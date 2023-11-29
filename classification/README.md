@@ -7,7 +7,7 @@ This folder contains the implementation of the InternViT-6B for image classifica
 - [Install](#install)
 - [Data Preparation](#data-preparation)
 - [Linear Probing on ImageNet-1K](#linear-probing-on-imagenet-1k)
-- [Evaluation](#evaluaton)
+- [Evaluation](#evaluation)
 
 <!-- TOC -->
 
@@ -92,6 +92,7 @@ data
 
 ### Linear Probing on ImageNet-1K
 
+
 To train a linear classifier for `InternViT-6b` on ImageNet with 8 GPUs, run:
 
 ```bash
@@ -103,7 +104,13 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224.yaml
 
 ### Evaluation
 
-To evaluate on ImageNet-1K val with 8 GPUs, run:
+| model name | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |
+|--------|:------------------:|:------:|:------:| :------:|:------:|:------:|
+| `intern_vit_6b_1k_224.yaml` | 88.2 | 90.4 | 80.0 | 77.4 | 89.8 | 69.0 |
+
+<details>
+  <summary>Evaluate InternViT-6B on <b>ImageNet-1K val</b>b> with 8 GPUs (click to expand).</summary>
+
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
@@ -113,8 +120,13 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224.yaml
     --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-1k --launcher slurm
 ```
 
-The result is:
+Expected results:
 
 ```
-
+ * Acc@1 88.244 Acc@5 98.470
+Accuracy of the network on the 50000 test images: 88.2%
 ```
+
+</details>
+
+
