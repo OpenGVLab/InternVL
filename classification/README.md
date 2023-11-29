@@ -23,7 +23,7 @@ This folder contains the implementation of the InternViT-6B for image classifica
 
 ```bash
 git clone https://github.com/OpenGVLab/InternVL.git
-cd InternVeL/classification
+cd InternVL/classification
 ```
 
 - Create a conda virtual environment and activate it:
@@ -43,7 +43,7 @@ conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=
 pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
 ```
 
-- Install `timm==0.6.11` and `mmcv-full==1.7.0`:
+- Install `timm==0.6.11` and `mmcv==1.7.0`:
 
 ```bash
 pip install -U openmim
@@ -51,11 +51,11 @@ pip install timm==0.6.11
 mim install mmcv==1.7.0
 ```
 
-- Install 'apex':
+- Install `apex`:
 
 ```bash
 git clone https://github.com/NVIDIA/apex.git
-git checkout 2386a912164b0c5cfcd8be7a2b890fbac5607c82
+git checkout 2386a912164b0c5cfcd8be7a2b890fbac5607c82  # https://github.com/NVIDIA/apex/issues/1735
 pip install -v --disable-pip-version-check --no-cache-dir --no-build-isolation --config-settings "--build-option=--cpp_ext" --config-settings "--build-option=--cuda_ext" ./
 ```
 
@@ -67,33 +67,32 @@ pip install opencv-python termcolor yacs pyyaml scipy
 
 ### Data Preparation
 
-We use standard ImageNet dataset, you can download it from http://image-net.org/. We provide the following two ways to
-load data:
+Please prepare the ImageNet-1K, ImageNet-A, ImageNet-R, ImageNet-Sketch, and ImageNetV2 datasets following the directory structure outlined below.
 
-- For standard folder dataset, move validation images to labeled sub-folders. The file structure should look like:
-  ```bash
-  $ tree data
-  imagenet
-  ├── train
-  │   ├── class1
-  │   │   ├── img1.jpeg
-  │   │   ├── img2.jpeg
-  │   │   └── ...
-  │   ├── class2
-  │   │   ├── img3.jpeg
-  │   │   └── ...
-  │   └── ...
-  └── val
-      ├── class1
-      │   ├── img4.jpeg
-      │   ├── img5.jpeg
-      │   └── ...
-      ├── class2
-      │   ├── img6.jpeg
-      │   └── ...
-      └── ...
-
-  ```
+```bash
+$ tree data
+data
+├── imagenet-1k
+│         ├── meta
+│         ├── test
+│         ├── train
+          │    ├── n01498041
+          │    └── ...
+│         └── val
+│              ├── ILSVRC2012_val_00000001.JPEG
+│              └── ...
+├── imagenet-a
+│         ├── n01498041
+│         └── ...
+├── imagenet-r
+│         ├── n01443537
+│         └── ...
+├── imagenet-sketch
+│         ├── n01440764
+│         └── ...
+└── imagenetv2
+    └── ImageNetV2-matched-frequency
+```
 
 ### Evaluation
 

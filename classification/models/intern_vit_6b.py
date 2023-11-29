@@ -27,7 +27,7 @@ class CrossAttention(nn.Module):
     def __init__(
             self, dim, num_heads=8, qkv_bias=False, qk_scale=None, attn_drop=0.,
             proj_drop=0., attn_head_dim=None, out_dim=None):
-        super(CrossAttention).__init__()
+        super().__init__()
         if out_dim is None:
             out_dim = dim
         self.num_heads = num_heads
@@ -92,7 +92,7 @@ class AttentiveBlock(nn.Module):
 
     def __init__(self, dim, num_heads, qkv_bias=False, qk_scale=None, drop=0., attn_drop=0.,
                  drop_path=0., norm_layer=nn.LayerNorm, attn_head_dim=None, out_dim=None):
-        super(AttentiveBlock).__init__()
+        super().__init__()
 
         self.norm1_q = norm_layer(dim)
         self.norm1_k = norm_layer(dim)
@@ -124,7 +124,7 @@ class AttentionPoolingBlock(AttentiveBlock):
 
 class RMSNorm(nn.Module):
     def __init__(self, hidden_size, eps=1e-6):
-        super(RMSNorm).__init__()
+        super().__init__()
         self.weight = nn.Parameter(torch.ones(hidden_size))
         self.variance_epsilon = eps
 
@@ -152,7 +152,7 @@ except Exception:
 
 class LayerScale(nn.Module):
     def __init__(self, dim, init_values=1e-5, inplace=False, force_fp32=False):
-        super(LayerScale).__init__()
+        super().__init__()
         self.inplace = inplace
         self.gamma = nn.Parameter(init_values * torch.ones(dim))
         self.force_fp32 = force_fp32
@@ -171,7 +171,7 @@ class LayerScale(nn.Module):
 class Attention(nn.Module):
     def __init__(self, dim, num_heads=8, qkv_bias=False, attn_drop=0., proj_drop=0., use_flash_attn=False,
                  causal=False, norm_layer=nn.LayerNorm, qk_normalization=False):
-        super(Attention).__init__()
+        super().__init__()
         assert dim % num_heads == 0, 'dim should be divisible by num_heads'
         self.num_heads = num_heads
         head_dim = dim // num_heads
@@ -238,7 +238,7 @@ class Mlp(nn.Module):
 
     def __init__(self, in_features, hidden_features=None, out_features=None, act_layer=nn.GELU,
                  bias=True, drop=0.):
-        super(Mlp).__init__()
+        super().__init__()
         out_features = out_features or in_features
         hidden_features = hidden_features or in_features
         bias = to_2tuple(bias)
@@ -265,7 +265,7 @@ class Block(nn.Module):
             self, dim, num_heads, mlp_ratio=4., qkv_bias=False, drop=0., attn_drop=0., init_values=None,
             drop_path=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm, use_flash_attn=False, with_cp=False,
             qk_normalization=False, layerscale_no_force_fp32=False):
-        super(Block).__init__()
+        super().__init__()
 
         self.norm1 = norm_layer(dim)
         self.attn = Attention(dim, num_heads=num_heads, qkv_bias=qkv_bias, attn_drop=attn_drop, proj_drop=drop,
@@ -303,7 +303,7 @@ class PatchEmbed(nn.Module):
     """
 
     def __init__(self, img_size=224, patch_size=16, in_chans=3, embed_dim=768, norm_layer=None, flatten=True):
-        super(PatchEmbed).__init__()
+        super().__init__()
         img_size = to_2tuple(img_size)
         patch_size = to_2tuple(patch_size)
         num_patches = (img_size[1] // patch_size[1]) * (img_size[0] // patch_size[0])
@@ -332,7 +332,7 @@ class InternViT6B(nn.Module):
                  use_flash_attn=True, with_cp=True, layerscale_no_force_fp32=True, freeze_vit=True,
                  cls_target='cls_patch_concat', num_classes=1000, attn_pool_num_heads=16, clip_embed_dim=768,
                  head_norm_type='bn', pretrained=None):
-        super(InternViT6B).__init__()
+        super().__init__()
         self.num_features = self.embed_dim = embed_dim  # num_features for consistency with other models
 
         self.pretrain_size = pretrain_size
@@ -407,7 +407,8 @@ class InternViT6B(nn.Module):
 
         if isinstance(pretrained, str):
             checkpoint = torch.load(pretrained, map_location='cpu')
-            checkpoint = checkpoint['module']
+            if 'module' in checkpoint:
+                checkpoint = checkpoint['module']
 
             # resize pos_embed
             pos_embed = checkpoint['pos_embed']
