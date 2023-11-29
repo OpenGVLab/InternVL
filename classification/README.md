@@ -94,51 +94,31 @@ data
     └── ImageNetV2-matched-frequency
 ```
 
+### Linear Probing on ImageNet-1K
+
+To train a linear classifier for `InternViT-6b` on ImageNet with 8 GPUs, run:
+
+```bash
+python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py \
+  --cfg configs/intern_vit_6b_1k_224.yaml --data-path ./data/imagenet-1k
+# or manage jobs with slurm
+GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224.yaml --launcher slurm
+```
+
 ### Evaluation
 
-To evaluate a pretrained `InternViT-6B` on ImageNet val, run:
+To evaluate on ImageNet-1K val with 8 GPUs, run:
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node <num-of-gpus-to-use> --master_port 12345 main.py --eval \
---cfg <config-file> --resume <checkpoint> --data-path <imagenet-path>
+python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
+    --cfg configs/intern_vit_6b_1k_224.yaml --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-1k
+# or manage jobs with slurm
+GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224.yaml --eval \
+    --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-1k --launcher slurm
 ```
 
-For example, to evaluate the `InternVL-B` with a single GPU:
+The result is:
 
-```bash
-python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.py --eval \
---cfg configs/internimage_b_1k_224.yaml --resume internimage_b_1k_224.pth --data-path <imagenet-path>
 ```
 
-### Linear Evaluation on ImageNet-1K
-
-To train an `InternVL` on ImageNet from scratch, run:
-
-```bash
-python -m torch.distributed.launch --nproc_per_node <num-of-gpus-to-use> --master_port 12345  main.py \
---cfg <config-file> --data-path <imagenet-path> [--batch-size <batch-size-per-gpu> --output <output-directory> --tag <job-tag>]
-```
-
-### Manage Jobs with Slurm.
-
-For example, to train `InternVL` with 8 GPU on a single node for 300 epochs, run:
-
-`InternViT-6B`:
-
-```bash
-GPUS=8 sh train_in1k.sh <partition> <job-name> configs/internimage_t_1k_224.yaml --resume internimage_t_1k_224.pth --eval
-```
-
-### Export
-
-To export `InternViT-6B` from PyTorch to ONNX, run:
-
-```shell
-python export.py --model_name intern_vit_6b_1k_224_cls_patch_sgd_lr0.1 --ckpt_dir /path/to/ckpt/dir --onnx
-```
-
-To export `InternViT-6B` from PyTorch to TensorRT, run:
-
-```shell
-python export.py --model_name intern_vit_6b_1k_224_cls_patch_sgd_lr0.1 --ckpt_dir /path/to/ckpt/dir --trt
 ```

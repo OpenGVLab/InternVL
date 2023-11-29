@@ -133,7 +133,9 @@ def parse_option():
                         type=int,
                         required=True,
                         help='local rank for DistributedDataParallel')
-
+    parser.add_argument('--launcher',
+                        choices=['pytorch', 'slurm'],
+                        default='pytorch')
     args, unparsed = parser.parse_known_args()
     config = get_config(args)
 
@@ -677,7 +679,7 @@ if __name__ == '__main__':
         assert has_native_amp, 'Please update pytorch(1.6+) to support amp!'
 
     # init distributed env
-    if 'SLURM_PROCID' in os.environ:
+    if _.launcher == 'slurm':
         print('\nDist init: SLURM')
         rank = int(os.environ['SLURM_PROCID'])
         gpu = rank % torch.cuda.device_count()
@@ -705,6 +707,7 @@ if __name__ == '__main__':
     else:
         rank = -1
         world_size = -1
+
     torch.cuda.set_device(config.LOCAL_RANK)
     torch.distributed.init_process_group(backend='nccl',
                                          init_method='env://',
