@@ -3,6 +3,7 @@
 # Copyright (c) 2023 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
+
 from functools import partial
 
 import torch
@@ -24,6 +25,7 @@ def _freeze_params(module):
 
 
 class CrossAttention(nn.Module):
+
     def __init__(self,
                  dim,
                  num_heads=8,
@@ -99,6 +101,7 @@ class CrossAttention(nn.Module):
 
 
 class AttentiveBlock(nn.Module):
+
     def __init__(self,
                  dim,
                  num_heads,
@@ -110,7 +113,7 @@ class AttentiveBlock(nn.Module):
                  norm_layer=nn.LayerNorm,
                  attn_head_dim=None,
                  out_dim=None):
-        super().__init__()
+        super(AttentiveBlock).__init__()
 
         self.norm1_q = norm_layer(dim)
         self.norm1_k = norm_layer(dim)
@@ -143,20 +146,22 @@ class AttentiveBlock(nn.Module):
 
 
 class AttentionPoolingBlock(AttentiveBlock):
+
     def forward(self, x):
         x_q = x.mean(1, keepdim=True)
         x_kv, pos_q, pos_k = x, 0, 0
-        x = super().forward(x_q,
-                            x_kv,
-                            pos_q,
-                            pos_k,
-                            bool_masked_pos=None,
-                            rel_pos_bias=None)
+        x = super(AttentionPoolingBlock).forward(x_q,
+                                                 x_kv,
+                                                 pos_q,
+                                                 pos_k,
+                                                 bool_masked_pos=None,
+                                                 rel_pos_bias=None)
         x = x.squeeze(1)
         return x
 
 
 class RMSNorm(nn.Module):
+
     def __init__(self, hidden_size, eps=1e-6):
         super().__init__()
         self.weight = nn.Parameter(torch.ones(hidden_size))
@@ -188,6 +193,7 @@ except Exception:
 
 
 class LayerScale(nn.Module):
+
     def __init__(self, dim, init_values=1e-5, inplace=False, force_fp32=False):
         super().__init__()
         self.inplace = inplace
@@ -207,6 +213,7 @@ class LayerScale(nn.Module):
 
 
 class Attention(nn.Module):
+
     def __init__(self,
                  dim,
                  num_heads=8,
@@ -289,6 +296,7 @@ class Attention(nn.Module):
 
 class Mlp(nn.Module):
     """MLP as used in Vision Transformer, MLP-Mixer and related networks."""
+
     def __init__(self,
                  in_features,
                  hidden_features=None,
@@ -318,6 +326,7 @@ class Mlp(nn.Module):
 
 
 class Block(nn.Module):
+
     def __init__(self,
                  dim,
                  num_heads,
@@ -369,6 +378,7 @@ class Block(nn.Module):
         self.with_cp = with_cp
 
     def forward(self, x):
+
         def _inner_forward(x):
             x = x + self.drop_path1(self.ls1(self.attn(self.norm1(x))))
             x = x + self.drop_path2(self.ls2(self.mlp(self.norm2(x))))
@@ -382,6 +392,7 @@ class Block(nn.Module):
 
 class PatchEmbed(nn.Module):
     """2D Image to Patch Embedding."""
+
     def __init__(self,
                  img_size=224,
                  patch_size=16,
@@ -417,6 +428,7 @@ class PatchEmbed(nn.Module):
 
 
 class InternViT6B(nn.Module):
+
     def __init__(self,
                  in_chans=3,
                  patch_size=14,
@@ -550,19 +562,7 @@ class InternViT6B(nn.Module):
                 size=(self.patch_size, self.patch_size),
                 mode='bicubic',
                 align_corners=False)
-            # filter useless keys
-            new_ckpt = dict()
-            skip_keys = [
-                'clip.', 'bamboo', 'text_projection', 'predictor',
-                'loss_weight', 'decoder', 'target_pos_embed', 'mask_token',
-                'grad_norm', 'norm3'
-            ]
-            for k, v in checkpoint.items():
-                if any(x in k for x in skip_keys):
-                    continue
-                new_ckpt[k] = v
-            torch.save(new_ckpt, 'intern_vit_6b_224px.pth')
-            message = self.load_state_dict(new_ckpt, strict=False)
+            message = self.load_state_dict(checkpoint, strict=False)
             print(message)
 
     @property

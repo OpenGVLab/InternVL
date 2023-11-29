@@ -3,14 +3,16 @@
 This folder contains the implementation of the InternViT-6B for image classification.
 
 <!-- TOC -->
-* [Install](#install)
-* [Data Preparation](#data-preparation)
-* [Evaluation](#evaluation)
-* [Training from Scratch on ImageNet-1K](#training-from-scratch-on-imagenet-1k)
-* [Manage Jobs with Slurm.](#manage-jobs-with-slurm)
-* [Training with Deepspeed](#training-with-deepspeed)
-* [Extracting Intermediate Features](#extracting-intermediate-features)
-* [Export](#export)
+
+- [Install](#install)
+- [Data Preparation](#data-preparation)
+- [Evaluation](#evaluation)
+- [Training from Scratch on ImageNet-1K](#training-from-scratch-on-imagenet-1k)
+- [Manage Jobs with Slurm.](#manage-jobs-with-slurm)
+- [Training with Deepspeed](#training-with-deepspeed)
+- [Extracting Intermediate Features](#extracting-intermediate-features)
+- [Export](#export)
+
 <!-- TOC -->
 
 ## Usage
@@ -34,6 +36,7 @@ conda activate internvl
 - Install `PyTorch>=2.0` and `torchvision>=0.15.2` with `CUDA>=11.6`:
 
 For examples, to install torch==2.0.1 with CUDA==11.8:
+
 ```bash
 conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.8 -c pytorch -c nvidia
 # or
@@ -92,7 +95,6 @@ load data:
 
   ```
 
-
 ### Evaluation
 
 To evaluate a pretrained `InternViT-6B` on ImageNet val, run:
@@ -128,15 +130,16 @@ For example, to train `InternImage` with 8 GPU on a single node for 300 epochs, 
 GPUS=8 sh train_in1k.sh <partition> <job-name> configs/internimage_t_1k_224.yaml --resume internimage_t_1k_224.pth --eval
 ```
 
-
 ### Export
 
 To export `InternViT-6B` from PyTorch to ONNX, run:
+
 ```shell
 python export.py --model_name intern_vit_6b_1k_224_cls_patch_sgd_lr0.1 --ckpt_dir /path/to/ckpt/dir --onnx
 ```
 
 To export `InternViT-6B` from PyTorch to TensorRT, run:
+
 ```shell
 python export.py --model_name intern_vit_6b_1k_224_cls_patch_sgd_lr0.1 --ckpt_dir /path/to/ckpt/dir --trt
 ```

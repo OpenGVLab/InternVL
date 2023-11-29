@@ -3,7 +3,7 @@ DATA:
   BATCH_SIZE: 128
   DATASET: 'imagenet_sketch'
   TRANSFORM: 'build_transform_for_linear_probe'
-  DATA_PATH: '/mnt/petrelfs/share_data/wangwenhai/data/sketch'
+  DATA_PATH: './data/imagenet-sketch'
 MODEL:
   TYPE: intern_vit_6b
   DROP_PATH_RATE: 0.0
@@ -19,7 +19,7 @@ MODEL:
     QK_NORMALIZATION: True
     DEPTH: 48
     USE_FLASH_ATTN: True
-    PRETRAINED: "/mnt/petrelfs/wangwenhai/workspace/InternVL-release/classification/intern_vit_6b_224px.pth"
+    PRETRAINED: "./intern_vit_6b_224px.pth"
     CLS_TARGET: 'cls_patch_concat'
 TRAIN:
   EMA:

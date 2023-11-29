@@ -20,6 +20,7 @@ import numpy as np
 
 
 class RealLabelsImagenet:
+
     def __init__(self, filenames, real_json='real.json', topk=(1, 5)):
         with open(real_json) as real_labels:
             real_labels = json.load(real_labels)

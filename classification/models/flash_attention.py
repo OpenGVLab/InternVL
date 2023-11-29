@@ -1,8 +1,6 @@
-# --------------------------------------------------------
-# InternVL
-# Copyright (c) 2023 OpenGVLab
-# Licensed under The MIT License [see LICENSE for details]
-# --------------------------------------------------------
+"""Code modified from https://github.com/Dao-AILab/flash-
+attention/blob/v0.2.8/flash_attn/flash_attention.py."""
+
 import torch
 import torch.nn as nn
 from einops import rearrange
@@ -26,6 +24,7 @@ class FlashAttention(nn.Module):
         attention_dropout: The dropout rate to apply to the attention
                            (default: 0.0)
     """
+
     def __init__(self,
                  softmax_scale=None,
                  attention_dropout=0.0,

@@ -1,5 +1,5 @@
 # --------------------------------------------------------
-# InternImage
+# InternVL
 # Copyright (c) 2022 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
@@ -401,6 +401,7 @@ class NativeScalerWithGradNormCount:
 
 class MyAverageMeter(object):
     """Computes and stores the average and current value."""
+
     def __init__(self, max_len=-1):
         self.val_list = []
         self.count = []

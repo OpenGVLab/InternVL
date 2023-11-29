@@ -3,6 +3,7 @@
 # Copyright (c) 2023 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
+
 import io
 import json
 import logging
@@ -102,6 +103,7 @@ class DatasetFolder(data.Dataset):
      Attributes:
         samples (list): List of (sample path, class_index) tuples
     """
+
     def __init__(self,
                  root,
                  loader,
@@ -255,6 +257,7 @@ class CachedImageFolder(DatasetFolder):
      Attributes:
         imgs (list): List of (image path, class_index) tuples
     """
+
     def __init__(self,
                  root,
                  ann_file='',
@@ -294,6 +297,7 @@ class CachedImageFolder(DatasetFolder):
 
 
 class ImageCephDataset(data.Dataset):
+
     def __init__(self,
                  root,
                  split,
@@ -339,6 +343,7 @@ class ImageCephDataset(data.Dataset):
 
 
 class Parser:
+
     def __init__(self):
         pass
 
@@ -357,6 +362,7 @@ class Parser:
 
 
 class ParserCephImage(Parser):
+
     def __init__(self,
                  root,
                  split,

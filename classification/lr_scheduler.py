@@ -50,6 +50,7 @@ def build_scheduler(config, optimizer, n_iter_per_epoch):
 
 
 class LinearLRScheduler(Scheduler):
+
     def __init__(
         self,
         optimizer: torch.optim.Optimizer,

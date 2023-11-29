@@ -13,6 +13,7 @@ from deepspeed.runtime.zero import GatheredParameters
 
 class EMADeepspeed(nn.Module):
     """migrated from https://github.com/microsoft/DeepSpeed/issues/2056."""
+
     def __init__(self, model, decay=0.9999, use_num_updates=True):
         super().__init__()
         if decay < 0.0 or decay > 1.0:

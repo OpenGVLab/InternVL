@@ -2,7 +2,7 @@ DATA:
   IMG_ON_MEMORY: False
   BATCH_SIZE: 128
   TRANSFORM: 'build_transform_for_linear_probe'
-  DATA_PATH: '/mnt/petrelfs/share/images'
+  DATA_PATH: './data/imagenet-1k'
 MODEL:
   TYPE: intern_vit_6b
   DROP_PATH_RATE: 0.0
@@ -18,7 +18,7 @@ MODEL:
     QK_NORMALIZATION: True
     DEPTH: 48
     USE_FLASH_ATTN: True
-    PRETRAINED: "/mnt/petrelfs/wangwenhai/workspace/InternVL-release/classification/intern_vit_6b_224px.pth"
+    PRETRAINED: "./intern_vit_6b_224px.pth"
     CLS_TARGET: 'cls_patch_concat'
 TRAIN:
   EMA:

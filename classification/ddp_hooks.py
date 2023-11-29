@@ -121,6 +121,7 @@ def fp16_compress_wrapper(
         >>> state = PowerSGDState(process_group=process_group, matrix_approximation_rank=1, start_powerSGD_iter=10)
         >>> ddp_model.register_comm_hook(state, fp16_compress_wrapper(powerSGD_hook))
     """
+
     def fp16_compress_wrapper_hook(
             hook_state,
             bucket: dist.GradBucket) -> torch.futures.Future[torch.Tensor]:
@@ -158,6 +159,7 @@ def bf16_compress_wrapper(
         >>> state = PowerSGDState(process_group=process_group, matrix_approximation_rank=1, start_powerSGD_iter=10)
         >>> ddp_model.register_comm_hook(state, bf16_compress_wrapper(powerSGD_hook))
     """
+
     def bf16_compress_wrapper_hook(
             hook_state,
             bucket: dist.GradBucket) -> torch.futures.Future[torch.Tensor]:

@@ -3,6 +3,7 @@
 # Copyright (c) 2023 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
+
 import os
 
 import numpy as np
@@ -32,6 +33,7 @@ except:
 
 
 class TTA(torch.nn.Module):
+
     def __init__(self, size, scales=[1.0, 1.05, 1.1]):
         super().__init__()
         self.size = size

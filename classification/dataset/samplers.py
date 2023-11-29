@@ -3,6 +3,7 @@
 # Copyright (c) 2023 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
+
 import math
 import os
 
@@ -19,6 +20,7 @@ class SubsetRandomSampler(torch.utils.data.Sampler):
     Arguments:
         indices (sequence): a sequence of indices
     """
+
     def __init__(self, indices):
         self.epoch = 0
         self.indices = indices
@@ -47,6 +49,7 @@ class NodeDistributedSampler(Sampler):
             distributed training.
         rank (optional): Rank of the current process within num_replicas.
     """
+
     def __init__(self,
                  dataset,
                  num_replicas=None,

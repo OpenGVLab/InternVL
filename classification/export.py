@@ -45,7 +45,7 @@ def get_model(args, cfg):
 
 
 def speed_test(model, input):
-    # warmup
+    # warm-up
     for _ in tqdm(range(100)):
         _ = model(input)
 
