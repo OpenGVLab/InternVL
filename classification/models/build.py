@@ -4,7 +4,7 @@
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
 from .intern_vit_6b import InternViT6B
-from .eva_vit import VisionTransformer as EVAViT
+
 
 def build_model(config):
     model_type = config.MODEL.TYPE
@@ -28,19 +28,6 @@ def build_model(config):
             pretrained=config.MODEL.INTERN_VIT_6B.PRETRAINED,
             cls_target=config.MODEL.INTERN_VIT_6B.CLS_TARGET,
             head_norm_type=config.MODEL.INTERN_VIT_6B.HEAD_NORM_TYPE,
-        )
-    elif model_type == 'eva_vit_g':
-        model = EVAViT(
-            img_size=config.DATA.IMG_SIZE,
-            patch_size=14,
-            num_classes=config.MODEL.NUM_CLASSES,
-            embed_dim=1408,
-            depth=40,
-            num_heads=16,
-            mlp_ratio=4.3637,
-            qkv_bias=True,
-            drop_path_rate=config.MODEL.DROP_PATH_RATE,
-            use_mean_pooling=False,
         )
     else:
         raise NotImplementedError(f"Unkown model: {model_type}")

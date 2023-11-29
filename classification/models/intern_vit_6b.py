@@ -14,7 +14,7 @@ from timm.models.layers import DropPath
 from timm.models.layers import to_2tuple
 
 try:
-    from flash_attn.flash_attention import FlashAttention
+    from .flash_attention import FlashAttention
 except:
     print("flash attention is not installed.")
 
@@ -391,8 +391,8 @@ class InternViT6B(nn.Module):
         else:
             raise NotImplementedError
         
-        # self.head.weight.data.normal_(mean=0.0, std=0.01)
-        # self.head.bias.data.zero_()
+        self.head.weight.data.normal_(mean=0.0, std=0.01)
+        self.head.bias.data.zero_()
     
     def init_weights(self, pretrained=None):
         print(f"pretrained: {pretrained}")
@@ -427,6 +427,7 @@ class InternViT6B(nn.Module):
                 if any(x in k for x in skip_keys):
                     continue
                 new_ckpt[k] = v
+            torch.save(new_ckpt, 'intern_vit_6b_224px.pth')
             message = self.load_state_dict(new_ckpt, strict=False)
             print(message)
     
@@ -458,7 +459,7 @@ class InternViT6B(nn.Module):
         return x
     
     @torch.jit.ignore
-    def lr_decay_keywards(self, decay_ratio=0.95):
+    def lr_decay_keywords(self, decay_ratio=0.95):
         lr_ratios = {}
         
         # blocks

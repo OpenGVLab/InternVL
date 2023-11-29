@@ -1,3 +1,8 @@
+# --------------------------------------------------------
+# InternVL
+# Copyright (c) 2023 OpenGVLab
+# Licensed under The MIT License [see LICENSE for details]
+# --------------------------------------------------------
 import torch
 from mmcv.cnn import get_model_complexity_info
 from mmcv.cnn.utils.flops_counter import flops_to_string, params_to_string

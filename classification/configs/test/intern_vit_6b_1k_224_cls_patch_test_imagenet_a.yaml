@@ -1,9 +1,9 @@
 DATA:
   IMG_ON_MEMORY: False
   BATCH_SIZE: 128
-  DATASET: 'imagenet_r'
+  DATASET: 'imagenet_a'
   TRANSFORM: 'build_transform_for_linear_probe'
-  DATA_PATH: '/mnt/petrelfs/share_data/wangwenhai/data/imagenet-r'
+  DATA_PATH: '/mnt/petrelfs/share_data/wangwenhai/data/imagenet-a'
 MODEL:
   TYPE: intern_vit_6b
   DROP_PATH_RATE: 0.0
@@ -19,11 +19,11 @@ MODEL:
     QK_NORMALIZATION: True
     DEPTH: 48
     USE_FLASH_ATTN: True
-    PRETRAINED: "/mnt/petrelfs/share_data/wangwenhai/internvl/6b_vit_exp126_clip_alpaca_7b_laion5b_peak_1e-5_256gpu_all_trainable_degradation.sh/1499/mp_rank_00_model_states.pt"
+    PRETRAINED: "/mnt/petrelfs/wangwenhai/workspace/InternVL-release/classification/intern_vit_6b_224px.pth"
     CLS_TARGET: 'cls_patch_concat'
 TRAIN:
   EMA:
-    ENABLE: True
+    ENABLE: False
     DECAY: 0.998
   EPOCHS: 10
   WARMUP_EPOCHS: 1

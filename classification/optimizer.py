@@ -1,9 +1,8 @@
 # --------------------------------------------------------
-# InternImage
-# Copyright (c) 2022 OpenGVLab
+# InternVL
+# Copyright (c) 2023 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
-
 from torch import optim as optim
 from torch.distributed.optim import ZeroRedundancyOptimizer
 
@@ -70,12 +69,6 @@ def build_optimizer(config, model):
                                   nesterov=True,
                                   lr=config.TRAIN.BASE_LR,
                                   weight_decay=config.TRAIN.WEIGHT_DECAY)
-        elif opt_lower == 'sgd_linear_probing':
-            optimizer = optim.SGD(parameters,
-                                  momentum=0.9,
-                                  nesterov=False,
-                                  lr=config.TRAIN.BASE_LR,
-                                  weight_decay=0)
         elif opt_lower == 'adamw':
             optimizer = optim.AdamW(parameters,
                                     eps=config.TRAIN.OPTIMIZER.EPS,
@@ -136,8 +129,8 @@ def set_weight_decay_and_lr(
         
         if lr_layer_decay:
             print('layer-wise lr decay is used !')
-            assert hasattr(model, 'lr_decay_keywards')
-            lr_ratio_keywards = model.lr_decay_keywards(lr_layer_decay_ratio)
+            assert hasattr(model, 'lr_decay_keywords')
+            lr_ratio_keywards = model.lr_decay_keywords(lr_layer_decay_ratio)
             
             # 2. check lr
             ratio = check_keywords_in_dict(name, lr_ratio_keywards)
