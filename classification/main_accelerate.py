@@ -3,6 +3,7 @@
 # Copyright (c) 2023 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
+
 import argparse
 import datetime
 import logging
@@ -32,8 +33,8 @@ warnings.filterwarnings('ignore')
 
 
 def parse_option():
-    parser = argparse.ArgumentParser(
-        'InternImage training and evaluation script', add_help=False)
+    parser = argparse.ArgumentParser('InternVL training and evaluation script',
+                                     add_help=False)
     parser.add_argument('--cfg',
                         type=str,
                         required=True,

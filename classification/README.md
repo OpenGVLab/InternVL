@@ -104,7 +104,7 @@ python -m torch.distributed.launch --nproc_per_node <num-of-gpus-to-use> --maste
 --cfg <config-file> --resume <checkpoint> --data-path <imagenet-path>
 ```
 
-For example, to evaluate the `InternImage-B` with a single GPU:
+For example, to evaluate the `InternVL-B` with a single GPU:
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.py --eval \
@@ -113,7 +113,7 @@ python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.p
 
 ### Linear Evaluation on ImageNet-1K
 
-To train an `InternImage` on ImageNet from scratch, run:
+To train an `InternVL` on ImageNet from scratch, run:
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node <num-of-gpus-to-use> --master_port 12345  main.py \
@@ -122,7 +122,7 @@ python -m torch.distributed.launch --nproc_per_node <num-of-gpus-to-use> --maste
 
 ### Manage Jobs with Slurm.
 
-For example, to train `InternImage` with 8 GPU on a single node for 300 epochs, run:
+For example, to train `InternVL` with 8 GPU on a single node for 300 epochs, run:
 
 `InternViT-6B`:
 
