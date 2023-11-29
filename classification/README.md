@@ -109,7 +109,7 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224.yaml
 | `intern_vit_6b_1k_224.yaml` | 88.2 | 90.4 | 80.0 | 77.4 | 89.8 | 69.0 |
 
 <details>
-  <summary>Evaluate InternViT-6B on <b>ImageNet-1K val</b>b> with 8 GPUs (click to expand).</summary>
+  <summary>Evaluate InternViT-6B on <b>ImageNet-1K val</b> with 8 GPUs (click to expand).</summary>
 
 
 ```bash
