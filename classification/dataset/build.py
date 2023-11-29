@@ -57,8 +57,7 @@ class TTA(torch.nn.Module):
 
 def build_loader(config):
     config.defrost()
-    dataset_train, config.MODEL.NUM_CLASSES = build_dataset('train',
-                                                            config=config)
+    dataset_train, config.MODEL.NUM_CLASSES = build_dataset('train', config=config)
     config.freeze()
     print(f'local rank {config.LOCAL_RANK} / global rank {dist.get_rank()}'
           'successfully build train dataset')
@@ -79,8 +78,7 @@ def build_loader(config):
             sampler_train = NodeDistributedSampler(dataset_train)
         else:
             if config.DATA.ZIP_MODE and config.DATA.CACHE_MODE == 'part':
-                indices = np.arange(dist.get_rank(), len(dataset_train),
-                                    dist.get_world_size())
+                indices = np.arange(dist.get_rank(), len(dataset_train), dist.get_world_size())
                 sampler_train = SubsetRandomSampler(indices)
             else:
                 sampler_train = torch.utils.data.DistributedSampler(
@@ -93,15 +91,13 @@ def build_loader(config):
         if config.TEST.SEQUENTIAL:
             sampler_val = torch.utils.data.SequentialSampler(dataset_val)
         else:
-            sampler_val = torch.utils.data.distributed.DistributedSampler(
-                dataset_val, shuffle=False)
+            sampler_val = torch.utils.data.distributed.DistributedSampler(dataset_val, shuffle=False)
 
     if dataset_test is not None:
         if config.TEST.SEQUENTIAL:
             sampler_test = torch.utils.data.SequentialSampler(dataset_test)
         else:
-            sampler_test = torch.utils.data.distributed.DistributedSampler(
-                dataset_test, shuffle=False)
+            sampler_test = torch.utils.data.distributed.DistributedSampler(dataset_test, shuffle=False)
 
     data_loader_train = torch.utils.data.DataLoader(
         dataset_train,
@@ -151,8 +147,7 @@ def build_loader(config):
 
 def build_loader2(config):
     config.defrost()
-    dataset_train, config.MODEL.NUM_CLASSES = build_dataset('train',
-                                                            config=config)
+    dataset_train, config.MODEL.NUM_CLASSES = build_dataset('train', config=config)
     config.freeze()
     dataset_val, _ = build_dataset('val', config=config)
     dataset_test, _ = build_dataset('test', config=config)
@@ -215,8 +210,7 @@ def build_dataset(split, config):
     if config.DATA.DATASET == 'imagenet' or config.DATA.DATASET == 'imagenet-real':
         if prefix == 'train' and not config.EVAL_MODE:
             root = os.path.join(config.DATA.DATA_PATH, 'train')
-            dataset = ImageCephDataset(root,
-                                       'train',
+            dataset = ImageCephDataset(root, 'train',
                                        transform=transform,
                                        on_memory=config.DATA.IMG_ON_MEMORY)
         elif prefix == 'val':
@@ -227,8 +221,7 @@ def build_dataset(split, config):
         if prefix == 'train':
             if not config.EVAL_MODE:
                 root = config.DATA.DATA_PATH
-                dataset = ImageCephDataset(root,
-                                           'train',
+                dataset = ImageCephDataset(root, 'train',
                                            transform=transform,
                                            on_memory=config.DATA.IMG_ON_MEMORY)
             nb_classes = 21841
@@ -249,22 +242,19 @@ def build_dataset(split, config):
         if prefix == 'train' and not config.EVAL_MODE:
             print(f'Only test split available for {config.DATA.DATASET}')
         else:
-            dataset = ImageFolder(root=config.DATA.DATA_PATH,
-                                  transform=transform)
+            dataset = ImageFolder(root=config.DATA.DATA_PATH, transform=transform)
             nb_classes = 1000
     elif config.DATA.DATASET == 'imagenet_a':
         if prefix == 'train' and not config.EVAL_MODE:
             print(f'Only test split available for {config.DATA.DATASET}')
         else:
-            dataset = ImageFolder(root=config.DATA.DATA_PATH,
-                                  transform=transform)
+            dataset = ImageFolder(root=config.DATA.DATA_PATH, transform=transform)
             nb_classes = 1000  # actual number of classes is 200
     elif config.DATA.DATASET == 'imagenet_r':
         if prefix == 'train' and not config.EVAL_MODE:
             print(f'Only test split available for {config.DATA.DATASET}')
         else:
-            dataset = ImageFolder(root=config.DATA.DATA_PATH,
-                                  transform=transform)
+            dataset = ImageFolder(root=config.DATA.DATA_PATH, transform=transform)
             nb_classes = 1000  # actual number of classes is 200
     else:
         raise NotImplementedError(
@@ -278,8 +268,7 @@ def build_transform_for_linear_probe(is_train, config):
     if is_train:
         transform = transforms.Compose([
             transforms.RandomResizedCrop(
-                config.DATA.IMG_SIZE,
-                interpolation=transforms.InterpolationMode.BICUBIC),
+                config.DATA.IMG_SIZE, interpolation=transforms.InterpolationMode.BICUBIC),
             transforms.RandomHorizontalFlip(),
             transforms.ToTensor(),
             transforms.Normalize(mean=config.AUG.MEAN, std=config.AUG.STD)
@@ -287,8 +276,7 @@ def build_transform_for_linear_probe(is_train, config):
     else:
         transform = transforms.Compose([
             transforms.Resize(
-                config.DATA.IMG_SIZE,
-                interpolation=transforms.InterpolationMode.BICUBIC),
+                config.DATA.IMG_SIZE, interpolation=transforms.InterpolationMode.BICUBIC),
             transforms.CenterCrop(config.DATA.IMG_SIZE),
             transforms.ToTensor(),
             transforms.Normalize(mean=config.AUG.MEAN, std=config.AUG.STD)
@@ -315,8 +303,7 @@ def build_transform(is_train, config):
         if not resize_im:
             # replace RandomResizedCropAndInterpolation with
             # RandomCrop
-            transform.transforms[0] = transforms.RandomCrop(
-                config.DATA.IMG_SIZE, padding=4)
+            transform.transforms[0] = transforms.RandomCrop(config.DATA.IMG_SIZE, padding=4)
 
         return transform
 
@@ -325,9 +312,7 @@ def build_transform(is_train, config):
         if config.TEST.CROP:
             size = int(1.0 * config.DATA.IMG_SIZE)
             t.append(
-                transforms.Resize(size,
-                                  interpolation=_pil_interp(
-                                      config.DATA.INTERPOLATION)),
+                transforms.Resize(size, interpolation=_pil_interp(config.DATA.INTERPOLATION)),
                 # to maintain same ratio w.r.t. 224 images
             )
             t.append(transforms.CenterCrop(config.DATA.IMG_SIZE))
