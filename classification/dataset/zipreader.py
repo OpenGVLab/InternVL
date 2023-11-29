@@ -4,9 +4,10 @@
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
 
+import io
 import os
 import zipfile
-import io
+
 import numpy as np
 from PIL import Image
 from PIL import ImageFile
@@ -22,10 +23,10 @@ def is_zip_path(img_or_path):
 class ZipReader(object):
     """A class to read zipped files"""
     zip_bank = dict()
-
+    
     def __init__(self):
         super(ZipReader, self).__init__()
-
+    
     @staticmethod
     def get_zipfile(path):
         zip_bank = ZipReader.zip_bank
@@ -33,21 +34,21 @@ class ZipReader(object):
             zfile = zipfile.ZipFile(path, 'r')
             zip_bank[path] = zfile
         return zip_bank[path]
-
+    
     @staticmethod
     def split_zip_style_path(path):
         pos_at = path.index('@')
         assert pos_at != -1, "character '@' is not found from the given path '%s'" % path
-
+        
         zip_path = path[0:pos_at]
         folder_path = path[pos_at + 1:]
         folder_path = str.strip(folder_path, '/')
         return zip_path, folder_path
-
+    
     @staticmethod
     def list_folder(path):
         zip_path, folder_path = ZipReader.split_zip_style_path(path)
-
+        
         zfile = ZipReader.get_zipfile(zip_path)
         folder_list = []
         for file_foler_name in zfile.namelist():
@@ -59,15 +60,15 @@ class ZipReader(object):
                     folder_list.append(file_foler_name)
                 else:
                     folder_list.append(file_foler_name[len(folder_path) + 1:])
-
+        
         return folder_list
-
+    
     @staticmethod
     def list_files(path, extension=None):
         if extension is None:
             extension = ['.*']
         zip_path, folder_path = ZipReader.split_zip_style_path(path)
-
+        
         zfile = ZipReader.get_zipfile(zip_path)
         file_lists = []
         for file_foler_name in zfile.namelist():
@@ -78,16 +79,16 @@ class ZipReader(object):
                     file_lists.append(file_foler_name)
                 else:
                     file_lists.append(file_foler_name[len(folder_path) + 1:])
-
+        
         return file_lists
-
+    
     @staticmethod
     def read(path):
         zip_path, path_img = ZipReader.split_zip_style_path(path)
         zfile = ZipReader.get_zipfile(zip_path)
         data = zfile.read(path_img)
         return data
-
+    
     @staticmethod
     def imread(path):
         zip_path, path_img = ZipReader.split_zip_style_path(path)

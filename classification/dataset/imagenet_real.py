@@ -1,3 +1,7 @@
+"""
+Code from https://github.com/baaivision/EVA/blob/master/EVA-02/asuka/imagenet_a_r_indices.py
+Thanks to the authors of EVA
+"""
 # --------------------------------------------------------
 # EVA: Exploring the Limits of Masked Visual Representation Learning at Scale (https://arxiv.org/abs/2211.07636)
 # Github source: https://github.com/baaivision/EVA
