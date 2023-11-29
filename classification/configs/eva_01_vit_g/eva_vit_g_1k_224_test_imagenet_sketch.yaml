@@ -1,0 +1,25 @@
+DATA:
+  IMG_ON_MEMORY: False
+  BATCH_SIZE: 128
+  DATASET: 'imagenet_sketch'
+  TRANSFORM: 'build_transform_for_linear_probe'
+  DATA_PATH: '/mnt/petrelfs/share_data/wangwenhai/data/sketch'
+AUG:
+  MEAN: (0.48145466, 0.4578275, 0.40821073)
+  STD: (0.26862954, 0.26130258, 0.27577711)
+MODEL:
+  TYPE: eva_vit_g
+  DROP_PATH_RATE: 0.0
+TRAIN:
+  EMA:
+    ENABLE: True
+    DECAY: 0.998
+  EPOCHS: 10
+  WARMUP_EPOCHS: 1
+  WEIGHT_DECAY: 0.0
+  BASE_LR: 0.1 # 512
+  WARMUP_LR: .0
+  MIN_LR: .0
+  LR_LAYER_DECAY: false
+  OPTIMIZER:
+    NAME: 'sgd'
