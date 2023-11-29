@@ -30,7 +30,7 @@ def load_ema_checkpoint(config, model_ema, logger):
                                                         check_hash=True)
     else:
         checkpoint = torch.load(config.MODEL.RESUME, map_location='cpu')
-    
+
     assert isinstance(checkpoint, dict)
     if 'model_ema' in checkpoint:
         new_state_dict = OrderedDict()
@@ -47,7 +47,7 @@ def load_ema_checkpoint(config, model_ema, logger):
         logger.warning(
             'Failed to find state_dict_ema, starting from loaded model weights'
         )
-    
+
     max_accuracy_ema = 0
     if 'max_accuracy_ema' in checkpoint:
         max_accuracy_ema = checkpoint['max_accuracy_ema']
@@ -66,9 +66,9 @@ def load_checkpoint(config, model, optimizer, lr_scheduler, scaler, logger):
                                                         check_hash=True)
     else:
         checkpoint = torch.load(config.MODEL.RESUME, map_location='cpu')
-    
+
     print('resuming model')
-    
+
     model_checkpoint = checkpoint['model']
     msg = model.load_state_dict(model_checkpoint, strict=False)
     logger.info(msg)
@@ -87,17 +87,17 @@ def load_checkpoint(config, model, optimizer, lr_scheduler, scaler, logger):
         config.TRAIN.START_EPOCH = checkpoint['epoch'] + 1
         config.freeze()
         if 'amp' in checkpoint and config.AMP_OPT_LEVEL != 'O0' and checkpoint[
-            'config'].AMP_OPT_LEVEL != 'O0':
+                'config'].AMP_OPT_LEVEL != 'O0':
             scaler.load_state_dict(checkpoint['amp'])
         logger.info(
             f"=> loaded successfully {config.MODEL.RESUME} (epoch {checkpoint['epoch']})"
         )
         if 'max_accuracy' in checkpoint:
             max_accuracy = checkpoint['max_accuracy']
-    
+
     del checkpoint
     torch.cuda.empty_cache()
-    
+
     return max_accuracy
 
 
@@ -106,13 +106,13 @@ def load_pretrained(config, model, logger):
         f'==============> Loading weight {config.MODEL.PRETRAINED} for fine-tuning......'
     )
     checkpoint = torch.load(config.MODEL.PRETRAINED, map_location='cpu')
-    
+
     state_dict = checkpoint
     if 'model' in checkpoint:
         state_dict = checkpoint['model']
     elif 'module' in checkpoint:
         state_dict = checkpoint['module']
-    
+
     first_key = list(state_dict.keys())[0]
     # delete teacher weights
     if 'student' in first_key or 'teacher' in first_key:
@@ -124,7 +124,7 @@ def load_pretrained(config, model, logger):
                 new_k = k.replace('student.', '')
                 new_state_dict[new_k] = v
         state_dict = new_state_dict
-    
+
     # weights from sim
     if 'mask_token' in first_key:
         new_state_dict = OrderedDict()
@@ -141,26 +141,26 @@ def load_pretrained(config, model, logger):
         new_state_dict['head.weight'] = state_dict['clip.classifier.weight']
         new_state_dict['head.bias'] = state_dict['clip.classifier.bias']
         state_dict = new_state_dict
-    
+
     # delete relative_position_index since we always re-init it
     relative_position_index_keys = [
         k for k in state_dict.keys() if 'relative_position_index' in k
     ]
     for k in relative_position_index_keys:
         del state_dict[k]
-    
+
     # delete relative_coords_table since we always re-init it
     relative_position_index_keys = [
         k for k in state_dict.keys() if 'relative_coords_table' in k
     ]
     for k in relative_position_index_keys:
         del state_dict[k]
-    
+
     # delete attn_mask since we always re-init it
     attn_mask_keys = [k for k in state_dict.keys() if 'attn_mask' in k]
     for k in attn_mask_keys:
         del state_dict[k]
-    
+
     # bicubic interpolate relative_position_bias_table if not match
     relative_position_bias_table_keys = [
         k for k in state_dict.keys() if 'relative_position_bias_table' in k
@@ -175,8 +175,8 @@ def load_pretrained(config, model, logger):
         else:
             if L1 != L2:
                 # bicubic interpolate relative_position_bias_table if not match
-                S1 = int(L1 ** 0.5)
-                S2 = int(L2 ** 0.5)
+                S1 = int(L1**0.5)
+                S2 = int(L2**0.5)
                 relative_position_bias_table_pretrained_resized = torch.nn.functional.interpolate(
                     relative_position_bias_table_pretrained.permute(1, 0).view(
                         1, nH1, S1, S1),
@@ -184,8 +184,8 @@ def load_pretrained(config, model, logger):
                     mode='bicubic')
                 state_dict[
                     k] = relative_position_bias_table_pretrained_resized.view(
-                    nH2, L2).permute(1, 0)
-    
+                        nH2, L2).permute(1, 0)
+
     # bicubic interpolate absolute_pos_embed if not match
     absolute_pos_embed_keys = [
         k for k in state_dict.keys() if 'absolute_pos_embed' in k
@@ -200,8 +200,8 @@ def load_pretrained(config, model, logger):
             logger.warning(f'Error in loading {k}, passing......')
         else:
             if L1 != L2:
-                S1 = int(L1 ** 0.5)
-                S2 = int(L2 ** 0.5)
+                S1 = int(L1**0.5)
+                S2 = int(L2**0.5)
                 absolute_pos_embed_pretrained = absolute_pos_embed_pretrained.reshape(
                     -1, S1, S1, C1)
                 absolute_pos_embed_pretrained = absolute_pos_embed_pretrained.permute(
@@ -215,13 +215,13 @@ def load_pretrained(config, model, logger):
                 absolute_pos_embed_pretrained_resized = absolute_pos_embed_pretrained_resized.flatten(
                     1, 2)
                 state_dict[k] = absolute_pos_embed_pretrained_resized
-    
+
     # check classifier, if not match, then re-init classifier to zero
     if 'head.bias' in state_dict:
         head_bias_pretrained = state_dict['head.bias']
         Nc1 = head_bias_pretrained.shape[0]
         Nc2 = model.head.bias.shape[0]
-        
+
         if (Nc1 != Nc2):
             if config.TRAIN.RAND_INIT_FT_HEAD:
                 model.head.weight.data = model.head.weight.data * 0.001
@@ -240,14 +240,14 @@ def load_pretrained(config, model, logger):
                     map22kto1k = f.readlines()
                 map22kto1k = [int(id22k.strip()) for id22k in map22kto1k]
                 state_dict['head.weight'] = state_dict['head.weight'][
-                                            map22kto1k, :]
+                    map22kto1k, :]
                 state_dict['head.bias'] = state_dict['head.bias'][map22kto1k]
-    
+
     msg = model.load_state_dict(state_dict, strict=False)
     logger.warning(msg)
-    
+
     logger.info(f'=> loaded successfully {config.MODEL.PRETRAINED}')
-    
+
     del checkpoint
     torch.cuda.empty_cache()
 
@@ -256,7 +256,7 @@ def convert_22k_head_to_1k(model, logger):
     head_weight = model.module.head.weight
     head_bias = model.module.head.bias
     Nc1 = head_bias.shape[0]
-    
+
     if Nc1 == 21841:
         logger.info('converting ImageNet-22K head to ImageNet-1K ......')
         map22kto1k_path = 'meta_data/map22kto1k.txt'
@@ -269,7 +269,7 @@ def convert_22k_head_to_1k(model, logger):
         model.module.head.bias = torch.nn.Parameter(head_bias[map22kto1k])
     else:
         logger.warning(f'Error in converting classifier head')
-    
+
     return model
 
 
@@ -318,7 +318,7 @@ def save_checkpoint(config,
     logger.info(f'{save_path} saving......')
     torch.save(save_state, save_path)
     logger.info(f'{save_path} saved !!!')
-    
+
     if dist.get_rank() == 0 and isinstance(epoch, int):
         to_del = epoch - config.SAVE_CKPT_NUM * config.SAVE_FREQ
         old_ckpt = os.path.join(config.OUTPUT, f'ckpt_epoch_{to_del}.pth')
@@ -334,8 +334,8 @@ def get_grad_norm(parameters, norm_type=2):
     total_norm = 0
     for p in parameters:
         param_norm = p.grad.data.norm(norm_type)
-        total_norm += param_norm.item() ** norm_type
-    total_norm = total_norm ** (1. / norm_type)
+        total_norm += param_norm.item()**norm_type
+    total_norm = total_norm**(1. / norm_type)
     return total_norm
 
 
@@ -364,10 +364,10 @@ def reduce_tensor(tensor):
 # https://github.com/facebookresearch/ConvNeXt/blob/main/utils.py
 class NativeScalerWithGradNormCount:
     state_dict_key = 'amp_scaler'
-    
+
     def __init__(self):
         self._scaler = torch.cuda.amp.GradScaler()
-    
+
     def __call__(self,
                  loss,
                  optimizer,
@@ -391,17 +391,16 @@ class NativeScalerWithGradNormCount:
         else:
             norm = None
         return norm
-    
+
     def state_dict(self):
         return self._scaler.state_dict()
-    
+
     def load_state_dict(self, state_dict):
         self._scaler.load_state_dict(state_dict)
 
 
 class MyAverageMeter(object):
     """Computes and stores the average and current value."""
-    
     def __init__(self, max_len=-1):
         self.val_list = []
         self.count = []
@@ -409,7 +408,7 @@ class MyAverageMeter(object):
         self.val = 0
         self.avg = 0
         self.var = 0
-    
+
     def update(self, val):
         self.val = val
         self.avg = 0

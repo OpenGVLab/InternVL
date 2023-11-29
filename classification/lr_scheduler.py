@@ -5,8 +5,8 @@
 # --------------------------------------------------------
 import torch
 from timm.scheduler.cosine_lr import CosineLRScheduler
-from timm.scheduler.step_lr import StepLRScheduler
 from timm.scheduler.scheduler import Scheduler
+from timm.scheduler.step_lr import StepLRScheduler
 
 
 def build_scheduler(config, optimizer, n_iter_per_epoch):
@@ -50,7 +50,6 @@ def build_scheduler(config, optimizer, n_iter_per_epoch):
 
 
 class LinearLRScheduler(Scheduler):
-
     def __init__(
         self,
         optimizer: torch.optim.Optimizer,
@@ -66,7 +65,7 @@ class LinearLRScheduler(Scheduler):
         initialize=True,
     ) -> None:
         super().__init__(optimizer,
-                         param_group_field="lr",
+                         param_group_field='lr',
                          noise_range_t=noise_range_t,
                          noise_pct=noise_pct,
                          noise_std=noise_std,

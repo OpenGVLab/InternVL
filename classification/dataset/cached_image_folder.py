@@ -4,22 +4,24 @@
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
 import io
+import json
+import logging
+import math
 import os
+import os.path as osp
 import re
 import time
-import json
-import math
+from abc import abstractmethod
+
 import mmcv
 import torch
-import logging
-import os.path as osp
+import torch.distributed as dist
+import torch.utils.data as data
+from mmcv.fileio import FileClient
 from PIL import Image
 from tqdm import tqdm, trange
-from abc import abstractmethod
-import torch.utils.data as data
-import torch.distributed as dist
-from mmcv.fileio import FileClient
-from .zipreader import is_zip_path, ZipReader
+
+from .zipreader import ZipReader, is_zip_path
 
 _logger = logging.getLogger(__name__)
 
@@ -28,6 +30,7 @@ _ERROR_RETRY = 50
 
 def has_file_allowed_extension(filename, extensions):
     """Checks if a file is an allowed extension.
+
     Args:
         filename (string): path to a file
     Returns:
@@ -65,7 +68,7 @@ def make_dataset(dir, class_to_idx, extensions):
 
 def make_dataset_with_ann(ann_file, img_prefix, extensions):
     images = []
-    with open(ann_file, "r") as f:
+    with open(ann_file, 'r') as f:
         contents = f.readlines()
         for line_str in contents:
             path_contents = [c for c in line_str.split('\t')]
@@ -80,7 +83,8 @@ def make_dataset_with_ann(ann_file, img_prefix, extensions):
 
 class DatasetFolder(data.Dataset):
     """A generic data loader where the samples are arranged in this way: ::
-        root/class_x/xxx.ext
+
+    root/class_x/xxx.ext
         root/class_x/xxy.ext
         root/class_x/xxz.ext
         root/class_y/123.ext
@@ -98,7 +102,6 @@ class DatasetFolder(data.Dataset):
      Attributes:
         samples (list): List of (sample path, class_index) tuples
     """
-
     def __init__(self,
                  root,
                  loader,
@@ -107,7 +110,7 @@ class DatasetFolder(data.Dataset):
                  img_prefix='',
                  transform=None,
                  target_transform=None,
-                 cache_mode="no"):
+                 cache_mode='no'):
         # image folder mode
         if ann_file == '':
             _, class_to_idx = find_classes(root)
@@ -119,9 +122,9 @@ class DatasetFolder(data.Dataset):
                                             extensions)
 
         if len(samples) == 0:
-            raise (RuntimeError("Found 0 files in subfolders of: " + root +
-                                "\n" + "Supported extensions are: " +
-                                ",".join(extensions)))
+            raise (RuntimeError('Found 0 files in subfolders of: ' + root +
+                                '\n' + 'Supported extensions are: ' +
+                                ','.join(extensions)))
 
         self.root = root
         self.loader = loader
@@ -135,11 +138,11 @@ class DatasetFolder(data.Dataset):
         self.target_transform = target_transform
 
         self.cache_mode = cache_mode
-        if self.cache_mode != "no":
+        if self.cache_mode != 'no':
             self.init_cache()
 
     def init_cache(self):
-        assert self.cache_mode in ["part", "full"]
+        assert self.cache_mode in ['part', 'full']
         n_sample = len(self.samples)
         global_rank = dist.get_rank()
         world_size = dist.get_world_size()
@@ -154,9 +157,9 @@ class DatasetFolder(data.Dataset):
                 )
                 start_time = time.time()
             path, target = self.samples[index]
-            if self.cache_mode == "full":
+            if self.cache_mode == 'full':
                 samples_bytes[index] = (ZipReader.read(path), target)
-            elif self.cache_mode == "part" and index % world_size == global_rank:
+            elif self.cache_mode == 'part' and index % world_size == global_rank:
                 samples_bytes[index] = (ZipReader.read(path), target)
             else:
                 samples_bytes[index] = (path, target)
@@ -235,7 +238,8 @@ def default_img_loader(path):
 
 class CachedImageFolder(DatasetFolder):
     """A generic data loader where the images are arranged in this way: ::
-        root/dog/xxx.png
+
+    root/dog/xxx.png
         root/dog/xxy.png
         root/dog/xxz.png
         root/cat/123.png
@@ -251,7 +255,6 @@ class CachedImageFolder(DatasetFolder):
      Attributes:
         imgs (list): List of (image path, class_index) tuples
     """
-
     def __init__(self,
                  root,
                  ann_file='',
@@ -259,7 +262,7 @@ class CachedImageFolder(DatasetFolder):
                  transform=None,
                  target_transform=None,
                  loader=default_img_loader,
-                 cache_mode="no"):
+                 cache_mode='no'):
         super(CachedImageFolder,
               self).__init__(root,
                              loader,
@@ -291,7 +294,6 @@ class CachedImageFolder(DatasetFolder):
 
 
 class ImageCephDataset(data.Dataset):
-
     def __init__(self,
                  root,
                  split,
@@ -337,7 +339,6 @@ class ImageCephDataset(data.Dataset):
 
 
 class Parser:
-
     def __init__(self):
         pass
 
@@ -356,7 +357,6 @@ class Parser:
 
 
 class ParserCephImage(Parser):
-
     def __init__(self,
                  root,
                  split,
@@ -393,7 +393,7 @@ class ParserCephImage(Parser):
                 local_size = int(os.environ.get('LOCAL_SIZE', 1))
             self.local_rank = local_rank
             self.local_size = local_size
-            self.rank = int(os.environ["RANK"])
+            self.rank = int(os.environ['RANK'])
             self.world_size = int(os.environ['WORLD_SIZE'])
             self.num_replicas = int(os.environ['WORLD_SIZE'])
             self.num_parts = local_size
@@ -404,7 +404,7 @@ class ParserCephImage(Parser):
             self.load_onto_memory_v2()
 
     def load_onto_memory(self):
-        print("Loading images onto memory...", self.local_rank,
+        print('Loading images onto memory...', self.local_rank,
               self.local_size)
         if self.file_client is None:
             self.file_client = FileClient(self.io_backend, **self.kwargs)
@@ -416,7 +416,7 @@ class ParserCephImage(Parser):
             img_bytes = self.file_client.get(path)
             self.holder[path] = img_bytes
 
-        print("Loading complete!")
+        print('Loading complete!')
 
     def load_onto_memory_v2(self):
         # print("Loading images onto memory...", self.local_rank, self.local_size)
@@ -445,7 +445,7 @@ class ParserCephImage(Parser):
 
             self.holder[path] = img_bytes
 
-        print("Loading complete!")
+        print('Loading complete!')
 
     def __getitem__(self, index):
         if self.file_client is None:

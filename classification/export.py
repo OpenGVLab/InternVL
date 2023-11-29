@@ -3,22 +3,27 @@
 # Copyright (c) 2023 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
+import argparse
 import os
 import time
-import argparse
 
 import torch
-from tqdm import tqdm
-
 from config import get_config
 from models import build_model
+from tqdm import tqdm
+
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model_name', type=str,
+    parser.add_argument('--model_name',
+                        type=str,
                         default='internimage_t_1k_224')
-    parser.add_argument('--ckpt_dir', type=str,
-                        default='/mnt/petrelfs/share_data/huangzhenhang/code/internimage/checkpoint_dir/new/cls')
+    parser.add_argument(
+        '--ckpt_dir',
+        type=str,
+        default=
+        '/mnt/petrelfs/share_data/huangzhenhang/code/internimage/checkpoint_dir/new/cls'
+    )
     parser.add_argument('--onnx', default=False, action='store_true')
     parser.add_argument('--trt', default=False, action='store_true')
 
@@ -30,12 +35,14 @@ def get_args():
     cfg = get_config(args)
     return args, cfg
 
+
 def get_model(args, cfg):
     model = build_model(cfg)
     ckpt = torch.load(args.ckpt, map_location='cpu')['model']
 
     model.load_state_dict(ckpt)
     return model
+
 
 def speed_test(model, input):
     # warmup
@@ -49,7 +56,8 @@ def speed_test(model, input):
         _ = model(input)
     end = time.time()
     th = 100 / (end - start)
-    print(f"using time: {end - start}, throughput {th}")
+    print(f'using time: {end - start}, throughput {th}')
+
 
 def torch2onnx(args, cfg):
     model = get_model(args, cfg).cuda()
@@ -65,6 +73,7 @@ def torch2onnx(args, cfg):
 
     return model
 
+
 def onnx2trt(args):
     from mmdeploy.backend.tensorrt import from_onnx
 
@@ -72,23 +81,21 @@ def onnx2trt(args):
     from_onnx(
         onnx_name,
         args.model_name,
-        dict(
-            input=dict(
-                min_shape=[1, 3, args.size, args.size],
-                opt_shape=[1, 3, args.size, args.size],
-                max_shape=[1, 3, args.size, args.size],
-            )
-        ),
+        dict(input=dict(
+            min_shape=[1, 3, args.size, args.size],
+            opt_shape=[1, 3, args.size, args.size],
+            max_shape=[1, 3, args.size, args.size],
+        )),
         max_workspace_size=2**30,
     )
+
 
 def check(args, cfg):
     from mmdeploy.backend.tensorrt.wrapper import TRTWrapper
 
     model = get_model(args, cfg).cuda()
     model.eval()
-    trt_model = TRTWrapper(f'{args.model_name}.engine',
-                           ['output'])
+    trt_model = TRTWrapper(f'{args.model_name}.engine', ['output'])
 
     x = torch.randn(1, 3, args.size, args.size).cuda()
 
@@ -104,6 +111,7 @@ def check(args, cfg):
     speed_test(model, x)
     speed_test(trt_model, dict(input=x))
 
+
 def main():
     args, cfg = get_args()
 
@@ -115,6 +123,7 @@ def main():
         onnx2trt(args)
         print('onnx -> trt: success')
         check(args, cfg)
+
 
 if __name__ == '__main__':
     main()

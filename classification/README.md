@@ -89,7 +89,7 @@ load data:
       │   ├── img6.jpeg
       │   └── ...
       └── ...
- 
+
   ```
 
 
@@ -99,7 +99,7 @@ To evaluate a pretrained `InternViT-6B` on ImageNet val, run:
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node <num-of-gpus-to-use> --master_port 12345 main.py --eval \
---cfg <config-file> --resume <checkpoint> --data-path <imagenet-path> 
+--cfg <config-file> --resume <checkpoint> --data-path <imagenet-path>
 ```
 
 For example, to evaluate the `InternImage-B` with a single GPU:
@@ -114,7 +114,7 @@ python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.p
 To train an `InternImage` on ImageNet from scratch, run:
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node <num-of-gpus-to-use> --master_port 12345  main.py \ 
+python -m torch.distributed.launch --nproc_per_node <num-of-gpus-to-use> --master_port 12345  main.py \
 --cfg <config-file> --data-path <imagenet-path> [--batch-size <batch-size-per-gpu> --output <output-directory> --tag <job-tag>]
 ```
 

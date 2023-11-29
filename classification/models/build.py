@@ -30,6 +30,6 @@ def build_model(config):
             head_norm_type=config.MODEL.INTERN_VIT_6B.HEAD_NORM_TYPE,
         )
     else:
-        raise NotImplementedError(f"Unkown model: {model_type}")
-    
+        raise NotImplementedError(f'Unkown model: {model_type}')
+
     return model

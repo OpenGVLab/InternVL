@@ -3,72 +3,120 @@
 # Copyright (c) 2023 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
-import os
-import time
-import random
 import argparse
 import datetime
-import numpy as np
+import os
+import random
 import subprocess
+import time
 
+import deepspeed
+import numpy as np
 import torch
 import torch.backends.cudnn as cudnn
 import torch.distributed as dist
-import deepspeed
-from timm.loss import LabelSmoothingCrossEntropy, SoftTargetCrossEntropy
-from timm.utils import accuracy, AverageMeter
-
 from config import get_config
-from models import build_model
 from dataset import build_loader
-from lr_scheduler import build_scheduler
-from optimizer import set_weight_decay_and_lr
-from logger import create_logger
-from utils import load_pretrained, reduce_tensor, MyAverageMeter
 from ddp_hooks import fp16_compress_hook
 from ema_deepspeed import EMADeepspeed
+from logger import create_logger
+from lr_scheduler import build_scheduler
+from models import build_model
+from optimizer import set_weight_decay_and_lr
+from timm.loss import LabelSmoothingCrossEntropy, SoftTargetCrossEntropy
+from timm.utils import AverageMeter, accuracy
+from utils import MyAverageMeter, load_pretrained, reduce_tensor
 
 
 def parse_option():
     parser = argparse.ArgumentParser(
         'InternImage training and evaluation script', add_help=False)
-    parser.add_argument('--cfg', type=str, required=True, metavar="FILE", help='path to config file')
-    parser.add_argument("--opts", help="Modify config options by adding 'KEY VALUE' pairs. ", default=None, nargs='+')
+    parser.add_argument('--cfg',
+                        type=str,
+                        required=True,
+                        metavar='FILE',
+                        help='path to config file')
+    parser.add_argument(
+        '--opts',
+        help="Modify config options by adding 'KEY VALUE' pairs. ",
+        default=None,
+        nargs='+')
 
     # easy config modification
-    parser.add_argument('--batch-size', type=int, help="batch size for single GPU")
-    parser.add_argument('--dataset', type=str, help='dataset name', default=None)
+    parser.add_argument('--batch-size',
+                        type=int,
+                        help='batch size for single GPU')
+    parser.add_argument('--dataset',
+                        type=str,
+                        help='dataset name',
+                        default=None)
     parser.add_argument('--data-path', type=str, help='path to dataset')
-    parser.add_argument('--zip', action='store_true', help='use zipped dataset instead of folder dataset')
-    parser.add_argument('--cache-mode', type=str, default='part', choices=['no', 'full', 'part'],
-                        help='no: no cache, '
-                             'full: cache all data, '
-                             'part: sharding the dataset into nonoverlapping pieces and only cache one piece'
-                        )
-    parser.add_argument('--pretrained',
-                        help='pretrained weight from checkpoint, could be imagenet22k pretrained weight')
+    parser.add_argument('--zip',
+                        action='store_true',
+                        help='use zipped dataset instead of folder dataset')
+    parser.add_argument(
+        '--cache-mode',
+        type=str,
+        default='part',
+        choices=['no', 'full', 'part'],
+        help='no: no cache, '
+        'full: cache all data, '
+        'part: sharding the dataset into nonoverlapping pieces and only cache one piece'
+    )
+    parser.add_argument(
+        '--pretrained',
+        help=
+        'pretrained weight from checkpoint, could be imagenet22k pretrained weight'
+    )
     parser.add_argument('--resume', help='resume from checkpoint')
-    parser.add_argument('--output', default='output', type=str, metavar='PATH',
-                        help='root of output folder, the full path is <output>/<model_name>/<tag> (default: output)'
-                        )
+    parser.add_argument(
+        '--output',
+        default='output',
+        type=str,
+        metavar='PATH',
+        help=
+        'root of output folder, the full path is <output>/<model_name>/<tag> (default: output)'
+    )
 
-    parser.add_argument('--eval', action='store_true', help='Perform evaluation only')
-    parser.add_argument('--throughput', action='store_true', help='Test throughput only')
+    parser.add_argument('--eval',
+                        action='store_true',
+                        help='Perform evaluation only')
+    parser.add_argument('--throughput',
+                        action='store_true',
+                        help='Test throughput only')
     parser.add_argument('--save-ckpt-num', default=1, type=int)
-    parser.add_argument('--accumulation-steps', type=int, default=1, help="gradient accumulation steps")
+    parser.add_argument('--accumulation-steps',
+                        type=int,
+                        default=1,
+                        help='gradient accumulation steps')
 
     # distributed training
-    parser.add_argument("--local-rank", type=int, required=True, help='local rank for DistributedDataParallel')
+    parser.add_argument('--local-rank',
+                        type=int,
+                        required=True,
+                        help='local rank for DistributedDataParallel')
 
     # deepspeed config
-    parser.add_argument('--disable-grad-scalar', action='store_true', help='disable Grad Scalar')
-    parser.add_argument('--offload-optimizer', type=str, default='none', choices=['cpu', 'none'],
+    parser.add_argument('--disable-grad-scalar',
+                        action='store_true',
+                        help='disable Grad Scalar')
+    parser.add_argument('--offload-optimizer',
+                        type=str,
+                        default='none',
+                        choices=['cpu', 'none'],
                         help='enable optimizer offloading')
-    parser.add_argument('--offload-param', type=str, default='none', choices=['cpu', 'none'],
+    parser.add_argument('--offload-param',
+                        type=str,
+                        default='none',
+                        choices=['cpu', 'none'],
                         help='enable model offloading')
     # To use Zero3, Please use main_accelerate.py instead.
     # For this script, we are facing a similar issue as https://github.com/microsoft/DeepSpeed/issues/3068
-    parser.add_argument("--zero-stage", type=int, default=1, choices=[1, 2], help='deep speed zero stage')
+    parser.add_argument('--zero-stage',
+                        type=int,
+                        default=1,
+                        choices=[1, 2],
+                        help='deep speed zero stage')
 
     args, unparsed = parser.parse_known_args()
     config = get_config(args)
@@ -86,10 +134,10 @@ def seed_everything(seed, rank):
 
 
 def save_config(config):
-    path = os.path.join(config.OUTPUT, "config.json")
-    with open(path, "w") as f:
+    path = os.path.join(config.OUTPUT, 'config.json')
+    with open(path, 'w') as f:
         f.write(config.dump())
-    logger.info(f"Full config saved to {path}")
+    logger.info(f'Full config saved to {path}')
 
 
 def build_criterion(config):
@@ -131,10 +179,10 @@ def scale_learning_rate(config, num_processes):
 def log_model_statistic(model_wo_ddp):
     n_parameters = sum(p.numel() for p in model_wo_ddp.parameters()
                        if p.requires_grad)
-    logger.info(f"number of params: {n_parameters / 1e6} M")
+    logger.info(f'number of params: {n_parameters / 1e6} M')
     if hasattr(model_wo_ddp, 'flops'):
         flops = model_wo_ddp.flops()
-        logger.info(f"number of GFLOPs: {flops / 1e9}")
+        logger.info(f'number of GFLOPs: {flops / 1e9}')
 
 
 def get_parameter_groups(model, config):
@@ -162,7 +210,9 @@ def get_parameter_groups(model, config):
 def get_optimizer_state_str(optimizer):
     states = []
     for param_group in optimizer.param_groups:
-        states.append(f'name={param_group["name"]} lr={param_group["lr"]} weight_decay={param_group["weight_decay"]}')
+        states.append(
+            f'name={param_group["name"]} lr={param_group["lr"]} weight_decay={param_group["weight_decay"]}'
+        )
     return '\n'.join(states)
 
 
@@ -170,35 +220,35 @@ def build_ds_config(config, args):
     opt_lower = config.TRAIN.OPTIMIZER.NAME.lower()
     if opt_lower == 'adamw':
         optimizer = {
-            "type": "AdamW",
-            "params": {
-                "lr": config.TRAIN.BASE_LR,
-                "eps": config.TRAIN.OPTIMIZER.EPS,
-                "betas": config.TRAIN.OPTIMIZER.BETAS,
-                "weight_decay": config.TRAIN.WEIGHT_DECAY
+            'type': 'AdamW',
+            'params': {
+                'lr': config.TRAIN.BASE_LR,
+                'eps': config.TRAIN.OPTIMIZER.EPS,
+                'betas': config.TRAIN.OPTIMIZER.BETAS,
+                'weight_decay': config.TRAIN.WEIGHT_DECAY
             }
         }
     else:
         return NotImplemented
 
     ds_config = {
-        "train_micro_batch_size_per_gpu": config.DATA.BATCH_SIZE,
-        "optimizer": optimizer,
-        "bf16": {
-            "enabled": True,
+        'train_micro_batch_size_per_gpu': config.DATA.BATCH_SIZE,
+        'optimizer': optimizer,
+        'bf16': {
+            'enabled': True,
         },
-        "zero_optimization": {
-            "stage": 1,
-            "allgather_partitions": True,
-            "allgather_bucket_size": 1e9,
-            "overlap_comm": True,
-            "reduce_scatter": True,
-            "reduce_bucket_size": 1e9,
-            "contiguous_gradients": True
+        'zero_optimization': {
+            'stage': 1,
+            'allgather_partitions': True,
+            'allgather_bucket_size': 1e9,
+            'overlap_comm': True,
+            'reduce_scatter': True,
+            'reduce_bucket_size': 1e9,
+            'contiguous_gradients': True
         },
-        "steps_per_print": 1e10,
-        "gradient_accumulation_steps": config.TRAIN.ACCUMULATION_STEPS,
-        "gradient_clipping": config.TRAIN.CLIP_GRAD,
+        'steps_per_print': 1e10,
+        'gradient_accumulation_steps': config.TRAIN.ACCUMULATION_STEPS,
+        'gradient_clipping': config.TRAIN.CLIP_GRAD,
     }
     return ds_config
 
@@ -213,19 +263,27 @@ def throughput(data_loader, model, logger):
         for i in range(50):
             model(images)
         torch.cuda.synchronize()
-        logger.info(f"throughput averaged with 30 times")
+        logger.info(f'throughput averaged with 30 times')
         tic1 = time.time()
         for i in range(30):
             model(images)
         torch.cuda.synchronize()
         tic2 = time.time()
         logger.info(
-            f"batch_size {batch_size} throughput {30 * batch_size / (tic2 - tic1)}"
+            f'batch_size {batch_size} throughput {30 * batch_size / (tic2 - tic1)}'
         )
         return
 
 
-def train_epoch(config, model, criterion, data_loader, optimizer, epoch, mixup_fn, lr_scheduler, model_ema=None):
+def train_epoch(config,
+                model,
+                criterion,
+                data_loader,
+                optimizer,
+                epoch,
+                mixup_fn,
+                lr_scheduler,
+                model_ema=None):
     model.train()
 
     num_steps = len(data_loader)
@@ -278,7 +336,9 @@ def train_epoch(config, model, criterion, data_loader, optimizer, epoch, mixup_f
                 f'mem {memory_used:.0f}MB')
 
     epoch_time = time.time() - start
-    logger.info(f"EPOCH {epoch} training takes {datetime.timedelta(seconds=int(epoch_time))}")
+    logger.info(
+        f'EPOCH {epoch} training takes {datetime.timedelta(seconds=int(epoch_time))}'
+    )
 
 
 @torch.no_grad()
@@ -329,9 +389,12 @@ def eval_epoch(config, data_loader, model, epoch=None):
                         f'Acc@5 {acc5_meter.val:.3f} ({acc5_meter.avg:.3f})\t'
                         f'Mem {memory_used:.0f}MB')
     if epoch is not None:
-        logger.info(f'[Epoch:{epoch}] * Acc@1 {acc1_meter.avg:.3f} Acc@5 {acc5_meter.avg:.3f}')
+        logger.info(
+            f'[Epoch:{epoch}] * Acc@1 {acc1_meter.avg:.3f} Acc@5 {acc5_meter.avg:.3f}'
+        )
     else:
-        logger.info(f' * Acc@1 {acc1_meter.avg:.3f} Acc@5 {acc5_meter.avg:.3f}')
+        logger.info(
+            f' * Acc@1 {acc1_meter.avg:.3f} Acc@5 {acc5_meter.avg:.3f}')
 
     return acc1_meter.avg, acc5_meter.avg, loss_meter.avg
 
@@ -339,7 +402,8 @@ def eval_epoch(config, data_loader, model, epoch=None):
 def train(config, ds_config):
     # -------------- build ---------------- #
 
-    _, dataset_val, _, data_loader_train, data_loader_val, _, mixup_fn = build_loader(config)
+    _, dataset_val, _, data_loader_train, data_loader_val, _, mixup_fn = build_loader(
+        config)
     model = build_model(config)
     model.cuda()
 
@@ -358,7 +422,7 @@ def train(config, ds_config):
         model.register_comm_hook(state=None, hook=fp16_compress_hook)
         logger.info('using fp16_compress_hook!')
     except:
-        logger.info("cannot register fp16_compress_hook!")
+        logger.info('cannot register fp16_compress_hook!')
 
     model_without_ddp = model.module
 
@@ -385,7 +449,8 @@ def train(config, ds_config):
         tag = os.path.basename(config.MODEL.RESUME)
     if config.MODEL.RESUME:
         logger.info('loading checkpoint from {}'.format(config.MODEL.RESUME))
-        _, client_state = model.load_checkpoint(load_dir=config.MODEL.RESUME, tag=tag)
+        _, client_state = model.load_checkpoint(load_dir=config.MODEL.RESUME,
+                                                tag=tag)
         logger.info(f'client_state={client_state.keys()}')
         lr_scheduler.load_state_dict(client_state['custom_lr_scheduler'])
         max_accuracy = client_state['max_accuracy']
@@ -396,18 +461,26 @@ def train(config, ds_config):
 
     # -------------- training ---------------- #
 
-    logger.info(f"Creating model:{config.MODEL.TYPE}/{config.MODEL.NAME}")
+    logger.info(f'Creating model:{config.MODEL.TYPE}/{config.MODEL.NAME}')
     logger.info(str(model))
     logger.info(get_optimizer_state_str(optimizer))
-    logger.info("Start training")
+    logger.info('Start training')
     logger.info('max_accuracy: {}'.format(max_accuracy))
     log_model_statistic(model_without_ddp)
 
     start_time = time.time()
-    start_epoch = client_state['epoch'] + 1 if 'epoch' in client_state else config.TRAIN.START_EPOCH
+    start_epoch = client_state[
+        'epoch'] + 1 if 'epoch' in client_state else config.TRAIN.START_EPOCH
     for epoch in range(start_epoch, config.TRAIN.EPOCHS):
         data_loader_train.sampler.set_epoch(epoch)
-        train_epoch(config, model, criterion, data_loader_train, optimizer, epoch, mixup_fn, lr_scheduler,
+        train_epoch(config,
+                    model,
+                    criterion,
+                    data_loader_train,
+                    optimizer,
+                    epoch,
+                    mixup_fn,
+                    lr_scheduler,
                     model_ema=model_ema)
 
         if epoch % config.SAVE_FREQ == 0 or epoch == config.TRAIN.EPOCHS - 1:
@@ -415,40 +488,56 @@ def train(config, ds_config):
                 save_dir=config.OUTPUT,
                 tag=f'epoch{epoch}',
                 client_state={
-                    'custom_lr_scheduler': lr_scheduler.state_dict(),
-                    'max_accuracy': max_accuracy,
-                    'epoch': epoch,
-                    'config': config,
-                    'max_accuracy_ema': max_accuracy_ema if model_ema is not None else 0.0,
-                    'model_ema': model_ema.state_dict() if model_ema is not None else None,
-                }
-            )
+                    'custom_lr_scheduler':
+                    lr_scheduler.state_dict(),
+                    'max_accuracy':
+                    max_accuracy,
+                    'epoch':
+                    epoch,
+                    'config':
+                    config,
+                    'max_accuracy_ema':
+                    max_accuracy_ema if model_ema is not None else 0.0,
+                    'model_ema':
+                    model_ema.state_dict() if model_ema is not None else None,
+                })
 
         if epoch % config.EVAL_FREQ == 0:
             acc1, _, _ = eval_epoch(config, data_loader_val, model, epoch)
-            logger.info(f"Accuracy of the network on the {len(dataset_val)} test images: {acc1:.1f}%")
+            logger.info(
+                f'Accuracy of the network on the {len(dataset_val)} test images: {acc1:.1f}%'
+            )
 
             if acc1 > max_accuracy:
                 model.save_checkpoint(
                     save_dir=config.OUTPUT,
                     tag='best',
                     client_state={
-                        'custom_lr_scheduler': lr_scheduler.state_dict(),
-                        'max_accuracy': max_accuracy,
-                        'epoch': epoch,
-                        'config': config,
-                        'max_accuracy_ema': max_accuracy_ema if model_ema is not None else 0.0,
-                        'model_ema': model_ema.state_dict() if model_ema is not None else None,
-                    }
-                )
+                        'custom_lr_scheduler':
+                        lr_scheduler.state_dict(),
+                        'max_accuracy':
+                        max_accuracy,
+                        'epoch':
+                        epoch,
+                        'config':
+                        config,
+                        'max_accuracy_ema':
+                        max_accuracy_ema if model_ema is not None else 0.0,
+                        'model_ema':
+                        model_ema.state_dict()
+                        if model_ema is not None else None,
+                    })
 
             max_accuracy = max(max_accuracy, acc1)
             logger.info(f'Max accuracy: {max_accuracy:.2f}%')
 
             if model_ema is not None:
                 with model_ema.activate(model):
-                    acc1_ema, _, _ = eval_epoch(config, data_loader_val, model, epoch)
-                    logger.info(f"[EMA] Accuracy of the network on the {len(dataset_val)} test images: {acc1_ema:.1f}%")
+                    acc1_ema, _, _ = eval_epoch(config, data_loader_val, model,
+                                                epoch)
+                    logger.info(
+                        f'[EMA] Accuracy of the network on the {len(dataset_val)} test images: {acc1_ema:.1f}%'
+                    )
                     max_accuracy_ema = max(max_accuracy_ema, acc1_ema)
                     logger.info(f'[EMA] Max accuracy: {max_accuracy_ema:.2f}%')
 
@@ -468,17 +557,21 @@ def eval(config):
     if config.MODEL.RESUME:
         try:
             checkpoint = torch.load(config.MODEL.RESUME, map_location='cpu')
-            msg = model_wo_ddp.load_state_dict(checkpoint['model'], strict=False)
+            msg = model_wo_ddp.load_state_dict(checkpoint['model'],
+                                               strict=False)
             logger.info(msg)
         except:
             try:
-                from deepspeed.utils.zero_to_fp32 import get_fp32_state_dict_from_zero_checkpoint
+                from deepspeed.utils.zero_to_fp32 import \
+                    get_fp32_state_dict_from_zero_checkpoint
                 ckpt_dir = os.path.dirname(config.MODEL.RESUME)
                 tag = os.path.basename(config.MODEL.RESUME)
-                state_dict = get_fp32_state_dict_from_zero_checkpoint(checkpoint_dir=ckpt_dir, tag=tag)
+                state_dict = get_fp32_state_dict_from_zero_checkpoint(
+                    checkpoint_dir=ckpt_dir, tag=tag)
                 model_wo_ddp.load_state_dict(state_dict)
             except:
-                checkpoint = torch.load(os.path.join(config.MODEL.RESUME, 'mp_rank_00_model_states.pt'),
+                checkpoint = torch.load(os.path.join(
+                    config.MODEL.RESUME, 'mp_rank_00_model_states.pt'),
                                         map_location='cpu')
                 model_wo_ddp.load_state_dict(checkpoint['module'])
     elif config.MODEL.PRETRAINED:
@@ -495,30 +588,30 @@ if __name__ == '__main__':
 
     # init distributed env
     if 'SLURM_PROCID' in os.environ:
-        print("\nDist init: SLURM")
+        print('\nDist init: SLURM')
         rank = int(os.environ['SLURM_PROCID'])
         gpu = rank % torch.cuda.device_count()
         config.defrost()
         config.LOCAL_RANK = gpu
         config.freeze()
 
-        world_size = int(os.environ["SLURM_NTASKS"])
-        if "MASTER_PORT" not in os.environ:
-            os.environ["MASTER_PORT"] = "29501"
-        node_list = os.environ["SLURM_NODELIST"]
+        world_size = int(os.environ['SLURM_NTASKS'])
+        if 'MASTER_PORT' not in os.environ:
+            os.environ['MASTER_PORT'] = '29501'
+        node_list = os.environ['SLURM_NODELIST']
         addr = subprocess.getoutput(
-            f"scontrol show hostname {node_list} | head -n1")
-        if "MASTER_ADDR" not in os.environ:
-            os.environ["MASTER_ADDR"] = addr
+            f'scontrol show hostname {node_list} | head -n1')
+        if 'MASTER_ADDR' not in os.environ:
+            os.environ['MASTER_ADDR'] = addr
 
         os.environ['RANK'] = str(rank)
         os.environ['LOCAL_RANK'] = str(gpu)
         os.environ['LOCAL_SIZE'] = str(torch.cuda.device_count())
         os.environ['WORLD_SIZE'] = str(world_size)
     if 'RANK' in os.environ and 'WORLD_SIZE' in os.environ:
-        rank = int(os.environ["RANK"])
+        rank = int(os.environ['RANK'])
         world_size = int(os.environ['WORLD_SIZE'])
-        print(f"RANK and WORLD_SIZE in environ: {rank}/{world_size}")
+        print(f'RANK and WORLD_SIZE in environ: {rank}/{world_size}')
     else:
         rank = -1
         world_size = -1
@@ -532,10 +625,11 @@ if __name__ == '__main__':
     os.makedirs(config.OUTPUT, exist_ok=True)
     logger = create_logger(output_dir=config.OUTPUT,
                            dist_rank=dist.get_rank(),
-                           name=f"{config.MODEL.NAME}")
+                           name=f'{config.MODEL.NAME}')
     logger.info(config.dump())
 
-    if dist.get_rank() == 0: save_config(config)
+    if dist.get_rank() == 0:
+        save_config(config)
     scale_learning_rate(config, dist.get_world_size())
     seed_everything(config.SEED, dist.get_rank())
 
