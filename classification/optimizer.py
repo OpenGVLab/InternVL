@@ -1,6 +1,6 @@
 # --------------------------------------------------------
 # InternVL
-# Copyright (c) 2023 OpenGVLab
+# Copyright (c) 2022 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
 
@@ -9,7 +9,9 @@ from torch.distributed.optim import ZeroRedundancyOptimizer
 
 
 def build_optimizer(config, model):
-    """Build optimizer, set weight decay of normalization to 0 by default."""
+    """
+    Build optimizer, set weight decay of normalization to 0 by default.
+    """
     skip = {}
     skip_keywords = {}
     if hasattr(model, 'no_weight_decay'):
@@ -45,10 +47,9 @@ def build_optimizer(config, model):
             optimizer = ZeroRedundancyOptimizer(
                 parameters[0]['params'],
                 optimizer_class=optim.SGD,
-                momentum=config.TRAIN.OPTIMIZER.MOMENTUM,
-                nesterov=True,
-                lr=parameters[0]['lr'],
-                weight_decay=parameters[0]['weight_decay'])
+                momentum=config.TRAIN.OPTIMIZER.MOMENTUM, nesterov=True,
+                lr=parameters[0]['lr'], weight_decay=parameters[0]['weight_decay']
+            )
             if len(parameters) > 1:
                 for param_group in parameters[1:]:
                     optimizer.add_param_group(param_group)
@@ -56,10 +57,9 @@ def build_optimizer(config, model):
             optimizer = ZeroRedundancyOptimizer(
                 parameters[0]['params'],
                 optimizer_class=optim.AdamW,
-                eps=config.TRAIN.OPTIMIZER.EPS,
-                betas=config.TRAIN.OPTIMIZER.BETAS,
-                lr=parameters[0]['lr'],
-                weight_decay=parameters[0]['weight_decay'])
+                eps=config.TRAIN.OPTIMIZER.EPS, betas=config.TRAIN.OPTIMIZER.BETAS,
+                lr=parameters[0]['lr'], weight_decay=parameters[0]['weight_decay']
+            )
             if len(parameters) > 1:
                 for param_group in parameters[1:]:
                     optimizer.add_param_group(param_group)
@@ -70,6 +70,12 @@ def build_optimizer(config, model):
                                   nesterov=True,
                                   lr=config.TRAIN.BASE_LR,
                                   weight_decay=config.TRAIN.WEIGHT_DECAY)
+        elif opt_lower == 'sgd_linear_probing':
+            optimizer = optim.SGD(parameters,
+                                  momentum=0.9,
+                                  nesterov=False,
+                                  lr=config.TRAIN.BASE_LR,
+                                  weight_decay=0)
         elif opt_lower == 'adamw':
             optimizer = optim.AdamW(parameters,
                                     eps=config.TRAIN.OPTIMIZER.EPS,
@@ -97,16 +103,16 @@ def check_keywords_in_dict(name, keywords_dict):
 
 
 def set_weight_decay_and_lr(
-    model,
-    weight_decay,
-    base_lr,
-    skip_list=(),
-    skip_keywords=(),
-    lr_layer_decay=None,
-    lr_layer_decay_ratio=None,
-    freeze_backbone=None,
-    dcn_lr_mul=None,
-    layerwise_lr=True,
+        model,
+        weight_decay,
+        base_lr,
+        skip_list=(),
+        skip_keywords=(),
+        lr_layer_decay=None,
+        lr_layer_decay_ratio=None,
+        freeze_backbone=None,
+        dcn_lr_mul=None,
+        layerwise_lr=True,
 ):
     parameters = []
     no_decay_name = []
@@ -121,8 +127,7 @@ def set_weight_decay_and_lr(
                     param.requires_grad = False
         # 1. check wd
         if len(param.shape) == 1 or name.endswith('.bias') or (
-                name in skip_list) or check_keywords_in_name(
-                    name, skip_keywords):
+                name in skip_list) or check_keywords_in_name(name, skip_keywords):
             wd = 0.
             no_decay_name.append(name)
         else:
@@ -148,12 +153,7 @@ def set_weight_decay_and_lr(
             lr_ratio_log[name] = (base_lr, ratio, wd, param.requires_grad)
         else:
             lr = base_lr
-        parameters.append({
-            'params': [param],
-            'weight_decay': wd,
-            'lr': lr,
-            'name': name
-        })
+        parameters.append({'params': [param], 'weight_decay': wd, 'lr': lr, 'name': name})
 
     print('no decay params: {no_decay_name}')
     if layerwise_lr:

@@ -1,6 +1,6 @@
 # --------------------------------------------------------
 # InternVL
-# Copyright (c) 2023 OpenGVLab
+# Copyright (c) 2022 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
 
@@ -16,15 +16,10 @@ from tqdm import tqdm
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model_name',
-                        type=str,
+    parser.add_argument('--model_name', type=str,
                         default='internimage_t_1k_224')
-    parser.add_argument(
-        '--ckpt_dir',
-        type=str,
-        default=
-        '/mnt/petrelfs/share_data/huangzhenhang/code/internimage/checkpoint_dir/new/cls'
-    )
+    parser.add_argument('--ckpt_dir', type=str,
+                        default='/mnt/petrelfs/share_data/huangzhenhang/code/internimage/checkpoint_dir/new/cls')
     parser.add_argument('--onnx', default=False, action='store_true')
     parser.add_argument('--trt', default=False, action='store_true')
 
@@ -82,12 +77,14 @@ def onnx2trt(args):
     from_onnx(
         onnx_name,
         args.model_name,
-        dict(input=dict(
-            min_shape=[1, 3, args.size, args.size],
-            opt_shape=[1, 3, args.size, args.size],
-            max_shape=[1, 3, args.size, args.size],
-        )),
-        max_workspace_size=2**30,
+        dict(
+            input=dict(
+                min_shape=[1, 3, args.size, args.size],
+                opt_shape=[1, 3, args.size, args.size],
+                max_shape=[1, 3, args.size, args.size],
+            )
+        ),
+        max_workspace_size=2 ** 30,
     )
 
 
@@ -96,7 +93,8 @@ def check(args, cfg):
 
     model = get_model(args, cfg).cuda()
     model.eval()
-    trt_model = TRTWrapper(f'{args.model_name}.engine', ['output'])
+    trt_model = TRTWrapper(f'{args.model_name}.engine',
+                           ['output'])
 
     x = torch.randn(1, 3, args.size, args.size).cuda()
 

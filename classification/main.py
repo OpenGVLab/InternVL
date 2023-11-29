@@ -53,8 +53,8 @@ def obsolete_torch_version(torch_version, version_threshold):
 
 
 def parse_option():
-    parser = argparse.ArgumentParser('InternVL training and evaluation script',
-                                     add_help=False)
+    parser = argparse.ArgumentParser(
+        'InternVL training and evaluation script', add_help=False)
     parser.add_argument('--cfg',
                         type=str,
                         required=True,
@@ -84,8 +84,8 @@ def parse_option():
         default='part',
         choices=['no', 'full', 'part'],
         help='no: no cache, '
-        'full: cache all data, '
-        'part: sharding the dataset into nonoverlapping pieces and only cache one piece'
+             'full: cache all data, '
+             'part: sharding the dataset into nonoverlapping pieces and only cache one piece'
     )
     parser.add_argument(
         '--pretrained',
@@ -275,31 +275,20 @@ def main(config):
                 filenames = dataset_val.filenames()
                 filenames = [os.path.basename(item) for item in filenames]
                 from dataset.imagenet_real import RealLabelsImagenet
-                real_labels = RealLabelsImagenet(
-                    filenames, real_json='meta_data/real.json')
-                acc1, acc5, loss = validate_real(config,
-                                                 data_loader_val,
-                                                 model,
-                                                 real_labels,
-                                                 amp_autocast=amp_autocast)
+                real_labels = RealLabelsImagenet(filenames, real_json='meta_data/real.json')
+                acc1, acc5, loss = validate_real(config, data_loader_val, model, real_labels, amp_autocast=amp_autocast)
                 logger.info(
                     f'ReaL Accuracy of the network on the {len(dataset_val)} test images: {acc1:.1f}%'
                 )
             else:
-                acc1, acc5, loss = validate(config,
-                                            data_loader_val,
-                                            model,
-                                            amp_autocast=amp_autocast)
+                acc1, acc5, loss = validate(config, data_loader_val, model, amp_autocast=amp_autocast)
                 logger.info(
                     f'Accuracy of the network on the {len(dataset_val)} test images: {acc1:.1f}%'
                 )
     elif config.MODEL.PRETRAINED:
         load_pretrained(config, model_without_ddp, logger)
         if data_loader_val is not None:
-            acc1, acc5, loss = validate(config,
-                                        data_loader_val,
-                                        model,
-                                        amp_autocast=amp_autocast)
+            acc1, acc5, loss = validate(config, data_loader_val, model, amp_autocast=amp_autocast)
             logger.info(
                 f'Accuracy of the network on the {len(dataset_val)} test images: {acc1:.1f}%'
             )
@@ -314,26 +303,18 @@ def main(config):
             load_ema_checkpoint(config, model_ema, logger)
             if config.DATA.DATASET == 'imagenet-real':
                 # assert only one gpu
-                assert dist.get_world_size(
-                ) == 1, 'imagenet-real should test with one gpu'
+                assert dist.get_world_size() == 1, 'imagenet-real should test with one gpu'
                 filenames = dataset_val.filenames()
                 filenames = [os.path.basename(item) for item in filenames]
                 from dataset.imagenet_real import RealLabelsImagenet
-                real_labels = RealLabelsImagenet(
-                    filenames, real_json='meta_data/real.json')
-                acc1, acc5, loss = validate_real(config,
-                                                 data_loader_val,
-                                                 model_ema.ema,
-                                                 real_labels,
+                real_labels = RealLabelsImagenet(filenames, real_json='meta_data/real.json')
+                acc1, acc5, loss = validate_real(config, data_loader_val, model_ema.ema, real_labels,
                                                  amp_autocast=amp_autocast)
                 logger.info(
                     f'ReaL Accuracy of the ema network on the {len(dataset_val)} test images: {acc1:.1f}%'
                 )
             else:
-                acc1, acc5, loss = validate(config,
-                                            data_loader_val,
-                                            model_ema.ema,
-                                            amp_autocast=amp_autocast)
+                acc1, acc5, loss = validate(config, data_loader_val, model_ema.ema, amp_autocast=amp_autocast)
                 logger.info(
                     f'Accuracy of the ema network on the {len(dataset_val)} test images: {acc1:.1f}%'
                 )
@@ -376,11 +357,7 @@ def main(config):
                             logger,
                             model_ema=model_ema)
         if data_loader_val is not None and epoch % config.EVAL_FREQ == 0:
-            acc1, acc5, loss = validate(config,
-                                        data_loader_val,
-                                        model,
-                                        epoch,
-                                        amp_autocast=amp_autocast)
+            acc1, acc5, loss = validate(config, data_loader_val, model, epoch, amp_autocast=amp_autocast)
             logger.info(
                 f'Accuracy of the network on the {len(dataset_val)} test images: {acc1:.1f}%'
             )
@@ -399,11 +376,8 @@ def main(config):
             logger.info(f'Max accuracy: {max_accuracy:.2f}%')
 
             if config.TRAIN.EMA.ENABLE:
-                acc1, acc5, loss = validate(config,
-                                            data_loader_val,
-                                            model_ema.ema,
-                                            epoch,
-                                            amp_autocast=amp_autocast)
+                acc1, acc5, loss = validate(config, data_loader_val,
+                                            model_ema.ema, epoch, amp_autocast=amp_autocast)
                 logger.info(
                     f'Accuracy of the ema network on the {len(dataset_val)} test images: {acc1:.1f}%'
                 )
@@ -484,8 +458,7 @@ def train_one_epoch(config,
                                         clip_grad=config.TRAIN.CLIP_GRAD,
                                         parameters=model.parameters(),
                                         create_graph=is_second_order,
-                                        update_grad=(idx + 1) %
-                                        config.TRAIN.ACCUMULATION_STEPS == 0)
+                                        update_grad=(idx + 1) % config.TRAIN.ACCUMULATION_STEPS == 0)
                 if (idx + 1) % config.TRAIN.ACCUMULATION_STEPS == 0:
                     optimizer.zero_grad()
                     if model_ema is not None:
@@ -521,8 +494,7 @@ def train_one_epoch(config,
                                         clip_grad=config.TRAIN.CLIP_GRAD,
                                         parameters=model.parameters(),
                                         create_graph=is_second_order,
-                                        update_grad=(idx + 1) %
-                                        config.TRAIN.ACCUMULATION_STEPS == 0)
+                                        update_grad=(idx + 1) % config.TRAIN.ACCUMULATION_STEPS == 0)
                 if model_ema is not None:
                     model_ema.update(model)
             else:
@@ -566,11 +538,7 @@ def train_one_epoch(config,
 
 
 @torch.no_grad()
-def validate_real(config,
-                  data_loader,
-                  model,
-                  real_labels,
-                  amp_autocast=suppress):
+def validate_real(config, data_loader, model, real_labels, amp_autocast=suppress):
     # https://github.com/baaivision/EVA/blob/master/EVA-01/eva/engine_for_finetuning.py#L195
     criterion = torch.nn.CrossEntropyLoss()
     model.eval()
@@ -585,8 +553,7 @@ def validate_real(config,
     for idx, (images, target) in enumerate(data_loader):
         images = images.cuda(non_blocking=True)
         target = target.cuda(non_blocking=True)
-        if not obsolete_torch_version(TORCH_VERSION,
-                                      (1, 9)) and config.AMP_OPT_LEVEL != 'O0':
+        if not obsolete_torch_version(TORCH_VERSION, (1, 9)) and config.AMP_OPT_LEVEL != 'O0':
             with amp_autocast(dtype=amp_type):
                 output = model(images)
         else:
@@ -630,8 +597,8 @@ def validate_real(config,
     # real labels mode replaces topk values at the end
     top1a, top5a = real_labels.get_accuracy(k=1), real_labels.get_accuracy(k=5)
 
-    print('* ReaL Acc@1 {:.3f} Acc@5 {:.3f} loss {losses:.3f}'.format(
-        top1a, top5a, losses=loss_meter.avg))
+    print('* ReaL Acc@1 {:.3f} Acc@5 {:.3f} loss {losses:.3f}'
+          .format(top1a, top5a, losses=loss_meter.avg))
 
     return top1a, top5a, loss_meter.avg
 
@@ -651,8 +618,7 @@ def validate(config, data_loader, model, epoch=None, amp_autocast=suppress):
     for idx, (images, target) in enumerate(data_loader):
         images = images.cuda(non_blocking=True)
         target = target.cuda(non_blocking=True)
-        if not obsolete_torch_version(TORCH_VERSION,
-                                      (1, 9)) and config.AMP_OPT_LEVEL != 'O0':
+        if not obsolete_torch_version(TORCH_VERSION, (1, 9)) and config.AMP_OPT_LEVEL != 'O0':
             with amp_autocast(dtype=amp_type):
                 output = model(images)
         else:
@@ -758,12 +724,9 @@ if __name__ == '__main__':
     cudnn.benchmark = True
 
     # linear scale the learning rate according to total batch size, may not be optimal
-    linear_scaled_lr = config.TRAIN.BASE_LR * \
-                       config.DATA.BATCH_SIZE * dist.get_world_size() / 512.0
-    linear_scaled_warmup_lr = config.TRAIN.WARMUP_LR * \
-                              config.DATA.BATCH_SIZE * dist.get_world_size() / 512.0
-    linear_scaled_min_lr = config.TRAIN.MIN_LR * \
-                           config.DATA.BATCH_SIZE * dist.get_world_size() / 512.0
+    linear_scaled_lr = config.TRAIN.BASE_LR * config.DATA.BATCH_SIZE * dist.get_world_size() / 512.0
+    linear_scaled_warmup_lr = config.TRAIN.WARMUP_LR * config.DATA.BATCH_SIZE * dist.get_world_size() / 512.0
+    linear_scaled_min_lr = config.TRAIN.MIN_LR * config.DATA.BATCH_SIZE * dist.get_world_size() / 512.0
     # gradient accumulation also need to scale the learning rate
     if config.TRAIN.ACCUMULATION_STEPS > 1:
         linear_scaled_lr = linear_scaled_lr * config.TRAIN.ACCUMULATION_STEPS

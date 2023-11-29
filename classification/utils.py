@@ -86,8 +86,7 @@ def load_checkpoint(config, model, optimizer, lr_scheduler, scaler, logger):
         config.defrost()
         config.TRAIN.START_EPOCH = checkpoint['epoch'] + 1
         config.freeze()
-        if 'amp' in checkpoint and config.AMP_OPT_LEVEL != 'O0' and checkpoint[
-                'config'].AMP_OPT_LEVEL != 'O0':
+        if 'amp' in checkpoint and config.AMP_OPT_LEVEL != 'O0' and checkpoint['config'].AMP_OPT_LEVEL != 'O0':
             scaler.load_state_dict(checkpoint['amp'])
         logger.info(
             f"=> loaded successfully {config.MODEL.RESUME} (epoch {checkpoint['epoch']})"
@@ -175,16 +174,13 @@ def load_pretrained(config, model, logger):
         else:
             if L1 != L2:
                 # bicubic interpolate relative_position_bias_table if not match
-                S1 = int(L1**0.5)
-                S2 = int(L2**0.5)
+                S1 = int(L1 ** 0.5)
+                S2 = int(L2 ** 0.5)
                 relative_position_bias_table_pretrained_resized = torch.nn.functional.interpolate(
-                    relative_position_bias_table_pretrained.permute(1, 0).view(
-                        1, nH1, S1, S1),
+                    relative_position_bias_table_pretrained.permute(1, 0).view(1, nH1, S1, S1),
                     size=(S2, S2),
                     mode='bicubic')
-                state_dict[
-                    k] = relative_position_bias_table_pretrained_resized.view(
-                        nH2, L2).permute(1, 0)
+                state_dict[k] = relative_position_bias_table_pretrained_resized.view(nH2, L2).permute(1, 0)
 
     # bicubic interpolate absolute_pos_embed if not match
     absolute_pos_embed_keys = [
@@ -200,20 +196,16 @@ def load_pretrained(config, model, logger):
             logger.warning(f'Error in loading {k}, passing......')
         else:
             if L1 != L2:
-                S1 = int(L1**0.5)
-                S2 = int(L2**0.5)
-                absolute_pos_embed_pretrained = absolute_pos_embed_pretrained.reshape(
-                    -1, S1, S1, C1)
-                absolute_pos_embed_pretrained = absolute_pos_embed_pretrained.permute(
-                    0, 3, 1, 2)
+                S1 = int(L1 ** 0.5)
+                S2 = int(L2 ** 0.5)
+                absolute_pos_embed_pretrained = absolute_pos_embed_pretrained.reshape(-1, S1, S1, C1)
+                absolute_pos_embed_pretrained = absolute_pos_embed_pretrained.permute(0, 3, 1, 2)
                 absolute_pos_embed_pretrained_resized = torch.nn.functional.interpolate(
                     absolute_pos_embed_pretrained,
                     size=(S2, S2),
                     mode='bicubic')
-                absolute_pos_embed_pretrained_resized = absolute_pos_embed_pretrained_resized.permute(
-                    0, 2, 3, 1)
-                absolute_pos_embed_pretrained_resized = absolute_pos_embed_pretrained_resized.flatten(
-                    1, 2)
+                absolute_pos_embed_pretrained_resized = absolute_pos_embed_pretrained_resized.permute(0, 2, 3, 1)
+                absolute_pos_embed_pretrained_resized = absolute_pos_embed_pretrained_resized.flatten(1, 2)
                 state_dict[k] = absolute_pos_embed_pretrained_resized
 
     # check classifier, if not match, then re-init classifier to zero
@@ -228,19 +220,15 @@ def load_pretrained(config, model, logger):
                 model.head.bias.data = model.head.bias.data * 0.001
                 del state_dict['head.weight']
                 del state_dict['head.bias']
-                logger.warning(
-                    f'Error in loading classifier head, re-init classifier head to 0'
-                )
+                logger.warning(f'Error in loading classifier head, re-init classifier head to 0')
             elif Nc1 == 21841 and Nc2 == 1000:
-                logger.info(
-                    'loading ImageNet-22K weight to ImageNet-1K ......')
+                logger.info('loading ImageNet-22K weight to ImageNet-1K ......')
                 map22kto1k_path = 'meta_data/map22kto1k.txt'
                 logger.info(map22kto1k_path)
                 with open(map22kto1k_path) as f:
                     map22kto1k = f.readlines()
                 map22kto1k = [int(id22k.strip()) for id22k in map22kto1k]
-                state_dict['head.weight'] = state_dict['head.weight'][
-                    map22kto1k, :]
+                state_dict['head.weight'] = state_dict['head.weight'][map22kto1k, :]
                 state_dict['head.bias'] = state_dict['head.bias'][map22kto1k]
 
     msg = model.load_state_dict(state_dict, strict=False)
@@ -264,8 +252,7 @@ def convert_22k_head_to_1k(model, logger):
         with open(map22kto1k_path) as f:
             map22kto1k = f.readlines()
         map22kto1k = [int(id22k.strip()) for id22k in map22kto1k]
-        model.module.head.weight = torch.nn.Parameter(
-            head_weight[map22kto1k, :])
+        model.module.head.weight = torch.nn.Parameter(head_weight[map22kto1k, :])
         model.module.head.bias = torch.nn.Parameter(head_bias[map22kto1k])
     else:
         logger.warning(f'Error in converting classifier head')
@@ -334,8 +321,8 @@ def get_grad_norm(parameters, norm_type=2):
     total_norm = 0
     for p in parameters:
         param_norm = p.grad.data.norm(norm_type)
-        total_norm += param_norm.item()**norm_type
-    total_norm = total_norm**(1. / norm_type)
+        total_norm += param_norm.item() ** norm_type
+    total_norm = total_norm ** (1. / norm_type)
     return total_norm
 
 
@@ -379,9 +366,7 @@ class NativeScalerWithGradNormCount:
         if update_grad:
             if clip_grad is not None:
                 assert parameters is not None
-                self._scaler.unscale_(
-                    optimizer
-                )  # unscale the gradients of optimizer's assigned params in-place
+                self._scaler.unscale_(optimizer)  # unscale the gradients of optimizer's assigned params in-place
                 norm = torch.nn.utils.clip_grad_norm_(parameters, clip_grad)
             else:
                 self._scaler.unscale_(optimizer)

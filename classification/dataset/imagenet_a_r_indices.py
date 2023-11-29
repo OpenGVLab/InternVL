@@ -1,5 +1,5 @@
-"""Code from https://github.com/baaivision/EVA/blob/master/EVA-02/asuka/imagene
-t_a_r_indices.py Thanks to the authors of EVA."""
+"""Code from https://github.com/baaivision/EVA/blob/master/EVA-02/asuka/imagenet_a_r_indices.py
+Thanks to the authors of EVA."""
 
 all_wnids = [
     'n01440764', 'n01443537', 'n01484850', 'n01491361', 'n01494475',

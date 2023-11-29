@@ -1,6 +1,6 @@
 # --------------------------------------------------------
 # InternVL
-# Copyright (c) 2023 OpenGVLab
+# Copyright (c) 2022 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
 
@@ -33,77 +33,40 @@ warnings.filterwarnings('ignore')
 
 
 def parse_option():
-    parser = argparse.ArgumentParser('InternVL training and evaluation script',
-                                     add_help=False)
-    parser.add_argument('--cfg',
-                        type=str,
-                        required=True,
-                        metavar='FILE',
-                        help='path to config file')
-    parser.add_argument(
-        '--opts',
-        help="Modify config options by adding 'KEY VALUE' pairs. ",
-        default=None,
-        nargs='+')
+    parser = argparse.ArgumentParser(
+        'InternVL training and evaluation script', add_help=False)
+    parser.add_argument('--cfg', type=str, required=True, metavar='FILE', help='path to config file')
+    parser.add_argument('--opts', help="Modify config options by adding 'KEY VALUE' pairs. ", default=None, nargs='+')
 
     # easy config modification
-    parser.add_argument('--batch-size',
-                        type=int,
-                        help='batch size for single GPU')
-    parser.add_argument('--dataset',
-                        type=str,
-                        help='dataset name',
-                        default=None)
+    parser.add_argument('--batch-size', type=int, help='batch size for single GPU')
+    parser.add_argument('--dataset', type=str, help='dataset name', default=None)
     parser.add_argument('--data-path', type=str, help='path to dataset')
-    parser.add_argument('--zip',
-                        action='store_true',
-                        help='use zipped dataset instead of folder dataset')
-    parser.add_argument(
-        '--cache-mode',
-        type=str,
-        default='part',
-        choices=['no', 'full', 'part'],
-        help='no: no cache, '
-        'full: cache all data, '
-        'part: sharding the dataset into nonoverlapping pieces and only cache one piece'
-    )
-    parser.add_argument(
-        '--pretrained',
-        help=
-        'pretrained weight from checkpoint, could be imagenet22k pretrained weight'
-    )
+    parser.add_argument('--zip', action='store_true', help='use zipped dataset instead of folder dataset')
+    parser.add_argument('--cache-mode', type=str, default='part', choices=['no', 'full', 'part'],
+                        help='no: no cache, '
+                        'full: cache all data, '
+                        'part: sharding the dataset into nonoverlapping pieces and only cache one piece'
+                        )
+    parser.add_argument('--pretrained', help='pretrained weight from checkpoint, could be imagenet22k pretrained weight')
     parser.add_argument('--resume', help='resume from checkpoint')
-    parser.add_argument(
-        '--output',
-        default='output',
-        type=str,
-        metavar='PATH',
-        help=
-        'root of output folder, the full path is <output>/<model_name>/<tag> (default: output)'
-    )
-    parser.add_argument('--eval',
-                        action='store_true',
-                        help='Perform evaluation only')
-    parser.add_argument('--throughput',
-                        action='store_true',
-                        help='Test throughput only')
+    parser.add_argument('--output', default='output', type=str, metavar='PATH',
+                        help='root of output folder, the full path is <output>/<model_name>/<tag> (default: output)'
+                        )
+    parser.add_argument('--eval', action='store_true', help='Perform evaluation only')
+    parser.add_argument('--throughput', action='store_true', help='Test throughput only')
     parser.add_argument('--save-ckpt-num', default=1, type=int)
-    parser.add_argument('--accumulation-steps',
-                        type=int,
-                        default=1,
-                        help='gradient accumulation steps')
-    parser.add_argument('--disable-grad-scalar',
-                        action='store_true',
-                        help='disable Grad Scalar')
+    parser.add_argument('--accumulation-steps', type=int, default=1, help='gradient accumulation steps')
+    parser.add_argument('--disable-grad-scalar', action='store_true', help='disable Grad Scalar')
     parser.add_argument(
         '--logger',
         type=str,
         default='tensorboard',
         choices=['tensorboard', 'wandb'],
-        help=
-        ('Whether to use [tensorboard](https://www.tensorflow.org/tensorboard) or [wandb](https://www.wandb.ai)'
-         ' for experiment tracking and logging of model metrics and model checkpoints'
-         ),
+        help=(
+            'Whether to use [tensorboard](https://www.tensorflow.org/tensorboard) or [wandb](https://www.wandb.ai)'
+            ' for experiment tracking and logging of model metrics and model checkpoints'
+        ),
     )
 
     args, unparsed = parser.parse_known_args()
@@ -171,32 +134,24 @@ def scale_learning_rate(config, num_processes):
 def setup_autoresume(config):
     if config.MODEL.RESUME == '' and config.TRAIN.AUTO_RESUME:
         last_checkpoint = os.path.join(config.OUTPUT, 'last')
-        resume_file = last_checkpoint if os.path.exists(
-            last_checkpoint) else None
+        resume_file = last_checkpoint if os.path.exists(last_checkpoint) else None
 
         if resume_file:
             if config.MODEL.RESUME:
-                logger.warning(
-                    f'auto-resume changing resume file from {config.MODEL.RESUME} to {resume_file}'
-                )
+                logger.warning(f'auto-resume changing resume file from {config.MODEL.RESUME} to {resume_file}')
             config.defrost()
             config.MODEL.RESUME = resume_file
             config.freeze()
             logger.info(f'auto resuming from {resume_file}')
         else:
-            logger.info(
-                f'no checkpoint found in {config.OUTPUT}, ignoring auto resume'
-            )
+            logger.info(f'no checkpoint found in {config.OUTPUT}, ignoring auto resume')
 
 
 def load_model_checkpoint(config, model, accelerator):
     if config.MODEL.RESUME:
         try:
             checkpoint = torch.load(config.MODEL.RESUME)['model']
-            checkpoint = {
-                k.replace('module.', ''): v
-                for k, v in checkpoint.items()
-            }
+            checkpoint = {k.replace('module.', ''): v for k, v in checkpoint.items()}
             model.load_state_dict(checkpoint)
         except:
             accelerator.load_state(config.MODEL.RESUME)
@@ -208,12 +163,7 @@ def load_model_checkpoint(config, model, accelerator):
     return model
 
 
-def save_checkpoint(save_dir,
-                    accelerator,
-                    epoch,
-                    max_acc,
-                    config,
-                    lr_scheduler=None):
+def save_checkpoint(save_dir, accelerator, epoch, max_acc, config, lr_scheduler=None):
     # let accelerator handle the model and optimizer state for ddp and deepspeed.
     accelerator.save_state(save_dir)
 
@@ -233,8 +183,7 @@ def load_checkpoint_if_needed(accelerator, config, lr_scheduler=None):
     if not save_dir:
         return 0.0
     accelerator.load_state(save_dir)
-    checkpoint = torch.load(os.path.join(save_dir, 'additional_state.pth'),
-                            map_location='cpu')
+    checkpoint = torch.load(os.path.join(save_dir, 'additional_state.pth'), map_location='cpu')
     if lr_scheduler is not None:
         logger.info('resuming lr_scheduler')
         lr_scheduler.load_state_dict(checkpoint['lr_scheduler'])
@@ -242,9 +191,7 @@ def load_checkpoint_if_needed(accelerator, config, lr_scheduler=None):
     config.TRAIN.START_EPOCH = checkpoint['epoch'] + 1
     config.freeze()
     max_acc = checkpoint.get('max_acc', 0.0)
-    logger.info(
-        f"=> loaded successfully {config.MODEL.RESUME} (epoch {checkpoint['epoch']})"
-    )
+    logger.info(f"=> loaded successfully {config.MODEL.RESUME} (epoch {checkpoint['epoch']})")
     return max_acc
 
 
@@ -257,8 +204,8 @@ def log_model_statistic(model_wo_ddp):
         logger.info(f'number of GFLOPs: {flops / 1e9}')
 
 
-def train_epoch(*, model, optimizer, data_loader, scheduler, criterion,
-                mixup_fn, accelerator: Accelerator, epoch, config):
+def train_epoch(*, model, optimizer, data_loader, scheduler, criterion, mixup_fn,
+                accelerator: Accelerator, epoch, config):
     model.train()
 
     num_steps = len(data_loader)
@@ -281,8 +228,7 @@ def train_epoch(*, model, optimizer, data_loader, scheduler, criterion,
             loss = criterion(outputs, targets)
             accelerator.backward(loss)
             if accelerator.sync_gradients:
-                accelerator.clip_grad_norm_(model.parameters(),
-                                            config.TRAIN.CLIP_GRAD)
+                accelerator.clip_grad_norm_(model.parameters(), config.TRAIN.CLIP_GRAD)
             optimizer.step()
             optimizer.zero_grad()
 
@@ -290,8 +236,7 @@ def train_epoch(*, model, optimizer, data_loader, scheduler, criterion,
 
         if (step + 1) % gradient_accumulation_steps == 0:
             if scheduler is not None:
-                scheduler.step_update(
-                    (epoch * num_steps + step) // gradient_accumulation_steps)
+                scheduler.step_update((epoch * num_steps + step) // gradient_accumulation_steps)
 
             batch_time.update(time.time() - end)
             model_time.update(time.time() - iter_begin_time)
@@ -319,8 +264,7 @@ def eval_epoch(*, config, data_loader, model, accelerator: Accelerator):
     acc1_meter = AverageMeter()
     acc5_meter = AverageMeter()
 
-    for idx, (images, target) in enumerate(
-            tqdm(data_loader, disable=accelerator.is_main_process)):
+    for idx, (images, target) in enumerate(tqdm(data_loader, disable=accelerator.is_main_process)):
         output = model(images)
 
         # convert 22k to 1k to evaluate
@@ -340,26 +284,22 @@ def eval_epoch(*, config, data_loader, model, accelerator: Accelerator):
         if (idx + 1) % config.PRINT_FREQ == 0 or idx + 1 == len(data_loader):
             logger.info(f'Test: [{idx+1}/{len(data_loader)}]\t'
                         f'Acc@1 {acc1_meter.val:.3f} ({acc1_meter.avg:.3f})\t'
-                        f'Acc@5 {acc5_meter.val:.3f} ({acc5_meter.avg:.3f})\t')
+                        f'Acc@5 {acc5_meter.val:.3f} ({acc5_meter.avg:.3f})\t'
+                        )
     return acc1_meter.avg
 
 
 def eval(config, accelerator: Accelerator):
     _, _, _, _, validate_dataloader, _, _ = build_loader2(config)
     model = build_model(config)
-    model, validate_dataloader = accelerator.prepare(model,
-                                                     validate_dataloader)
+    model, validate_dataloader = accelerator.prepare(model, validate_dataloader)
     model = load_model_checkpoint(config, model, accelerator)
     log_model_statistic(accelerator.unwrap_model(model))
-    eval_epoch(config=config,
-               data_loader=validate_dataloader,
-               model=model,
-               accelerator=accelerator)
+    eval_epoch(config=config, data_loader=validate_dataloader, model=model, accelerator=accelerator)
 
 
 def train(config, accelerator: Accelerator):
-    _, _, _, training_dataloader, validate_dataloader, _, mixup_fn = build_loader2(
-        config)
+    _, _, _, training_dataloader, validate_dataloader, _, mixup_fn = build_loader2(config)
     model = build_model(config)
     optimizer = build_optimizer(config, model)
     criterion = build_criterion(config)
@@ -367,10 +307,8 @@ def train(config, accelerator: Accelerator):
     model, optimizer, training_dataloader, validate_dataloader = accelerator.prepare(
         model, optimizer, training_dataloader, validate_dataloader)
 
-    effective_update_steps_per_epoch = len(
-        training_dataloader) // config.TRAIN.ACCUMULATION_STEPS
-    lr_scheduler = build_scheduler(config, optimizer,
-                                   effective_update_steps_per_epoch)
+    effective_update_steps_per_epoch = len(training_dataloader) // config.TRAIN.ACCUMULATION_STEPS
+    lr_scheduler = build_scheduler(config, optimizer, effective_update_steps_per_epoch)
 
     try:
         model.register_comm_hook(state=None, hook=fp16_compress_hook)
@@ -382,35 +320,24 @@ def train(config, accelerator: Accelerator):
 
     logger.info(f'Created model:{config.MODEL.TYPE}/{config.MODEL.NAME}')
     logger.info(str(model))
-    logger.info('Effective Optimizer Steps: {}'.format(
-        effective_update_steps_per_epoch))
+    logger.info('Effective Optimizer Steps: {}'.format(effective_update_steps_per_epoch))
     logger.info('Start training')
     logger.info('Max accuracy: {}'.format(max_acc))
     log_model_statistic(accelerator.unwrap_model(model))
 
     for epoch in range(config.TRAIN.START_EPOCH, config.TRAIN.EPOCHS):
-        train_epoch(model=model,
-                    optimizer=optimizer,
-                    data_loader=training_dataloader,
-                    scheduler=lr_scheduler,
-                    criterion=criterion,
-                    mixup_fn=mixup_fn,
-                    accelerator=accelerator,
-                    epoch=epoch,
-                    config=config)
-        acc = eval_epoch(config=config,
-                         data_loader=validate_dataloader,
-                         model=model,
+        train_epoch(model=model, optimizer=optimizer, data_loader=training_dataloader,
+                    scheduler=lr_scheduler, criterion=criterion, mixup_fn=mixup_fn,
+                    accelerator=accelerator, epoch=epoch, config=config)
+        acc = eval_epoch(config=config, data_loader=validate_dataloader, model=model,
                          accelerator=accelerator)
 
         accelerator.wait_for_everyone()
         if acc > max_acc:
             max_acc = acc
-            save_checkpoint(os.path.join(config.OUTPUT, 'best'), accelerator,
-                            epoch, max_acc, config, lr_scheduler)
+            save_checkpoint(os.path.join(config.OUTPUT, 'best'), accelerator, epoch, max_acc, config, lr_scheduler)
         logger.info(f'Max Acc@1 {max_acc:.3f}')
-        save_checkpoint(os.path.join(config.OUTPUT, 'last'), accelerator,
-                        epoch, max_acc, config, lr_scheduler)
+        save_checkpoint(os.path.join(config.OUTPUT, 'last'), accelerator, epoch, max_acc, config, lr_scheduler)
 
 
 def main():
@@ -430,9 +357,7 @@ def main():
         gradient_accumulation_steps=config.TRAIN.ACCUMULATION_STEPS,
         # When use deepspeed, you could not comment this out
         # even if you set loss scale to 1.0 in deepspeed config.
-        kwargs_handlers=[
-            GradScalerKwargs(enabled=not args.disable_grad_scalar)
-        ],
+        kwargs_handlers=[GradScalerKwargs(enabled=not args.disable_grad_scalar)],
     )
     logger.info(accelerator.state, main_process_only=False)
 
