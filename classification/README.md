@@ -6,12 +6,8 @@ This folder contains the implementation of the InternViT-6B for image classifica
 
 - [Install](#install)
 - [Data Preparation](#data-preparation)
-- [Evaluation](#evaluation)
-- [Training from Scratch on ImageNet-1K](#training-from-scratch-on-imagenet-1k)
-- [Manage Jobs with Slurm.](#manage-jobs-with-slurm)
-- [Training with Deepspeed](#training-with-deepspeed)
-- [Extracting Intermediate Features](#extracting-intermediate-features)
-- [Export](#export)
+- [Linear Probing on ImageNet-1K](#linear-probing-on-imagenet-1k)
+- [Evaluation](#evaluaton)
 
 <!-- TOC -->
 
