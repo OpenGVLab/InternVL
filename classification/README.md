@@ -130,3 +130,25 @@ Accuracy of the network on the 50000 test images: 88.2%
 </details>
 
 
+
+<details>
+  <summary>Evaluate InternViT-6B on <b>ImageNet-ReaL val</b> with 1 GPU (click to expand).</summary>
+
+
+```bash
+python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.py --eval \
+    --cfg configs/intern_vit_6b_1k_224_test_imagenet_real.yaml --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-1k
+# or manage jobs with slurm
+GPUS=1 GPUS_PER_NODE=1 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenet_real.yaml --eval \
+    --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-1k --launcher slurm
+```
+
+Expected results:
+
+```
+* ReaL Acc@1 90.377 Acc@5 98.557 loss 0.596
+ReaL Accuracy of the network on the 50000 test images: 90.4%
+```
+
+</details>
+
