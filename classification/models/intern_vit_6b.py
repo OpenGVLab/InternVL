@@ -390,8 +390,8 @@ class InternViT6B(nn.Module):
         else:
             raise NotImplementedError
 
-        # self.head.weight.data.normal_(mean=0.0, std=0.01)
-        # self.head.bias.data.zero_()
+        self.head.weight.data.normal_(mean=0.0, std=0.01)
+        self.head.bias.data.zero_()
 
     def init_weights(self, pretrained=None):
         print(f'pretrained: {pretrained}')
@@ -418,15 +418,7 @@ class InternViT6B(nn.Module):
             checkpoint['patch_embed.proj.weight'] = F.interpolate(
                 patch_embed, size=(self.patch_size, self.patch_size),
                 mode='bicubic', align_corners=False)
-            # filter useless keys
-            new_ckpt = dict()
-            skip_keys = ['clip.', 'bamboo', 'text_projection', 'predictor',
-                         'loss_weight', 'decoder', 'target_pos_embed', 'mask_token', 'grad_norm', 'norm3']
-            for k, v in checkpoint.items():
-                if any(x in k for x in skip_keys):
-                    continue
-                new_ckpt[k] = v
-            message = self.load_state_dict(new_ckpt, strict=False)
+            message = self.load_state_dict(checkpoint, strict=False)
             print(message)
 
     @property

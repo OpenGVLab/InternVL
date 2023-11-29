@@ -342,11 +342,9 @@ def main(config):
                         amp_autocast,
                         loss_scaler,
                         model_ema=model_ema)
-        if (epoch % config.SAVE_FREQ == 0 or epoch == (config.TRAIN.EPOCHS - 1)) and \
-                config.TRAIN.OPTIMIZER.USE_ZERO:
+        if (epoch % config.SAVE_FREQ == 0 or epoch == (config.TRAIN.EPOCHS - 1)) and config.TRAIN.OPTIMIZER.USE_ZERO:
             optimizer.consolidate_state_dict(to=0)
-        if dist.get_rank() == 0 and (epoch % config.SAVE_FREQ == 0
-                                     or epoch == (config.TRAIN.EPOCHS - 1)):
+        if dist.get_rank() == 0 and (epoch % config.SAVE_FREQ == 0 or epoch == (config.TRAIN.EPOCHS - 1)):
             save_checkpoint(config,
                             epoch,
                             model_without_ddp,
@@ -451,8 +449,7 @@ def train_one_epoch(config,
                     loss = criterion(outputs, targets)
                     loss = loss / config.TRAIN.ACCUMULATION_STEPS
             if config.AMP_OPT_LEVEL != 'O0':
-                is_second_order = hasattr(optimizer, 'is_second_order') and \
-                                  optimizer.is_second_order
+                is_second_order = hasattr(optimizer, 'is_second_order') and optimizer.is_second_order
                 grad_norm = loss_scaler(loss,
                                         optimizer,
                                         clip_grad=config.TRAIN.CLIP_GRAD,
@@ -487,8 +484,7 @@ def train_one_epoch(config,
                     loss = criterion(outputs, targets)
             optimizer.zero_grad()
             if config.AMP_OPT_LEVEL != 'O0':
-                is_second_order = hasattr(optimizer, 'is_second_order') and \
-                                  optimizer.is_second_order
+                is_second_order = hasattr(optimizer, 'is_second_order') and optimizer.is_second_order
                 grad_norm = loss_scaler(loss,
                                         optimizer,
                                         clip_grad=config.TRAIN.CLIP_GRAD,
