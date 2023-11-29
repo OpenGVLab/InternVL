@@ -20,32 +20,30 @@ This folder contains the implementation of the InternViT-6B for image classifica
 - Clone this repo:
 
 ```bash
-git clone https://github.com/OpenGVLab/InternImage.git
-cd InternImage
+git clone https://github.com/OpenGVLab/InternVL.git
+cd InternVeL/classification
 ```
 
 - Create a conda virtual environment and activate it:
 
 ```bash
-conda create -n internimage python=3.7 -y
-conda activate internimage
+conda create -n internvl python=3.9 -y
+conda activate internvl
 ```
 
-- Install `CUDA>=10.2` with `cudnn>=7` following
-  the [official installation instructions](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html)
-- Install `PyTorch>=1.10.0` and `torchvision>=0.9.0` with `CUDA>=10.2`:
+- Install `PyTorch>=2.0` and `torchvision>=0.15.2` with `CUDA>=11.6`:
 
-For examples, to install torch==1.11 with CUDA==11.3:
+For examples, to install torch==2.0.1 with CUDA==11.8:
 ```bash
-pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113  -f https://download.pytorch.org/whl/torch_stable.html
+conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.8 -c pytorch -c nvidia
+# or
+pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
 ```
 
-- Install `timm==0.6.11` and `mmcv-full==1.5.0`:
+- Install `timm==0.6.11`:
 
 ```bash
-pip install -U openmim
-mim install mmcv-full==1.5.0
-pip install timm==0.6.11 mmdet==2.28.1
+pip install timm==0.6.11
 ```
 
 - Install other requirements:
@@ -54,15 +52,6 @@ pip install timm==0.6.11 mmdet==2.28.1
 pip install opencv-python termcolor yacs pyyaml scipy
 ```
 
-- Compiling CUDA operators
-```bash
-cd ./ops_dcnv3
-sh ./make.sh
-# unit test (should see all checking is True)
-python test.py
-```
-- You can also install the operator using .whl files
-[DCNv3-1.0-whl](https://github.com/OpenGVLab/InternImage/releases/tag/whl_files)
 ### Data Preparation
 
 We use standard ImageNet dataset, you can download it from http://image-net.org/. We provide the following two ways to
