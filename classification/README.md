@@ -159,7 +159,7 @@ ReaL Accuracy of the network on the 50000 test images: 90.4%
 
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.py --eval \
+python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
     --cfg configs/intern_vit_6b_1k_224_test_imagenetv2.yaml --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenetv2
 # or manage jobs with slurm
 GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenetv2.yaml --eval \
@@ -180,7 +180,7 @@ Accuracy of the network on the 10000 test images: 80.0%
 
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.py --eval \
+python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
     --cfg configs/intern_vit_6b_1k_224_test_imagenet_a.yaml --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-a
 # or manage jobs with slurm
 GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenet_a.yaml --eval \
@@ -202,7 +202,7 @@ Accuracy of the network on the 7500 test images: 77.4%
 
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.py --eval \
+python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
     --cfg configs/intern_vit_6b_1k_224_test_imagenet_r.yaml --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-r
 # or manage jobs with slurm
 GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenet_r.yaml --eval \
@@ -212,7 +212,8 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test
 Expected results:
 
 ```
-
+ * Acc@1 89.797 Acc@5 97.017
+Accuracy of the network on the 30000 test images: 89.8%
 ```
 
 </details>
@@ -224,7 +225,7 @@ Expected results:
 
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.py --eval \
+python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
     --cfg configs/intern_vit_6b_1k_224_test_imagenet_sketch.yaml --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-sketch
 # or manage jobs with slurm
 GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenet_sketch.yaml --eval \
@@ -234,7 +235,8 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test
 Expected results:
 
 ```
-
+ * Acc@1 68.939 Acc@5 88.317
+Accuracy of the network on the 50889 test images: 68.9%
 ```
 
 </details>
