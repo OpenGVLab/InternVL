@@ -152,3 +152,26 @@ ReaL Accuracy of the network on the 50000 test images: 90.4%
 
 </details>
 
+
+
+<details>
+  <summary>Evaluate InternViT-6B on <b>ImageNetV2</b> with 1 GPU (click to expand).</summary>
+
+
+```bash
+python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.py --eval \
+    --cfg configs/intern_vit_6b_1k_224_test_imagenetv2.yaml --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenetv2
+# or manage jobs with slurm
+GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenetv2.yaml --eval \
+    --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenetv2 --launcher slurm
+```
+
+Expected results:
+
+```
+ * Acc@1 79.960 Acc@5 95.300
+Accuracy of the network on the 10000 test images: 80.0%
+```
+
+</details>
+
