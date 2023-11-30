@@ -39,7 +39,7 @@ Our segmentation code is developed on top of [MMSegmentation v0.30.0](https://gi
   pip install opencv-python
   ```
 
-- Install `timm==0.6.11` and `mmcv==1.6.2` and \`mmsegmentation==0.30.0':
+- Install `timm==0.6.11` and `mmcv==1.6.2` and `mmsegmentation==0.30.0`:
 
   ```bash
   pip install -U openmim
