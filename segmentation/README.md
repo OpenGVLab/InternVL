@@ -73,7 +73,7 @@ GPUS=8 sh slurm_train.sh <partition> <job-name> configs/intern_vit_6b/linear_pro
 
 ## 📊 Evaluation
 
-You can download checkpoints from [here](./). Then place it to `segmentation/checkpoints`.
+You can download checkpoints from [here](https://github.com/OpenGVLab/InternVL/releases/tag/segmentation). Then place them to `segmentation/checkpoints/`.
 
 For example, to evaluate the `InternViT-6B` with a single GPU:
 
@@ -89,8 +89,8 @@ sh dist_test.sh configs/intern_vit_6b/linear_probing/linear_intern_vit_6b_504_80
 
 ## 🖼️ Image Demo
 
-To inference a single/multiple image like this.
-If you specify image containing directory instead of a single image, it will process all the images in the directory.:
+To infer a single/multiple image like this.
+If you specify a directory instead of a single image, it will process all the images in the directory:
 
 ```
 CUDA_VISIBLE_DEVICES=0 python image_demo.py \
