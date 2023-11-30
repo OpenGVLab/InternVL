@@ -11,7 +11,7 @@ This folder contains the implementation of the InternViT-6B for image classifica
 
 <!-- TOC -->
 
-## Install
+## 🛠️ Install
 
 - Clone this repository:
 
@@ -59,13 +59,14 @@ pip install -v --disable-pip-version-check --no-cache-dir --no-build-isolation -
 pip install opencv-python termcolor yacs pyyaml scipy
 ```
 
-## Data Preparation
+## 📦 Data Preparation
 
 - `ImageNet-1K`: We use the standard ImageNet dataset, you can download it from [http://image-net.org/](http://image-net.org/).
 - `ImageNet-A`: Download it from [https://people.eecs.berkeley.edu/~hendrycks/imagenet-a.tar](https://people.eecs.berkeley.edu/~hendrycks/imagenet-a.tar).
 - `ImageNet-R`: Download it from [https://people.eecs.berkeley.edu/~hendrycks/imagenet-r.tar](https://people.eecs.berkeley.edu/~hendrycks/imagenet-r.tar).
 - `ImageNetV2`: Download it from [https://imagenetv2public.s3-us-west-2.amazonaws.com/imagenetv2-matched-frequency.tar.gz](https://imagenetv2public.s3-us-west-2.amazonaws.com/imagenetv2-matched-frequency.tar.gz).
 - `ImageNet-Sketch`: Download it using `gdown`.
+  
   ```shell
   # GDown is needed to download the dataset. Please install it via `pip install gdown`
   gdown --id 1Mj0i5HBthqH1p_yeXzsg22gZduvgoNeA
@@ -96,7 +97,7 @@ data
     └── ImageNetV2-matched-frequency
 ```
 
-## Linear Probing on ImageNet-1K
+## 🔍 Linear Probing on ImageNet-1K
 
 To train a linear classifier for `InternViT-6b` on ImageNet with 8 GPUs, run:
 
@@ -107,7 +108,7 @@ python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.p
 GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224.yaml --launcher slurm
 ```
 
-## Evaluation
+## 📊 Evaluation
 
 | model name                  | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |                              download                               |
 | --------------------------- | :---: | :-----: | :---: | :--: | :--: | :-------: | :-----------------------------------------------------------------: |
