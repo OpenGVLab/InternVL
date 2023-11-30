@@ -126,7 +126,7 @@ Accuracy of the network on the 50000 test images: 88.2%
 </details>
 
 <details>
-  <summary>Evaluate InternViT-6B on <b>ImageNet-ReaL val</b> with 1 GPU (click to expand).</summary>
+  <summary>Evaluate InternViT-6B on <b>ImageNet-ReaL</b> with 1 GPU (click to expand).</summary>
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.py --eval \
