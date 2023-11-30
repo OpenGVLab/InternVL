@@ -2,15 +2,6 @@
 
 This folder contains the implementation of the InternViT-6B for image classification.
 
-<!-- TOC -->
-
-- [Install](#install)
-- [Data Preparation](#data-preparation)
-- [Linear Probing on ImageNet-1K](#linear-probing-on-imagenet-1k)
-- [Evaluation](#evaluation)
-
-<!-- TOC -->
-
 ## 🛠️ Install
 
 - Clone this repository:
