@@ -61,7 +61,7 @@ Prepare datasets according to the [guidelines](https://github.com/open-mmlab/mms
 
 ## 🔥 Training
 
-> Please note, this open-source code does not include DeepSpeed, so it currently only supports training for linear probing and head tuning, and does not support full-parameter training.
+> Please note, this open-source code does not include DeepSpeed in MMSegmentation, so it currently only supports training for linear probing and head tuning, and does not support full-parameter training.
 
 To train a linear classifier for `InternViT-6B` with 8 GPU on 1 node (total batch size 16), run:
 
