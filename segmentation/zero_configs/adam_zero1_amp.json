@@ -1,0 +1,18 @@
+{
+  "train_batch_size": 16,
+  "gradient_accumulation_steps": 1,
+  "optimizer": {
+    "type": "AdamW",
+    "params": {
+      "lr": 0.00004
+    }
+  },
+  "amp": {
+    "enabled": true,
+    "opt_level": "O1"
+  },
+  "log": {
+    "steps_per_print": 50
+  },
+  "wall_clock_breakdown": false
+}
