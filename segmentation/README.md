@@ -57,7 +57,7 @@ Our segmentation code is developed on top of [MMSegmentation v0.30.0](https://gi
 
 ## 📦 Data Preparation
 
-Prepare datasets according to the [guidelines](https://github.com/open-mmlab/mmsegmentation/blob/master/docs/en/dataset_prepare.md#prepare-datasets) in MMSegmentation.
+Prepare the ADE20K dataset according to the [guidelines](https://github.com/open-mmlab/mmsegmentation/blob/master/docs/en/dataset_prepare.md#prepare-datasets) in MMSegmentation.
 
 ## 🔥 Training
 
