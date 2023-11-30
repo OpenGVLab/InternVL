@@ -1,0 +1,5 @@
+[flake8]
+ignore = E501, F403, C901, W504, W605, E251, E122, E126, E127, E722, W503, E128, E741
+select = E1, E3, E502, E7, E9, W1, W5, W6
+max-line-length = 180
+exclude=*.egg/*,build,dist,detection/configs/*

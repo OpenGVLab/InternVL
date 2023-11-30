@@ -1,0 +1,32 @@
+{
+  "train_batch_size": 16,
+  "gradient_accumulation_steps": 1,
+  "optimizer": {
+    "type": "ZeroOneAdam",
+    "params": {
+      "lr": 1e-3,
+      "weight_decay": 0.01,
+      "bias_correction": false,
+      "var_freeze_step": 1000,
+      "var_update_scaler": 16,
+      "local_step_scaler": 1000,
+      "local_step_clipper": 16,
+      "cuda_aware": false,
+      "comm_backend_name": "nccl"
+    }
+  },
+  "fp16": {
+    "enabled": true
+  },
+  "zero_optimization": {
+    "stage": 3,
+    "contiguous_gradients": true,
+    "stage3_max_live_parameters": 1e9,
+    "stage3_max_reuse_distance": 1e9,
+    "stage3_prefetch_bucket_size": 1e7,
+    "stage3_param_persistence_threshold": 1e5,
+    "reduce_bucket_size": 1e7,
+    "sub_group_size": 1e9
+  },
+  "steps_per_print": 50
+}

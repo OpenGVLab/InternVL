@@ -1,0 +1,25 @@
+{
+  "train_batch_size": 16,
+  "gradient_accumulation_steps": 1,
+  "optimizer": {
+    "type": "AdamW",
+    "params": {
+      "lr": 0.00004
+    }
+  },
+  "fp16": {
+    "enabled": true
+  },
+  "zero_optimization": {
+    "stage": 2,
+    "allgather_partitions": true,
+    "allgather_bucket_size": 1e9,
+    "overlap_comm": true,
+    "reduce_scatter": true,
+    "reduce_bucket_size": 1e9,
+    "contiguous_gradients": true
+  },
+  "log": {
+    "steps_per_print": 50
+  }
+}

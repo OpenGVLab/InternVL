@@ -1,0 +1,21 @@
+{
+  "train_batch_size": 16,
+  "gradient_accumulation_steps": 1,
+  "optimizer": {
+    "type": "Adam",
+    "params": {
+      "lr": 0.00004
+    }
+  },
+  "bf16": {
+    "enabled": true
+  },
+  "zero_optimization": {
+    "stage": 1,
+    "reduce_bucket_size": 5e8,
+    "overlap_comm": true
+  },
+  "log": {
+    "steps_per_print": 50
+  }
+}
