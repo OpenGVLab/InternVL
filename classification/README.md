@@ -96,26 +96,26 @@ To train a linear classifier for `InternViT-6b` on ImageNet with 8 GPUs, run:
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py \
-  --cfg configs/intern_vit_6b_1k_224.yaml --data-path ./data/imagenet-1k
+  --cfg configs/intern_vit_6b_1k_224.yaml
 # or manage jobs with slurm
 GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224.yaml --launcher slurm
 ```
 
 ### Evaluation
 
-| model name                  | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |
-| --------------------------- | :---: | :-----: | :---: | :--: | :--: | :-------: |
-| `intern_vit_6b_1k_224.yaml` | 88.2  |  90.4   | 80.0  | 77.5 | 89.8 |   69.1    |
+| model name                  | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |                          log                          |
+| --------------------------- | :---: | :-----: | :---: | :--: | :--: | :-------: | :---------------------------------------------------: |
+| `intern_vit_6b_1k_224.yaml` | 88.2  |  90.4   | 80.0  | 77.5 | 89.8 |   69.1    | [log](./work_dirs/intern_vit_6b_1k_224/log_rank0.txt) |
 
 <details>
   <summary>Evaluate InternViT-6B on <b>ImageNet-1K val</b> with 8 GPUs (click to expand).</summary>
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
-    --cfg configs/intern_vit_6b_1k_224.yaml --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-1k
+    --cfg configs/intern_vit_6b_1k_224.yaml --resume pretrained/intern_vit_6b_224px_head.pth
 # or manage jobs with slurm
 GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224.yaml --eval \
-    --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-1k --launcher slurm
+    --resume pretrained/intern_vit_6b_224px_head.pth --launcher slurm
 ```
 
 Expected results:
@@ -132,10 +132,10 @@ Accuracy of the network on the 50000 test images: 88.2%
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.py --eval \
-    --cfg configs/intern_vit_6b_1k_224_test_imagenet_real.yaml --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-1k
+    --cfg configs/intern_vit_6b_1k_224_test_imagenet_real.yaml --resume pretrained/intern_vit_6b_224px_head.pth
 # or manage jobs with slurm
 GPUS=1 GPUS_PER_NODE=1 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenet_real.yaml --eval \
-    --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-1k --launcher slurm
+    --resume pretrained/intern_vit_6b_224px_head.pth --launcher slurm
 ```
 
 Expected results:
@@ -152,10 +152,10 @@ ReaL Accuracy of the network on the 50000 test images: 90.4%
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
-    --cfg configs/intern_vit_6b_1k_224_test_imagenetv2.yaml --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenetv2
+    --cfg configs/intern_vit_6b_1k_224_test_imagenetv2.yaml --resume pretrained/intern_vit_6b_224px_head.pth
 # or manage jobs with slurm
 GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenetv2.yaml --eval \
-    --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenetv2 --launcher slurm
+    --resume pretrained/intern_vit_6b_224px_head.pth --launcher slurm
 ```
 
 Expected results:
@@ -172,10 +172,10 @@ Accuracy of the network on the 10000 test images: 80.0%
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
-    --cfg configs/intern_vit_6b_1k_224_test_imagenet_a.yaml --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-a
+    --cfg configs/intern_vit_6b_1k_224_test_imagenet_a.yaml --resume pretrained/intern_vit_6b_224px_head.pth
 # or manage jobs with slurm
 GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenet_a.yaml --eval \
-    --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-a --launcher slurm
+    --resume pretrained/intern_vit_6b_224px_head.pth --launcher slurm
 ```
 
 Expected results:
@@ -192,10 +192,10 @@ Accuracy of the network on the 7500 test images: 77.5%
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
-    --cfg configs/intern_vit_6b_1k_224_test_imagenet_r.yaml --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-r
+    --cfg configs/intern_vit_6b_1k_224_test_imagenet_r.yaml --resume pretrained/intern_vit_6b_224px_head.pth
 # or manage jobs with slurm
 GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenet_r.yaml --eval \
-    --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-r --launcher slurm
+    --resume pretrained/intern_vit_6b_224px_head.pth --launcher slurm
 ```
 
 Expected results:
@@ -212,10 +212,10 @@ Accuracy of the network on the 30000 test images: 89.8%
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
-    --cfg configs/intern_vit_6b_1k_224_test_imagenet_sketch.yaml --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-sketch
+    --cfg configs/intern_vit_6b_1k_224_test_imagenet_sketch.yaml --resume pretrained/intern_vit_6b_224px_head.pth
 # or manage jobs with slurm
 GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenet_sketch.yaml --eval \
-    --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-sketch --launcher slurm
+    --resume pretrained/intern_vit_6b_224px_head.pth --launcher slurm
 ```
 
 Expected results:

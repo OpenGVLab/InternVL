@@ -390,8 +390,9 @@ class InternViT6B(nn.Module):
         else:
             raise NotImplementedError
 
-        self.head.weight.data.normal_(mean=0.0, std=0.01)
-        self.head.bias.data.zero_()
+        if type(self.head) != nn.Identity:
+            self.head.weight.data.normal_(mean=0.0, std=0.01)
+            self.head.bias.data.zero_()
 
     def init_weights(self, pretrained=None):
         print(f'pretrained: {pretrained}')

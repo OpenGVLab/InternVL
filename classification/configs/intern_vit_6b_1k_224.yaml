@@ -18,7 +18,7 @@ MODEL:
     QK_NORMALIZATION: True
     DEPTH: 48
     USE_FLASH_ATTN: True
-    PRETRAINED: "./intern_vit_6b_224px.pth"
+    PRETRAINED: "./pretrained/intern_vit_6b_224px.pth"
     CLS_TARGET: 'cls_patch_concat'
 TRAIN:
   EMA:

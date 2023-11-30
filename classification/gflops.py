@@ -8,9 +8,9 @@ import argparse
 import time
 
 import torch
-from intern_vit_6b import InternViT6B
 from mmcv.cnn import get_model_complexity_info
 from mmcv.cnn.utils.flops_counter import flops_to_string, params_to_string
+from models.intern_vit_6b import InternViT6B
 from tqdm import tqdm
 
 parser = argparse.ArgumentParser(description='Hyperparams')
