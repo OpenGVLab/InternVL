@@ -84,7 +84,7 @@ GPUS=8 sh slurm_train.sh <partition> <job-name> configs/intern_vit_6b/linear_pro
 | head tuning     | InternViT-6B (frozen) | UperNet | 54.9 |  [config](./configs/intern_vit_6b/head_tuning/upernet_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5_frozen.py)  | [ckpt](https://huggingface.co/OpenGVLab/InternVL/resolve/main/upernet_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5_frozen.pth) \| [log](https://huggingface.co/OpenGVLab/InternVL/raw/main/upernet_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5_frozen.log) |
 | full tuning     | InternViT-6B          | UperNet | 58.9 |     [config](./configs/intern_vit_6b/full_tuning/upernet_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5.py)      |                                                               ckpt \| [log](https://huggingface.co/OpenGVLab/InternVL/raw/main/upernet_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5.log)                                                                |
 
-You can download checkpoints from [here](https://huggingface.co/OpenGVLab/InternVL/tree/main). Then place them to `segmentation/checkpoints/`.
+You can download checkpoints from [here](https://huggingface.co/OpenGVLab/InternVL/tree/main) or from the table above. Then place them to `segmentation/checkpoints/`.
 
 For example, to evaluate the `InternViT-6B` with a single GPU:
 
