@@ -102,7 +102,7 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224.yaml
 
 | model name                  | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |                              download                               |
 | --------------------------- | :---: | :-----: | :---: | :--: | :--: | :-------: | :-----------------------------------------------------------------: |
-| `intern_vit_6b_1k_224.yaml` | 88.2  |  90.4   | 80.0  | 77.5 | 89.8 |   69.1    | [ckpt](./) \| [log](./work_dirs/intern_vit_6b_1k_224/log_rank0.txt) |
+| `intern_vit_6b_1k_224.yaml` | 88.2  |  90.4   | 80.0  | 77.5 | 89.8 |   69.1    | [ckpt](https://github.com/OpenGVLab/InternVL/releases/download/classification/intern_vit_6b_224px_head.pth) \| [log](./work_dirs/intern_vit_6b_1k_224/log_rank0.txt) |
 
 <details>
   <summary>Evaluate InternViT-6B on <b>ImageNet-1K val</b> with 8 GPUs (click to expand).</summary>
