@@ -264,7 +264,7 @@ class Block(nn.Module):
     def __init__(
             self, dim, num_heads, mlp_ratio=4., qkv_bias=False, drop=0., attn_drop=0., init_values=None,
             drop_path=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm, use_flash_attn=False, with_cp=False,
-            qk_normalization=False, layerscale_no_force_fp32=False):
+            qk_normalization=False, layerscale_force_fp32=False):
         super().__init__()
 
         self.norm1 = norm_layer(dim)
@@ -272,7 +272,7 @@ class Block(nn.Module):
                               use_flash_attn=use_flash_attn, causal=False, norm_layer=norm_layer,
                               qk_normalization=qk_normalization)
         self.ls1 = LayerScale(dim, init_values=init_values,
-                              force_fp32=(not layerscale_no_force_fp32)) if init_values else nn.Identity()
+                              force_fp32=layerscale_force_fp32) if init_values else nn.Identity()
         # NOTE: drop path for stochastic depth, we shall see if this is better than dropout here
         self.drop_path1 = DropPath(drop_path) if drop_path > 0. else nn.Identity()
 
@@ -280,7 +280,7 @@ class Block(nn.Module):
         mlp_hidden_dim = int(dim * mlp_ratio)
         self.mlp = Mlp(in_features=dim, hidden_features=mlp_hidden_dim, act_layer=act_layer, drop=drop)
         self.ls2 = LayerScale(dim, init_values=init_values,
-                              force_fp32=(not layerscale_no_force_fp32)) if init_values else nn.Identity()
+                              force_fp32=layerscale_force_fp32) if init_values else nn.Identity()
         self.drop_path2 = DropPath(drop_path) if drop_path > 0. else nn.Identity()
 
         self.with_cp = with_cp
@@ -329,7 +329,7 @@ class InternViT6B(nn.Module):
 
     def __init__(self, in_chans=3, patch_size=14, img_size=224, pretrain_size=224, qkv_bias=False, drop_path_rate=0.0,
                  embed_dim=3200, num_heads=25, mlp_ratio=4, init_values=0.1, qk_normalization=True, depth=48,
-                 use_flash_attn=True, with_cp=True, layerscale_no_force_fp32=True, freeze_vit=True,
+                 use_flash_attn=True, with_cp=True, layerscale_force_fp32=False, freeze_vit=True,
                  cls_target='cls_patch_concat', num_classes=1000, attn_pool_num_heads=16, clip_embed_dim=768,
                  head_norm_type='bn', pretrained=None):
         super().__init__()
@@ -362,7 +362,7 @@ class InternViT6B(nn.Module):
                   use_flash_attn=use_flash_attn[i],
                   with_cp=with_cp,
                   qk_normalization=qk_normalization,
-                  layerscale_no_force_fp32=layerscale_no_force_fp32)
+                  layerscale_force_fp32=layerscale_force_fp32)
             for i in range(depth)])
 
         if cls_target == 'clip_projector':

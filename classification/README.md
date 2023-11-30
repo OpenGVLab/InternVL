@@ -88,6 +88,14 @@ data
     └── ImageNetV2-matched-frequency
 ```
 
+- ImageNet-1K: We use standard ImageNet dataset, you can download it from [http://image-net.org/](http://image-net.org/).
+- ImageNet-A: Download it from [link](https://people.eecs.berkeley.edu/~hendrycks/imagenet-a.tar)
+
+```shell
+wget https://people.eecs.berkeley.edu/~hendrycks/imagenet-a.tar
+tar xvf imagenet-a.tar
+```
+
 ### Linear Probing on ImageNet-1K
 
 To train a linear classifier for `InternViT-6b` on ImageNet with 8 GPUs, run:

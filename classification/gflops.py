@@ -93,7 +93,6 @@ if __name__ == '__main__':
                         depth=config['depth'],
                         use_flash_attn=True,
                         with_cp=True,
-                        layerscale_no_force_fp32=True,
                         freeze_vit=True,
                         cls_target='cls_patch_concat',
                         num_classes=0,
