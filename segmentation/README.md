@@ -69,7 +69,7 @@ To evaluate our `InternViT-6B` on ADE20K val, run:
 sh dist_test.sh <config-file> <checkpoint> <gpu-num> --eval mIoU
 ```
 
-You can download checkpoint files from [here](https://huggingface.co/OpenGVLab/InternImage/tree/fc1e4e7e01c3e7a39a3875bdebb6577a7256ff91). Then place it to segmentation/checkpoint_dir/seg.
+You can download checkpoint files from [here](./). Then place it to `segmentation/checkpoints`.
 
 For example, to evaluate the `InternViT-6B` with a single GPU:
 

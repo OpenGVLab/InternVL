@@ -1,0 +1,16 @@
+{
+  "train_batch_size": 16,
+  "gradient_accumulation_steps": 1,
+  "optimizer": {
+    "type": "Adam",
+    "params": {
+      "torch_adam": true,
+      "lr": 0.00004
+    }
+  },
+  "fp16": {
+    "enabled": true,
+    "auto_cast": true
+  },
+  "steps_per_print": 50
+}

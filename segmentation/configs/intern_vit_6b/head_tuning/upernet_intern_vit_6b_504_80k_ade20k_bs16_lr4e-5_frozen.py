@@ -10,7 +10,7 @@ _base_ = [
     '../../_base_/default_runtime.py',
     '../../_base_/schedules/schedule_80k.py'
 ]
-deepspeed = True
+deepspeed = False
 deepspeed_config = 'zero_configs/adam_zero1_bf16.json'
 pretrained = './pretrained/intern_vit_6b_224px.pth'
 model = dict(
@@ -57,7 +57,10 @@ lr_config = dict(_delete_=True, policy='poly',
 # By default, models are trained on 8 GPUs with 2 images per GPU
 data = dict(samples_per_gpu=2)
 runner = dict(type='IterBasedRunner')
-checkpoint_config = dict(deepspeed=deepspeed, by_epoch=False, interval=1000, max_keep_ckpts=2)
+if deepspeed:
+    checkpoint_config = dict(deepspeed=deepspeed, by_epoch=False, interval=1000, max_keep_ckpts=2)
+else:
+    checkpoint_config = dict(by_epoch=False, interval=1000, max_keep_ckpts=2)
 evaluation = dict(interval=1000, metric='mIoU', save_best='auto')
 custom_hooks = [
     dict(
