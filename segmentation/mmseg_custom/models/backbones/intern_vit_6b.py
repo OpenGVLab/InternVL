@@ -202,7 +202,7 @@ class Block(nn.Module):
     def __init__(
             self, dim, num_heads, mlp_ratio=4., qkv_bias=False, drop=0., attn_drop=0., init_values=None,
             drop_path=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm, use_flash_attn=False, with_cp=False,
-            qk_normalization=False, layerscale_no_force_fp32=False):
+            qk_normalization=False, layerscale_force_fp32=False):
         super().__init__()
 
         self.norm1 = norm_layer(dim)
@@ -210,7 +210,7 @@ class Block(nn.Module):
                               use_flash_attn=use_flash_attn, causal=False, norm_layer=norm_layer,
                               qk_normalization=qk_normalization)
         self.ls1 = LayerScale(dim, init_values=init_values,
-                              force_fp32=(not layerscale_no_force_fp32)) if init_values else nn.Identity()
+                              force_fp32=layerscale_force_fp32) if init_values else nn.Identity()
         # NOTE: drop path for stochastic depth, we shall see if this is better than dropout here
         self.drop_path1 = DropPath(drop_path) if drop_path > 0. else nn.Identity()
 
@@ -218,7 +218,7 @@ class Block(nn.Module):
         mlp_hidden_dim = int(dim * mlp_ratio)
         self.mlp = Mlp(in_features=dim, hidden_features=mlp_hidden_dim, act_layer=act_layer, drop=drop)
         self.ls2 = LayerScale(dim, init_values=init_values,
-                              force_fp32=(not layerscale_no_force_fp32)) if init_values else nn.Identity()
+                              force_fp32=layerscale_force_fp32) if init_values else nn.Identity()
         self.drop_path2 = DropPath(drop_path) if drop_path > 0. else nn.Identity()
 
         self.with_cp = with_cp
@@ -266,30 +266,13 @@ class PatchEmbed(nn.Module):
 @BACKBONES.register_module()
 class InternViT6B(BaseModule):
 
-    def __init__(
-            self,
-            in_chans: int = 3,
-            patch_size: int = 14,
-            img_size: int = 224,
-            pretrain_size: int = 224,
-            qkv_bias: bool = False,
-            drop_path_rate: float = 0.0,
-            embed_dim: int = 3200,
-            num_heads: int = 25,
-            mlp_ratio: int = 4,
-            init_values: float = 0.1,
-            qk_normalization: bool = True,
-            depth: int = 48,
-            use_flash_attn: bool = True,
-            with_cp: bool = True,
-            layerscale_no_force_fp32: bool = True,
-            out_indices: list = [7, 11, 15, 23],
-            freeze_vit: bool = False,
-            unfreeze_pos_embed: bool = False,
-            with_fpn: bool = False,
-            with_final_norm: bool = False,
-            pretrained=None):
+    def __init__(self, in_chans=3, patch_size=14, img_size=224, pretrain_size=224, qkv_bias=False, drop_path_rate=0.0,
+                 embed_dim=3200, num_heads=25, mlp_ratio=4, init_values=0.1, qk_normalization=True, depth=48,
+                 use_flash_attn=True, with_cp=True, layerscale_force_fp32=False, out_indices=[7, 11, 15, 23],
+                 freeze_vit=False, with_fpn=False, with_final_norm=False, pretrained=None):
+
         super().__init__()
+
         self.num_features = self.embed_dim = embed_dim  # num_features for consistency with other models
 
         self.pretrain_size = pretrain_size
@@ -321,16 +304,13 @@ class InternViT6B(BaseModule):
                   use_flash_attn=use_flash_attn,
                   with_cp=with_cp,
                   qk_normalization=qk_normalization,
-                  layerscale_no_force_fp32=layerscale_no_force_fp32)
+                  layerscale_force_fp32=layerscale_force_fp32)
             for i in range(depth)])
 
         self.init_weights(pretrained)
 
         if freeze_vit:
             _freeze_params(self)
-        if unfreeze_pos_embed:
-            self.pos_embed.requires_grad = True
-            print('unfreeze pos_embed')
 
         if with_fpn:
             self.up1 = nn.Sequential(*[
