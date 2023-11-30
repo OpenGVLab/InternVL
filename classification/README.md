@@ -92,7 +92,6 @@ data
 
 ### Linear Probing on ImageNet-1K
 
-
 To train a linear classifier for `InternViT-6b` on ImageNet with 8 GPUs, run:
 
 ```bash
@@ -104,13 +103,12 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224.yaml
 
 ### Evaluation
 
-| model name | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |
-|--------|:------------------:|:------:|:------:| :------:|:------:|:------:|
-| `intern_vit_6b_1k_224.yaml` | 88.2 | 90.4 | 80.0 | 77.5 | 89.8 | 69.1 |
+| model name                  | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |
+| --------------------------- | :---: | :-----: | :---: | :--: | :--: | :-------: |
+| `intern_vit_6b_1k_224.yaml` | 88.2  |  90.4   | 80.0  | 77.5 | 89.8 |   69.1    |
 
 <details>
   <summary>Evaluate InternViT-6B on <b>ImageNet-1K val</b> with 8 GPUs (click to expand).</summary>
-
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
@@ -129,11 +127,8 @@ Accuracy of the network on the 50000 test images: 88.2%
 
 </details>
 
-
-
 <details>
   <summary>Evaluate InternViT-6B on <b>ImageNet-ReaL val</b> with 1 GPU (click to expand).</summary>
-
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.py --eval \
@@ -152,11 +147,8 @@ ReaL Accuracy of the network on the 50000 test images: 90.4%
 
 </details>
 
-
-
 <details>
   <summary>Evaluate InternViT-6B on <b>ImageNetV2</b> with 8 GPUs (click to expand).</summary>
-
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
@@ -178,7 +170,6 @@ Accuracy of the network on the 10000 test images: 80.0%
 <details>
   <summary>Evaluate InternViT-6B on <b>ImageNet-A</b> with 8 GPUs (click to expand).</summary>
 
-
 ```bash
 python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
     --cfg configs/intern_vit_6b_1k_224_test_imagenet_a.yaml --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-a
@@ -196,10 +187,8 @@ Accuracy of the network on the 7500 test images: 77.5%
 
 </details>
 
-
 <details>
   <summary>Evaluate InternViT-6B on <b>ImageNet-R</b> with 8 GPUs (click to expand).</summary>
-
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
@@ -218,11 +207,8 @@ Accuracy of the network on the 30000 test images: 89.8%
 
 </details>
 
-
-
 <details>
   <summary>Evaluate InternViT-6B on <b>ImageNet-Sketch</b> with 8 GPUs (click to expand).</summary>
-
 
 ```bash
 python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
