@@ -1,0 +1,40 @@
+0001.png	The image shows a python code. Is the output of the code 'Hello'? Please answer yes or no.	Yes
+0001.png	The image shows a python code. Is the output of the code 'World'? Please answer yes or no.	No
+0002.png	The image shows a python code. Is the output of the code 'a cat'? Please answer yes or no.	Yes
+0002.png	The image shows a python code. Is the output of the code 'a dog'? Please answer yes or no.	No
+0003.png	The image shows a python code. Is the output of the code '12'? Please answer yes or no.	Yes
+0003.png	The image shows a python code. Is the output of the code '5'? Please answer yes or no.	No
+0004.png	The image shows a python code. Is the output of the code '3'? Please answer yes or no.	Yes
+0004.png	The image shows a python code. Is the output of the code '2'? Please answer yes or no.	No
+0005.png	The image shows a python code. Is the output of the code '12'? Please answer yes or no.	Yes
+0005.png	The image shows a python code. Is the output of the code '5'? Please answer yes or no.	No
+0006.png	The image shows a python code. Is the output of the code '0'? Please answer yes or no.	Yes
+0006.png	The image shows a python code. Is the output of the code '1'? Please answer yes or no.	No
+0007.png	Is a c++ code shown in the picture? Please answer yes or no.	Yes
+0007.png	Is a python code shown in the picture? Please answer yes or no.	No
+0008.png	The image shows a python code. Is the output of the code '1234'? Please answer yes or no.	Yes
+0008.png	The image shows a python code. Is the output of the code '12345'? Please answer yes or no.	No
+0009.png	The image shows a python code. Is the output of the code '36'? Please answer yes or no.	Yes
+0009.png	The image shows a python code. Is the output of the code '6'? Please answer yes or no.	No
+0010.png	The image shows a python code. Is the output of the code '1'? Please answer yes or no.	Yes
+0010.png	The image shows a python code. Is the output of the code '5'? Please answer yes or no.	No
+0011.png	The image shows a python code. Is the output of the code '0'? Please answer yes or no.	Yes
+0011.png	The image shows a python code. Is the output of the code '1'? Please answer yes or no.	No
+0012.png	The image shows a python code. Is the output of the code 'working hard'? Please answer yes or no.	Yes
+0012.png	The image shows a python code. Is the output of the code 'playing hard'? Please answer yes or no.	No
+0013.png	The image shows a python code. Is the output of the code 'a cat'? Please answer yes or no.	Yes
+0013.png	The image shows a python code. Is the output of the code 'a dog'? Please answer yes or no.	No
+0014.png	The image shows a python code. Is the output of the code '7'? Please answer yes or no.	Yes
+0014.png	The image shows a python code. Is the output of the code '1'? Please answer yes or no.	No
+0015.png	The image shows a python code. Is the output of the code '11'? Please answer yes or no.	Yes
+0015.png	The image shows a python code. Is the output of the code '9'? Please answer yes or no.	No
+0016.png	The image shows a python code. Is the output of the code 'x is smaller than 10'? Please answer yes or no.	Yes
+0016.png	The image shows a python code. Is the output of the code 'x is larger than 10'? Please answer yes or no.	No
+0017.png	The image shows a python code. Will the number 3 appear in the output of the code? Please answer yes or no.	Yes
+0017.png	The image shows a python code. Will the number 6 appear in the output of the code? Please answer yes or no.	No
+0018.png	The image shows a python code. Is the output of the code '11'? Please answer yes or no.	Yes
+0018.png	The image shows a python code. Is the output of the code '12'? Please answer yes or no.	No
+0019.png	The image shows a python code. Is the output of the code 'the list has more than 2 numbers'? Please answer yes or no.	Yes
+0019.png	The image shows a python code. Is the output of the code 'the list has less than 2 numbers'? Please answer yes or no.	No
+0020.png	Is a python code shown in the picture? Please answer yes or no.	Yes
+0020.png	Is a c++ code shown in the picture? Please answer yes or no.	No

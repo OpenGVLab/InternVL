@@ -1,0 +1,13 @@
+multilingual_mscoco_captions,es
+multilingual_mscoco_captions,it
+multilingual_mscoco_captions,ko
+multilingual_mscoco_captions,pl
+multilingual_mscoco_captions,ru
+multilingual_mscoco_captions,tr
+multilingual_mscoco_captions,zh
+multilingual_mscoco_captions,en
+imagenet1k,zh
+imagenet1k,it
+imagenet1k,jp
+imagenet1k,en
+imagenet1k,ar
