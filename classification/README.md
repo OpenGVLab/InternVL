@@ -63,7 +63,17 @@ pip install opencv-python termcolor yacs pyyaml scipy
 
 ### Data Preparation
 
-Please prepare the ImageNet-1K, ImageNet-A, ImageNet-R, ImageNet-Sketch, and ImageNetV2 datasets following the directory structure outlined below.
+- ImageNet-1K: We use the standard ImageNet dataset, you can download it from [http://image-net.org/](http://image-net.org/).
+- ImageNet-A: Download it from [https://people.eecs.berkeley.edu/~hendrycks/imagenet-a.tar](https://people.eecs.berkeley.edu/~hendrycks/imagenet-a.tar).
+- ImageNet-R: Download it from [https://people.eecs.berkeley.edu/~hendrycks/imagenet-r.tar](https://people.eecs.berkeley.edu/~hendrycks/imagenet-r.tar).
+- ImageNetV2: Download it from [https://imagenetv2public.s3-us-west-2.amazonaws.com/imagenetv2-matched-frequency.tar.gz](https://imagenetv2public.s3-us-west-2.amazonaws.com/imagenetv2-matched-frequency.tar.gz).
+- ImageNet-Sketch: Download it using `gdown`.
+  ```shell
+  # GDown is needed to download the dataset. Please install it via `pip install gdown`
+  gdown --id 1Mj0i5HBthqH1p_yeXzsg22gZduvgoNeA
+  ```
+
+Please prepare the ImageNet-1K, ImageNet-A, ImageNet-R, ImageNetV2, and ImageNet-Sketch datasets following the directory structure outlined below.
 
 ```bash
 $ tree data
@@ -88,13 +98,9 @@ data
     └── ImageNetV2-matched-frequency
 ```
 
-- ImageNet-1K: We use standard ImageNet dataset, you can download it from [http://image-net.org/](http://image-net.org/).
-- ImageNet-A: Download it from [link](https://people.eecs.berkeley.edu/~hendrycks/imagenet-a.tar)
 
-```shell
-wget https://people.eecs.berkeley.edu/~hendrycks/imagenet-a.tar
-tar xvf imagenet-a.tar
-```
+
+  
 
 ### Linear Probing on ImageNet-1K
 
