@@ -465,7 +465,4 @@ class InternViT6B(nn.Module):
         lr_ratios['pos_embed'] = 1.0 * (decay_ratio ** (self.depth + 1))
         lr_ratios['cls_token'] = 1.0 * (decay_ratio ** (self.depth + 1))
 
-        # head
-        lr_ratios['cls_token'] = 1.0
-
         return lr_ratios
