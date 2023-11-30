@@ -50,7 +50,7 @@ def parse_option():
                         )
     parser.add_argument('--pretrained', help='pretrained weight from checkpoint, could be imagenet22k pretrained weight')
     parser.add_argument('--resume', help='resume from checkpoint')
-    parser.add_argument('--output', default='output', type=str, metavar='PATH',
+    parser.add_argument('--output', default='work_dirs', type=str, metavar='PATH',
                         help='root of output folder, the full path is <output>/<model_name>/<tag> (default: output)'
                         )
     parser.add_argument('--eval', action='store_true', help='Perform evaluation only')

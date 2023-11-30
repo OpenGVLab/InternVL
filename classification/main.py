@@ -109,7 +109,7 @@ def parse_option():
         help='mixed precision opt level, if O0, no amp is used')
     parser.add_argument(
         '--output',
-        default='output',
+        default='work_dirs',
         type=str,
         metavar='PATH',
         help=

@@ -10,6 +10,7 @@ args = parser.parse_args()
 
 model = torch.load(args.filename, map_location=torch.device('cpu'))
 del model['optimizer']
+model['model'] = model['model_ema']
 del model['model_ema']
 del model['amp']
 
@@ -23,4 +24,4 @@ for k, v in model_.items():
 model['model'] = new_model
 print(model['model'].keys())
 
-torch.save(model, args.filename.replace('.pth', '_release.pth'))
+torch.save(model, args.filename.replace('.pth', '_ema.pth'))
