@@ -74,7 +74,7 @@ sh dist_train.sh configs/intern_vit_6b/linear_probing/linear_intern_vit_6b_504_8
 GPUS=8 sh slurm_train.sh <partition> <job-name> configs/intern_vit_6b/linear_probing/linear_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5_frozen.py
 ```
 
-### 📊 Evaluation
+## 📊 Evaluation
 
 
 You can download checkpoints from [here](./). Then place it to `segmentation/checkpoints`.
@@ -91,7 +91,7 @@ For example, to evaluate the `InternViT-6B` with a single node with 8 GPUs:
 sh dist_test.sh configs/intern_vit_6b/linear_probing/linear_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5_frozen.py checkpoints/linear_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5_frozen.pth 8 --eval mIoU
 ```
 
-### Image Demo
+## 🖼️ Image Demo
 
 To inference a single/multiple image like this.
 If you specify image containing directory instead of a single image, it will process all the images in the directory.:
