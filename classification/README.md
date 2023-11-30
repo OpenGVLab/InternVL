@@ -13,7 +13,7 @@ This folder contains the implementation of the InternViT-6B for image classifica
 
 ## Install
 
-- Clone this repo:
+- Clone this repository:
 
 ```bash
 git clone https://github.com/OpenGVLab/InternVL.git
@@ -29,7 +29,7 @@ conda activate internvl
 
 - Install `PyTorch>=2.0` and `torchvision>=0.15.2` with `CUDA>=11.6`:
 
-For examples, to install torch==2.0.1 with CUDA==11.8:
+For examples, to install `torch==2.0.1` with `CUDA==11.8`:
 
 ```bash
 conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.8 -c pytorch -c nvidia
@@ -61,11 +61,11 @@ pip install opencv-python termcolor yacs pyyaml scipy
 
 ## Data Preparation
 
-- ImageNet-1K: We use the standard ImageNet dataset, you can download it from [http://image-net.org/](http://image-net.org/).
-- ImageNet-A: Download it from [https://people.eecs.berkeley.edu/~hendrycks/imagenet-a.tar](https://people.eecs.berkeley.edu/~hendrycks/imagenet-a.tar).
-- ImageNet-R: Download it from [https://people.eecs.berkeley.edu/~hendrycks/imagenet-r.tar](https://people.eecs.berkeley.edu/~hendrycks/imagenet-r.tar).
-- ImageNetV2: Download it from [https://imagenetv2public.s3-us-west-2.amazonaws.com/imagenetv2-matched-frequency.tar.gz](https://imagenetv2public.s3-us-west-2.amazonaws.com/imagenetv2-matched-frequency.tar.gz).
-- ImageNet-Sketch: Download it using `gdown`.
+- `ImageNet-1K`: We use the standard ImageNet dataset, you can download it from [http://image-net.org/](http://image-net.org/).
+- `ImageNet-A`: Download it from [https://people.eecs.berkeley.edu/~hendrycks/imagenet-a.tar](https://people.eecs.berkeley.edu/~hendrycks/imagenet-a.tar).
+- `ImageNet-R`: Download it from [https://people.eecs.berkeley.edu/~hendrycks/imagenet-r.tar](https://people.eecs.berkeley.edu/~hendrycks/imagenet-r.tar).
+- `ImageNetV2`: Download it from [https://imagenetv2public.s3-us-west-2.amazonaws.com/imagenetv2-matched-frequency.tar.gz](https://imagenetv2public.s3-us-west-2.amazonaws.com/imagenetv2-matched-frequency.tar.gz).
+- `ImageNet-Sketch`: Download it using `gdown`.
   ```shell
   # GDown is needed to download the dataset. Please install it via `pip install gdown`
   gdown --id 1Mj0i5HBthqH1p_yeXzsg22gZduvgoNeA
