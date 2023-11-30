@@ -69,8 +69,6 @@ Please prepare the ImageNet-1K, ImageNet-A, ImageNet-R, ImageNet-Sketch, and Ima
 $ tree data
 data
 ├── imagenet-1k
-│         ├── meta
-│         ├── test
 │         ├── train
           │    ├── n01498041
           │    └── ...
