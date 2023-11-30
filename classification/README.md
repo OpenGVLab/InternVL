@@ -63,7 +63,7 @@ This folder contains the implementation of the InternViT-6B for image classifica
   gdown --id 1Mj0i5HBthqH1p_yeXzsg22gZduvgoNeA
   ```
 
-Please prepare the `ImageNet-1K`, `ImageNet-A`, `ImageNet-R`, `ImageNetV2`, and `ImageNet-Sketch` datasets following the directory structure outlined below.
+First, please prepare the `ImageNet-1K`, `ImageNet-A`, `ImageNet-R`, `ImageNetV2`, and `ImageNet-Sketch` datasets following the directory structure outlined below.
 
 ```bash
 $ tree data
@@ -86,6 +86,13 @@ data
 │         └── ...
 └── imagenetv2
     └── ImageNetV2-matched-frequency
+```
+
+Then, unzip the `train.txt.zip` and `val.txt.zip` in `meta_data/`.
+```shell
+cd meta_data/
+unzip train.txt.zip
+unzip val.txt.zip
 ```
 
 ## 🔍 Linear Probing on ImageNet-1K
