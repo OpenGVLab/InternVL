@@ -48,6 +48,7 @@ pip install -U openmim
 mim install mmcv-full==1.6.2
 mim install mmsegmentation==0.30.0
 pip install timm==0.6.11
+pip install yapf==0.40.1
 ```
 
 - Install `tensorboard`:
@@ -62,7 +63,7 @@ Prepare datasets according to the [guidelines](https://github.com/open-mmlab/mms
 
 ### Evaluation
 
-To evaluate our `InternImage` on ADE20K val, run:
+To evaluate our `InternViT-6B` on ADE20K val, run:
 
 ```bash
 sh dist_test.sh <config-file> <checkpoint> <gpu-num> --eval mIoU
@@ -70,38 +71,38 @@ sh dist_test.sh <config-file> <checkpoint> <gpu-num> --eval mIoU
 
 You can download checkpoint files from [here](https://huggingface.co/OpenGVLab/InternImage/tree/fc1e4e7e01c3e7a39a3875bdebb6577a7256ff91). Then place it to segmentation/checkpoint_dir/seg.
 
-For example, to evaluate the `InternImage-T` with a single GPU:
+For example, to evaluate the `InternViT-6B` with a single GPU:
 
 ```bash
-python test.py configs/ade20k/upernet_internimage_t_512_160k_ade20k.py checkpoint_dir/seg/upernet_internimage_t_512_160k_ade20k.pth --eval mIoU
+python test.py configs/intern_vit_6b/linear_probing/linear_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5_frozen.py checkpoints/linear_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5_frozen.pth --eval mIoU
 ```
 
-For example, to evaluate the `InternImage-B` with a single node with 8 GPUs:
+For example, to evaluate the `InternViT-6B` with a single node with 8 GPUs:
 
 ```bash
-sh dist_test.sh configs/ade20k/upernet_internimage_b_512_160k_ade20k.py checkpoint_dir/seg/upernet_internimage_b_512_160k_ade20k.pth 8 --eval mIoU
+sh dist_test.sh configs/intern_vit_6b/linear_probing/linear_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5_frozen.py checkpoints/linear_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5_frozen.pth 8 --eval mIoU
 ```
 
 ### Training
 
-To train an `InternImage` on ADE20K, run:
+To train an `InternViT-6B` on ADE20K, run:
 
 ```bash
 sh dist_train.sh <config-file> <gpu-num>
 ```
 
-For example, to train `InternImage-T` with 8 GPU on 1 node (total batch size 16), run:
+For example, to train `InternViT-6B` with 8 GPU on 1 node (total batch size 16), run:
 
 ```bash
-sh dist_train.sh configs/ade20k/upernet_internimage_t_512_160k_ade20k.py 8
+sh dist_train.sh configs/intern_vit_6b/linear_probing/linear_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5_frozen.py 8
 ```
 
 ### Manage Jobs with Slurm
 
-For example, to train `InternImage-XL` with 8 GPU on 1 node (total batch size 16), run:
+For example, to train `InternViT-6B` with 8 GPU on 1 node (total batch size 16), run:
 
 ```bash
-GPUS=8 sh slurm_train.sh <partition> <job-name> configs/ade20k/upernet_internimage_xl_640_160k_ade20k.py
+GPUS=8 sh slurm_train.sh <partition> <job-name> configs/intern_vit_6b/linear_probing/linear_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5_frozen.py
 ```
 
 ### Image Demo
@@ -112,41 +113,7 @@ If you specify image containing directory instead of a single image, it will pro
 ```
 CUDA_VISIBLE_DEVICES=0 python image_demo.py \
   data/ade/ADEChallengeData2016/images/validation/ADE_val_00000591.jpg \
-  configs/ade20k/upernet_internimage_t_512_160k_ade20k.py  \
-  checkpoint_dir/seg/upernet_internimage_t_512_160k_ade20k.pth  \
+  configs/intern_vit_6b/linear_probing/linear_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5_frozen.py  \
+  checkpoints/linear_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5_frozen.pth  \
   --palette ade20k
-```
-
-### Export
-
-To export a segmentation model from PyTorch to TensorRT, run:
-
-```shell
-MODEL="model_name"
-CKPT_PATH="/path/to/model/ckpt.pth"
-
-python deploy.py \
-    "./deploy/configs/mmseg/segmentation_tensorrt_static-512x512.py" \
-    "./configs/ade20k/${MODEL}.py" \
-    "${CKPT_PATH}" \
-    "./deploy/demo.png" \
-    --work-dir "./work_dirs/mmseg/${MODEL}" \
-    --device cuda \
-    --dump-info
-```
-
-For example, to export `upernet_internimage_t_512_160k_ade20k` from PyTorch to TensorRT, run:
-
-```shell
-MODEL="upernet_internimage_t_512_160k_ade20k"
-CKPT_PATH="/path/to/model/ckpt/upernet_internimage_t_512_160k_ade20k.pth"
-
-python deploy.py \
-    "./deploy/configs/mmseg/segmentation_tensorrt_static-512x512.py" \
-    "./configs/ade20k/${MODEL}.py" \
-    "${CKPT_PATH}" \
-    "./deploy/demo.png" \
-    --work-dir "./work_dirs/mmseg/${MODEL}" \
-    --device cuda \
-    --dump-info
 ```

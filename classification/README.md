@@ -98,10 +98,6 @@ data
     └── ImageNetV2-matched-frequency
 ```
 
-
-
-  
-
 ### Linear Probing on ImageNet-1K
 
 To train a linear classifier for `InternViT-6b` on ImageNet with 8 GPUs, run:
