@@ -6,49 +6,49 @@ This folder contains the implementation of the InternViT-6B for image classifica
 
 - Clone this repository:
 
-```bash
-git clone https://github.com/OpenGVLab/InternVL.git
-cd InternVL/classification
-```
+  ```bash
+  git clone https://github.com/OpenGVLab/InternVL.git
+  cd InternVL/classification
+  ```
 
 - Create a conda virtual environment and activate it:
 
-```bash
-conda create -n internvl python=3.9 -y
-conda activate internvl
-```
+  ```bash
+  conda create -n internvl python=3.9 -y
+  conda activate internvl
+  ```
 
 - Install `PyTorch>=2.0` and `torchvision>=0.15.2` with `CUDA>=11.6`:
 
-For examples, to install `torch==2.0.1` with `CUDA==11.8`:
+  For examples, to install `torch==2.0.1` with `CUDA==11.8`:
 
-```bash
-conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.8 -c pytorch -c nvidia
-# or
-pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
-```
+  ```bash
+  conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.8 -c pytorch -c nvidia
+  # or
+  pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
+  ```
 
 - Install `timm==0.6.11` and `mmcv-full==1.6.2`:
 
-```bash
-pip install -U openmim
-pip install timm==0.6.11
-mim install mmcv-full==1.6.2
-```
+  ```bash
+  pip install -U openmim
+  pip install timm==0.6.11
+  mim install mmcv-full==1.6.2
+  ```
 
 - Install `apex`:
 
-```bash
-git clone https://github.com/NVIDIA/apex.git
-git checkout 2386a912164b0c5cfcd8be7a2b890fbac5607c82  # https://github.com/NVIDIA/apex/issues/1735
-pip install -v --disable-pip-version-check --no-cache-dir --no-build-isolation --config-settings "--build-option=--cpp_ext" --config-settings "--build-option=--cuda_ext" ./
-```
+  ```bash
+  git clone https://github.com/NVIDIA/apex.git
+  git checkout 2386a912164b0c5cfcd8be7a2b890fbac5607c82  # https://github.com/NVIDIA/apex/issues/1735
+  pip install -v --disable-pip-version-check --no-cache-dir --no-build-isolation --config-settings "--build-option=--cpp_ext" --config-settings "--build-option=--cuda_ext" ./
+  ```
 
 - Install other requirements:
 
-```bash
-pip install opencv-python termcolor yacs pyyaml scipy
-```
+  ```bash
+  pip install opencv-python termcolor yacs pyyaml scipy
+  ```
 
 ## 📦 Data Preparation
 
@@ -63,7 +63,7 @@ pip install opencv-python termcolor yacs pyyaml scipy
   gdown --id 1Mj0i5HBthqH1p_yeXzsg22gZduvgoNeA
   ```
 
-Please prepare the ImageNet-1K, ImageNet-A, ImageNet-R, ImageNetV2, and ImageNet-Sketch datasets following the directory structure outlined below.
+Please prepare the `ImageNet-1K`, `ImageNet-A`, `ImageNet-R`, `ImageNetV2`, and `ImageNet-Sketch` datasets following the directory structure outlined below.
 
 ```bash
 $ tree data
@@ -93,8 +93,7 @@ data
 To train a linear classifier for `InternViT-6b` on ImageNet with 8 GPUs, run:
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py \
-  --cfg configs/intern_vit_6b_1k_224.yaml
+python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --cfg configs/intern_vit_6b_1k_224.yaml
 # or manage jobs with slurm
 GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224.yaml --launcher slurm
 ```
