@@ -155,7 +155,7 @@ ReaL Accuracy of the network on the 50000 test images: 90.4%
 
 
 <details>
-  <summary>Evaluate InternViT-6B on <b>ImageNetV2</b> with 1 GPU (click to expand).</summary>
+  <summary>Evaluate InternViT-6B on <b>ImageNetV2</b> with 8 GPUs (click to expand).</summary>
 
 
 ```bash
@@ -175,3 +175,66 @@ Accuracy of the network on the 10000 test images: 80.0%
 
 </details>
 
+<details>
+  <summary>Evaluate InternViT-6B on <b>ImageNet-A</b> with 8 GPUs (click to expand).</summary>
+
+
+```bash
+python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.py --eval \
+    --cfg configs/intern_vit_6b_1k_224_test_imagenet_a.yaml --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-a
+# or manage jobs with slurm
+GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenet_a.yaml --eval \
+    --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-a --launcher slurm
+```
+
+Expected results:
+
+```
+ * Acc@1 77.400 Acc@5 92.720
+Accuracy of the network on the 7500 test images: 77.4%
+```
+
+</details>
+
+
+<details>
+  <summary>Evaluate InternViT-6B on <b>ImageNet-R</b> with 8 GPUs (click to expand).</summary>
+
+
+```bash
+python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.py --eval \
+    --cfg configs/intern_vit_6b_1k_224_test_imagenet_r.yaml --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-r
+# or manage jobs with slurm
+GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenet_r.yaml --eval \
+    --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-r --launcher slurm
+```
+
+Expected results:
+
+```
+
+```
+
+</details>
+
+
+
+<details>
+  <summary>Evaluate InternViT-6B on <b>ImageNet-Sketch</b> with 8 GPUs (click to expand).</summary>
+
+
+```bash
+python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.py --eval \
+    --cfg configs/intern_vit_6b_1k_224_test_imagenet_sketch.yaml --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-sketch
+# or manage jobs with slurm
+GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenet_sketch.yaml --eval \
+    --resume intern_vit_6b_224px_head.pth --data-path ./data/imagenet-sketch --launcher slurm
+```
+
+Expected results:
+
+```
+
+```
+
+</details>
