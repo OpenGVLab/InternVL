@@ -4,7 +4,6 @@ This folder contains the implementation of the InternViT-6B for semantic segment
 
 Our segmentation code is developed on top of [MMSegmentation v0.30.0](https://github.com/open-mmlab/mmsegmentation/tree/v0.30.0).
 
-
 ## 🛠️ Install
 
 - Clone this repo:
@@ -40,7 +39,7 @@ Our segmentation code is developed on top of [MMSegmentation v0.30.0](https://gi
   pip install opencv-python
   ```
 
-- Install `timm==0.6.11` and `mmcv==1.6.2` and `mmsegmentation==0.30.0':
+- Install `timm==0.6.11` and `mmcv==1.6.2` and \`mmsegmentation==0.30.0':
 
   ```bash
   pip install -U openmim
@@ -60,8 +59,6 @@ Our segmentation code is developed on top of [MMSegmentation v0.30.0](https://gi
 
 Prepare datasets according to the [guidelines](https://github.com/open-mmlab/mmsegmentation/blob/master/docs/en/dataset_prepare.md#prepare-datasets) in MMSegmentation.
 
-
-
 ## 🔥 Training
 
 > Please note, this open-source code does not include DeepSpeed, so it currently only supports training for linear probing and head tuning, and does not support full-parameter training.
@@ -75,7 +72,6 @@ GPUS=8 sh slurm_train.sh <partition> <job-name> configs/intern_vit_6b/linear_pro
 ```
 
 ## 📊 Evaluation
-
 
 You can download checkpoints from [here](./). Then place it to `segmentation/checkpoints`.
 

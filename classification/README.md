@@ -53,11 +53,15 @@ This folder contains the implementation of the InternViT-6B for image classifica
 ## 📦 Data Preparation
 
 - `ImageNet-1K`: We use the standard ImageNet dataset, you can download it from [http://image-net.org/](http://image-net.org/).
+
 - `ImageNet-A`: Download it from [https://people.eecs.berkeley.edu/~hendrycks/imagenet-a.tar](https://people.eecs.berkeley.edu/~hendrycks/imagenet-a.tar).
+
 - `ImageNet-R`: Download it from [https://people.eecs.berkeley.edu/~hendrycks/imagenet-r.tar](https://people.eecs.berkeley.edu/~hendrycks/imagenet-r.tar).
+
 - `ImageNetV2`: Download it from [https://imagenetv2public.s3-us-west-2.amazonaws.com/imagenetv2-matched-frequency.tar.gz](https://imagenetv2public.s3-us-west-2.amazonaws.com/imagenetv2-matched-frequency.tar.gz).
+
 - `ImageNet-Sketch`: Download it using `gdown`.
-  
+
   ```shell
   # GDown is needed to download the dataset. Please install it via `pip install gdown`
   gdown --id 1Mj0i5HBthqH1p_yeXzsg22gZduvgoNeA
@@ -89,6 +93,7 @@ data
 ```
 
 Then, unzip the `train.txt.zip` and `val.txt.zip` in `meta_data/`.
+
 ```shell
 cd meta_data/
 unzip train.txt.zip
@@ -107,8 +112,8 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224.yaml
 
 ## 📊 Evaluation
 
-| model name                  | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |                              download                               |
-| --------------------------- | :---: | :-----: | :---: | :--: | :--: | :-------: | :-----------------------------------------------------------------: |
+| model name                                                     | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |                                                                               download                                                                               |
+| -------------------------------------------------------------- | :---: | :-----: | :---: | :--: | :--: | :-------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | [intern_vit_6b_1k_224.yaml](configs/intern_vit_6b_1k_224.yaml) | 88.2  |  90.4   | 80.0  | 77.5 | 89.8 |   69.1    | [ckpt](https://github.com/OpenGVLab/InternVL/releases/download/classification/intern_vit_6b_224px_head.pth) \| [log](./work_dirs/intern_vit_6b_1k_224/log_rank0.txt) |
 
 <details>
