@@ -106,7 +106,7 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224.yaml
 
 | model name | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |
 |--------|:------------------:|:------:|:------:| :------:|:------:|:------:|
-| `intern_vit_6b_1k_224.yaml` | 88.2 | 90.4 | 80.0 | 77.4 | 89.8 | 69.0 |
+| `intern_vit_6b_1k_224.yaml` | 88.2 | 90.4 | 80.0 | 77.5 | 89.8 | 69.1 |
 
 <details>
   <summary>Evaluate InternViT-6B on <b>ImageNet-1K val</b> with 8 GPUs (click to expand).</summary>
@@ -123,7 +123,7 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224.yaml
 Expected results:
 
 ```
- * Acc@1 88.244 Acc@5 98.470
+ * Acc@1 88.230 Acc@5 98.474
 Accuracy of the network on the 50000 test images: 88.2%
 ```
 
@@ -146,7 +146,7 @@ GPUS=1 GPUS_PER_NODE=1 sh train_in1k.sh <partition> <job-name> configs/intern_vi
 Expected results:
 
 ```
-* ReaL Acc@1 90.377 Acc@5 98.557 loss 0.596
+* ReaL Acc@1 90.439 Acc@5 98.572 loss 0.605
 ReaL Accuracy of the network on the 50000 test images: 90.4%
 ```
 
@@ -169,7 +169,7 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test
 Expected results:
 
 ```
- * Acc@1 79.960 Acc@5 95.300
+ * Acc@1 79.960 Acc@5 95.340
 Accuracy of the network on the 10000 test images: 80.0%
 ```
 
@@ -190,8 +190,8 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test
 Expected results:
 
 ```
- * Acc@1 77.400 Acc@5 92.720
-Accuracy of the network on the 7500 test images: 77.4%
+ * Acc@1 77.479 Acc@5 92.724
+Accuracy of the network on the 7500 test images: 77.5%
 ```
 
 </details>
@@ -212,7 +212,7 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test
 Expected results:
 
 ```
- * Acc@1 89.797 Acc@5 97.017
+ * Acc@1 89.783 Acc@5 97.023
 Accuracy of the network on the 30000 test images: 89.8%
 ```
 
@@ -235,8 +235,8 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test
 Expected results:
 
 ```
- * Acc@1 68.939 Acc@5 88.317
-Accuracy of the network on the 50889 test images: 68.9%
+ * Acc@1 69.102 Acc@5 88.333
+Accuracy of the network on the 50889 test images: 69.1%
 ```
 
 </details>
