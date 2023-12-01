@@ -69,6 +69,8 @@ CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl 
 Expected results:
 
 ```
+{"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.83216, "acc5": 0.97318, "mean_per_class_recall": 0.83214}, "language": "en"}
 ```
 
 </details>
@@ -85,7 +87,8 @@ CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl 
 Expected results:
 
 ```
-
+{"dataset": "imagenet-a", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.8376, "acc5": 0.9552, "mean_per_class_recall": 0.8185692974609302}, "language": "en"}
 ```
 
 </details>
@@ -102,7 +105,8 @@ CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl 
 Expected results:
 
 ```
-
+{"dataset": "imagenet-r", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.9547333333333333, "acc5": 0.9918333333333333, "mean_per_class_recall": 0.9457395156627574}, "language": "en"}
 ```
 
 </details>
@@ -119,6 +123,8 @@ CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl 
 Expected results:
 
 ```
+{"dataset": "imagenetv2", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.7717, "acc5": 0.9468, "mean_per_class_recall": 0.7724}, "language": "en"}
 ```
 
 </details>
@@ -135,7 +141,8 @@ CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl 
 Expected results:
 
 ```
-
+{"dataset": "imagenet_sketch", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.7383520996679046, "acc5": 0.9200220086855706, "mean_per_class_recall": 0.7386588235294118}, "language": "en"}
 ```
 
 </details>
@@ -152,6 +159,8 @@ CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl 
 Expected results:
 
 ```
+{"dataset": "objectnet", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.8058576504791645, "acc5": 0.9386777215462474, "mean_per_class_recall": 0.7967581578671181}, "language": "en"}
 ```
 
 </details>
