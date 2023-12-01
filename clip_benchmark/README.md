@@ -50,131 +50,112 @@ This folder contains the implementation of InternVL for image classification and
 
 ## 📦 Data Preparation
 
-## 📊 Evaluation
+## 📊 Evaluation: Zero-Shot Image Classification
 
-- classification:
 
-| model name | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |                                                                       download                                                                       |
+| model name | IN-1K | IN-A | IN-R | IN-V2 | IN-Sketch | ObjectNet |                                                                       download                                                                       |
 | ---------- | :---: | :-----: | :---: | :--: | :--: | :-------: | :--------------------------------------------------------------------------------------------------------------------------------------------------: |
-| internvl_c | 88.2  |  90.4   | 80.0  | 77.5 | 89.8 |   69.1    | [ckpt](https://huggingface.co/OpenGVLab/InternVL/resolve/main/intern_vit_6b_224px_head.pth) \| [log](./work_dirs/intern_vit_6b_1k_224/log_rank0.txt) |
+| InternVL-C | 83.2  |  83.8   | 95.5  | 77.3 | 73.9 |   80.6    | [ckpt](https://huggingface.co/OpenGVLab/InternVL/resolve/main/internvl_c_13b_224px.pth) |
 
 <details>
-  <summary>Evaluate InternVL-C on <b>ImageNet-1K val</b> with 1 GPUs (click to expand).</summary>
+  <summary>[InternVL-C] ImageNet-1K val (click to expand)</summary>
 
 ```bash
-python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
-    --task "zeroshot_classification"  --dataset "imagenet1k" --dataset_root ./data/imagenet-1k/ \
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
+    --task "zeroshot_classification" --dataset "imagenet1k" --dataset_root ./data/imagenet-1k/ \
     --model internvl_c_classification --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
 ```
 
 Expected results:
 
 ```
- * Acc@1 88.230 Acc@5 98.474
-Accuracy of the network on the 50000 test images: 88.2%
 ```
 
 </details>
 
 <details>
-  <summary>Evaluate InternViT-6B on <b>ImageNet-ReaL</b> with 1 GPU (click to expand).</summary>
+  <summary>[InternVL-C] ImageNet-A (click to expand)</summary>
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.py --eval \
-    --cfg configs/intern_vit_6b_1k_224_test_imagenet_real.yaml --resume pretrained/intern_vit_6b_224px_head.pth
-# or manage jobs with slurm
-GPUS=1 GPUS_PER_NODE=1 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenet_real.yaml --eval \
-    --resume pretrained/intern_vit_6b_224px_head.pth --launcher slurm
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
+    --task "zeroshot_classification" --dataset "imagenet-a" --dataset_root ./data/imagenet-a/ \
+    --model internvl_c_classification --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
 ```
 
 Expected results:
 
 ```
-* ReaL Acc@1 90.439 Acc@5 98.572 loss 0.605
-ReaL Accuracy of the network on the 50000 test images: 90.4%
+
 ```
 
 </details>
 
 <details>
-  <summary>Evaluate InternViT-6B on <b>ImageNetV2</b> with 8 GPUs (click to expand).</summary>
+  <summary>[InternVL-C] ImageNet-R (click to expand)</summary>
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
-    --cfg configs/intern_vit_6b_1k_224_test_imagenetv2.yaml --resume pretrained/intern_vit_6b_224px_head.pth
-# or manage jobs with slurm
-GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenetv2.yaml --eval \
-    --resume pretrained/intern_vit_6b_224px_head.pth --launcher slurm
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
+    --task "zeroshot_classification" --dataset "imagenet-r" --dataset_root ./data/imagenet-r/ \
+    --model internvl_c_classification --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
 ```
 
 Expected results:
 
 ```
- * Acc@1 79.960 Acc@5 95.340
-Accuracy of the network on the 10000 test images: 80.0%
+
 ```
 
 </details>
 
 <details>
-  <summary>Evaluate InternViT-6B on <b>ImageNet-A</b> with 8 GPUs (click to expand).</summary>
+  <summary>[InternVL-C] ImageNet-V2 (click to expand)</summary>
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
-    --cfg configs/intern_vit_6b_1k_224_test_imagenet_a.yaml --resume pretrained/intern_vit_6b_224px_head.pth
-# or manage jobs with slurm
-GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenet_a.yaml --eval \
-    --resume pretrained/intern_vit_6b_224px_head.pth --launcher slurm
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
+    --task "zeroshot_classification" --dataset "imagenetv2" --dataset_root ./data/imagenetv2/ \
+    --model internvl_c_classification --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
 ```
 
 Expected results:
 
 ```
- * Acc@1 77.479 Acc@5 92.724
-Accuracy of the network on the 7500 test images: 77.5%
 ```
 
 </details>
 
 <details>
-  <summary>Evaluate InternViT-6B on <b>ImageNet-R</b> with 8 GPUs (click to expand).</summary>
+  <summary>[InternVL-C] ImageNet-Sketch (click to expand)</summary>
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
-    --cfg configs/intern_vit_6b_1k_224_test_imagenet_r.yaml --resume pretrained/intern_vit_6b_224px_head.pth
-# or manage jobs with slurm
-GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenet_r.yaml --eval \
-    --resume pretrained/intern_vit_6b_224px_head.pth --launcher slurm
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
+    --task "zeroshot_classification" --dataset "imagenet_sketch" --dataset_root ./data/imagenet-sketch/ \
+    --model internvl_c_classification --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
 ```
 
 Expected results:
 
 ```
- * Acc@1 89.783 Acc@5 97.023
-Accuracy of the network on the 30000 test images: 89.8%
+
 ```
 
 </details>
 
 <details>
-  <summary>Evaluate InternViT-6B on <b>ImageNet-Sketch</b> with 8 GPUs (click to expand).</summary>
+  <summary>[InternVL-C] ObjectNet (click to expand)</summary>
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
-    --cfg configs/intern_vit_6b_1k_224_test_imagenet_sketch.yaml --resume pretrained/intern_vit_6b_224px_head.pth
-# or manage jobs with slurm
-GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test_imagenet_sketch.yaml --eval \
-    --resume pretrained/intern_vit_6b_224px_head.pth --launcher slurm
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
+    --task "zeroshot_classification" --dataset "objectnet" --dataset_root ./data/objectnet-1.0/ \
+    --model internvl_c_classification --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
 ```
 
 Expected results:
 
 ```
- * Acc@1 69.102 Acc@5 88.333
-Accuracy of the network on the 50889 test images: 69.1%
 ```
 
 </details>
+
 
 # CLIP Benchmark
 
