@@ -50,69 +50,21 @@ This folder contains the implementation of InternVL for image classification and
 
 ## 📦 Data Preparation
 
-- `ImageNet-1K`: We use the standard ImageNet dataset, you can download it from [http://image-net.org/](http://image-net.org/).
-
-- `ImageNet-A`: Download it from [https://people.eecs.berkeley.edu/~hendrycks/imagenet-a.tar](https://people.eecs.berkeley.edu/~hendrycks/imagenet-a.tar).
-
-- `ImageNet-R`: Download it from [https://people.eecs.berkeley.edu/~hendrycks/imagenet-r.tar](https://people.eecs.berkeley.edu/~hendrycks/imagenet-r.tar).
-
-- `ImageNetV2`: Download it from [https://imagenetv2public.s3-us-west-2.amazonaws.com/imagenetv2-matched-frequency.tar.gz](https://imagenetv2public.s3-us-west-2.amazonaws.com/imagenetv2-matched-frequency.tar.gz).
-
-- `ImageNet-Sketch`: Download it using `gdown`.
-
-  ```shell
-  # GDown is needed to download the dataset. Please install it via `pip install gdown`
-  gdown --id 1Mj0i5HBthqH1p_yeXzsg22gZduvgoNeA
-  ```
-
-First, please prepare the `ImageNet-1K`, `ImageNet-A`, `ImageNet-R`, `ImageNetV2`, and `ImageNet-Sketch` datasets following the directory structure outlined below.
-
-```bash
-$ tree data
-data
-├── imagenet-1k
-│         ├── train
-          │    ├── n01498041
-          │    └── ...
-│         └── val
-│              ├── ILSVRC2012_val_00000001.JPEG
-│              └── ...
-├── imagenet-a
-│         ├── n01498041
-│         └── ...
-├── imagenet-r
-│         ├── n01443537
-│         └── ...
-├── imagenet-sketch
-│         ├── n01440764
-│         └── ...
-└── imagenetv2
-    └── ImageNetV2-matched-frequency
-```
-
-Then, unzip the `train.txt.zip` and `val.txt.zip` in `meta_data/`.
-
-```shell
-cd meta_data/
-unzip train.txt.zip
-unzip val.txt.zip
-```
-
 ## 📊 Evaluation
+
+- classification:
 
 | model name | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |                                                                       download                                                                       |
 | ---------- | :---: | :-----: | :---: | :--: | :--: | :-------: | :--------------------------------------------------------------------------------------------------------------------------------------------------: |
 | internvl_c | 88.2  |  90.4   | 80.0  | 77.5 | 89.8 |   69.1    | [ckpt](https://huggingface.co/OpenGVLab/InternVL/resolve/main/intern_vit_6b_224px_head.pth) \| [log](./work_dirs/intern_vit_6b_1k_224/log_rank0.txt) |
 
 <details>
-  <summary>Evaluate InternViT-6B on <b>ImageNet-1K val</b> with 8 GPUs (click to expand).</summary>
+  <summary>Evaluate InternVL-C on <b>ImageNet-1K val</b> with 1 GPUs (click to expand).</summary>
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node 8 --master_port 12345 main.py --eval \
-    --cfg configs/intern_vit_6b_1k_224.yaml --resume pretrained/intern_vit_6b_224px_head.pth
-# or manage jobs with slurm
-GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224.yaml --eval \
-    --resume pretrained/intern_vit_6b_224px_head.pth --launcher slurm
+python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
+    --task "zeroshot_classification"  --dataset "imagenet1k" --dataset_root ./data/imagenet-1k/ \
+    --model internvl_c_classification --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
 ```
 
 Expected results:
