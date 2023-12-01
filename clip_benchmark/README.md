@@ -52,15 +52,23 @@ This folder contains the implementation of InternVL for image classification and
 
 ## 📊 Evaluation: Zero-Shot Image Classification
 
+**ImageNet variants and ObjectNet**
 
-| model name | IN-1K | IN-A | IN-R | IN-V2 | IN-Sketch | ObjectNet |                                                                       download                                                                       |
-| :----------: | :---: | :-----: | :---: | :--: | :--: | :-------: | :--------------------------------------------------------------------------------------------------------------------------------------------------: |
-| InternVL-C | 83.2  |  83.8   | 95.5  | 77.3 | 73.9 |   80.6    | [ckpt](https://huggingface.co/OpenGVLab/InternVL/resolve/main/internvl_c_13b_224px.pth) |
+| model name | IN-1K | IN-A | IN-R | IN-V2 | IN-Sketch | ObjectNet | 
+| :----------: | :---: | :-----: | :---: | :--: | :--: | :-------: | 
+| InternVL-C | 83.2  |  83.8   | 95.5  | 77.3 | 73.9 |   80.6    | 
+
+**Multilingual ImageNet-1K**
 
 | model name | IN-1K (EN) | IN-1K (ZH) | IN-1K (JP) | IN-1K (AR) | IN-1K (IT) | average | 
 | :----------: | :---: | :-----: | :---: | :--: | :--: | :-------: | 
 | InternVL-C | 83.2  |  64.4   | 61.5  | 44.9 | 65.7 |   64.0    | 
 
+**Other Datasets**
+
+| model name | IN-1K (EN) | IN-1K (ZH) | IN-1K (JP) | IN-1K (AR) | IN-1K (IT) | average | 
+| :----------: | :---: | :-----: | :---: | :--: | :--: | :-------: | 
+| InternVL-C | 83.2  |  64.4   | 61.5  | 44.9 | 65.7 |   64.0    | 
 
 <details>
   <summary>[InternVL-C] ImageNet-1K val (click to expand)</summary>
