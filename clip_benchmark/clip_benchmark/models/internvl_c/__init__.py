@@ -56,8 +56,8 @@ def build_transform(task, image_size=224, mean=[0.485, 0.456, 0.406], std=[0.229
 def get_model_and_transform(task, image_size, device):
     llm_path = os.path.split(os.path.realpath(__file__))[0]
     llm_path = os.path.join(llm_path, 'chinese_alpaca_lora_7b')
-    model = InternVL_C(img_size=image_size, layerscale_force_fp32=False, llm_path=llm_path)
-    model = model.to(device).to(torch.bfloat16)
+    model = InternVL_C(img_size=image_size, layerscale_force_fp32=True, llm_path=llm_path)
+    model = model.to(torch.float16).to(device)
     transform = build_transform(task, image_size)
     return model, transform
 
@@ -68,6 +68,5 @@ def load_internvl_c(ckpt_path, device, task, image_size=224):
     tokenizer = InternVLTokenizer(llm_path)
     model, transform = get_model_and_transform(task=task, image_size=image_size, device=device)
     ckpt = torch.load(ckpt_path, map_location='cpu')
-    message = model.load_state_dict(ckpt, strict=False)
-    print(message)
+    model.load_state_dict(ckpt, strict=False)
     return model, transform, tokenizer

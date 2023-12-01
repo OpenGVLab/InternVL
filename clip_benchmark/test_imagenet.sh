@@ -27,7 +27,7 @@ s1a --async python3 clip_benchmark/cli.py eval --model_type internvl --language 
     --model internvl_c_classification --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
 
 s1a --async python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
-    --task "zeroshot_classification" --dataset "imagenet_sketch" --dataset_root ./data/sketch/ \
+    --task "zeroshot_classification" --dataset "imagenet_sketch" --dataset_root ./data/imagenet-sketch/ \
     --model internvl_c_classification --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
 
 s1a --async python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
