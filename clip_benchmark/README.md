@@ -192,7 +192,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.6446, "acc5": 0.87842, "mean_per_class_recall": 0.6446}, "language": "cn"}
+"metrics": {"acc1": 0.6446, "acc5": 0.87842, "mean_per_class_recall": 0.6442}, "language": "cn"}
 ```
 
 </details>
