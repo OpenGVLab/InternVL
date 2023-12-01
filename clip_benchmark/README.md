@@ -71,7 +71,7 @@ This folder contains the implementation of InternVL for image classification and
 | InternVL-C | 83.2  |  64.4   | 61.5  | 44.9 | 65.7 |   64.0    | 
 
 <details>
-  <summary>[InternVL-C] ImageNet-1K val (click to expand)</summary>
+  <summary>[InternVL-C] ImageNet-1K val</summary>
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
@@ -89,7 +89,7 @@ Expected results:
 </details>
 
 <details>
-  <summary>[InternVL-C] ImageNet-A (click to expand)</summary>
+  <summary>[InternVL-C] ImageNet-A</summary>
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
@@ -107,7 +107,7 @@ Expected results:
 </details>
 
 <details>
-  <summary>[InternVL-C] ImageNet-R (click to expand)</summary>
+  <summary>[InternVL-C] ImageNet-R</summary>
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
@@ -125,7 +125,7 @@ Expected results:
 </details>
 
 <details>
-  <summary>[InternVL-C] ImageNet-V2 (click to expand)</summary>
+  <summary>[InternVL-C] ImageNet-V2</summary>
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
@@ -143,7 +143,7 @@ Expected results:
 </details>
 
 <details>
-  <summary>[InternVL-C] ImageNet-Sketch (click to expand)</summary>
+  <summary>[InternVL-C] ImageNet-Sketch</summary>
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
@@ -161,7 +161,7 @@ Expected results:
 </details>
 
 <details>
-  <summary>[InternVL-C] ObjectNet (click to expand)</summary>
+  <summary>[InternVL-C] ObjectNet</summary>
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
@@ -178,6 +178,80 @@ Expected results:
 
 </details>
 
+
+<details>
+  <summary>[InternVL-C] ImageNet-1K val (ZH, Chinese)</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" \
+    --task "zeroshot_classification" --dataset "imagenet1k" --dataset_root ./data/imagenet-1k/ \
+    --model internvl_c_classification --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.6446, "acc5": 0.87842, "mean_per_class_recall": 0.6446}, "language": "cn"}
+```
+
+</details>
+
+
+<details>
+  <summary>[InternVL-C] ImageNet-1K val (JP, Japanese)</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "jp" \
+    --task "zeroshot_classification" --dataset "imagenet1k" --dataset_root ./data/imagenet-1k/ \
+    --model internvl_c_classification --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.61478, "acc5": 0.8116, "mean_per_class_recall": 0.61402}, "language": "jp"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] ImageNet-1K val (AR, Arabic)</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "ar" \
+    --task "zeroshot_classification" --dataset "imagenet1k" --dataset_root ./data/imagenet-1k/ \
+    --model internvl_c_classification --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.44854, "acc5": 0.66408, "mean_per_class_recall": 0.44758}, "language": "ar"}
+```
+
+</details>
+
+
+<details>
+  <summary>[InternVL-C] ImageNet-1K val (IT, Italian)</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "it" \
+    --task "zeroshot_classification" --dataset "imagenet1k" --dataset_root ./data/imagenet-1k/ \
+    --model internvl_c_classification --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.6568, "acc5": 0.85258, "mean_per_class_recall": 0.65564}, "language": "it"}
+```
+
+</details>
 
 # CLIP Benchmark
 
