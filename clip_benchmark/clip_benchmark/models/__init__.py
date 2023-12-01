@@ -1,11 +1,8 @@
-from functools import partial
 from typing import Union
 
 import torch
 
-from .internvl_c import load_internvl_clip as load_internvl_clip
-from .internvl_c_hf import load_internvl_clip as load_internvl_clip_hf
-from .internvl_g_hf import load_internvl_qformer as load_internvl_qformer_hf
+from .internvl import load_internvl
 from .japanese_clip import load_japanese_clip
 from .open_clip import load_open_clip
 
@@ -13,12 +10,7 @@ from .open_clip import load_open_clip
 TYPE2FUNC = {
     'open_clip': load_open_clip,
     'ja_clip': load_japanese_clip,
-    'internvl_clip_retrieval': partial(load_internvl_clip, task='retrieval'),
-    'internvl_clip_classification': partial(load_internvl_clip, task='classification'),
-    'internvl_clip_hf_retrieval': partial(load_internvl_clip_hf, task='retrieval'),
-    'internvl_clip_hf_classification': partial(load_internvl_clip_hf, task='classification'),
-    'internvl_qformer_hf_retrieval': partial(load_internvl_qformer_hf, task='retrieval'),
-    'internvl_qformer_hf_classification': partial(load_internvl_qformer_hf, task='classification'),
+    'internvl': load_internvl,
 }
 MODEL_TYPES = list(TYPE2FUNC.keys())
 

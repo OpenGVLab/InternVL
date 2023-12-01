@@ -1,3 +1,4 @@
+# https://github.com/Dao-AILab/flash-attention/blob/v0.2.8/flash_attn/flash_attention.py
 import torch
 import torch.nn as nn
 from einops import rearrange

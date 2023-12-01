@@ -326,7 +326,7 @@ class InternVL_C(nn.Module):
     def __init__(self, in_chans=3, patch_size=14, img_size=224, qkv_bias=False, drop_path_rate=0.0,
                  embed_dim=3200, num_heads=25, mlp_ratio=4, init_values=0.1, qk_normalization=True, depth=48,
                  use_flash_attn=True, with_cp=True, layerscale_force_fp32=False, context_length: int = 80,
-                 transformer_width=4096, llama_path=None, attn_pool_num_heads=16, clip_embed_dim=768):
+                 transformer_width=4096, llm_path=None, attn_pool_num_heads=16, clip_embed_dim=768):
         super().__init__()
 
         self.use_flash_attn = use_flash_attn
@@ -335,7 +335,7 @@ class InternVL_C(nn.Module):
         self.transformer_width = transformer_width
 
         """ text encoder of InternVL """
-        llama_config = LlamaConfig.from_pretrained(llama_path)
+        llama_config = LlamaConfig.from_pretrained(llm_path)
         model = LlamaForCausalLM(llama_config)
         self.transformer = model.model
 
@@ -363,6 +363,7 @@ class InternVL_C(nn.Module):
                   qk_normalization=qk_normalization,
                   layerscale_force_fp32=layerscale_force_fp32)
             for i in range(depth)])
+
         self.clip_projector = AttentionPoolingBlock(
             dim=embed_dim, num_heads=attn_pool_num_heads, qkv_bias=True, qk_scale=None,
             drop=0., attn_drop=0., norm_layer=partial(nn.LayerNorm, eps=1e-5), out_dim=clip_embed_dim)
