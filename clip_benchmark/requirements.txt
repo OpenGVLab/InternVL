@@ -1,8 +1,13 @@
 open_clip_torch>=0.2.1
+opencv-python
+peft==0.6.2
 pycocoevalcap
+pyyaml
 scikit-learn>=1.0,<2
-torch>=1.8.1,<2
-torchvision>=0.8.9,<2
+scikit-learn
+scipy
+termcolor
 tqdm>=2
-transformers
+transformers==4.32.0
 webdataset>=0.2.31
+yacs

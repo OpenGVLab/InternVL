@@ -3,10 +3,9 @@ from typing import Union
 
 import torch
 
-from .internvl_clip import load_internvl_clip
-from .internvl_hf_stage1 import load_internvl_clip as load_internvl_clip_hf
-from .internvl_hf_stage2 import \
-    load_internvl_qformer as load_internvl_qformer_hf
+from .internvl_c import load_internvl_clip as load_internvl_clip
+from .internvl_c_hf import load_internvl_clip as load_internvl_clip_hf
+from .internvl_g_hf import load_internvl_qformer as load_internvl_qformer_hf
 from .japanese_clip import load_japanese_clip
 from .open_clip import load_open_clip
 

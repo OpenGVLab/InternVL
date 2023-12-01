@@ -14,8 +14,7 @@ from clip_benchmark.datasets.builder import (build_dataset, dataset_collection,
                                              get_dataset_default_task)
 from clip_benchmark.metrics import (linear_probe, mscoco_generative,
                                     zeroshot_classification,
-                                    zeroshot_retrieval,
-                                    zeroshot_retrieval_with_itm)
+                                    zeroshot_retrieval)
 from clip_benchmark.model_collection import (get_model_collection_from_file,
                                              model_collection)
 from clip_benchmark.models import MODEL_TYPES, load_clip
