@@ -62,13 +62,13 @@ This folder contains the implementation of InternVL for image classification and
 
 | model name | IN-1K (EN) | IN-1K (ZH) | IN-1K (JP) | IN-1K (AR) | IN-1K (IT) | average | 
 | :----------: | :---: | :-----: | :---: | :--: | :--: | :-------: | 
-| InternVL-C | 83.2  |  64.4   | 61.5  | 44.9 | 65.7 |   64.0    | 
+| InternVL-C | 83.2  |  64.5   | 61.5  | 44.9 | 65.7 |   64.0    | 
 
 **Other Datasets**
 
 | model name | IN-1K (EN) | IN-1K (ZH) | IN-1K (JP) | IN-1K (AR) | IN-1K (IT) | average | 
 | :----------: | :---: | :-----: | :---: | :--: | :--: | :-------: | 
-| InternVL-C | 83.2  |  64.4   | 61.5  | 44.9 | 65.7 |   64.0    | 
+| InternVL-C | 83.2  |  64.5   | 61.5  | 44.9 | 65.7 |   64.0    | 
 
 <details>
   <summary>[InternVL-C] ImageNet-1K val</summary>
