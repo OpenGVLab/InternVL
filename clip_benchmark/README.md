@@ -155,7 +155,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet_sketch", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.7383520996679046, "acc5": 0.9200220086855706, "mean_per_class_recall": 0.7386588235294118}, "language": "en"}
+"metrics": {"acc1": 0.738568256401187, "acc5": 0.9200809605219202, "mean_per_class_recall": 0.7386603921568629}, "language": "en"}
 ```
 
 </details>
