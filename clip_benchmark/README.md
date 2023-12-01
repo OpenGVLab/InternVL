@@ -54,9 +54,9 @@ This folder contains the implementation of InternVL for image classification and
 
 **ImageNet variants and ObjectNet**
 
-| model name | IN-1K | IN-A | IN-R | IN-V2 | IN-Sketch | ObjectNet | 
-| :----------: | :---: | :-----: | :---: | :--: | :--: | :-------: | 
-| InternVL-C | 83.2  |  83.8   | 95.5  | 77.3 | 73.9 |   80.6    | 
+| model name | IN-1K | IN-A | IN-R | IN-V2 | IN-Sketch | ObjectNet | ∆ | average | 
+| :----------: | :---: | :-----: | :---: | :--: | :--: | :-------: | :-------: |  :-------: | 
+| InternVL-C | 83.2  |  83.8   | 95.5  | 77.3 | 73.9 |   80.6    | 0.8 | 82.4 |
 
 **Multilingual ImageNet-1K**
 
@@ -83,7 +83,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.83216, "acc5": 0.97318, "mean_per_class_recall": 0.83214}, "language": "en"}
+"metrics": {"acc1": 0.83196, "acc5": 0.97322, "mean_per_class_recall": 0.83212}, "language": "en"}
 ```
 
 </details>
@@ -101,7 +101,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet-a", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.8376, "acc5": 0.9552, "mean_per_class_recall": 0.8185692974609302}, "language": "en"}
+"metrics": {"acc1": 0.8378666666666666, "acc5": 0.9558666666666666, "mean_per_class_recall": 0.818903532103108}, "language": "en"}
 ```
 
 </details>
@@ -119,7 +119,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet-r", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.9547333333333333, "acc5": 0.9918333333333333, "mean_per_class_recall": 0.9457395156627574}, "language": "en"}
+"metrics": {"acc1": 0.9549666666666666, "acc5": 0.9918333333333333, "mean_per_class_recall": 0.9458947085263395}, "language": "en"}
 ```
 
 </details>
@@ -137,7 +137,7 @@ Expected results:
 
 ```
 {"dataset": "imagenetv2", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.7717, "acc5": 0.9468, "mean_per_class_recall": 0.7724}, "language": "en"}
+"metrics": {"acc1": 0.7726, "acc5": 0.9468, "mean_per_class_recall": 0.7738000000000001}, "language": "en"}
 ```
 
 </details>
@@ -173,7 +173,7 @@ Expected results:
 
 ```
 {"dataset": "objectnet", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.8058576504791645, "acc5": 0.9386777215462474, "mean_per_class_recall": 0.7967581578671181}, "language": "en"}
+"metrics": {"acc1": 0.8057499730806503, "acc5": 0.9389469150425326, "mean_per_class_recall": 0.7969509016675933}, "language": "en"}
 ```
 
 </details>
