@@ -610,6 +610,8 @@ Expected results:
 
 ## 📊 Evaluation: Image-Text Retrieval
 
+**Flickr30K \& COCO**
+
 <table>
    <tr  align=center>
       <td rowspan="2" align=center><b>model</b></td>
@@ -751,6 +753,66 @@ Expected results:
 ```
 
 </details>
+
+**XTD**
+
+| model name | EN         | ES         | FR         | ZH         | IT         | KO      | RU     | JP     | average |
+| :--------: | :--------: | :--------: | :--------: | :--------: | :--------: | :-----: |:-----: |:-----: |:-----:  |
+| InternVL-C |   97.3     | 95.7       | 95.1       | 95.6       | 96.0       | 92.1    | 93.4   | 95.5   | 95.1    |
+| InternVL-G |   98.6     | 97.7       | 96.5       | 96.7       | 96.9       | 95.1    | 94.8   | 96.1   | 96.6    |
+
+<details>
+  <summary>[InternVL-C] XTD</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_retrieval" \
+    --dataset "multilingual_mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_c_retrieval \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json --language=en
+
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_retrieval" \
+    --dataset "multilingual_mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_c_retrieval \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json --language=es
+
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" --task "zeroshot_retrieval" \
+    --dataset "multilingual_mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_c_retrieval \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json --language=fr
+
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" --task "zeroshot_retrieval" \
+    --dataset "multilingual_mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_c_retrieval \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json --language=zh
+
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" --task "zeroshot_retrieval" \
+    --dataset "multilingual_mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_c_retrieval \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json --language=it
+
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" --task "zeroshot_retrieval" \
+    --dataset "multilingual_mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_c_retrieval \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json --language=ko
+
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" --task "zeroshot_retrieval" \
+    --dataset "multilingual_mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_c_retrieval \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json --language=ru
+
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" --task "zeroshot_retrieval" \
+    --dataset "multilingual_mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_c_retrieval \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json --language=jp
+```
+
+Expected results:
+
+```
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.7670000195503235, "text_retrieval_recall@1": 0.7480000257492065, "image_retrieval_recall@5": 0.9200000166893005, "text_retrieval_recall@5": 0.921999990940094, "image_retrieval_recall@10": 0.9670000076293945, "text_retrieval_recall@10": 0.9729999899864197}, "language": "en"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.7059999704360962, "text_retrieval_recall@1": 0.7009999752044678, "image_retrieval_recall@5": 0.9020000100135803, "text_retrieval_recall@5": 0.8960000276565552, "image_retrieval_recall@10": 0.9430000185966492, "text_retrieval_recall@10": 0.9570000171661377}, "language": "es"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6970000267028809, "text_retrieval_recall@1": 0.6899999976158142, "image_retrieval_recall@5": 0.8830000162124634, "text_retrieval_recall@5": 0.8889999985694885, "image_retrieval_recall@10": 0.9359999895095825, "text_retrieval_recall@10": 0.9509999752044678}, "language": "fr"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6489999890327454, "text_retrieval_recall@1": 0.6710000038146973, "image_retrieval_recall@5": 0.8759999871253967, "text_retrieval_recall@5": 0.8769999742507935, "image_retrieval_recall@10": 0.9419999718666077, "text_retrieval_recall@10": 0.9559999704360962}, "language": "zh"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6790000200271606, "text_retrieval_recall@1": 0.7049999833106995, "image_retrieval_recall@5": 0.8999999761581421, "text_retrieval_recall@5": 0.8999999761581421, "image_retrieval_recall@10": 0.9440000057220459, "text_retrieval_recall@10": 0.9599999785423279}, "language": "it"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.5830000042915344, "text_retrieval_recall@1": 0.5920000076293945, "image_retrieval_recall@5": 0.8399999737739563, "text_retrieval_recall@5": 0.8360000252723694, "image_retrieval_recall@10": 0.9079999923706055, "text_retrieval_recall@10": 0.9210000038146973}, "language": "ko"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6439999938011169, "text_retrieval_recall@1": 0.6439999938011169, "image_retrieval_recall@5": 0.8510000109672546, "text_retrieval_recall@5": 0.8629999756813049, "image_retrieval_recall@10": 0.9169999957084656, "text_retrieval_recall@10": 0.9340000281333923}, "language": "ru"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6340000033378601, "text_retrieval_recall@1": 0.6759999990463257, "image_retrieval_recall@5": 0.875, "text_retrieval_recall@5": 0.8989999890327454, "image_retrieval_recall@10": 0.9369999766349792, "text_retrieval_recall@10": 0.9549999833106995}, "language": "jp"}
+```
+
+</details>
+
 
 # CLIP Benchmark
 
