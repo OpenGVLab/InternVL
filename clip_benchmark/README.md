@@ -250,6 +250,70 @@ Expected results:
 | :--------: | :--------: | :--------: | :--------: | :--------: | :--------: | :-----: |
 | InternVL-C |    83.2    |    64.5    |    61.5    |    44.9    |    65.7    |  64.0   |
 
+## 📊 Evaluation: Image-Text Retrieval
+
+<table>
+   <tr  align=center>
+      <td rowspan="2" align=center><b>model</b></td>
+      <td rowspan="2" align=center><b>dataset</b></td>
+      <td colspan="3" align=center><b>image-to-text</b></td>
+      <td colspan="3" align=center><b>text-to-image</b></td>
+   </tr>
+   <tr>
+      <td>R@1</td>
+      <td>R@5</td>
+      <td>R@10</td>
+      <td>R@1</td>
+      <td>R@5</td>
+      <td>R@10</td>
+   </tr>
+
+  <tr align=center>
+      <td>InternVL-C</td>
+      <td>Flickr30K</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+   </tr>
+   
+  <tr align=center>
+      <td>InternVL-C</td>
+      <td>Flickr30K-CN</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+   </tr>
+   
+  <tr align=center>
+      <td>InternVL-C</td>
+      <td>COCO</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+   </tr>
+   
+  <tr align=center>
+      <td>InternVL-C</td>
+      <td>COCO-CN</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+   </tr>
+
+</table>
+
 # CLIP Benchmark
 
 [![pypi](https://img.shields.io/pypi/v/clip_benchmark.svg)](https://pypi.python.org/pypi/clip_benchmark)
