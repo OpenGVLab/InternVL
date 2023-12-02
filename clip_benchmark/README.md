@@ -52,7 +52,7 @@ This folder contains the implementation of InternVL for image classification and
 
 ## 📊 Evaluation: Zero-Shot Image Classification
 
-**ImageNet variants and ObjectNet**
+### ImageNet variants and ObjectNet
 
 | model name | IN-1K | IN-A | IN-R | IN-V2 | IN-Sketch | ObjectNet |  ∆  | average |
 | :--------: | :---: | :--: | :--: | :---: | :-------: | :-------: | :-: | :-----: |
@@ -166,7 +166,7 @@ Expected results:
 
 </details>
 
-**Multilingual ImageNet-1K**
+### Multilingual ImageNet-1K
 
 | model name | IN-1K (EN) | IN-1K (ZH) | IN-1K (JP) | IN-1K (AR) | IN-1K (IT) | average |
 | :--------: | :--------: | :--------: | :--------: | :--------: | :--------: | :-----: |
@@ -244,7 +244,7 @@ Expected results:
 
 </details>
 
-**Other Datasets**
+### Other Datasets
 
 <img width="1219" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/9417667d-4bd7-4385-a048-3489de8892f3">
 
@@ -610,7 +610,7 @@ Expected results:
 
 ## 📊 Evaluation: Image-Text Retrieval
 
-**Flickr30K \& COCO**
+### Flickr30K \& COCO
 
 <table>
    <tr  align=center>
@@ -754,7 +754,7 @@ Expected results:
 
 </details>
 
-**XTD**
+### XTD
 
 | model name | EN         | ES         | FR         | ZH         | IT         | KO      | RU     | JP     | average |
 | :--------: | :--------: | :--------: | :--------: | :--------: | :--------: | :-----: |:-----: |:-----: |:-----:  |
