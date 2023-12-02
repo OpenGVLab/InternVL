@@ -271,48 +271,129 @@ Expected results:
   <tr align=center>
       <td>InternVL-C</td>
       <td>Flickr30K</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>94.7</td>
+      <td>99.6</td>
+      <td>99.9</td>
+      <td>81.7</td>
+      <td>96.0</td>
+      <td>98.2</td>
    </tr>
    
   <tr align=center>
       <td>InternVL-C</td>
       <td>Flickr30K-CN</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>90.3</td>
+      <td>98.8</td>
+      <td>99.7</td>
+      <td>75.1</td>
+      <td>92.9</td>
+      <td>96.4</td>
    </tr>
    
   <tr align=center>
       <td>InternVL-C</td>
       <td>COCO</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>70.6</td>
+      <td>89.0</td>
+      <td>93.5</td>
+      <td>54.1</td>
+      <td>77.3</td>
+      <td>84.6</td>
    </tr>
    
   <tr align=center>
       <td>InternVL-C</td>
       <td>COCO-CN</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>68.8</td>
+      <td>92.0</td>
+      <td>96.7</td>
+      <td>68.9</td>
+      <td>91.9</td>
+      <td>96.5</td>
    </tr>
 
 </table>
+
+<details>
+  <summary>[InternVL-C] Flickr30K</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_retrieval" \
+    --dataset "flickr30k" --dataset_root ./data/flickr30k --model internvl_c_retrieval \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "flickr30k", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval",
+"metrics": {"image_retrieval_recall@1": 0.8166000247001648, "text_retrieval_recall@1": 0.9470000267028809,
+"image_retrieval_recall@5": 0.9603999853134155, "text_retrieval_recall@5": 0.9959999918937683,
+"image_retrieval_recall@10": 0.9819999933242798, "text_retrieval_recall@10": 0.9990000128746033}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] Flickr30K-CN</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" --task "zeroshot_retrieval" \
+    --dataset "flickr30k" --dataset_root ./data/flickr30k --model internvl_c_retrieval \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "flickr30k", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval",
+"metrics": {"image_retrieval_recall@1": 0.7509999871253967, "text_retrieval_recall@1": 0.902999997138977,
+"image_retrieval_recall@5": 0.9290000200271606, "text_retrieval_recall@5": 0.9879999756813049,
+"image_retrieval_recall@10": 0.9638000130653381, "text_retrieval_recall@10": 0.996999979019165}, "language": "cn"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] COCO</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_retrieval" \
+    --dataset "mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_c_retrieval \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval",
+"metrics": {"image_retrieval_recall@1": 0.5411835312843323, "text_retrieval_recall@1": 0.7059999704360962,
+"image_retrieval_recall@5": 0.7731707096099854, "text_retrieval_recall@5": 0.8902000188827515,
+"image_retrieval_recall@10": 0.8463414907455444, "text_retrieval_recall@10": 0.9354000091552734}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] COCO-CN</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" --task "zeroshot_retrieval" \
+    --dataset "mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_c_retrieval \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval",
+"metrics": {"image_retrieval_recall@1": 0.6885090470314026, "text_retrieval_recall@1": 0.6880000233650208,
+"image_retrieval_recall@5": 0.9192782640457153, "text_retrieval_recall@5": 0.9200000166893005,
+"image_retrieval_recall@10": 0.9648622870445251, "text_retrieval_recall@10": 0.9670000076293945}, "language": "cn"}
+```
+
+</details>
+
 
 # CLIP Benchmark
 
