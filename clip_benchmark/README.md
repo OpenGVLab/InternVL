@@ -52,13 +52,14 @@ This folder contains the implementation of InternVL for image classification and
 
 ## 📊 Evaluation: Zero-Shot Image Classification
 
+**ImageNet variants and ObjectNet**
 
-| model name | IN-1K | IN-A | IN-R | IN-V2 | IN-Sketch | ObjectNet |                                                                       download                                                                       |
-| ---------- | :---: | :-----: | :---: | :--: | :--: | :-------: | :--------------------------------------------------------------------------------------------------------------------------------------------------: |
-| InternVL-C | 83.2  |  83.8   | 95.5  | 77.3 | 73.9 |   80.6    | [ckpt](https://huggingface.co/OpenGVLab/InternVL/resolve/main/internvl_c_13b_224px.pth) |
+| model name | IN-1K | IN-A | IN-R | IN-V2 | IN-Sketch | ObjectNet | ∆ | average | 
+| :----------: | :---: | :-----: | :---: | :--: | :--: | :-------: | :-------: |  :-------: | 
+| InternVL-C | 83.2  |  83.8   | 95.5  | 77.3 | 73.9 |   80.6    | 0.8 | 82.4 |
 
 <details>
-  <summary>[InternVL-C] ImageNet-1K val (click to expand)</summary>
+  <summary>[InternVL-C] ImageNet-1K val</summary>
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
@@ -70,13 +71,13 @@ Expected results:
 
 ```
 {"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.83216, "acc5": 0.97318, "mean_per_class_recall": 0.83214}, "language": "en"}
+"metrics": {"acc1": 0.83196, "acc5": 0.97322, "mean_per_class_recall": 0.83212}, "language": "en"}
 ```
 
 </details>
 
 <details>
-  <summary>[InternVL-C] ImageNet-A (click to expand)</summary>
+  <summary>[InternVL-C] ImageNet-A</summary>
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
@@ -88,13 +89,13 @@ Expected results:
 
 ```
 {"dataset": "imagenet-a", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.8376, "acc5": 0.9552, "mean_per_class_recall": 0.8185692974609302}, "language": "en"}
+"metrics": {"acc1": 0.8378666666666666, "acc5": 0.9558666666666666, "mean_per_class_recall": 0.818903532103108}, "language": "en"}
 ```
 
 </details>
 
 <details>
-  <summary>[InternVL-C] ImageNet-R (click to expand)</summary>
+  <summary>[InternVL-C] ImageNet-R</summary>
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
@@ -106,13 +107,13 @@ Expected results:
 
 ```
 {"dataset": "imagenet-r", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.9547333333333333, "acc5": 0.9918333333333333, "mean_per_class_recall": 0.9457395156627574}, "language": "en"}
+"metrics": {"acc1": 0.9549666666666666, "acc5": 0.9918333333333333, "mean_per_class_recall": 0.9458947085263395}, "language": "en"}
 ```
 
 </details>
 
 <details>
-  <summary>[InternVL-C] ImageNet-V2 (click to expand)</summary>
+  <summary>[InternVL-C] ImageNet-V2</summary>
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
@@ -124,13 +125,13 @@ Expected results:
 
 ```
 {"dataset": "imagenetv2", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.7717, "acc5": 0.9468, "mean_per_class_recall": 0.7724}, "language": "en"}
+"metrics": {"acc1": 0.7726, "acc5": 0.9468, "mean_per_class_recall": 0.7738000000000001}, "language": "en"}
 ```
 
 </details>
 
 <details>
-  <summary>[InternVL-C] ImageNet-Sketch (click to expand)</summary>
+  <summary>[InternVL-C] ImageNet-Sketch</summary>
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
@@ -142,13 +143,13 @@ Expected results:
 
 ```
 {"dataset": "imagenet_sketch", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.7383520996679046, "acc5": 0.9200220086855706, "mean_per_class_recall": 0.7386588235294118}, "language": "en"}
+"metrics": {"acc1": 0.738568256401187, "acc5": 0.9200809605219202, "mean_per_class_recall": 0.7386603921568629}, "language": "en"}
 ```
 
 </details>
 
 <details>
-  <summary>[InternVL-C] ObjectNet (click to expand)</summary>
+  <summary>[InternVL-C] ObjectNet</summary>
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
@@ -160,10 +161,100 @@ Expected results:
 
 ```
 {"dataset": "objectnet", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.8058576504791645, "acc5": 0.9386777215462474, "mean_per_class_recall": 0.7967581578671181}, "language": "en"}
+"metrics": {"acc1": 0.8057499730806503, "acc5": 0.9389469150425326, "mean_per_class_recall": 0.7969509016675933}, "language": "en"}
 ```
 
 </details>
+
+**Multilingual ImageNet-1K**
+
+| model name | IN-1K (EN) | IN-1K (ZH) | IN-1K (JP) | IN-1K (AR) | IN-1K (IT) | average | 
+| :----------: | :---: | :-----: | :---: | :--: | :--: | :-------: | 
+| InternVL-C | 83.2  |  64.5   | 61.5  | 44.9 | 65.7 |   64.0    | 
+
+<details>
+  <summary>[InternVL-C] ImageNet-1K val (ZH, Chinese)</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" \
+    --task "zeroshot_classification" --dataset "imagenet1k" --dataset_root ./data/imagenet-1k/ \
+    --model internvl_c_classification --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.6446, "acc5": 0.87842, "mean_per_class_recall": 0.6442}, "language": "cn"}
+```
+
+</details>
+
+
+<details>
+  <summary>[InternVL-C] ImageNet-1K val (JP, Japanese)</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "jp" \
+    --task "zeroshot_classification" --dataset "imagenet1k" --dataset_root ./data/imagenet-1k/ \
+    --model internvl_c_classification --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.61478, "acc5": 0.8116, "mean_per_class_recall": 0.61402}, "language": "jp"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] ImageNet-1K val (AR, Arabic)</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "ar" \
+    --task "zeroshot_classification" --dataset "imagenet1k" --dataset_root ./data/imagenet-1k/ \
+    --model internvl_c_classification --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.44854, "acc5": 0.66408, "mean_per_class_recall": 0.44758}, "language": "ar"}
+```
+
+</details>
+
+
+<details>
+  <summary>[InternVL-C] ImageNet-1K val (IT, Italian)</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "it" \
+    --task "zeroshot_classification" --dataset "imagenet1k" --dataset_root ./data/imagenet-1k/ \
+    --model internvl_c_classification --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.6568, "acc5": 0.85258, "mean_per_class_recall": 0.65564}, "language": "it"}
+```
+
+</details>
+
+**Other Datasets**
+
+| model name | IN-1K (EN) | IN-1K (ZH) | IN-1K (JP) | IN-1K (AR) | IN-1K (IT) | average | 
+| :----------: | :---: | :-----: | :---: | :--: | :--: | :-------: | 
+| InternVL-C | 83.2  |  64.5   | 61.5  | 44.9 | 65.7 |   64.0    | 
+
+
+
+
 
 
 # CLIP Benchmark
