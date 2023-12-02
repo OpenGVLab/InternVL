@@ -3,7 +3,7 @@ set -x
 alias s1a='srun -p INTERN4 -N 1 --gres=gpu:1 --cpus-per-task 10 --quotatype=auto'
 
 s1a --async python3 clip_benchmark/cli.py eval --model_type internvl --language "en" \
-    --task "zeroshot_classification"  --dataset "imagenet1k" --dataset_root ./data/imagenet-1k/ \
+    --task "zeroshot_classification" --dataset "imagenet1k" --dataset_root ./data/imagenet-1k/ \
     --model internvl_c_classification --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
 
 s1a --async python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" \
