@@ -58,18 +58,6 @@ This folder contains the implementation of InternVL for image classification and
 | :----------: | :---: | :-----: | :---: | :--: | :--: | :-------: | :-------: |  :-------: | 
 | InternVL-C | 83.2  |  83.8   | 95.5  | 77.3 | 73.9 |   80.6    | 0.8 | 82.4 |
 
-**Multilingual ImageNet-1K**
-
-| model name | IN-1K (EN) | IN-1K (ZH) | IN-1K (JP) | IN-1K (AR) | IN-1K (IT) | average | 
-| :----------: | :---: | :-----: | :---: | :--: | :--: | :-------: | 
-| InternVL-C | 83.2  |  64.5   | 61.5  | 44.9 | 65.7 |   64.0    | 
-
-**Other Datasets**
-
-| model name | IN-1K (EN) | IN-1K (ZH) | IN-1K (JP) | IN-1K (AR) | IN-1K (IT) | average | 
-| :----------: | :---: | :-----: | :---: | :--: | :--: | :-------: | 
-| InternVL-C | 83.2  |  64.5   | 61.5  | 44.9 | 65.7 |   64.0    | 
-
 <details>
   <summary>[InternVL-C] ImageNet-1K val</summary>
 
@@ -178,6 +166,11 @@ Expected results:
 
 </details>
 
+**Multilingual ImageNet-1K**
+
+| model name | IN-1K (EN) | IN-1K (ZH) | IN-1K (JP) | IN-1K (AR) | IN-1K (IT) | average | 
+| :----------: | :---: | :-----: | :---: | :--: | :--: | :-------: | 
+| InternVL-C | 83.2  |  64.5   | 61.5  | 44.9 | 65.7 |   64.0    | 
 
 <details>
   <summary>[InternVL-C] ImageNet-1K val (ZH, Chinese)</summary>
@@ -252,6 +245,17 @@ Expected results:
 ```
 
 </details>
+
+**Other Datasets**
+
+| model name | IN-1K (EN) | IN-1K (ZH) | IN-1K (JP) | IN-1K (AR) | IN-1K (IT) | average | 
+| :----------: | :---: | :-----: | :---: | :--: | :--: | :-------: | 
+| InternVL-C | 83.2  |  64.5   | 61.5  | 44.9 | 65.7 |   64.0    | 
+
+
+
+
+
 
 # CLIP Benchmark
 
