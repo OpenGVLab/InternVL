@@ -260,7 +260,7 @@ CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl 
 Expected results:
 
 ```
-{"dataset": "cifar10", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification", 
+{"dataset": "cifar10", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
 "metrics": {"acc1": 0.9935, "acc5": 0.9996, "mean_per_class_recall": 0.9935}, "language": "en"}
 ```
 
@@ -607,8 +607,6 @@ Expected results:
 ```
 
 </details>
-
-
 
 ## 📊 Evaluation: Image-Text Retrieval
 
