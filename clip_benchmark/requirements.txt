@@ -6,6 +6,7 @@ pyyaml
 scikit-learn>=1.0,<2
 scikit-learn
 scipy
+tensorflow
 termcolor
 tqdm>=2
 transformers==4.32.0

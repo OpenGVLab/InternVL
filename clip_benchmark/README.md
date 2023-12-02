@@ -268,7 +268,7 @@ Expected results:
       <td>R@10</td>
    </tr>
 
-  <tr align=center>
+<tr align=center>
       <td>InternVL-C</td>
       <td>Flickr30K</td>
       <td>94.7</td>
@@ -278,8 +278,8 @@ Expected results:
       <td>96.0</td>
       <td>98.2</td>
    </tr>
-   
-  <tr align=center>
+
+<tr align=center>
       <td>InternVL-C</td>
       <td>Flickr30K-CN</td>
       <td>90.3</td>
@@ -289,8 +289,8 @@ Expected results:
       <td>92.9</td>
       <td>96.4</td>
    </tr>
-   
-  <tr align=center>
+
+<tr align=center>
       <td>InternVL-C</td>
       <td>COCO</td>
       <td>70.6</td>
@@ -300,8 +300,8 @@ Expected results:
       <td>77.3</td>
       <td>84.6</td>
    </tr>
-   
-  <tr align=center>
+
+<tr align=center>
       <td>InternVL-C</td>
       <td>COCO-CN</td>
       <td>68.8</td>
@@ -393,7 +393,6 @@ Expected results:
 ```
 
 </details>
-
 
 # CLIP Benchmark
 
