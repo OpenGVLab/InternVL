@@ -246,9 +246,369 @@ Expected results:
 
 **Other Datasets**
 
-| model name | IN-1K (EN) | IN-1K (ZH) | IN-1K (JP) | IN-1K (AR) | IN-1K (IT) | average |
-| :--------: | :--------: | :--------: | :--------: | :--------: | :--------: | :-----: |
-| InternVL-C |    83.2    |    64.5    |    61.5    |    44.9    |    65.7    |  64.0   |
+<img width="1219" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/9417667d-4bd7-4385-a048-3489de8892f3">
+
+<details>
+  <summary>[InternVL-C] CIFAR-10</summary>
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "cifar10" --dataset_root ./data/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```bash
+
+```
+
+Expected results:
+
+```
+{"dataset": "cifar10", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification", 
+"metrics": {"acc1": 0.9935, "acc5": 0.9996, "mean_per_class_recall": 0.9935}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] CIFAR-100</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "cifar100" --dataset_root ./data/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "cifar100", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.9315, "acc5": 0.9925, "mean_per_class_recall": 0.9312}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] MNIST</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "mnist" --dataset_root ./data/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "mnist", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.8059, "acc5": 0.9742, "mean_per_class_recall": 0.8024705158575907}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] Caltech-101</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "caltech101" --dataset_root ./data/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "caltech101", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.89501312335958, "acc5": 0.9849081364829396, "mean_per_class_recall": 0.9551142080563548}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] SUN397</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "sun397" --dataset_root ./data/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "sun397", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.7600639976460636, "acc5": 0.9623370174890119, "mean_per_class_recall": 0.7643101664978325}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] FGVC Aircraft</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "fgvc_aircraft" --dataset_root ./data/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "fgvc_aircraft", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.5262526252625263, "acc5": 0.9426942694269427, "mean_per_class_recall": 0.5252139037433156}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] Country-211</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "country211" --dataset_root ./data/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "country211", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.34071090047393365, "acc5": 0.6049763033175355, "mean_per_class_recall": 0.3408530805687204}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] Stanford Cars</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "cars" --dataset_root ./data/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "cars", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.9411764705882353, "acc5": 0.99950254943415, "mean_per_class_recall": 0.9413694180920759}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] Birdsnap</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "birdsnap" --dataset_root ./data/birdsnap/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "birdsnap", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.7235772357723578, "acc5": 0.9636856368563685, "mean_per_class_recall": 0.7058843537414966}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] DTD</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "dtd" --dataset_root ./data/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "dtd", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.7079787234042553, "acc5": 0.9361702127659575, "mean_per_class_recall": 0.7074468085106383}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] Eurosat</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "eurosat" --dataset_root ./data/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "eurosat", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.7933703703703704, "acc5": 0.9984444444444445, "mean_per_class_recall": 0.8010866666666667}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] FER2013</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "fer2013" --dataset_root ./data/fer2013 --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "fer2013", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.5621342992477013, "acc5": 0.9731122875452772, "mean_per_class_recall": 0.530855567482585}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] Flowers-102</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "vtab/flowers" --dataset_root ./data/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "vtab/flowers", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.8606277443486746, "acc5": 0.953651000162628, "mean_per_class_recall": 0.8562257647762344}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] Food-101</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "food101" --dataset_root ./data/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "food101", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.9525544554455445, "acc5": 0.9954851485148515, "mean_per_class_recall": 0.9527524752475246}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] GTSRB</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "gtsrb" --dataset_root ./data/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "gtsrb", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.6542359461599366, "acc5": 0.9094220110847189, "mean_per_class_recall": 0.5771153922473438}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] Pets</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "pets" --dataset_root ./data/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "pets", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.9604796947397111, "acc5": 0.9991823385118561, "mean_per_class_recall": 0.9602545246926443}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] Rendered SST2</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "renderedsst2" --dataset_root ./data/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "renderedsst2", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.6798462383305875, "acc5": NaN, "mean_per_class_recall": 0.6798408459266979}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] Resisc45</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "vtab/resisc45" --dataset_root ./data/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "vtab/resisc45", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.7421044278685923, "acc5": 0.9666719568322488, "mean_per_class_recall": 0.7476201893984034}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] STL10</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "stl10" --dataset_root ./data/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "stl10", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.9945, "acc5": 1.0, "mean_per_class_recall": 0.9945}, "language": "en"}
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-C] VOC2007</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
+    --dataset "voc2007" --dataset_root ./data/ --model internvl_c_classification \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "voc2007", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
+"metrics": {"acc1": 0.7994123931623932, "acc5": 0.9795005341880342, "mean_per_class_recall": 0.9048316862763777}, "language": "en"}
+```
+
+</details>
+
+
 
 ## 📊 Evaluation: Image-Text Retrieval
 
