@@ -250,11 +250,11 @@ Expected results:
 
 <details>
   <summary>[InternVL-C] CIFAR-10</summary>
+
+```bash
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_classification" \
     --dataset "cifar10" --dataset_root ./data/ --model internvl_c_classification \
     --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
-```bash
-
 ```
 
 Expected results:
