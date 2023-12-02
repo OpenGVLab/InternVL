@@ -610,7 +610,7 @@ Expected results:
 
 ## 📊 Evaluation: Image-Text Retrieval
 
-### Flickr30K \& COCO
+### Flickr30K & COCO
 
 <table>
    <tr  align=center>
@@ -756,10 +756,10 @@ Expected results:
 
 ### XTD
 
-| model name | EN         | ES         | FR         | ZH         | IT         | KO      | RU     | JP     | average |
-| :--------: | :--------: | :--------: | :--------: | :--------: | :--------: | :-----: |:-----: |:-----: |:-----:  |
-| InternVL-C |   97.3     | 95.7       | 95.1       | 95.6       | 96.0       | 92.1    | 93.4   | 95.5   | 95.1    |
-| InternVL-G |   98.6     | 97.7       | 96.5       | 96.7       | 96.9       | 95.1    | 94.8   | 96.1   | 96.6    |
+| model name |  EN  |  ES  |  FR  |  ZH  |  IT  |  KO  |  RU  |  JP  | average |
+| :--------: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :-----: |
+| InternVL-C | 97.3 | 95.7 | 95.1 | 95.6 | 96.0 | 92.1 | 93.4 | 95.5 |  95.1   |
+| InternVL-G | 98.6 | 97.7 | 96.5 | 96.7 | 96.9 | 95.1 | 94.8 | 96.1 |  96.6   |
 
 <details>
   <summary>[InternVL-C] XTD</summary>
@@ -812,7 +812,6 @@ Expected results:
 ```
 
 </details>
-
 
 # CLIP Benchmark
 

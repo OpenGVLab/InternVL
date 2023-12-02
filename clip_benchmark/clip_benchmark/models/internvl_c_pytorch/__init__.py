@@ -12,7 +12,7 @@ from torch import nn
 from torchvision.transforms import InterpolationMode
 from transformers import LlamaTokenizer
 
-from .internvl_clip import InternVL_C
+from .internvl_c import InternVL_C
 
 try:
     from .flash_attention import FlashAttention
@@ -62,7 +62,7 @@ def get_model_and_transform(task, image_size, device):
     return model, transform
 
 
-def load_internvl_c(ckpt_path, device, task, image_size=224):
+def load_internvl_c_pytorch(ckpt_path, device, task, image_size=224):
     llm_path = os.path.split(os.path.realpath(__file__))[0]
     llm_path = os.path.join(llm_path, 'chinese_alpaca_lora_7b')
     tokenizer = InternVLTokenizer(llm_path)

@@ -60,7 +60,8 @@ def _get_downloadable_file(filename, download_url, is_json=True):
 def create_annotation_file(root, lang_code):
     print('Downloading multilingual_ms_coco index file')
     download_path = os.path.join(GITHUB_MAIN_PATH, IMAGE_INDEX_FILE_DOWNLOAD_NAME)
-    target_images = _get_downloadable_file('multilingual_coco_images.txt', download_path, False)
+    save_path = os.path.join(root, 'multilingual_coco_images.txt')
+    target_images = _get_downloadable_file(save_path, download_path, False)
 
     print('Downloading multilingual_ms_coco captions:', lang_code)
     download_path = os.path.join(GITHUB_MAIN_PATH, CAPTIONS_FILE_DOWNLOAD_NAME.format(lang_code))
@@ -68,8 +69,8 @@ def create_annotation_file(root, lang_code):
         download_path = 'https://github.com/adobe-research/Cross-lingual-Test-Dataset-XTD10/raw/main/STAIR/test_1kcaptions_jp.txt'
     if lang_code == 'fr':
         download_path = 'https://github.com/adobe-research/Cross-lingual-Test-Dataset-XTD10/raw/main/MIC/test_1kcaptions_fr.txt'
-    target_captions = _get_downloadable_file('raw_multilingual_coco_captions_{}.txt'.format(lang_code), download_path,
-                                             False)
+    save_path = os.path.join(root, 'raw_multilingual_coco_captions_{}.txt'.format(lang_code))
+    target_captions = _get_downloadable_file(save_path, download_path, False)
 
     number_of_missing_images = 0
     valid_images, valid_annotations, valid_indicies = [], [], []
