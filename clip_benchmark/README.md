@@ -719,6 +719,49 @@ Expected results:
 
 </details>
 
+
+<details>
+  <summary>[InternVL-G] Flickr30K</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_retrieval" \
+    --dataset "flickr30k" --dataset_root ./data/flickr30k --model internvl_g_retrieval_hf \
+    --pretrained ./pretrained/internvl_14b_224px --output result_g.json
+```
+
+Expected results:
+
+```
+{"dataset": "flickr30k", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval",
+"metrics": {"image_retrieval_recall@1": 0.8497999906539917, "text_retrieval_recall@1": 0.9570000171661377,
+"image_retrieval_recall@5": 0.9700000286102295, "text_retrieval_recall@5": 0.996999979019165,
+"image_retrieval_recall@10": 0.98580002784729, "text_retrieval_recall@10": 0.9990000128746033}, "language": "en"}
+```
+
+</details>
+
+
+
+<details>
+  <summary>[InternVL-G] COCO</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_retrieval" \
+    --dataset "mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_g_retrieval_hf \
+    --pretrained ./pretrained/internvl_14b_224px --output result_g.json
+```
+
+Expected results:
+
+```
+{"dataset": "mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval",
+"metrics": {"image_retrieval_recall@1": 0.5858056545257568, "text_retrieval_recall@1": 0.7491999864578247,
+"image_retrieval_recall@5": 0.813194751739502, "text_retrieval_recall@5": 0.9129999876022339,
+"image_retrieval_recall@10": 0.8795281648635864, "text_retrieval_recall@10": 0.9521999955177307}, "language": "en"}
+```
+
+</details>
+
 ### Flickr30K-CN & COCO-CN
 
 <table>
@@ -823,6 +866,49 @@ Expected results:
 "metrics": {"image_retrieval_recall@1": 0.6885090470314026, "text_retrieval_recall@1": 0.6880000233650208,
 "image_retrieval_recall@5": 0.9192782640457153, "text_retrieval_recall@5": 0.9200000166893005,
 "image_retrieval_recall@10": 0.9648622870445251, "text_retrieval_recall@10": 0.9670000076293945}, "language": "cn"}
+```
+
+</details>
+
+
+
+<details>
+  <summary>[InternVL-G] Flickr30K-CN</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" --task "zeroshot_retrieval" \
+    --dataset "flickr30k" --dataset_root ./data/flickr30k --model internvl_g_retrieval_hf \
+    --pretrained ./pretrained/internvl_14b_224px --output result_g.json
+```
+
+Expected results:
+
+```
+{"dataset": "flickr30k", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval",
+"metrics": {"image_retrieval_recall@1": 0.7767999768257141, "text_retrieval_recall@1": 0.9290000200271606,
+"image_retrieval_recall@5": 0.9476000070571899, "text_retrieval_recall@5": 0.9940000176429749,
+"image_retrieval_recall@10": 0.9728000164031982, "text_retrieval_recall@10": 0.9980000257492065}, "language": "cn"}
+
+```
+
+</details>
+
+<details>
+  <summary>[InternVL-G] COCO-CN</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" --task "zeroshot_retrieval" \
+    --dataset "mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_g_retrieval_hf \
+    --pretrained ./pretrained/internvl_14b_224px --output result_g.json
+```
+
+Expected results:
+
+```
+{"dataset": "mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval",
+"metrics": {"image_retrieval_recall@1": 0.7378917336463928, "text_retrieval_recall@1": 0.7139999866485596,
+"image_retrieval_recall@5": 0.9439696073532104, "text_retrieval_recall@5": 0.9390000104904175,
+"image_retrieval_recall@10": 0.9810066223144531, "text_retrieval_recall@10": 0.9769999980926514}, "language": "cn"}
 ```
 
 </details>
