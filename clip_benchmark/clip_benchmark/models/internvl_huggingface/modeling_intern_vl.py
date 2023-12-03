@@ -4,7 +4,7 @@
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
 from functools import partial
-from typing import Any, Optional, Tuple, Union
+from typing import Optional
 
 import numpy as np
 import torch
@@ -15,7 +15,7 @@ from timm.models.layers import DropPath
 from torch import nn
 from transformers import GenerationConfig
 from transformers.modeling_utils import PreTrainedModel
-from transformers.utils import ModelOutput, logging
+from transformers.utils import logging
 
 from .configuration_intern_vl import InternVLConfig
 from .modeling_intern_vit import (InternVisionEmbeddings, InternVisionEncoder,

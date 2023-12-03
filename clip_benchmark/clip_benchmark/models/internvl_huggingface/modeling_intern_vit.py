@@ -3,7 +3,7 @@
 # Copyright (c) 2023 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
-from typing import Any, Optional, Tuple, Union
+from typing import Optional, Tuple, Union
 
 import torch
 import torch.nn.functional as F
@@ -14,7 +14,7 @@ from transformers.activations import ACT2FN
 from transformers.modeling_outputs import (BaseModelOutput,
                                            BaseModelOutputWithPooling)
 from transformers.modeling_utils import PreTrainedModel
-from transformers.utils import ModelOutput, logging
+from transformers.utils import logging
 
 from .configuration_intern_vit import InternVisionConfig
 
@@ -135,7 +135,8 @@ class InternAttention(nn.Module):
         query_states = self._shape(query_states, tgt_len, bsz)  # bsz, self.num_heads, seq_len, self.head_dim
         key_states = self._shape(key_states, tgt_len, bsz)  # bsz, self.num_heads, seq_len, self.head_dim
         value_states = self._shape(value_states, tgt_len, bsz)  # bsz, self.num_heads, seq_len, self.head_dim
-        mixed_qkv = torch.stack([query_states, key_states, value_states], dim=2)  # bsz, self.num_heads, 3, seq_len, self.head_dim
+        mixed_qkv = torch.stack([query_states, key_states, value_states],
+                                dim=2)  # bsz, self.num_heads, 3, seq_len, self.head_dim
         context_layer, _ = self.inner_attn(mixed_qkv)
         context_layer = context_layer.flatten(2)
         outputs = self.proj(context_layer)
