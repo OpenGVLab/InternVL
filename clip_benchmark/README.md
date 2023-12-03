@@ -613,10 +613,17 @@ Expected results:
 ### Flickr30K & COCO
 
 <table>
+  <tr  align=center>
+      <td rowspan="3" align=center><b>model</b></td>
+      <td colspan="6" align=center><b>Flickr30K</b></td>
+      <td colspan="6" align=center><b>COCO</b></td>
+      <td rowspan="3" align=center><b>avg</b></td>
+    
+   </tr>
    <tr  align=center>
-      <td rowspan="2" align=center><b>model</b></td>
-      <td rowspan="2" align=center><b>dataset</b></td>
       <td colspan="3" align=center><b>image-to-text</b></td>
+      <td colspan="3" align=center><b>text-to-image</b></td>
+       <td colspan="3" align=center><b>image-to-text</b></td>
       <td colspan="3" align=center><b>text-to-image</b></td>
    </tr>
    <tr>
@@ -626,95 +633,47 @@ Expected results:
       <td>R@1</td>
       <td>R@5</td>
       <td>R@10</td>
+      <td>R@1</td>
+      <td>R@5</td>
+      <td>R@10</td>
+      <td>R@1</td>
+      <td>R@5</td>
+      <td>R@10</td>
    </tr>
 
 <tr align=center>
       <td>InternVL-C</td>
-      <td>Flickr30K</td>
       <td>94.7</td>
       <td>99.6</td>
       <td>99.9</td>
       <td>81.7</td>
       <td>96.0</td>
       <td>98.2</td>
-   </tr>
-
-<tr align=center>
-      <td>InternVL-C</td>
-      <td>Flickr30K-CN</td>
-      <td>90.3</td>
-      <td>98.8</td>
-      <td>99.7</td>
-      <td>75.1</td>
-      <td>92.9</td>
-      <td>96.4</td>
-   </tr>
-
-  <tr align=center>
-      <td>InternVL-C</td>
-      <td>COCO</td>
       <td>70.6</td>
       <td>89.0</td>
       <td>93.5</td>
       <td>54.1</td>
       <td>77.3</td>
       <td>84.6</td>
+      <td>86.6</td>
    </tr>
-
-  <tr align=center>
-      <td>InternVL-C</td>
-      <td>COCO-CN</td>
-      <td>68.8</td>
-      <td>92.0</td>
-      <td>96.7</td>
-      <td>68.9</td>
-      <td>91.9</td>
-      <td>96.5</td>
-   </tr>
-
-   <tr align=center>
+<tr align=center>
       <td>InternVL-G</td>
-      <td>Flickr30K</td>
       <td>95.7</td>
       <td>99.7</td>
       <td>99.9</td>
       <td>85.0</td>
       <td>97.0</td>
       <td>98.6</td>
-   </tr>
-
-  <tr align=center>
-      <td>InternVL-G</td>
-      <td>Flickr30K-CN</td>
-      <td>92.9</td>
-      <td>99.4</td>
-      <td>99.8</td>
-      <td>77.7</td>
-      <td>94.8</td>
-      <td>97.3</td>
-   </tr>
-
-  <tr align=center>
-      <td>InternVL-G</td>
-      <td>COCO</td>
       <td>74.9</td>
       <td>91.3</td>
       <td>95.2</td>
       <td>58.6</td>
       <td>81.3</td>
       <td>88.0</td>
+      <td>88.8</td>
    </tr>
 
-  <tr align=center>
-      <td>InternVL-G</td>
-      <td>COCO-CN</td>
-      <td>71.4</td>
-      <td>93.9</td>
-      <td>97.7</td>
-      <td>73.8</td>
-      <td>94.4</td>
-      <td>98.1</td>
-   </tr>
 
 </table>
 
@@ -738,25 +697,7 @@ Expected results:
 
 </details>
 
-<details>
-  <summary>[InternVL-C] Flickr30K-CN</summary>
 
-```bash
-CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" --task "zeroshot_retrieval" \
-    --dataset "flickr30k" --dataset_root ./data/flickr30k --model internvl_c_retrieval \
-    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
-```
-
-Expected results:
-
-```
-{"dataset": "flickr30k", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval",
-"metrics": {"image_retrieval_recall@1": 0.7509999871253967, "text_retrieval_recall@1": 0.902999997138977,
-"image_retrieval_recall@5": 0.9290000200271606, "text_retrieval_recall@5": 0.9879999756813049,
-"image_retrieval_recall@10": 0.9638000130653381, "text_retrieval_recall@10": 0.996999979019165}, "language": "cn"}
-```
-
-</details>
 
 <details>
   <summary>[InternVL-C] COCO</summary>
@@ -774,6 +715,94 @@ Expected results:
 "metrics": {"image_retrieval_recall@1": 0.5411835312843323, "text_retrieval_recall@1": 0.7059999704360962,
 "image_retrieval_recall@5": 0.7731707096099854, "text_retrieval_recall@5": 0.8902000188827515,
 "image_retrieval_recall@10": 0.8463414907455444, "text_retrieval_recall@10": 0.9354000091552734}, "language": "en"}
+```
+
+</details>
+
+### Flickr30K-CN & COCO-CN
+
+<table>
+  <tr  align=center>
+      <td rowspan="3" align=center><b>model</b></td>
+      <td colspan="6" align=center><b>Flickr30K-CN</b></td>
+      <td colspan="6" align=center><b>COCO-CN</b></td>
+      <td rowspan="3" align=center><b>avg</b></td>
+    
+   </tr>
+   <tr  align=center>
+      <td colspan="3" align=center><b>image-to-text</b></td>
+      <td colspan="3" align=center><b>text-to-image</b></td>
+       <td colspan="3" align=center><b>image-to-text</b></td>
+      <td colspan="3" align=center><b>text-to-image</b></td>
+   </tr>
+   <tr>
+      <td>R@1</td>
+      <td>R@5</td>
+      <td>R@10</td>
+      <td>R@1</td>
+      <td>R@5</td>
+      <td>R@10</td>
+      <td>R@1</td>
+      <td>R@5</td>
+      <td>R@10</td>
+      <td>R@1</td>
+      <td>R@5</td>
+      <td>R@10</td>
+   </tr>
+
+<tr align=center>
+      <td>InternVL-C</td>
+      <td>90.3</td>
+      <td>98.8</td>
+      <td>99.7</td>
+      <td>75.1</td>
+      <td>92.9</td>
+      <td>96.4</td>
+      <td>68.8</td>
+      <td>92.0</td>
+      <td>96.7</td>
+      <td>68.9</td>
+      <td>91.9</td>
+      <td>96.5</td>
+      <td>89.0</td>
+   </tr>
+<tr align=center>
+      <td>InternVL-G</td>
+      <td>92.9</td>
+      <td>99.4</td>
+      <td>99.8</td>
+      <td>77.7</td>
+      <td>94.8</td>
+      <td>97.3</td>
+      <td>71.4</td>
+      <td>93.9</td>
+      <td>97.7</td>
+      <td>73.8</td>
+      <td>94.4</td>
+      <td>98.1</td>
+      <td>90.9</td>
+   </tr>
+
+
+</table>
+
+
+<details>
+  <summary>[InternVL-C] Flickr30K-CN</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" --task "zeroshot_retrieval" \
+    --dataset "flickr30k" --dataset_root ./data/flickr30k --model internvl_c_retrieval \
+    --pretrained ./pretrained/internvl_c_13b_224px.pth --output result.json
+```
+
+Expected results:
+
+```
+{"dataset": "flickr30k", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval",
+"metrics": {"image_retrieval_recall@1": 0.7509999871253967, "text_retrieval_recall@1": 0.902999997138977,
+"image_retrieval_recall@5": 0.9290000200271606, "text_retrieval_recall@5": 0.9879999756813049,
+"image_retrieval_recall@10": 0.9638000130653381, "text_retrieval_recall@10": 0.996999979019165}, "language": "cn"}
 ```
 
 </details>
