@@ -1,0 +1,122 @@
+[
+  {
+    "dataset": "vtab",
+    "lp_acc1": 0.7272385796110142,
+    "fewshot_k": -1,
+    "model": "ViT-B-16",
+    "pretrained": "laion400m_e32",
+    "upstream_dataset": "LAION-400M",
+    "gmacs_total": 268122270972.16,
+    "samples_seen_pretty": "13B"
+  },
+  {
+    "dataset": "vtab",
+    "lp_acc1": 0.7125347395825511,
+    "fewshot_k": -1,
+    "model": "ViT-B-16",
+    "pretrained": "openai",
+    "upstream_dataset": "CLIP-WIT",
+    "gmacs_total": 263296000000.0,
+    "samples_seen_pretty": "13B"
+  },
+  {
+    "dataset": "vtab",
+    "lp_acc1": 0.7332202011443508,
+    "fewshot_k": -1,
+    "model": "ViT-B-16-plus-240",
+    "pretrained": "laion400m_e32",
+    "upstream_dataset": "LAION-400M",
+    "gmacs_total": 370313744206.08,
+    "samples_seen_pretty": "13B"
+  },
+  {
+    "dataset": "vtab",
+    "lp_acc1": 0.7143166719197058,
+    "fewshot_k": -1,
+    "model": "ViT-B-32",
+    "pretrained": "laion2b_e16",
+    "upstream_dataset": "LAION-2B",
+    "gmacs_total": 256967931347.2,
+    "samples_seen_pretty": "34B"
+  },
+  {
+    "dataset": "vtab",
+    "lp_acc1": 0.7152995214130362,
+    "fewshot_k": -1,
+    "model": "ViT-B-32",
+    "pretrained": "laion2b_s34b_b79k",
+    "upstream_dataset": "LAION-2B",
+    "gmacs_total": 291096483388.0,
+    "samples_seen_pretty": "34B"
+  },
+  {
+    "dataset": "vtab",
+    "lp_acc1": 0.7183753019516755,
+    "fewshot_k": -1,
+    "model": "ViT-B-32",
+    "pretrained": "laion400m_e32",
+    "upstream_dataset": "LAION-400M",
+    "gmacs_total": 96456237491.2,
+    "samples_seen_pretty": "13B"
+  },
+  {
+    "dataset": "vtab",
+    "lp_acc1": 0.6971394911855741,
+    "fewshot_k": -1,
+    "model": "ViT-B-32",
+    "pretrained": "openai",
+    "upstream_dataset": "CLIP-WIT",
+    "gmacs_total": 94720000000.0,
+    "samples_seen_pretty": "13B"
+  },
+  {
+    "dataset": "vtab",
+    "lp_acc1": 0.7596462313700938,
+    "fewshot_k": -1,
+    "model": "ViT-H-14",
+    "pretrained": "laion2b_s32b_b79k",
+    "upstream_dataset": "LAION-2B",
+    "gmacs_total": 6631508868008.96,
+    "samples_seen_pretty": "34B"
+  },
+  {
+    "dataset": "vtab",
+    "lp_acc1": 0.744758325311516,
+    "fewshot_k": -1,
+    "model": "ViT-L-14",
+    "pretrained": "laion2b_s32b_b82k",
+    "upstream_dataset": "LAION-2B",
+    "gmacs_total": 2807360000000.0,
+    "samples_seen_pretty": "34B"
+  },
+  {
+    "dataset": "vtab",
+    "lp_acc1": 0.7397637678783028,
+    "fewshot_k": -1,
+    "model": "ViT-L-14",
+    "pretrained": "laion400m_e32",
+    "upstream_dataset": "LAION-400M",
+    "gmacs_total": 1143527799338.24,
+    "samples_seen_pretty": "13B"
+  },
+  {
+    "dataset": "vtab",
+    "lp_acc1": 0.7376775015037333,
+    "fewshot_k": -1,
+    "model": "ViT-L-14",
+    "pretrained": "openai",
+    "upstream_dataset": "CLIP-WIT",
+    "gmacs_total": 1122944000000.0,
+    "samples_seen_pretty": "13B"
+  },
+  {
+    "dataset": "vtab",
+    "lp_acc1": 0.7517780869059744,
+    "fewshot_k": -1,
+    "model": "ViT-g-14",
+    "pretrained": "laion2b_s12b_b42k",
+    "upstream_dataset": "LAION-2B",
+    "gmacs_total": 3549396664594.8,
+    "samples_seen_pretty": "13B"
+  }
+]

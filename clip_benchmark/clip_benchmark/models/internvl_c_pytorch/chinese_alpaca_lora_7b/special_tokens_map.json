@@ -1,0 +1,6 @@
+{
+  "bos_token": "<s>",
+  "eos_token": "</s>",
+  "pad_token": "[PAD]",
+  "unk_token": "<unk>"
+}
