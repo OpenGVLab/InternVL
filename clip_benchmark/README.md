@@ -620,8 +620,8 @@ Expected results:
       <td colspan="6" align=center><b>Flickr30K</b></td>
       <td colspan="6" align=center><b>COCO</b></td>
       <td rowspan="3" align=center><b>avg</b></td>
-    
-   </tr>
+
+</tr>
    <tr  align=center>
       <td colspan="3" align=center><b>image-to-text</b></td>
       <td colspan="3" align=center><b>text-to-image</b></td>
@@ -676,7 +676,6 @@ Expected results:
       <td>88.8</td>
    </tr>
 
-
 </table>
 
 <details>
@@ -699,8 +698,6 @@ Expected results:
 
 </details>
 
-
-
 <details>
   <summary>[InternVL-C] COCO</summary>
 
@@ -721,7 +718,6 @@ Expected results:
 
 </details>
 
-
 <details>
   <summary>[InternVL-G] Flickr30K</summary>
 
@@ -741,8 +737,6 @@ Expected results:
 ```
 
 </details>
-
-
 
 <details>
   <summary>[InternVL-G] COCO</summary>
@@ -772,8 +766,8 @@ Expected results:
       <td colspan="6" align=center><b>Flickr30K-CN</b></td>
       <td colspan="6" align=center><b>COCO-CN</b></td>
       <td rowspan="3" align=center><b>avg</b></td>
-    
-   </tr>
+
+</tr>
    <tr  align=center>
       <td colspan="3" align=center><b>image-to-text</b></td>
       <td colspan="3" align=center><b>text-to-image</b></td>
@@ -828,9 +822,7 @@ Expected results:
       <td>90.9</td>
    </tr>
 
-
 </table>
-
 
 <details>
   <summary>[InternVL-C] Flickr30K-CN</summary>
@@ -871,8 +863,6 @@ Expected results:
 ```
 
 </details>
-
-
 
 <details>
   <summary>[InternVL-G] Flickr30K-CN</summary>
@@ -973,7 +963,6 @@ Expected results:
 ```
 
 </details>
-
 
 <details>
   <summary>[InternVL-G] XTD</summary>
