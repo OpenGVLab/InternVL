@@ -650,7 +650,7 @@ Expected results:
       <td>96.4</td>
    </tr>
 
-<tr align=center>
+  <tr align=center>
       <td>InternVL-C</td>
       <td>COCO</td>
       <td>70.6</td>
@@ -661,7 +661,7 @@ Expected results:
       <td>84.6</td>
    </tr>
 
-<tr align=center>
+  <tr align=center>
       <td>InternVL-C</td>
       <td>COCO-CN</td>
       <td>68.8</td>
@@ -670,6 +670,50 @@ Expected results:
       <td>68.9</td>
       <td>91.9</td>
       <td>96.5</td>
+   </tr>
+
+   <tr align=center>
+      <td>InternVL-G</td>
+      <td>Flickr30K</td>
+      <td>95.7</td>
+      <td>99.7</td>
+      <td>99.9</td>
+      <td>85.0</td>
+      <td>97.0</td>
+      <td>98.6</td>
+   </tr>
+
+  <tr align=center>
+      <td>InternVL-G</td>
+      <td>Flickr30K-CN</td>
+      <td>92.9</td>
+      <td>99.4</td>
+      <td>99.8</td>
+      <td>77.7</td>
+      <td>94.8</td>
+      <td>97.3</td>
+   </tr>
+
+  <tr align=center>
+      <td>InternVL-G</td>
+      <td>COCO</td>
+      <td>74.9</td>
+      <td>91.3</td>
+      <td>95.2</td>
+      <td>58.6</td>
+      <td>81.3</td>
+      <td>88.0</td>
+   </tr>
+
+  <tr align=center>
+      <td>InternVL-G</td>
+      <td>COCO-CN</td>
+      <td>71.4</td>
+      <td>93.9</td>
+      <td>97.7</td>
+      <td>73.8</td>
+      <td>94.4</td>
+      <td>98.1</td>
    </tr>
 
 </table>
