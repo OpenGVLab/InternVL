@@ -50,6 +50,8 @@ This folder contains the implementation of InternVL for image classification and
 
 ## 📦 Data Preparation
 
+This codebase will automatically download the required dataset. If the dataset fails to download automatically, please refer to this [file](./clip_benchmark/datasets/builder.py) for manual downloading.
+
 ## 📊 Evaluation: Zero-Shot Image Classification
 
 ### ImageNet variants and ObjectNet
