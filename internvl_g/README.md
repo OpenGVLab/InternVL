@@ -1,4 +1,4 @@
-## InternVL Stage2 Pre-training
+# InternVL Stage-2 Pre-training
 
 This folder contains the implementation of the InternVL for stage2 pre-training and retrieval fine-tuning.
 
