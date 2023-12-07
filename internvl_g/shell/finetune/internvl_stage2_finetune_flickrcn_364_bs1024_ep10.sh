@@ -3,7 +3,7 @@ set -x
 export VIT_LAYER_DECAY_RATE=0.9
 export QLLAMA_LAYER_DECAY_RATE=0.9
 
-PARTITION=INTERN2
+PARTITION=VC2
 
 GPUS=${GPUS:-32}
 GPUS_PER_NODE=${GPUS_PER_NODE:-8}
@@ -46,7 +46,7 @@ srun -p ${PARTITION} \
   --evaluation_strategy "no" \
   --save_strategy "steps" \
   --save_steps 100 \
-  --save_total_limit 10 \
+  --save_total_limit 5 \
   --learning_rate 1e-6 \
   --weight_decay 0.05 \
   --warmup_steps 100 \
