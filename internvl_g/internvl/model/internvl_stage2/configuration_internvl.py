@@ -84,6 +84,8 @@ class InternVLConfig(PretrainedConfig):
         self.qllama_config.num_query_token = num_query_token
         self.qllama_config.cross_attention_frequency = cross_attention_frequency
         self.hidden_size = self.qllama_config.hidden_size
+        self.tie_word_embeddings = self.qllama_config.tie_word_embeddings
+        self.is_encoder_decoder = self.qllama_config.is_encoder_decoder
 
         self.clip_embed_dim = clip_embed_dim
         self.attn_pool_num_heads = attn_pool_num_heads

@@ -16,7 +16,7 @@ from transformers.modeling_utils import PreTrainedModel
 from transformers.utils import ModelOutput, logging
 
 from .configuration_internvl_chat import InternVLChatConfig
-from .modeling_intern_vl import InternVLModel, InternVLPreTrainedModel
+from .modeling_internvl import InternVLModel, InternVLPreTrainedModel
 
 logger = logging.get_logger(__name__)
 

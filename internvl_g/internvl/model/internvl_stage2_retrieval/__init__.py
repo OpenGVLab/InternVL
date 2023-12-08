@@ -11,9 +11,9 @@ from torchvision.transforms import InterpolationMode
 from transformers import LlamaTokenizer
 
 from .configuration_intern_vit import InternVisionConfig
-from .configuration_intern_vl import InternVLConfig
+from .configuration_internvl import InternVLConfig
 from .modeling_intern_vit import InternVisionModel
-from .modeling_intern_vl import InternVL_C, InternVL_G, InternVLModel
+from .modeling_internvl import InternVL_C, InternVL_G, InternVLModel
 
 __all__ = ['InternVisionConfig', 'InternVisionModel', 'InternVLConfig',
            'InternVLModel', 'InternVL_C', 'InternVL_G']

@@ -1,7 +1,7 @@
 set -x
 
-alias s1a='srun -p INTERN4 -N 1 --gres=gpu:1 --cpus-per-task 10 --quotatype=auto'
-
+PARTITION=${PARTITION:-'INTERN4'}
+alias s1a="srun -p ${PARTITION} -N 1 --gres=gpu:1 --cpus-per-task 10 --quotatype=auto"
 export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 
 
