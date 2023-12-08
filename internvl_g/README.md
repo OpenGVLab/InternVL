@@ -190,13 +190,13 @@ Expected results:
 
 <tr align=center>
       <td>InternVL-C-FT</td>
-      <td>97.2</td>     
+      <td>97.2</td>
       <td>100.0</td>
       <td>100.0</td>
       <td>88.5</td>
       <td>98.4</td>
       <td>99.2</td>
-      <td>96.5</td>     
+      <td>96.5</td>
       <td>99.9</td>
       <td>100.0</td>
       <td>85.2</td>
@@ -223,9 +223,6 @@ Expected results:
 
 </table>
 
-
-
-
 <details>
   <summary>[InternVL-C-FT] Flickr30K</summary>
 
@@ -235,7 +232,6 @@ CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl 
      --dataset "flickr30k" --dataset_root ./data/flickr30k --model internvl_c_retrieval_hf \
      --pretrained ./work_dirs/internvl_stage2_finetune_flickr_364_bs1024_ep10/ --output result_ft.json
 ```
-
 
 </details>
 
@@ -249,9 +245,7 @@ CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl 
      --pretrained ./work_dirs/internvl_stage2_finetune_flickrcn_364_bs1024_ep10/ --output result_ft.json
 ```
 
-
 </details>
-
 
 <details>
   <summary>[InternVL-G-FT] Flickr30K</summary>
@@ -265,7 +259,6 @@ CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl 
 
 </details>
 
-
 <details>
   <summary>[InternVL-G-FT] Flickr30K-CN</summary>
 
@@ -275,6 +268,5 @@ CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl 
      --dataset "flickr30k" --dataset_root ./data/flickr30k --model internvl_g_retrieval_hf \
      --pretrained ./work_dirs/internvl_stage2_finetune_flickrcn_364_bs1024_ep10/ --output result_ft.json
 ```
-
 
 </details>
