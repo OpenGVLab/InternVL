@@ -610,7 +610,7 @@ Expected results:
 
 </details>
 
-## 📊 Evaluation: Image-Text Retrieval
+## 📊 Evaluation: Zero-Shot Image-Text Retrieval
 
 ### Flickr30K & COCO
 

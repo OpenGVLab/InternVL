@@ -1,0 +1,400 @@
+10002.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+10002.jpg	Does this artwork exist in the form of glassware? Please answer yes or no.	No
+10049.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+10049.jpg	Does this artwork exist in the form of sculpture? Please answer yes or no.	No
+10256.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+10256.jpg	Does this artwork exist in the form of sculpture? Please answer yes or no.	No
+10358.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+10358.jpg	Does this artwork exist in the form of glassware? Please answer yes or no.	No
+10543.jpg	Is this artwork displayed in fogg art museum, harvard university, cambridge? Please answer yes or no.	Yes
+10543.jpg	Is this artwork displayed in museo civico, pistoia? Please answer yes or no.	No
+10581.jpg	Does this artwork belong to the type of portrait? Please answer yes or no.	Yes
+10581.jpg	Does this artwork belong to the type of genre? Please answer yes or no.	No
+1060.jpg	Is this artwork created by antoniazzo romano? Please answer yes or no.	Yes
+1060.jpg	Is this artwork created by gentile da fabriano? Please answer yes or no.	No
+10881.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+10881.jpg	Does this artwork exist in the form of tapestry? Please answer yes or no.	No
+10970.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+10970.jpg	Does this artwork belong to the type of study? Please answer yes or no.	No
+11276.jpg	Does this artwork exist in the form of sculpture? Please answer yes or no.	Yes
+11276.jpg	Does this artwork exist in the form of graphics? Please answer yes or no.	No
+11331.jpg	Is this artwork created by donatello? Please answer yes or no.	Yes
+11331.jpg	Is this artwork created by zichy, mihály? Please answer yes or no.	No
+11488.jpg	Does this artwork belong to the type of mythological? Please answer yes or no.	Yes
+11488.jpg	Does this artwork belong to the type of historical? Please answer yes or no.	No
+11724.jpg	Is this artwork created by duccio di buoninsegna? Please answer yes or no.	Yes
+11724.jpg	Is this artwork created by giani, felice? Please answer yes or no.	No
+11726.jpg	Is this artwork titled temptation on the mountain (detail)? Please answer yes or no.	Yes
+11726.jpg	Is this artwork titled in the forest of fontainebleau? Please answer yes or no.	No
+12133.jpg	Is this artwork titled hand study with bible? Please answer yes or no.	Yes
+12133.jpg	Is this artwork titled self-portrait aged 78? Please answer yes or no.	No
+12439.jpg	Is this artwork created by dürer, albrecht? Please answer yes or no.	Yes
+12439.jpg	Is this artwork created by koekkoek, barend cornelis? Please answer yes or no.	No
+12561.jpg	Is this artwork created by eberlein, gustav heinrich? Please answer yes or no.	Yes
+12561.jpg	Is this artwork created by gillemans, jan pauwel the younger? Please answer yes or no.	No
+12652.jpg	Is this artwork displayed in stedelijk museum de lakenhal, leiden? Please answer yes or no.	Yes
+12652.jpg	Is this artwork displayed in palazzo ducale, mantua? Please answer yes or no.	No
+12736.jpg	Is this artwork displayed in cannon hall museum, barnsley? Please answer yes or no.	Yes
+12736.jpg	Is this artwork displayed in protestant parish church, gelnhausen? Please answer yes or no.	No
+12902.jpg	Is this artwork displayed in private collection? Please answer yes or no.	Yes
+12902.jpg	Is this artwork displayed in musée national gustave-moreau, paris? Please answer yes or no.	No
+12908.jpg	Is this artwork titled ruth and boaz? Please answer yes or no.	Yes
+12908.jpg	Is this artwork titled view of dresden from the right bank of the elbe with the augustus bridge? Please answer yes or no.	No
+13091.jpg	Is this artwork titled italianate landscape with figures by classical ruins? Please answer yes or no.	Yes
+13091.jpg	Is this artwork titled two boys singing? Please answer yes or no.	No
+13174.jpg	Is this artwork titled nobility? Please answer yes or no.	Yes
+13174.jpg	Is this artwork titled aretino in the studio of tintoretto? Please answer yes or no.	No
+13239.jpg	Is this artwork titled doge ziani receiving the benediction of pope alexander iii? Please answer yes or no.	Yes
+13239.jpg	Is this artwork titled the adoration of the shepherds? Please answer yes or no.	No
+13288.jpg	Does this artwork exist in the form of architecture? Please answer yes or no.	Yes
+13288.jpg	Does this artwork exist in the form of metalwork? Please answer yes or no.	No
+13696.jpg	Is this artwork displayed in pinacoteca nazionale, siena? Please answer yes or no.	Yes
+13696.jpg	Is this artwork displayed in british embassy, paris? Please answer yes or no.	No
+13760.jpg	Is this artwork titled noli me tangere? Please answer yes or no.	Yes
+13760.jpg	Is this artwork titled profile study of a bearded man? Please answer yes or no.	No
+13821.jpg	Is this artwork created by frangipane, niccolò? Please answer yes or no.	Yes
+13821.jpg	Is this artwork created by drevet, pierre? Please answer yes or no.	No
+13901.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+13901.jpg	Does this artwork exist in the form of metalwork? Please answer yes or no.	No
+14283.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+14283.jpg	Does this artwork exist in the form of mosaic? Please answer yes or no.	No
+14499.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+14499.jpg	Does this artwork belong to the type of mythological? Please answer yes or no.	No
+14777.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+14777.jpg	Does this artwork belong to the type of historical? Please answer yes or no.	No
+15028.jpg	Does this artwork belong to the type of portrait? Please answer yes or no.	Yes
+15028.jpg	Does this artwork belong to the type of study? Please answer yes or no.	No
+15232.jpg	Is this artwork created by giordano, luca? Please answer yes or no.	Yes
+15232.jpg	Is this artwork created by heyerdahl, hans olaf? Please answer yes or no.	No
+15246.jpg	Is this artwork displayed in palazzo medici riccardi, florence? Please answer yes or no.	Yes
+15246.jpg	Is this artwork displayed in abbey church of sainte-foy, conques (aveyron)? Please answer yes or no.	No
+15311.jpg	Is this artwork created by giorgione? Please answer yes or no.	Yes
+15311.jpg	Is this artwork created by marilhat, prosper? Please answer yes or no.	No
+15989.jpg	Is this artwork displayed in pinacoteca, vatican? Please answer yes or no.	Yes
+15989.jpg	Is this artwork displayed in cathedral museum, zamora? Please answer yes or no.	No
+16006.jpg	Is this artwork displayed in private collection? Please answer yes or no.	Yes
+16006.jpg	Is this artwork displayed in cathedral of san geminiano, modena? Please answer yes or no.	No
+16249.jpg	Does this artwork belong to the type of landscape? Please answer yes or no.	Yes
+16249.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	No
+16538.jpg	Is this artwork created by gogh, vincent van? Please answer yes or no.	Yes
+16538.jpg	Is this artwork created by altdorfer, albrecht? Please answer yes or no.	No
+16835.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+16835.jpg	Does this artwork exist in the form of illumination? Please answer yes or no.	No
+16911.jpg	Is this artwork created by gossart, jan? Please answer yes or no.	Yes
+16911.jpg	Is this artwork created by stanzione, massimo? Please answer yes or no.	No
+17311.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+17311.jpg	Does this artwork belong to the type of interior? Please answer yes or no.	No
+17317.jpg	Is this artwork created by gozzoli, benozzo? Please answer yes or no.	Yes
+17317.jpg	Is this artwork created by coriolano, cristoforo? Please answer yes or no.	No
+17535.jpg	Is this artwork created by grebber, pieter de? Please answer yes or no.	Yes
+17535.jpg	Is this artwork created by massys, quentin? Please answer yes or no.	No
+17823.jpg	Is this artwork created by greuze, jean-baptiste? Please answer yes or no.	Yes
+17823.jpg	Is this artwork created by landseer, sir edwin henry? Please answer yes or no.	No
+17838.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+17838.jpg	Does this artwork exist in the form of furniture? Please answer yes or no.	No
+17998.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+17998.jpg	Does this artwork belong to the type of genre? Please answer yes or no.	No
+18566.jpg	Is this artwork created by hamen, juan van der? Please answer yes or no.	Yes
+18566.jpg	Is this artwork created by starnina, gherardo di jacopo? Please answer yes or no.	No
+18604.jpg	Is this artwork created by hardouin-mansart, jules? Please answer yes or no.	Yes
+18604.jpg	Is this artwork created by kerseboom, friedrich? Please answer yes or no.	No
+18722.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+18722.jpg	Does this artwork exist in the form of sculpture? Please answer yes or no.	No
+1873.jpg	Does this artwork exist in the form of architecture? Please answer yes or no.	Yes
+1873.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	No
+18902.jpg	Is this artwork created by herrera, francisco de, the elder? Please answer yes or no.	Yes
+18902.jpg	Is this artwork created by ingres, jean-auguste-dominique? Please answer yes or no.	No
+18926.jpg	Is this artwork created by herring, john frederick the younger? Please answer yes or no.	Yes
+18926.jpg	Is this artwork created by cozens, john robert? Please answer yes or no.	No
+19087.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+19087.jpg	Does this artwork exist in the form of metalwork? Please answer yes or no.	No
+19154.jpg	Is this artwork titled portrait of the merchant georg gisze (detail)? Please answer yes or no.	Yes
+19154.jpg	Is this artwork titled pair of table candlesticks? Please answer yes or no.	No
+19417.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+19417.jpg	Does this artwork exist in the form of mosaic? Please answer yes or no.	No
+19452.jpg	Is this artwork titled the artist and his model? Please answer yes or no.	Yes
+19452.jpg	Is this artwork titled the lovesick maiden (detail)? Please answer yes or no.	No
+19839.jpg	Is this artwork created by janneck, franz christoph? Please answer yes or no.	Yes
+19839.jpg	Is this artwork created by goupil, jules-adolphe? Please answer yes or no.	No
+19863.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+19863.jpg	Does this artwork belong to the type of mythological? Please answer yes or no.	No
+19993.jpg	Is this artwork displayed in private collection? Please answer yes or no.	Yes
+19993.jpg	Is this artwork displayed in cathedral of st paul, liège? Please answer yes or no.	No
+20176.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+20176.jpg	Does this artwork exist in the form of furniture? Please answer yes or no.	No
+20437.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+20437.jpg	Does this artwork exist in the form of tapestry? Please answer yes or no.	No
+20442.jpg	Is this artwork created by kucharski, aleksander? Please answer yes or no.	Yes
+20442.jpg	Is this artwork created by pourbus, frans the elder? Please answer yes or no.	No
+20455.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+20455.jpg	Does this artwork exist in the form of metalwork? Please answer yes or no.	No
+20483.jpg	Is this artwork titled allegory of the regency? Please answer yes or no.	Yes
+20483.jpg	Is this artwork titled breton woman bathing? Please answer yes or no.	No
+20490.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+20490.jpg	Does this artwork exist in the form of illumination? Please answer yes or no.	No
+20551.jpg	Is this artwork created by lagrenée, jean-jacques? Please answer yes or no.	Yes
+20551.jpg	Is this artwork created by scultori, diana? Please answer yes or no.	No
+20651.jpg	Is this artwork titled a highland landscape? Please answer yes or no.	Yes
+20651.jpg	Is this artwork titled a dog and a cat fighting in a kitchen interior? Please answer yes or no.	No
+20724.jpg	Does this artwork belong to the type of portrait? Please answer yes or no.	Yes
+20724.jpg	Does this artwork belong to the type of landscape? Please answer yes or no.	No
+21048.jpg	Is this artwork created by lemoyne, jean-baptiste ii? Please answer yes or no.	Yes
+21048.jpg	Is this artwork created by kneller, sir godfrey? Please answer yes or no.	No
+21097.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+21097.jpg	Does this artwork belong to the type of genre? Please answer yes or no.	No
+21244.jpg	Does this artwork belong to the type of study? Please answer yes or no.	Yes
+21244.jpg	Does this artwork belong to the type of portrait? Please answer yes or no.	No
+21469.jpg	Does this artwork belong to the type of genre? Please answer yes or no.	Yes
+21469.jpg	Does this artwork belong to the type of still-life? Please answer yes or no.	No
+21580.jpg	Is this artwork created by linard, jacques? Please answer yes or no.	Yes
+21580.jpg	Is this artwork created by bonino da campione? Please answer yes or no.	No
+21712.jpg	Is this artwork titled st john the evangelist resuscitating drusiana? Please answer yes or no.	Yes
+21712.jpg	Is this artwork titled la finette? Please answer yes or no.	No
+22329.jpg	Is this artwork titled marriage of the virgin? Please answer yes or no.	Yes
+22329.jpg	Is this artwork titled landscape with river and figures (detail)? Please answer yes or no.	No
+22366.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+22366.jpg	Does this artwork exist in the form of glassware? Please answer yes or no.	No
+22667.jpg	Is this artwork displayed in private collection? Please answer yes or no.	Yes
+22667.jpg	Is this artwork displayed in san francesco d'assisi, pavia? Please answer yes or no.	No
+22760.jpg	Is this artwork titled madonna and child (detail)? Please answer yes or no.	Yes
+22760.jpg	Is this artwork titled view of the south and east walls? Please answer yes or no.	No
+22842.jpg	Is this artwork titled ukrainian peasant girl? Please answer yes or no.	Yes
+22842.jpg	Is this artwork titled virtue crowning merit? Please answer yes or no.	No
+23229.jpg	Is this artwork displayed in national gallery, london? Please answer yes or no.	Yes
+23229.jpg	Is this artwork displayed in notre-dame-la-riche, tours? Please answer yes or no.	No
+23427.jpg	Is this artwork displayed in the hermitage, st. petersburg? Please answer yes or no.	Yes
+23427.jpg	Is this artwork displayed in national gallery of victoria, melbourne? Please answer yes or no.	No
+23465.jpg	Is this artwork displayed in private collection? Please answer yes or no.	Yes
+23465.jpg	Is this artwork displayed in cistertian church, zirc? Please answer yes or no.	No
+23824.jpg	Is this artwork titled christ walking on the water? Please answer yes or no.	Yes
+23824.jpg	Is this artwork titled mademoiselle romaine lacaux? Please answer yes or no.	No
+24122.jpg	Is this artwork displayed in museo correr, venice? Please answer yes or no.	Yes
+24122.jpg	Is this artwork displayed in church of brou, bourg-en-bresse? Please answer yes or no.	No
+24260.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+24260.jpg	Does this artwork exist in the form of illumination? Please answer yes or no.	No
+24291.jpg	Is this artwork titled virgin and child with sts catherine, cecilia, barbara, and ursula? Please answer yes or no.	Yes
+24291.jpg	Is this artwork titled sorrow? Please answer yes or no.	No
+24723.jpg	Is this artwork titled tomb of henry the lion and his wife matilda? Please answer yes or no.	Yes
+24723.jpg	Is this artwork titled god the father? Please answer yes or no.	No
+2490.jpg	Does this artwork belong to the type of landscape? Please answer yes or no.	Yes
+2490.jpg	Does this artwork belong to the type of mythological? Please answer yes or no.	No
+2507.jpg	Is this artwork displayed in private collection? Please answer yes or no.	Yes
+2507.jpg	Is this artwork displayed in st. vitus's cathedral, prague? Please answer yes or no.	No
+25312.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+25312.jpg	Does this artwork exist in the form of metalwork? Please answer yes or no.	No
+25476.jpg	Is this artwork created by michelangelo buonarroti? Please answer yes or no.	Yes
+25476.jpg	Is this artwork created by beuckelaer, joachim? Please answer yes or no.	No
+25492.jpg	Does this artwork exist in the form of sculpture? Please answer yes or no.	Yes
+25492.jpg	Does this artwork exist in the form of illumination? Please answer yes or no.	No
+25513.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+25513.jpg	Does this artwork belong to the type of landscape? Please answer yes or no.	No
+26521.jpg	Does this artwork exist in the form of illumination? Please answer yes or no.	Yes
+26521.jpg	Does this artwork exist in the form of furniture? Please answer yes or no.	No
+26973.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+26973.jpg	Does this artwork belong to the type of mythological? Please answer yes or no.	No
+27021.jpg	Is this artwork created by miniaturist, german? Please answer yes or no.	Yes
+27021.jpg	Is this artwork created by trinquesse, louis-rolland? Please answer yes or no.	No
+27662.jpg	Does this artwork belong to the type of still-life? Please answer yes or no.	Yes
+27662.jpg	Does this artwork belong to the type of mythological? Please answer yes or no.	No
+27936.jpg	Does this artwork belong to the type of portrait? Please answer yes or no.	Yes
+27936.jpg	Does this artwork belong to the type of interior? Please answer yes or no.	No
+28039.jpg	Is this artwork displayed in cappella palatina, palermo? Please answer yes or no.	Yes
+28039.jpg	Is this artwork displayed in musée des beaux-arts, chambéry? Please answer yes or no.	No
+28345.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+28345.jpg	Does this artwork exist in the form of tapestry? Please answer yes or no.	No
+28400.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+28400.jpg	Does this artwork belong to the type of portrait? Please answer yes or no.	No
+28698.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+28698.jpg	Does this artwork belong to the type of still-life? Please answer yes or no.	No
+28758.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+28758.jpg	Does this artwork exist in the form of graphics? Please answer yes or no.	No
+28974.jpg	Is this artwork titled prayer before the meal? Please answer yes or no.	Yes
+28974.jpg	Is this artwork titled rest in the mountains? Please answer yes or no.	No
+29266.jpg	Is this artwork created by palma vecchio? Please answer yes or no.	Yes
+29266.jpg	Is this artwork created by maris, jacobus hendricus? Please answer yes or no.	No
+30443.jpg	Is this artwork titled the crucifixion with sts jerome and christopher? Please answer yes or no.	Yes
+30443.jpg	Is this artwork titled tomb of michelangelo (detail)? Please answer yes or no.	No
+3085.jpg	Is this artwork created by bartsius, willem? Please answer yes or no.	Yes
+3085.jpg	Is this artwork created by oehme, ernst ferdinand? Please answer yes or no.	No
+30875.jpg	Is this artwork created by pomarancio? Please answer yes or no.	Yes
+30875.jpg	Is this artwork created by steen, jan? Please answer yes or no.	No
+3114.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+3114.jpg	Does this artwork belong to the type of study? Please answer yes or no.	No
+31808.jpg	Is this artwork created by raffaello sanzio? Please answer yes or no.	Yes
+31808.jpg	Is this artwork created by simon von taisten? Please answer yes or no.	No
+32147.jpg	Is this artwork titled lucretia? Please answer yes or no.	Yes
+32147.jpg	Is this artwork titled rinaldo abandoning armida (detail)? Please answer yes or no.	No
+3241.jpg	Is this artwork titled holy family? Please answer yes or no.	Yes
+3241.jpg	Is this artwork titled friedrich iii, the wise, and johann i, the constant, electors of saxony? Please answer yes or no.	No
+33017.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+33017.jpg	Does this artwork exist in the form of glassware? Please answer yes or no.	No
+33069.jpg	Does this artwork belong to the type of historical? Please answer yes or no.	Yes
+33069.jpg	Does this artwork belong to the type of interior? Please answer yes or no.	No
+33173.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+33173.jpg	Does this artwork exist in the form of graphics? Please answer yes or no.	No
+33753.jpg	Is this artwork titled vanitas? Please answer yes or no.	Yes
+33753.jpg	Is this artwork titled legend of st francis: 18. apparition at arles (detail)? Please answer yes or no.	No
+33854.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+33854.jpg	Does this artwork belong to the type of study? Please answer yes or no.	No
+339.jpg	Is this artwork displayed in staatliche museen, berlin? Please answer yes or no.	Yes
+339.jpg	Is this artwork displayed in national museum of religious carvings, valladolid? Please answer yes or no.	No
+33933.jpg	Is this artwork titled madonna and child? Please answer yes or no.	Yes
+33933.jpg	Is this artwork titled the bacino di san marco? Please answer yes or no.	No
+3404.jpg	Is this artwork displayed in szépmûvészeti múzeum, budapest? Please answer yes or no.	Yes
+3404.jpg	Is this artwork displayed in s. eustorgio, milan? Please answer yes or no.	No
+34109.jpg	Is this artwork displayed in national gallery of art, washington? Please answer yes or no.	Yes
+34109.jpg	Is this artwork displayed in abbey church of sainte-foy, conques? Please answer yes or no.	No
+34363.jpg	Is this artwork displayed in museo del prado, madrid? Please answer yes or no.	Yes
+34363.jpg	Is this artwork displayed in state tretyakov gallery, moscow? Please answer yes or no.	No
+34539.jpg	Is this artwork titled the victory of eucharistic truth over heresy? Please answer yes or no.	Yes
+34539.jpg	Is this artwork titled a sunday afternoon on the ile de la grande jatte? Please answer yes or no.	No
+34627.jpg	Does this artwork belong to the type of landscape? Please answer yes or no.	Yes
+34627.jpg	Does this artwork belong to the type of genre? Please answer yes or no.	No
+34638.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+34638.jpg	Does this artwork exist in the form of tapestry? Please answer yes or no.	No
+34669.jpg	Does this artwork belong to the type of mythological? Please answer yes or no.	Yes
+34669.jpg	Does this artwork belong to the type of historical? Please answer yes or no.	No
+35345.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+35345.jpg	Does this artwork belong to the type of landscape? Please answer yes or no.	No
+35439.jpg	Is this artwork titled madonna and child with a host of musical angels? Please answer yes or no.	Yes
+35439.jpg	Is this artwork titled garden in fontenay? Please answer yes or no.	No
+35460.jpg	Is this artwork created by schinkel, karl friedrich? Please answer yes or no.	Yes
+35460.jpg	Is this artwork created by giolfino, bartolomeo? Please answer yes or no.	No
+35486.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+35486.jpg	Does this artwork exist in the form of furniture? Please answer yes or no.	No
+35513.jpg	Is this artwork created by schongauer, martin? Please answer yes or no.	Yes
+35513.jpg	Is this artwork created by cassioli, amos? Please answer yes or no.	No
+3552.jpg	Is this artwork titled madonna degli alberetti? Please answer yes or no.	Yes
+3552.jpg	Is this artwork titled peter gillis? Please answer yes or no.	No
+35658.jpg	Is this artwork created by sebastiano del piombo? Please answer yes or no.	Yes
+35658.jpg	Is this artwork created by jacobsz., dirck? Please answer yes or no.	No
+35736.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+35736.jpg	Does this artwork belong to the type of still-life? Please answer yes or no.	No
+35861.jpg	Does this artwork belong to the type of interior? Please answer yes or no.	Yes
+35861.jpg	Does this artwork belong to the type of still-life? Please answer yes or no.	No
+36805.jpg	Is this artwork titled weir? Please answer yes or no.	Yes
+36805.jpg	Is this artwork titled view of the window wall? Please answer yes or no.	No
+36966.jpg	Does this artwork belong to the type of portrait? Please answer yes or no.	Yes
+36966.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	No
+37010.jpg	Is this artwork titled madonna and child with the young st john? Please answer yes or no.	Yes
+37010.jpg	Is this artwork titled sketch for attila? Please answer yes or no.	No
+37077.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+37077.jpg	Does this artwork belong to the type of still-life? Please answer yes or no.	No
+37439.jpg	Is this artwork titled the message? Please answer yes or no.	Yes
+37439.jpg	Is this artwork titled the descent from the cross? Please answer yes or no.	No
+37819.jpg	Is this artwork created by tiepolo, giovanni battista? Please answer yes or no.	Yes
+37819.jpg	Is this artwork created by kerricx, willem ignatius? Please answer yes or no.	No
+37866.jpg	Does this artwork belong to the type of mythological? Please answer yes or no.	Yes
+37866.jpg	Does this artwork belong to the type of still-life? Please answer yes or no.	No
+381.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+381.jpg	Does this artwork exist in the form of architecture? Please answer yes or no.	No
+38178.jpg	Is this artwork created by tintoretto? Please answer yes or no.	Yes
+38178.jpg	Is this artwork created by morel, jean-baptiste? Please answer yes or no.	No
+38536.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+38536.jpg	Does this artwork exist in the form of furniture? Please answer yes or no.	No
+38546.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+38546.jpg	Does this artwork exist in the form of metalwork? Please answer yes or no.	No
+38694.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+38694.jpg	Does this artwork exist in the form of metalwork? Please answer yes or no.	No
+38740.jpg	Is this artwork displayed in musée toulouse-lautrec, albi? Please answer yes or no.	Yes
+38740.jpg	Is this artwork displayed in kupferstichkabinett, gotha? Please answer yes or no.	No
+38881.jpg	Does this artwork belong to the type of genre? Please answer yes or no.	Yes
+38881.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	No
+38993.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+38993.jpg	Does this artwork exist in the form of illumination? Please answer yes or no.	No
+39026.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+39026.jpg	Does this artwork belong to the type of historical? Please answer yes or no.	No
+39124.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+39124.jpg	Does this artwork exist in the form of graphics? Please answer yes or no.	No
+39188.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+39188.jpg	Does this artwork exist in the form of architecture? Please answer yes or no.	No
+39482.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+39482.jpg	Does this artwork exist in the form of metalwork? Please answer yes or no.	No
+39556.jpg	Is this artwork created by unknown master, dutch? Please answer yes or no.	Yes
+39556.jpg	Is this artwork created by cuyp, benjamin gerritsz.? Please answer yes or no.	No
+41036.jpg	Is this artwork displayed in kunsthistorisches museum, vienna? Please answer yes or no.	Yes
+41036.jpg	Is this artwork displayed in national museum of art, minsk? Please answer yes or no.	No
+41371.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+41371.jpg	Does this artwork exist in the form of architecture? Please answer yes or no.	No
+41484.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+41484.jpg	Does this artwork belong to the type of historical? Please answer yes or no.	No
+41594.jpg	Is this artwork created by veronese, paolo? Please answer yes or no.	Yes
+41594.jpg	Is this artwork created by jeaurat, etienne? Please answer yes or no.	No
+416.jpg	Does this artwork exist in the form of sculpture? Please answer yes or no.	Yes
+416.jpg	Does this artwork exist in the form of others? Please answer yes or no.	No
+41653.jpg	Is this artwork titled view of the sala del collegio? Please answer yes or no.	Yes
+41653.jpg	Is this artwork titled reine lefebvre and margot? Please answer yes or no.	No
+41944.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+41944.jpg	Does this artwork exist in the form of mosaic? Please answer yes or no.	No
+42152.jpg	Is this artwork titled the pieterskerk in leiden? Please answer yes or no.	Yes
+42152.jpg	Is this artwork titled portrait of cardinal reginald pole? Please answer yes or no.	No
+42288.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+42288.jpg	Does this artwork exist in the form of stained-glass? Please answer yes or no.	No
+42303.jpg	Is this artwork displayed in art museum, cincinnati? Please answer yes or no.	Yes
+42303.jpg	Is this artwork displayed in banca del monte di bologna e ravenna, bologna? Please answer yes or no.	No
+42401.jpg	Is this artwork created by waldmüller, fedinand georg? Please answer yes or no.	Yes
+42401.jpg	Is this artwork created by seeman, enoch? Please answer yes or no.	No
+42447.jpg	Is this artwork displayed in musée du louvre, paris? Please answer yes or no.	Yes
+42447.jpg	Is this artwork displayed in santa catarina, pisa? Please answer yes or no.	No
+42585.jpg	Is this artwork created by werff, pieter van der? Please answer yes or no.	Yes
+42585.jpg	Is this artwork created by domenichini, apollonio? Please answer yes or no.	No
+42706.jpg	Is this artwork displayed in musée du louvre, paris? Please answer yes or no.	Yes
+42706.jpg	Is this artwork displayed in galleria nazionale d'arte moderna e contemporanea, rome? Please answer yes or no.	No
+42796.jpg	Is this artwork displayed in private collection? Please answer yes or no.	Yes
+42796.jpg	Is this artwork displayed in museo di san salvi, florence? Please answer yes or no.	No
+42857.jpg	Does this artwork belong to the type of landscape? Please answer yes or no.	Yes
+42857.jpg	Does this artwork belong to the type of study? Please answer yes or no.	No
+42905.jpg	Is this artwork created by wit, jacob de? Please answer yes or no.	Yes
+42905.jpg	Is this artwork created by vittone, bernardo antonio? Please answer yes or no.	No
+42941.jpg	Is this artwork created by witte, emanuel de? Please answer yes or no.	Yes
+42941.jpg	Is this artwork created by bicci di neri? Please answer yes or no.	No
+42956.jpg	Is this artwork titled view of rome with the tiberand castel sant'angelo? Please answer yes or no.	Yes
+42956.jpg	Is this artwork titled st bonaventure enters the franciscan order? Please answer yes or no.	No
+42987.jpg	Is this artwork created by witz, konrad? Please answer yes or no.	Yes
+42987.jpg	Is this artwork created by christus, petrus? Please answer yes or no.	No
+43142.jpg	Does this artwork belong to the type of mythological? Please answer yes or no.	Yes
+43142.jpg	Does this artwork belong to the type of interior? Please answer yes or no.	No
+43175.jpg	Is this artwork displayed in private collection? Please answer yes or no.	Yes
+43175.jpg	Is this artwork displayed in smith college museum of art, northampton? Please answer yes or no.	No
+43349.jpg	Is this artwork created by zuccarelli, francesco? Please answer yes or no.	Yes
+43349.jpg	Is this artwork created by baccanelli, giovanni antonio di giulio? Please answer yes or no.	No
+43445.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+43445.jpg	Does this artwork belong to the type of interior? Please answer yes or no.	No
+4836.jpg	Is this artwork displayed in villa cornaro, piombino dese? Please answer yes or no.	Yes
+4836.jpg	Is this artwork displayed in palais saint-vaast, arras? Please answer yes or no.	No
+5227.jpg	Is this artwork created by botticelli, sandro? Please answer yes or no.	Yes
+5227.jpg	Is this artwork created by vigri, caterina? Please answer yes or no.	No
+526.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+526.jpg	Does this artwork exist in the form of tapestry? Please answer yes or no.	No
+5906.jpg	Is this artwork created by bronzino, agnolo? Please answer yes or no.	Yes
+5906.jpg	Is this artwork created by pellegrino da san daniele? Please answer yes or no.	No
+6168.jpg	Does this artwork exist in the form of graphics? Please answer yes or no.	Yes
+6168.jpg	Does this artwork exist in the form of tapestry? Please answer yes or no.	No
+6297.jpg	Is this artwork titled peasants making merry outside a tavern 'the swan'? Please answer yes or no.	Yes
+6297.jpg	Is this artwork titled allegory of quietude? Please answer yes or no.	No
+6478.jpg	Does this artwork belong to the type of religious? Please answer yes or no.	Yes
+6478.jpg	Does this artwork belong to the type of genre? Please answer yes or no.	No
+6969.jpg	Is this artwork titled letizia ramolino bonaparte? Please answer yes or no.	Yes
+6969.jpg	Is this artwork titled job and his daughters? Please answer yes or no.	No
+701.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+701.jpg	Does this artwork exist in the form of others? Please answer yes or no.	No
+7702.jpg	Is this artwork titled reine lefebvre and margot? Please answer yes or no.	Yes
+7702.jpg	Is this artwork titled fire in the oil depot at san marcuola? Please answer yes or no.	No
+8101.jpg	Is this artwork displayed in museu de arte, são paulo? Please answer yes or no.	Yes
+8101.jpg	Is this artwork displayed in national széchényi library, budapest? Please answer yes or no.	No
+815.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+815.jpg	Does this artwork exist in the form of furniture? Please answer yes or no.	No
+8797.jpg	Is this artwork created by coecke van aelst, pieter? Please answer yes or no.	Yes
+8797.jpg	Is this artwork created by abaquesne, masséot? Please answer yes or no.	No
+8885.jpg	Is this artwork displayed in art museum, saint louis? Please answer yes or no.	Yes
+8885.jpg	Is this artwork displayed in museo civico d'arte antica, turin? Please answer yes or no.	No
+9153.jpg	Is this artwork displayed in galleria nazionale, parma? Please answer yes or no.	Yes
+9153.jpg	Is this artwork displayed in hospital de san bernardo, seville? Please answer yes or no.	No
+9395.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+9395.jpg	Does this artwork exist in the form of stained-glass? Please answer yes or no.	No
+9405.jpg	Is this artwork created by courbet, gustave? Please answer yes or no.	Yes
+9405.jpg	Is this artwork created by milani, aureliano? Please answer yes or no.	No
+9599.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	Yes
+9599.jpg	Does this artwork exist in the form of ceramics? Please answer yes or no.	No
+995.jpg	Does this artwork exist in the form of sculpture? Please answer yes or no.	Yes
+995.jpg	Does this artwork exist in the form of painting? Please answer yes or no.	No
