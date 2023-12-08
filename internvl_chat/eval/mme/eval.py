@@ -53,7 +53,7 @@ if __name__ == '__main__':
     print(f'[MME] image_size: {image_size}')
     print(f'[MME] pad2square: {pad2square}')
     print(f'[MME] template: {args.template}')
-    exit()
+
     output = os.path.basename(args.model_path)
     os.makedirs(output, exist_ok=True)
 
