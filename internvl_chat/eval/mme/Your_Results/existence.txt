@@ -1,0 +1,60 @@
+000000006040.jpg	Is there a train in this image? Please answer yes or no.	Yes
+000000006040.jpg	Is there a bed in this image? Please answer yes or no.	No
+000000006471.jpg	Is there a baseball bat in this image? Please answer yes or no.	Yes
+000000006471.jpg	Is there a giraffe in this image? Please answer yes or no.	No
+000000007108.jpg	Is there a elephant in this image? Please answer yes or no.	Yes
+000000007108.jpg	Is there a hair drier in this image? Please answer yes or no.	No
+000000007816.jpg	Is there a motorcycle in this image? Please answer yes or no.	Yes
+000000007816.jpg	Is there a airplane in this image? Please answer yes or no.	No
+000000007977.jpg	Is there a skateboard in this image? Please answer yes or no.	Yes
+000000007977.jpg	Is there a spoon in this image? Please answer yes or no.	No
+000000008844.jpg	Is there a person in this image? Please answer yes or no.	Yes
+000000008844.jpg	Is there a sink in this image? Please answer yes or no.	No
+000000009590.jpg	Is there a bottle in this image? Please answer yes or no.	Yes
+000000009590.jpg	Is there a scissors in this image? Please answer yes or no.	No
+000000010363.jpg	Is there a bottle in this image? Please answer yes or no.	Yes
+000000010363.jpg	Is there a apple in this image? Please answer yes or no.	No
+000000011197.jpg	Is there a car in this image? Please answer yes or no.	Yes
+000000011197.jpg	Is there a fork in this image? Please answer yes or no.	No
+000000015254.jpg	Is there a spoon in this image? Please answer yes or no.	Yes
+000000015254.jpg	Is there a donut in this image? Please answer yes or no.	No
+000000015517.jpg	Is there a bus in this image? Please answer yes or no.	Yes
+000000015517.jpg	Is there a cow in this image? Please answer yes or no.	No
+000000015746.jpg	Is there a fire hydrant in this image? Please answer yes or no.	Yes
+000000015746.jpg	Is there a person in this image? Please answer yes or no.	No
+000000037751.jpg	Is there a backpack in this image? Please answer yes or no.	Yes
+000000037751.jpg	Is there a microwave in this image? Please answer yes or no.	No
+000000050145.jpg	Is there a bicycle in this image? Please answer yes or no.	Yes
+000000050145.jpg	Is there a apple in this image? Please answer yes or no.	No
+000000061418.jpg	Is there a chair in this image? Please answer yes or no.	Yes
+000000061418.jpg	Is there a airplane in this image? Please answer yes or no.	No
+000000417779.jpg	Is there a car in this image? Please answer yes or no.	Yes
+000000417779.jpg	Is there a kite in this image? Please answer yes or no.	No
+000000424521.jpg	Is there a skateboard in this image? Please answer yes or no.	Yes
+000000424521.jpg	Is there a banana in this image? Please answer yes or no.	No
+000000438304.jpg	Is there a sports ball in this image? Please answer yes or no.	Yes
+000000438304.jpg	Is there a horse in this image? Please answer yes or no.	No
+000000494427.jpg	Is there a laptop in this image? Please answer yes or no.	Yes
+000000494427.jpg	Is there a potted plant in this image? Please answer yes or no.	No
+000000495448.jpg	Is there a cake in this image? Please answer yes or no.	Yes
+000000495448.jpg	Is there a tie in this image? Please answer yes or no.	No
+000000498463.jpg	Is there a refrigerator in this image? Please answer yes or no.	Yes
+000000498463.jpg	Is there a donut in this image? Please answer yes or no.	No
+000000519039.jpg	Is there a truck in this image? Please answer yes or no.	Yes
+000000519039.jpg	Is there a book in this image? Please answer yes or no.	No
+000000523241.jpg	Is there a car in this image? Please answer yes or no.	Yes
+000000523241.jpg	Is there a cell phone in this image? Please answer yes or no.	No
+000000530162.jpg	Is there a umbrella in this image? Please answer yes or no.	Yes
+000000530162.jpg	Is there a horse in this image? Please answer yes or no.	No
+000000537812.jpg	Is there a chair in this image? Please answer yes or no.	Yes
+000000537812.jpg	Is there a baseball bat in this image? Please answer yes or no.	No
+000000541952.jpg	Is there a clock in this image? Please answer yes or no.	Yes
+000000541952.jpg	Is there a bottle in this image? Please answer yes or no.	No
+000000546626.jpg	Is there a bottle in this image? Please answer yes or no.	Yes
+000000546626.jpg	Is there a mouse in this image? Please answer yes or no.	No
+000000556000.jpg	Is there a chair in this image? Please answer yes or no.	Yes
+000000556000.jpg	Is there a dog in this image? Please answer yes or no.	No
+000000557258.jpg	Is there a toilet in this image? Please answer yes or no.	Yes
+000000557258.jpg	Is there a pizza in this image? Please answer yes or no.	No
+000000572956.jpg	Is there a motorcycle in this image? Please answer yes or no.	Yes
+000000572956.jpg	Is there a bus in this image? Please answer yes or no.	No
