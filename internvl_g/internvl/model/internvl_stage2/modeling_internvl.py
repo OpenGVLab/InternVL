@@ -19,7 +19,7 @@ from transformers import GenerationConfig
 from transformers.modeling_utils import PreTrainedModel
 from transformers.utils import ModelOutput, logging
 
-from .configuration_intern_vl import InternVLConfig
+from .configuration_internvl import InternVLConfig
 from .modeling_intern_vit import (InternVisionEmbeddings, InternVisionEncoder,
                                   InternVisionModel)
 from .modeling_qllama import LlamaForCausalLM, _expand_mask, _make_causal_mask
@@ -39,7 +39,7 @@ class InternVLPreTrainedModel(PreTrainedModel):
     """
 
     config_class = InternVLConfig
-    base_model_prefix = 'intern_vl'
+    base_model_prefix = 'internvl'
     supports_gradient_checkpointing = True
     _keys_to_ignore_on_load_missing = [
         r'position_ids',

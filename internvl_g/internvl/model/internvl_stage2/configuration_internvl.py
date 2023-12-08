@@ -51,7 +51,7 @@ class InternVLConfig(PretrainedConfig):
             Dictionary of additional keyword arguments.
     """
 
-    model_type = 'intern_vl'
+    model_type = 'internvl'
     is_composition = True
 
     def __init__(

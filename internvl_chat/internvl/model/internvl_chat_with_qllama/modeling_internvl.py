@@ -17,7 +17,7 @@ from transformers import GenerationConfig
 from transformers.modeling_utils import PreTrainedModel
 from transformers.utils import logging
 
-from .configuration_intern_vl import InternVLConfig
+from .configuration_internvl import InternVLConfig
 from .modeling_intern_vit import (InternVisionEmbeddings, InternVisionEncoder,
                                   InternVisionModel)
 from .modeling_qllama import LlamaForCausalLM, _expand_mask, _make_causal_mask
@@ -37,7 +37,7 @@ class InternVLPreTrainedModel(PreTrainedModel):
     """
 
     config_class = InternVLConfig
-    base_model_prefix = 'intern_vl'
+    base_model_prefix = 'internvl'
     supports_gradient_checkpointing = True
     _keys_to_ignore_on_load_missing = [
         r'position_ids',
@@ -343,6 +343,8 @@ class InternVLModel(InternVLPreTrainedModel):
     def get_image_features(
             self,
             pixel_values: torch.FloatTensor,
+            question_input_ids: torch.Tensor,
+            question_attention_mask: torch.Tensor,
             output_attentions: Optional[bool] = None,
             output_hidden_states: Optional[bool] = None,
             return_dict: Optional[bool] = None,
@@ -355,36 +357,46 @@ class InternVLModel(InternVLPreTrainedModel):
 
         vision_outputs = self.vision_model(
             pixel_values=pixel_values,
-            output_hidden_states=output_hidden_states,
+            output_hidden_states=True,
             return_dict=return_dict)
         image_embeds = vision_outputs[0]
-        backbone_embeds = image_embeds
+        backbone_embeds = vision_outputs.hidden_states[-4]
 
+        assert question_input_ids.size(0) == 1, 'batch size must be 1'
+        question_input_ids = question_input_ids[0]
+        question_attention_mask = question_attention_mask[0]
+        round_size = question_input_ids.size(0)  # [round_size, question_length]
+        question_input_embeds = self.get_input_embeddings()(question_input_ids)
         batch_size = image_embeds.shape[0]
-        input_embeds = self.query_tokens.repeat(batch_size, 1, 1)
-
+        input_embeds = self.query_tokens.repeat(batch_size * round_size, 1, 1)
         attention_mask = torch.ones(input_embeds.size()[:-1], dtype=torch.long, device=image_embeds.device)
+        input_embeds = torch.cat([input_embeds, question_input_embeds], dim=1)
+        attention_mask = torch.cat([attention_mask, question_attention_mask], dim=-1)
         attention_mask = _expand_mask(attention_mask, input_embeds.dtype).to(
             input_embeds.device)  # [bsz, 1, tgt_seq_len, src_seq_len]
         if type(self.qllama.model) == LlamaForCausalLM:
-            outputs = self.qllama.model.model.custom_forward(
+            qllama_outputs = self.qllama.model.model.custom_forward(
                 inputs_embeds=input_embeds,
                 vision_hidden_states=image_embeds,
                 attention_mask=attention_mask,
+                repeat_time=batch_size * round_size,
                 output_attentions=output_attentions,
                 output_hidden_states=output_hidden_states,
                 return_dict=return_dict,
             ).last_hidden_state
+            query_embeds = qllama_outputs[:, :self.num_query_token, :]
         else:
-            outputs = self.qllama.model.custom_forward(
+            qllama_outputs = self.qllama.model.custom_forward(
                 inputs_embeds=input_embeds,
                 vision_hidden_states=image_embeds,
                 attention_mask=attention_mask,
+                repeat_time=batch_size * round_size,
                 output_attentions=output_attentions,
                 output_hidden_states=output_hidden_states,
                 return_dict=return_dict,
             ).last_hidden_state
-        return backbone_embeds, outputs
+            query_embeds = qllama_outputs[:, :self.num_query_token, :]
+        return backbone_embeds, query_embeds
 
 
 class InternVL_C(InternVLModel):

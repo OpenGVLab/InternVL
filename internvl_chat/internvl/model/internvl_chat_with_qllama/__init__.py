@@ -14,7 +14,7 @@ from .configuration_intern_vit import InternVisionConfig
 from .configuration_internvl import InternVLConfig
 from .configuration_internvl_chat import InternVLChatConfig
 from .modeling_intern_vit import InternVisionModel
-from .modeling_intern_vl import InternVL_C, InternVL_G, InternVLModel
+from .modeling_internvl import InternVL_C, InternVL_G, InternVLModel
 from .modeling_internvl_chat import InternVLChatModel
 
 __all__ = ['InternVisionConfig', 'InternVisionModel', 'InternVLConfig',

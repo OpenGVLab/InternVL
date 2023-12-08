@@ -3,11 +3,13 @@
 # Copyright (c) 2023 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
+from dataclasses import dataclass
 from functools import partial
-from typing import Optional
+from typing import Any, Optional, Tuple, Union
 
 import numpy as np
 import torch
+import torch.distributed as dist
 import torch.nn.functional as F
 import torch.utils.checkpoint
 from peft import LoraConfig, get_peft_model
@@ -15,7 +17,7 @@ from timm.models.layers import DropPath
 from torch import nn
 from transformers import GenerationConfig
 from transformers.modeling_utils import PreTrainedModel
-from transformers.utils import logging
+from transformers.utils import ModelOutput, logging
 
 from .configuration_internvl import InternVLConfig
 from .modeling_intern_vit import (InternVisionEmbeddings, InternVisionEncoder,
@@ -37,7 +39,7 @@ class InternVLPreTrainedModel(PreTrainedModel):
     """
 
     config_class = InternVLConfig
-    base_model_prefix = 'intern_vl'
+    base_model_prefix = 'internvl'
     supports_gradient_checkpointing = True
     _keys_to_ignore_on_load_missing = [
         r'position_ids',
@@ -170,6 +172,46 @@ class AttentionPoolingBlock(AttentiveBlock):
         return x
 
 
+@dataclass
+class InternVLModelOutput(ModelOutput):
+    """
+    Class defining the outputs of [`InternVLModelOutput`].
+    """
+
+    loss: Optional[torch.FloatTensor] = None
+    loss_itm: Optional[torch.FloatTensor] = None
+    loss_itc: Optional[torch.FloatTensor] = None
+    loss_itg: Optional[torch.FloatTensor] = None
+
+    def to_tuple(self) -> Tuple[Any]:
+        return tuple(
+            self[k]
+            if k not in ['loss', 'loss_itm', 'loss_itc', 'loss_itg']
+            else getattr(self, k).to_tuple()
+            for k in self.keys()
+        )
+
+
+class GatherLayer(torch.autograd.Function):
+    """Gather tensors from all process, supporting backward propagation.
+    """
+
+    @staticmethod
+    def forward(ctx, input):
+        ctx.save_for_backward(input)
+        output = [torch.zeros_like(input) for _ in range(dist.get_world_size())]
+        dist.all_gather(output, input)
+        return torch.stack(output, 0)
+
+    @staticmethod
+    def backward(ctx, grads):
+        input, = ctx.saved_tensors
+        dist.all_reduce(grads)
+        grad_out = torch.zeros_like(input)
+        grad_out[:] = grads[dist.get_rank()]
+        return grad_out
+
+
 class InternVLModel(InternVLPreTrainedModel):
     config_class = InternVLConfig
     main_input_name = 'pixel_values'
@@ -254,6 +296,167 @@ class InternVLModel(InternVLPreTrainedModel):
 
     def get_decoder(self):
         return self.qllama.get_decoder()
+
+    @torch.no_grad()
+    def _prepare_attention_mask(
+            self,
+            image_attention_mask: torch.LongTensor,
+            attention_mask: torch.LongTensor,
+            input_embeds: torch.FloatTensor,
+            repeat_time: int,
+    ):
+        # itm, itc
+        attention_mask = torch.cat([image_attention_mask, attention_mask], dim=1)
+        expand_mask = _expand_mask(attention_mask, input_embeds.dtype).to(
+            input_embeds.device)  # [bsz, 1, tgt_seq_len, src_seq_len]
+        itm_mask_neg, itm_mask_pos, itc_mask = torch.chunk(expand_mask, repeat_time, dim=0)
+
+        itc_mask[:, :, :self.num_query_token, self.num_query_token:] = torch.finfo(input_embeds.dtype).min
+        itc_mask[:, :, self.num_query_token:, :self.num_query_token] = torch.finfo(input_embeds.dtype).min
+        itc_mask_causal = _make_causal_mask(
+            (itc_mask.shape[0], itc_mask.shape[2] - self.num_query_token),
+            input_embeds.dtype,
+            device=input_embeds.device
+        )
+        # use causal mask for text in itc
+        itc_mask[:, :, self.num_query_token:, self.num_query_token:] += itc_mask_causal
+
+        attention_mask = torch.cat([itm_mask_neg, itm_mask_pos, itc_mask], dim=0)
+
+        return attention_mask
+
+    def forward(
+            self,
+            pixel_values: torch.FloatTensor,
+            positive_input_ids: torch.FloatTensor,
+            positive_attention_mask: torch.LongTensor,
+            negative_input_ids: torch.FloatTensor,
+            negative_attention_mask: torch.LongTensor,
+            summarize_input_ids: torch.FloatTensor,
+            summarize_attention_mask: torch.LongTensor,
+            input_ids: torch.FloatTensor,
+            attention_mask: torch.LongTensor,
+            image_ids: torch.LongTensor,
+            labels: torch.LongTensor,
+            output_attentions: Optional[bool] = None,
+            output_hidden_states: Optional[bool] = None,
+            return_dict: Optional[bool] = None,
+    ) -> Union[Tuple, InternVLModelOutput]:
+        return_dict = return_dict if return_dict is not None else self.config.use_return_dict
+
+        # step 1: forward the images through the vision encoder,
+        # to get image embeddings of shape (batch_size, seq_len, hidden_size)
+        vision_outputs = self.vision_model(
+            pixel_values=pixel_values,
+            output_hidden_states=output_hidden_states,
+            return_dict=return_dict)
+        image_embeds = vision_outputs[0]
+        backbone_embeds = self.clip_projector(image_embeds)
+
+        # step 2: prepare input_ids and attention_mask for two sub-tasks:
+        # 1) image-text matching; 2) image-text contrastive learning.
+        batch_size = input_ids.shape[0]
+        input_ids = torch.cat([negative_input_ids, positive_input_ids,
+                               summarize_input_ids], dim=0)  # [3 * batch_size, seq_len]
+        itm_attention_mask = torch.cat(
+            [negative_attention_mask, positive_attention_mask], dim=0)
+        attention_mask = torch.cat(
+            [itm_attention_mask, summarize_attention_mask], dim=0)  # [3 * batch_size, seq_len]
+
+        repeat_time = input_ids.size(0) // batch_size
+        # step 3: forward the input_ids and attention_mask through the text encoder.
+        input_embeds = self.get_input_embeddings()(input_ids)
+        query_tokens = self.query_tokens.repeat(repeat_time * batch_size, 1, 1)
+        input_embeds = torch.cat([query_tokens, input_embeds], dim=1)
+        image_attention_mask = torch.ones(query_tokens.size()[:-1], dtype=torch.long, device=image_embeds.device)
+        attention_mask = self._prepare_attention_mask(
+            image_attention_mask, attention_mask, input_embeds, repeat_time
+        )
+        if type(self.qllama.model) == LlamaForCausalLM:
+            outputs = self.qllama.model.model.custom_forward(
+                inputs_embeds=input_embeds,
+                vision_hidden_states=image_embeds,
+                attention_mask=attention_mask,
+                output_attentions=output_attentions,
+                output_hidden_states=output_hidden_states,
+                return_dict=return_dict,
+                repeat_time=repeat_time,
+            ).last_hidden_state
+        else:
+            outputs = self.qllama.model.custom_forward(
+                inputs_embeds=input_embeds,
+                vision_hidden_states=image_embeds,
+                attention_mask=attention_mask,
+                output_attentions=output_attentions,
+                output_hidden_states=output_hidden_states,
+                return_dict=return_dict,
+                repeat_time=repeat_time,
+            ).last_hidden_state
+        image_embeds = outputs[:, :self.num_query_token]
+        text_embeds = outputs[:, self.num_query_token:]
+        image_itm_neg, image_itm_pos, image_itc = image_embeds.chunk(repeat_time, dim=0)
+        text_itm_neg, text_itm_pos, text_itc = text_embeds.chunk(repeat_time, dim=0)
+        image_itm = torch.cat([image_itm_neg, image_itm_pos], dim=0)
+
+        ###============== Image-Text Matching ===================###
+        image_itm = self.itm_head(image_itm)
+        logits = image_itm.mean(dim=1)
+        itm_labels = torch.cat([
+            torch.zeros(batch_size, dtype=torch.long, device=logits.device),
+            torch.ones(batch_size, dtype=torch.long, device=logits.device)
+        ], dim=0)
+        loss_itm = F.cross_entropy(logits, itm_labels)
+        neg_match_acc = ((logits[:batch_size].argmax(dim=-1) == 0) / batch_size).sum()
+        pos_match_acc = ((logits[batch_size:].argmax(dim=-1) == 1) / batch_size).sum()
+
+        ###============== Image-Text Contrastive ===================###
+        image_itc = self.clip_projector2(image_itc)
+
+        selected = summarize_attention_mask.sum(1) - 1
+        text_itc = text_itc[torch.arange(text_itc.shape[0]), selected]
+        text_itc = text_itc @ self.text_projection
+
+        # normalized features
+        backbone_embeds = backbone_embeds / backbone_embeds.norm(dim=1, keepdim=True)
+        image_itc = image_itc / image_itc.norm(dim=1, keepdim=True)
+        text_itc = text_itc / text_itc.norm(dim=1, keepdim=True)
+        backbone_embeds_all = GatherLayer.apply(backbone_embeds).flatten(0, 1)
+        image_itc_all = GatherLayer.apply(image_itc).flatten(0, 1)
+        text_itc_all = GatherLayer.apply(text_itc).flatten(0, 1)
+
+        # cosine similarity as logits
+        logit_scale = self.logit_scale.exp()
+        sim_i2t = logit_scale * (image_itc @ text_itc_all.t())
+        sim_t2i = logit_scale * (text_itc @ image_itc_all.t())
+        backbone_i2t = logit_scale * (backbone_embeds @ text_itc_all.t())
+        backbone_t2i = logit_scale * (text_itc @ backbone_embeds_all.t())
+
+        image_ids = image_ids.view(-1, 1)
+        image_ids_all = GatherLayer.apply(image_ids).flatten(0, 1)
+        pos_idx = torch.eq(image_ids, image_ids_all.t()).float()
+        sim_targets = pos_idx / pos_idx.sum(1, keepdim=True)
+
+        loss_t2i = -torch.sum(F.log_softmax(sim_t2i, dim=1) * sim_targets, dim=1).mean()
+        loss_i2t = -torch.sum(F.log_softmax(sim_i2t, dim=1) * sim_targets, dim=1).mean()
+        loss_backbone_t2i = -torch.sum(F.log_softmax(backbone_t2i, dim=1) * sim_targets, dim=1).mean()
+        loss_backbone_i2t = -torch.sum(F.log_softmax(backbone_i2t, dim=1) * sim_targets, dim=1).mean()
+        loss_itc = (loss_t2i + loss_i2t) / 2 + (loss_backbone_t2i + loss_backbone_i2t) / 2
+
+        vision_sim = F.cosine_similarity(backbone_embeds.detach(), image_itc).mean()
+
+        loss = loss_itm + loss_itc
+        if dist.get_rank() == 0:
+            print(f'loss: {loss.item()}, loss_itm: {loss_itm.item()}, loss_itc: {loss_itc.item()}, '
+                  f'vision_similarity: {round(vision_sim.item(), 5)}, '
+                  f'logit scale: {round(1.0 / logit_scale.item(), 5)}, '
+                  f'pos_match_acc: {round(pos_match_acc.item(), 4)}, '
+                  f'neg_match_acc: {round(neg_match_acc.item(), 4)}')
+
+        return InternVLModelOutput(
+            loss=loss,
+            loss_itc=loss_itc.detach(),
+            loss_itm=loss_itm.detach(),
+        )
 
     @torch.no_grad()
     def generate(
@@ -343,8 +546,6 @@ class InternVLModel(InternVLPreTrainedModel):
     def get_image_features(
             self,
             pixel_values: torch.FloatTensor,
-            question_input_ids: torch.Tensor,
-            question_attention_mask: torch.Tensor,
             output_attentions: Optional[bool] = None,
             output_hidden_states: Optional[bool] = None,
             return_dict: Optional[bool] = None,
@@ -357,46 +558,36 @@ class InternVLModel(InternVLPreTrainedModel):
 
         vision_outputs = self.vision_model(
             pixel_values=pixel_values,
-            output_hidden_states=True,
+            output_hidden_states=output_hidden_states,
             return_dict=return_dict)
         image_embeds = vision_outputs[0]
-        backbone_embeds = vision_outputs.hidden_states[-4]
+        backbone_embeds = image_embeds
 
-        assert question_input_ids.size(0) == 1, 'batch size must be 1'
-        question_input_ids = question_input_ids[0]
-        question_attention_mask = question_attention_mask[0]
-        round_size = question_input_ids.size(0)  # [round_size, question_length]
-        question_input_embeds = self.get_input_embeddings()(question_input_ids)
         batch_size = image_embeds.shape[0]
-        input_embeds = self.query_tokens.repeat(batch_size * round_size, 1, 1)
+        input_embeds = self.query_tokens.repeat(batch_size, 1, 1)
+
         attention_mask = torch.ones(input_embeds.size()[:-1], dtype=torch.long, device=image_embeds.device)
-        input_embeds = torch.cat([input_embeds, question_input_embeds], dim=1)
-        attention_mask = torch.cat([attention_mask, question_attention_mask], dim=-1)
         attention_mask = _expand_mask(attention_mask, input_embeds.dtype).to(
             input_embeds.device)  # [bsz, 1, tgt_seq_len, src_seq_len]
         if type(self.qllama.model) == LlamaForCausalLM:
-            qllama_outputs = self.qllama.model.model.custom_forward(
+            outputs = self.qllama.model.model.custom_forward(
                 inputs_embeds=input_embeds,
                 vision_hidden_states=image_embeds,
                 attention_mask=attention_mask,
-                repeat_time=batch_size * round_size,
                 output_attentions=output_attentions,
                 output_hidden_states=output_hidden_states,
                 return_dict=return_dict,
             ).last_hidden_state
-            query_embeds = qllama_outputs[:, :self.num_query_token, :]
         else:
-            qllama_outputs = self.qllama.model.custom_forward(
+            outputs = self.qllama.model.custom_forward(
                 inputs_embeds=input_embeds,
                 vision_hidden_states=image_embeds,
                 attention_mask=attention_mask,
-                repeat_time=batch_size * round_size,
                 output_attentions=output_attentions,
                 output_hidden_states=output_hidden_states,
                 return_dict=return_dict,
             ).last_hidden_state
-            query_embeds = qllama_outputs[:, :self.num_query_token, :]
-        return backbone_embeds, query_embeds
+        return backbone_embeds, outputs
 
 
 class InternVL_C(InternVLModel):
