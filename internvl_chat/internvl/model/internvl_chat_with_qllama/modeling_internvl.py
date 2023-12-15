@@ -345,6 +345,7 @@ class InternVLModel(InternVLPreTrainedModel):
             pixel_values: torch.FloatTensor,
             question_input_ids: torch.Tensor,
             question_attention_mask: torch.Tensor,
+            select_layer: Optional[int] = -4,
             output_attentions: Optional[bool] = None,
             output_hidden_states: Optional[bool] = None,
             return_dict: Optional[bool] = None,
@@ -360,7 +361,7 @@ class InternVLModel(InternVLPreTrainedModel):
             output_hidden_states=True,
             return_dict=return_dict)
         image_embeds = vision_outputs[0]
-        backbone_embeds = vision_outputs.hidden_states[-4]
+        backbone_embeds = vision_outputs.hidden_states[select_layer]
 
         assert question_input_ids.size(0) == 1, 'batch size must be 1'
         question_input_ids = question_input_ids[0]
