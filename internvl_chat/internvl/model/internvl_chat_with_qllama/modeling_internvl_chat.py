@@ -3,11 +3,13 @@
 # Copyright (c) 2023 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
+import math
 from dataclasses import dataclass
 from typing import Any, List, Optional, Tuple, Union
 
 import torch.utils.checkpoint
 from peft import LoraConfig, get_peft_model
+from timm.models.layers import trunc_normal_
 from torch import nn
 from torch.nn import CrossEntropyLoss
 from transformers import GenerationConfig, LlamaForCausalLM, LlamaTokenizer
@@ -48,6 +50,7 @@ class InternVLChatModel(PreTrainedModel):
         num_query_token = config.internvl_config.num_query_token
         image_size = config.internvl_config.force_image_size or config.internvl_config.vision_config.image_size
         patch_size = config.internvl_config.vision_config.patch_size
+        self.select_layer = config.select_layer
         self.num_image_token = (image_size // patch_size) ** 2
         self.num_query_token = num_query_token
         print('num_image_token:', self.num_image_token)
@@ -174,14 +177,14 @@ class InternVLChatModel(PreTrainedModel):
 
     def extract_feature(self, pixel_values, question_input_ids, question_attention_mask):
         vit_embeds, qllama_embeds = self.internvl.get_image_features(
-            pixel_values, question_input_ids, question_attention_mask)
+            pixel_values, question_input_ids, question_attention_mask, self.select_layer)
         vit_embeds = self.mlp1(vit_embeds[:, 1:, :])
         qllama_embeds = self.mlp2(qllama_embeds)
         return vit_embeds, qllama_embeds
 
     def chat(self, template, tokenizer, pixel_values, question, generation_config,
-             IMG_START_TOKEN='<img>', IMG_END_TOKEN='</img>', IMG_CONTEXT_TOKEN='<IMG_CONTEXT>',
-             QUERY_START_TOKEN='<query>', QUERY_END_TOKEN='</query>', QUERY_CONTEXT_TOKEN='<QUERY_CONTEXT>'):
+             IMG_START_TOKEN='<IMG>', IMG_END_TOKEN='</IMG>', IMG_CONTEXT_TOKEN='<IMG_CONTEXT>',
+             QUERY_START_TOKEN='<QUERY>', QUERY_END_TOKEN='</QUERY>', QUERY_CONTEXT_TOKEN='<QUERY_CONTEXT>'):
 
         img_context_token_id = tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
         query_context_token_id = tokenizer.convert_tokens_to_ids(QUERY_CONTEXT_TOKEN)
