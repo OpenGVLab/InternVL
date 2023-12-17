@@ -419,7 +419,8 @@ def build_datasets(data_args, llm_tokenizer, internvl_tokenizer, tcs_loader, mod
                 image_size=data_args.force_image_size,
                 is_train=ds_collections[ds_name]['data_augment'],
                 pad2square=data_args.pad2square,
-                with_pure_text_data=data_args.with_pure_text_data
+                with_pure_text_data=data_args.with_pure_text_data,
+                max_conv_num=data_args.max_conv_num
             )
             dataset.ds_name = ds_name
             datasets.append(dataset)
