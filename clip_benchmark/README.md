@@ -91,7 +91,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet-a", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.8378666666666666, "acc5": 0.9558666666666666, "mean_per_class_recall": 0.818903532103108}, "language": "en"}
+"metrics": {"acc1": 0.8377333333333333, "acc5": 0.9558666666666666, "mean_per_class_recall": 0.8183934468491632}, "language": "en"}
 ```
 
 </details>
@@ -109,7 +109,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet-r", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.9549666666666666, "acc5": 0.9918333333333333, "mean_per_class_recall": 0.9458947085263395}, "language": "en"}
+"metrics": {"acc1": 0.9549666666666666, "acc5": 0.9918333333333333, "mean_per_class_recall": 0.9460205918105684}, "language": "en"}
 ```
 
 </details>
@@ -145,7 +145,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet_sketch", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.738568256401187, "acc5": 0.9200809605219202, "mean_per_class_recall": 0.7386603921568629}, "language": "en"}
+"metrics": {"acc1": 0.7385879070133035, "acc5": 0.9199827074613374, "mean_per_class_recall": 0.7386403921568627}, "language": "en"}
 ```
 
 </details>
@@ -163,7 +163,7 @@ Expected results:
 
 ```
 {"dataset": "objectnet", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.8057499730806503, "acc5": 0.9389469150425326, "mean_per_class_recall": 0.7969509016675933}, "language": "en"}
+"metrics": {"acc1": 0.8059114891784215, "acc5": 0.9387853989447615, "mean_per_class_recall": 0.797040815749882}, "language": "en"}
 ```
 
 </details>
