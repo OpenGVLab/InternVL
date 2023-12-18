@@ -28,6 +28,17 @@ This folder contains the implementation of the InternViT-6B for image classifica
   pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
   ```
 
+- Install `flash-attn==0.2.8` :
+
+  If you want to fully replicate my results, please install `v0.2.8`, otherwise install the latest version.
+  
+  ```bash
+  git clone https://github.com/Dao-AILab/flash-attention.git
+  cd flash-attention
+  git checkout v0.2.8
+  python setup.py install
+  ```
+
 - Install `timm==0.6.11` and `mmcv-full==1.6.2`:
 
   ```bash
