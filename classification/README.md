@@ -161,7 +161,7 @@ GPUS=1 GPUS_PER_NODE=1 sh train_in1k.sh <partition> <job-name> configs/intern_vi
 Expected results:
 
 ```
-* ReaL Acc@1 90.439 Acc@5 98.572 loss 0.605
+* ReaL Acc@1 90.437 Acc@5 98.567 loss 0.605
 ReaL Accuracy of the network on the 50000 test images: 90.4%
 ```
 
