@@ -50,11 +50,11 @@ MaximumDecompressedSize = 1024
 MegaByte = 2 ** 20
 PngImagePlugin.MAX_TEXT_CHUNK = MaximumDecompressedSize * MegaByte
 IMG_CONTEXT_TOKEN = '<IMG_CONTEXT>'
-IMG_START_TOKEN = '<img>'
-IMG_END_TOKEN = '</img>'
+IMG_START_TOKEN = '<IMG>'
+IMG_END_TOKEN = '</IMG>'
 QUERY_CONTEXT_TOKEN = '<QUERY_CONTEXT>'
-QUERY_START_TOKEN = '<query>'
-QUERY_END_TOKEN = '</query>'
+QUERY_START_TOKEN = '<QUERY>'
+QUERY_END_TOKEN = '</QUERY>'
 
 logger = logging.getLogger(__name__)
 
@@ -254,9 +254,17 @@ def preprocess(
             # "-2" is hardcoded for the Llama tokenizer to make the offset correct.
             instruction_len = len(tokenizer(parts[0]).input_ids) - 2
 
+            if i != 0 and not tokenizer.legacy:
+                # The legacy and non-legacy modes handle special tokens differently
+                instruction_len -= 1
+
             # Ignore the user instructions
             target[cur_len: cur_len + instruction_len] = IGNORE_TOKEN_ID
             cur_len += turn_len
+
+            if i != 0 and not tokenizer.legacy:
+                # The legacy and non-legacy modes handle special tokens differently
+                cur_len -= 1
 
         target[cur_len:] = IGNORE_TOKEN_ID
 
@@ -273,6 +281,7 @@ def preprocess(
                     f'WARNING: tokenization mismatch: {cur_len} vs. {total_len}.'
                     f' #turn = {len(turns) - 1}. (ignored)'
                 )
+                sys.stdout.flush()
 
     return dict(
         input_ids=input_ids,
@@ -304,7 +313,6 @@ class LazySupervisedDataset(Dataset):
             self.raw_data = json.load(open(meta['annotation'], 'r'))
         elif meta['annotation'].endswith('jsonl'):
             self.raw_data = [json.loads(line) for line in open(meta['annotation'], 'r')]
-        random.shuffle(self.raw_data)
 
         print(f'data length before split: {len(self.raw_data)}')
         new_raw_data = []
@@ -387,9 +395,10 @@ class LazySupervisedDataset(Dataset):
                     ret = self.pure_text_get_item(i)
                 break
             except Exception as e:
-                print(e)
+                print(e, self.ds_name)
                 if 'image' in self.raw_data[i]:
                     print(f"Failed to load image: {self.ds_name, self.raw_data[i]['image']}")
+                    sys.stdout.flush()
                 i = random.randint(0, len(self.raw_data) - 1)
         return ret
 
@@ -410,7 +419,8 @@ def build_datasets(data_args, llm_tokenizer, internvl_tokenizer, tcs_loader, mod
                 image_size=data_args.force_image_size,
                 is_train=ds_collections[ds_name]['data_augment'],
                 pad2square=data_args.pad2square,
-                with_pure_text_data=data_args.with_pure_text_data
+                with_pure_text_data=data_args.with_pure_text_data,
+                max_conv_num=data_args.max_conv_num
             )
             dataset.ds_name = ds_name
             datasets.append(dataset)
@@ -420,8 +430,9 @@ def build_datasets(data_args, llm_tokenizer, internvl_tokenizer, tcs_loader, mod
                 lengths.append(len(dataset))
     total_length = sum(lengths)
     weights = [l / total_length for l in lengths]
-    for idx, ds_name in enumerate(ds_collections.keys()):
-        print(f'{ds_name}: {weights[idx]}')
+    for idx, dataset in enumerate(datasets):
+        if torch.distributed.get_rank() == 0:
+            print(f'{dataset.ds_name}: {weights[idx]}')
     train_dataset = WeightedConcatDataset(datasets, weights)
     return train_dataset
 
@@ -440,7 +451,7 @@ def main():
 
     # Sending telemetry. Tracking the example usage helps us better allocate resources to maintain them. The
     # information sent is the one passed as arguments along with your Python/PyTorch versions.
-    send_example_telemetry('Intern chat', model_args, data_args)
+    send_example_telemetry('InternVL-Chat (w/ QLLaMA)', model_args, data_args)
 
     # Setup logging
     logging.basicConfig(
@@ -486,7 +497,7 @@ def main():
     # Load pretrained model, tokenizer, and image processor
     tokenizer_path = model_args.model_name_or_path or model_args.llm_path
     llm_tokenizer = LlamaTokenizer.from_pretrained(
-        tokenizer_path, add_eos_token=False, legacy=True)
+        tokenizer_path, add_eos_token=False, legacy=False)
     llm_tokenizer.model_max_length = data_args.max_seq_length
     token_list = [IMG_START_TOKEN, IMG_END_TOKEN, IMG_CONTEXT_TOKEN,
                   QUERY_START_TOKEN, QUERY_END_TOKEN, QUERY_CONTEXT_TOKEN]
@@ -517,7 +528,7 @@ def main():
         print('Building InternVLChatModel...')
         model = InternVLChatModel(intern_chat_config, internvl, llm)
 
-    print(f'Loading InternVL Tokenizer: {model_args.model_name_or_path}')
+    print(f'Loading InternVL Tokenizer: {model_args.internvl_path}')
     internvl_tokenizer = LlamaTokenizer.from_pretrained(
         model_args.internvl_path, add_eos_token=True)
     internvl_tokenizer.model_max_length = data_args.max_question_length

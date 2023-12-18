@@ -41,8 +41,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     prompt = 'Answer the question using a single word or phrase.'
-    tokenizer = LlamaTokenizer.from_pretrained(
-        args.model_path, add_eos_token=False, legacy=True)
+    tokenizer = LlamaTokenizer.from_pretrained(args.model_path)
 
     config = InternVLChatConfig.from_pretrained(args.model_path)
     model = InternVLChatModel.from_pretrained(

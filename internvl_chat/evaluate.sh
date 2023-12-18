@@ -22,8 +22,7 @@ if  [ ${DATASET} == "caption" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/caption/evaluate_caption.py \
-    --checkpoint ${CHECKPOINT} --model_type "InternChatModel" --template 'vicuna_v1.1'
+    eval/caption/evaluate_caption.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1'
 fi
 
 if  [ ${DATASET} == "caption-coco" ]; then
@@ -33,8 +32,7 @@ if  [ ${DATASET} == "caption-coco" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/caption/evaluate_caption.py \
-    --checkpoint ${CHECKPOINT} --model_type "InternChatModel" --template 'vicuna_v1.1' --datasets coco
+    eval/caption/evaluate_caption.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets coco
 fi
 
 if  [ ${DATASET} == "caption-flickr30k" ]; then
@@ -44,8 +42,7 @@ if  [ ${DATASET} == "caption-flickr30k" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/caption/evaluate_caption.py \
-    --checkpoint ${CHECKPOINT} --model_type "InternChatModel" --template 'vicuna_v1.1' --datasets flickr30k
+    eval/caption/evaluate_caption.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets flickr30k
 fi
 
 if  [ ${DATASET} == "caption-nocaps" ]; then
@@ -55,8 +52,7 @@ if  [ ${DATASET} == "caption-nocaps" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/caption/evaluate_caption.py \
-    --checkpoint ${CHECKPOINT} --model_type "InternChatModel" --template 'vicuna_v1.1' --datasets nocaps
+    eval/caption/evaluate_caption.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets nocaps
 fi
 
 if [ ${DATASET} == "vqa" ]; then
@@ -66,19 +62,7 @@ if [ ${DATASET} == "vqa" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/vqa/evaluate_vqa.py \
-    --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1'
-fi
-
-if [ ${DATASET} == "vqa-pad" ]; then
-    torchrun \
-    --nnodes=1 \
-    --node_rank=0 \
-    --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
-    eval/vqa/evaluate_vqa.py \
-    --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1'
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1'
 fi
 
 if [ ${DATASET} == "vqa-okvqa" ]; then
@@ -88,8 +72,7 @@ if [ ${DATASET} == "vqa-okvqa" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/vqa/evaluate_vqa.py \
-    --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets okvqa_val
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets okvqa_val
 fi
 
 if [ ${DATASET} == "vqa-textvqa" ]; then
@@ -99,8 +82,7 @@ if [ ${DATASET} == "vqa-textvqa" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/vqa/evaluate_vqa.py \
-    --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets textvqa_val_ocr
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets textvqa_val_ocr
 fi
 
 if [ ${DATASET} == "vqa-vizwiz" ]; then
@@ -110,8 +92,7 @@ if [ ${DATASET} == "vqa-vizwiz" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/vqa/evaluate_vqa.py \
-    --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets vizwiz_val
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets vizwiz_val
 fi
 
 if [ ${DATASET} == "vqa-vizwiz-test" ]; then
@@ -121,8 +102,7 @@ if [ ${DATASET} == "vqa-vizwiz-test" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/vqa/evaluate_vqa.py \
-    --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets vizwiz_test
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets vizwiz_test
 fi
 
 if [ ${DATASET} == "vqa-vqav2-testdev" ]; then
@@ -132,8 +112,7 @@ if [ ${DATASET} == "vqa-vqav2-testdev" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/vqa/evaluate_vqa.py \
-    --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets vqav2_testdev
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets vqav2_testdev
 fi
 
 if [ ${DATASET} == "vqa-ai2d" ]; then
@@ -143,8 +122,7 @@ if [ ${DATASET} == "vqa-ai2d" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/vqa/evaluate_vqa.py \
-    --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets ai2diagram_test
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets ai2diagram_test
 fi
 
 if [ ${DATASET} == "vqa-vqav2" ]; then
@@ -154,8 +132,7 @@ if [ ${DATASET} == "vqa-vqav2" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/vqa/evaluate_vqa.py \
-    --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets vqav2_val
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets vqav2_val
 fi
 
 if [ ${DATASET} == "vqa-gqa" ]; then
@@ -165,8 +142,7 @@ if [ ${DATASET} == "vqa-gqa" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/vqa/evaluate_vqa.py \
-    --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets gqa_testdev_llava
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets gqa_testdev_llava
 fi
 
 if [ ${DATASET} == "refcoco" ]; then
@@ -176,23 +152,22 @@ if [ ${DATASET} == "refcoco" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/refcoco/evaluate_grounding.py \
-    --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1'
+    eval/refcoco/evaluate_grounding.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1'
 fi
 
 if [ ${DATASET} == "llava-bench" ]; then
-    /mnt/afs/user/chenzhe/.conda/envs/husky/bin/python eval/llava_bench/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1'
+    python eval/llava_bench/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1'
 fi
 
 if [ ${DATASET} == "pope" ]; then
-    /mnt/afs/user/chenzhe/.conda/envs/husky/bin/python eval/llava_bench/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets pope --template 'vicuna_v1.1'
+    python eval/llava_bench/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets pope --template 'vicuna_v1.1'
 fi
 
 if [ ${DATASET} == "mmvet" ]; then
-    /mnt/afs/user/chenzhe/.conda/envs/husky/bin/python eval/llava_bench/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets mmvet --template 'vicuna_v1.1'
+    python eval/llava_bench/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets mmvet --template 'vicuna_v1.1'
 fi
 
 if [ ${DATASET} == "mmbench" ]; then
     cd eval/mmbench/
-    /mnt/afs/user/chenzhe/.conda/envs/husky/bin/python eval.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1'
+    python eval.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1'
 fi

@@ -2,7 +2,7 @@ set -x
 
 CHECKPOINT=${1}
 DATASET=${2}
-
+export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 echo "CHECKPOINT: ${CHECKPOINT}"
 
 if  [ ${DATASET} == "caption" ]; then

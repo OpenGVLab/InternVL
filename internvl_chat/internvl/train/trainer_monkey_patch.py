@@ -70,17 +70,19 @@ def create_optimizer(self):
     parameter_groups = {}
     try:  # for stage2 model
         vit_num_layers = opt_model.config.vision_config.num_hidden_layers + 2
-        qllama_num_layers = opt_model.config.text_config.num_hidden_layers + 2
+        qllama_num_layers = opt_model.config.qllama_config.num_hidden_layers + 2
     except:  # for stage3 model
         vit_num_layers = opt_model.internvl.config.vision_config.num_hidden_layers + 2
-        qllama_num_layers = opt_model.internvl.config.text_config.num_hidden_layers + 2
+        qllama_num_layers = opt_model.internvl.config.qllama_config.num_hidden_layers + 2
     print('vit_num_layers:', vit_num_layers)
     print('qllama_num_layers:', qllama_num_layers)
 
     vit_layer_decay_rate = float(os.getenv('VIT_LAYER_DECAY_RATE', 1.0))
     qllama_layer_decay_rate = float(os.getenv('QLLAMA_LAYER_DECAY_RATE', 1.0))
+    qllama_lr_scale = float(os.getenv('QLLAMA_LR_SCALE', 1.0))
     print('vit_layer_decay_rate:', vit_layer_decay_rate)
     print('qllama_layer_decay_rate:', qllama_layer_decay_rate)
+    print('qllama_lr_scale:', qllama_lr_scale)
 
     for name, param in opt_model.named_parameters():
         if not param.requires_grad:
@@ -98,8 +100,11 @@ def create_optimizer(self):
         if group_name not in parameter_groups:
             if cls == 'vit':
                 scale = vit_layer_decay_rate ** (vit_num_layers - layer_id - 1)
-            else:
+            elif cls == 'qllama':
                 scale = qllama_layer_decay_rate ** (qllama_num_layers - layer_id - 1)
+                scale = scale * qllama_lr_scale
+            else:
+                scale = 1.0
             scale = min(1.0, scale)
             parameter_groups[group_name] = {
                 'weight_decay': this_weight_decay,

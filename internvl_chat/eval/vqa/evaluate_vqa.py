@@ -9,10 +9,9 @@ from functools import partial
 from typing import Optional
 
 import torch
-import torchvision.transforms as T
-from husky.model.internvl_hf_stage3_v13 import InternChatModel
+from internvl.model.internvl_chat_with_qllama import InternVLChatModel
+from internvl.train.dataset import build_transform
 from PIL import Image
-from torchvision.transforms.functional import InterpolationMode
 from tqdm import tqdm
 from transformers import LlamaTokenizer
 from vqa import VQA
@@ -208,20 +207,6 @@ def collate_fn(batches, tokenizer):
     return pixel_values, questions, question_ids, annotations
 
 
-def expand2square(pil_img, background_color):
-    width, height = pil_img.size
-    if width == height:
-        return pil_img
-    elif width > height:
-        result = Image.new(pil_img.mode, (width, width), background_color)
-        result.paste(pil_img, (0, (width - height) // 2))
-        return result
-    else:
-        result = Image.new(pil_img.mode, (height, height), background_color)
-        result.paste(pil_img, ((height - width) // 2, 0))
-        return result
-
-
 class VQADataset(torch.utils.data.Dataset):
 
     def __init__(self, train, test, prompt, few_shot, input_size=224, pad2square=False):
@@ -231,21 +216,9 @@ class VQADataset(torch.utils.data.Dataset):
         self.few_shot = few_shot
         if few_shot > 0:
             self.train = open(train).readlines()
-        if pad2square:
-            self.transform = T.Compose([
-                T.Lambda(lambda img: img.convert('RGB') if img.mode != 'RGB' else img),
-                T.Lambda(lambda img: expand2square(img, tuple(int(x * 255) for x in (0.485, 0.456, 0.406)))),
-                T.Resize((input_size, input_size), interpolation=InterpolationMode.BICUBIC),
-                T.ToTensor(),
-                T.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))
-            ])
-        else:
-            self.transform = T.Compose([
-                T.Lambda(lambda img: img.convert('RGB') if img.mode != 'RGB' else img),
-                T.Resize((input_size, input_size), interpolation=InterpolationMode.BICUBIC),
-                T.ToTensor(),
-                T.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))
-            ])
+        self.transform = build_transform(is_train=False, input_size=input_size, pad2square=pad2square)
+        print('input_size:', input_size)
+        print('pad2square:', pad2square)
 
     def __len__(self):
         return len(self.test)
@@ -324,10 +297,9 @@ def evaluate_chat_model():
     base_prompt = 'Answer the question using a single word or phrase.'
     vizwiz_prompt = "When the provided information is insufficient, respond with 'Unanswerable'. "
     ai2d_prompt = 'Please answer the question based on the options mentioned before.'
-    model = InternChatModel.from_pretrained(
+    model = InternVLChatModel.from_pretrained(
         args.checkpoint, torch_dtype=torch.bfloat16).cuda().eval()
     tokenizer = LlamaTokenizer.from_pretrained(args.checkpoint)
-    tokenizer.add_eos_token = False
 
     random.seed(args.seed)
     summaries = []
@@ -339,10 +311,10 @@ def evaluate_chat_model():
         else:
             input_prompt = base_prompt
 
-        if model.qllama.config.force_image_size is not None:
-            image_size = model.qllama.config.force_image_size
+        if model.internvl.config.force_image_size is not None:
+            image_size = model.internvl.config.force_image_size
         else:
-            image_size = model.qllama.config.vision_config.image_size
+            image_size = model.internvl.config.vision_config.image_size
 
         dataset = VQADataset(
             train=ds_collections[ds_name]['train'],
@@ -350,7 +322,7 @@ def evaluate_chat_model():
             prompt=input_prompt,
             few_shot=args.few_shot,
             input_size=image_size,
-            pad2square=args.pad2square
+            pad2square=model.config.pad2square
         )
         dataloader = torch.utils.data.DataLoader(
             dataset=dataset,
@@ -468,7 +440,7 @@ def evaluate_chat_model():
                     dst_file = './data/gqa/testdev_balanced_predictions.json'
                     print('python eval/vqa/convert_gqa_for_eval.py --src ' +
                           results_file + ' --dst ' + dst_file)
-                    python_path = '/mnt/afs/user/chenzhe/.conda/envs/husky/bin/python'
+                    python_path = 'python'
                     os.system(python_path + ' eval/vqa/convert_gqa_for_eval.py --src ' +
                               results_file + ' --dst ' + dst_file)
                     command = f'cd ./data/gqa/ && {python_path} eval.py --tier testdev_balanced && cd ../../'
@@ -503,7 +475,6 @@ if __name__ == '__main__':
     parser.add_argument('--out_dir', type=str, default='results')
     parser.add_argument('--few-shot', type=int, default=0)
     parser.add_argument('--seed', type=int, default=0)
-    parser.add_argument('--pad2square', type=bool, default=False)
     args = parser.parse_args()
 
     if not os.path.exists(args.out_dir):
@@ -511,7 +482,6 @@ if __name__ == '__main__':
 
     args.datasets = args.datasets.split(',')
     print('datasets:', args.datasets)
-    print('pad2square:', args.pad2square)
     assert args.batch_size == 1, 'Only batch size 1 is supported'
 
     torch.distributed.init_process_group(
