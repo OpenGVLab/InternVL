@@ -30,6 +30,17 @@ Our segmentation code is developed on top of [MMSegmentation v0.30.0](https://gi
   pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
   ```
 
+- Install `flash-attn==0.2.8` :
+
+  If you want to fully replicate my results, please install `v0.2.8`, otherwise install the latest version.
+  
+  ```bash
+  git clone https://github.com/Dao-AILab/flash-attention.git
+  cd flash-attention
+  git checkout v0.2.8
+  python setup.py install
+  ```
+
 - Install other requirements:
 
   note: conda opencv will break torchvision as not to support GPU, so we need to install opencv using pip.
