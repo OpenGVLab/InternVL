@@ -281,7 +281,7 @@ Expected results:
 
 ```
 {"dataset": "cifar100", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.9315, "acc5": 0.9925, "mean_per_class_recall": 0.9312}, "language": "en"}
+"metrics": {"acc1": 0.9315, "acc5": 0.9925, "mean_per_class_recall": 0.9314}, "language": "en"}
 ```
 
 </details>
@@ -299,7 +299,7 @@ Expected results:
 
 ```
 {"dataset": "mnist", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.8059, "acc5": 0.9742, "mean_per_class_recall": 0.8024705158575907}, "language": "en"}
+"metrics": {"acc1": 0.806, "acc5": 0.9743, "mean_per_class_recall": 0.8028667364603377}, "language": "en"}
 ```
 
 </details>
@@ -317,7 +317,7 @@ Expected results:
 
 ```
 {"dataset": "caltech101", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.89501312335958, "acc5": 0.9849081364829396, "mean_per_class_recall": 0.9551142080563548}, "language": "en"}
+"metrics": {"acc1": 0.8949037620297463, "acc5": 0.9847987751531059, "mean_per_class_recall": 0.9548738053818752}, "language": "en"}
 ```
 
 </details>
@@ -335,7 +335,7 @@ Expected results:
 
 ```
 {"dataset": "sun397", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.7600639976460636, "acc5": 0.9623370174890119, "mean_per_class_recall": 0.7643101664978325}, "language": "en"}
+"metrics": {"acc1": 0.7600180223256157, "acc5": 0.9623370174890119, "mean_per_class_recall": 0.7641970904214413}, "language": "en"}
 ```
 
 </details>
@@ -353,7 +353,7 @@ Expected results:
 
 ```
 {"dataset": "fgvc_aircraft", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.5262526252625263, "acc5": 0.9426942694269427, "mean_per_class_recall": 0.5252139037433156}, "language": "en"}
+"metrics": {"acc1": 0.5271527152715272, "acc5": 0.9426942694269427, "mean_per_class_recall": 0.5255169340463458}, "language": "en"}
 ```
 
 </details>
@@ -371,7 +371,7 @@ Expected results:
 
 ```
 {"dataset": "country211", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.34071090047393365, "acc5": 0.6049763033175355, "mean_per_class_recall": 0.3408530805687204}, "language": "en"}
+"metrics": {"acc1": 0.34080568720379145, "acc5": 0.6048815165876777, "mean_per_class_recall": 0.3406635071090047}, "language": "en"}
 ```
 
 </details>
@@ -389,7 +389,7 @@ Expected results:
 
 ```
 {"dataset": "cars", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.9411764705882353, "acc5": 0.99950254943415, "mean_per_class_recall": 0.9413694180920759}, "language": "en"}
+"metrics": {"acc1": 0.9416739211540853, "acc5": 0.99950254943415, "mean_per_class_recall": 0.9416684924576828}, "language": "en"}
 ```
 
 </details>
@@ -407,7 +407,7 @@ Expected results:
 
 ```
 {"dataset": "birdsnap", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.7235772357723578, "acc5": 0.9636856368563685, "mean_per_class_recall": 0.7058843537414966}, "language": "en"}
+"metrics": {"acc1": 0.7203252032520325, "acc5": 0.9636856368563685, "mean_per_class_recall": 0.7027551020408164}, "language": "en"}
 ```
 
 </details>
@@ -425,7 +425,7 @@ Expected results:
 
 ```
 {"dataset": "dtd", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.7079787234042553, "acc5": 0.9361702127659575, "mean_per_class_recall": 0.7074468085106383}, "language": "en"}
+"metrics": {"acc1": 0.7074468085106383, "acc5": 0.9367021276595745, "mean_per_class_recall": 0.7079787234042553}, "language": "en"}
 ```
 
 </details>
@@ -443,7 +443,7 @@ Expected results:
 
 ```
 {"dataset": "eurosat", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.7933703703703704, "acc5": 0.9984444444444445, "mean_per_class_recall": 0.8010866666666667}, "language": "en"}
+"metrics": {"acc1": 0.7937407407407407, "acc5": 0.9984074074074074, "mean_per_class_recall": 0.8013766666666665}, "language": "en"}
 ```
 
 </details>
@@ -461,7 +461,7 @@ Expected results:
 
 ```
 {"dataset": "fer2013", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.5621342992477013, "acc5": 0.9731122875452772, "mean_per_class_recall": 0.530855567482585}, "language": "en"}
+"metrics": {"acc1": 0.561994984675397, "acc5": 0.9732516021175815, "mean_per_class_recall": 0.5305440899910082}, "language": "en"}
 ```
 
 </details>
@@ -479,7 +479,7 @@ Expected results:
 
 ```
 {"dataset": "vtab/flowers", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.8606277443486746, "acc5": 0.953651000162628, "mean_per_class_recall": 0.8562257647762344}, "language": "en"}
+"metrics": {"acc1": 0.8606277443486746, "acc5": 0.953651000162628, "mean_per_class_recall": 0.8563173902114554}, "language": "en"}
 ```
 
 </details>
@@ -497,7 +497,7 @@ Expected results:
 
 ```
 {"dataset": "food101", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.9525544554455445, "acc5": 0.9954851485148515, "mean_per_class_recall": 0.9527524752475246}, "language": "en"}
+"metrics": {"acc1": 0.9526336633663366, "acc5": 0.9954851485148515, "mean_per_class_recall": 0.9527524752475246}, "language": "en"}
 ```
 
 </details>
@@ -515,7 +515,7 @@ Expected results:
 
 ```
 {"dataset": "gtsrb", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.6542359461599366, "acc5": 0.9094220110847189, "mean_per_class_recall": 0.5771153922473438}, "language": "en"}
+"metrics": {"acc1": 0.6548693586698338, "acc5": 0.9089469517022961, "mean_per_class_recall": 0.5775180283147926}, "language": "en"}
 ```
 
 </details>
@@ -551,7 +551,7 @@ Expected results:
 
 ```
 {"dataset": "renderedsst2", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.6798462383305875, "acc5": NaN, "mean_per_class_recall": 0.6798408459266979}, "language": "en"}
+"metrics": {"acc1": 0.6792970895112576, "acc5": NaN, "mean_per_class_recall": 0.6792944097041282}, "language": "en"}
 ```
 
 </details>
@@ -569,7 +569,7 @@ Expected results:
 
 ```
 {"dataset": "vtab/resisc45", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.7421044278685923, "acc5": 0.9666719568322488, "mean_per_class_recall": 0.7476201893984034}, "language": "en"}
+"metrics": {"acc1": 0.7422631328360577, "acc5": 0.9663545468973179, "mean_per_class_recall": 0.7481098478511045}, "language": "en"}
 ```
 
 </details>
@@ -605,7 +605,7 @@ Expected results:
 
 ```
 {"dataset": "voc2007", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.7994123931623932, "acc5": 0.9795005341880342, "mean_per_class_recall": 0.9048316862763777}, "language": "en"}
+"metrics": {"acc1": 0.7997462606837606, "acc5": 0.9795005341880342, "mean_per_class_recall": 0.9048832641726575}, "language": "en"}
 ```
 
 </details>
