@@ -34,7 +34,6 @@ model = dict(
         layerscale_force_fp32=False,
         with_fpn=True,
         freeze_vit=True,
-        unfreeze_pos_embed=False,
         out_indices=[11, 23, 35, 47],
         pretrained=pretrained),
     decode_head=dict(num_classes=150,
