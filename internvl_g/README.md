@@ -1,4 +1,4 @@
-![image](https://github.com/OpenGVLab/InternVL/assets/23737120/8a4794a2-fcdd-4143-be82-1b9c17c7b29b)# InternVL Stage-2 Pre-training
+# InternVL Stage-2 Pre-training
 
 This folder contains the implementation of the InternVL for stage2 pre-training and retrieval fine-tuning.
 
