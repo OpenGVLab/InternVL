@@ -73,7 +73,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.83196, "acc5": 0.97322, "mean_per_class_recall": 0.83212}, "language": "en"}
+"metrics": {"acc1": 0.83178, "acc5": 0.97322, "mean_per_class_recall": 0.83204}, "language": "en"}
 ```
 
 </details>
@@ -187,7 +187,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.6446, "acc5": 0.87842, "mean_per_class_recall": 0.6442}, "language": "cn"}
+"metrics": {"acc1": 0.6446, "acc5": 0.87842, "mean_per_class_recall": 0.6444200000000001}, "language": "cn"}
 ```
 
 </details>
@@ -205,7 +205,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.61478, "acc5": 0.8116, "mean_per_class_recall": 0.61402}, "language": "jp"}
+"metrics": {"acc1": 0.61488, "acc5": 0.81146, "mean_per_class_recall": 0.6140599999999999}, "language": "jp"}
 ```
 
 </details>
@@ -223,7 +223,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.44854, "acc5": 0.66408, "mean_per_class_recall": 0.44758}, "language": "ar"}
+"metrics": {"acc1": 0.4486, "acc5": 0.66418, "mean_per_class_recall": 0.44764}, "language": "ar"}
 ```
 
 </details>
@@ -241,7 +241,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.6568, "acc5": 0.85258, "mean_per_class_recall": 0.65564}, "language": "it"}
+"metrics": {"acc1": 0.65686, "acc5": 0.85254, "mean_per_class_recall": 0.6557799999999999}, "language": "it"}
 ```
 
 </details>
