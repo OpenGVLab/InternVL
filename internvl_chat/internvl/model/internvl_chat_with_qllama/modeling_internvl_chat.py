@@ -261,10 +261,6 @@ class InternVLChatModel(PreTrainedModel):
         else:
             vit_embeds, qllama_embeds = self.extract_feature(
                 pixel_values, question_input_ids, question_attention_mask)
-        print('question_input_ids:', question_input_ids)
-        print('question_attention_mask:', question_attention_mask)
-        print('vit_embeds:', vit_embeds)
-        print('qllama_embeds:', qllama_embeds)
 
         input_embeds = self.language_model.get_input_embeddings()(input_ids)
         B, N, C = input_embeds.shape
