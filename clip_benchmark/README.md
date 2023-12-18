@@ -73,7 +73,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.83196, "acc5": 0.97322, "mean_per_class_recall": 0.83212}, "language": "en"}
+"metrics": {"acc1": 0.83178, "acc5": 0.97322, "mean_per_class_recall": 0.83204}, "language": "en"}
 ```
 
 </details>
@@ -91,7 +91,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet-a", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.8378666666666666, "acc5": 0.9558666666666666, "mean_per_class_recall": 0.818903532103108}, "language": "en"}
+"metrics": {"acc1": 0.8377333333333333, "acc5": 0.9558666666666666, "mean_per_class_recall": 0.8183934468491632}, "language": "en"}
 ```
 
 </details>
@@ -109,7 +109,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet-r", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.9549666666666666, "acc5": 0.9918333333333333, "mean_per_class_recall": 0.9458947085263395}, "language": "en"}
+"metrics": {"acc1": 0.9549666666666666, "acc5": 0.9918333333333333, "mean_per_class_recall": 0.9460205918105684}, "language": "en"}
 ```
 
 </details>
@@ -145,7 +145,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet_sketch", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.738568256401187, "acc5": 0.9200809605219202, "mean_per_class_recall": 0.7386603921568629}, "language": "en"}
+"metrics": {"acc1": 0.7385879070133035, "acc5": 0.9199827074613374, "mean_per_class_recall": 0.7386403921568627}, "language": "en"}
 ```
 
 </details>
@@ -163,7 +163,7 @@ Expected results:
 
 ```
 {"dataset": "objectnet", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.8057499730806503, "acc5": 0.9389469150425326, "mean_per_class_recall": 0.7969509016675933}, "language": "en"}
+"metrics": {"acc1": 0.8059114891784215, "acc5": 0.9387853989447615, "mean_per_class_recall": 0.797040815749882}, "language": "en"}
 ```
 
 </details>
@@ -187,7 +187,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.6446, "acc5": 0.87842, "mean_per_class_recall": 0.6442}, "language": "cn"}
+"metrics": {"acc1": 0.6446, "acc5": 0.87842, "mean_per_class_recall": 0.6444200000000001}, "language": "cn"}
 ```
 
 </details>
@@ -205,7 +205,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.61478, "acc5": 0.8116, "mean_per_class_recall": 0.61402}, "language": "jp"}
+"metrics": {"acc1": 0.61488, "acc5": 0.81146, "mean_per_class_recall": 0.6140599999999999}, "language": "jp"}
 ```
 
 </details>
@@ -223,7 +223,7 @@ Expected results:
 
 ```
 {"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.44854, "acc5": 0.66408, "mean_per_class_recall": 0.44758}, "language": "ar"}
+"metrics": {"acc1": 0.4486, "acc5": 0.66418, "mean_per_class_recall": 0.44764}, "language": "ar"}
 ```
 
 </details>
@@ -241,14 +241,14 @@ Expected results:
 
 ```
 {"dataset": "imagenet1k", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.6568, "acc5": 0.85258, "mean_per_class_recall": 0.65564}, "language": "it"}
+"metrics": {"acc1": 0.65686, "acc5": 0.85254, "mean_per_class_recall": 0.6557799999999999}, "language": "it"}
 ```
 
 </details>
 
 ### Other Datasets
 
-<img width="1219" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/9417667d-4bd7-4385-a048-3489de8892f3">
+<img width="1219" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/5de18a6c-8979-432d-bcb6-eb7796b4a08f">
 
 <details>
   <summary>[InternVL-C] CIFAR-10</summary>
@@ -281,7 +281,7 @@ Expected results:
 
 ```
 {"dataset": "cifar100", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.9315, "acc5": 0.9925, "mean_per_class_recall": 0.9312}, "language": "en"}
+"metrics": {"acc1": 0.9315, "acc5": 0.9925, "mean_per_class_recall": 0.9314}, "language": "en"}
 ```
 
 </details>
@@ -299,7 +299,7 @@ Expected results:
 
 ```
 {"dataset": "mnist", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.8059, "acc5": 0.9742, "mean_per_class_recall": 0.8024705158575907}, "language": "en"}
+"metrics": {"acc1": 0.806, "acc5": 0.9743, "mean_per_class_recall": 0.8028667364603377}, "language": "en"}
 ```
 
 </details>
@@ -317,7 +317,7 @@ Expected results:
 
 ```
 {"dataset": "caltech101", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.89501312335958, "acc5": 0.9849081364829396, "mean_per_class_recall": 0.9551142080563548}, "language": "en"}
+"metrics": {"acc1": 0.8949037620297463, "acc5": 0.9847987751531059, "mean_per_class_recall": 0.9548738053818752}, "language": "en"}
 ```
 
 </details>
@@ -335,7 +335,7 @@ Expected results:
 
 ```
 {"dataset": "sun397", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.7600639976460636, "acc5": 0.9623370174890119, "mean_per_class_recall": 0.7643101664978325}, "language": "en"}
+"metrics": {"acc1": 0.7600180223256157, "acc5": 0.9623370174890119, "mean_per_class_recall": 0.7641970904214413}, "language": "en"}
 ```
 
 </details>
@@ -353,7 +353,7 @@ Expected results:
 
 ```
 {"dataset": "fgvc_aircraft", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.5262526252625263, "acc5": 0.9426942694269427, "mean_per_class_recall": 0.5252139037433156}, "language": "en"}
+"metrics": {"acc1": 0.5271527152715272, "acc5": 0.9426942694269427, "mean_per_class_recall": 0.5255169340463458}, "language": "en"}
 ```
 
 </details>
@@ -371,7 +371,7 @@ Expected results:
 
 ```
 {"dataset": "country211", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.34071090047393365, "acc5": 0.6049763033175355, "mean_per_class_recall": 0.3408530805687204}, "language": "en"}
+"metrics": {"acc1": 0.34080568720379145, "acc5": 0.6048815165876777, "mean_per_class_recall": 0.3406635071090047}, "language": "en"}
 ```
 
 </details>
@@ -389,7 +389,7 @@ Expected results:
 
 ```
 {"dataset": "cars", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.9411764705882353, "acc5": 0.99950254943415, "mean_per_class_recall": 0.9413694180920759}, "language": "en"}
+"metrics": {"acc1": 0.9416739211540853, "acc5": 0.99950254943415, "mean_per_class_recall": 0.9416684924576828}, "language": "en"}
 ```
 
 </details>
@@ -407,7 +407,7 @@ Expected results:
 
 ```
 {"dataset": "birdsnap", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.7235772357723578, "acc5": 0.9636856368563685, "mean_per_class_recall": 0.7058843537414966}, "language": "en"}
+"metrics": {"acc1": 0.7203252032520325, "acc5": 0.9636856368563685, "mean_per_class_recall": 0.7027551020408164}, "language": "en"}
 ```
 
 </details>
@@ -425,7 +425,7 @@ Expected results:
 
 ```
 {"dataset": "dtd", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.7079787234042553, "acc5": 0.9361702127659575, "mean_per_class_recall": 0.7074468085106383}, "language": "en"}
+"metrics": {"acc1": 0.7074468085106383, "acc5": 0.9367021276595745, "mean_per_class_recall": 0.7079787234042553}, "language": "en"}
 ```
 
 </details>
@@ -443,7 +443,7 @@ Expected results:
 
 ```
 {"dataset": "eurosat", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.7933703703703704, "acc5": 0.9984444444444445, "mean_per_class_recall": 0.8010866666666667}, "language": "en"}
+"metrics": {"acc1": 0.7937407407407407, "acc5": 0.9984074074074074, "mean_per_class_recall": 0.8013766666666665}, "language": "en"}
 ```
 
 </details>
@@ -461,7 +461,7 @@ Expected results:
 
 ```
 {"dataset": "fer2013", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.5621342992477013, "acc5": 0.9731122875452772, "mean_per_class_recall": 0.530855567482585}, "language": "en"}
+"metrics": {"acc1": 0.561994984675397, "acc5": 0.9732516021175815, "mean_per_class_recall": 0.5305440899910082}, "language": "en"}
 ```
 
 </details>
@@ -479,7 +479,7 @@ Expected results:
 
 ```
 {"dataset": "vtab/flowers", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.8606277443486746, "acc5": 0.953651000162628, "mean_per_class_recall": 0.8562257647762344}, "language": "en"}
+"metrics": {"acc1": 0.8606277443486746, "acc5": 0.953651000162628, "mean_per_class_recall": 0.8563173902114554}, "language": "en"}
 ```
 
 </details>
@@ -497,7 +497,7 @@ Expected results:
 
 ```
 {"dataset": "food101", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.9525544554455445, "acc5": 0.9954851485148515, "mean_per_class_recall": 0.9527524752475246}, "language": "en"}
+"metrics": {"acc1": 0.9526336633663366, "acc5": 0.9954851485148515, "mean_per_class_recall": 0.9527524752475246}, "language": "en"}
 ```
 
 </details>
@@ -515,7 +515,7 @@ Expected results:
 
 ```
 {"dataset": "gtsrb", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.6542359461599366, "acc5": 0.9094220110847189, "mean_per_class_recall": 0.5771153922473438}, "language": "en"}
+"metrics": {"acc1": 0.6548693586698338, "acc5": 0.9089469517022961, "mean_per_class_recall": 0.5775180283147926}, "language": "en"}
 ```
 
 </details>
@@ -551,7 +551,7 @@ Expected results:
 
 ```
 {"dataset": "renderedsst2", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.6798462383305875, "acc5": NaN, "mean_per_class_recall": 0.6798408459266979}, "language": "en"}
+"metrics": {"acc1": 0.6792970895112576, "acc5": NaN, "mean_per_class_recall": 0.6792944097041282}, "language": "en"}
 ```
 
 </details>
@@ -569,7 +569,7 @@ Expected results:
 
 ```
 {"dataset": "vtab/resisc45", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.7421044278685923, "acc5": 0.9666719568322488, "mean_per_class_recall": 0.7476201893984034}, "language": "en"}
+"metrics": {"acc1": 0.7422631328360577, "acc5": 0.9663545468973179, "mean_per_class_recall": 0.7481098478511045}, "language": "en"}
 ```
 
 </details>
@@ -605,7 +605,7 @@ Expected results:
 
 ```
 {"dataset": "voc2007", "model": "internvl_c_classification", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_classification",
-"metrics": {"acc1": 0.7994123931623932, "acc5": 0.9795005341880342, "mean_per_class_recall": 0.9048316862763777}, "language": "en"}
+"metrics": {"acc1": 0.7997462606837606, "acc5": 0.9795005341880342, "mean_per_class_recall": 0.9048832641726575}, "language": "en"}
 ```
 
 </details>
@@ -909,8 +909,8 @@ Expected results:
 
 | model name |  EN  |  ES  |  FR  |  ZH  |  IT  |  KO  |  RU  |  JP  | average |
 | :--------: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :-----: |
-| InternVL-C | 97.3 | 95.7 | 95.1 | 95.6 | 96.0 | 92.1 | 93.4 | 95.5 |  95.1   |
-| InternVL-G | 98.6 | 97.7 | 96.5 | 96.7 | 96.9 | 95.1 | 94.9 | 96.1 |  96.6   |
+| InternVL-C | 97.3 | 95.7 | 95.1 | 95.6 | 96.0 | 92.2 | 93.3 | 95.5 |  95.1   |
+| InternVL-G | 98.6 | 97.7 | 96.5 | 96.7 | 96.9 | 95.1 | 94.8 | 96.1 |  96.6   |
 
 <details>
   <summary>[InternVL-C] XTD</summary>
@@ -954,12 +954,12 @@ Expected results:
 ```
 {"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.7670000195503235, "text_retrieval_recall@1": 0.7480000257492065, "image_retrieval_recall@5": 0.9200000166893005, "text_retrieval_recall@5": 0.921999990940094, "image_retrieval_recall@10": 0.9670000076293945, "text_retrieval_recall@10": 0.9729999899864197}, "language": "en"}
 {"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.7059999704360962, "text_retrieval_recall@1": 0.7009999752044678, "image_retrieval_recall@5": 0.9020000100135803, "text_retrieval_recall@5": 0.8960000276565552, "image_retrieval_recall@10": 0.9430000185966492, "text_retrieval_recall@10": 0.9570000171661377}, "language": "es"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6970000267028809, "text_retrieval_recall@1": 0.6899999976158142, "image_retrieval_recall@5": 0.8830000162124634, "text_retrieval_recall@5": 0.8889999985694885, "image_retrieval_recall@10": 0.9359999895095825, "text_retrieval_recall@10": 0.9509999752044678}, "language": "fr"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6489999890327454, "text_retrieval_recall@1": 0.6710000038146973, "image_retrieval_recall@5": 0.8759999871253967, "text_retrieval_recall@5": 0.8769999742507935, "image_retrieval_recall@10": 0.9419999718666077, "text_retrieval_recall@10": 0.9559999704360962}, "language": "zh"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6790000200271606, "text_retrieval_recall@1": 0.7049999833106995, "image_retrieval_recall@5": 0.8999999761581421, "text_retrieval_recall@5": 0.8999999761581421, "image_retrieval_recall@10": 0.9440000057220459, "text_retrieval_recall@10": 0.9599999785423279}, "language": "it"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.5830000042915344, "text_retrieval_recall@1": 0.5920000076293945, "image_retrieval_recall@5": 0.8399999737739563, "text_retrieval_recall@5": 0.8360000252723694, "image_retrieval_recall@10": 0.9079999923706055, "text_retrieval_recall@10": 0.9210000038146973}, "language": "ko"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6439999938011169, "text_retrieval_recall@1": 0.6439999938011169, "image_retrieval_recall@5": 0.8510000109672546, "text_retrieval_recall@5": 0.8629999756813049, "image_retrieval_recall@10": 0.9169999957084656, "text_retrieval_recall@10": 0.9340000281333923}, "language": "ru"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6340000033378601, "text_retrieval_recall@1": 0.6759999990463257, "image_retrieval_recall@5": 0.875, "text_retrieval_recall@5": 0.8989999890327454, "image_retrieval_recall@10": 0.9369999766349792, "text_retrieval_recall@10": 0.9549999833106995}, "language": "jp"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6970000267028809, "text_retrieval_recall@1": 0.6899999976158142, "image_retrieval_recall@5": 0.8830000162124634, "text_retrieval_recall@5": 0.8889999985694885, "image_retrieval_recall@10": 0.9350000023841858, "text_retrieval_recall@10": 0.9509999752044678}, "language": "fr"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6480000019073486, "text_retrieval_recall@1": 0.6710000038146973, "image_retrieval_recall@5": 0.8759999871253967, "text_retrieval_recall@5": 0.8769999742507935, "image_retrieval_recall@10": 0.9419999718666077, "text_retrieval_recall@10": 0.9559999704360962}, "language": "zh"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6790000200271606, "text_retrieval_recall@1": 0.7039999961853027, "image_retrieval_recall@5": 0.8989999890327454, "text_retrieval_recall@5": 0.8999999761581421, "image_retrieval_recall@10": 0.9440000057220459, "text_retrieval_recall@10": 0.9599999785423279}, "language": "it"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.5830000042915344, "text_retrieval_recall@1": 0.5920000076293945, "image_retrieval_recall@5": 0.8399999737739563, "text_retrieval_recall@5": 0.8360000252723694, "image_retrieval_recall@10": 0.9079999923706055, "text_retrieval_recall@10": 0.921999990940094}, "language": "ko"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6430000066757202, "text_retrieval_recall@1": 0.6439999938011169, "image_retrieval_recall@5": 0.8510000109672546, "text_retrieval_recall@5": 0.8640000224113464, "image_retrieval_recall@10": 0.9169999957084656, "text_retrieval_recall@10": 0.9330000281333923}, "language": "ru"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_c_retrieval", "pretrained": "./pretrained/internvl_c_13b_224px.pth", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6330000162124634, "text_retrieval_recall@1": 0.6759999990463257, "image_retrieval_recall@5": 0.875, "text_retrieval_recall@5": 0.8989999890327454, "image_retrieval_recall@10": 0.9359999895095825, "text_retrieval_recall@10": 0.9549999833106995}, "language": "jp"}
 ```
 
 </details>
@@ -1004,14 +1004,14 @@ CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl 
 Expected results:
 
 ```
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.8109999895095825, "text_retrieval_recall@1": 0.7979999780654907, "image_retrieval_recall@5": 0.9470000267028809, "text_retrieval_recall@5": 0.9480000138282776, "image_retrieval_recall@10": 0.9819999933242798, "text_retrieval_recall@10": 0.9860000014305115}, "language": "en"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.7549999952316284, "text_retrieval_recall@1": 0.746999979019165, "image_retrieval_recall@5": 0.9350000023841858, "text_retrieval_recall@5": 0.925000011920929, "image_retrieval_recall@10": 0.9660000205039978, "text_retrieval_recall@10": 0.9769999980926514}, "language": "es"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.7450000047683716, "text_retrieval_recall@1": 0.7269999980926514, "image_retrieval_recall@5": 0.9179999828338623, "text_retrieval_recall@5": 0.9190000295639038, "image_retrieval_recall@10": 0.9620000123977661, "text_retrieval_recall@10": 0.9649999737739563}, "language": "fr"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6970000267028809, "text_retrieval_recall@1": 0.6949999928474426, "image_retrieval_recall@5": 0.9120000004768372, "text_retrieval_recall@5": 0.9110000133514404, "image_retrieval_recall@10": 0.9620000123977661, "text_retrieval_recall@10": 0.9670000076293945}, "language": "zh"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.7329999804496765, "text_retrieval_recall@1": 0.7450000047683716, "image_retrieval_recall@5": 0.9309999942779541, "text_retrieval_recall@5": 0.9319999814033508, "image_retrieval_recall@10": 0.9639999866485596, "text_retrieval_recall@10": 0.968999981880188}, "language": "it"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6430000066757202, "text_retrieval_recall@1": 0.6470000147819519, "image_retrieval_recall@5": 0.8790000081062317, "text_retrieval_recall@5": 0.8769999742507935, "image_retrieval_recall@10": 0.9430000185966492, "text_retrieval_recall@10": 0.9509999752044678}, "language": "ko"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6850000023841858, "text_retrieval_recall@1": 0.6899999976158142, "image_retrieval_recall@5": 0.8740000128746033, "text_retrieval_recall@5": 0.8920000195503235, "image_retrieval_recall@10": 0.9390000104904175, "text_retrieval_recall@10": 0.9490000009536743}, "language": "ru"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6850000023841858, "text_retrieval_recall@1": 0.7049999833106995, "image_retrieval_recall@5": 0.9020000100135803, "text_retrieval_recall@5": 0.9100000262260437, "image_retrieval_recall@10": 0.9539999961853027, "text_retrieval_recall@10": 0.9610000252723694}, "language": "jp"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.8119999766349792, "text_retrieval_recall@1": 0.7979999780654907, "image_retrieval_recall@5": 0.9470000267028809, "text_retrieval_recall@5": 0.9480000138282776, "image_retrieval_recall@10": 0.9829999804496765, "text_retrieval_recall@10": 0.9860000014305115}, "language": "en"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.7549999952316284, "text_retrieval_recall@1": 0.7450000047683716, "image_retrieval_recall@5": 0.9350000023841858, "text_retrieval_recall@5": 0.925000011920929, "image_retrieval_recall@10": 0.9660000205039978, "text_retrieval_recall@10": 0.9769999980926514}, "language": "es"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.7450000047683716, "text_retrieval_recall@1": 0.7279999852180481, "image_retrieval_recall@5": 0.9179999828338623, "text_retrieval_recall@5": 0.9190000295639038, "image_retrieval_recall@10": 0.9620000123977661, "text_retrieval_recall@10": 0.9649999737739563}, "language": "fr"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6980000138282776, "text_retrieval_recall@1": 0.6949999928474426, "image_retrieval_recall@5": 0.9120000004768372, "text_retrieval_recall@5": 0.9110000133514404, "image_retrieval_recall@10": 0.9620000123977661, "text_retrieval_recall@10": 0.9670000076293945}, "language": "zh"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.7329999804496765, "text_retrieval_recall@1": 0.7450000047683716, "image_retrieval_recall@5": 0.9309999942779541, "text_retrieval_recall@5": 0.9309999942779541, "image_retrieval_recall@10": 0.9639999866485596, "text_retrieval_recall@10": 0.968999981880188}, "language": "it"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6430000066757202, "text_retrieval_recall@1": 0.6470000147819519, "image_retrieval_recall@5": 0.8790000081062317, "text_retrieval_recall@5": 0.8769999742507935, "image_retrieval_recall@10": 0.9419999718666077, "text_retrieval_recall@10": 0.9509999752044678}, "language": "ko"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6850000023841858, "text_retrieval_recall@1": 0.6899999976158142, "image_retrieval_recall@5": 0.8740000128746033, "text_retrieval_recall@5": 0.8920000195503235, "image_retrieval_recall@10": 0.9390000104904175, "text_retrieval_recall@10": 0.9480000138282776}, "language": "ru"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6850000023841858, "text_retrieval_recall@1": 0.703000009059906, "image_retrieval_recall@5": 0.9020000100135803, "text_retrieval_recall@5": 0.9100000262260437, "image_retrieval_recall@10": 0.9539999961853027, "text_retrieval_recall@10": 0.9610000252723694}, "language": "jp"}
 ```
 
 </details>

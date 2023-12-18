@@ -28,6 +28,17 @@ This folder contains the implementation of the InternViT-6B for image classifica
   pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
   ```
 
+- Install `flash-attn==0.2.8` :
+
+  If you want to fully replicate my results, please install `v0.2.8`, otherwise install the latest version.
+  
+  ```bash
+  git clone https://github.com/Dao-AILab/flash-attention.git
+  cd flash-attention
+  git checkout v0.2.8
+  python setup.py install
+  ```
+
 - Install `timm==0.6.11` and `mmcv-full==1.6.2`:
 
   ```bash
@@ -114,7 +125,7 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224.yaml
 
 | model name                                                     | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |                                                                       download                                                                       |
 | -------------------------------------------------------------- | :---: | :-----: | :---: | :--: | :--: | :-------: | :--------------------------------------------------------------------------------------------------------------------------------------------------: |
-| [intern_vit_6b_1k_224.yaml](configs/intern_vit_6b_1k_224.yaml) | 88.2  |  90.4   | 80.0  | 77.5 | 89.8 |   69.1    | [ckpt](https://huggingface.co/OpenGVLab/InternVL/resolve/main/intern_vit_6b_224px_head.pth) \| [log](./work_dirs/intern_vit_6b_1k_224/log_rank0.txt) |
+| [intern_vit_6b_1k_224.yaml](configs/intern_vit_6b_1k_224.yaml) | 88.2  |  90.4   | 79.9  | 77.5 | 89.8 |   69.1    | [ckpt](https://huggingface.co/OpenGVLab/InternVL/resolve/main/intern_vit_6b_224px_head.pth) \| [log](./work_dirs/intern_vit_6b_1k_224/log_rank0.txt) |
 
 <details>
   <summary>Evaluate InternViT-6B on <b>ImageNet-1K val</b> with 8 GPUs (click to expand).</summary>
@@ -150,7 +161,7 @@ GPUS=1 GPUS_PER_NODE=1 sh train_in1k.sh <partition> <job-name> configs/intern_vi
 Expected results:
 
 ```
-* ReaL Acc@1 90.439 Acc@5 98.572 loss 0.605
+* ReaL Acc@1 90.437 Acc@5 98.567 loss 0.605
 ReaL Accuracy of the network on the 50000 test images: 90.4%
 ```
 
@@ -170,8 +181,8 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test
 Expected results:
 
 ```
- * Acc@1 79.960 Acc@5 95.340
-Accuracy of the network on the 10000 test images: 80.0%
+ * Acc@1 79.940 Acc@5 95.340
+Accuracy of the network on the 10000 test images: 79.9%
 ```
 
 </details>
@@ -190,7 +201,7 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test
 Expected results:
 
 ```
- * Acc@1 77.479 Acc@5 92.724
+ * Acc@1 77.479 Acc@5 92.737
 Accuracy of the network on the 7500 test images: 77.5%
 ```
 
@@ -210,7 +221,7 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test
 Expected results:
 
 ```
- * Acc@1 89.783 Acc@5 97.023
+ * Acc@1 89.777 Acc@5 97.023
 Accuracy of the network on the 30000 test images: 89.8%
 ```
 
@@ -230,7 +241,7 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test
 Expected results:
 
 ```
- * Acc@1 69.102 Acc@5 88.333
+ * Acc@1 69.117 Acc@5 88.341
 Accuracy of the network on the 50889 test images: 69.1%
 ```
 
