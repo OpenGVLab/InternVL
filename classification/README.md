@@ -210,7 +210,7 @@ GPUS=8 sh train_in1k.sh <partition> <job-name> configs/intern_vit_6b_1k_224_test
 Expected results:
 
 ```
- * Acc@1 89.783 Acc@5 97.023
+ * Acc@1 89.777 Acc@5 97.023
 Accuracy of the network on the 30000 test images: 89.8%
 ```
 
