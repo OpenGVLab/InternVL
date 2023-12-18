@@ -1,4 +1,4 @@
-# InternVL Stage-2 Pre-training
+![image](https://github.com/OpenGVLab/InternVL/assets/23737120/8a4794a2-fcdd-4143-be82-1b9c17c7b29b)# InternVL Stage-2 Pre-training
 
 This folder contains the implementation of the InternVL for stage2 pre-training and retrieval fine-tuning.
 
@@ -232,7 +232,14 @@ CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl 
      --dataset "flickr30k" --dataset_root ./data/flickr30k --model internvl_c_retrieval_hf \
      --pretrained ./work_dirs/internvl_stage2_finetune_flickr_364_bs1024_ep10/ --output result_ft.json
 ```
+Expected results:
 
+```
+{"dataset": "flickr30k", "model": "internvl_c_retrieval_hf", "pretrained": "./work_dirs/internvl_stage2_finetune_flickr_364_bs1024_ep10", "task": "zeroshot_retrieval",
+"metrics": {"image_retrieval_recall@1": 0.8853999972343445, "text_retrieval_recall@1": 0.972000002861023,
+"image_retrieval_recall@5": 0.9836000204086304, "text_retrieval_recall@5": 1.0,
+"image_retrieval_recall@10": 0.9923999905586243, "text_retrieval_recall@10": 1.0}, "language": "en"}
+```
 </details>
 
 <details>
@@ -245,6 +252,14 @@ CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl 
      --pretrained ./work_dirs/internvl_stage2_finetune_flickrcn_364_bs1024_ep10/ --output result_ft.json
 ```
 
+Expected results:
+
+```
+{"dataset": "flickr30k", "model": "internvl_c_retrieval_hf", "pretrained": "./work_dirs/internvl_stage2_finetune_flickrcn_364_bs1024_ep10", "task": "zeroshot_retrieval",
+"metrics": {"image_retrieval_recall@1": 0.8521999716758728, "text_retrieval_recall@1": 0.9649999737739563,
+"image_retrieval_recall@5": 0.9697999954223633, "text_retrieval_recall@5": 0.9990000128746033,
+"image_retrieval_recall@10": 0.9854000210762024, "text_retrieval_recall@10": 1.0}, "language": "cn"}
+```
 </details>
 
 <details>
@@ -257,6 +272,14 @@ CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl 
      --pretrained ./work_dirs/internvl_stage2_finetune_flickr_364_bs1024_ep10/ --output result_ft.json
 ```
 
+Expected results:
+
+```
+{"dataset": "flickr30k", "model": "internvl_g_retrieval_hf", "pretrained": "./work_dirs/internvl_stage2_finetune_flickr_364_bs1024_ep10", "task": "zeroshot_retrieval",
+"metrics": {"image_retrieval_recall@1": 0.895799994468689, "text_retrieval_recall@1": 0.9789999723434448,
+"image_retrieval_recall@5": 0.9861999750137329, "text_retrieval_recall@5": 1.0,
+"image_retrieval_recall@10": 0.9922000169754028, "text_retrieval_recall@10": 1.0}, "language": "en"}
+```
 </details>
 
 <details>
@@ -269,4 +292,12 @@ CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl 
      --pretrained ./work_dirs/internvl_stage2_finetune_flickrcn_364_bs1024_ep10/ --output result_ft.json
 ```
 
+Expected results:
+
+```
+{"dataset": "flickr30k", "model": "internvl_g_retrieval_hf", "pretrained": "./work_dirs/internvl_stage2_finetune_flickrcn_364_bs1024_ep10", "task": "zeroshot_retrieval",
+"metrics": {"image_retrieval_recall@1": 0.8587999939918518, "text_retrieval_recall@1": 0.968999981880188,
+"image_retrieval_recall@5": 0.9714000225067139, "text_retrieval_recall@5": 0.9990000128746033,
+"image_retrieval_recall@10": 0.9865999817848206, "text_retrieval_recall@10": 1.0}, "language": "cn"}
+```
 </details>
