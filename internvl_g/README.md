@@ -31,14 +31,14 @@ This folder contains the implementation of the InternVL for stage2 pre-training 
 - Install `flash-attn==0.2.8` :
 
   If you want to fully replicate my results, please install `v0.2.8`, otherwise install the latest version.
-  
+
   ```bash
   git clone https://github.com/Dao-AILab/flash-attention.git
   cd flash-attention
   git checkout v0.2.8
   python setup.py install
   ```
-  
+
 - Install `timm==0.6.11` and `mmcv-full==1.6.2`:
 
   ```bash
@@ -243,6 +243,7 @@ CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl 
      --dataset "flickr30k" --dataset_root ./data/flickr30k --model internvl_c_retrieval_hf \
      --pretrained ./work_dirs/internvl_stage2_finetune_flickr_364_bs1024_ep10/ --output result_ft.json
 ```
+
 Expected results:
 
 ```
@@ -251,6 +252,7 @@ Expected results:
 "image_retrieval_recall@5": 0.9836000204086304, "text_retrieval_recall@5": 1.0,
 "image_retrieval_recall@10": 0.9923999905586243, "text_retrieval_recall@10": 1.0}, "language": "en"}
 ```
+
 </details>
 
 <details>
@@ -271,6 +273,7 @@ Expected results:
 "image_retrieval_recall@5": 0.9697999954223633, "text_retrieval_recall@5": 0.9990000128746033,
 "image_retrieval_recall@10": 0.9854000210762024, "text_retrieval_recall@10": 1.0}, "language": "cn"}
 ```
+
 </details>
 
 <details>
@@ -291,6 +294,7 @@ Expected results:
 "image_retrieval_recall@5": 0.9861999750137329, "text_retrieval_recall@5": 1.0,
 "image_retrieval_recall@10": 0.9922000169754028, "text_retrieval_recall@10": 1.0}, "language": "en"}
 ```
+
 </details>
 
 <details>
@@ -311,4 +315,5 @@ Expected results:
 "image_retrieval_recall@5": 0.9714000225067139, "text_retrieval_recall@5": 0.9990000128746033,
 "image_retrieval_recall@10": 0.9865999817848206, "text_retrieval_recall@10": 1.0}, "language": "cn"}
 ```
+
 </details>
