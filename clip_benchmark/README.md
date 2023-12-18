@@ -248,7 +248,7 @@ Expected results:
 
 ### Other Datasets
 
-<img width="1219" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/9417667d-4bd7-4385-a048-3489de8892f3">
+<img width="1219" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/5de18a6c-8979-432d-bcb6-eb7796b4a08f">
 
 <details>
   <summary>[InternVL-C] CIFAR-10</summary>
