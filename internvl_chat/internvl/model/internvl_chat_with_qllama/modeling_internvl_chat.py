@@ -80,6 +80,8 @@ class InternVLChatModel(PreTrainedModel):
             nn.GELU(),
             nn.Linear(llm_hidden_size, llm_hidden_size)
         )
+        self.mlp1.apply(self._init_weights)
+        self.mlp2.apply(self._init_weights)
 
         self.img_context_token_id = None
         self.query_context_token_id = None
@@ -89,6 +91,18 @@ class InternVLChatModel(PreTrainedModel):
             self.use_llm_lora = True
         else:
             self.use_llm_lora = False
+
+    def _init_weights(self, module):
+        """Initialize the weights"""
+        if isinstance(module, nn.Linear):
+            module.weight.data.normal_(mean=0.0, std=0.02)
+            if hasattr(module, 'bias') and module.bias is not None:
+                module.bias.data.zero_()
+        elif isinstance(module, nn.LayerNorm):
+            module.bias.data.zero_()
+            module.weight.data.fill_(1.0)
+        elif isinstance(module, nn.Linear) and module.bias is not None:
+            module.bias.data.zero_()
 
     def wrap_llm_lora(self, r=128, lora_alpha=256, lora_dropout=0.05):
         lora_config = LoraConfig(
@@ -247,6 +261,10 @@ class InternVLChatModel(PreTrainedModel):
         else:
             vit_embeds, qllama_embeds = self.extract_feature(
                 pixel_values, question_input_ids, question_attention_mask)
+        print('question_input_ids:', question_input_ids)
+        print('question_attention_mask:', question_attention_mask)
+        print('vit_embeds:', vit_embeds)
+        print('qllama_embeds:', qllama_embeds)
 
         input_embeds = self.language_model.get_input_embeddings()(input_ids)
         B, N, C = input_embeds.shape

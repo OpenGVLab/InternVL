@@ -206,7 +206,7 @@ class InternVisionEncoder(nn.Module):
         dpr = [x.item() for x in torch.linspace(0, config.drop_path_rate, config.num_hidden_layers)]
         self.layers = nn.ModuleList([
             InternVisionEncoderLayer(config, dpr[idx]) for idx in range(config.num_hidden_layers)])
-        self.gradient_checkpointing = False
+        self.gradient_checkpointing = True
 
     def forward(
             self,
