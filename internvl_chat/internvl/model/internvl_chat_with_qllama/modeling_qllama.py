@@ -174,7 +174,6 @@ class FixedLlamaRotaryEmbedding(torch.nn.Module):
 
 
 LlamaRotaryEmbedding = FixedLlamaRotaryEmbedding
-print('Discovered fixed LlamaRotaryEmbedding - will use it instead of original LlamaRotaryEmbedding')
 
 
 def rotate_half(x):
