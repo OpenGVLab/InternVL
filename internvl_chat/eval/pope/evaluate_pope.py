@@ -18,7 +18,7 @@ ds_collections = {
         'root': 'data/pope/val2014',
         'question': 'data/pope/llava_pope_test.jsonl',
         'metric': None,
-        'max_new_tokens': 10,
+        'max_new_tokens': 100,
         'min_new_tokens': 1,
     }
 }
@@ -103,7 +103,7 @@ def evaluate_chat_model():
         dataset = VQADataset(
             root=ds_collections[ds_name]['root'],
             data=ds_collections[ds_name]['question'],
-            prompt=prompt,
+            prompt='',
             input_size=image_size,
             pad2square=model.config.pad2square
         )
