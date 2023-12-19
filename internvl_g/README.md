@@ -145,12 +145,11 @@ Expected results:
 sh evaluate.sh pretrained/internvl_14b_224px caption-flickr30k
 ```
 
-
 Expected results:
+
 ```bash
 ['flickr30k', 'English caption:', 10.666, dict_items([('Bleu_1', 0.7182900534357628), ('Bleu_2', 0.5353390037921949), ('Bleu_3', 0.3834462132295285), ('Bleu_4', 0.2702131471765472), ('METEOR', 0.25263515267930103), ('ROUGE_L', 0.5305876871149064), ('CIDEr', 0.7919734768328237)])]
 ```
-
 
 </details>
 
