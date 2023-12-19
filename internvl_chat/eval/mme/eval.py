@@ -35,7 +35,7 @@ if __name__ == '__main__':
     parser.add_argument('--beam_num', type=int, default=5)
     parser.add_argument('--top_k', type=int, default=50)
     parser.add_argument('--top_p', type=float, default=0.9)
-    parser.add_argument('--sample', type=bool, default=False)
+    parser.add_argument('--sample', type=bool, default=True)
     parser.add_argument('--temperature', type=float, default=1.0)
 
     args = parser.parse_args()
