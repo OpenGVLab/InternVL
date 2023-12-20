@@ -191,15 +191,15 @@ class InternVLModel(InternVLPreTrainedModel):
             torch.zeros(1, config.num_query_token, text_hidden_size)
         )
 
-        self.text_projection = nn.Parameter(torch.empty(text_hidden_size, clip_embed_dim))  # frozen
-        self.logit_scale = nn.Parameter(torch.ones([]) * np.log(1 / 0.07))  # trainable
-        self.clip_projector = AttentionPoolingBlock(  # frozen
-            dim=vision_hidden_size, num_heads=attn_pool_num_heads, qkv_bias=True, qk_scale=None,
-            drop=0., attn_drop=0., norm_layer=partial(nn.LayerNorm, eps=1e-5), out_dim=clip_embed_dim)
-        self.clip_projector2 = AttentionPoolingBlock(  # trainable
-            dim=text_hidden_size, num_heads=attn_pool_num_heads, qkv_bias=True, qk_scale=None,
-            drop=0., attn_drop=0., norm_layer=partial(nn.LayerNorm, eps=1e-5), out_dim=clip_embed_dim)
-        self.itm_head = nn.Linear(text_hidden_size, 2)  # trainable
+        # self.text_projection = nn.Parameter(torch.empty(text_hidden_size, clip_embed_dim))  # frozen
+        # self.logit_scale = nn.Parameter(torch.ones([]) * np.log(1 / 0.07))  # trainable
+        # self.clip_projector = AttentionPoolingBlock(  # frozen
+        #     dim=vision_hidden_size, num_heads=attn_pool_num_heads, qkv_bias=True, qk_scale=None,
+        #     drop=0., attn_drop=0., norm_layer=partial(nn.LayerNorm, eps=1e-5), out_dim=clip_embed_dim)
+        # self.clip_projector2 = AttentionPoolingBlock(  # trainable
+        #     dim=text_hidden_size, num_heads=attn_pool_num_heads, qkv_bias=True, qk_scale=None,
+        #     drop=0., attn_drop=0., norm_layer=partial(nn.LayerNorm, eps=1e-5), out_dim=clip_embed_dim)
+        # self.itm_head = nn.Linear(text_hidden_size, 2)  # trainable
         self.gradient_checkpointing = True
 
         # Initialize weights and apply final processing
@@ -248,12 +248,6 @@ class InternVLModel(InternVLPreTrainedModel):
 
     def get_output_embeddings(self) -> nn.Module:
         return self.qllama.get_output_embeddings()
-
-    def get_encoder(self):
-        return self.qllama.get_encoder()
-
-    def get_decoder(self):
-        return self.qllama.get_decoder()
 
     @torch.no_grad()
     def generate(
@@ -321,7 +315,7 @@ class InternVLModel(InternVLPreTrainedModel):
             device=input_embeds.device
         )
         if type(self.qllama.model) == LlamaForCausalLM:
-            outputs = self.qllama.model.model.custom_forward(
+            outputs = self.qllama.model.model.forward_train(
                 inputs_embeds=input_embeds,
                 vision_hidden_states=None,
                 attention_mask=attention_mask,
@@ -330,7 +324,7 @@ class InternVLModel(InternVLPreTrainedModel):
                 return_dict=return_dict,
             ).last_hidden_state
         else:
-            outputs = self.qllama.model.custom_forward(
+            outputs = self.qllama.model.forward_train(
                 inputs_embeds=input_embeds,
                 vision_hidden_states=None,
                 attention_mask=attention_mask,
@@ -376,7 +370,7 @@ class InternVLModel(InternVLPreTrainedModel):
         attention_mask = _expand_mask(attention_mask, input_embeds.dtype).to(
             input_embeds.device)  # [bsz, 1, tgt_seq_len, src_seq_len]
         if type(self.qllama.model) == LlamaForCausalLM:
-            qllama_outputs = self.qllama.model.model.custom_forward(
+            qllama_outputs = self.qllama.model.model.forward_train(
                 inputs_embeds=input_embeds,
                 vision_hidden_states=image_embeds,
                 attention_mask=attention_mask,
@@ -387,7 +381,7 @@ class InternVLModel(InternVLPreTrainedModel):
             ).last_hidden_state
             query_embeds = qllama_outputs[:, :self.num_query_token, :]
         else:
-            qllama_outputs = self.qllama.model.custom_forward(
+            qllama_outputs = self.qllama.model.forward_train(
                 inputs_embeds=input_embeds,
                 vision_hidden_states=image_embeds,
                 attention_mask=attention_mask,

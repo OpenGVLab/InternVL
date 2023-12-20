@@ -3,13 +3,11 @@
 # Copyright (c) 2023 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
-import math
 from dataclasses import dataclass
 from typing import Any, List, Optional, Tuple, Union
 
 import torch.utils.checkpoint
 from peft import LoraConfig, get_peft_model
-from timm.models.layers import trunc_normal_
 from torch import nn
 from torch.nn import CrossEntropyLoss
 from transformers import GenerationConfig, LlamaForCausalLM, LlamaTokenizer
@@ -18,7 +16,7 @@ from transformers.modeling_utils import PreTrainedModel
 from transformers.utils import ModelOutput, logging
 
 from .configuration_internvl_chat import InternVLChatConfig
-from .modeling_internvl import InternVLModel, InternVLPreTrainedModel
+from .modeling_internvl import InternVLModel
 
 logger = logging.get_logger(__name__)
 
@@ -43,6 +41,14 @@ class InternVLChatModelOutput(ModelOutput):
 class InternVLChatModel(PreTrainedModel):
     config_class = InternVLChatConfig
     main_input_name = 'pixel_values'
+    base_model_prefix = 'internvl_chat'
+    supports_gradient_checkpointing = True
+    _keys_to_ignore_on_load_missing = [
+        r'position_ids', 'logit_scale'
+    ]
+    _no_split_modules = ['InternAttention', 'LlamaDecoderLayer', 'LlamaForCausalLM']
+    _skip_keys_device_placement = 'past_key_values'
+    _keep_in_fp32_modules = ['wo']
 
     def __init__(self, config: InternVLChatConfig, internvl=None, language_model=None):
         super().__init__(config)
@@ -80,8 +86,6 @@ class InternVLChatModel(PreTrainedModel):
             nn.GELU(),
             nn.Linear(llm_hidden_size, llm_hidden_size)
         )
-        self.mlp1.apply(self._init_weights)
-        self.mlp2.apply(self._init_weights)
 
         self.img_context_token_id = None
         self.query_context_token_id = None
@@ -91,18 +95,6 @@ class InternVLChatModel(PreTrainedModel):
             self.use_llm_lora = True
         else:
             self.use_llm_lora = False
-
-    def _init_weights(self, module):
-        """Initialize the weights"""
-        if isinstance(module, nn.Linear):
-            module.weight.data.normal_(mean=0.0, std=0.02)
-            if hasattr(module, 'bias') and module.bias is not None:
-                module.bias.data.zero_()
-        elif isinstance(module, nn.LayerNorm):
-            module.bias.data.zero_()
-            module.weight.data.fill_(1.0)
-        elif isinstance(module, nn.Linear) and module.bias is not None:
-            module.bias.data.zero_()
 
     def wrap_llm_lora(self, r=128, lora_alpha=256, lora_dropout=0.05):
         lora_config = LoraConfig(
@@ -146,7 +138,7 @@ class InternVLChatModel(PreTrainedModel):
             input_embeds[selected] = input_embeds[selected] * 0.0 + vit_embeds.reshape(-1, C)
 
             selected = (input_ids == self.query_context_token_id)
-            length = selected.sum()
+            length = selected.long().sum()
             input_embeds[selected] = input_embeds[selected] * 0.0 + qllama_embeds.reshape(-1, C)[:length]
             input_embeds = input_embeds.reshape(B, N, C)
         else:
