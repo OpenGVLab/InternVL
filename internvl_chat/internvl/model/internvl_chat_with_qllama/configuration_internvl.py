@@ -7,8 +7,6 @@ import copy
 
 from transformers import LlamaConfig
 from transformers.configuration_utils import PretrainedConfig
-from transformers.models.auto.modeling_auto import \
-    MODEL_FOR_CAUSAL_LM_MAPPING_NAMES
 from transformers.utils import logging
 
 from .configuration_intern_vit import InternVisionConfig
@@ -86,14 +84,11 @@ class InternVLConfig(PretrainedConfig):
         self.qllama_config.num_query_token = num_query_token
         self.qllama_config.cross_attention_frequency = cross_attention_frequency
         self.hidden_size = self.qllama_config.hidden_size
-        self.tie_word_embeddings = self.qllama_config.tie_word_embeddings
-        self.is_encoder_decoder = self.qllama_config.is_encoder_decoder
 
         self.clip_embed_dim = clip_embed_dim
         self.attn_pool_num_heads = attn_pool_num_heads
         self.num_query_token = num_query_token
         self.label_smoothing = label_smoothing
-        self.use_decoder_only_language_model = self.qllama_config.model_type in MODEL_FOR_CAUSAL_LM_MAPPING_NAMES
         self.use_backbone_lora = use_backbone_lora
         self.use_qllama_lora = use_qllama_lora
         self.force_image_size = force_image_size
