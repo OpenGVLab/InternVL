@@ -1,10 +1,10 @@
-import gc
 import json
 import logging
 import math
 import os
 import random
 import sys
+import warnings
 from copy import deepcopy
 from typing import Dict, Optional
 
@@ -37,6 +37,9 @@ from transformers.utils import send_example_telemetry
 from transformers.utils.logging import (enable_default_handler,
                                         enable_explicit_format, set_verbosity)
 
+replace_llama_attn_with_flash_attn()
+# replace_llama_rmsnorm_with_fused_rmsnorm()
+
 try:
     from petrel_client.client import Client
     from petrel_client.common.config import Config
@@ -56,6 +59,7 @@ QUERY_CONTEXT_TOKEN = '<QUERY_CONTEXT>'
 QUERY_START_TOKEN = '<QUERY>'
 QUERY_END_TOKEN = '</QUERY>'
 
+warnings.filterwarnings('ignore')
 logger = logging.getLogger(__name__)
 
 os.environ['TOKENIZERS_PARALLELISM'] = 'true'
@@ -505,9 +509,6 @@ def main():
     img_context_token_id = llm_tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
     query_context_token_id = llm_tokenizer.convert_tokens_to_ids(QUERY_CONTEXT_TOKEN)
     tcs_loader = TCSLoader('~/petreloss.conf')
-
-    replace_llama_attn_with_flash_attn()
-    replace_llama_rmsnorm_with_fused_rmsnorm()
 
     if model_args.model_name_or_path is not None:
         print('Loading InternVLChatModel...')

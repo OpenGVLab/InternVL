@@ -160,7 +160,13 @@ if [ ${DATASET} == "llava-bench" ]; then
 fi
 
 if [ ${DATASET} == "pope" ]; then
-    python eval/llava_bench/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets pope --template 'vicuna_v1.1'
+    torchrun \
+    --nnodes=1 \
+    --node_rank=0 \
+    --master_addr=127.0.0.1 \
+    --nproc_per_node=8 \
+    --master_port=63667 \
+    eval/pope/evaluate_pope.py --checkpoint ${CHECKPOINT} --datasets pope --template 'vicuna_v1.1'
 fi
 
 if [ ${DATASET} == "mmvet" ]; then

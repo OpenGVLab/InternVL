@@ -781,7 +781,7 @@ class LlamaModel(LlamaPreTrainedModel):
         )
 
     @add_start_docstrings_to_model_forward(LLAMA_INPUTS_DOCSTRING)
-    def custom_forward(
+    def forward_train(
             self,
             input_ids: torch.LongTensor = None,
             attention_mask: Optional[torch.Tensor] = None,

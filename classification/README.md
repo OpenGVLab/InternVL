@@ -31,7 +31,7 @@ This folder contains the implementation of the InternViT-6B for image classifica
 - Install `flash-attn==0.2.8` :
 
   If you want to fully replicate my results, please install `v0.2.8`, otherwise install the latest version.
-  
+
   ```bash
   git clone https://github.com/Dao-AILab/flash-attention.git
   cd flash-attention

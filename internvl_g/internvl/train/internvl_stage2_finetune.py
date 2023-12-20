@@ -14,8 +14,6 @@ import transformers
 from internvl.dist_utils import init_dist
 from internvl.model.internvl_stage2_retrieval import (InternVLConfig,
                                                       InternVLModel)
-from internvl.train.llama_flash_attn_monkey_patch import \
-    replace_llama_attn_with_flash_attn
 from internvl.train.trainer_monkey_patch import replace_create_optimizer
 from PIL import Image, ImageFile, PngImagePlugin
 from torch.utils.data import Dataset
@@ -338,7 +336,6 @@ def main():
     train_dataset = FlickrDataset(metas=ds_collections[data_args.dataset_name],
                                   tokenizer=tokenizer, data_args=data_args)
 
-    replace_llama_attn_with_flash_attn()
     config = InternVLConfig.from_pretrained(model_args.model_name_or_path)
     config.vision_config.drop_path_rate = model_args.drop_path_rate
     model = InternVLModel.from_pretrained(
@@ -389,12 +386,12 @@ def main():
         model.qllama.lm_head.weight.requires_grad = True
         model.text_projection.requires_grad = True
 
-    # print trainable parameters
+    # Print trainable parameters
     if dist.get_rank() == 0:
         for name, param in model.named_parameters():
             print(name, param.requires_grad)
 
-    # set seed for torch dataloaders
+    # Set seed for torch dataloaders
     set_seed(training_args.seed)
 
     # Initialize our Trainer

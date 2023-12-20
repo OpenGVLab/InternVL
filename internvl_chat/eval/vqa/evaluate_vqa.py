@@ -386,7 +386,7 @@ def evaluate_chat_model():
                     })
                 elif ds_name in ['vizwiz_test']:
                     outputs.append({
-                        'image': question_id,
+                        'image': question_id.replace('data/vizwiz/test/', ''),
                         'answer': answer,
                     })
                 else:

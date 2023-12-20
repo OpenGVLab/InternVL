@@ -625,9 +625,6 @@ class LlamaModel(LlamaPreTrainedModel):
         self.vocab_size = config.vocab_size
         self.cross_attention_frequency = config.cross_attention_frequency
         self.num_query_token = config.num_query_token
-        print('cross_attention_frequency:', self.cross_attention_frequency)
-        print('num_query_token:', self.num_query_token)
-
         self.embed_tokens = nn.Embedding(config.vocab_size, config.hidden_size, self.padding_idx)
         use_cross_attn = [idx % self.cross_attention_frequency == 0 for idx in range(config.num_hidden_layers)]
         self.layers = nn.ModuleList(
@@ -784,7 +781,7 @@ class LlamaModel(LlamaPreTrainedModel):
         )
 
     @add_start_docstrings_to_model_forward(LLAMA_INPUTS_DOCSTRING)
-    def custom_forward(
+    def forward_train(
             self,
             input_ids: torch.LongTensor = None,
             attention_mask: Optional[torch.Tensor] = None,

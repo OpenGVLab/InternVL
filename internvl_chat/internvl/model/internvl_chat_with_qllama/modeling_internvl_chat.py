@@ -18,7 +18,7 @@ from transformers.modeling_utils import PreTrainedModel
 from transformers.utils import ModelOutput, logging
 
 from .configuration_internvl_chat import InternVLChatConfig
-from .modeling_internvl import InternVLModel, InternVLPreTrainedModel
+from .modeling_internvl import InternVLModel
 
 logger = logging.get_logger(__name__)
 
@@ -43,6 +43,14 @@ class InternVLChatModelOutput(ModelOutput):
 class InternVLChatModel(PreTrainedModel):
     config_class = InternVLChatConfig
     main_input_name = 'pixel_values'
+    base_model_prefix = 'internvl_chat'
+    supports_gradient_checkpointing = True
+    _keys_to_ignore_on_load_missing = [
+        r'position_ids', 'logit_scale'
+    ]
+    _no_split_modules = ['InternAttention', 'LlamaDecoderLayer', 'LlamaForCausalLM']
+    _skip_keys_device_placement = 'past_key_values'
+    _keep_in_fp32_modules = ['wo']
 
     def __init__(self, config: InternVLChatConfig, internvl=None, language_model=None):
         super().__init__(config)
@@ -146,7 +154,7 @@ class InternVLChatModel(PreTrainedModel):
             input_embeds[selected] = input_embeds[selected] * 0.0 + vit_embeds.reshape(-1, C)
 
             selected = (input_ids == self.query_context_token_id)
-            length = selected.sum()
+            length = selected.long().sum()
             input_embeds[selected] = input_embeds[selected] * 0.0 + qllama_embeds.reshape(-1, C)[:length]
             input_embeds = input_embeds.reshape(B, N, C)
         else:
