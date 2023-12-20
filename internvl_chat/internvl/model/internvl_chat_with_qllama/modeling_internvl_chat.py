@@ -3,13 +3,11 @@
 # Copyright (c) 2023 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
-import math
 from dataclasses import dataclass
 from typing import Any, List, Optional, Tuple, Union
 
 import torch.utils.checkpoint
 from peft import LoraConfig, get_peft_model
-from timm.models.layers import trunc_normal_
 from torch import nn
 from torch.nn import CrossEntropyLoss
 from transformers import GenerationConfig, LlamaForCausalLM, LlamaTokenizer
@@ -206,7 +204,8 @@ class InternVLChatModel(PreTrainedModel):
 
     def chat(self, template, tokenizer, pixel_values, question, generation_config,
              IMG_START_TOKEN='<IMG>', IMG_END_TOKEN='</IMG>', IMG_CONTEXT_TOKEN='<IMG_CONTEXT>',
-             QUERY_START_TOKEN='<QUERY>', QUERY_END_TOKEN='</QUERY>', QUERY_CONTEXT_TOKEN='<QUERY_CONTEXT>'):
+             QUERY_START_TOKEN='<QUERY>', QUERY_END_TOKEN='</QUERY>', QUERY_CONTEXT_TOKEN='<QUERY_CONTEXT>',
+             internvl_tokenizer_path='./data/llm/internvl_14b_224px'):
 
         img_context_token_id = tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
         query_context_token_id = tokenizer.convert_tokens_to_ids(QUERY_CONTEXT_TOKEN)
@@ -227,9 +226,7 @@ class InternVLChatModel(PreTrainedModel):
 
         if self.internvl_tokenizer is None:
             self.internvl_tokenizer = LlamaTokenizer.from_pretrained(
-                '/mnt/petrelfs/wangwenhai/workspace/InternVL-release/internvl_chat/data/llm/internvl_14b_224px',
-                add_eos_token=True
-            )
+                internvl_tokenizer_path, add_eos_token=True)
         tokenized_questions = self.internvl_tokenizer(question, return_tensors='pt')
         question_input_ids = tokenized_questions['input_ids'].cuda().unsqueeze(0)
         question_attention_mask = tokenized_questions['attention_mask'].cuda().unsqueeze(0)
