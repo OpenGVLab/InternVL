@@ -158,7 +158,7 @@ class InternVLChatModel(PreTrainedModel):
             input_embeds[selected] = input_embeds[selected] * 0.0 + qllama_embeds.reshape(-1, C)[:length]
             input_embeds = input_embeds.reshape(B, N, C)
         else:
-            print('[2] text only forward!')
+            print('pure text forward')
 
         outputs = self.language_model(
             inputs_embeds=input_embeds,
