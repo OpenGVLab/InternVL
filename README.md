@@ -18,8 +18,8 @@ We hope that our research could contribute to the development of multi-modal lar
 
 ## 🗓️ Schedule
 
-- [ ] Release InternVL-Chat
-- [ ] Release InternVL-Chat (using LLaVA codebase)
+- [ ] Release InternVL-Chat (our custom codebase)
+- [ ] Release InternVL-Chat (LLaVA codebase)
 - [ ] Release InternVL
 - [ ] Release InternViT-6B
 
