@@ -108,16 +108,3 @@ For example, to evaluate the `InternViT-6B` with a single node with 8 GPUs:
 ```bash
 sh dist_test.sh configs/intern_vit_6b/linear_probing/linear_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5_frozen.py checkpoints/linear_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5_frozen.pth 8 --eval mIoU
 ```
-
-## 🖼️ Image Demo
-
-To infer a single/multiple image like this.
-If you specify a directory instead of a single image, it will process all the images in the directory:
-
-```
-CUDA_VISIBLE_DEVICES=0 python image_demo.py \
-  data/ade/ADEChallengeData2016/images/validation/ADE_val_00000591.jpg \
-  configs/intern_vit_6b/linear_probing/linear_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5_frozen.py  \
-  checkpoints/linear_intern_vit_6b_504_80k_ade20k_bs16_lr4e-5_frozen.pth  \
-  --palette ade20k
-```
