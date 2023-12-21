@@ -2,6 +2,8 @@
 
 This folder contains the implementation of InternVL for image classification and image-text retrieval.
 
+We mainly use [CLIP Benchmark](https://github.com/LAION-AI/CLIP_benchmark) to evaluate the performance of InternVL.
+
 ## 🛠️ Install
 
 - Clone this repository:
