@@ -2,6 +2,8 @@
 
 This folder contains the implementation of the InternVL-Chat.
 
+***Note: This folder is still under construction.***
+
 ## 🛠️ Install
 
 - Clone this repository:
