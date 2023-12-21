@@ -169,6 +169,16 @@ if [ ${DATASET} == "pope" ]; then
     eval/pope/evaluate_pope.py --checkpoint ${CHECKPOINT} --datasets pope --template 'vicuna_v1.1'
 fi
 
+if [ ${DATASET} == "tiny_lvlm" ]; then
+    torchrun \
+    --nnodes=1 \
+    --node_rank=0 \
+    --master_addr=127.0.0.1 \
+    --nproc_per_node=8 \
+    --master_port=63667 \
+    eval/tiny_lvlm/evaluate_lvlm.py --checkpoint ${CHECKPOINT} --datasets updated_datasets --template 'vicuna_v1.1'
+fi
+
 if [ ${DATASET} == "mmvet" ]; then
     python eval/llava_bench/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets mmvet --template 'vicuna_v1.1'
 fi

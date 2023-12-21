@@ -249,12 +249,6 @@ class InternVLModel(InternVLPreTrainedModel):
     def get_output_embeddings(self) -> nn.Module:
         return self.qllama.get_output_embeddings()
 
-    def get_encoder(self):
-        return self.qllama.get_encoder()
-
-    def get_decoder(self):
-        return self.qllama.get_decoder()
-
     @torch.no_grad()
     def generate(
             self,
