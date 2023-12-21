@@ -150,6 +150,8 @@ Accuracy of the network on the 50000 test images: 88.2%
 <details>
   <summary>Evaluate InternViT-6B on <b>ImageNet-ReaL</b> with 1 GPU (click to expand).</summary>
 
+**Note: ImageNet-ReaL now only supports single-GPU testing.**
+
 ```bash
 python -m torch.distributed.launch --nproc_per_node 1 --master_port 12345 main.py --eval \
     --cfg configs/intern_vit_6b_1k_224_test_imagenet_real.yaml --resume pretrained/intern_vit_6b_224px_head.pth
