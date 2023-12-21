@@ -12,15 +12,23 @@ In this work, we design a large-scale vision-language foundation model (InternVL
 This model can be broadly applied to and achieve state-of-the-art performance on visual perception tasks such as image-level or pixel-level recognition, vision-language tasks such as zero-shot image/video classification, zero-shot image/video-text retrieval, and link with LLMs to create multi-modal dialogue systems.
 We hope that our research could contribute to the development of multi-modal large models.
 
+
+<img width="1204" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/bb8929c8-b653-45ef-a0fc-628a798a1a62">
+
+
 ## 🗓️ Schedule
 
 - [ ] Release InternVL-Chat
-- [ ] Release InternVL-14B
+- [ ] Release InternVL
 - [ ] Release InternViT-6B
 
 ## 🏠 Overview
 
-<img width="971" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/7922e66d-f969-4329-9f42-4dc9cb4ef46a">
+<img width="1204" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/d081bdcf-525a-4f84-98d8-30a0c353d6e9">
+
+## 🎁 Performance
+
+<img width="1204" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/c9f93b54-fdba-4a69-9341-e905376f7b9c">
 
 ## 🎫 License
 
@@ -36,4 +44,4 @@ TODO
 
 ## Acknowledgement
 
-InternVL is built with [OpenAI CLIP](https://github.com/openai/CLIP), [Open CLIP](https://github.com/mlfoundations/open_clip), [CLIP Benchmark](https://github.com/LAION-AI/CLIP_benchmark), [EVA](https://github.com/baaivision/EVA/tree/master), [InternImage](https://github.com/OpenGVLab/InternImage), [ViT-Adapter](https://github.com/czczup/ViT-Adapter), [MMSegmentation](https://github.com/open-mmlab/mmsegmentation), [Transformers](https://github.com/huggingface/transformers), [BLIP-2](https://github.com/salesforce/LAVIS/tree/main/projects/blip2), [Qwen-VL](https://github.com/QwenLM/Qwen-VL/tree/master/eval_mm), and [LLaVA-1.5](https://github.com/haotian-liu/LLaVA). Thanks for their awesome work!
+InternVL is built with [OpenAI CLIP](https://github.com/openai/CLIP), [Open CLIP](https://github.com/mlfoundations/open_clip), [CLIP Benchmark](https://github.com/LAION-AI/CLIP_benchmark), [EVA](https://github.com/baaivision/EVA/tree/master), [InternImage](https://github.com/OpenGVLab/InternImage), [ViT-Adapter](https://github.com/czczup/ViT-Adapter), [MMSegmentation](https://github.com/open-mmlab/mmsegmentation), [Transformers](https://github.com/huggingface/transformers), [DINOv2](https://github.com/facebookresearch/dinov2), [BLIP-2](https://github.com/salesforce/LAVIS/tree/main/projects/blip2), [Qwen-VL](https://github.com/QwenLM/Qwen-VL/tree/master/eval_mm), and [LLaVA-1.5](https://github.com/haotian-liu/LLaVA). Thanks for their awesome work!
