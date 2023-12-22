@@ -31,12 +31,12 @@ The official implementation of
 
 ## Model Weights
 
-| model name   | type        | download |
-| ------------ | ----------- | -------- |
-| InternViT-6B | pytorch     |          |
-| InternViT-6B | huggingface |          |
-| InternVL     | pytorch     |          |
-| InternVL     |             |          |
+| model name   | type        | download                                                                                   |
+| ------------ | ----------- | ------------------------------------------------------------------------------------------ |
+| InternViT-6B | pytorch     | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL/blob/main/intern_vit_6b_224px.pth)  |
+| InternViT-6B | huggingface | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)                          |
+| InternVL-C   | pytorch     | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL/blob/main/internvl_c_13b_224px.pth) |
+| InternVL-C/G | huggingface | 🤗 [HF link](https://huggingface.co/czczup/InternVL-14B-224px)                             |
 
 ## License
 
