@@ -12,9 +12,7 @@ In this work, we design a large-scale vision-language foundation model (InternVL
 This model can be broadly applied to and achieve state-of-the-art performance on visual perception tasks such as image-level or pixel-level recognition, vision-language tasks such as zero-shot image/video classification, zero-shot image/video-text retrieval, and link with LLMs to create multi-modal dialogue systems.
 We hope that our research could contribute to the development of multi-modal large models.
 
-
 <img width="1204" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/bb8929c8-b653-45ef-a0fc-628a798a1a62">
-
 
 ## 🗓️ Schedule
 

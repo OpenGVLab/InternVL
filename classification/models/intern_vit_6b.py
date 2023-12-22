@@ -14,8 +14,10 @@ from timm.models.layers import DropPath, to_2tuple
 
 try:
     from .flash_attention import FlashAttention
+    has_flash_attn = True
 except:
-    print('flash attention is not installed.')
+    print('FlashAttention is not installed.')
+    has_flash_attn = False
 
 
 def _freeze_params(module):
@@ -342,6 +344,9 @@ class InternViT6B(nn.Module):
         self.cls_target = cls_target
         self.depth = depth
 
+        use_flash_attn = use_flash_attn and has_flash_attn
+        if use_flash_attn and not has_flash_attn:
+            print('Warning: Flash Attention is not available, use_flash_attn is set to False.')
         use_flash_attn = [use_flash_attn] * depth if not isinstance(use_flash_attn, list) else use_flash_attn
 
         norm_layer_for_blocks = partial(RMSNorm, eps=1e-6)

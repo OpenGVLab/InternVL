@@ -17,7 +17,7 @@ from .internvl_c import InternVL_C
 try:
     from .flash_attention import FlashAttention
 except:
-    print('flash attention is not installed.')
+    print('FlashAttention is not installed.')
 
 
 class InternVLTokenizer(nn.Module):

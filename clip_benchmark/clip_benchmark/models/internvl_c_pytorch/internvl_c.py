@@ -16,8 +16,10 @@ from transformers import LlamaConfig, LlamaForCausalLM
 
 try:
     from .flash_attention import FlashAttention
+    has_flash_attn = True
 except:
-    print('flash attention is not installed.')
+    print('FlashAttention is not installed.')
+    has_flash_attn = False
 
 
 class CrossAttention(nn.Module):
@@ -329,6 +331,9 @@ class InternVL_C(nn.Module):
                  transformer_width=4096, llm_path=None, attn_pool_num_heads=16, clip_embed_dim=768):
         super().__init__()
 
+        use_flash_attn = use_flash_attn and has_flash_attn
+        if use_flash_attn and not has_flash_attn:
+            print('Warning: Flash Attention is not available, use_flash_attn is set to False.')
         self.use_flash_attn = use_flash_attn
         self.context_length = context_length
         self.embed_dim = embed_dim
