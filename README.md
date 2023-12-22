@@ -124,7 +124,7 @@ probs = logits_per_image.softmax(dim=-1)
 
 ## License
 
-This project is released under the [MIT license](LICENSE). Parts of this project contain code from other sources, which are subject to their respective licenses.
+This project is released under the [MIT license](LICENSE). Parts of this project contain code and models from other sources, which are subject to their respective licenses.
 
 ## Citation
 
