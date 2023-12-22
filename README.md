@@ -6,36 +6,43 @@ The official implementation of
 
 \[[Paper](<>)\]  \[[Demo](<>)\]
 
-The exponential growth of large language models (LLMs) has opened up numerous possibilities for multi-modal AGI systems.
-However, the progress in vision and vision-language foundation models, which are also critical elements of multi-modal AGI, has not kept pace with LLMs.
-In this work, we design a large-scale vision-language foundation model (InternVL), which scales up the vision foundation model to 6 billion parameters and progressively aligns it with the large language model, using web-scale image-text data from various sources.
-This model can be broadly applied to and achieve state-of-the-art performance on visual perception tasks such as image-level or pixel-level recognition, vision-language tasks such as zero-shot image/video classification, zero-shot image/video-text retrieval, and link with LLMs to create multi-modal dialogue systems.
-We hope that our research could contribute to the development of multi-modal large models.
+## Hightlights
 
+- Scaling up ViT to 6B parameters
+- A good alternative to the ViT-22B
+- State-of-the-art performance on 32 generic visual-linguistic benchmarks
 
 <img width="1204" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/bb8929c8-b653-45ef-a0fc-628a798a1a62">
 
-
-## 🗓️ Schedule
+## Schedule
 
 - [ ] Release InternVL-Chat (our custom codebase)
 - [ ] Release InternVL-Chat (LLaVA codebase)
 - [ ] Release InternVL
 - [ ] Release InternViT-6B
 
-## 🏠 Overview
+## Overview
 
 <img width="1204" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/d081bdcf-525a-4f84-98d8-30a0c353d6e9">
 
-## 🎁 Performance
+## Performance
 
 <img width="1204" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/c9f93b54-fdba-4a69-9341-e905376f7b9c">
 
-## 🎫 License
+## Model Weights
+
+| model name   | type        | download                                                                                   |
+| ------------ | ----------- | ------------------------------------------------------------------------------------------ |
+| InternViT-6B | pytorch     | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL/blob/main/intern_vit_6b_224px.pth)  |
+| InternViT-6B | huggingface | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)                          |
+| InternVL-C   | pytorch     | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL/blob/main/internvl_c_13b_224px.pth) |
+| InternVL-C/G | huggingface | 🤗 [HF link](https://huggingface.co/czczup/InternVL-14B-224px)                             |
+
+## License
 
 This project is released under the [MIT license](LICENSE).
 
-## 🖊️ Citation
+## Citation
 
 If you find this project useful in your research, please consider cite:
 

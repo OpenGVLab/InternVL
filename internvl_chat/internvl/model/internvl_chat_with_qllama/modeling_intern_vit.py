@@ -8,6 +8,7 @@ from typing import Optional, Tuple, Union
 import torch
 import torch.nn.functional as F
 import torch.utils.checkpoint
+from einops import rearrange
 from timm.models.layers import DropPath
 from torch import nn
 from transformers.activations import ACT2FN
@@ -20,8 +21,11 @@ from .configuration_intern_vit import InternVisionConfig
 
 try:
     from .flash_attention import FlashAttention
+    has_flash_attn = True
 except:
     print('FlashAttention is not installed.')
+    has_flash_attn = False
+
 
 logger = logging.get_logger(__name__)
 
@@ -94,6 +98,9 @@ class InternAttention(nn.Module):
         self.config = config
         self.embed_dim = config.hidden_size
         self.num_heads = config.num_attention_heads
+        self.use_flash_attn = config.use_flash_attn and has_flash_attn
+        if config.use_flash_attn and not has_flash_attn:
+            print('Warning: Flash Attention is not available, use_flash_attn is set to False.')
         self.head_dim = self.embed_dim // self.num_heads
         if self.head_dim * self.num_heads != self.embed_dim:
             raise ValueError(
@@ -102,8 +109,9 @@ class InternAttention(nn.Module):
             )
 
         self.scale = self.head_dim ** -0.5
-
         self.qkv = nn.Linear(self.embed_dim, 3 * self.embed_dim, bias=config.qkv_bias)
+        self.attn_drop = nn.Dropout(config.attention_dropout)
+        self.proj_drop = nn.Dropout(config.dropout)
 
         self.qk_normalization = config.qk_normalization
 
@@ -111,36 +119,49 @@ class InternAttention(nn.Module):
             self.q_norm = InternRMSNorm(self.embed_dim, eps=config.layer_norm_eps)
             self.k_norm = InternRMSNorm(self.embed_dim, eps=config.layer_norm_eps)
 
-        self.inner_attn = FlashAttention(attention_dropout=config.attention_dropout)
+        if self.use_flash_attn:
+            self.inner_attn = FlashAttention(attention_dropout=config.attention_dropout)
         self.proj = nn.Linear(self.embed_dim, self.embed_dim)
 
-    def _shape(self, tensor: torch.Tensor, seq_len: int, bsz: int):
-        return tensor.view(bsz, seq_len, self.num_heads, self.head_dim).contiguous()
-
-    def forward(
-            self,
-            hidden_states: torch.Tensor,
-    ) -> torch.Tensor:
-        """Input shape: Batch x Time x Channel"""
-        bsz, tgt_len, embed_dim = hidden_states.size()
-        mixed_qkv = self.qkv(hidden_states)
-
-        mixed_qkv = mixed_qkv.reshape(bsz, tgt_len, 3, embed_dim)
-        query_states, key_states, value_states = mixed_qkv.unbind(2)
+    def _naive_attn(self, x):
+        B, N, C = x.shape
+        qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
+        q, k, v = qkv.unbind(0)  # make torchscript happy (cannot use tensor as tuple)
 
         if self.qk_normalization:
-            query_states = self.q_norm(query_states)
-            key_states = self.k_norm(key_states)
+            B_, H_, N_, D_ = q.shape
+            q = self.q_norm(q.transpose(1, 2).flatten(-2, -1)).view(B_, N_, H_, D_).transpose(1, 2)
+            k = self.k_norm(k.transpose(1, 2).flatten(-2, -1)).view(B_, N_, H_, D_).transpose(1, 2)
 
-        query_states = self._shape(query_states, tgt_len, bsz)  # bsz, self.num_heads, seq_len, self.head_dim
-        key_states = self._shape(key_states, tgt_len, bsz)  # bsz, self.num_heads, seq_len, self.head_dim
-        value_states = self._shape(value_states, tgt_len, bsz)  # bsz, self.num_heads, seq_len, self.head_dim
-        mixed_qkv = torch.stack([query_states, key_states, value_states],
-                                dim=2)  # bsz, self.num_heads, 3, seq_len, self.head_dim
-        context_layer, _ = self.inner_attn(mixed_qkv)
-        context_layer = context_layer.flatten(2)
-        outputs = self.proj(context_layer)
-        return outputs
+        attn = ((q * self.scale) @ k.transpose(-2, -1))
+        attn = attn.softmax(dim=-1)
+        attn = self.attn_drop(attn)
+
+        x = (attn @ v).transpose(1, 2).reshape(B, N, C)
+        x = self.proj(x)
+        x = self.proj_drop(x)
+        return x
+
+    def _flash_attn(self, x, key_padding_mask=None, need_weights=False):
+        qkv = self.qkv(x)
+        qkv = rearrange(qkv, 'b s (three h d) -> b s three h d', three=3, h=self.num_heads)
+
+        if self.qk_normalization:
+            q, k, v = qkv.unbind(2)
+            q = self.q_norm(q.flatten(-2, -1)).view(q.shape)
+            k = self.k_norm(k.flatten(-2, -1)).view(k.shape)
+            qkv = torch.stack([q, k, v], dim=2)
+
+        context, _ = self.inner_attn(
+            qkv, key_padding_mask=key_padding_mask, need_weights=need_weights, causal=False
+        )
+        outs = self.proj(rearrange(context, 'b s h d -> b s (h d)'))
+        outs = self.proj_drop(outs)
+        return outs
+
+    def forward(self, hidden_states: torch.Tensor) -> torch.Tensor:
+        x = self._naive_attn(hidden_states) if not self.use_flash_attn else self._flash_attn(hidden_states)
+        return x
 
 
 class InternMLP(nn.Module):
