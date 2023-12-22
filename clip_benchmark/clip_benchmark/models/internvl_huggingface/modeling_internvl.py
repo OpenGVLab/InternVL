@@ -380,6 +380,59 @@ class InternVLModel(InternVLPreTrainedModel):
             ).last_hidden_state
         return backbone_embeds, outputs
 
+    def encode_image(self, image, mode):
+        if mode == 'InternVL-C':
+            vision_outputs = self.vision_model(
+                pixel_values=image,
+                output_hidden_states=False,
+                return_dict=True)
+            image_embeds = vision_outputs[0]
+            image_embeds = self.clip_projector(image_embeds)
+        elif mode == 'InternVL-G':
+            backbone_embeds, image_embeds = self.get_image_features(
+                pixel_values=image,
+                output_hidden_states=False,
+                return_dict=True,
+            )
+            backbone_embeds = self.clip_projector(backbone_embeds)
+            image_embeds = self.clip_projector2(image_embeds)
+            # ensemble
+            backbone_embeds = backbone_embeds / backbone_embeds.norm(dim=1, keepdim=True)
+            image_embeds = image_embeds / image_embeds.norm(dim=1, keepdim=True)
+            image_embeds = image_embeds + backbone_embeds
+        else:
+            raise NotImplementedError
+        return image_embeds
+
+    def encode_text(self, text):
+        attention_mask = text > 0
+        text_embeds = self.get_text_features(
+            input_ids=text,
+            attention_mask=attention_mask,
+            output_attentions=False,
+            output_hidden_states=False,
+            return_dict=True,
+        )
+        text_embeds = text_embeds[torch.arange(text_embeds.shape[0]), attention_mask.sum(1) - 1]
+        text_embeds = text_embeds @ self.text_projection
+        return text_embeds
+
+    def forward(self, image, text, mode='InternVL-C'):
+        assert mode in ['InternVL-C', 'InternVL-G'], 'mode must be InternVL-C or InternVL-G'
+        image_features = self.encode_image(image, mode)
+        text_features = self.encode_text(text)
+
+        # normalized features
+        image_features = image_features / image_features.norm(dim=1, keepdim=True)
+        text_features = text_features / text_features.norm(dim=1, keepdim=True)
+
+        # cosine similarity as logits
+        logit_scale = self.logit_scale.exp()
+        logits_per_image = logit_scale * image_features @ text_features.t()
+        logits_per_text = logits_per_image.t()
+
+        return logits_per_image, logits_per_text
+
 
 class InternVL_C(InternVLModel):
 
