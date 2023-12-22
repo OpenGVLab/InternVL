@@ -19,8 +19,8 @@ The official implementation of
 
 - [ ] Release InternVL-Chat (our custom codebase)
 - [ ] Release InternVL-Chat (LLaVA codebase)
-- [ ] Release InternVL
-- [ ] Release InternViT-6B
+- [x] Release InternVL
+- [x] Release InternViT-6B
 
 ## Overview
 
