@@ -10,6 +10,7 @@ The official implementation of
 
 - Scaling up ViT to 6B parameters
 - A good alternative to the ViT-22B
+- Support for multiple languages
 - State-of-the-art performance on 32 generic visual-linguistic benchmarks
 
 <img width="1204" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/bb8929c8-b653-45ef-a0fc-628a798a1a62">
@@ -36,7 +37,7 @@ The official implementation of
 | InternViT-6B | pytorch     | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL/blob/main/intern_vit_6b_224px.pth)  |
 | InternViT-6B | huggingface | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)                          |
 | InternVL-C   | pytorch     | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL/blob/main/internvl_c_13b_224px.pth) |
-| InternVL-C/G | huggingface | 🤗 [HF link](https://huggingface.co/czczup/InternVL-14B-224px)                             |
+| InternVL-C/G | huggingface | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)                          |
 
 ## Inference (Huggingface Version)
 
@@ -62,6 +63,63 @@ pixel_values = pixel_values.to(torch.bfloat16).cuda()
 
 outputs = model(pixel_values)
 
+```
+
+InternVL-C & InternVL-G
+
+```python
+import torch
+from PIL import Image
+from transformers import AutoModel, CLIPImageProcessor
+from transformers import AutoTokenizer
+
+
+model = AutoModel.from_pretrained(
+    'OpenGVLab/InternVL-14B-224px',
+    torch_dtype=torch.bfloat16,
+    low_cpu_mem_usage=True,
+    trust_remote_code=True).cuda().eval()
+
+image_processor = CLIPImageProcessor.from_pretrained('OpenGVLab/InternVL-14B-224px')
+
+tokenizer = AutoTokenizer.from_pretrained(
+    'OpenGVLab/InternVL-14B-224px', use_fast=False, add_eos_token=True)
+tokenizer.pad_token_id = 0  # set pad_token_id to 0
+
+images = [
+    Image.open('./examples/image1.jpg').convert('RGB'),
+    Image.open('./examples/image2.jpg').convert('RGB'),
+    Image.open('./examples/image3.jpg').convert('RGB')
+]
+prefix = 'summarize:'
+texts = [
+    prefix + 'a photo of a red panda',  # English
+    prefix + '一张熊猫的照片',  # Chinese
+    prefix + '二匹の猫の写真'  # Japanese
+]
+
+pixel_values = image_processor(images=images, return_tensors='pt').pixel_values
+pixel_values = pixel_values.to(torch.bfloat16).cuda()
+input_ids = tokenizer(texts, return_tensors='pt', max_length=80,
+                      truncation=True, padding='max_length').input_ids.cuda()
+
+# InternVL-C
+logits_per_image, logits_per_text = model(
+    image=pixel_values, text=input_ids, mode='InternVL-C')
+probs = logits_per_image.softmax(dim=-1)
+# tensor([[9.9609e-01, 5.2185e-03, 6.0070e-08],
+#         [2.2949e-02, 9.7656e-01, 5.9903e-06],
+#         [3.2932e-06, 7.4863e-05, 1.0000e+00]], device='cuda:0',
+#        dtype=torch.bfloat16, grad_fn=<SoftmaxBackward0>)
+
+# InternVL-G
+logits_per_image, logits_per_text = model(
+    image=pixel_values, text=input_ids, mode='InternVL-G')
+probs = logits_per_image.softmax(dim=-1)
+# tensor([[9.9609e-01, 3.1738e-03, 3.6322e-08],
+#         [8.6060e-03, 9.9219e-01, 2.8759e-06],
+#         [1.7583e-06, 3.1233e-05, 1.0000e+00]], device='cuda:0',
+#        dtype=torch.bfloat16, grad_fn=<SoftmaxBackward0>)
 ```
 
 ## License
