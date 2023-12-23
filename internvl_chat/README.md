@@ -77,17 +77,18 @@ Coming Soon
 | model name   | type        | download                                                          |  size   |
 | ------------ | ----------- | ----------------------------------------------------------------- | :-----: |
 | InternVL-C/G | huggingface | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px) | 27.7 GB |
+| Vicuna-7B    | huggingface | 🤗 [HF link](https://huggingface.co/lmsys/vicuna-7b-v1.5)         | 13.5 GB |
+| Vicuna-13B   | huggingface | 🤗 [HF link](https://huggingface.co/lmsys/vicuna-13b-v1.5)        | 26.1 GB |
 
 Please download the above model weights and place them in the `pretrained/` folder.
-
-You can download either the PyTorch version or the Hugging Face version based on your needs.
 
 The directory structure is:
 
 ```sh
 pretrained
-└── internvl_14b_224px/
-
+│── internvl_14b_224px/
+│── vicuna-13b-v1.5
+└── vicuna-7b-v1.5
 ```
 
 ## 🔥 Supervised Fine-tuning
@@ -96,4 +97,8 @@ Coming Soon
 
 ## 📊 Evaluation
 
-Coming Soon
+| model         | QLLaMA | LLM          | res | COCO  | Flickr | NoCaps | VQAv2 | GQA  | VizWiz | TextVQA | MME    | POPE | Download |
+| ------------- | ------ | ------------ | --- | ----- | ------ | ------ | ----- | ---- | ------ | ------- | ------ | ---- | -------- |
+| InternVL-Chat | ✔️     | frozen V-7B  | 224 | 141.4 | 89.7   | 120.5  | 72.3  | 57.7 | 44.5   | 42.1    | 1298.5 | 85.2 | TODO     |
+| InternVL-Chat | ✔️     | frozen V-13B | 224 | 142.4 | 89.9   | 123.1  | 71.7  | 59.5 | 54.0   | 49.1    | 1317.2 | 85.4 | TODO     |
+| InternVL-Chat | ✔      | V-13B        | 336 | 146.2 | 92.2   | 126.2  | 81.2  | 66.6 | 58.5   | 61.5    | 1586.4 | 87.6 | TODO     |

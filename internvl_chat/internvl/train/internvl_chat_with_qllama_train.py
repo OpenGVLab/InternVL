@@ -130,6 +130,10 @@ class ModelArguments:
         default=False,
         metadata={'help': 'Set to True to enable the use of a custom trainer.'},
     )
+    grad_checkpoint: Optional[bool] = field(
+        default=False,
+        metadata={'help': 'Set to True to use gradient checkpointing.'},
+    )
 
 
 @dataclass
@@ -561,17 +565,18 @@ def main():
     model.internvl.config.qllama_config.use_cache = False
     model.language_model.config.use_cache = False
 
-    if not model_args.use_qllama_lora:
-        model.internvl.qllama.gradient_checkpointing = True
-        model.internvl.qllama.model.gradient_checkpointing = True
+    if model_args.grad_checkpoint:
+        if not model_args.use_qllama_lora:
+            model.internvl.qllama.gradient_checkpointing = True
+            model.internvl.qllama.model.gradient_checkpointing = True
 
-    if not model_args.use_backbone_lora:
-        model.internvl.vision_model.gradient_checkpointing = True
-        model.internvl.vision_model.encoder.gradient_checkpointing = True
+        if not model_args.use_backbone_lora:
+            model.internvl.vision_model.gradient_checkpointing = True
+            model.internvl.vision_model.encoder.gradient_checkpointing = True
 
-    if not model_args.use_llm_lora:
-        model.language_model.gradient_checkpointing = True
-        model.language_model.model.gradient_checkpointing = True
+        if not model_args.use_llm_lora:
+            model.language_model.gradient_checkpointing = True
+            model.language_model.model.gradient_checkpointing = True
 
     train_dataset = build_datasets(data_args, llm_tokenizer, internvl_tokenizer, tcs_loader, model)
 
@@ -637,6 +642,9 @@ def main():
     # Initialize our Trainer
     if model_args.use_custom_trainer:
         replace_create_optimizer()
+
+    torch.backends.cuda.matmul.allow_tf32 = True
+    torch.backends.cudnn.allow_tf32 = True
 
     trainer = Trainer(
         model=model,
