@@ -268,7 +268,7 @@ InternVL is the largest open-source vision/vision-language foundation model deve
 
   </table>
 
-- Multilingual Zero-Shot Image-Text Retrieval [\[see details\]](./clip_benchmark#xtd)
+- Multilingual Zero-Shot Image-Text Retrieval on XTD [\[see details\]](./clip_benchmark#xtd)
 
   | model name        |  EN  |  ES  |  FR  |  ZH  |  IT  |  KO  |  RU  |  JP  | average |
   | ----------------- | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :-----: |
