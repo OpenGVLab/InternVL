@@ -70,7 +70,7 @@ InternVL is the largest open-source vision/vision-language foundation model deve
 <details>
   <summary>Cross-Modal Retrieval (click to expand)</summary>
 
-- English Image-Text Retrieval [\[see details\]](./clip_benchmark#flickr30k--coco)
+- English Zero-Shot Image-Text Retrieval [\[see details\]](./clip_benchmark#flickr30k--coco)
 
   <table>
     <tr  align=center>
@@ -168,7 +168,7 @@ InternVL is the largest open-source vision/vision-language foundation model deve
 
   </table>
 
-- Chinese Image-Text Retrieval [\[see details\]](./clip_benchmark#flickr30k-cn--coco-cn)
+- Chinese Zero-Shot Image-Text Retrieval [\[see details\]](./clip_benchmark#flickr30k-cn--coco-cn)
 
   <table>
     <tr  align=center>
@@ -268,7 +268,7 @@ InternVL is the largest open-source vision/vision-language foundation model deve
 
   </table>
 
-- Multilingual Image-Text Retrieval [\[see details\]](./clip_benchmark#xtd)
+- Multilingual Zero-Shot Image-Text Retrieval [\[see details\]](./clip_benchmark#xtd)
 
   | model name        |  EN  |  ES  |  FR  |  ZH  |  IT  |  KO  |  RU  |  JP  | average |
   | ----------------- | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :-----: |
