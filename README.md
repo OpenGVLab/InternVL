@@ -1,8 +1,11 @@
-![logo](https://github.com/OpenGVLab/InternVL/assets/23737120/b4f7f53d-eee5-4733-9ec4-214ba93b16da)
+# <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/1e96c12b-4a1c-4b8e-84fb-b8a793a9a388"> InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks —— An Open-Source Alternative to ViT-22B
 
 ## What is InternVL?
 
-InternVL is the largest open-source vision/vision-language foundation model developed by Shanghai AI Laboratory. It scales up the ViT to 6B parameters and aligns it with LLM.
+InternVL scales up the ViT to **6B parameters** and aligns it with LLM.
+
+It is **the largest open-source vision/visual language base model (14B)** to date, achieving **32 state-of-the-art** performances on a wide range of tasks such as visual perception, image text retrieval, multi-modal dialogue, etc.
+
 
 \[[Paper](https://arxiv.org/abs/2312.14238)\]  \[[Demo (coming soon)](<>)\]  \[[Quick Start](#quick-start-with-huggingface)\]
 
