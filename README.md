@@ -13,7 +13,7 @@ InternVL is the largest open-source vision/vision-language foundation model deve
 
 - Linear Probe Image Classification [\[see details\]](./classification#-evaluation)
 
-  | model name          | #param | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |
+  | method          | #param | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |
   | ------------------- | :----: | :---: | :-----: | :---: | :--: | :--: | :-------: |
   | OpenCLIP-G          |  1.8B  | 86.2  |  89.4   | 77.2  | 63.8 | 87.8 |   66.4    |
   | DINOv2-g            |  1.1B  | 86.5  |  89.6   | 78.4  | 75.9 | 78.8 |   62.5    |
@@ -24,7 +24,7 @@ InternVL is the largest open-source vision/vision-language foundation model deve
 
 - Semantic Segmentation [\[see details\]](./segmentation#-evaluation)
 
-  | model name            | decoder | #param (train/total) | crop size | mIoU         |
+  | method            | decoder | #param (train/total) | crop size | mIoU         |
   | --------------------- | :-----: | :------------------: | :-------: | ------------ |
   | OpenCLIP-G (frozen)   | Linear  |     0.3M / 1.8B      |    512    | 39.3         |
   | ViT-22B (frozen)      | Linear  |     0.9M / 21.7B     |    504    | 34.6         |
@@ -36,7 +36,7 @@ InternVL is the largest open-source vision/vision-language foundation model deve
 
 - Zero-Shot Image Classification [\[see details\]](./clip_benchmark#imagenet-variants-and-objectnet)
 
-  | model name        | IN-1K | IN-A | IN-R | IN-V2 | IN-Sketch | ObjectNet |
+  | method        | IN-1K | IN-A | IN-R | IN-V2 | IN-Sketch | ObjectNet |
   | ----------------- | :---: | :--: | :--: | :---: | :-------: | :-------: |
   | OpenCLIP-G        | 80.1  | 69.3 | 92.1 | 73.6  |   68.9    |   73.0    |
   | EVA-02-CLIP-E+    | 82.0  | 82.1 | 94.5 | 75.7  |   71.6    |   79.6    |
@@ -45,7 +45,7 @@ InternVL is the largest open-source vision/vision-language foundation model deve
 
 - Multilingual Zero-Shot Image Classification [\[see details\]](./clip_benchmark#multilingual-imagenet-1k)
 
-  | model name        | IN-1K (EN) | IN-1K (ZH) | IN-1K (JP) | IN-1K (AR) | IN-1K (IT) |
+  | method        | IN-1K (EN) | IN-1K (ZH) | IN-1K (JP) | IN-1K (AR) | IN-1K (IT) |
   | ----------------- | :--------: | :--------: | :--------: | :--------: | :--------: |
   | Taiyi-CLIP-ViT-H  |     -      |    54.4    |     -      |     -      |     -      |
   | WuKong-ViT-L-G    |     -      |    57.5    |     -      |     -      |     -      |
@@ -57,7 +57,7 @@ InternVL is the largest open-source vision/vision-language foundation model deve
 
 - Zero-Shot Video Classification \[see details\]
 
-  | model name        | #frame | K400 | K600 | K700 |
+  | method        | #frame | K400 | K600 | K700 |
   | ----------------- | :----: | :--: | :--: | :--: |
   | OpenCLIP-G        |   1    | 65.9 | 66.1 | 59.2 |
   | EVA-02-CLIP-E+    |   1    | 69.8 | 69.3 | 63.4 |
@@ -270,7 +270,7 @@ InternVL is the largest open-source vision/vision-language foundation model deve
 
 - Multilingual Zero-Shot Image-Text Retrieval on XTD [\[see details\]](./clip_benchmark#xtd)
 
-  | model name        |  EN  |  ES  |  FR  |  ZH  |  IT  |  KO  |  RU  |  JP  | average |
+  | method        |  EN  |  ES  |  FR  |  ZH  |  IT  |  KO  |  RU  |  JP  | average |
   | ----------------- | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :-----: |
   | AltCLIP           | 95.4 | 94.1 | 92.9 | 95.1 | 94.2 | 94.4 | 91.8 | 91.7 |  93.7   |
   | OpenCLIP-XLM-R-H  | 97.3 | 96.1 | 94.5 | 94.7 | 96.0 | 90.2 | 93.9 | 94.0 |  94.6   |
@@ -284,7 +284,7 @@ InternVL is the largest open-source vision/vision-language foundation model deve
 
 - Zero-Shot Image Captioning [\[see details\]](./internvl_g#zero-shot-image-captioning)
 
-  | model             | COCO  | Flickr30K | NoCaps |
+  | method            | COCO  | Flickr30K | NoCaps |
   | ----------------- | :---: | :-------: | :----: |
   | Flamingo-80B      | 84.3  |   67.2    |   -    |
   | KOSMOS-2          |   -   |   66.7    |   -    |
@@ -297,7 +297,7 @@ InternVL is the largest open-source vision/vision-language foundation model deve
 
 - Multimodal Benchmarks with Frozen LLM [\[see details\]](./internvl_chat#-evaluation)
 
-  | model                | visual encoder | glue layer |    LLM     | res. | COCO  | Flickr | NoCaps | VQAv2 | GQA  | VizWiz | TextVQA |  MME   | POPE |
+  | method               | visual encoder | glue layer |    LLM     | res. | COCO  | Flickr | NoCaps | VQAv2 | GQA  | VizWiz | TextVQA |  MME   | POPE |
   | -------------------- | :------------: | :--------: | :--------: | :--: | :---: | :----: | :----: | :---: | :--: | :----: | :-----: | :----: | :--: |
   | InstructBLIP         |     EVA-g      |  QFormer   | Vicuna-7B  | 224  |   –   |  82.4  | 123.1  |   –   | 49.2 |  34.5  |  50.1   |   –    |  –   |
   | BLIP-2               |     EVA-g      |  QFormer   | Vicuna-13B | 224  |   –   |  71.6  | 103.9  | 41.0  | 41.0 |  19.6  |  42.5   | 1293.8 | 85.3 |
@@ -307,7 +307,7 @@ InternVL is the largest open-source vision/vision-language foundation model deve
 
 - Multimodal Benchmarks with Trainable LLM [\[see details\]](./llava)
 
-  | model                | visual encoder | glue layer |    LLM     | res. | VQAv2 | GQA  | VizWiz | TextVQA |  MME   | POPE |
+  | method               | visual encoder | glue layer |    LLM     | res. | VQAv2 | GQA  | VizWiz | TextVQA |  MME   | POPE |
   | -------------------- | :------------: | :--------: | :--------: | :--: | :---: | :--: | :----: | :-----: | :----: | :--: |
   | LLaVA-1.5            |   CLIP-L-336   |    MLP     | Vicuna-7B  | 336  | 78.5  | 62.0 |  50.0  |  58.2   | 1510.7 | 85.9 |
   | InternVL-Chat (ours) |    IViT-6B     |    MLP     | Vicuna-7B  | 336  | 79.3  | 62.9 |  52.5  |  57.0   | 1525.1 | 86.4 |
