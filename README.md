@@ -2,7 +2,7 @@
 
 ## What is InternVL?
 
-\[[Paper](https://arxiv.org/abs/2312.14238)\]  \[[Demo](http://101.132.98.120:10003/)\]  \[[Quick Start](#quick-start-with-huggingface)\]
+\[[Paper](https://arxiv.org/abs/2312.14238)\]  \[[Chat Demo](https://internvl.opengvlab.com/)\]  \[[Retrieval Demo (Coming Soon)]()\]  \[[Quick Start](#quick-start-with-huggingface)\]
 
 InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 
@@ -383,7 +383,7 @@ outputs = model(pixel_values)
 </details>
 
 <details>
-  <summary>using InternVL-C & InternVL-G (click to expand)</summary>
+  <summary>using InternVL-C(ontrastive) and InternVL-G(enerative) (click to expand)</summary>
 
 ```python
 import torch
