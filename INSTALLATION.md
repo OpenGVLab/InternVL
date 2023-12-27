@@ -52,6 +52,14 @@
   pip install -v --disable-pip-version-check --no-cache-dir --no-build-isolation --config-settings "--build-option=--cpp_ext" --config-settings "--build-option=--cuda_ext" ./
   ```
 
+  If you meet `ModuleNotFoundError: No module named 'fused_layer_norm_cuda'`, please note that this is because apex's CUDA extensions are not being installed successfully. You can try to uninstall apex and the code will default to the PyTorch version of RMSNorm; Or, if you want to use apex, try adding a few lines to `setup.py`, like this, and then recompiling.
+
+  <img src=https://github.com/OpenGVLab/InternVL/assets/23737120/c04a989c-8024-49fa-b62c-2da623e63729 width=50%>
+  
+
+
+
+
 - Install other requirements:
 
   ```bash
