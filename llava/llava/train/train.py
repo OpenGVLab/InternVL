@@ -864,9 +864,9 @@ def train():
         (ModelArguments, DataArguments, TrainingArguments))
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
     local_rank = training_args.local_rank
-    training_args._frozen = False
-    data_args._frozen = False
-    model_args._frozen = False
+    training_args._frozen = False  # compatible with transformers==4.32.0
+    data_args._frozen = False  # compatible with transformers==4.32.0
+    model_args._frozen = False  # compatible with transformers==4.32.0
     compute_dtype = (torch.float16 if training_args.fp16 else (torch.bfloat16 if training_args.bf16 else torch.float32))
 
     bnb_model_from_pretrained_args = {}
