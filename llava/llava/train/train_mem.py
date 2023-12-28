@@ -4,8 +4,10 @@
 
 # Need to call this before importing transformers.
 from llava.train.llama_flash_attn_monkey_patch import replace_llama_attn_with_flash_attn
+from llava.train.llama_tokenizer_monkey_patch import fix_llama_tokenizer_bug
 
 replace_llama_attn_with_flash_attn()
+fix_llama_tokenizer_bug()
 
 from llava.train.train import train
 
