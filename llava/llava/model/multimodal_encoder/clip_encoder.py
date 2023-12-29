@@ -1,3 +1,5 @@
+import logging
+
 import torch
 import torch.nn as nn
 
@@ -38,9 +40,10 @@ class CLIPVisionTower(nn.Module):
                 image_mean=[0.485, 0.456, 0.406], image_std=[0.229, 0.224, 0.225], size=336
             )
             self.vision_tower = InternVisionModel.from_pretrained(self.vision_tower_name)
-            self.vision_tower.resize_pos_embeddings(224, 336, 14)
-            self.vision_tower.config.image_size = 336
-            self.vision_tower.config.force_image_size = 336
+            # This operation is not compatible with DeepSpeed Zero3
+            # self.vision_tower.resize_pos_embeddings(224, 336, 14)
+            # self.vision_tower.config.image_size = 336
+            # self.vision_tower.config.force_image_size = 336
         else:
             self.image_processor = CLIPImageProcessor.from_pretrained(self.vision_tower_name)
             self.vision_tower = CLIPVisionModel.from_pretrained(self.vision_tower_name)
