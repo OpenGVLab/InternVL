@@ -38,7 +38,7 @@ from transformers.utils.logging import (enable_default_handler,
                                         enable_explicit_format, set_verbosity)
 
 replace_llama_attn_with_flash_attn()
-# replace_llama_rmsnorm_with_fused_rmsnorm()
+replace_llama_rmsnorm_with_fused_rmsnorm()
 
 try:
     from petrel_client.client import Client
@@ -279,13 +279,13 @@ def preprocess(
         if False:  # Inspect and check the correctness of masking
             z = target.clone()
             z = torch.where(z == IGNORE_TOKEN_ID, tokenizer.unk_token_id, z)
-            print(tokenizer.decode(z))
+            logger.info(tokenizer.decode(z))
             exit()
 
         if cur_len < tokenizer.model_max_length:
             if cur_len != total_len:
                 target[:] = IGNORE_TOKEN_ID
-                print(
+                logger.info(
                     f'WARNING: tokenization mismatch: {cur_len} vs. {total_len}.'
                     f' #turn = {len(turns) - 1}. (ignored)'
                 )
@@ -314,15 +314,15 @@ class LazySupervisedDataset(Dataset):
         self.is_train = is_train
         self.pad2square = pad2square
 
-        print(f'[Dataset] num_image_token: {num_image_token}')
-        print(f'[Dataset] num_query_token: {num_query_token}')
+        logger.info(f'[Dataset] num_image_token: {num_image_token}')
+        logger.info(f'[Dataset] num_query_token: {num_query_token}')
 
         if meta['annotation'].endswith('json'):
             self.raw_data = json.load(open(meta['annotation'], 'r'))
         elif meta['annotation'].endswith('jsonl'):
             self.raw_data = [json.loads(line) for line in open(meta['annotation'], 'r')]
 
-        print(f'data length before split: {len(self.raw_data)}')
+        logger.info(f'data length before split: {len(self.raw_data)}')
         new_raw_data = []
         for item in self.raw_data:
             if 'image' in item:  # skip pure text data
@@ -338,7 +338,7 @@ class LazySupervisedDataset(Dataset):
                 if with_pure_text_data:
                     new_raw_data.append(item)
         self.raw_data = new_raw_data
-        print(f'data length after split: {len(self.raw_data)}')
+        logger.info(f'data length after split: {len(self.raw_data)}')
 
         self.root = meta['root']
         self.cached_data_dict = {}
@@ -403,7 +403,7 @@ class LazySupervisedDataset(Dataset):
                     ret = self.pure_text_get_item(i)
                 break
             except Exception as e:
-                print(e, self.ds_name)
+                logger.info([e, self.ds_name])
                 if 'image' in self.raw_data[i]:
                     print(f"Failed to load image: {self.ds_name, self.raw_data[i]['image']}")
                     sys.stdout.flush()
@@ -440,7 +440,7 @@ def build_datasets(data_args, llm_tokenizer, internvl_tokenizer, tcs_loader, mod
     weights = [l / total_length for l in lengths]
     for idx, dataset in enumerate(datasets):
         if torch.distributed.get_rank() == 0:
-            print(f'{dataset.ds_name}: {weights[idx]}')
+            logger.info(f'{dataset.ds_name}: {weights[idx]}')
     train_dataset = WeightedConcatDataset(datasets, weights)
     return train_dataset
 
@@ -515,31 +515,31 @@ def main():
     tcs_loader = TCSLoader('~/petreloss.conf')
 
     if model_args.model_name_or_path is not None:
-        print('Loading InternVLChatModel...')
+        logger.info('Loading InternVLChatModel...')
         model = InternVLChatModel.from_pretrained(
             model_args.model_name_or_path, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16)
     else:
-        print('Loading InternVL...')
+        logger.info('Loading InternVL...')
         internvl = InternVLModel.from_pretrained(
             model_args.internvl_path, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16)
-        print('Loading LLaMA...')
+        logger.info('Loading LLaMA...')
         llm = LlamaForCausalLM.from_pretrained(
             model_args.llm_path, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16)
-        print('Building InternVLChatConfig...')
+        logger.info('Building InternVLChatConfig...')
         internvl_config = InternVLConfig.from_pretrained(model_args.internvl_path)
         llm_config = LlamaConfig.from_pretrained(model_args.llm_path)
         intern_chat_config = InternVLChatConfig(internvl_config.to_dict(), llm_config.to_dict(),
                                                 pad2square=data_args.pad2square)
-        print('Building InternVLChatModel...')
+        logger.info('Building InternVLChatModel...')
         model = InternVLChatModel(intern_chat_config, internvl, llm)
 
-    print(f'Loading InternVL Tokenizer: {model_args.internvl_path}')
+    logger.info(f'Loading InternVL Tokenizer: {model_args.internvl_path}')
     internvl_tokenizer = LlamaTokenizer.from_pretrained(
         model_args.internvl_path, add_eos_token=True)
     internvl_tokenizer.model_max_length = data_args.max_question_length
     model.img_context_token_id = img_context_token_id
     model.query_context_token_id = query_context_token_id
-    print('Finished')
+    logger.info('Finished')
 
     if data_args.force_image_size != 224:
         if model.internvl.config.force_image_size != data_args.force_image_size:
@@ -634,7 +634,7 @@ def main():
     if dist.get_rank() == 0:
         for name, param in model.named_parameters():
             if param.requires_grad:
-                print(name)
+                logger.info(name)
 
     # set seed for torch dataloaders
     set_seed(training_args.seed)
