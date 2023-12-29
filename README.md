@@ -1,8 +1,8 @@
-# <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/1e96c12b-4a1c-4b8e-84fb-b8a793a9a388"> InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks —— An Open-Source Alternative to ViT-22B
+# <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/5aa4cda8-b453-40a0-9336-17012b430ae8"> InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks —— An Open-Source Alternative to ViT-22B
 
 ## What is InternVL?
 
-\[[Paper](https://arxiv.org/abs/2312.14238)\]  \[[Chat Demo](https://internvl.opengvlab.com/)\]  \[[Retrieval Demo (Coming Soon)]()\]  \[[Quick Start](#quick-start-with-huggingface)\]
+\[[Paper](https://arxiv.org/abs/2312.14238)\]  \[[Chat Demo](https://internvl.opengvlab.com/)\]  \[[Retrieval Demo (Coming Soon)](<>)\]  \[[Quick Start](#quick-start-with-huggingface)\]
 
 InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 
@@ -30,9 +30,9 @@ It is _**the largest open-source vision/vision-language foundation model (14B)**
 <details>
   <summary>Visual Perception (click to expand)</summary>
 
-> \* ViT-22B uses the private JFT-3B dataset.
-
 - Linear-Probe Image Classification [\[see details\]](./classification#-evaluation)
+
+  ViT-22B uses the private JFT-3B dataset.
 
   | method              | #param | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |
   | ------------------- | :----: | :---: | :-----: | :---: | :--: | :--: | :-------: |
@@ -496,6 +496,8 @@ If you find this project useful in your research, please consider cite:
 
 InternVL is built with reference to the code of the following projects: [OpenAI CLIP](https://github.com/openai/CLIP), [Open CLIP](https://github.com/mlfoundations/open_clip), [CLIP Benchmark](https://github.com/LAION-AI/CLIP_benchmark), [EVA](https://github.com/baaivision/EVA/tree/master), [InternImage](https://github.com/OpenGVLab/InternImage), [ViT-Adapter](https://github.com/czczup/ViT-Adapter), [MMSegmentation](https://github.com/open-mmlab/mmsegmentation), [Transformers](https://github.com/huggingface/transformers), [DINOv2](https://github.com/facebookresearch/dinov2), [BLIP-2](https://github.com/salesforce/LAVIS/tree/main/projects/blip2), [Qwen-VL](https://github.com/QwenLM/Qwen-VL/tree/master/eval_mm), and [LLaVA-1.5](https://github.com/haotian-liu/LLaVA). Thanks for their awesome work!
 
---- 
+______________________________________________________________________
+
 If you want to join our WeChat group, please scan the following QR Code to add our assistant as a Wechat friend:
-<p align="center"><img width="300" alt="image" src="https://github.com/OpenGVLab/DragGAN/assets/26198430/e3f0807f-956a-474e-8fd2-1f7c22d73997"></p> 
+
+<p align="center"><img width="300" alt="image" src="https://github.com/OpenGVLab/DragGAN/assets/26198430/e3f0807f-956a-474e-8fd2-1f7c22d73997"></p>
