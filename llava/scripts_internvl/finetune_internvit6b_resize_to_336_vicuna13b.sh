@@ -18,7 +18,7 @@ torchrun --nnodes=${NNODES} --nproc_per_node=${GPUS} --master_port=${PORT} \
     --deepspeed ./scripts/zero3.json \
     --model_name_or_path ./pretrained/vicuna-13b-v1.5 \
     --version v1 \
-    --data_path ./playground/data/llava_v1_5_mix665k.json \
+    --data_path ./playground/llava_v1_5_mix665k.json \
     --image_folder ./playground/data \
     --vision_tower ./pretrained/intern_vit_6b_224px \
     --pretrain_mm_mlp_adapter ./work_dirs/pretrain_internvit6b_resize_to_336_vicuna13b/mm_projector.bin \
