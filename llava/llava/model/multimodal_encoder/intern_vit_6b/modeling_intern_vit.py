@@ -79,14 +79,26 @@ class InternVisionEmbeddings(nn.Module):
 
         self.position_embedding = nn.Parameter(torch.randn(1, self.num_positions, self.embed_dim))
 
+    def _get_pos_embed(self, pos_embed, H, W):
+        target_dtype = pos_embed.dtype
+        pos_embed = pos_embed.float().reshape(
+            1, self.image_size // self.patch_size, self.image_size // self.patch_size, -1).permute(0, 3, 1, 2)
+        pos_embed = F.interpolate(pos_embed, size=(H, W), mode='bicubic', align_corners=False).\
+            reshape(1, -1, H * W).permute(0, 2, 1).to(target_dtype)
+        return pos_embed
+
     def forward(self, pixel_values: torch.FloatTensor) -> torch.Tensor:
-        batch_size = pixel_values.shape[0]
         target_dtype = self.patch_embedding.weight.dtype
-        patch_embeds = self.patch_embedding(pixel_values)  # shape = [*, width, grid, grid]
+        patch_embeds = self.patch_embedding(pixel_values)  # shape = [*, channel, width, height]
+        batch_size, _, height, width = patch_embeds.shape
         patch_embeds = patch_embeds.flatten(2).transpose(1, 2)
         class_embeds = self.class_embedding.expand(batch_size, 1, -1).to(target_dtype)
         embeddings = torch.cat([class_embeds, patch_embeds], dim=1)
-        embeddings = embeddings + self.position_embedding.to(target_dtype)
+        position_embedding = torch.cat([
+            self.position_embedding[:, :1, :],
+            self._get_pos_embed(self.position_embedding[:, 1:, :], height, width)
+        ], dim=1)
+        embeddings = embeddings + position_embedding.to(target_dtype)
         return embeddings
 
 
