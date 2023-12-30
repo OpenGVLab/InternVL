@@ -4,6 +4,8 @@ This folder contains the implementation of the InternVL-Chat.
 
 We mainly use the LLaVA codebase to evaluate InternVL in creating multimodal dialogue systems. Thanks for this great work.
 
+> Note: To unify the environment across different tasks, we have made some compatibility modifications to the LLaVA code, allowing it to support `transformers==4.32.0` (originally locked at 4.31.0). Please note that `transformers==4.32.0` should be installed.
+
 ## 🛠️ Installation
 
 - Clone this repository:
