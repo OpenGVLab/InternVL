@@ -1,8 +1,10 @@
 # InternVL for Multimodal Dialogue using LLaVA
 
-## 🛠️ Installation
-
 This folder contains the implementation of the InternVL-Chat.
+
+We mainly use the LLaVA codebase to evaluate InternVL in creating multimodal dialogue systems. Thanks for this great work.
+
+## 🛠️ Installation
 
 - Clone this repository:
 
@@ -67,6 +69,25 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/pretrain_internvit6b_re
 # finetune
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/finetune_internvit6b_resize_to_336_vicuna13b.sh
 ```
+
+- InternVL-14B + Vicuna-7B:
+
+```
+# pretrain
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/pretrain_internvl14b_resize_to_336_vicuna7b.sh
+# finetune
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/finetune_internvl14b_resize_to_336_vicuna7b.sh
+```
+
+- InternVL-14B + Vicuna-13B:
+
+```
+# pretrain
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/pretrain_internvl14b_resize_to_336_vicuna13b.sh
+# finetune
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/finetune_internvl14b_resize_to_336_vicuna13b.sh
+```
+
 
 ## 🤗 Model Zoo
 
