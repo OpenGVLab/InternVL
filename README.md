@@ -462,16 +462,14 @@ caption = tokenizer.decode(pred[0].cpu(), skip_special_tokens=True).strip()
 <details>
   <summary>using InternVL-Chat (click to expand)</summary>
 
-```python
-TODO
-```
+See [here](./llava)
 
 </details>
 
 ## Schedule
 
 - [ ] Release high-resolution models
-- [ ] Release InternVL-Chat
+- [x] Release InternVL-Chat
 - [x] Release InternVL-C(ontrastive) and InternVL-G(enerative)
 - [x] Release InternViT-6B
 
