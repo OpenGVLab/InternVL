@@ -1,3 +1,104 @@
+# InternVL for Multimodal Dialogue using LLaVA
+
+This folder contains the implementation of the InternVL-Chat.
+
+We mainly use the LLaVA codebase to evaluate InternVL in creating multimodal dialogue systems. Thanks for this great work.
+
+> Note: To unify the environment across different tasks, we have made some compatibility modifications to the LLaVA code, allowing it to support `transformers==4.32.0` (originally locked at 4.31.0). Please note that `transformers==4.32.0` should be installed.
+
+## 🛠️ Installation
+
+- Clone this repository:
+
+  ```bash
+  git clone https://github.com/OpenGVLab/InternVL.git
+  cd InternVL/llava
+  ```
+
+- Create a conda virtual environment and activate it:
+
+  ```bash
+  conda create -n internvl python=3.9 -y
+  conda activate internvl
+  ```
+
+- Install `PyTorch>=2.0` and `torchvision>=0.15.2` with `CUDA>=11.6`:
+
+  For examples, to install `torch==2.0.1` with `CUDA==11.8`:
+
+  ```bash
+  conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.8 -c pytorch -c nvidia
+  # or
+  pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
+  ```
+
+- Install `flash-attn==0.2.8` :
+
+  If you want to fully replicate my results, please install `v0.2.8`, otherwise install the latest version.
+
+  This is because different versions of flash attention yield slight differences in results.
+
+  ```bash
+  git clone https://github.com/Dao-AILab/flash-attention.git
+  cd flash-attention
+  git checkout v0.2.8
+  python setup.py install
+  ```
+
+- Install other requirements:
+
+  ```bash
+  pip install --upgrade pip  # enable PEP 660 support
+  pip install -e .
+  ```
+
+## 🔥 Training
+
+- InternViT-6B + Vicuna-7B:
+
+```
+# pretrain
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/pretrain_internvit6b_resize_to_336_vicuna7b.sh
+# finetune
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/finetune_internvit6b_resize_to_336_vicuna7b.sh
+```
+
+- InternViT-6B + Vicuna-13B:
+
+```
+# pretrain
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/pretrain_internvit6b_resize_to_336_vicuna13b.sh
+# finetune
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/finetune_internvit6b_resize_to_336_vicuna13b.sh
+```
+
+- InternVL-14B + Vicuna-7B:
+
+```
+# pretrain
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/pretrain_internvl14b_resize_to_336_vicuna7b.sh
+# finetune
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/finetune_internvl14b_resize_to_336_vicuna7b.sh
+```
+
+- InternVL-14B + Vicuna-13B:
+
+```
+# pretrain
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/pretrain_internvl14b_resize_to_336_vicuna13b.sh
+# finetune
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/finetune_internvl14b_resize_to_336_vicuna13b.sh
+```
+
+
+## 🤗 Model Zoo
+
+| method        | visual encoder | glue layer |    LLM     | res. | VQAv2 | GQA  | VizWiz | TextVQA |  MME   | POPE | Download |
+| ------------- | :------------: | :--------: | :--------: | :--: | :---: | :--: | :----: | :-----: | :----: | :--: |   :--:   |
+| InternVL-Chat |    IViT-6B     |    MLP     | Vicuna-7B  | 336  | 79.3  | 62.9 |  52.5  |  57.0   | 1525.1 | 86.4 | [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B) |
+| InternVL-Chat |    IViT-6B     |    MLP     | Vicuna-13B | 336  | 80.2  | 63.9 |  54.6  |  58.7   | 1546.9 | 87.1 | [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B) |
+
+
 # 🌋 LLaVA: Large Language and Vision Assistant
 
 *Visual instruction tuning towards large language and vision models with GPT-4 level capabilities.*
