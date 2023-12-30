@@ -184,7 +184,7 @@ def http_bot(state, model_selector, temperature, top_p, max_new_tokens, request:
                     template_name = "v0_mmtag"
                 else:
                     template_name = "llava_v0"
-        elif "internvl" in model_name.lower():
+        elif "intern" in model_name.lower():
             if "chinese" in model_name.lower():
                 template_name = "internvl_zh"
             else:
