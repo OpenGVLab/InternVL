@@ -95,6 +95,7 @@ class InternVLChatModel(PreTrainedModel):
                             'mlp.gate_proj', 'mlp.down_proj', 'mlp.up_proj'],
             lora_alpha=lora_alpha,
             lora_dropout=lora_dropout,
+            task_type='CAUSAL_LM'
         )
         self.language_model = get_peft_model(self.language_model, lora_config)
         self.language_model.print_trainable_parameters()
@@ -127,11 +128,19 @@ class InternVLChatModel(PreTrainedModel):
 
             input_ids = input_ids.reshape(B * N)
             selected = (input_ids == self.img_context_token_id)
-            input_embeds[selected] = input_embeds[selected] * 0.0 + vit_embeds.reshape(-1, C)
+            temp_embeds = torch.zeros_like(input_embeds)
+            temp_embeds[selected] = vit_embeds.reshape(-1, C)
+            selected_bf16 = selected.to(input_embeds.dtype).unsqueeze(-1)
+            input_embeds = input_embeds * (1 - selected_bf16) + temp_embeds * selected_bf16
+            # input_embeds[selected] = input_embeds[selected] * 0.0 + vit_embeds.reshape(-1, C)
 
             selected = (input_ids == self.query_context_token_id)
-            length = selected.long().sum()
-            input_embeds[selected] = input_embeds[selected] * 0.0 + qllama_embeds.reshape(-1, C)[:length]
+            length = selected.sum()
+            temp_embeds = torch.zeros_like(input_embeds)
+            temp_embeds[selected] = qllama_embeds.reshape(-1, C)[:length]
+            selected_bf16 = selected.to(input_embeds.dtype).unsqueeze(-1)
+            input_embeds = input_embeds * (1 - selected_bf16) + temp_embeds * selected_bf16
+            # input_embeds[selected] = input_embeds[selected] * 0.0 + qllama_embeds.reshape(-1, C)[:length]
             input_embeds = input_embeds.reshape(B, N, C)
         else:
             print('pure text forward')
