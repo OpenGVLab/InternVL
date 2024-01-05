@@ -1,0 +1,158 @@
+{
+  "llava_instruct_150k": {
+    "root": "./data/coco/train2017/",
+    "annotation": "./data/sft_data/llava_instruct_150k.json",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "vqav2_train_83k": {
+    "root": "./data/coco/train2014/",
+    "annotation": "./data/sft_data/vqav2_train_83k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "chartqa_train_18k": {
+    "root": "./data/ocr_data/ChartQA/train/png/",
+    "annotation": "./data/sft_data/chartqa_train_18k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "docvqa_train_10k": {
+    "root": "./data/ocr_data/DocVQA/train/train/documents/",
+    "annotation": "./data/sft_data/docvqa_train_10k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "stvqa_train_19k": {
+    "root": "./data/ocr_data/ST-VQA/",
+    "annotation": "./data/sft_data/stvqa_train_19k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "estvqa_train_17k": {
+    "root": "./data/ocr_data/EST-VQA-v1.0/images/train/",
+    "annotation": "./data/sft_data/estvqa_train_17k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "infovqa_train_4k": {
+    "root": "./data/ocr_data/InfoVQA/infographicVQA_train_v1.0_images/",
+    "annotation": "./data/sft_data/infovqa_train_4k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "ocrvqa_train_206k": {
+    "root": "./data/playground/data/ocr_vqa/images/",
+    "annotation": "./data/sft_data/ocrvqa_train_206k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "textcap_train_21k": {
+    "root": "./data/ocr_data/TextVQA/train_images/",
+    "annotation": "./data/sft_data/textcap_train_21k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "coco_karpathy_train_567k": {
+    "root": "./data/coco/",
+    "annotation": "./data/sft_data/coco_karpathy_train_567k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "svit_train_426k": {
+    "root": "./data/playground/data/vg/VG_100K/",
+    "annotation": "./data/sft_data/svit_train_426k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "okvqa_train_9k": {
+    "root": "./data/coco/train2014/",
+    "annotation": "./data/sft_data/okvqa_train_9k.jsonl",
+    "data_augment": false,
+    "repeat_time": 2
+  },
+  "aokvqa_train_66k": {
+    "root": "./data/coco/",
+    "annotation": "./data/sft_data/aokvqa_train_66k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "gqa_train_943k": {
+    "root": "./data/playground/data/gqa/images",
+    "annotation": "./data/sft_data/gqa_train_943k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "refcoco_train_284k": {
+    "root": "./data/coco/train2014/",
+    "annotation": "./data/sft_data/refcoco_train_284k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "llavar_train_20k": {
+    "root": "./data/LLaVAR/images/",
+    "annotation": "./data/sft_data/llavar_train_20k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "lrv_instruction_68k": {
+    "root": "./data/playground/data/vg/VG_100K/",
+    "annotation": "./data/sft_data/lrv_instruction_68k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "lrv_chart_7k": {
+    "root": "./data/LRV-Instruction/chart_image",
+    "annotation": "./data/sft_data/lrv_chart_7k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "toloka_train_39k": {
+    "root": "./data/coco/",
+    "annotation": "./data/sft_data/toloka_train_39k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "vsr_train_8k": {
+    "root": "./data/coco/",
+    "annotation": "./data/sft_data/vsr_train_8k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "iconqa_train_30k": {
+    "root": "./data/IconQA/",
+    "annotation": "./data/sft_data/iconqa_train_30k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "ai2d_train_12k": {
+    "root": "./data/AI2Diagram/ai2d/images/",
+    "annotation": "./data/sft_data/ai2d_train_12k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "visdial_train_123k": {
+    "root": "./data/coco/",
+    "annotation": "./data/sft_data/visdial_train_123k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "llava1.5": {
+    "root": "./data/playground/data/",
+    "annotation": "./data/playground/llava_v1_5_mix665k.json",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "alpaca_data_cleaned": {
+    "root": "",
+    "annotation": "./data/sft_data/alpaca_data_cleaned.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "sharegpt_v3": {
+    "root": "",
+    "annotation": "./data/sft_data/ShareGPT_V3_unfiltered_cleaned_split_no_imsorry.json",
+    "data_augment": false,
+    "repeat_time": 1
+  }
+}

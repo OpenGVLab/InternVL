@@ -566,17 +566,14 @@ def main():
     model.language_model.config.use_cache = False
 
     if model_args.grad_checkpoint:
-        if not model_args.use_qllama_lora:
-            model.internvl.qllama.gradient_checkpointing = True
-            model.internvl.qllama.model.gradient_checkpointing = True
+        model.internvl.qllama.gradient_checkpointing = True
+        model.internvl.qllama.model.gradient_checkpointing = True
 
-        if not model_args.use_backbone_lora:
-            model.internvl.vision_model.gradient_checkpointing = True
-            model.internvl.vision_model.encoder.gradient_checkpointing = True
+        model.internvl.vision_model.gradient_checkpointing = True
+        model.internvl.vision_model.encoder.gradient_checkpointing = True
 
-        if not model_args.use_llm_lora:
-            model.language_model.gradient_checkpointing = True
-            model.language_model.model.gradient_checkpointing = True
+        model.language_model.gradient_checkpointing = True
+        model.language_model.model.gradient_checkpointing = True
 
     train_dataset = build_datasets(data_args, llm_tokenizer, internvl_tokenizer, tcs_loader, model)
 
@@ -613,6 +610,7 @@ def main():
         model.internvl.config.use_qllama_lora = model_args.use_qllama_lora
 
     if model_args.use_llm_lora:
+        model.language_model.enable_input_require_grads()
         model.wrap_llm_lora(r=model_args.use_llm_lora)
         model.config.use_llm_lora = model_args.use_llm_lora
 
