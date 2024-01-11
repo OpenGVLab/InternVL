@@ -4,6 +4,8 @@ This folder contains the implementation of the InternVL-Chat.
 
 We mainly use the LLaVA codebase to evaluate InternVL in creating multimodal dialogue systems. Thanks for this great work.
 
+We have retained the original documentation of LLaVA 1.5 as a more detailed manual. In most cases, you will only need to refer to the new documentation that we have added.
+
 > Note: To unify the environment across different tasks, we have made some compatibility modifications to the LLaVA code, allowing it to support `transformers==4.32.0` (originally locked at 4.31.0). Please note that `transformers==4.32.0` should be installed.
 
 ## 🛠️ Installation
@@ -80,6 +82,64 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/finetune_internvit6b_re
 | ------------- |:--------------:|:----------:|:----------:|:----:|:-----:|:----:|:------:|:-------:|:------:|:----:|:---------------------------------------------------------------------------:|
 | InternVL-Chat | IViT-6B-224px  | MLP        | Vicuna-7B  | 336  | 79.3  | 62.9 | 52.5   | 57.0    | 1525.1 | 86.4 | [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)  |
 | InternVL-Chat | IViT-6B-224px  | MLP        | Vicuna-13B | 336  | 80.2  | 63.9 | 54.6   | 58.7    | 1546.9 | 87.1 | [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B) |
+
+Please download the above model weights and place them in the `pretrained/` folder.
+
+```shell
+cd pretrained/
+# pip install -U huggingface_hub
+hugging face-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternViT-6B-224px --local-dir internvit_6b_224px
+hugging face-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B --local-dir InternVL-Chat-ViT-6B-Vicuna-7B
+hugging face-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B --local-dir InternVL-Chat-ViT-6B-Vicuna-13B
+```
+
+The directory structure is:
+
+```
+pretrained
+│── internvit_6b_224px/
+│── InternVL-Chat-ViT-6B-Vicuna-7B/
+└── InternVL-Chat-ViT-6B-Vicuna-13B/
+```
+
+## 🖥️ Demo
+
+The method for deploying the demo is consistent with LLaVA-1.5. You only need to change the model path. The specific steps are as follows:
+
+1. Launch a controller
+   
+   ```shell
+   python -m llava.serve.controller --host 0.0.0.0 --port 10000
+   ```
+
+2. Launch a gradio web server
+   
+   ```shell
+   python -m llava.serve.gradio_web_server --controller http://localhost:10000 --model-list-mode reload
+   ```
+
+3. Launch a model worker
+   
+   ```shell
+   # OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B
+   python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40000 --worker http://localhost:40000 --model-path ./pretrained/InternVL-Chat-ViT-6B-Vicuna-7B
+   # OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B
+   python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40001 --worker http://localhost:40001 --model-path ./pretrained/InternVL-Chat-ViT-6B-Vicuna-13B
+   ```
+
+For more details to deploy the demo, please refer to [here](#gradio-web-ui).
+
+## 💡Testing
+
+The method for testing the model remains the same as LLaVA-1.5; you just need to change the path of the script. Our scripts are located in `scripts_internvl/`.
+
+For example, testing MME using a single GPU:
+
+```shell
+sh scripts_internvl/eval/mme.sh pretrained/InternVL-Chat-ViT-6B-Vicuna-7B/
+```
+
+-------------
 
 # 🌋 LLaVA: Large Language and Vision Assistant
 
