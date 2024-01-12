@@ -86,7 +86,7 @@ You can download either the PyTorch version or the Hugging Face version based on
 cd pretrained/
 wget https://huggingface.co/OpenGVLab/InternVL/resolve/main/internvl_c_13b_224px.pth
 # pip install -U huggingface_hub
-hugging face-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-14B-224px --local-dir internvl_14b_224px
+huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-14B-224px --local-dir internvl_14b_224px
 ```
 
 The directory structure is:
