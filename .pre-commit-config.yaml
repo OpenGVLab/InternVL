@@ -1,4 +1,4 @@
-exclude: ^llava/
+exclude: ^internvl_chat_llava/
 repos:
   - repo: https://github.com/PyCQA/flake8
     rev: 5.0.4

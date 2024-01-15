@@ -323,7 +323,7 @@ It is _**the largest open-source vision/vision-language foundation model (14B)**
   | InternVL-Chat (ours) |    IViT-6B     |   QLLaMA   | Vicuna-7B  | 224  | 141.4 |  89.7  | 120.5  | 72.3  | 57.7 |  44.5  |  42.1   | 1298.5 | 85.2 |
   | InternVL-Chat (ours) |    IViT-6B     |   QLLaMA   | Vicuna-13B | 224  | 142.4 |  89.9  | 123.1  | 71.7  | 59.5 |  54.0  |  49.1   | 1317.2 | 85.4 |
 
-- Multimodal Benchmarks with Trainable LLM [\[see details\]](./llava)
+- Multimodal Benchmarks with Trainable LLM [\[see details\]](./internvl_chat_llava)
 
   | method               | visual encoder | glue layer |    LLM     | res. | VQAv2 | GQA  | VizWiz | TextVQA |  MME   | POPE |
   | -------------------- | :------------: | :--------: | :--------: | :--: | :---: | :--: | :----: | :-----: | :----: | :--: |
@@ -462,7 +462,7 @@ caption = tokenizer.decode(pred[0].cpu(), skip_special_tokens=True).strip()
 <details>
   <summary>using InternVL-Chat (click to expand)</summary>
 
-See [here](./llava)
+See [here](./internvl_chat_llava)
 
 </details>
 
