@@ -14,7 +14,7 @@ We have retained the original documentation of LLaVA 1.5 as a more detailed manu
   
   ```bash
   git clone https://github.com/OpenGVLab/InternVL.git
-  cd InternVL/llava
+  cd InternVL/internvl_chat_llava
   ```
 
 - Create a conda virtual environment and activate it:
