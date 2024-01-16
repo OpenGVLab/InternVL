@@ -29,6 +29,7 @@ class SeparatorStyle(IntEnum):
     ROBIN = auto()
     FALCON_CHAT = auto()
     CHATGLM3 = auto()
+    HUSKY = auto()
 
 
 @dataclasses.dataclass
@@ -223,6 +224,15 @@ class Conversation:
                 else:
                     ret += role + ':'
 
+            return ret
+        elif self.sep_style == SeparatorStyle.HUSKY:
+            seps = [self.sep, self.sep2]
+            ret = self.system_message + seps[0]
+            for i, (role, message) in enumerate(self.messages):
+                if message:
+                    ret += role + ': ' + message + seps[i % 2]
+                else:
+                    ret += role + ':'
             return ret
         else:
             raise ValueError(f'Invalid style: {self.sep_style}')
@@ -1187,6 +1197,18 @@ register_conv_template(
         sep='</s>',
         stop_token_ids=[2],
         stop_str='</s>',
+    )
+)
+
+# Husky2 template
+register_conv_template(
+    Conversation(
+        name='husky_v2.0',
+        system_template='',
+        roles=('<human>', '<bot>'),
+        sep_style=SeparatorStyle.HUSKY,
+        sep=' ',
+        sep2='</s>',
     )
 )
 
