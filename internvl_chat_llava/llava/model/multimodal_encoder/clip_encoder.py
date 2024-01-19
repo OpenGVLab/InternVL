@@ -13,12 +13,12 @@ from .internvl_14b.modeling_internvl import InternVLModel
 
 
 def is_intern_vit_6b_model(vision_tower_name):
-    model_names = ["intern_vit_6b", "internvit_6b", "InternViT-6B"]
+    model_names = ["intern_vit_6b", "internvit_6b", "InternViT-6B", "internvit6b"]
     return any(name in vision_tower_name for name in model_names)
 
 
 def is_internvl_14b_model(vision_tower_name):
-    model_names = ["internvl_14b", "intern_vl_14b", "InternVL-14B"]
+    model_names = ["internvl_14b", "intern_vl_14b", "InternVL-14B", "internvl14b"]
     return any(name in vision_tower_name for name in model_names)
 
 

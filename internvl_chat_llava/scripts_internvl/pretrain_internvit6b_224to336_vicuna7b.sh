@@ -2,7 +2,7 @@
 
 set -x
 
-OUTPUT_DIR='work_dirs/pretrain_internvit6b_resize_to_336_vicuna7b'
+OUTPUT_DIR='work_dirs/pretrain_internvit6b_224to336_vicuna7b'
 GPUS=${GPUS:-8}
 NNODES=${NNODES:-1}
 NODE_RANK=${NODE_RANK:-0}
