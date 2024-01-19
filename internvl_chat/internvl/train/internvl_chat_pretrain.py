@@ -530,7 +530,7 @@ def main():
         _freeze_params(model.mlp1)
 
     if model_args.unfreeze_vit_layers != 0:
-        layers = model.vision_model.encoder.layers[model_args.unfreeze_vit_layers:-4]
+        layers = model.vision_model.encoder.layers[model_args.unfreeze_vit_layers:]
         for k, v in layers.named_parameters():
             logger.info(f'Unfreezing ViT layer: {k}')
             v.requires_grad = True
