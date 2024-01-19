@@ -33,7 +33,6 @@ from transformers import (HfArgumentParser, LlamaConfig, LlamaForCausalLM,
                           LlamaTokenizer, Trainer, TrainingArguments,
                           default_data_collator, set_seed)
 from transformers.trainer_utils import get_last_checkpoint
-from transformers.utils import send_example_telemetry
 from transformers.utils.logging import (enable_default_handler,
                                         enable_explicit_format, set_verbosity)
 
@@ -43,8 +42,10 @@ replace_llama_rmsnorm_with_fused_rmsnorm()
 try:
     from petrel_client.client import Client
     from petrel_client.common.config import Config
+    has_tcs_loader = True
 except ImportError as E:
-    logger.info('please install petrel_client')
+    print('petrel_client is not installed. Using PIL to load images.')
+    has_tcs_loader = False
 
 IGNORE_INDEX = -100
 Image.MAX_IMAGE_PIXELS = None
@@ -300,7 +301,10 @@ class LazySupervisedDataset(Dataset):
             data_item['conversations'][0]['value'] = '<image>\n' + data_item['conversations'][0]['value']
 
         image_path = os.path.join(self.root, data_item['image'])
-        image = self.tcs_loader(image_path)
+        if self.tcs_loader is not None:
+            image = self.tcs_loader(image_path)
+        else:
+            image = Image.open(image_path).convert('RGB')
         transform = build_transform(is_train=self.is_train, input_size=self.image_size,
                                     pad2square=self.pad2square)
         pixel_values = transform(image)
@@ -452,7 +456,7 @@ def main():
                   QUAD_START_TOKEN, QUAD_END_TOKEN]
     num_new_tokens = tokenizer.add_tokens(token_list, special_tokens=True)
     img_context_token_id = tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
-    tcs_loader = TCSLoader('~/petreloss.conf')
+    tcs_loader = TCSLoader('~/petreloss.conf') if has_tcs_loader else None
 
     if model_args.model_name_or_path is not None:
         logger.info('Loading InternVLChatModel...')
@@ -526,8 +530,9 @@ def main():
         _freeze_params(model.mlp1)
 
     if model_args.unfreeze_vit_layers != 0:
-        layers = model.vision_model.encoder.layers[model_args.unfreeze_vit_layers:]
+        layers = model.vision_model.encoder.layers[model_args.unfreeze_vit_layers:-4]
         for k, v in layers.named_parameters():
+            logger.info(f'Unfreezing ViT layer: {k}')
             v.requires_grad = True
 
     # print trainable parameters
