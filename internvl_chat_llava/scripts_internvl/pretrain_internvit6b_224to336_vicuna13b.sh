@@ -2,7 +2,7 @@
 
 set -x
 
-OUTPUT_DIR='work_dirs/finetune_internvit6b_resize_to_336_vicuna7b'
+OUTPUT_DIR='work_dirs/pretrain_internvit6b_224to336_vicuna13b'
 GPUS=${GPUS:-8}
 NNODES=${NNODES:-1}
 NODE_RANK=${NODE_RANK:-0}
@@ -15,30 +15,28 @@ fi
 echo "Begin running..."
 torchrun --nnodes=${NNODES} --nproc_per_node=${GPUS} --master_port=${PORT} \
     llava/train/train_mem.py \
-    --deepspeed ./scripts/zero3.json \
-    --model_name_or_path ./pretrained/vicuna-7b-v1.5 \
-    --version v1 \
-    --data_path ./playground/llava_v1_5_mix665k.json \
-    --image_folder ./playground/data \
+    --deepspeed ./scripts/zero2.json \
+    --model_name_or_path ./pretrained/vicuna-13b-v1.5 \
+    --version plain \
+    --data_path ./playground/data/LLaVA-Pretrain/blip_laion_cc_sbu_558k.json \
+    --image_folder ./playground/data/LLaVA-Pretrain/images \
     --vision_tower ./pretrained/intern_vit_6b_224px \
-    --pretrain_mm_mlp_adapter ./work_dirs/pretrain_internvit6b_resize_to_336_vicuna7b/mm_projector.bin \
     --mm_projector_type mlp2x_gelu \
+    --tune_mm_mlp_adapter True \
     --mm_vision_select_layer -4 \
     --mm_use_im_start_end False \
     --mm_use_im_patch_token False \
-    --image_aspect_ratio pad \
-    --group_by_modality_length True \
     --bf16 True \
     --output_dir ${OUTPUT_DIR} \
     --num_train_epochs 1 \
-    --per_device_train_batch_size 16 \
+    --per_device_train_batch_size 32 \
     --per_device_eval_batch_size 4 \
     --gradient_accumulation_steps 1 \
     --evaluation_strategy "no" \
     --save_strategy "steps" \
     --save_steps 1000 \
     --save_total_limit 3 \
-    --learning_rate 2e-5 \
+    --learning_rate 1e-3 \
     --weight_decay 0. \
     --warmup_ratio 0.03 \
     --lr_scheduler_type "cosine" \
