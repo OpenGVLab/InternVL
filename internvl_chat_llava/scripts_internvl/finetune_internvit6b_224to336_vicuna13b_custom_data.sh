@@ -36,7 +36,7 @@ srun -p ${PARTITION} \
     --version v1 \
     --meta_path ./scripts_internvl/meta/custom_data.json \
     --vision_tower ./pretrained/intern_vit_6b_224px \
-    --pretrain_mm_mlp_adapter ./work_dirs/pretrain_internvit6b_resize_to_336_vicuna13b/mm_projector.bin \
+    --pretrain_mm_mlp_adapter ./work_dirs/pretrain_internvit6b_224to336_vicuna13b/mm_projector.bin \
     --mm_projector_type mlp2x_gelu \
     --mm_vision_select_layer -4 \
     --mm_use_im_start_end False \
