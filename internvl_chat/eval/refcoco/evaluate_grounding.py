@@ -19,7 +19,7 @@ ds_collections = {
     'refcoco_val': 'data/refcoco/refcoco_val.jsonl',
     'refcoco_testA': 'data/refcoco/refcoco_testA.jsonl',
     'refcoco_testB': 'data/refcoco/refcoco_testB.jsonl',
-    'refcoco+_val': 'data/refcoco/refcoco+/refcoco+_val.jsonl',
+    'refcoco+_val': 'data/refcoco/refcoco+_val.jsonl',
     'refcoco+_testA': 'data/refcoco/refcoco+_testA.jsonl',
     'refcoco+_testB': 'data/refcoco/refcoco+_testB.jsonl',
     'refcocog_val': 'data/refcoco/refcocog_val.jsonl',
