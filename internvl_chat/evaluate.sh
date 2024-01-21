@@ -180,7 +180,7 @@ if [ ${DATASET} == "tiny_lvlm" ]; then
 fi
 
 if [ ${DATASET} == "mmvet" ]; then
-    python eval/llava_bench/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets mmvet --template ${TEMPLATE}
+    python eval/mmvet/evaluate_mmvet.py --checkpoint ${CHECKPOINT} --datasets mmvet --template ${TEMPLATE}
 fi
 
 if [ ${DATASET} == "mmbench" ]; then
