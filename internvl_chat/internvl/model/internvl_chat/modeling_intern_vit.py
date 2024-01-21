@@ -194,7 +194,6 @@ class InternVisionEncoderLayer(nn.Module):
         self.ls2 = nn.Parameter(config.initializer_factor * torch.ones(self.embed_dim))
         self.drop_path1 = DropPath(drop_path_rate) if drop_path_rate > 0. else nn.Identity()
         self.drop_path2 = DropPath(drop_path_rate) if drop_path_rate > 0. else nn.Identity()
-        print(f'drop_path_rate: {drop_path_rate}' )
 
     def forward(
             self,
