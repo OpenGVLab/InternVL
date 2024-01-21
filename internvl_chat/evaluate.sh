@@ -2,15 +2,15 @@ set -x
 
 CHECKPOINT=${1}
 DATASET=${2}
-CHECKPOINT="/mnt/petrelfs/wangwenhai/workspace/InternVL-release/internvl_chat/${CHECKPOINT}"
-
+TEMPLATE=${3}
+CHECKPOINT="$(pwd)/${CHECKPOINT}"
 export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 echo "CHECKPOINT: ${CHECKPOINT}"
 
 if  [ ${DATASET} == "mme" ]; then
   cd eval/mme/
   DIRNAME=`basename ${CHECKPOINT}`
-  python eval.py --template "vicuna_v1.1" --model_path ${CHECKPOINT}
+  python eval.py --template ${TEMPLATE} --model-path ${CHECKPOINT}
   python calculation.py --results_dir ${DIRNAME}
   cd ../../
 fi
@@ -22,7 +22,7 @@ if  [ ${DATASET} == "caption" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/caption/evaluate_caption.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1'
+    eval/caption/evaluate_caption.py --checkpoint ${CHECKPOINT} --template ${TEMPLATE}
 fi
 
 if  [ ${DATASET} == "caption-coco" ]; then
@@ -32,7 +32,7 @@ if  [ ${DATASET} == "caption-coco" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/caption/evaluate_caption.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets coco
+    eval/caption/evaluate_caption.py --checkpoint ${CHECKPOINT} --template ${TEMPLATE} --datasets coco
 fi
 
 if  [ ${DATASET} == "caption-flickr30k" ]; then
@@ -42,7 +42,7 @@ if  [ ${DATASET} == "caption-flickr30k" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/caption/evaluate_caption.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets flickr30k
+    eval/caption/evaluate_caption.py --checkpoint ${CHECKPOINT} --template ${TEMPLATE} --datasets flickr30k
 fi
 
 if  [ ${DATASET} == "caption-nocaps" ]; then
@@ -52,7 +52,7 @@ if  [ ${DATASET} == "caption-nocaps" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/caption/evaluate_caption.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets nocaps
+    eval/caption/evaluate_caption.py --checkpoint ${CHECKPOINT} --template ${TEMPLATE} --datasets nocaps
 fi
 
 if [ ${DATASET} == "vqa" ]; then
@@ -62,7 +62,7 @@ if [ ${DATASET} == "vqa" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1'
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template ${TEMPLATE}
 fi
 
 if [ ${DATASET} == "vqa-okvqa" ]; then
@@ -72,7 +72,7 @@ if [ ${DATASET} == "vqa-okvqa" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets okvqa_val
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template ${TEMPLATE} --datasets okvqa_val
 fi
 
 if [ ${DATASET} == "vqa-textvqa" ]; then
@@ -82,7 +82,7 @@ if [ ${DATASET} == "vqa-textvqa" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets textvqa_val_ocr
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template ${TEMPLATE} --datasets textvqa_val_ocr
 fi
 
 if [ ${DATASET} == "vqa-vizwiz" ]; then
@@ -92,7 +92,7 @@ if [ ${DATASET} == "vqa-vizwiz" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets vizwiz_val
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template ${TEMPLATE} --datasets vizwiz_val
 fi
 
 if [ ${DATASET} == "vqa-vizwiz-test" ]; then
@@ -102,7 +102,7 @@ if [ ${DATASET} == "vqa-vizwiz-test" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets vizwiz_test
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template ${TEMPLATE} --datasets vizwiz_test
 fi
 
 if [ ${DATASET} == "vqa-vqav2-testdev" ]; then
@@ -112,7 +112,7 @@ if [ ${DATASET} == "vqa-vqav2-testdev" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets vqav2_testdev
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template ${TEMPLATE} --datasets vqav2_testdev
 fi
 
 if [ ${DATASET} == "vqa-ai2d" ]; then
@@ -122,7 +122,7 @@ if [ ${DATASET} == "vqa-ai2d" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets ai2diagram_test
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template ${TEMPLATE} --datasets ai2diagram_test
 fi
 
 if [ ${DATASET} == "vqa-vqav2" ]; then
@@ -132,7 +132,7 @@ if [ ${DATASET} == "vqa-vqav2" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets vqav2_val
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template ${TEMPLATE} --datasets vqav2_val
 fi
 
 if [ ${DATASET} == "vqa-gqa" ]; then
@@ -142,7 +142,7 @@ if [ ${DATASET} == "vqa-gqa" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1' --datasets gqa_testdev_llava
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template ${TEMPLATE} --datasets gqa_testdev_llava
 fi
 
 if [ ${DATASET} == "refcoco" ]; then
@@ -152,11 +152,11 @@ if [ ${DATASET} == "refcoco" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/refcoco/evaluate_grounding.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1'
+    eval/refcoco/evaluate_grounding.py --checkpoint ${CHECKPOINT} --template ${TEMPLATE}
 fi
 
 if [ ${DATASET} == "llava-bench" ]; then
-    python eval/llava_bench/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1'
+    python eval/llava_bench/evaluate_vqa.py --checkpoint ${CHECKPOINT} --template ${TEMPLATE}
 fi
 
 if [ ${DATASET} == "pope" ]; then
@@ -166,7 +166,7 @@ if [ ${DATASET} == "pope" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/pope/evaluate_pope.py --checkpoint ${CHECKPOINT} --datasets pope --template 'vicuna_v1.1'
+    eval/pope/evaluate_pope.py --checkpoint ${CHECKPOINT} --datasets pope --template ${TEMPLATE}
 fi
 
 if [ ${DATASET} == "tiny_lvlm" ]; then
@@ -176,14 +176,24 @@ if [ ${DATASET} == "tiny_lvlm" ]; then
     --master_addr=127.0.0.1 \
     --nproc_per_node=8 \
     --master_port=63667 \
-    eval/tiny_lvlm/evaluate_lvlm.py --checkpoint ${CHECKPOINT} --datasets updated_datasets --template 'vicuna_v1.1'
+    eval/tiny_lvlm/evaluate_lvlm.py --checkpoint ${CHECKPOINT} --datasets updated_datasets --template ${TEMPLATE}
 fi
 
 if [ ${DATASET} == "mmvet" ]; then
-    python eval/llava_bench/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets mmvet --template 'vicuna_v1.1'
+    python eval/llava_bench/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets mmvet --template ${TEMPLATE}
 fi
 
 if [ ${DATASET} == "mmbench" ]; then
     cd eval/mmbench/
-    python eval.py --checkpoint ${CHECKPOINT} --template 'vicuna_v1.1'
+    python eval.py --checkpoint ${CHECKPOINT} --template ${TEMPLATE}
+fi
+
+if [ ${DATASET} == "cmmmu" ]; then
+  CUDA_VISIBLE_DEVICES=0 python eval/cmmmu/evaluate_cmmmu.py --checkpoint ${CHECKPOINT} --datasets art_and_design &
+  CUDA_VISIBLE_DEVICES=1 python eval/cmmmu/evaluate_cmmmu.py --checkpoint ${CHECKPOINT} --datasets business &
+  CUDA_VISIBLE_DEVICES=2 python eval/cmmmu/evaluate_cmmmu.py --checkpoint ${CHECKPOINT} --datasets health_and_medicine &
+  CUDA_VISIBLE_DEVICES=3 python eval/cmmmu/evaluate_cmmmu.py --checkpoint ${CHECKPOINT} --datasets humanities_and_social_sciences &
+  CUDA_VISIBLE_DEVICES=4 python eval/cmmmu/evaluate_cmmmu.py --checkpoint ${CHECKPOINT} --datasets science &
+  CUDA_VISIBLE_DEVICES=5 python eval/cmmmu/evaluate_cmmmu.py --checkpoint ${CHECKPOINT} --datasets technology_and_engineering &
+  wait
 fi

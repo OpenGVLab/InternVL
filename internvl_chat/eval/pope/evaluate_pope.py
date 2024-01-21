@@ -7,7 +7,6 @@ import time
 from functools import partial
 
 import torch
-from internvl.model.internvl_chat_with_qllama import InternVLChatModel
 from internvl.train.dataset import build_transform
 from PIL import Image
 from tqdm import tqdm
@@ -88,24 +87,16 @@ class InferenceSampler(torch.utils.data.sampler.Sampler):
 
 
 def evaluate_chat_model():
-    model = InternVLChatModel.from_pretrained(
-        args.checkpoint, torch_dtype=torch.bfloat16).cuda().eval()
-    tokenizer = LlamaTokenizer.from_pretrained(args.checkpoint)
     prompt = 'Answer the question using a single word or phrase.'
     random.seed(args.seed)
+
     for ds_name in args.datasets:
-
-        if model.internvl.config.force_image_size is not None:
-            image_size = model.internvl.config.force_image_size
-        else:
-            image_size = model.internvl.config.vision_config.image_size
-
         dataset = VQADataset(
             root=ds_collections[ds_name]['root'],
             data=ds_collections[ds_name]['question'],
             prompt='',
             input_size=image_size,
-            pad2square=model.config.pad2square
+            pad2square=pad2square
         )
         dataloader = torch.utils.data.DataLoader(
             dataset=dataset,
@@ -176,10 +167,10 @@ if __name__ == '__main__':
     parser.add_argument('--datasets', type=str, default='pope')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
-    parser.add_argument('--num_beams', type=int, default=5)
+    parser.add_argument('--num-beams', type=int, default=5)
     parser.add_argument('--template', type=str, default='vicuna_v1.1')
     parser.add_argument('--temperature', type=float, default=0.0)
-    parser.add_argument('--out_dir', type=str, default='results')
+    parser.add_argument('--out-dir', type=str, default='results')
     parser.add_argument('--seed', type=int, default=0)
     args = parser.parse_args()
 
@@ -197,5 +188,24 @@ if __name__ == '__main__':
     )
 
     torch.cuda.set_device(int(os.getenv('LOCAL_RANK', 0)))
+
+    tokenizer = LlamaTokenizer.from_pretrained(args.checkpoint)
+
+    if 'qllama' in args.checkpoint.lower():
+        from internvl.model.internvl_chat_with_qllama import InternVLChatModel
+        model = InternVLChatModel.from_pretrained(
+            args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
+        image_size = model.internvl.config.force_image_size or model.config.internvl_config.vision_config.image_size
+        pad2square = model.config.pad2square
+    else:
+        from internvl.model.internvl_chat import InternVLChatModel
+        model = InternVLChatModel.from_pretrained(
+            args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
+        image_size = model.config.force_image_size or model.config.vision_config.image_size
+        pad2square = model.config.pad2square
+
+    print(f'[test] image_size: {image_size}')
+    print(f'[test] pad2square: {pad2square}')
+    print(f'[test] template: {args.template}')
 
     evaluate_chat_model()

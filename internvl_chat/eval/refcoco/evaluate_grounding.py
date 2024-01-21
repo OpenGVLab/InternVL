@@ -109,23 +109,15 @@ class InferenceSampler(torch.utils.data.sampler.Sampler):
 def evaluate_chat_model():
     prompt = 'Please provide the bounding box coordinate of the region this sentence describes:'
     print('prompt:', prompt)
-    model = InternVLChatModel.from_pretrained(
-        args.checkpoint, torch_dtype=torch.bfloat16).cuda().eval()
-    tokenizer = LlamaTokenizer.from_pretrained(args.checkpoint)
-    tokenizer.add_eos_token = False
-
     random.seed(args.seed)
     summaries = []
+
     for ds_name in args.datasets:
-        if model.internvl.config.force_image_size is not None:
-            image_size = model.internvl.config.force_image_size
-        else:
-            image_size = model.internvl.config.vision_config.image_size
         dataset = RefCOCODataset(
             test=ds_collections[ds_name],
             prompt=prompt,
             input_size=image_size,
-            pad2square=model.config.pad2square,
+            pad2square=pad2square,
         )
         dataloader = torch.utils.data.DataLoader(
             dataset=dataset,
@@ -221,14 +213,16 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--checkpoint', type=str, default='')
-    parser.add_argument('--datasets', type=str, default='refcoco_val,refcoco_testA,refcoco_testB')
+    parser.add_argument('--datasets', type=str, default='refcoco_val,refcoco_testA,refcoco_testB,'
+                                                        'refcoco+_val,refcoco+_testA,refcoco+_testB,'
+                                                        'refcocog_val,refcocog_test')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
-    parser.add_argument('--num_beams', type=int, default=5)
+    parser.add_argument('--num-beams', type=int, default=5)
     parser.add_argument('--template', type=str, default='vicuna_v1.1')
-    parser.add_argument('--out_dir', type=str, default='results')
-    parser.add_argument('--top_k', type=int, default=50)
-    parser.add_argument('--top_p', type=float, default=0.9)
+    parser.add_argument('--out-dir', type=str, default='results')
+    parser.add_argument('--top-k', type=int, default=50)
+    parser.add_argument('--top-p', type=float, default=0.9)
     parser.add_argument('--sample', type=bool, default=True)
     parser.add_argument('--temperature', type=float, default=1.0)
     parser.add_argument('--seed', type=int, default=0)
@@ -248,5 +242,24 @@ if __name__ == '__main__':
     )
 
     torch.cuda.set_device(int(os.getenv('LOCAL_RANK', 0)))
+
+    tokenizer = LlamaTokenizer.from_pretrained(args.checkpoint)
+
+    if 'qllama' in args.checkpoint.lower():
+        from internvl.model.internvl_chat_with_qllama import InternVLChatModel
+        model = InternVLChatModel.from_pretrained(
+            args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
+        image_size = model.internvl.config.force_image_size or model.config.internvl_config.vision_config.image_size
+        pad2square = model.config.pad2square
+    else:
+        from internvl.model.internvl_chat import InternVLChatModel
+        model = InternVLChatModel.from_pretrained(
+            args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
+        image_size = model.config.force_image_size or model.config.vision_config.image_size
+        pad2square = model.config.pad2square
+
+    print(f'[test] image_size: {image_size}')
+    print(f'[test] pad2square: {pad2square}')
+    print(f'[test] template: {args.template}')
 
     evaluate_chat_model()

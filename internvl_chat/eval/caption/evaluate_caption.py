@@ -7,7 +7,6 @@ import time
 from functools import partial
 
 import torch
-from internvl.model.internvl_chat_with_qllama import InternVLChatModel
 from internvl.train.dataset import build_transform
 from PIL import Image
 from pycocoevalcap.eval import COCOEvalCap
@@ -107,30 +106,22 @@ class InferenceSampler(torch.utils.data.sampler.Sampler):
 
 
 def evaluate_chat_model():
-    question = 'Provide a one-sentence caption for the provided image.'
-    print('question:', question)
-
-    model = InternVLChatModel.from_pretrained(
-        args.checkpoint, torch_dtype=torch.bfloat16).cuda().eval()
-    tokenizer = LlamaTokenizer.from_pretrained(args.checkpoint)
-
+    prompt = 'Provide a one-sentence caption for the provided image.'
+    print('prompt:', prompt)
     random.seed(args.seed)
     summaries = []
+
     for ds_name in args.datasets:
         annotation = ds_collections[ds_name]['annotation']
         if type(annotation) == list:
             annotation = annotation[0]
-        if model.internvl.config.force_image_size is not None:
-            image_size = model.internvl.config.force_image_size
-        else:
-            image_size = model.internvl.config.vision_config.image_size
         dataset = CaptionDataset(
             name=ds_name,
             root=ds_collections[ds_name]['root'],
             annotation=annotation,
-            prompt=question,
+            prompt=prompt,
             input_size=image_size,
-            pad2square=model.config.pad2square
+            pad2square=pad2square
         )
         dataloader = torch.utils.data.DataLoader(
             dataset=dataset,
@@ -146,16 +137,17 @@ def evaluate_chat_model():
         for _, (pixel_values, ids, _, _) in tqdm(enumerate(dataloader)):
             pixel_values = pixel_values.to(torch.bfloat16).cuda()
             generation_config = dict(
-                do_sample=False,
                 num_beams=args.num_beams,
                 max_new_tokens=30,
                 min_new_tokens=8,
+                do_sample=True if args.temperature > 0 else False,
+                temperature=args.temperature,
             )
             pred = model.chat(
                 template=args.template,
                 tokenizer=tokenizer,
                 pixel_values=pixel_values,
-                question=question,
+                question=prompt,
                 generation_config=generation_config,
             )
             image_ids.extend(ids)
@@ -220,6 +212,7 @@ if __name__ == '__main__':
     parser.add_argument('--num-workers', type=int, default=1)
     parser.add_argument('--num-beams', type=int, default=5)
     parser.add_argument('--template', type=str, default='vicuna_v1.1')
+    parser.add_argument('--temperature', type=float, default=0.0)
     parser.add_argument('--out-dir', type=str, default='results')
     parser.add_argument('--seed', type=int, default=0)
     args = parser.parse_args()
@@ -238,5 +231,24 @@ if __name__ == '__main__':
     )
 
     torch.cuda.set_device(int(os.getenv('LOCAL_RANK', 0)))
+
+    tokenizer = LlamaTokenizer.from_pretrained(args.checkpoint)
+
+    if 'qllama' in args.checkpoint.lower():
+        from internvl.model.internvl_chat_with_qllama import InternVLChatModel
+        model = InternVLChatModel.from_pretrained(
+            args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
+        image_size = model.internvl.config.force_image_size or model.config.internvl_config.vision_config.image_size
+        pad2square = model.config.pad2square
+    else:
+        from internvl.model.internvl_chat import InternVLChatModel
+        model = InternVLChatModel.from_pretrained(
+            args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
+        image_size = model.config.force_image_size or model.config.vision_config.image_size
+        pad2square = model.config.pad2square
+
+    print(f'[test] image_size: {image_size}')
+    print(f'[test] pad2square: {pad2square}')
+    print(f'[test] template: {args.template}')
 
     evaluate_chat_model()
