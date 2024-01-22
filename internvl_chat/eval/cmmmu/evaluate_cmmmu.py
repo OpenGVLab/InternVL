@@ -6,7 +6,6 @@ import random
 import torch
 from internvl.train.dataset import build_transform
 from PIL import Image
-from torchvision.transforms.functional import InterpolationMode
 from tqdm import tqdm
 from transformers import LlamaTokenizer
 
@@ -48,14 +47,6 @@ ds_collections = {
         'min_new_tokens': 1,
     },
 }
-
-
-def collate_fn(batches, tokenizer):
-    pixel_values = torch.cat([_['pixel_values'] for _ in batches], dim=0)
-    questions = [_['question'] for _ in batches]
-    image_paths = [_['image_path'] for _ in batches]
-
-    return pixel_values, questions, image_paths
 
 
 class VQADataset(torch.utils.data.Dataset):
@@ -115,7 +106,7 @@ def evaluate_chat_model():
                 temperature=args.temperature,
             )
             pred = model.chat(
-                template=args.template,
+                template=template,
                 tokenizer=tokenizer,
                 pixel_values=pixel_value,
                 question=question,
@@ -144,7 +135,6 @@ if __name__ == '__main__':
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
     parser.add_argument('--num-beams', type=int, default=1)
-    parser.add_argument('--template', type=str, default='husky_v2.0')
     parser.add_argument('--temperature', type=float, default=0.0)
     parser.add_argument('--out-dir', type=str, default='results')
     parser.add_argument('--seed', type=int, default=0)
@@ -172,9 +162,13 @@ if __name__ == '__main__':
         image_size = model.config.force_image_size or model.config.vision_config.image_size
         pad2square = model.config.pad2square
 
+    if 'husky' in args.checkpoint.lower():
+        template = 'husky_v2.0'
+    else:
+        template = 'vicuna_v1.1'
     print(f'[test] image_size: {image_size}')
     print(f'[test] pad2square: {pad2square}')
-    print(f'[test] template: {args.template}')
+    print(f'[test] template: {template}')
 
     model_id = '_'.join(args.checkpoint.split('/')[-2:])
     evaluate_chat_model()

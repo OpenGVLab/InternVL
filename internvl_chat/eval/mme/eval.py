@@ -26,8 +26,7 @@ def post_processing(response):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--template', type=str, default='vicuna_v1.1')
-    parser.add_argument('--model-path', type=str, default='')
+    parser.add_argument('--checkpoint', type=str, default='')
     parser.add_argument('--root', type=str, default='./Your_Results')
     parser.add_argument('--beam-num', type=int, default=5)
     parser.add_argument('--top-k', type=int, default=50)
@@ -38,26 +37,30 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     prompt = 'Answer the question using a single word or phrase.'
-    tokenizer = LlamaTokenizer.from_pretrained(args.model_path)
+    tokenizer = LlamaTokenizer.from_pretrained(args.checkpoint)
 
-    if 'qllama' in args.model_path.lower():
+    if 'qllama' in args.checkpoint.lower():
         from internvl.model.internvl_chat_with_qllama import InternVLChatModel
         model = InternVLChatModel.from_pretrained(
-            args.model_path, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
+            args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
         image_size = model.internvl.config.force_image_size or model.config.internvl_config.vision_config.image_size
         pad2square = model.config.pad2square
     else:
         from internvl.model.internvl_chat import InternVLChatModel
         model = InternVLChatModel.from_pretrained(
-            args.model_path, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
+            args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
         image_size = model.config.force_image_size or model.config.vision_config.image_size
         pad2square = model.config.pad2square
 
+    if 'husky' in args.checkpoint.lower():
+        template = 'husky_v2.0'
+    else:
+        template = 'vicuna_v1.1'
     print(f'[test] image_size: {image_size}')
     print(f'[test] pad2square: {pad2square}')
-    print(f'[test] template: {args.template}')
+    print(f'[test] template: {template}')
 
-    output = os.path.basename(args.model_path)
+    output = os.path.basename(args.checkpoint)
     os.makedirs(output, exist_ok=True)
 
     for filename in os.listdir(args.root):
@@ -75,14 +78,14 @@ if __name__ == '__main__':
                 do_sample=args.sample,
                 top_k=args.top_k,
                 top_p=args.top_p,
-                repetition_penalty=1.5,
+                # repetition_penalty=1.5,
                 length_penalty=1.0,
                 num_beams=args.beam_num,
                 max_new_tokens=20,
                 eos_token_id=tokenizer.eos_token_id,
             )
             response = model.chat(
-                template=args.template,
+                template=template,
                 tokenizer=tokenizer,
                 pixel_values=pixel_values,
                 question=question,

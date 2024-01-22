@@ -335,7 +335,7 @@ def evaluate_chat_model():
                 temperature=args.temperature,
             )
             pred = model.chat(
-                template=args.template,
+                template=template,
                 tokenizer=tokenizer,
                 pixel_values=pixel_values,
                 question=questions[0],
@@ -461,7 +461,6 @@ if __name__ == '__main__':
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
     parser.add_argument('--num-beams', type=int, default=5)
-    parser.add_argument('--template', type=str, default='vicuna_v1.1')
     parser.add_argument('--temperature', type=float, default=0.0)
     parser.add_argument('--out-dir', type=str, default='results')
     parser.add_argument('--few-shot', type=int, default=0)
@@ -498,8 +497,12 @@ if __name__ == '__main__':
         image_size = model.config.force_image_size or model.config.vision_config.image_size
         pad2square = model.config.pad2square
 
+    if 'husky' in args.checkpoint.lower():
+        template = 'husky_v2.0'
+    else:
+        template = 'vicuna_v1.1'
     print(f'[test] image_size: {image_size}')
     print(f'[test] pad2square: {pad2square}')
-    print(f'[test] template: {args.template}')
+    print(f'[test] template: {template}')
 
     evaluate_chat_model()

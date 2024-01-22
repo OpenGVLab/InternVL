@@ -6,11 +6,11 @@
 
 (1) Fill all the files in "Your_Results", adding your model's responses:
 Each file in "Your_Results" consists of:
-Image_Name + "\t" + Question + "\t" + Ground_Truth_Answer + "\n"
+Image_Name + "\\t" + Question + "\\t" + Ground_Truth_Answer + "\\n"
 
 You need to add the responses of your model as:
-Image_Name + "\t" + Question + "\t" + Ground_Truth_Answer + "\t" + Your_Response + "\n"
+Image_Name + "\\t" + Question + "\\t" + Ground_Truth_Answer + "\\t" + Your_Response + "\\n"
 
-Note: if your responses contain "\n", please delet it. For each question, your response can only be in one line, not across lines!
+Note: if your responses contain "\\n", please delet it. For each question, your response can only be in one line, not across lines!
 
 (2) run "python3 calculation.py --results_dir ./Your_Results"
