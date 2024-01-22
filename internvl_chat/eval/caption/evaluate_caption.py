@@ -18,15 +18,21 @@ ds_collections = {
     'flickr30k': {
         'root': 'data/flickr30k/',
         'annotation': 'data/flickr30k/flickr30k_test_karpathy.json',
+        'max_new_tokens': 30,
+        'min_new_tokens': 8,
     },
     'coco': {
         'root': 'data/coco/',
         'annotation': ['data/coco/annotations/coco_karpathy_test.json',
                        'data/coco/annotations/coco_karpathy_test_gt.json'],
+        'max_new_tokens': 30,
+        'min_new_tokens': 8,
     },
     'nocaps': {
         'root': 'data/nocaps/images',
         'annotation': 'data/nocaps/nocaps_val_4500_captions.json',
+        'max_new_tokens': 30,
+        'min_new_tokens': 8,
     },
 }
 
@@ -42,8 +48,6 @@ class CaptionDataset(torch.utils.data.Dataset):
         self.prompt = prompt
         self.root = root
         self.transform = build_transform(is_train=False, input_size=input_size, pad2square=pad2square)
-        print('input_size:', input_size)
-        print('pad2square:', pad2square)
 
     def __len__(self):
         return len(self.images)
@@ -138,8 +142,8 @@ def evaluate_chat_model():
             pixel_values = pixel_values.to(torch.bfloat16).cuda()
             generation_config = dict(
                 num_beams=args.num_beams,
-                max_new_tokens=30,
-                min_new_tokens=8,
+                max_new_tokens=ds_collections[ds_name]['max_new_tokens'],
+                min_new_tokens=ds_collections[ds_name]['min_new_tokens'],
                 do_sample=True if args.temperature > 0 else False,
                 temperature=args.temperature,
             )
@@ -164,7 +168,7 @@ def evaluate_chat_model():
         merged_ids = [_ for _ in itertools.chain.from_iterable(merged_ids)]
         merged_captions = [_ for _ in itertools.chain.from_iterable(merged_captions)]
         average_length = sum(len(x.split()) for x in merged_captions) / len(merged_captions)
-        print(f'Average length: {average_length}')
+        print(f'Average caption length: {average_length}')
 
         if torch.distributed.get_rank() == 0:
             print(f'Evaluating {ds_name} ...')

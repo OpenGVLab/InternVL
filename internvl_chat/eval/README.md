@@ -1,26 +1,20 @@
 # Evaluation
 
-## Dependencies
-
-```bash
-pip install pycocoevalcap tqdm
-```
-
 ## Directory Structure
 
 ```
 data
 ├── flickr30k
-│   ├── flickr30k_test_karpathy.json  # wget https://github.com/OpenGVLab/InternVL/releases/download/data/flickr30k_test_karpathy.json
+│   ├── flickr30k_test_karpathy.json
 │   └── Images
 ├── coco
 │   ├── annotations
-│   │   ├── coco_karpathy_test_gt.json  # wget https://github.com/OpenGVLab/InternVL/releases/download/data/coco_karpathy_test_gt.json
-│   │   ├── coco_karpathy_test.json  # wget https://github.com/OpenGVLab/InternVL/releases/download/data/coco_karpathy_test.json
+│   │   ├── coco_karpathy_test_gt.json
+│   │   ├── coco_karpathy_test.json
 │   │   └── ...
-│   ├── train2014  # wget http://images.cocodataset.org/zips/train2014.zip && unzip train2014.zip
-│   ├── val2014  # wget http://images.cocodataset.org/zips/val2014.zip && unzip val2014.zip
-│   └── test2015  # wget http://images.cocodataset.org/zips/test2015.zip && unzip test2015.zip
+│   ├── train2014
+│   ├── val2014
+│   └── test2015
 ├── nocaps
 │   ├── nocaps_val_4500_captions.json
 │   └── images
@@ -35,17 +29,19 @@ data
     └── refcoco+_val.jsonl
 ```
 
-
 ## Image Caption
 
-### [COCO](https://cocodataset.org/)
+### [COCO karpathy test](https://cocodataset.org/)
 
 > COCO images are used in VQAv2/OK-VQA/RefCOCO/RefCOCO+/RefCOCOg. Make sure you have already downloaded COCO images before evaluating on these benchmarks.
+
+<details>
+<summary>Data Preparation</summary>
 
 ```bash
 mkdir -p data/coco && cd data/coco
 
-# download coco2014 images
+# download coco images
 wget http://images.cocodataset.org/zips/train2014.zip && unzip train2014.zip
 wget http://images.cocodataset.org/zips/val2014.zip && unzip val2014.zip
 wget http://images.cocodataset.org/zips/test2015.zip && unzip test2015.zip
@@ -55,10 +51,26 @@ mkdir -p annotations && cd annotations/
 wget https://github.com/OpenGVLab/InternVL/releases/download/data/coco_karpathy_test.json
 wget https://github.com/OpenGVLab/InternVL/releases/download/data/coco_karpathy_test_gt.json
 
-cd ../..
+cd ../../../
 ```
 
-### [Flickr30K](https://bryanplummer.com/Flickr30kEntities/)
+</details>
+
+<details>
+<summary>Evaluation</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> caption-coco
+```
+
+</details>
+
+
+### [Flickr30K karpathy test](https://bryanplummer.com/Flickr30kEntities/)
+
+
+<details>
+<summary>Data Preparation</summary>
 
 ```bash
 mkdir -p data/flickr30k && cd data/flickr30k
@@ -71,7 +83,22 @@ wget https://github.com/OpenGVLab/InternVL/releases/download/data/flickr30k_test
 cd ../..
 ```
 
-### [NoCaps](https://nocaps.org/)
+</details>
+
+
+<details>
+<summary>Evaluation</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> caption-flickr30k
+```
+
+</details>
+
+### [NoCaps val](https://nocaps.org/)
+
+<details>
+<summary>Data Preparation</summary>
 
 ```bash
 mkdir -p data/nocaps && cd data/nocaps
@@ -83,10 +110,24 @@ wget https://nocaps.s3.amazonaws.com/nocaps_val_4500_captions.json
 cd ../..
 ```
 
+</details>
+
+<details>
+<summary>Evaluation</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> caption-nocaps
+```
+
+</details>
+
 
 ## General VQA
 
-### [VQAv2](https://visualqa.org/)
+### [VQAv2 val & test-dev](https://visualqa.org/)
+
+<details>
+<summary>Data Preparation</summary>
 
 ```bash
 mkdir -p data/vqav2 && cd data/vqav2
@@ -106,8 +147,28 @@ wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/vqav2
 wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/vqav2/vqav2_testdev.jsonl
 ```
 
-### [OKVQA](https://okvqa.allenai.org/)
+</details>
 
+
+<details>
+<summary>Evaluation</summary>
+
+```bash
+# VQAv2-val
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-vqav2-val
+# VQAv2-testdev
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-vqav2-testdev
+```
+For the testdev set, submit the results to the [evaluation server](https://eval.ai/web/challenges/challenge-page/830/my-submission).
+
+</details>
+
+
+### [OKVQA val](https://okvqa.allenai.org/)
+
+<details>
+<summary>Data Preparation</summary>
+    
 ```bash
 mkdir -p data/okvqa && cd data/okvqa
 
@@ -124,7 +185,22 @@ wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/okvqa
 cd ../..
 ```
 
-### [TextVQA](https://textvqa.org/)
+</details>
+
+<details>
+<summary>Evaluation</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-okvqa-val
+```
+
+</details>
+
+
+### [TextVQA val](https://textvqa.org/)
+
+<details>
+<summary>Data Preparation</summary>
 
 ```bash
 mkdir -p data/textvqa && cd data/textvqa
@@ -147,8 +223,23 @@ wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textv
 cd ../..
 ```
 
+</details>
+
+<details>
+<summary>Evaluation</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-textvqa-val
+```
+
+</details>
+
+
 ### [VizWiz](https://vizwiz.org/tasks-and-datasets/vqa/)
 
+<details>
+<summary>Data Preparation</summary>
+    
 ```bash
 mkdir -p data/vizwiz && cd data/vizwiz
 
@@ -176,7 +267,26 @@ cd ../..
 
 </details>
 
+
+<details>
+<summary>Evaluation</summary>
+
+```bash
+# VizWiz val
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-vizwiz-val
+# VizWiz test
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-vizwiz-test
+```
+For the test set, submit the results to the [evaluation server](https://eval.ai/web/challenges/challenge-page/1911/my-submission).
+
+
+</details>
+
+
 ### [DocVQA](https://www.docvqa.org/datasets)
+
+<details>
+<summary>Data Preparation</summary>
 
 ```bash
 mkdir -p data/docvqa && cd data/docvqa
@@ -193,7 +303,12 @@ wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/docvq
 cd ../..
 ```
 
+</details>
+
 ### [ChartQA](https://aclanthology.org/2022.findings-acl.177/)
+
+<details>
+<summary>Data Preparation</summary>
 
 ```bash
 mkdir -p data/chartqa && cd data/chartqa
@@ -208,6 +323,8 @@ wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/chart
 
 cd ../..
 ```
+
+</details>
 
 ### [GQA](https://cs.stanford.edu/people/dorarad/gqa/about.html)
 
@@ -227,10 +344,14 @@ wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/gqa/t
 
 cd ../..
 ```
+
 </details>
 
 ### [OCRVQA](https://ocr-vqa.github.io/)
 
+<details>
+<summary>Data Preparation</summary>
+    
 ```bash
 mkdir -p data/ocrvqa && cd data/ocrvqa
 
@@ -244,8 +365,13 @@ wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/ocrvq
 cd ../..
 ```
 
+</details>
+
 ### [AI2Diagram](https://allenai.org/data/diagrams)
 
+<details>
+<summary>Data Preparation</summary>
+    
 ```bash
 mkdir -p data/ai2diagram && cd data/ai2diagram
 
@@ -259,8 +385,13 @@ wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/ai2di
 cd ../..
 ```
 
+</details>
+
 ### [ScienceQA](https://github.com/lupantech/ScienceQA)
 
+<details>
+<summary>Data Preparation</summary>
+    
 ```bash
 mkdir -p data/scienceqa/images && cd data/scienceqa/images
 
@@ -278,11 +409,15 @@ wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/scien
 cd ../..
 ```
 
+</details>
+
 ## Refer Expression Comprehension
 
 ### RefCOCO/RefCOCO+/RefCOCO-g
 
-
+<details>
+<summary>Data Preparation</summary>
+    
 ```bash
 mkdir -p data/refcoco && cd data/refcoco
 
@@ -298,3 +433,5 @@ wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/refco
 
 cd ../..
 ```
+
+</details>
