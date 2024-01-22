@@ -2,8 +2,6 @@
 
 This folder contains the implementation of the InternVL-Chat.
 
-***Note: This folder is still under construction.***
-
 ## 🛠️ Installation
 
 > If you have already installed the environment as per the instructions in other folders, you can skip this section.
@@ -70,7 +68,7 @@ This folder contains the implementation of the InternVL-Chat.
 
 ## 📦 Data Preparation
 
-Coming Soon
+See [here](./eval/README.md).
 
 ## 📦 Model Preparation
 
@@ -110,3 +108,5 @@ Coming Soon
 | InternVL-Chat | ✔️     | frozen V-7B  | 224 | 141.4 | 89.7   | 120.5  | 72.3  | 57.7 | 44.5   | 42.1    | 1298.5 | 85.2 | TODO     |
 | InternVL-Chat | ✔️     | frozen V-13B | 224 | 142.4 | 89.9   | 123.1  | 71.7  | 59.5 | 54.0   | 49.1    | 1317.2 | 85.4 | TODO     |
 | InternVL-Chat | ✔      | V-13B        | 336 | 146.2 | 92.2   | 126.2  | 81.2  | 66.6 | 58.5   | 61.5    | 1586.4 | 87.6 | TODO     |
+
+
