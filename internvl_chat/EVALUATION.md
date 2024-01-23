@@ -1,6 +1,9 @@
 # Evaluation
 
-## Directory Structure
+
+<details>
+<summary>Directory Structure</summary>
+
 
 ```
 data
@@ -144,6 +147,8 @@ data
 │   ├── ...
 │   └── images/
 ```
+
+</details>
 
 ## Image Caption
 
