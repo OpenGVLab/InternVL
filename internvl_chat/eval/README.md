@@ -129,6 +129,12 @@ data
 │       ├── Object_Hallucination
 │       ├── ...
 │       └── Visual_Reasoning
+├── mmbench
+│   ├── mmbench_dev_20230712.tsv
+│   ├── mmbench_dev_cn_20231003.tsv
+│   ├── mmbench_dev_en_20231003.tsv
+│   ├── mmbench_test_cn_20231003.tsv
+│   └── mmbench_test_en_20231003.tsv
 ├── llava-bench-in-the-wild
 │   ├── answers_gpt4.jsonl
 │   ├── ...
@@ -620,7 +626,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> refcoco
 
 ## MultiModal Dialogue
 
-### MME
+### [MME](https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models/tree/Evaluation)
 
 <details>
 <summary>Data Preparation</summary>
@@ -646,9 +652,42 @@ CUDA_VISIBLE_DEVICES=0 sh evaluate.sh <checkpoint> mme
 
 </details>
 
-### MMBench
+### [MMBench dev & test](https://github.com/open-compass/mmbench/?tab=readme-ov-file)
 
-### POPE
+<summary>Data Preparation</summary>
+
+```bash
+mkdir -p data/mmbench && cd data/mmbench
+
+# download csv files of mmbench
+wget https://download.openmmlab.com/mmclassification/datasets/mmbench/mmbench_dev_20230712.tsv
+wget https://download.openmmlab.com/mmclassification/datasets/mmbench/mmbench_dev_cn_20231003.tsv
+wget https://download.openmmlab.com/mmclassification/datasets/mmbench/mmbench_dev_en_20231003.tsv
+wget https://download.openmmlab.com/mmclassification/datasets/mmbench/mmbench_test_cn_20231003.tsv
+wget https://download.openmmlab.com/mmclassification/datasets/mmbench/mmbench_test_en_20231003.tsv
+
+cd ../..
+```
+
+</details>
+
+<details>
+<summary>Evaluation</summary>
+
+```bash
+# mmbench_dev_20230712
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmbench-dev-en
+# mmbench_dev_cn_20231003
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmbench-dev-cn
+# mmbench_test_en_20231003
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmbench-test-en
+# mmbench_test_cn_20231003
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmbench-test-cn
+```
+
+</details>
+
+### [POPE](https://github.com/AoiDragon/POPE/tree/main)
 
 <details>
 <summary>Data Preparation</summary>
@@ -683,7 +722,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> pope
 
 ### CMMMU
 
-### Tiny LVLM
+### [Tiny LVLM](https://github.com/OpenGVLab/Multi-Modality-Arena/tree/main/tiny_lvlm_evaluation)
 
 <details>
 <summary>Data Preparation</summary>
@@ -709,7 +748,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> tiny_lvlm
 
 </details>
 
-### LLaVA Bench
+### [LLaVA Bench](https://huggingface.co/datasets/liuhaotian/llava-bench-in-the-wild)
 
 <details>
 <summary>Data Preparation</summary>
