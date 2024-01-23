@@ -105,6 +105,10 @@ data
 │   ├── ai2d/
 │   ├── test.jsonl
 │   └── train.jsonl
+├── scienceqa
+│   ├── images/
+│   ├── problems.json
+│   └── scienceqa_test_img.jsonl
 ├── refcoco
 │   ├── refcocog_test.jsonl
 │   ├── refcocog_val.jsonl
@@ -654,6 +658,7 @@ CUDA_VISIBLE_DEVICES=0 sh evaluate.sh <checkpoint> mme
 
 ### [MMBench dev & test](https://github.com/open-compass/mmbench/?tab=readme-ov-file)
 
+<details>
 <summary>Data Preparation</summary>
 
 ```bash
@@ -684,6 +689,8 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmbench-test-en
 # mmbench_test_cn_20231003
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmbench-test-cn
 ```
+
+Then, submit the results to the [evaluation server](https://mmbench.opencompass.org.cn/mmbench-submission).
 
 </details>
 
@@ -773,6 +780,7 @@ cd ../../../
 
 ```bash
 # single GPU testing
+export OPENAI_API_KEY='your_gpt4_key'
 CUDA_VISIBLE_DEVICES=0 sh evaluate.sh <checkpoint> llava-bench
 ```
 
