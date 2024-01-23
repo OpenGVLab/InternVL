@@ -307,3 +307,13 @@ if [ ${DATASET} == "mmbench-test-cn" ]; then
       --master_port=63667 \
       eval/mmbench/evaluate_mmbench.py --checkpoint ${CHECKPOINT} --datasets mmbench_test_cn_20231003
 fi
+
+if [ ${DATASET} == "scienceqa" ]; then
+    torchrun \
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=8 \
+      --master_port=63667 \
+      eval/scienceqa/evaluate_scienceqa.py --checkpoint ${CHECKPOINT} --datasets sqa_test
+fi

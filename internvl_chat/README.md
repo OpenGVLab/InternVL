@@ -104,7 +104,7 @@ Coming Soon
 | ------------- | ------ | ------------ | --- | ----- | ------ | ------ | ----- | ---- | ------ | ------- | ------ | ---- | -------- |
 | InternVL-Chat | ✔️     | frozen V-7B  | 224 | 141.4 | 89.7   | 120.5  | 72.3  | 57.7 | 44.5   | 42.1    | 1298.5 | 85.2 | TODO     |
 | InternVL-Chat | ✔️     | frozen V-13B | 224 | 142.4 | 89.9   | 123.1  | 71.7  | 59.5 | 54.0   | 49.1    | 1317.2 | 85.4 | TODO     |
-| InternVL-Chat | ✔      | V-13B        | 336 | 146.2 | 92.2   | 126.2  | 81.2  | 66.6 | 58.5   | 61.5    | 1586.4 | 87.6 | TODO     |
+| InternVL-Chat | ✔️     | V-13B        | 336 | 146.2 | 92.2   | 126.2  | 81.2  | 66.6 | 58.5   | 61.5    | 1586.4 | 87.6 | TODO     |
 
 ## 📊 Evaluation (Chinese Models)
 
@@ -118,7 +118,7 @@ Coming Soon
 
 | model                                                                             | VQAv2<sub>test</sub> | OKVQA<sub>val</sub> | TextVQA<sub>val</sub> | VizWiz<sub>val/test</sub> | AI2D<sub>test</sub> | GQA<sub>test</sub> | SQA<sub>test</sub> |
 | --------------------------------------------------------------------------------- | -------------------- | ------------------- | --------------------- | ------------------------- | ------------------- | ------------------ | ------------------ |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1.1-Chinese) | 80.9                 | 64.2                | 65.8                  | 58.3 / 57.3               | 70.23               | 62.4               |                    |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1.1-Chinese) | 80.9                 | 64.2                | 65.8                  | 58.3 / 57.3               | 70.23               | 62.4               | 91.2               |
 
 **Image Captioning**
 
@@ -132,7 +132,6 @@ Please prepare the data according to the following directory structure.
 
 <details>
 <summary>Directory Structure</summary>
-
 
 ```
 data
@@ -919,4 +918,3 @@ CUDA_VISIBLE_DEVICES=0 sh evaluate.sh <checkpoint> llava-bench
 ```
 
 </details>
-

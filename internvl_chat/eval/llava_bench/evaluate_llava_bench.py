@@ -49,7 +49,7 @@ def evaluate_chat_model():
         dataset = VQADataset(
             root=ds_collections[ds_name]['root'],
             data=ds_collections[ds_name]['question'],
-            prompt='Please give a detailed answer.',
+            prompt=' Please give a detailed answer.',
             input_size=image_size,
             pad2square=pad2square
         )
@@ -62,7 +62,7 @@ def evaluate_chat_model():
                 max_new_tokens=ds_collections[ds_name]['max_new_tokens'],
                 min_new_tokens=ds_collections[ds_name]['min_new_tokens'],
                 length_penalty=1,
-                repetition_penalty=1.2,
+                repetition_penalty=1.5,
                 do_sample=True if args.temperature > 0 else False,
                 temperature=args.temperature,
             )
