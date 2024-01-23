@@ -29,7 +29,7 @@ class SeparatorStyle(IntEnum):
     ROBIN = auto()
     FALCON_CHAT = auto()
     CHATGLM3 = auto()
-    HUSKY = auto()
+    INTERNVL_ZH = auto()
 
 
 @dataclasses.dataclass
@@ -225,7 +225,7 @@ class Conversation:
                     ret += role + ':'
 
             return ret
-        elif self.sep_style == SeparatorStyle.HUSKY:
+        elif self.sep_style == SeparatorStyle.INTERNVL_ZH:
             seps = [self.sep, self.sep2]
             ret = self.system_message + seps[0]
             for i, (role, message) in enumerate(self.messages):
@@ -1200,13 +1200,13 @@ register_conv_template(
     )
 )
 
-# Husky2 template
+# InternVL-ZH template
 register_conv_template(
     Conversation(
-        name='husky_v2.0',
+        name='internvl_zh',
         system_template='',
         roles=('<human>', '<bot>'),
-        sep_style=SeparatorStyle.HUSKY,
+        sep_style=SeparatorStyle.INTERNVL_ZH,
         sep=' ',
         sep2='</s>',
     )

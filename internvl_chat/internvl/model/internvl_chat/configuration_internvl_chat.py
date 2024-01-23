@@ -29,6 +29,7 @@ class InternVLChatConfig(PretrainedConfig):
             select_layer=-4,
             force_image_size=None,
             downsample_ratio=0.5,
+            template=None,
             **kwargs):
         super().__init__(**kwargs)
 
@@ -48,6 +49,7 @@ class InternVLChatConfig(PretrainedConfig):
         self.select_layer = select_layer
         self.force_image_size = force_image_size
         self.downsample_ratio = downsample_ratio
+        self.template = template
 
     def to_dict(self):
         """
@@ -66,5 +68,6 @@ class InternVLChatConfig(PretrainedConfig):
         output['select_layer'] = self.select_layer
         output['force_image_size'] = self.force_image_size
         output['downsample_ratio'] = self.downsample_ratio
+        output['template'] = self.template
 
         return output

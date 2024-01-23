@@ -151,7 +151,7 @@ class DataTrainingArguments:
         metadata={'help': 'Pad the image to a square shape if set to True.'},
     )
     conv_style: Optional[str] = field(
-        default='husky_v2.0', metadata={'help': 'Prompt style for a conversation.'}
+        default='internvl_zh', metadata={'help': 'Prompt style for a conversation.'}
     )
     meta_path: Optional[str] = field(
         default=None,
@@ -476,7 +476,10 @@ def main():
         vision_config = InternVisionConfig.from_pretrained(model_args.vision_path)
         vision_config.drop_path_rate = model_args.drop_path_rate
         llm_config = LlamaConfig.from_pretrained(model_args.llm_path)
-        internvl_chat_config = InternVLChatConfig(vision_config.to_dict(), llm_config.to_dict())
+        internvl_chat_config = InternVLChatConfig(vision_config.to_dict(), llm_config.to_dict(),
+                                                  downsample_ratio=model_args.down_sample_ratio,
+                                                  pad2square=data_args.pad2square,
+                                                  template=data_args.conv_style)
         logger.info('Building InternVLChatModel...')
         model = InternVLChatModel(internvl_chat_config, vision_model, llm)
     model.img_context_token_id = img_context_token_id

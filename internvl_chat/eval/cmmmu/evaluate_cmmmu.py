@@ -106,7 +106,6 @@ def evaluate_chat_model():
                 temperature=args.temperature,
             )
             pred = model.chat(
-                template=template,
                 tokenizer=tokenizer,
                 pixel_values=pixel_value,
                 question=question,
@@ -162,13 +161,9 @@ if __name__ == '__main__':
         image_size = model.config.force_image_size or model.config.vision_config.image_size
         pad2square = model.config.pad2square
 
-    if 'husky' in args.checkpoint.lower():
-        template = 'husky_v2.0'
-    else:
-        template = 'vicuna_v1.1'
     print(f'[test] image_size: {image_size}')
     print(f'[test] pad2square: {pad2square}')
-    print(f'[test] template: {template}')
+    print(f'[test] template: {model.config.template}')
 
     model_id = '_'.join(args.checkpoint.split('/')[-2:])
     evaluate_chat_model()

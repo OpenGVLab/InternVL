@@ -248,25 +248,21 @@ if __name__ == '__main__':
             args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
         image_size = model.internvl.config.force_image_size or model.config.internvl_config.vision_config.image_size
         pad2square = model.config.pad2square
+        PATTERN = re.compile(r'\[(.*?),(.*?),(.*?),(.*?)\]')
+        divisor = 1  # TODO: divisor
+        prompt = 'Please provide the bounding box coordinate of the region this sentence describes: {}'
     else:
         from internvl.model.internvl_chat import InternVLChatModel
         model = InternVLChatModel.from_pretrained(
             args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
         image_size = model.config.force_image_size or model.config.vision_config.image_size
         pad2square = model.config.pad2square
-
-    if 'husky' in args.checkpoint.lower():
-        template = 'husky_v2.0'
         PATTERN = re.compile(r'\[\[(.*?),(.*?),(.*?),(.*?)\]\]')
-        divisor = 1
+        divisor = 1  # TODO: divisor
         prompt = 'Please provide the bounding box coordinate of the region this sentence describes: <ref>{}</ref>'
-    else:
-        template = 'vicuna_v1.1'
-        PATTERN = re.compile(r'\[(.*?),(.*?),(.*?),(.*?)\]')
-        divisor = 1
-        prompt = 'Please provide the bounding box coordinate of the region this sentence describes: {}'
+
     print(f'[test] image_size: {image_size}')
     print(f'[test] pad2square: {pad2square}')
-    print(f'[test] template: {template}')
+    print(f'[test] template: {model.config.template}')
 
     evaluate_chat_model()

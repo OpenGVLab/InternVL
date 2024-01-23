@@ -30,6 +30,7 @@ class InternVLChatModel(PreTrainedModel):
         image_size = config.force_image_size or config.vision_config.image_size
         patch_size = config.vision_config.patch_size
         self.select_layer = config.select_layer
+        self.template = config.template
         self.num_image_token = int((image_size // patch_size) ** 2 * (config.downsample_ratio ** 2))
         logger.info(f'num_image_token: {self.num_image_token}')
         if vision_model is not None:
@@ -187,7 +188,7 @@ class InternVLChatModel(PreTrainedModel):
         vit_embeds = self.mlp1(vit_embeds)
         return vit_embeds
 
-    def chat(self, template, tokenizer, pixel_values, question, generation_config,
+    def chat(self, tokenizer, pixel_values, question, generation_config,
              IMG_START_TOKEN='<img>', IMG_END_TOKEN='</img>', IMG_CONTEXT_TOKEN='<IMG_CONTEXT>'):
 
         img_context_token_id = tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
@@ -195,7 +196,7 @@ class InternVLChatModel(PreTrainedModel):
 
         from internvl.conversation import get_conv_template
 
-        template = get_conv_template(template)
+        template = get_conv_template(self.template)
         image_tokens = IMG_START_TOKEN + IMG_CONTEXT_TOKEN * self.num_image_token + IMG_END_TOKEN
         template.append_message(template.roles[0], image_tokens + '\n' + question)
         template.append_message(template.roles[1], None)

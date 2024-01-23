@@ -52,13 +52,9 @@ if __name__ == '__main__':
         image_size = model.config.force_image_size or model.config.vision_config.image_size
         pad2square = model.config.pad2square
 
-    if 'husky' in args.checkpoint.lower():
-        template = 'husky_v2.0'
-    else:
-        template = 'vicuna_v1.1'
     print(f'[test] image_size: {image_size}')
     print(f'[test] pad2square: {pad2square}')
-    print(f'[test] template: {template}')
+    print(f'[test] template: {model.config.template}')
 
     output = os.path.basename(args.checkpoint)
     os.makedirs(output, exist_ok=True)
@@ -85,7 +81,6 @@ if __name__ == '__main__':
                 eos_token_id=tokenizer.eos_token_id,
             )
             response = model.chat(
-                template=template,
                 tokenizer=tokenizer,
                 pixel_values=pixel_values,
                 question=question,

@@ -55,4 +55,9 @@ class InternVLChatConfig(PretrainedConfig):
         output['internvl_config'] = self.internvl_config.to_dict()
         output['llm_config'] = self.llm_config.to_dict()
         output['model_type'] = self.__class__.model_type
+        output['use_llm_lora'] = self.use_llm_lora
+        output['pad2square'] = self.pad2square
+        output['select_layer'] = self.select_layer
+        output['template'] = self.template
+
         return output
