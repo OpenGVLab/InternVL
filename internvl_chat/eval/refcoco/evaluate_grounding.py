@@ -8,7 +8,6 @@ import time
 from functools import partial
 
 import torch
-from internvl.model.internvl_chat_with_qllama import InternVLChatModel
 from internvl.train.dataset import build_transform
 from PIL import Image
 from torchvision.ops.boxes import box_area
@@ -73,7 +72,7 @@ class RefCOCODataset(torch.utils.data.Dataset):
         pixel_values = self.transform(image).unsqueeze(0)
 
         return {
-            'text': self.prompt + ' ' + text,
+            'text': self.prompt.format(text),
             'pixel_values': pixel_values,
             'bbox': bbox,
             'hw': (h, w),
@@ -107,7 +106,6 @@ class InferenceSampler(torch.utils.data.sampler.Sampler):
 
 
 def evaluate_chat_model():
-    prompt = 'Please provide the bounding box coordinate of the region this sentence describes:'
     print('prompt:', prompt)
     random.seed(args.seed)
     summaries = []
@@ -173,7 +171,6 @@ def evaluate_chat_model():
             results_file = os.path.join(args.out_dir, results_file)
             json.dump(merged_outputs, open(results_file, 'w'))
 
-            PATTERN = re.compile(r'\[(.*?),(.*?),(.*?),(.*?)\]')
             correct = total_cnt = 0
             for i, output in enumerate(merged_outputs):
                 predict_bbox = re.findall(PATTERN, output['answer'])
@@ -186,6 +183,7 @@ def evaluate_chat_model():
                                            dtype=torch.float32).view(-1, 4)
                 predict_bbox = torch.tensor(predict_bbox,
                                             dtype=torch.float32).view(-1, 4)
+                predict_bbox = predict_bbox / divisor
                 predict_bbox[:, 0::2] *= output['hw'][1]
                 predict_bbox[:, 1::2] *= output['hw'][0]
                 iou, _ = box_iou(predict_bbox, target_bbox)
@@ -260,8 +258,14 @@ if __name__ == '__main__':
 
     if 'husky' in args.checkpoint.lower():
         template = 'husky_v2.0'
+        PATTERN = re.compile(r'\[\[(.*?),(.*?),(.*?),(.*?)\]\]')
+        divisor = 1
+        prompt = 'Please provide the bounding box coordinate of the region this sentence describes: <ref>{}</ref>'
     else:
         template = 'vicuna_v1.1'
+        PATTERN = re.compile(r'\[(.*?),(.*?),(.*?),(.*?)\]')
+        divisor = 1
+        prompt = 'Please provide the bounding box coordinate of the region this sentence describes: {}'
     print(f'[test] image_size: {image_size}')
     print(f'[test] pad2square: {pad2square}')
     print(f'[test] template: {template}')
