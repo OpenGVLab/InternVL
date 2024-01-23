@@ -609,7 +609,6 @@ cd ../..
 
 </details>
 
-
 <details>
 <summary>Evaluation</summary>
 
@@ -714,7 +713,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> tiny_lvlm
 
 <details>
 <summary>Data Preparation</summary>
-  
+
 ```bash
 cd data/
 # download dataset from https://huggingface.co/datasets/liuhaotian/llava-bench-in-the-wild
