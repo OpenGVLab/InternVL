@@ -112,23 +112,23 @@ Coming Soon
 
 | model                                                                             | MME          | MMB<sub>dev/test</sub> | MMB-CN<sub>dev/test</sub> | POPE |
 | --------------------------------------------------------------------------------- | ------------ | ---------------------- | ------------------------- | ---- |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1.1-Chinese) | 1672.4/341.1 | 76.6/75.4              | 71.5/70.1                 | 87.2 |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1) | 1672.4/341.1 | 76.6/75.4              | 71.5/70.1                 | 87.2 |
 
 | model                                                                             | MMMU<sub>val/test</sub> | CMMMU<sub>val/test</sub> | Tiny<sub>LVLM</sub> | LLaVA<sub>bench</sub> |
 | --------------------------------------------------------------------------------- | ----------------------- | ------------------------ | ------------------- | --------------------- |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1.1-Chinese) | 39.1/35.3               |                          | 344.5               | 76.3                  |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1) | 39.1/35.3               |                          | 344.5               | 76.3                  |
 
 **Visual Question Answering**
 
 | model                                                                             | VQAv2<sub>test</sub> | OKVQA<sub>val</sub> | TextVQA<sub>val</sub> | VizWiz<sub>val/test</sub> | AI2D<sub>test</sub> | GQA<sub>test</sub> | SQA<sub>test</sub> |
 | --------------------------------------------------------------------------------- | -------------------- | ------------------- | --------------------- | ------------------------- | ------------------- | ------------------ | ------------------ |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1.1-Chinese) | 80.9                 | 64.2                | 65.8                  | 58.3 / 57.3               | 70.23               | 62.4               | 91.2               |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1) | 80.9                 | 64.2                | 65.8                  | 58.3 / 57.3               | 70.23               | 62.4               | 91.2               |
 
 **Image Captioning**
 
 | model                                                                             | COCO<sub>test</sub> | Flickr30K<sub>test</sub> | NoCaps<sub>val</sub> |
 | --------------------------------------------------------------------------------- | ------------------- | ------------------------ | -------------------- |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1.1-Chinese) | 141.8               | 84.3                     | 120.4                |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1) | 141.8               | 84.3                     | 120.4                |
 
 ## ❓ How to Evaluate
 
