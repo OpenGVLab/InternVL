@@ -7,17 +7,31 @@ import time
 from functools import partial
 
 import torch
+from data_utils import CAT_SHORT2LONG, process_single_sample
+from datasets import concatenate_datasets, load_dataset
 from internvl.train.dataset import build_transform
-from PIL import Image
 from torch.utils.data import Dataset
 from tqdm import tqdm
 from transformers import LlamaTokenizer
 
 ds_collections = {
-    'sqa_test': {
-        'root': 'data/scienceqa/scienceqa_test_img.jsonl',
+    'MMMU_validation': {
+        'root': 'MMMU/MMMU',
         'max_new_tokens': 100,
         'min_new_tokens': 1,
+        'split': 'validation'
+    },
+    'MMMU_test': {
+        'root': 'MMMU/MMMU',
+        'max_new_tokens': 100,
+        'min_new_tokens': 1,
+        'split': 'test'
+    },
+    'MMMU_dev': {
+        'root': 'MMMU/MMMU',
+        'max_new_tokens': 100,
+        'min_new_tokens': 1,
+        'split': 'dev'
     },
 }
 
@@ -26,16 +40,22 @@ def collate_fn(batches, tokenizer):
     pixel_values = torch.cat([_['pixel_values'] for _ in batches], dim=0)
     questions = [_['question'] for _ in batches]
     answers = [_['answer'] for _ in batches]
-    image_paths = [_['image_path'] for _ in batches]
+    data_ids = [_['data_id'] for _ in batches]
     options = [_['option'] for _ in batches]
-    return pixel_values, questions, answers, image_paths, options
+    return pixel_values, questions, answers, data_ids, options
 
 
-class ScienceQADataset(torch.utils.data.Dataset):
+class MMMUDataset(torch.utils.data.Dataset):
 
-    def __init__(self, root, prompt, input_size=224, pad2square=False):
-        f = open(root, 'r', encoding='utf-8')
-        self.data = [json.loads(line) for line in f.readlines()]
+    def __init__(self, root, split, prompt, input_size=224, pad2square=False):
+        # run for each subject
+        sub_dataset_list = []
+        for subject in tqdm(CAT_SHORT2LONG.values()):
+            sub_dataset = load_dataset(root, subject, split=split, cache_dir='~/.cache/datasets/')
+            sub_dataset_list.append(sub_dataset)
+
+        # merge all dataset
+        self.data = concatenate_datasets(sub_dataset_list)
         self.prompt = prompt
         self.transform = build_transform(is_train=False, input_size=input_size, pad2square=pad2square)
 
@@ -43,36 +63,38 @@ class ScienceQADataset(torch.utils.data.Dataset):
         return len(self.data)
 
     def __getitem__(self, idx):
-        data = self.data[idx]
-        image_path = data['image']
-        hint = data['hint'] if data['hint'] else None
-        question = data['question']
 
-        choices = data['choices']
-        answer = data['answer']
+        data = process_single_sample(self.data[idx])
+        data_id = data['id']
+        question = data['question'].replace('<image 1>', '')
+        question = '<image>\n' + question
+        image = data['image']
+        question_type = data['question_type']
+
+        choices = eval(data['options'])
+        answer = data['answer'] if 'answer' in data else None
+
         choice_list = []
-
         options = {}
-        multiple_choices = ['A', 'B', 'C', 'D', 'E']
+        multiple_choices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
         for i, c in enumerate(choices):
-            choice_list.append('{}. {}'.format(multiple_choices[i], c))
-            options[multiple_choices[i]] = c
+            choice_list.append('{}. {}'.format(multiple_choices[i], c.strip()))
+            options[multiple_choices[i]] = c.strip()
         choice_txt = '\n'.join(choice_list)
 
-        image = Image.open(image_path).convert('RGB')
         pixel_values = self.transform(image).unsqueeze(0)
 
-        if hint is not None:
-            question = hint + '\n' + question
-        question += '\n' + choice_txt
-        question += '\n' + self.prompt
+        if len(choice_txt) > 0:
+            question += '\n' + choice_txt
+        question += '\n' + self.prompt[question_type]
 
         return {
             'question': question,
             'pixel_values': pixel_values,
-            'answer': multiple_choices[answer],
-            'image_path': image_path,
-            'option': options
+            'answer': answer,
+            'option': options,
+            'data_id': data_id
         }
 
 
@@ -118,12 +140,16 @@ def post_process(pred, option):
 
 
 def evaluate_chat_model():
-    prompt = "Answer with the option's letter from the given choices directly."
+    prompt = {
+        'multiple-choice': "Answer with the option's letter from the given choices directly.",
+        'open': 'Answer the question using a single word or phrase.'
+    }
     random.seed(args.seed)
 
     for ds_name in args.datasets:
-        dataset = ScienceQADataset(
-            root=ds_collections[ds_name]['root'],
+        dataset = MMMUDataset(
+            root=ds_collections[ds_name]['root'],  # hf dataset path.
+            split=ds_collections[ds_name]['split'],
             prompt=prompt,
             input_size=image_size,
             pad2square=pad2square
@@ -139,7 +165,7 @@ def evaluate_chat_model():
         )
 
         outputs = []
-        for _, (pixel_values, questions, answers, image_paths, options) in tqdm(enumerate(dataloader)):
+        for _, (pixel_values, questions, answers, data_ids, options) in tqdm(enumerate(dataloader)):
             pixel_values = pixel_values.to(torch.bfloat16).cuda()
             generation_config = dict(
                 num_beams=args.num_beams,
@@ -156,14 +182,17 @@ def evaluate_chat_model():
                 question=questions[0],
                 generation_config=generation_config,
             )
-            preds = [post_process(pred, options[0])]
+            if len(options[0]) == 0:
+                preds = [pred]
+            else:
+                preds = [post_process(pred, options[0])]
 
-            for question, pred, answer, image_path in zip(questions, preds, answers, image_paths):
+            for question, pred, answer, data_id in zip(questions, preds, answers, data_ids):
                 outputs.append({
                     'question': question,
                     'answer': pred,
                     'gt_answers': answer,
-                    'image_path': image_path
+                    'data_id': data_id
                 })
 
         torch.distributed.barrier()
@@ -179,23 +208,20 @@ def evaluate_chat_model():
 
             print(f'Evaluating {ds_name} ...')
             time_prefix = time.strftime('%y%m%d%H%M%S', time.localtime())
-            results_file = f'{ds_name}_{time_prefix}.jsonl'
+            results_file = f'{ds_name}_{time_prefix}.json'
             output_path = os.path.join(args.out_dir, results_file)
-            with open(output_path, 'w') as f:
-                for output in merged_outputs:
-                    f.write(json.dumps(output) + '\n')
-            print('Results saved to {}'.format(output_path))
-            cnt = 0
+            outputs = {}
             for item in merged_outputs:
-                if item['answer'] == item['gt_answers']:
-                    cnt += 1
-            print(f'Acc@1: {cnt / len(merged_outputs)}')
+                outputs[item['data_id']] = item['answer']
+            with open(output_path, 'w') as f:
+                json.dump(outputs, f, indent=4)
+            print('Results saved to {}'.format(output_path))
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--checkpoint', type=str, default='')
-    parser.add_argument('--datasets', type=str, default='sqa_test')
+    parser.add_argument('--datasets', type=str, default='MMMU_dev')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
     parser.add_argument('--num-beams', type=int, default=5)

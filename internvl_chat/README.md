@@ -112,7 +112,7 @@ Coming Soon
 
 | model                                                                             | MME            | MMB<sub>dev/test</sub> | MMB-CN<sub>dev/test</sub> | POPE | MMMU | CMMMU | Tiny LVLM | LLaVA<sub>bench</sub> |
 | --------------------------------------------------------------------------------- | -------------- | ---------------------- | ------------------------- | ---- | ---- | ----- | --------- | --------------------- |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1.1-Chinese) | 1672.4 / 341.1 | 76.6 / 75.4            | 71.5 / 70.1               | 87.2 |      |       | 344.5     |                       |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1.1-Chinese) | 1672.4 / 341.1 | 76.6 / 75.4            | 71.5 / 70.1               | 87.2 |      |       | 344.5     | 76.3                  |
 
 **Visual Question Answering**
 
@@ -274,6 +274,10 @@ data
 │   ├── answers_gpt4.jsonl
 │   ├── ...
 │   └── images/
+├── mmmu
+│   ├── Accounting/
+│   ├── ...
+│   └── Sociology
 ```
 
 </details>
@@ -722,7 +726,7 @@ cd ../..
 <summary>Evaluation</summary>
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> scienceqa-test
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> scienceqa
 ```
 
 </details>
@@ -859,6 +863,29 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> pope
 </details>
 
 #### MMMU
+
+<details>
+<summary>Data Preparation</summary>
+
+The evaluation code will automatically download the dataset from hugging face.
+
+</details>
+
+<details>
+<summary>Evaluation</summary>
+
+```bash
+# dev set
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmmu-dev
+# val set
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmmu-val
+# test set
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmmu-test
+```
+
+Then, submit the results to the [evaluation server](https://eval.ai/web/challenges/challenge-page/2179/overview).
+
+</details>
 
 #### CMMMU
 

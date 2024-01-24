@@ -317,3 +317,34 @@ if [ ${DATASET} == "scienceqa" ]; then
       --master_port=63667 \
       eval/scienceqa/evaluate_scienceqa.py --checkpoint ${CHECKPOINT} --datasets sqa_test
 fi
+
+
+if [ ${DATASET} == "mmmu-dev" ]; then
+    torchrun \
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=8 \
+      --master_port=63667 \
+      eval/mmmu/evaluate_mmmu.py --checkpoint ${CHECKPOINT} --datasets MMMU_dev
+fi
+
+if [ ${DATASET} == "mmmu-val" ]; then
+    torchrun \
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=8 \
+      --master_port=63667 \
+      eval/mmmu/evaluate_mmmu.py --checkpoint ${CHECKPOINT} --datasets MMMU_validation
+fi
+
+if [ ${DATASET} == "mmmu-test" ]; then
+    torchrun \
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=8 \
+      --master_port=63667 \
+      eval/mmmu/evaluate_mmmu.py --checkpoint ${CHECKPOINT} --datasets MMMU_test
+fi
