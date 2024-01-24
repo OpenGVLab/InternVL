@@ -3,8 +3,6 @@ import os
 import re
 
 import torch
-from internvl.model.internvl_chat_with_qllama import (InternVLChatConfig,
-                                                      InternVLChatModel)
 from internvl.train.dataset import build_transform, expand2square
 from PIL import Image
 from tqdm import tqdm
@@ -28,32 +26,37 @@ def post_processing(response):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--template', type=str, default='vicuna_v1.1')
-    parser.add_argument('--model_path', type=str, default='')
-    parser.add_argument('--root', type=str,
-                        default='/mnt/petrelfs/wangwenhai/workspace/InternVL-release/internvl_chat/eval/mme/Your_Results')
-    parser.add_argument('--beam_num', type=int, default=5)
-    parser.add_argument('--top_k', type=int, default=50)
-    parser.add_argument('--top_p', type=float, default=0.9)
+    parser.add_argument('--checkpoint', type=str, default='')
+    parser.add_argument('--root', type=str, default='./Your_Results')
+    parser.add_argument('--beam-num', type=int, default=5)
+    parser.add_argument('--top-k', type=int, default=50)
+    parser.add_argument('--top-p', type=float, default=0.9)
     parser.add_argument('--sample', type=bool, default=True)
     parser.add_argument('--temperature', type=float, default=1.0)
 
     args = parser.parse_args()
 
     prompt = 'Answer the question using a single word or phrase.'
-    tokenizer = LlamaTokenizer.from_pretrained(args.model_path)
+    tokenizer = LlamaTokenizer.from_pretrained(args.checkpoint)
 
-    config = InternVLChatConfig.from_pretrained(args.model_path)
-    model = InternVLChatModel.from_pretrained(
-        args.model_path, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16, config=config).cuda().eval()
-    image_size = model.internvl.config.force_image_size or model.config.internvl_config.vision_config.image_size
-    pad2square = model.config.pad2square
-    print(f'[MME] force_image_size: {config.internvl_config.force_image_size}')
-    print(f'[MME] image_size: {image_size}')
-    print(f'[MME] pad2square: {pad2square}')
-    print(f'[MME] template: {args.template}')
+    if 'qllama' in args.checkpoint.lower():
+        from internvl.model.internvl_chat_with_qllama import InternVLChatModel
+        model = InternVLChatModel.from_pretrained(
+            args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
+        image_size = model.internvl.config.force_image_size or model.config.internvl_config.vision_config.image_size
+        pad2square = model.config.pad2square
+    else:
+        from internvl.model.internvl_chat import InternVLChatModel
+        model = InternVLChatModel.from_pretrained(
+            args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
+        image_size = model.config.force_image_size or model.config.vision_config.image_size
+        pad2square = model.config.pad2square
 
-    output = os.path.basename(args.model_path)
+    print(f'[test] image_size: {image_size}')
+    print(f'[test] pad2square: {pad2square}')
+    print(f'[test] template: {model.config.template}')
+
+    output = os.path.basename(args.checkpoint)
     os.makedirs(output, exist_ok=True)
 
     for filename in os.listdir(args.root):
@@ -71,14 +74,13 @@ if __name__ == '__main__':
                 do_sample=args.sample,
                 top_k=args.top_k,
                 top_p=args.top_p,
-                repetition_penalty=1.5,
+                # repetition_penalty=1.5,
                 length_penalty=1.0,
                 num_beams=args.beam_num,
                 max_new_tokens=20,
                 eos_token_id=tokenizer.eos_token_id,
             )
             response = model.chat(
-                template=args.template,
                 tokenizer=tokenizer,
                 pixel_values=pixel_values,
                 question=question,

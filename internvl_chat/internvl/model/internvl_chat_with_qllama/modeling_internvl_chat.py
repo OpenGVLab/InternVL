@@ -21,23 +21,6 @@ from .modeling_internvl import InternVLModel
 logger = logging.get_logger(__name__)
 
 
-@dataclass
-class InternVLChatModelOutput(ModelOutput):
-    """
-    Class defining the outputs of [`InternVLChatModel`].
-    """
-
-    loss: Optional[torch.FloatTensor] = None
-
-    def to_tuple(self) -> Tuple[Any]:
-        return tuple(
-            self[k]
-            if k not in ['loss']
-            else getattr(self, k).to_tuple()
-            for k in self.keys()
-        )
-
-
 class InternVLChatModel(PreTrainedModel):
     config_class = InternVLChatConfig
     main_input_name = 'pixel_values'
@@ -49,6 +32,7 @@ class InternVLChatModel(PreTrainedModel):
         image_size = config.internvl_config.force_image_size or config.internvl_config.vision_config.image_size
         patch_size = config.internvl_config.vision_config.patch_size
         self.select_layer = config.select_layer
+        self.template = config.template
         self.num_image_token = (image_size // patch_size) ** 2
         self.num_query_token = num_query_token
         print('num_image_token:', self.num_image_token)
@@ -114,7 +98,7 @@ class InternVLChatModel(PreTrainedModel):
             output_attentions: Optional[bool] = None,
             output_hidden_states: Optional[bool] = None,
             return_dict: Optional[bool] = None,
-    ) -> Union[Tuple, InternVLChatModelOutput]:
+    ) -> Union[Tuple, CausalLMOutputWithPast]:
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
 
         input_embeds = self.language_model.get_input_embeddings()(input_ids)
@@ -189,7 +173,7 @@ class InternVLChatModel(PreTrainedModel):
         qllama_embeds = self.mlp2(qllama_embeds)
         return vit_embeds, qllama_embeds
 
-    def chat(self, template, tokenizer, pixel_values, question, generation_config,
+    def chat(self, tokenizer, pixel_values, question, generation_config,
              IMG_START_TOKEN='<IMG>', IMG_END_TOKEN='</IMG>', IMG_CONTEXT_TOKEN='<IMG_CONTEXT>',
              QUERY_START_TOKEN='<QUERY>', QUERY_END_TOKEN='</QUERY>', QUERY_CONTEXT_TOKEN='<QUERY_CONTEXT>',
              internvl_tokenizer_path='/mnt/petrelfs/wangwenhai/workspace/InternVL-release/internvl_chat/data/llm/internvl_14b_224px'):
@@ -201,7 +185,7 @@ class InternVLChatModel(PreTrainedModel):
 
         from internvl.conversation import get_conv_template
 
-        template = get_conv_template(template)
+        template = get_conv_template(self.template)
         image_tokens = IMG_START_TOKEN + IMG_CONTEXT_TOKEN * self.num_image_token + IMG_END_TOKEN
         query_tokens = QUERY_START_TOKEN + QUERY_CONTEXT_TOKEN * self.num_query_token + QUERY_END_TOKEN
         template.append_message(template.roles[0], image_tokens + query_tokens + '\n' + question)

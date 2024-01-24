@@ -9,7 +9,6 @@ from functools import partial
 from typing import Optional
 
 import torch
-from internvl.model.internvl_chat_with_qllama import InternVLChatModel
 from internvl.train.dataset import build_transform
 from PIL import Image
 from tqdm import tqdm
@@ -217,8 +216,6 @@ class VQADataset(torch.utils.data.Dataset):
         if few_shot > 0:
             self.train = open(train).readlines()
         self.transform = build_transform(is_train=False, input_size=input_size, pad2square=pad2square)
-        print('input_size:', input_size)
-        print('pad2square:', pad2square)
 
     def __len__(self):
         return len(self.test)
@@ -297,12 +294,9 @@ def evaluate_chat_model():
     base_prompt = 'Answer the question using a single word or phrase.'
     vizwiz_prompt = "When the provided information is insufficient, respond with 'Unanswerable'. "
     ai2d_prompt = 'Please answer the question based on the options mentioned before.'
-    model = InternVLChatModel.from_pretrained(
-        args.checkpoint, torch_dtype=torch.bfloat16).cuda().eval()
-    tokenizer = LlamaTokenizer.from_pretrained(args.checkpoint)
-
     random.seed(args.seed)
     summaries = []
+
     for ds_name in args.datasets:
         if 'vizwiz' in ds_name:
             input_prompt = vizwiz_prompt + base_prompt
@@ -311,18 +305,13 @@ def evaluate_chat_model():
         else:
             input_prompt = base_prompt
 
-        if model.internvl.config.force_image_size is not None:
-            image_size = model.internvl.config.force_image_size
-        else:
-            image_size = model.internvl.config.vision_config.image_size
-
         dataset = VQADataset(
             train=ds_collections[ds_name]['train'],
             test=ds_collections[ds_name]['test'],
             prompt=input_prompt,
             few_shot=args.few_shot,
             input_size=image_size,
-            pad2square=model.config.pad2square
+            pad2square=pad2square
         )
         dataloader = torch.utils.data.DataLoader(
             dataset=dataset,
@@ -338,14 +327,14 @@ def evaluate_chat_model():
         for _, (pixel_values, questions, question_ids, annotations) in tqdm(enumerate(dataloader)):
             pixel_values = pixel_values.to(torch.bfloat16).cuda()
             generation_config = dict(
-                do_sample=False,
                 num_beams=args.num_beams,
                 max_new_tokens=ds_collections[ds_name]['max_new_tokens'],
                 min_new_tokens=1,
                 length_penalty=1,
+                do_sample=True if args.temperature > 0 else False,
+                temperature=args.temperature,
             )
             pred = model.chat(
-                template=args.template,
                 tokenizer=tokenizer,
                 pixel_values=pixel_values,
                 question=questions[0],
@@ -470,9 +459,9 @@ if __name__ == '__main__':
                         default='okvqa_val,textvqa_val_ocr,vizwiz_val,ai2diagram_test,gqa_testdev_llava')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
-    parser.add_argument('--num_beams', type=int, default=5)
-    parser.add_argument('--template', type=str, default='vicuna_v1.1')
-    parser.add_argument('--out_dir', type=str, default='results')
+    parser.add_argument('--num-beams', type=int, default=5)
+    parser.add_argument('--temperature', type=float, default=0.0)
+    parser.add_argument('--out-dir', type=str, default='results')
     parser.add_argument('--few-shot', type=int, default=0)
     parser.add_argument('--seed', type=int, default=0)
     args = parser.parse_args()
@@ -491,5 +480,24 @@ if __name__ == '__main__':
     )
 
     torch.cuda.set_device(int(os.getenv('LOCAL_RANK', 0)))
+
+    tokenizer = LlamaTokenizer.from_pretrained(args.checkpoint)
+
+    if 'qllama' in args.checkpoint.lower():
+        from internvl.model.internvl_chat_with_qllama import InternVLChatModel
+        model = InternVLChatModel.from_pretrained(
+            args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
+        image_size = model.internvl.config.force_image_size or model.config.internvl_config.vision_config.image_size
+        pad2square = model.config.pad2square
+    else:
+        from internvl.model.internvl_chat import InternVLChatModel
+        model = InternVLChatModel.from_pretrained(
+            args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
+        image_size = model.config.force_image_size or model.config.vision_config.image_size
+        pad2square = model.config.pad2square
+
+    print(f'[test] image_size: {image_size}')
+    print(f'[test] pad2square: {pad2square}')
+    print(f'[test] template: {model.config.template}')
 
     evaluate_chat_model()
