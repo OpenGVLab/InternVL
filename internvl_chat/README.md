@@ -862,7 +862,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> pope
 
 </details>
 
-#### MMMU
+#### [MMMU](MMMU_validation_240124181104.json)
 
 <details>
 <summary>Data Preparation</summary>
@@ -883,7 +883,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmmu-val
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmmu-test
 ```
 
-Then, submit the results to the [evaluation server](https://eval.ai/web/challenges/challenge-page/2179/overview).
+For the test set, submit the results to the [evaluation server](https://eval.ai/web/challenges/challenge-page/2179/overview).
 
 </details>
 

@@ -1,0 +1,3611 @@
+{
+    "validation_Accounting_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Accounting_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Accounting_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Accounting_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Accounting_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Accounting_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Accounting_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Accounting_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Accounting_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Accounting_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Accounting_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Accounting_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Accounting_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Accounting_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Accounting_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Accounting_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Accounting_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Accounting_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Accounting_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Accounting_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Accounting_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Accounting_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Accounting_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Accounting_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Accounting_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Accounting_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Accounting_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Accounting_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Accounting_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Accounting_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Agriculture_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Agriculture_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Agriculture_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Agriculture_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Agriculture_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Agriculture_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Agriculture_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Agriculture_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Agriculture_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Agriculture_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Agriculture_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Agriculture_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Agriculture_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Agriculture_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Agriculture_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Agriculture_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Agriculture_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Agriculture_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Agriculture_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Agriculture_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Agriculture_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Agriculture_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Agriculture_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Agriculture_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Agriculture_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Agriculture_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Agriculture_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Agriculture_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Agriculture_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Agriculture_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Architecture_and_Engineering_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Architecture_and_Engineering_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Architecture_and_Engineering_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Architecture_and_Engineering_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Architecture_and_Engineering_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Architecture_and_Engineering_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Architecture_and_Engineering_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Architecture_and_Engineering_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Architecture_and_Engineering_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Architecture_and_Engineering_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Architecture_and_Engineering_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Architecture_and_Engineering_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Architecture_and_Engineering_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Architecture_and_Engineering_14": {
+        "question_type": "short-answer",
+        "ground_truth": "1.06"
+    },
+    "validation_Architecture_and_Engineering_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Architecture_and_Engineering_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Architecture_and_Engineering_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Architecture_and_Engineering_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Architecture_and_Engineering_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Architecture_and_Engineering_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Architecture_and_Engineering_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Architecture_and_Engineering_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Architecture_and_Engineering_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Architecture_and_Engineering_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Architecture_and_Engineering_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Architecture_and_Engineering_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Architecture_and_Engineering_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Architecture_and_Engineering_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Architecture_and_Engineering_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Architecture_and_Engineering_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Art_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Art_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Art_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Art_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Art_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Art_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Art_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Art_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Art_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Art_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Art_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Art_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Art_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Art_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Art_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Art_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Art_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Art_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Art_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Art_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Art_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_Theory_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_Theory_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Art_Theory_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_Theory_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_Theory_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Art_Theory_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_Theory_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Art_Theory_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Art_Theory_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_Theory_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_Theory_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Art_Theory_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_Theory_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_Theory_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Art_Theory_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Art_Theory_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Art_Theory_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Art_Theory_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Art_Theory_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_Theory_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_Theory_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Art_Theory_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_Theory_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Art_Theory_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Art_Theory_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_Theory_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Art_Theory_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_Theory_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Art_Theory_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Art_Theory_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Basic_Medical_Science_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Basic_Medical_Science_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Basic_Medical_Science_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Basic_Medical_Science_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Basic_Medical_Science_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Basic_Medical_Science_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Basic_Medical_Science_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Basic_Medical_Science_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Basic_Medical_Science_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Basic_Medical_Science_10": {
+        "question_type": "short-answer",
+        "ground_truth": "C"
+    },
+    "validation_Basic_Medical_Science_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Basic_Medical_Science_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Basic_Medical_Science_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Basic_Medical_Science_14": {
+        "question_type": "short-answer",
+        "ground_truth": "Transformation"
+    },
+    "validation_Basic_Medical_Science_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Basic_Medical_Science_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Basic_Medical_Science_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Basic_Medical_Science_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Basic_Medical_Science_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Basic_Medical_Science_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Basic_Medical_Science_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Basic_Medical_Science_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Basic_Medical_Science_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Basic_Medical_Science_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Basic_Medical_Science_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Basic_Medical_Science_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Basic_Medical_Science_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Basic_Medical_Science_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Basic_Medical_Science_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Basic_Medical_Science_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Biology_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Biology_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Biology_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Biology_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Biology_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Biology_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Biology_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "I"
+    },
+    "validation_Biology_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Biology_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Biology_10": {
+        "question_type": "short-answer",
+        "ground_truth": "1/64"
+    },
+    "validation_Biology_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Biology_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Biology_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Biology_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Biology_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Biology_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Biology_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Biology_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Biology_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Biology_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Biology_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Biology_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Biology_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Biology_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Biology_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Biology_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Biology_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Biology_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Biology_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Biology_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "F"
+    },
+    "validation_Chemistry_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Chemistry_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Chemistry_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Chemistry_4": {
+        "question_type": "short-answer",
+        "ground_truth": "trans-1-Chloro-4-methylcyclohexane"
+    },
+    "validation_Chemistry_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Chemistry_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Chemistry_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Chemistry_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Chemistry_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Chemistry_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Chemistry_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Chemistry_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Chemistry_13": {
+        "question_type": "short-answer",
+        "ground_truth": "12.97"
+    },
+    "validation_Chemistry_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Chemistry_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Chemistry_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Chemistry_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Chemistry_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Chemistry_19": {
+        "question_type": "short-answer",
+        "ground_truth": "4"
+    },
+    "validation_Chemistry_20": {
+        "question_type": "short-answer",
+        "ground_truth": "5"
+    },
+    "validation_Chemistry_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Chemistry_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Chemistry_23": {
+        "question_type": "short-answer",
+        "ground_truth": "6.5"
+    },
+    "validation_Chemistry_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Chemistry_25": {
+        "question_type": "short-answer",
+        "ground_truth": "24.32"
+    },
+    "validation_Chemistry_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Chemistry_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Chemistry_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Chemistry_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Chemistry_30": {
+        "question_type": "short-answer",
+        "ground_truth": [
+            "$MgS$",
+            "MgS"
+        ]
+    },
+    "validation_Clinical_Medicine_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Clinical_Medicine_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Clinical_Medicine_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Clinical_Medicine_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Clinical_Medicine_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Clinical_Medicine_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Clinical_Medicine_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Clinical_Medicine_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Clinical_Medicine_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Clinical_Medicine_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Clinical_Medicine_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Clinical_Medicine_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Clinical_Medicine_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Clinical_Medicine_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Clinical_Medicine_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Clinical_Medicine_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Clinical_Medicine_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Clinical_Medicine_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Clinical_Medicine_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Clinical_Medicine_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Clinical_Medicine_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Clinical_Medicine_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Clinical_Medicine_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Clinical_Medicine_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Clinical_Medicine_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Clinical_Medicine_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Clinical_Medicine_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Clinical_Medicine_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Clinical_Medicine_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Clinical_Medicine_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Computer_Science_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Computer_Science_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Computer_Science_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Computer_Science_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Computer_Science_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Computer_Science_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Computer_Science_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Computer_Science_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Computer_Science_9": {
+        "question_type": "short-answer",
+        "ground_truth": "60"
+    },
+    "validation_Computer_Science_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Computer_Science_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Computer_Science_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Computer_Science_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Computer_Science_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Computer_Science_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Computer_Science_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Computer_Science_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Computer_Science_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Computer_Science_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Computer_Science_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Computer_Science_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Computer_Science_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Computer_Science_23": {
+        "question_type": "short-answer",
+        "ground_truth": "253.75"
+    },
+    "validation_Computer_Science_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Computer_Science_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Computer_Science_26": {
+        "question_type": "short-answer",
+        "ground_truth": "251"
+    },
+    "validation_Computer_Science_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Computer_Science_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Computer_Science_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Computer_Science_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Design_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Design_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Design_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Design_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Design_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Design_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Design_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Design_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Design_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Design_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Design_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Design_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Design_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Design_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Design_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Design_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Design_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Design_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Design_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Design_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Design_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Design_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Design_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Design_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Design_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Design_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Design_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Design_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Design_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Design_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Diagnostics_and_Laboratory_Medicine_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Economics_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Economics_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Economics_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Economics_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Economics_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Economics_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Economics_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Economics_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Economics_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Economics_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Economics_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Economics_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Economics_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Economics_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Economics_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Economics_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Economics_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Economics_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Economics_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Economics_20": {
+        "question_type": "short-answer",
+        "ground_truth": "8"
+    },
+    "validation_Economics_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Economics_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Economics_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Economics_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Economics_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Economics_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Economics_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Economics_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Economics_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Economics_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Electronics_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Electronics_2": {
+        "question_type": "short-answer",
+        "ground_truth": "2.83"
+    },
+    "validation_Electronics_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Electronics_4": {
+        "question_type": "short-answer",
+        "ground_truth": "8.4"
+    },
+    "validation_Electronics_5": {
+        "question_type": "short-answer",
+        "ground_truth": "62.6"
+    },
+    "validation_Electronics_6": {
+        "question_type": "short-answer",
+        "ground_truth": "71.6"
+    },
+    "validation_Electronics_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Electronics_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Electronics_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Electronics_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Electronics_11": {
+        "question_type": "short-answer",
+        "ground_truth": "0.3"
+    },
+    "validation_Electronics_12": {
+        "question_type": "short-answer",
+        "ground_truth": "10"
+    },
+    "validation_Electronics_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Electronics_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Electronics_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Electronics_16": {
+        "question_type": "short-answer",
+        "ground_truth": "20"
+    },
+    "validation_Electronics_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Electronics_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Electronics_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Electronics_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Electronics_21": {
+        "question_type": "short-answer",
+        "ground_truth": "0.9965"
+    },
+    "validation_Electronics_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Electronics_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Electronics_24": {
+        "question_type": "short-answer",
+        "ground_truth": "551"
+    },
+    "validation_Electronics_25": {
+        "question_type": "short-answer",
+        "ground_truth": "50"
+    },
+    "validation_Electronics_26": {
+        "question_type": "short-answer",
+        "ground_truth": "6.333"
+    },
+    "validation_Electronics_27": {
+        "question_type": "short-answer",
+        "ground_truth": "-120"
+    },
+    "validation_Electronics_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Electronics_29": {
+        "question_type": "short-answer",
+        "ground_truth": "30"
+    },
+    "validation_Electronics_30": {
+        "question_type": "short-answer",
+        "ground_truth": "-141"
+    },
+    "validation_Energy_and_Power_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Energy_and_Power_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Energy_and_Power_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Energy_and_Power_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Energy_and_Power_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Energy_and_Power_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Energy_and_Power_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Energy_and_Power_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Energy_and_Power_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Energy_and_Power_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Energy_and_Power_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Energy_and_Power_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Energy_and_Power_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Energy_and_Power_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Energy_and_Power_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Energy_and_Power_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Energy_and_Power_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Energy_and_Power_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Energy_and_Power_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Energy_and_Power_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Energy_and_Power_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Energy_and_Power_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Energy_and_Power_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Energy_and_Power_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Energy_and_Power_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Energy_and_Power_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Energy_and_Power_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Energy_and_Power_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Energy_and_Power_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Energy_and_Power_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Finance_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Finance_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Finance_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Finance_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Finance_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Finance_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Finance_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Finance_8": {
+        "question_type": "short-answer",
+        "ground_truth": "360"
+    },
+    "validation_Finance_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Finance_10": {
+        "question_type": "short-answer",
+        "ground_truth": "2000000"
+    },
+    "validation_Finance_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Finance_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Finance_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Finance_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Finance_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Finance_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Finance_17": {
+        "question_type": "short-answer",
+        "ground_truth": "1000"
+    },
+    "validation_Finance_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Finance_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Finance_20": {
+        "question_type": "short-answer",
+        "ground_truth": "7243000"
+    },
+    "validation_Finance_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Finance_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Finance_23": {
+        "question_type": "short-answer",
+        "ground_truth": "527.89"
+    },
+    "validation_Finance_24": {
+        "question_type": "short-answer",
+        "ground_truth": "30.0"
+    },
+    "validation_Finance_25": {
+        "question_type": "short-answer",
+        "ground_truth": "0.286"
+    },
+    "validation_Finance_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Finance_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Finance_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Finance_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Finance_30": {
+        "question_type": "short-answer",
+        "ground_truth": "1249"
+    },
+    "validation_Geography_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Geography_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Geography_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Geography_4": {
+        "question_type": "short-answer",
+        "ground_truth": [
+            "Tampa",
+            "Florida"
+        ]
+    },
+    "validation_Geography_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Geography_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Geography_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Geography_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Geography_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Geography_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Geography_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Geography_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Geography_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Geography_14": {
+        "question_type": "short-answer",
+        "ground_truth": "8200"
+    },
+    "validation_Geography_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Geography_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Geography_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Geography_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Geography_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Geography_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Geography_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Geography_22": {
+        "question_type": "short-answer",
+        "ground_truth": "3"
+    },
+    "validation_Geography_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Geography_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Geography_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Geography_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Geography_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Geography_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Geography_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Geography_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_History_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_History_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_History_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_History_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_History_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_History_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_History_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_History_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_History_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_History_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_History_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_History_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_History_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_History_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_History_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_History_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_History_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_History_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_History_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_History_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_History_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_History_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_History_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_History_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_History_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_History_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_History_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_History_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_History_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_History_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Literature_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Literature_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Literature_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Literature_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Literature_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Literature_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Literature_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Literature_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Literature_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Literature_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Literature_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Literature_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Literature_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Literature_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Literature_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Literature_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Literature_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Literature_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Literature_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Literature_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Literature_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Literature_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Literature_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Literature_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Literature_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Literature_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Literature_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Literature_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Literature_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Literature_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Manage_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Manage_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Manage_3": {
+        "question_type": "short-answer",
+        "ground_truth": "242110.62"
+    },
+    "validation_Manage_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Manage_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Manage_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Manage_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Manage_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Manage_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Manage_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Manage_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Manage_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Manage_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Manage_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Manage_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Manage_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Manage_17": {
+        "question_type": "short-answer",
+        "ground_truth": "65"
+    },
+    "validation_Manage_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Manage_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Manage_20": {
+        "question_type": "short-answer",
+        "ground_truth": "2960"
+    },
+    "validation_Manage_21": {
+        "question_type": "short-answer",
+        "ground_truth": "9.20"
+    },
+    "validation_Manage_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Manage_23": {
+        "question_type": "short-answer",
+        "ground_truth": "1464"
+    },
+    "validation_Manage_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Manage_25": {
+        "question_type": "short-answer",
+        "ground_truth": "0.963"
+    },
+    "validation_Manage_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Manage_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Manage_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Manage_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Manage_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Marketing_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Marketing_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Marketing_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Marketing_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Marketing_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Marketing_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Marketing_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Marketing_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Marketing_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Marketing_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Marketing_11": {
+        "question_type": "short-answer",
+        "ground_truth": "0.10"
+    },
+    "validation_Marketing_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Marketing_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Marketing_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Marketing_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Marketing_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Marketing_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Marketing_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Marketing_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Marketing_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Marketing_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Marketing_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Marketing_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Marketing_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Marketing_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Marketing_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Marketing_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Marketing_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Marketing_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Marketing_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Materials_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Materials_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Materials_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Materials_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Materials_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Materials_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Materials_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Materials_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Materials_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Materials_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Materials_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Materials_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Materials_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Materials_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Materials_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Materials_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Materials_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Materials_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Materials_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Materials_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Materials_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Materials_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Materials_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Materials_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "F"
+    },
+    "validation_Materials_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Materials_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Materials_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Materials_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Materials_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Materials_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Math_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Math_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Math_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Math_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Math_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Math_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Math_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Math_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Math_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Math_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Math_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Math_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Math_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Math_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Math_15": {
+        "question_type": "short-answer",
+        "ground_truth": [
+            "24/7",
+            "3.429"
+        ]
+    },
+    "validation_Math_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Math_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Math_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Math_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Math_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Math_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Math_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Math_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Math_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Math_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Math_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Math_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Math_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Math_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Math_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Mechanical_Engineering_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Mechanical_Engineering_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Mechanical_Engineering_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Mechanical_Engineering_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Mechanical_Engineering_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Mechanical_Engineering_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Mechanical_Engineering_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Mechanical_Engineering_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Mechanical_Engineering_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Mechanical_Engineering_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Mechanical_Engineering_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Mechanical_Engineering_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Mechanical_Engineering_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Mechanical_Engineering_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Mechanical_Engineering_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Mechanical_Engineering_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Mechanical_Engineering_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Mechanical_Engineering_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Mechanical_Engineering_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Mechanical_Engineering_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Mechanical_Engineering_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Mechanical_Engineering_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Mechanical_Engineering_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Mechanical_Engineering_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Mechanical_Engineering_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Mechanical_Engineering_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Mechanical_Engineering_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Mechanical_Engineering_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Mechanical_Engineering_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Mechanical_Engineering_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Music_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Music_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Music_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Music_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Music_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Music_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Music_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Music_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Music_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Music_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Music_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Music_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Music_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Music_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Music_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Music_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Music_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Music_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Music_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Music_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Music_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Music_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Music_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Music_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Music_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Music_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Music_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Music_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Music_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Music_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Pharmacy_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Pharmacy_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Pharmacy_3": {
+        "question_type": "short-answer",
+        "ground_truth": "2"
+    },
+    "validation_Pharmacy_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Pharmacy_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Pharmacy_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Pharmacy_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Pharmacy_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Pharmacy_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Pharmacy_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Pharmacy_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Pharmacy_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Pharmacy_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Pharmacy_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Pharmacy_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Pharmacy_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Pharmacy_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Pharmacy_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Pharmacy_19": {
+        "question_type": "short-answer",
+        "ground_truth": "B"
+    },
+    "validation_Pharmacy_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Pharmacy_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Pharmacy_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Pharmacy_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Pharmacy_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Pharmacy_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Pharmacy_26": {
+        "question_type": "short-answer",
+        "ground_truth": "A"
+    },
+    "validation_Pharmacy_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Pharmacy_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Pharmacy_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Pharmacy_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Physics_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Physics_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Physics_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Physics_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Physics_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Physics_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Physics_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Physics_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Physics_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Physics_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Physics_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Physics_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Physics_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Physics_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Physics_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Physics_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Physics_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Physics_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Physics_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Physics_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Physics_21": {
+        "question_type": "short-answer",
+        "ground_truth": "A"
+    },
+    "validation_Physics_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Physics_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Physics_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Physics_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Physics_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Physics_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Physics_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Physics_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Physics_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Psychology_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Psychology_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Psychology_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Psychology_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Psychology_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Psychology_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Psychology_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Psychology_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Psychology_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Psychology_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Psychology_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Psychology_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Psychology_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Psychology_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Psychology_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Psychology_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Psychology_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Psychology_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Psychology_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Psychology_20": {
+        "question_type": "short-answer",
+        "ground_truth": "embryonic"
+    },
+    "validation_Psychology_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Psychology_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Psychology_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Psychology_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Psychology_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Psychology_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Psychology_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Psychology_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Psychology_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Psychology_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    },
+    "validation_Public_Health_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Public_Health_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Public_Health_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Public_Health_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Public_Health_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Public_Health_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Public_Health_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Public_Health_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Public_Health_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Public_Health_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Public_Health_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Public_Health_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Public_Health_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Public_Health_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Public_Health_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Public_Health_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Public_Health_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Public_Health_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Public_Health_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Public_Health_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Public_Health_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Public_Health_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Public_Health_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Public_Health_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Public_Health_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Public_Health_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Public_Health_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Public_Health_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Public_Health_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Public_Health_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Sociology_1": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Sociology_2": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Sociology_3": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Sociology_4": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Sociology_5": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Sociology_6": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Sociology_7": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Sociology_8": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Sociology_9": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Sociology_10": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Sociology_11": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Sociology_12": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Sociology_13": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Sociology_14": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Sociology_15": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Sociology_16": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Sociology_17": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Sociology_18": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Sociology_19": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Sociology_20": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Sociology_21": {
+        "question_type": "multiple-choice",
+        "ground_truth": "C"
+    },
+    "validation_Sociology_22": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Sociology_23": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Sociology_24": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Sociology_25": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Sociology_26": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Sociology_27": {
+        "question_type": "multiple-choice",
+        "ground_truth": "D"
+    },
+    "validation_Sociology_28": {
+        "question_type": "multiple-choice",
+        "ground_truth": "A"
+    },
+    "validation_Sociology_29": {
+        "question_type": "multiple-choice",
+        "ground_truth": "B"
+    },
+    "validation_Sociology_30": {
+        "question_type": "multiple-choice",
+        "ground_truth": "E"
+    }
+}

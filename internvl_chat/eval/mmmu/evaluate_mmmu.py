@@ -216,6 +216,13 @@ def evaluate_chat_model():
             with open(output_path, 'w') as f:
                 json.dump(outputs, f, indent=4)
             print('Results saved to {}'.format(output_path))
+            if ds_collections[ds_name]['split'] == 'validation':
+                print('Evaluating ...')
+                cmd = f'python eval/mmmu/main_eval_only.py ' \
+                      f'--output_path {output_path} ' \
+                      f'--answer_path eval/mmmu/answer_dict_val.json'
+                print(cmd)
+                os.system(cmd)
 
 
 if __name__ == '__main__':
