@@ -1,22 +1,56 @@
 import argparse
+import base64
 import itertools
 import json
 import os
 import random
 import time
 from functools import partial
+from io import BytesIO
 
+import pandas as pd
 import torch
 from internvl.train.dataset import build_transform
 from PIL import Image
+from torch.utils.data import Dataset
 from tqdm import tqdm
 from transformers import LlamaTokenizer
 
 ds_collections = {
-    'updated_datasets': {
-        'root': 'data/tiny_lvlm/updated_datasets/',
-        'max_new_tokens': 30,
+    'mmbench_dev_20230712': {
+        'root': 'data/mmbench/mmbench_dev_20230712.tsv',
+        'max_new_tokens': 100,
         'min_new_tokens': 1,
+        'type': 'dev',
+        'language': 'en'
+    },
+    'mmbench_dev_cn_20231003': {
+        'root': 'data/mmbench/mmbench_dev_cn_20231003.tsv',
+        'max_new_tokens': 100,
+        'min_new_tokens': 1,
+        'type': 'dev',
+        'language': 'cn'
+    },
+    'mmbench_dev_en_20231003': {
+        'root': 'data/mmbench/mmbench_dev_en_20231003.tsv',
+        'max_new_tokens': 100,
+        'min_new_tokens': 1,
+        'type': 'dev',
+        'language': 'en'
+    },
+    'mmbench_test_cn_20231003': {
+        'root': 'data/mmbench/mmbench_test_cn_20231003.tsv',
+        'max_new_tokens': 100,
+        'min_new_tokens': 1,
+        'type': 'test',
+        'language': 'cn'
+    },
+    'mmbench_test_en_20231003': {
+        'root': 'data/mmbench/mmbench_test_en_20231003.tsv',
+        'max_new_tokens': 100,
+        'min_new_tokens': 1,
+        'type': 'test',
+        'language': 'en'
     }
 }
 
@@ -24,47 +58,64 @@ ds_collections = {
 def collate_fn(batches, tokenizer):
     pixel_values = torch.cat([_['pixel_values'] for _ in batches], dim=0)
     questions = [_['question'] for _ in batches]
-    annotations = [_['annotation'] for _ in batches]
-    image_paths = [_['image_path'] for _ in batches]
+    answers = [_['answer'] for _ in batches]
+    indexes = [_['index'] for _ in batches]
+    options = [_['option'] for _ in batches]
+    return pixel_values, questions, answers, indexes, options
 
-    return pixel_values, questions, annotations, image_paths
 
+class MMBenchDataset(torch.utils.data.Dataset):
 
-class VQADataset(torch.utils.data.Dataset):
-
-    def __init__(self, root, prompt, input_size=224, pad2square=False):
-        dirnames = [os.path.join(root, item) for item in os.listdir(root)]
-        dirnames = [item for item in dirnames if os.path.exists(os.path.join(item, 'dataset.json'))]
-        sorted(dirnames)
-
-        self.roots = []
-        self.items = []
-        for item in dirnames:
-            data_path = os.path.join(item, 'dataset.json')
-            data = json.loads(open(data_path).read())
-            for data_line in data:
-                self.roots.append(item)
-                self.items.append(data_line)
+    def __init__(self, root, prompt, language, input_size=224, pad2square=False):
+        self.df = pd.read_csv(root, sep='\t')
         self.prompt = prompt
+        self.language = language
         self.transform = build_transform(is_train=False, input_size=input_size, pad2square=pad2square)
 
     def __len__(self):
-        return len(self.items)
+        return len(self.df)
 
     def __getitem__(self, idx):
-        root = self.roots[idx]
-        item = self.items[idx]
-        image_path, question, annotation = item['image_path'], item['question'], item['gt_answers']
-        image_path = os.path.join(root, image_path)
-        image = Image.open(image_path).convert('RGB')
+        index = self.df.iloc[idx]['index']
+        image = self.df.iloc[idx]['image']
+        question = self.df.iloc[idx]['question']
+        answer = self.df.iloc[idx]['answer'] if 'answer' in self.df.iloc[0].keys() else None
+        # catetory = self.df.iloc[idx]['category']
+        # l2_catetory = self.df.iloc[idx]['l2-category']
+
+        image = Image.open(BytesIO(base64.b64decode(image))).convert('RGB')
         pixel_values = self.transform(image).unsqueeze(0)
-        question = question + ' ' + self.prompt
+
+        option_candidate = ['A', 'B', 'C', 'D', 'E']
+        options = {
+            cand: self.load_from_df(idx, cand)
+            for cand in option_candidate
+            if self.load_from_df(idx, cand) is not None
+        }
+
+        hint = self.load_from_df(idx, 'hint')
+        if hint is not None:
+            question = hint + '\n' + question
+        for key, item in options.items():
+            question += f'\n{key}. {item}'
+        if self.language == 'cn':
+            question = question + '\n' + self.prompt['cn']
+        else:
+            question = question + '\n' + self.prompt['en']
+
         return {
             'question': question,
             'pixel_values': pixel_values,
-            'annotation': annotation,
-            'image_path': image_path,
+            'answer': answer,
+            'index': index,
+            'option': options
         }
+
+    def load_from_df(self, idx, key):
+        if key in self.df.iloc[idx] and not pd.isna(self.df.iloc[idx][key]):
+            return self.df.iloc[idx][key]
+        else:
+            return None
 
 
 class InferenceSampler(torch.utils.data.sampler.Sampler):
@@ -93,14 +144,29 @@ class InferenceSampler(torch.utils.data.sampler.Sampler):
         return len(self._local_indices)
 
 
+def post_process(pred, option):
+    pred = pred.strip()
+    option_candidate = list(option.keys())
+    if len(pred) == 1:
+        return pred
+    elif len(pred) != 1 and pred[0] in option_candidate:
+        return pred[0]
+    elif len(pred) != 1 and pred[0] not in option_candidate:
+        for k, v in option.items():
+            if v in pred:
+                return k
+
+    return random.choice(option_candidate)
+
+
 def evaluate_chat_model():
-    prompt = 'Answer the question using a single word or phrase.'
     random.seed(args.seed)
 
     for ds_name in args.datasets:
-        dataset = VQADataset(
+        dataset = MMBenchDataset(
             root=ds_collections[ds_name]['root'],
             prompt=prompt,
+            language=ds_collections[ds_name]['language'],
             input_size=image_size,
             pad2square=pad2square
         )
@@ -115,13 +181,14 @@ def evaluate_chat_model():
         )
 
         outputs = []
-        for _, (pixel_values, questions, annotations, image_paths) in tqdm(enumerate(dataloader)):
+        for _, (pixel_values, questions, answers, indexes, options) in tqdm(enumerate(dataloader)):
             pixel_values = pixel_values.to(torch.bfloat16).cuda()
             generation_config = dict(
                 num_beams=args.num_beams,
                 max_new_tokens=ds_collections[ds_name]['max_new_tokens'],
                 min_new_tokens=ds_collections[ds_name]['min_new_tokens'],
                 length_penalty=1,
+                repetition_penalty=1.2,
                 do_sample=True if args.temperature > 0 else False,
                 temperature=args.temperature,
             )
@@ -131,16 +198,14 @@ def evaluate_chat_model():
                 question=questions[0],
                 generation_config=generation_config,
             )
-            answers = [pred]
+            preds = [post_process(pred, options[0])]
 
-            for question, answer, annotation, image_path in zip(questions, answers, annotations, image_paths):
-                task_type = image_path.split('/')[-2]
+            for question, pred, answer, index in zip(questions, preds, answers, indexes):
                 outputs.append({
                     'question': question,
-                    'answer': answer,
-                    'gt_answers': annotation,
-                    'image_path': image_path,
-                    'task_type': task_type
+                    'answer': pred,
+                    'gt_answers': answer,
+                    'index': int(index)
                 })
 
         torch.distributed.barrier()
@@ -153,23 +218,26 @@ def evaluate_chat_model():
         merged_outputs = [_ for _ in itertools.chain.from_iterable(merged_outputs)]
 
         if torch.distributed.get_rank() == 0:
+
             print(f'Evaluating {ds_name} ...')
             time_prefix = time.strftime('%y%m%d%H%M%S', time.localtime())
-            results_file = f'{ds_name}_{time_prefix}.json'
-            results_file = os.path.join(args.out_dir, results_file)
-            json.dump(merged_outputs, open(results_file, 'w'))
-            print('Results saved to {}'.format(results_file))
-            cmd = 'python eval/tiny_lvlm/calculate_score.py ' \
-                  '--file-path ' + results_file
-            print(cmd)
-            os.system(cmd)
+            results_file = f'{ds_name}_{time_prefix}.xlsx'
+            output_path = os.path.join(args.out_dir, results_file)
+            df = pd.read_table(ds_collections[ds_name]['root'])
+            cur_df = df.copy()
+            cur_df = cur_df.drop(columns=['hint', 'category', 'source', 'image', 'comment', 'l2-category'])
+            cur_df.insert(6, 'prediction', None)
+            for item in merged_outputs:
+                cur_df.loc[df['index'] == item['index'], 'prediction'] = item['answer']
+
+            cur_df.to_excel(output_path, index=False, engine='openpyxl')
+            print('Results saved to {}'.format(output_path))
 
 
 if __name__ == '__main__':
-
     parser = argparse.ArgumentParser()
     parser.add_argument('--checkpoint', type=str, default='')
-    parser.add_argument('--datasets', type=str, default='updated_datasets')
+    parser.add_argument('--datasets', type=str, default='mmbench_dev_20230712')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
     parser.add_argument('--num-beams', type=int, default=5)
@@ -212,4 +280,8 @@ if __name__ == '__main__':
     print(f'[test] pad2square: {pad2square}')
     print(f'[test] template: {model.config.template}')
 
+    prompt = {
+        'en': "Answer with the option's letter from the given choices directly.",
+        'cn': '请直接回答选项字母。'
+    }
     evaluate_chat_model()

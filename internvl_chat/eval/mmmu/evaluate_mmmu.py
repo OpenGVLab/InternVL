@@ -7,63 +7,94 @@ import time
 from functools import partial
 
 import torch
+from data_utils import CAT_SHORT2LONG, process_single_sample
+from datasets import concatenate_datasets, load_dataset
 from internvl.train.dataset import build_transform
-from PIL import Image
+from torch.utils.data import Dataset
 from tqdm import tqdm
 from transformers import LlamaTokenizer
 
 ds_collections = {
-    'updated_datasets': {
-        'root': 'data/tiny_lvlm/updated_datasets/',
-        'max_new_tokens': 30,
+    'MMMU_validation': {
+        'root': 'MMMU/MMMU',
+        'max_new_tokens': 100,
         'min_new_tokens': 1,
-    }
+        'split': 'validation'
+    },
+    'MMMU_test': {
+        'root': 'MMMU/MMMU',
+        'max_new_tokens': 100,
+        'min_new_tokens': 1,
+        'split': 'test'
+    },
+    'MMMU_dev': {
+        'root': 'MMMU/MMMU',
+        'max_new_tokens': 100,
+        'min_new_tokens': 1,
+        'split': 'dev'
+    },
 }
 
 
 def collate_fn(batches, tokenizer):
     pixel_values = torch.cat([_['pixel_values'] for _ in batches], dim=0)
     questions = [_['question'] for _ in batches]
-    annotations = [_['annotation'] for _ in batches]
-    image_paths = [_['image_path'] for _ in batches]
+    answers = [_['answer'] for _ in batches]
+    data_ids = [_['data_id'] for _ in batches]
+    options = [_['option'] for _ in batches]
+    return pixel_values, questions, answers, data_ids, options
 
-    return pixel_values, questions, annotations, image_paths
 
+class MMMUDataset(torch.utils.data.Dataset):
 
-class VQADataset(torch.utils.data.Dataset):
+    def __init__(self, root, split, prompt, input_size=224, pad2square=False):
+        # run for each subject
+        sub_dataset_list = []
+        for subject in tqdm(CAT_SHORT2LONG.values()):
+            sub_dataset = load_dataset(root, subject, split=split, cache_dir='~/.cache/datasets/')
+            sub_dataset_list.append(sub_dataset)
 
-    def __init__(self, root, prompt, input_size=224, pad2square=False):
-        dirnames = [os.path.join(root, item) for item in os.listdir(root)]
-        dirnames = [item for item in dirnames if os.path.exists(os.path.join(item, 'dataset.json'))]
-        sorted(dirnames)
-
-        self.roots = []
-        self.items = []
-        for item in dirnames:
-            data_path = os.path.join(item, 'dataset.json')
-            data = json.loads(open(data_path).read())
-            for data_line in data:
-                self.roots.append(item)
-                self.items.append(data_line)
+        # merge all dataset
+        self.data = concatenate_datasets(sub_dataset_list)
         self.prompt = prompt
         self.transform = build_transform(is_train=False, input_size=input_size, pad2square=pad2square)
 
     def __len__(self):
-        return len(self.items)
+        return len(self.data)
 
     def __getitem__(self, idx):
-        root = self.roots[idx]
-        item = self.items[idx]
-        image_path, question, annotation = item['image_path'], item['question'], item['gt_answers']
-        image_path = os.path.join(root, image_path)
-        image = Image.open(image_path).convert('RGB')
+
+        data = process_single_sample(self.data[idx])
+        data_id = data['id']
+        question = data['question'].replace('<image 1>', '')
+        question = '<image>\n' + question
+        image = data['image']
+        question_type = data['question_type']
+
+        choices = eval(data['options'])
+        answer = data['answer'] if 'answer' in data else None
+
+        choice_list = []
+        options = {}
+        multiple_choices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+        for i, c in enumerate(choices):
+            choice_list.append('{}. {}'.format(multiple_choices[i], c.strip()))
+            options[multiple_choices[i]] = c.strip()
+        choice_txt = '\n'.join(choice_list)
+
         pixel_values = self.transform(image).unsqueeze(0)
-        question = question + ' ' + self.prompt
+
+        if len(choice_txt) > 0:
+            question += '\n' + choice_txt
+        question += '\n' + self.prompt[question_type]
+
         return {
             'question': question,
             'pixel_values': pixel_values,
-            'annotation': annotation,
-            'image_path': image_path,
+            'answer': answer,
+            'option': options,
+            'data_id': data_id
         }
 
 
@@ -93,13 +124,32 @@ class InferenceSampler(torch.utils.data.sampler.Sampler):
         return len(self._local_indices)
 
 
+def post_process(pred, option):
+    pred = pred.strip()
+    option_candidate = list(option.keys())
+    if len(pred) == 1:
+        return pred
+    elif len(pred) != 1 and pred[0] in option_candidate:
+        return pred[0]
+    elif len(pred) != 1 and pred[0] not in option_candidate:
+        for k, v in option.items():
+            if v in pred:
+                return k
+
+    return random.choice(option_candidate)
+
+
 def evaluate_chat_model():
-    prompt = 'Answer the question using a single word or phrase.'
+    prompt = {
+        'multiple-choice': "Answer with the option's letter from the given choices directly.",
+        'open': 'Answer the question using a single word or phrase.'
+    }
     random.seed(args.seed)
 
     for ds_name in args.datasets:
-        dataset = VQADataset(
-            root=ds_collections[ds_name]['root'],
+        dataset = MMMUDataset(
+            root=ds_collections[ds_name]['root'],  # hf dataset path.
+            split=ds_collections[ds_name]['split'],
             prompt=prompt,
             input_size=image_size,
             pad2square=pad2square
@@ -115,13 +165,14 @@ def evaluate_chat_model():
         )
 
         outputs = []
-        for _, (pixel_values, questions, annotations, image_paths) in tqdm(enumerate(dataloader)):
+        for _, (pixel_values, questions, answers, data_ids, options) in tqdm(enumerate(dataloader)):
             pixel_values = pixel_values.to(torch.bfloat16).cuda()
             generation_config = dict(
                 num_beams=args.num_beams,
                 max_new_tokens=ds_collections[ds_name]['max_new_tokens'],
                 min_new_tokens=ds_collections[ds_name]['min_new_tokens'],
                 length_penalty=1,
+                # repetition_penalty=1.2,
                 do_sample=True if args.temperature > 0 else False,
                 temperature=args.temperature,
             )
@@ -131,16 +182,17 @@ def evaluate_chat_model():
                 question=questions[0],
                 generation_config=generation_config,
             )
-            answers = [pred]
+            if len(options[0]) == 0:
+                preds = [pred]
+            else:
+                preds = [post_process(pred, options[0])]
 
-            for question, answer, annotation, image_path in zip(questions, answers, annotations, image_paths):
-                task_type = image_path.split('/')[-2]
+            for question, pred, answer, data_id in zip(questions, preds, answers, data_ids):
                 outputs.append({
                     'question': question,
-                    'answer': answer,
-                    'gt_answers': annotation,
-                    'image_path': image_path,
-                    'task_type': task_type
+                    'answer': pred,
+                    'gt_answers': answer,
+                    'data_id': data_id
                 })
 
         torch.distributed.barrier()
@@ -153,23 +205,30 @@ def evaluate_chat_model():
         merged_outputs = [_ for _ in itertools.chain.from_iterable(merged_outputs)]
 
         if torch.distributed.get_rank() == 0:
+
             print(f'Evaluating {ds_name} ...')
             time_prefix = time.strftime('%y%m%d%H%M%S', time.localtime())
             results_file = f'{ds_name}_{time_prefix}.json'
-            results_file = os.path.join(args.out_dir, results_file)
-            json.dump(merged_outputs, open(results_file, 'w'))
-            print('Results saved to {}'.format(results_file))
-            cmd = 'python eval/tiny_lvlm/calculate_score.py ' \
-                  '--file-path ' + results_file
-            print(cmd)
-            os.system(cmd)
+            output_path = os.path.join(args.out_dir, results_file)
+            outputs = {}
+            for item in merged_outputs:
+                outputs[item['data_id']] = item['answer']
+            with open(output_path, 'w') as f:
+                json.dump(outputs, f, indent=4)
+            print('Results saved to {}'.format(output_path))
+            if ds_collections[ds_name]['split'] == 'validation':
+                print('Evaluating ...')
+                cmd = f'python eval/mmmu/main_eval_only.py ' \
+                      f'--output_path {output_path} ' \
+                      f'--answer_path eval/mmmu/answer_dict_val.json'
+                print(cmd)
+                os.system(cmd)
 
 
 if __name__ == '__main__':
-
     parser = argparse.ArgumentParser()
     parser.add_argument('--checkpoint', type=str, default='')
-    parser.add_argument('--datasets', type=str, default='updated_datasets')
+    parser.add_argument('--datasets', type=str, default='MMMU_dev')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
     parser.add_argument('--num-beams', type=int, default=5)

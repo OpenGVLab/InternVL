@@ -29,6 +29,7 @@ class SeparatorStyle(IntEnum):
     ROBIN = auto()
     FALCON_CHAT = auto()
     CHATGLM3 = auto()
+    INTERNVL_ZH = auto()
 
 
 @dataclasses.dataclass
@@ -223,6 +224,15 @@ class Conversation:
                 else:
                     ret += role + ':'
 
+            return ret
+        elif self.sep_style == SeparatorStyle.INTERNVL_ZH:
+            seps = [self.sep, self.sep2]
+            ret = self.system_message + seps[0]
+            for i, (role, message) in enumerate(self.messages):
+                if message:
+                    ret += role + ': ' + message + seps[i % 2]
+                else:
+                    ret += role + ':'
             return ret
         else:
             raise ValueError(f'Invalid style: {self.sep_style}')
@@ -1187,6 +1197,18 @@ register_conv_template(
         sep='</s>',
         stop_token_ids=[2],
         stop_str='</s>',
+    )
+)
+
+# InternVL-ZH template
+register_conv_template(
+    Conversation(
+        name='internvl_zh',
+        system_template='',
+        roles=('<human>', '<bot>'),
+        sep_style=SeparatorStyle.INTERNVL_ZH,
+        sep=' ',
+        sep2='</s>',
     )
 )
 
