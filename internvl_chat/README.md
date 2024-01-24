@@ -110,9 +110,13 @@ Coming Soon
 
 **MultiModal Benchmark**
 
-| model                                                                             | MME            | MMB<sub>dev/test</sub> | MMB-CN<sub>dev/test</sub> | POPE | MMMU | CMMMU | Tiny LVLM | LLaVA<sub>bench</sub> |
-| --------------------------------------------------------------------------------- | -------------- | ---------------------- | ------------------------- | ---- | ---- | ----- | --------- | --------------------- |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1.1-Chinese) | 1672.4 / 341.1 | 76.6 / 75.4            | 71.5 / 70.1               | 87.2 |      |       | 344.5     | 76.3                  |
+| model                                                                             | MME          | MMB<sub>dev/test</sub> | MMB-CN<sub>dev/test</sub> | POPE |
+| --------------------------------------------------------------------------------- | ------------ | ---------------------- | ------------------------- | ---- |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1.1-Chinese) | 1672.4/341.1 | 76.6/75.4              | 71.5/70.1                 | 87.2 |
+
+| model                                                                             | MMMU<sub>val/test</sub> | CMMMU<sub>val/test</sub> | Tiny<sub>LVLM</sub> | LLaVA<sub>bench</sub> |
+| --------------------------------------------------------------------------------- | ----------------------- | ------------------------ | ------------------- | --------------------- |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1.1-Chinese) | 39.1/35.3               |                          | 344.5               | 76.3                  |
 
 **Visual Question Answering**
 
