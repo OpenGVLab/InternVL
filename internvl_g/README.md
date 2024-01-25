@@ -43,11 +43,11 @@ This folder contains the implementation of the InternVL for stage2 pre-training 
   python setup.py install
   ```
 
-- Install `timm==0.6.11` and `mmcv-full==1.6.2`:
+- Install `timm==0.9.12` and `mmcv-full==1.6.2`:
 
   ```bash
   pip install -U openmim
-  pip install timm==0.6.11
+  pip install timm==0.9.12
   mim install mmcv-full==1.6.2
   ```
 
