@@ -112,7 +112,7 @@ Coming Soon
 
 | model                                                                             | MME            | MMB<sub>dev/test</sub> | MMB-CN<sub>dev/test</sub> | POPE |
 | --------------------------------------------------------------------------------- | -------------- | ---------------------- | ------------------------- | ---- |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1) | 1672.4 / 341.1 | 76.6 / 75.4            | 71.5 / 70.1               | 87.2 |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1) | 1672.3 / 341.1 | 76.6 / 75.4            | 71.5 / 70.1               | 87.2 |
 
 | model                                                                             | MMMU<sub>val/test</sub> | CMMMU<sub>val/test</sub> | Tiny<sub>LVLM</sub> | LLaVA<sub>bench</sub> |
 | --------------------------------------------------------------------------------- | ----------------------- | ------------------------ | ------------------- | --------------------- |

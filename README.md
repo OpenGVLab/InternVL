@@ -1,5 +1,10 @@
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/5aa4cda8-b453-40a0-9336-17012b430ae8"> InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks —— An Open-Source Alternative to ViT-22B
 
+## Release
+
+- `2024/01/24`: InternVL-Chat-V1.1 is released, it supports Chinese and OCR, see [here](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#-evaluation-chinese-models) or try our [demo](https://internvl.opengvlab.com/).
+- `2024/01/16`: We release our [customized mmcv/mmsegmentation/mmdetection code](https://github.com/OpenGVLab/InternVL-MMDetSeg), integrated with DeepSpeed, which can be used for training large-scale object detection and semantic segmentation models.
+
 ## What is InternVL?
 
 \[[Paper](https://arxiv.org/abs/2312.14238)\]  \[[Chat Demo](https://internvl.opengvlab.com/)\]  \[[Retrieval Demo (Coming Soon)](<>)\]  \[[Quick Start](#quick-start-with-huggingface)\]
@@ -8,7 +13,8 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 
 It is _**the largest open-source vision/vision-language foundation model (14B)**_ to date, achieving _**32 state-of-the-art**_ performances on a wide range of tasks such as visual perception, cross-modal retrieval, multimodal dialogue, etc.
 
-<img width="1204" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/c9f93b54-fdba-4a69-9341-e905376f7b9c">
+<img width="1204" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/47878df8-2aec-446e-8a58-00640a2e1327">
+
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/zero-shot-cross-modal-retrieval-on-coco-2014)](https://paperswithcode.com/sota/zero-shot-cross-modal-retrieval-on-coco-2014?p=internvl-scaling-up-vision-foundation-models)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/zero-shot-image-retrieval-on-coco-cn)](https://paperswithcode.com/sota/zero-shot-image-retrieval-on-coco-cn?p=internvl-scaling-up-vision-foundation-models)
@@ -84,7 +90,7 @@ It is _**the largest open-source vision/vision-language foundation model (14B)**
   | ----------------- | :----: | :--: | :--: | :--: |
   | OpenCLIP-G        |   1    | 65.9 | 66.1 | 59.2 |
   | EVA-02-CLIP-E+    |   1    | 69.8 | 69.3 | 63.4 |
-  | InternVL-C (ours) |   1    | 76.1 | 75.5 | 67.5 |
+  | InternVL-C (ours) |   1    | 71.0 | 71.3 | 65.7 |
   | ViCLIP            |   8    | 75.7 | 73.5 | 66.4 |
   | InternVL-C (ours) |   8    | 79.4 | 78.8 | 71.5 |
 
