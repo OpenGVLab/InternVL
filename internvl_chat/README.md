@@ -43,11 +43,11 @@ This folder contains the implementation of the InternVL-Chat.
   python setup.py install
   ```
 
-- Install `timm==0.6.11` and `mmcv-full==1.6.2`:
+- Install `timm==0.9.12` and `mmcv-full==1.6.2`:
 
   ```bash
   pip install -U openmim
-  pip install timm==0.6.11
+  pip install timm==0.9.12
   mim install mmcv-full==1.6.2
   ```
 
@@ -110,13 +110,13 @@ Coming Soon
 
 **MultiModal Benchmark**
 
-| model                                                                             | MME          | MMB<sub>dev/test</sub> | MMB-CN<sub>dev/test</sub> | POPE |
-| --------------------------------------------------------------------------------- | ------------ | ---------------------- | ------------------------- | ---- |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1) | 1672.4/341.1 | 76.6/75.4              | 71.5/70.1                 | 87.2 |
+| model                                                                             | MME            | MMB<sub>dev/test</sub> | MMB-CN<sub>dev/test</sub> | POPE |
+| --------------------------------------------------------------------------------- | -------------- | ---------------------- | ------------------------- | ---- |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1) | 1672.4 / 341.1 | 76.6 / 75.4            | 71.5 / 70.1               | 87.2 |
 
 | model                                                                             | MMMU<sub>val/test</sub> | CMMMU<sub>val/test</sub> | Tiny<sub>LVLM</sub> | LLaVA<sub>bench</sub> |
 | --------------------------------------------------------------------------------- | ----------------------- | ------------------------ | ------------------- | --------------------- |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1) | 39.1/35.3               |                          | 344.5               | 76.3                  |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1) | 39.1 / 35.3             |                          | 344.5               | 76.3                  |
 
 **Visual Question Answering**
 

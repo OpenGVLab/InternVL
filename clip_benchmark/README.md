@@ -32,11 +32,11 @@ We mainly use [CLIP Benchmark](https://github.com/LAION-AI/CLIP_benchmark) to ev
   pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
   ```
 
-- Install `timm==0.6.11` and `mmcv-full==1.6.2`:
+- Install `timm==0.9.12` and `mmcv-full==1.6.2`:
 
   ```bash
   pip install -U openmim
-  pip install timm==0.6.11
+  pip install timm==0.9.12
   mim install mmcv-full==1.6.2
   ```
 

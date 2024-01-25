@@ -54,13 +54,13 @@ Our segmentation code is developed on top of [MMSegmentation v0.30.0](https://gi
   pip install opencv-python
   ```
 
-- Install `timm==0.6.11` and `mmcv==1.6.2` and `mmsegmentation==0.30.0`:
+- Install `timm==0.9.12` and `mmcv==1.6.2` and `mmsegmentation==0.30.0`:
 
   ```bash
   pip install -U openmim
   mim install mmcv-full==1.6.2
   mim install mmsegmentation==0.30.0
-  pip install timm==0.6.11
+  pip install timm==0.9.12
   pip install yapf==0.40.1
   ```
 
