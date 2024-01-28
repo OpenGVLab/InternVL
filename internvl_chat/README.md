@@ -116,7 +116,7 @@ Coming Soon
 
 | model                                                                             | MMMU<sub>val/test</sub> | CMMMU<sub>val/test</sub> | Tiny<sub>LVLM</sub> | LLaVA<sub>bench</sub> | MM-Vet |
 | --------------------------------------------------------------------------------- | ----------------------- | ------------------------ | ------------------- | --------------------- | ------ |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1) | 39.1 / 35.3             |                          | 344.5               | 76.3                  | 45.0   |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1) | 39.1 / 35.3             | 34.8 / 34.0              | 344.5               | 76.3                  | 45.0   |
 
 **Visual Question Answering**
 
