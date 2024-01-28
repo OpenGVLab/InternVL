@@ -79,7 +79,6 @@ def evaluate_chat_model():
                 temperature=args.temperature,
             )
             pred = model.chat(
-                template=template,
                 tokenizer=tokenizer,
                 pixel_values=pixel_values,
                 question=question,

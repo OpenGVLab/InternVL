@@ -114,9 +114,9 @@ Coming Soon
 | --------------------------------------------------------------------------------- | -------------- | ---------------------- | ------------------------- | ---- |
 | [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1) | 1672.3 / 341.1 | 76.6 / 75.4            | 71.5 / 70.1               | 87.2 |
 
-| model                                                                             | MMMU<sub>val/test</sub> | CMMMU<sub>val/test</sub> | Tiny<sub>LVLM</sub> | LLaVA<sub>bench</sub> |
-| --------------------------------------------------------------------------------- | ----------------------- | ------------------------ | ------------------- | --------------------- |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1) | 39.1 / 35.3             |                          | 344.5               | 76.3                  |
+| model                                                                             | MMMU<sub>val/test</sub> | CMMMU<sub>val/test</sub> | Tiny<sub>LVLM</sub> | LLaVA<sub>bench</sub> | MM-Vet |
+| --------------------------------------------------------------------------------- | ----------------------- | ------------------------ | ------------------- | --------------------- | ------ |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1) | 39.1 / 35.3             |                          | 344.5               | 76.3                  | 45.0   |
 
 **Visual Question Answering**
 
@@ -282,6 +282,8 @@ data
 │   ├── Accounting/
 │   ├── ...
 │   └── Sociology
+├── mm-vet
+│   └── images/
 ```
 
 </details>
@@ -946,6 +948,29 @@ cd ../../../
 # single GPU testing
 export OPENAI_API_KEY='your_gpt4_key'
 CUDA_VISIBLE_DEVICES=0 sh evaluate.sh <checkpoint> llava-bench
+```
+
+</details>
+
+#### [MM-Vet](https://github.com/yuweihao/MM-Vet?tab=readme-ov-file)
+
+<details>
+<summary>Data Preparation</summary>
+
+```bash
+mkdir -p data/mm-vet && cd data/mm-vet
+wget https://github.com/yuweihao/MM-Vet/releases/download/v1/mm-vet.zip
+unzip mm-vet.zip
+cd ../..
+```
+
+</details>
+
+<details>
+<summary>Evaluation</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmvet
 ```
 
 </details>
