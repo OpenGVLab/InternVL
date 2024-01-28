@@ -67,7 +67,7 @@ class MMMUDataset(torch.utils.data.Dataset):
         data = process_single_sample(self.data[idx])
         data_id = data['id']
         question = data['question'].replace('<image 1>', '')
-        question = '<image>\n' + question
+        # question = '<image>\n' + question
         image = data['image']
         question_type = data['question_type']
 

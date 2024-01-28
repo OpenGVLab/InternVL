@@ -253,11 +253,6 @@ if [ ${DATASET} == "mmvet" ]; then
     python eval/mmvet/evaluate_mmvet.py --checkpoint ${CHECKPOINT} --datasets mmvet
 fi
 
-if [ ${DATASET} == "mmbench" ]; then
-    cd eval/mmbench/
-    python eval.py --checkpoint ${CHECKPOINT}
-fi
-
 if [ ${DATASET} == "cmmmu" ]; then
   CUDA_VISIBLE_DEVICES=0 python eval/cmmmu/evaluate_cmmmu.py --checkpoint ${CHECKPOINT} --datasets art_and_design &
   CUDA_VISIBLE_DEVICES=1 python eval/cmmmu/evaluate_cmmmu.py --checkpoint ${CHECKPOINT} --datasets business &
