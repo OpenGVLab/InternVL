@@ -139,6 +139,9 @@ cd pretrained/
 # pip install -U huggingface_hub
 huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B --local-dir InternVL-Chat-ViT-6B-Vicuna-7B
 huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B --local-dir InternVL-Chat-ViT-6B-Vicuna-13B
+huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B-448px --local-dir InternVL-Chat-ViT-6B-Vicuna-7B-448px
+huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B-448px --local-dir InternVL-Chat-ViT-6B-Vicuna-13B-448px
+
 ```
 
 The directory structure is:
@@ -150,7 +153,9 @@ pretrained
 │── vicuna-13b-v1.5/
 │── vicuna-7b-v1.5/
 │── InternVL-Chat-ViT-6B-Vicuna-7B/
-└── InternVL-Chat-ViT-6B-Vicuna-13B/
+│── InternVL-Chat-ViT-6B-Vicuna-13B/
+│── InternVL-Chat-ViT-6B-Vicuna-7B-448px/
+└── InternVL-Chat-ViT-6B-Vicuna-13B-448px/
 ```
 
 ## 🖥️ Demo
