@@ -1,9 +1,9 @@
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/5aa4cda8-b453-40a0-9336-17012b430ae8"> InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks —— An Open-Source Alternative to ViT-22B
 
-## Release
+## News🚀🚀🚀
 
-- `2024/01/27`: We release 448 resolution model and achieve 76.6 on MMBench dev, see [here](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#-evaluation-chinese-models).
-- `2024/01/24`: InternVL-Chat-V1.1 is released, it supports Chinese and OCR, see [here](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1) or try our [demo](https://internvl.opengvlab.com/).
+- `2024/01/27`: We release 448 resolution model, achieving 76.6 on MMBench dev, see [here](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#-evaluation-chinese-models).
+- `2024/01/24`: InternVL-Chat-V1.1 is released, it supports Chinese and has stronger OCR capability, see [here](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1) or try our [demo](https://internvl.opengvlab.com/).
 - `2024/01/16`: We release our [customized mmcv/mmsegmentation/mmdetection code](https://github.com/OpenGVLab/InternVL-MMDetSeg), integrated with DeepSpeed, which can be used for training large-scale object detection and semantic segmentation models.
 
 ## What is InternVL?
@@ -30,6 +30,18 @@ It is _**the largest open-source vision/vision-language foundation model (14B)**
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/zero-shot-transfer-image-classification-on-5)](https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-5?p=internvl-scaling-up-vision-foundation-models)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/zero-shot-transfer-image-classification-on-3)](https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-3?p=internvl-scaling-up-vision-foundation-models)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/zero-shot-transfer-image-classification-on-1)](https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-1?p=internvl-scaling-up-vision-foundation-models)
+
+## Model Zoo
+
+| Model                           | Date    | Download                                                                          | Note                              |
+| ------------------------------- | ------- | --------------------------------------------------------------------------------- | --------------------------------- |
+| InternViT-6B-224px              | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)              | vision foundation model           |
+| InternVL-14B-224px              | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)              | vision-language foundation model  |
+| InternVL-Chat-13B               | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)  | English multimodal dialogue       |
+| InternVL-Chat-19B               | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B) | English multimodal dialogue       |
+| InternVL-Chat-V1.1              | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1)      | support Chinese and stronger OCR           |
+| InternViT-6B-448px              | 2024.01.30 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px)              | 448 resolution                    |
+
 
 ## What can InternVL do?
 
@@ -355,16 +367,6 @@ It is _**the largest open-source vision/vision-language foundation model (14B)**
 
 </details>
 
-## Model Zoo
-
-| Model                           | Date    | Download                                                                          | Note                              |
-| ------------------------------- | ------- | --------------------------------------------------------------------------------- | --------------------------------- |
-| InternViT-6B-224px              | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)              | vision foundation model           |
-| InternVL-14B-224px              | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)              | vision-language foundation model  |
-| InternVL-Chat-13B               | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)  | English multimodal dialogue       |
-| InternVL-Chat-19B               | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B) | English multimodal dialogue       |
-| InternVL-Chat-V1.1              | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1)      | support Chinese and OCR           |
-| InternViT-6B-448px              | 2024.01.30 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px)              | 448 resolution                    |
 
 ## Installation
 
