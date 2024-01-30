@@ -357,14 +357,14 @@ It is _**the largest open-source vision/vision-language foundation model (14B)**
 
 ## Model Zoo
 
-| Model                           | Date    | HF Link                                                                  | Note                              |
+| Model                           | Date    | Download                                                                 | Note                              |
 | ------------------------------- | ------- | ------------------------------------------------------------------------ | --------------------------------- |
-| InternViT-6B-224px              | 2023.12 | [link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)              | vision foundation model           |
-| InternVL-14B-224px              | 2023.12 | [link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)              | vision-language foundation model  |
-| InternVL-Chat-13B               | 2023.12 | [link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)  | English multimodal dialogue       |
-| InternVL-Chat-19B               | 2023.12 | [link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B) | English multimodal dialogue       |
-| InternVL-Chat-V1.1              | 2024.01 | [link](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1)      | support Chinese and OCR           |
-| InternViT-6B-448px              | 2024.01 | [link](https://huggingface.co/OpenGVLab/InternViT-6B-448px)              | 448 resolution                    |
+| InternViT-6B-224px              | 2023.12 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)              | vision foundation model           |
+| InternVL-14B-224px              | 2023.12 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)              | vision-language foundation model  |
+| InternVL-Chat-13B               | 2023.12 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)  | English multimodal dialogue       |
+| InternVL-Chat-19B               | 2023.12 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B) | English multimodal dialogue       |
+| InternVL-Chat-V1.1              | 2024.01 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1)      | support Chinese and OCR           |
+| InternViT-6B-448px              | 2024.01 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px)              | 448 resolution                    |
 
 ## Installation
 
