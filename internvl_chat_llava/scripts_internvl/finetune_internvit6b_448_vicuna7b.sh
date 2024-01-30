@@ -21,7 +21,7 @@ torchrun --nnodes=${NNODES} --nproc_per_node=${GPUS} --master_port=${PORT} \
     --data_path ./playground/llava_v1_5_mix665k.json \
     --image_folder ./playground/data \
     --vision_tower ./pretrained/intern_vit_6b_448px \
-    --pretrain_mm_mlp_adapter ./work_dirs/pretrain_internvit6b_448_vicuna13b/mm_projector.bin \
+    --pretrain_mm_mlp_adapter ./work_dirs/pretrain_internvit6b_448_vicuna7b/mm_projector.bin \
     --mm_projector_type mlp2x_gelu \
     --mm_vision_select_layer -4 \
     --mm_use_im_start_end False \
