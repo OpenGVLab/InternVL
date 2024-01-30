@@ -223,6 +223,14 @@ def evaluate_chat_model():
                       f'--answer_path eval/mmmu/answer_dict_val.json'
                 print(cmd)
                 os.system(cmd)
+            time_prefix = time.strftime('%y%m%d%H%M%S', time.localtime())
+            results_file = f'{ds_name}_{time_prefix}.jsonl'
+            output_path = os.path.join(args.out_dir, results_file)
+            writer = open(output_path, 'w')
+            for item in merged_outputs:
+                writer.write(json.dumps(item) + '\n')
+            writer.close()
+            print('Results saved to {}'.format(output_path))
 
 
 if __name__ == '__main__':

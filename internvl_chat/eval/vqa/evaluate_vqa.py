@@ -341,30 +341,33 @@ def evaluate_chat_model():
                 generation_config=generation_config,
             )
             answers = [pred]
-            # answers = [post_process(pred)]
 
-            for question_id, answer, annotation in zip(question_ids, answers, annotations):
+            for question, question_id, answer, annotation in zip(questions, question_ids, answers, annotations):
                 if ds_name in ['vqav2_val', 'vqav2_testdev', 'okvqa_val', 'textvqa_val',
                                'vizwiz_val', 'textvqa_val_ocr']:
                     outputs.append({
+                        'question': question,
                         'question_id': question_id,
                         'answer': answer,
                     })
                 elif ds_name in ['docvqa_val', 'infographicsvqa', 'gqa_testdev', 'ocrvqa_val',
                                  'ocrvqa_test', 'gqa_testdev_llava']:
                     outputs.append({
+                        'question': question,
                         'questionId': question_id,
                         'answer': answer,
                         'annotation': annotation,
                     })
                 elif ds_name in ['ai2diagram_test']:
                     outputs.append({
+                        'question': question,
                         'image': question_id,
                         'answer': answer,
                         'annotation': annotation,
                     })
                 elif ds_name in ['chartqa_test_human', 'chartqa_test_augmented']:
                     outputs.append({
+                        'question': question,
                         'answer': answer,
                         'annotation': annotation,
                     })
