@@ -462,6 +462,7 @@ def main():
         logger.info('Loading InternVLChatModel...')
         config = InternVLChatConfig.from_pretrained(model_args.model_name_or_path)
         config.vision_config.drop_path_rate = model_args.drop_path_rate
+        config.template = data_args.conv_style
         model = InternVLChatModel.from_pretrained(
             model_args.model_name_or_path, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16,
             device_map='cuda', config=config)

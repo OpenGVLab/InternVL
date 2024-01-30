@@ -49,9 +49,10 @@ class CLIPVisionTower(nn.Module):
             self.image_processor = CLIPImageProcessor.from_pretrained(self.vision_tower_name)
             self.vision_tower = EvaCLIPVisionModel.from_pretrained(self.vision_tower_name)
         elif is_intern_vit_6b_model(self.vision_tower_name):
+            crop_size = 448 if "448" in self.vision_tower_name else 336
             self.image_processor = CLIPImageProcessor(
-                crop_size=336, do_center_crop=True, do_normalize=True, do_resize=True,
-                image_mean=[0.485, 0.456, 0.406], image_std=[0.229, 0.224, 0.225], size=336
+                crop_size=crop_size, do_center_crop=True, do_normalize=True, do_resize=True,
+                image_mean=[0.485, 0.456, 0.406], image_std=[0.229, 0.224, 0.225], size=crop_size
             )
             self.vision_tower = InternVisionModel.from_pretrained(self.vision_tower_name)
         elif is_internvl_14b_model(self.vision_tower_name):
