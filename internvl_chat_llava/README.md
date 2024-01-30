@@ -54,13 +54,41 @@ We have retained the original documentation of LLaVA 1.5 as a more detailed manu
   pip install -e .
   ```
 
-## 🔥 Training
+## 📦 Model Preparation
 
-Note: A better 336 resolution model will be released soon.
+| model name         | type        | download                                                          |  size   |
+| ------------------ | ----------- | ----------------------------------------------------------------- | :-----: |
+| InternViT-6B-224px | huggingface | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px) | 12 GB |
+| InternViT-6B-448px | huggingface | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px) | 12 GB |
+| Vicuna-7B-v1.5     | huggingface | 🤗 [HF link](https://huggingface.co/lmsys/vicuna-7b-v1.5)         | 13.5 GB |
+| Vicuna-13B-v1.5    | huggingface | 🤗 [HF link](https://huggingface.co/lmsys/vicuna-13b-v1.5)        | 26.1 GB |
+
+Please download the above model weights and place them in the `pretrained/` folder.
+
+```sh
+cd pretrained/
+# pip install -U huggingface_hub
+huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternViT-6B-224px --local-dir intern_vit_6b_224px
+huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternViT-6B-448px --local-dir intern_vit_6b_448px
+huggingface-cli download --resume-download --local-dir-use-symlinks False lmsys/vicuna-13b-v1.5 --local-dir vicuna-13b-v1.5
+huggingface-cli download --resume-download --local-dir-use-symlinks False lmsys/vicuna-7b-v1.5 --local-dir vicuna-7b-v1.5
+```
+
+The directory structure is:
+
+```sh
+pretrained
+│── intern_vit_6b_224px/
+│── intern_vit_6b_448px/
+│── vicuna-13b-v1.5/
+└── vicuna-7b-v1.5/
+```
+
+## 🔥 Training
 
 - InternViT-6B-224px + Vicuna-7B:
 
-```
+```shell
 # pretrain
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/pretrain_internvit6b_224to336_vicuna7b.sh
 # finetune
@@ -69,26 +97,46 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/finetune_internvit6b_22
 
 - InternViT-6B-224px + Vicuna-13B:
 
-```
+```shell
 # pretrain
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/pretrain_internvit6b_224to336_vicuna13b.sh
 # finetune
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/finetune_internvit6b_224to336_vicuna13b.sh
 ```
 
+- InternViT-6B-448px + Vicuna-7B:
+
+```shell
+# pretrain
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/pretrain_internvit6b_448_vicuna7b.sh
+# finetune
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/finetune_internvit6b_448_vicuna7b.sh
+```
+
+- InternViT-6B-448px + Vicuna-13B:
+
+```shell
+# pretrain
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/pretrain_internvit6b_448_vicuna13b.sh
+# finetune
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/finetune_internvit6b_448_vicuna13b.sh
+```
+
+
 ## 🤗 Model Zoo
 
-| method        | visual encoder | glue layer | LLM        | res. | VQAv2 | GQA  | VizWiz | TextVQA | MME    | POPE | Download                                                                    |
-| ------------- |:--------------:|:----------:|:----------:|:----:|:-----:|:----:|:------:|:-------:|:------:|:----:|:---------------------------------------------------------------------------:|
-| InternVL-Chat | IViT-6B-224px  | MLP        | Vicuna-7B  | 336  | 79.3  | 62.9 | 52.5   | 57.0    | 1525.1 | 86.4 | [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)  |
-| InternVL-Chat | IViT-6B-224px  | MLP        | Vicuna-13B | 336  | 80.2  | 63.9 | 54.6   | 58.7    | 1546.9 | 87.1 | [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B) |
+| method        | visual encoder | LLM        | res. | VQAv2 | GQA  | VizWiz | TextVQA | MME    | POPE | Download                                                                    |
+| ------------- |:--------------:|:----------:|:----:|:-----:|:----:|:------:|:-------:|:------:|:----:|:---------------------------------------------------------------------------:|
+| InternVL-Chat | IViT-6B-224px  | Vicuna-7B  | 336  | 79.3  | 62.9 | 52.5   | 57.0    | 1525.1 | 86.4 | [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)  |
+| InternVL-Chat | IViT-6B-224px  | Vicuna-13B | 336  | 80.2  | 63.9 | 54.6   | 58.7    | 1546.9 | 87.1 | [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B) |
+| InternVL-Chat | IViT-6B-448px  | Vicuna-7B  | 448  |       |      |        |         |        |      | [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B-448px)  |
+| InternVL-Chat | IViT-6B-448px  | Vicuna-13B | 448  |       |      |        |         |        |      | [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B-448px) |
 
 Please download the above model weights and place them in the `pretrained/` folder.
 
 ```shell
 cd pretrained/
 # pip install -U huggingface_hub
-huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternViT-6B-224px --local-dir internvit_6b_224px
 huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B --local-dir InternVL-Chat-ViT-6B-Vicuna-7B
 huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B --local-dir InternVL-Chat-ViT-6B-Vicuna-13B
 ```
@@ -97,7 +145,10 @@ The directory structure is:
 
 ```
 pretrained
-│── internvit_6b_224px/
+│── intern_vit_6b_224px/
+│── intern_vit_6b_448px/
+│── vicuna-13b-v1.5/
+│── vicuna-7b-v1.5/
 │── InternVL-Chat-ViT-6B-Vicuna-7B/
 └── InternVL-Chat-ViT-6B-Vicuna-13B/
 ```
