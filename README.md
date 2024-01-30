@@ -474,7 +474,7 @@ See [here](./internvl_chat_llava)
 
 ## Schedule
 
-- [ ] Release high-resolution models
+- [x] Release high-resolution models
 - [x] Release InternVL-Chat
 - [x] Release InternVL-C(ontrastive) and InternVL-G(enerative)
 - [x] Release InternViT-6B
