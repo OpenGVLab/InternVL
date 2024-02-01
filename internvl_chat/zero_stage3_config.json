@@ -4,9 +4,9 @@
     "overlap_comm": true,
     "contiguous_gradients": true,
     "sub_group_size": 1e9,
-    "reduce_bucket_size": "auto",
-    "stage3_prefetch_bucket_size": "auto",
-    "stage3_param_persistence_threshold": "auto",
+    "reduce_bucket_size": 1e9,
+    "stage3_prefetch_bucket_size": 5e8,
+    "stage3_param_persistence_threshold": 1e6,
     "stage3_max_live_parameters": 1e9,
     "stage3_max_reuse_distance": 1e9,
     "stage3_gather_16bit_weights_on_model_save": true
@@ -22,27 +22,6 @@
   },
   "bf16": {
     "enabled": "auto"
-  },
-  "scheduler": {
-    "type": "WarmupDecayLR",
-    "params": {
-      "warmup_min_lr": "auto",
-      "warmup_max_lr": "auto",
-      "warmup_num_steps": "auto",
-      "total_num_steps": "auto"
-    }
-  },
-  "optimizer": {
-    "type": "AdamW",
-    "params": {
-      "lr": "auto",
-      "betas": [
-        0.9,
-        0.999
-      ],
-      "eps": 1e-8,
-      "weight_decay": "auto"
-    }
   },
   "gradient_accumulation_steps": "auto",
   "gradient_clipping": "auto",

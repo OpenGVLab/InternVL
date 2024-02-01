@@ -3,6 +3,7 @@ import socket
 import subprocess
 from datetime import timedelta
 
+import deepspeed
 import torch
 import torch.multiprocessing as mp
 from torch import distributed as dist
@@ -98,4 +99,5 @@ def _init_dist_slurm(backend, port=None):
     os.environ['WORLD_SIZE'] = str(ntasks)
     os.environ['LOCAL_RANK'] = str(proc_id % num_gpus)
     os.environ['RANK'] = str(proc_id)
-    dist.init_process_group(backend=backend, timeout=timeout)
+    # dist.init_process_group(backend=backend, timeout=timeout)
+    deepspeed.init_distributed(dist_backend=backend)

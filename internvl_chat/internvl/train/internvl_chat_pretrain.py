@@ -58,6 +58,8 @@ IMG_START_TOKEN = '<img>'
 IMG_END_TOKEN = '</img>'
 QUAD_START_TOKEN = '<quad>'
 QUAD_END_TOKEN = '</quad>'
+REF_START_TOKEN = '<ref>'
+REF_END_TOKEN = '</ref>'
 
 warnings.filterwarnings('ignore')
 logger = logging.getLogger(__name__)
@@ -391,8 +393,9 @@ def build_datasets(data_args, tokenizer, tcs_loader, model):
 def main():
     # Parse input arguments
     # See all possible arguments in src/transformers/training_args.py
-    parser = HfArgumentParser((ModelArguments, DataTrainingArguments, TrainingArguments))
+    # If use DeepSpeed zero3, init_dist must before HfArgumentParser
     init_dist(launcher='slurm', backend='nccl')
+    parser = HfArgumentParser((ModelArguments, DataTrainingArguments, TrainingArguments))
     if len(sys.argv) == 2 and sys.argv[1].endswith('.json'):
         # If we pass only one argument to the script, and it's the path to a json file,
         # let's parse it to get our arguments.
@@ -453,7 +456,7 @@ def main():
     tokenizer.tokenizer_path = tokenizer_path
     tokenizer.model_max_length = data_args.max_seq_length
     token_list = [IMG_START_TOKEN, IMG_END_TOKEN, IMG_CONTEXT_TOKEN,
-                  QUAD_START_TOKEN, QUAD_END_TOKEN]
+                  QUAD_START_TOKEN, QUAD_END_TOKEN, REF_START_TOKEN, REF_END_TOKEN]
     num_new_tokens = tokenizer.add_tokens(token_list, special_tokens=True)
     img_context_token_id = tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
     tcs_loader = TCSLoader('~/petreloss.conf') if has_tcs_loader else None

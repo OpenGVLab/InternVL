@@ -51,7 +51,7 @@ class InternVLChatModel(PreTrainedModel):
             nn.Linear(llm_hidden_size, llm_hidden_size)
         )
 
-        if config.force_image_size:
+        if config.force_image_size != config.vision_config.image_size:
             self.vision_model.resize_pos_embeddings(
                 old_size=config.vision_config.image_size,
                 new_size=config.force_image_size,
