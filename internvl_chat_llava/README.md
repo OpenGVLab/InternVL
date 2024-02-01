@@ -125,12 +125,13 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh scripts_internvl/finetune_internvit6b_44
 
 ## 🤗 Model Zoo
 
-| method        | vision encoder | LLM   | res. | VQAv2 | GQA  | VizWiz | TextVQA | MME    | POPE | Download                                                                          |
-| ------------- |:--------------:|:-----:|:----:|:-----:|:----:|:------:|:-------:|:------:|:----:|:---------------------------------------------------------------------------------:|
-| InternVL-Chat | IViT-6B-224px  | V-7B  | 336  | 79.3  | 62.9 | 52.5   | 57.0    | 1525.1 | 86.4 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)        |
-| InternVL-Chat | IViT-6B-224px  | V-13B | 336  | 80.2  | 63.9 | 54.6   | 58.7    | 1546.9 | 87.1 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B)       |
-| InternVL-Chat | IViT-6B-448px  | V-7B  | 448  | TODO  | TODO | TODO   | TODO    | TODO   | TODO | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B-448px)  |
-| InternVL-Chat | IViT-6B-448px  | V-13B | 448  | TODO  | TODO | TODO   | TODO    | TODO   | TODO | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B-448px) |
+| method        | vision encoder | LLM   | res. | VQAv2 | GQA  | VizWiz | SQA | TextVQA | POPE | MME    | MMB   | MMB<sub>CN</sub> | MMVet | Download |                                                           
+| ------------- |:--------------:|:-----:|:----:|:-----:|:----:|:------:|:-----:|:-------:|:----:|:------:|:-----:|:------:|:------:| :----------------------------------------------------------------:|
+| LLaVA-1.5     | CLIP-L-336px   | V-7B  | 336  | 78.5  | 62.0 | 50.0   | 66.8  | 58.2    | 85.9 | 1510.7 | 64.3  | 58.3   | 30.5   | -        |
+| LLaVA-1.5     | CLIP-L-336px   | V-13B | 336  | 80.0  | 63.3 | 53.6   | 71.6  | 61.3    | 85.9 | 1531.3 | 67.7  | 63.6   | 35.4   | -        |
+| InternVL-Chat | IViT-6B-224px  | V-7B  | 336  | 79.3  | 62.9 | 52.5   | 66.2  | 57.0    | 86.4 | 1525.1 | 64.6  | 57.6   | 31.2   | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)        |
+| InternVL-Chat | IViT-6B-224px  | V-13B | 336  | 80.2  | 63.9 | 54.6   | 70.1  | 58.7    | 87.1 | 1546.9 | 66.5  | 61.9   | 33.7   | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B)       |
+| InternVL-Chat | IViT-6B-448px  | V-13B | 448  | 82.0  | 64.1 | 60.1   | 71.6  | 64.8    | 87.2 | 1579.0 | 68.2  | 64.0   | 36.7   | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B-448px) |
 
 Please download the above model weights and place them in the `pretrained/` folder.
 
@@ -139,7 +140,6 @@ cd pretrained/
 # pip install -U huggingface_hub
 huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B --local-dir InternVL-Chat-ViT-6B-Vicuna-7B
 huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B --local-dir InternVL-Chat-ViT-6B-Vicuna-13B
-huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B-448px --local-dir InternVL-Chat-ViT-6B-Vicuna-7B-448px
 huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B-448px --local-dir InternVL-Chat-ViT-6B-Vicuna-13B-448px
 
 ```
@@ -154,7 +154,6 @@ pretrained
 │── vicuna-7b-v1.5/
 │── InternVL-Chat-ViT-6B-Vicuna-7B/
 │── InternVL-Chat-ViT-6B-Vicuna-13B/
-│── InternVL-Chat-ViT-6B-Vicuna-7B-448px/
 └── InternVL-Chat-ViT-6B-Vicuna-13B-448px/
 ```
 
