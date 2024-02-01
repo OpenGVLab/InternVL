@@ -23,7 +23,7 @@ from internvl.model.internvl_chat import (InternVisionConfig,
                                           InternVisionModel,
                                           InternVLChatConfig,
                                           InternVLChatModel)
-from internvl.patch import (replace_llama_attn_with_flash_attn,
+from internvl.patch import (replace_llama2_attn_with_flash_attn,
                             replace_llama_rmsnorm_with_fused_rmsnorm)
 from internvl.train.dataset import (TCSLoader, WeightedConcatDataset,
                                     build_transform)
@@ -36,7 +36,7 @@ from transformers.trainer_utils import get_last_checkpoint
 from transformers.utils.logging import (enable_default_handler,
                                         enable_explicit_format, set_verbosity)
 
-replace_llama_attn_with_flash_attn()
+replace_llama2_attn_with_flash_attn()
 replace_llama_rmsnorm_with_fused_rmsnorm()
 
 try:
@@ -464,21 +464,20 @@ def main():
         config.vision_config.drop_path_rate = model_args.drop_path_rate
         config.template = data_args.conv_style
         model = InternVLChatModel.from_pretrained(
-            model_args.model_name_or_path, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16,
-            device_map='cuda', config=config)
+            model_args.model_name_or_path, torch_dtype=torch.bfloat16, config=config)
     else:
         logger.info('Loading ViT-6B...')
         vision_model = InternVisionModel.from_pretrained(
-            model_args.vision_path, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16, device_map='cuda')
+            model_args.vision_path, torch_dtype=torch.bfloat16)
         logger.info('Loading LLaMA...')
         llm = LlamaForCausalLM.from_pretrained(
-            model_args.llm_path, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16, device_map='cuda')
+            model_args.llm_path, torch_dtype=torch.bfloat16)
         logger.info('Building InternVLChatConfig...')
         vision_config = InternVisionConfig.from_pretrained(model_args.vision_path)
         vision_config.drop_path_rate = model_args.drop_path_rate
         llm_config = LlamaConfig.from_pretrained(model_args.llm_path)
         internvl_chat_config = InternVLChatConfig(vision_config.to_dict(), llm_config.to_dict(),
-                                                  downsample_ratio=model_args.down_sample_ratio,
+                                                  downsample_ratio=data_args.down_sample_ratio,
                                                   pad2square=data_args.pad2square,
                                                   template=data_args.conv_style)
         logger.info('Building InternVLChatModel...')
@@ -486,13 +485,15 @@ def main():
     model.img_context_token_id = img_context_token_id
     logger.info('Finished')
 
-    if data_args.force_image_size != 224:
-        if model.config.force_image_size != data_args.force_image_size:
-            model.config.force_image_size = data_args.force_image_size
-            model.vision_model.resize_pos_embeddings(old_size=224,
-                                                     new_size=data_args.force_image_size,
-                                                     patch_size=14)
-            model.num_image_token = int((data_args.force_image_size // 14) ** 2 * (data_args.down_sample_ratio ** 2))
+    patch_size = model.config.vision_config.patch_size
+    if model.config.force_image_size != data_args.force_image_size and \
+            model.config.vision_config.image_size != data_args.force_image_size:
+        model.vision_model.resize_pos_embeddings(old_size=model.config.vision_config.image_size,
+                                                 new_size=data_args.force_image_size,
+                                                 patch_size=patch_size)
+        model.config.vision_config.image_size = data_args.force_image_size
+    model.config.force_image_size = data_args.force_image_size
+    model.num_image_token = int((data_args.force_image_size // patch_size) ** 2 * (data_args.down_sample_ratio ** 2))
     if num_new_tokens > 0:
         model.language_model.resize_token_embeddings(len(tokenizer))
         output_embeddings = model.language_model.get_output_embeddings().weight.data
