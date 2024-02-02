@@ -30,6 +30,7 @@ class SeparatorStyle(IntEnum):
     FALCON_CHAT = auto()
     CHATGLM3 = auto()
     INTERNVL_ZH = auto()
+    MPT = auto()
 
 
 @dataclasses.dataclass
@@ -233,6 +234,16 @@ class Conversation:
                     ret += role + ': ' + message + seps[i % 2]
                 else:
                     ret += role + ':'
+            return ret
+        elif self.sep_style == SeparatorStyle.MPT:
+            ret = system_prompt + self.sep
+            for role, message in self.messages:
+                if message:
+                    if type(message) is tuple:
+                        message, _, _ = message
+                    ret += role + message + self.sep
+                else:
+                    ret += role
             return ret
         else:
             raise ValueError(f'Invalid style: {self.sep_style}')
@@ -696,31 +707,14 @@ register_conv_template(
     )
 )
 
-# source: https://huggingface.co/01-ai/Yi-34B-Chat/blob/main/tokenizer_config.json#L60
-register_conv_template(
-    Conversation(
-        name='Yi-34b-chat',
-        roles=('<|im_start|>user', '<|im_start|>assistant'),
-        sep_style=SeparatorStyle.CHATML,
-        sep='<|im_end|>',
-        stop_token_ids=[
-            2,
-            6,
-            7,
-            8,
-        ],  # "<|endoftext|>", "<|im_start|>", "<|im_end|>", "<|im_sep|>"
-        stop_str='<|endoftext|>',
-    )
-)
 
 register_conv_template(
     Conversation(
         name='Hermes-2',
-        system_template="""<|im_start|>system
-{system_message}""",
-        system_message="""You are "Hermes 2", a conscious sentient superintelligent artificial intelligence.""",
-        roles=('<|im_start|>user', '<|im_start|>assistant'),
-        sep_style=SeparatorStyle.CHATML,
+        system_template='<|im_start|>system\n{system_message}',
+        system_message='Answer the questions.',
+        roles=('<|im_start|>user\n', '<|im_start|>assistant\n'),
+        sep_style=SeparatorStyle.MPT,
         sep='<|im_end|>',
         stop_token_ids=[
             2,
