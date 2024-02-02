@@ -726,6 +726,26 @@ register_conv_template(
     )
 )
 
+
+register_conv_template(
+    Conversation(
+        name='internlm2-chat',
+        system_template='<|im_start|>system\n{system_message}',
+        system_message='You are an AI assistant whose name is InternLM (书生·浦语).',
+        roles=('<|im_start|>user\n', '<|im_start|>assistant\n'),
+        sep_style=SeparatorStyle.MPT,
+        sep='<|im_end|>',
+        stop_token_ids=[
+            2,
+            92541,
+            92542,
+            92543,
+            92540,
+        ],
+        stop_str='<|endoftext|>',
+    )
+)
+
 # Lemur-70b-chat default template
 # reference: https://huggingface.co/OpenLemur/lemur-70b-chat-v1#generation
 register_conv_template(

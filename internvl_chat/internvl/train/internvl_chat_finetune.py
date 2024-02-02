@@ -400,7 +400,7 @@ class LazySupervisedDataset(Dataset):
         transform = build_transform(is_train=self.is_train, input_size=self.image_size,
                                     pad2square=self.pad2square)
         pixel_values = transform(image)
-        if self.template_name == 'Hermes-2':
+        if self.template_name == 'Hermes-2' or self.template_name == 'internlm2-chat':
             preprocess_function = preprocess_mpt
         else:
             preprocess_function = preprocess
@@ -420,7 +420,7 @@ class LazySupervisedDataset(Dataset):
         transform = build_transform(is_train=self.is_train, input_size=self.image_size,
                                     pad2square=self.pad2square)
         pixel_values = transform(image)
-        if self.template_name == 'Hermes-2':
+        if self.template_name == 'Hermes-2' or self.template_name == 'internlm2-chat':
             preprocess_function = preprocess_mpt
         else:
             preprocess_function = preprocess
