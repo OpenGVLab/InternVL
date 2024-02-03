@@ -3,7 +3,7 @@
 ## News🚀🚀🚀
 
 - `2024/01/27`: We release 448 resolution model, achieving 76.6 on MMBench dev, see [here](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#-evaluation-chinese-models).
-- `2024/01/24`: InternVL-Chat-V1.1 is released, it supports Chinese and has stronger OCR capability, see [here](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1) or try our [demo](https://internvl.opengvlab.com/).
+- `2024/01/24`: InternVL-Chat-V1.1 is released, it supports Chinese and has stronger OCR capability, see [here](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) or try our [demo](https://internvl.opengvlab.com/).
 - `2024/01/16`: We release our [customized mmcv/mmsegmentation/mmdetection code](https://github.com/OpenGVLab/InternVL-MMDetSeg), integrated with DeepSpeed, which can be used for training large-scale object detection and semantic segmentation models.
 
 ## What is InternVL?
@@ -33,15 +33,14 @@ It is _**the largest open-source vision/vision-language foundation model (14B)**
 
 ## Model Zoo
 
-| Model                           | Date    | Download                                                                          | Note                              |
-| ------------------------------- | ------- | --------------------------------------------------------------------------------- | --------------------------------- |
-| InternViT-6B-224px              | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)              | vision foundation model           |
-| InternVL-14B-224px              | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)              | vision-language foundation model  |
-| InternVL-Chat-13B               | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)  | English multimodal dialogue       |
-| InternVL-Chat-19B               | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B) | English multimodal dialogue       |
-| InternVL-Chat-V1.1              | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1.1)      | support Chinese and stronger OCR           |
-| InternViT-6B-448px              | 2024.01.30 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px)              | 448 resolution                    |
-
+| Model              | Date       | Download                                                                       | Note                             |
+| ------------------ | ---------- | ------------------------------------------------------------------------------ | -------------------------------- |
+| InternViT-6B-224px | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)              | vision foundation model          |
+| InternVL-14B-224px | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)              | vision-language foundation model |
+| InternVL-Chat-13B  | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)  | English multimodal dialogue      |
+| InternVL-Chat-19B  | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B) | English multimodal dialogue      |
+| InternVL-Chat-V1.1 | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)      | support Chinese and stronger OCR |
+| InternViT-6B-448px | 2024.01.30 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px)              | 448 resolution                   |
 
 ## What can InternVL do?
 
@@ -367,7 +366,6 @@ It is _**the largest open-source vision/vision-language foundation model (14B)**
 
 </details>
 
-
 ## Installation
 
 See [INSTALLATION.md](./INSTALLATION.md)
@@ -481,7 +479,37 @@ caption = tokenizer.decode(pred[0].cpu(), skip_special_tokens=True).strip()
 <details>
   <summary>using InternVL-Chat (click to expand)</summary>
 
-See [here](./internvl_chat_llava)
+```python
+import torch
+from PIL import Image
+from transformers import AutoModel, CLIPImageProcessor
+from transformers import AutoTokenizer
+
+path = "OpenGVLab/InternVL-Chat-Chinese-V1-1"
+model = AutoModel.from_pretrained(
+    path,
+    torch_dtype=torch.bfloat16,
+    low_cpu_mem_usage=True,
+    trust_remote_code=True,
+    device_map='auto').eval()
+
+tokenizer = AutoTokenizer.from_pretrained(path)
+image = Image.open('./examples/image2.jpg').convert('RGB')
+image = image.resize((448, 448))
+image_processor = CLIPImageProcessor.from_pretrained(path)
+
+pixel_values = image_processor(images=image, return_tensors='pt').pixel_values
+pixel_values = pixel_values.to(torch.bfloat16).cuda()
+
+generation_config = dict(
+    num_beams=1,
+    max_new_tokens=512,
+    do_sample=False,
+)
+
+question = "请详细描述图片"
+response = model.chat(tokenizer, pixel_values, question, generation_config)
+```
 
 </details>
 
