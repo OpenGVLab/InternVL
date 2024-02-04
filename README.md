@@ -332,22 +332,23 @@ It is _**the largest open-source vision/vision-language foundation model (14B)**
 
 - Multimodal Benchmarks with Frozen LLM [\[see details\]](./internvl_chat#-evaluation)
 
-  | method               | visual encoder | glue layer |    LLM     | res. | COCO  | Flickr | NoCaps | VQAv2 | GQA  | VizWiz | TextVQA |  MME   | POPE |
-  | -------------------- | :------------: | :--------: | :--------: | :--: | :---: | :----: | :----: | :---: | :--: | :----: | :-----: | :----: | :--: |
-  | InstructBLIP         |     EVA-g      |  QFormer   | Vicuna-7B  | 224  |   –   |  82.4  | 123.1  |   –   | 49.2 |  34.5  |  50.1   |   –    |  –   |
-  | BLIP-2               |     EVA-g      |  QFormer   | Vicuna-13B | 224  |   –   |  71.6  | 103.9  | 41.0  | 41.0 |  19.6  |  42.5   | 1293.8 | 85.3 |
-  | InstructBLIP         |     EVA-g      |  QFormer   | Vicuna-13B | 224  |   –   |  82.8  | 121.9  |   –   | 49.5 |  33.4  |  50.7   | 1212.8 | 78.9 |
-  | InternVL-Chat (ours) |    IViT-6B     |   QLLaMA   | Vicuna-7B  | 224  | 141.4 |  89.7  | 120.5  | 72.3  | 57.7 |  44.5  |  42.1   | 1298.5 | 85.2 |
-  | InternVL-Chat (ours) |    IViT-6B     |   QLLaMA   | Vicuna-13B | 224  | 142.4 |  89.9  | 123.1  | 71.7  | 59.5 |  54.0  |  49.1   | 1317.2 | 85.4 |
+  | method               | visual encoder | glue layer |  LLM  | res. | COCO  | Flickr | NoCaps | VQAv2 | GQA  | VizWiz | TextVQA |  MME   | POPE |
+  | -------------------- | :------------: | :--------: | :---: | :--: | :---: | :----: | :----: | :---: | :--: | :----: | :-----: | :----: | :--: |
+  | InstructBLIP         |     EVA-g      |  QFormer   | V-7B  | 224  |   –   |  82.4  | 123.1  |   –   | 49.2 |  34.5  |  50.1   |   –    |  –   |
+  | BLIP-2               |     EVA-g      |  QFormer   | V-13B | 224  |   –   |  71.6  | 103.9  | 41.0  | 41.0 |  19.6  |  42.5   | 1293.8 | 85.3 |
+  | InstructBLIP         |     EVA-g      |  QFormer   | V-13B | 224  |   –   |  82.8  | 121.9  |   –   | 49.5 |  33.4  |  50.7   | 1212.8 | 78.9 |
+  | InternVL-Chat (ours) |    IViT-6B     |   QLLaMA   | V-7B  | 224  | 141.4 |  89.7  | 120.5  | 72.3  | 57.7 |  44.5  |  42.1   | 1298.5 | 85.2 |
+  | InternVL-Chat (ours) |    IViT-6B     |   QLLaMA   | V-13B | 224  | 142.4 |  89.9  | 123.1  | 71.7  | 59.5 |  54.0  |  49.1   | 1317.2 | 85.4 |
 
 - Multimodal Benchmarks with Trainable LLM [\[see details\]](./internvl_chat_llava)
 
-  | method               | visual encoder | glue layer |    LLM     | res. | VQAv2 | GQA  | VizWiz | TextVQA |  MME   | POPE |
-  | -------------------- | :------------: | :--------: | :--------: | :--: | :---: | :--: | :----: | :-----: | :----: | :--: |
-  | LLaVA-1.5            |   CLIP-L-336   |    MLP     | Vicuna-7B  | 336  | 78.5  | 62.0 |  50.0  |  58.2   | 1510.7 | 85.9 |
-  | InternVL-Chat (ours) |    IViT-6B     |    MLP     | Vicuna-7B  | 336  | 79.3  | 62.9 |  52.5  |  57.0   | 1525.1 | 86.4 |
-  | LLaVA-1.5            |   CLIP-L-336   |    MLP     | Vicuna-13B | 336  | 80.0  | 63.3 |  53.6  |  61.3   | 1531.3 | 85.9 |
-  | InternVL-Chat (ours) |    IViT-6B     |    MLP     | Vicuna-13B | 336  | 80.2  | 63.9 |  54.6  |  58.7   | 1546.9 | 87.1 |
+  | method               | vision encoder |  LLM  | res. | VQAv2 | GQA  | VizWiz | SQA  | TextVQA | POPE |  MME   | MMB  | MMB<sub>CN</sub> | MMVet |
+  | -------------------- | :------------: | :---: | :--: | :---: | :--: | :----: | :--: | :-----: | :--: | :----: | :--: | :--------------: | :---: |
+  | LLaVA-1.5            |  CLIP-L-336px  | V-7B  | 336  | 78.5  | 62.0 |  50.0  | 66.8 |  58.2   | 85.9 | 1510.7 | 64.3 |       58.3       | 30.5  |
+  | LLaVA-1.5            |  CLIP-L-336px  | V-13B | 336  | 80.0  | 63.3 |  53.6  | 71.6 |  61.3   | 85.9 | 1531.3 | 67.7 |       63.6       | 35.4  |
+  | InternVL-Chat (ours) | IViT-6B-224px  | V-7B  | 336  | 79.3  | 62.9 |  52.5  | 66.2 |  57.0   | 86.4 | 1525.1 | 64.6 |       57.6       | 31.2  |
+  | InternVL-Chat (ours) | IViT-6B-224px  | V-13B | 336  | 80.2  | 63.9 |  54.6  | 70.1 |  58.7   | 87.1 | 1546.9 | 66.5 |       61.9       | 33.7  |
+  | InternVL-Chat (ours) | IViT-6B-448px  | V-13B | 448  | 82.0  | 64.1 |  60.1  | 71.6 |  64.8   | 87.2 | 1579.0 | 68.2 |       64.0       | 36.7  |
 
 - Tiny LVLM [\[see details\]](https://github.com/OpenGVLab/Multi-Modality-Arena/tree/main/tiny_lvlm_evaluation)
 
