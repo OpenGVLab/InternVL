@@ -110,9 +110,9 @@ Coming Soon
 
 **MultiModal Benchmark**
 
-| model                                                                             | MME            | MMB<sub>dev/test</sub> | MMB-CN<sub>dev/test</sub> | POPE | MMVP |
-| --------------------------------------------------------------------------------- | -------------- | ---------------------- | ------------------------- | ---- | ---- |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 1672.3 / 341.1 | 76.6 / 75.4            | 71.5 / 70.1               | 87.2 | 44.7 |
+| model                                                                             | MME            | MMB<sub>dev/test</sub> | MMB-CN<sub>dev/test</sub> | POPE | MMVP | MathVista |
+| --------------------------------------------------------------------------------- | -------------- | ---------------------- | ------------------------- | ---- | ---- | --------- |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 1672.3 / 341.1 | 76.6 / 75.4            | 71.5 / 70.1               | 87.2 | 44.7 | 34.5      |
 
 | model                                                                             | MMMU<sub>val/test</sub> | CMMMU<sub>val/test</sub> | Tiny<sub>LVLM</sub> | LLaVA<sub>bench</sub> | MM-Vet |
 | --------------------------------------------------------------------------------- | ----------------------- | ------------------------ | ------------------- | --------------------- | ------ |
@@ -291,6 +291,9 @@ data
 ├── MMVP_VLM
 │   ├── MLLM_VLM Images/
 │   └── Questions.csv
+├── MathVista
+│   ├── annot_testmini.json
+│   └── AI4Math___math_vista/
 ```
 
 </details>
@@ -1002,6 +1005,35 @@ cd ..
 
 ```bash
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmvp
+```
+
+</details>
+
+#### [MathVista](https://github.com/lupantech/MathVista)
+
+<details>
+<summary>Data Preparation</summary>
+
+```bash
+mkdir -p data/MathVista && cd data/MathVista
+# Execute the following python code
+# from datasets import load_dataset
+# dataset = load_dataset("AI4Math/MathVista")
+# dataset.save_to_disk('./MathVista')
+wget https://huggingface.co/datasets/AI4Math/MathVista/raw/main/annot_testmini.json
+cd ../..
+```
+
+</details>
+
+<details>
+<summary>Evaluation</summary>
+
+```bash
+# testmini set
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mathvista-testmini
+# test set
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mathvista-test
 ```
 
 </details>
