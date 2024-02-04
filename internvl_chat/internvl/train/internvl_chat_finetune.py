@@ -611,7 +611,6 @@ def main():
     model.vision_model.encoder.gradient_checkpointing = True
     if model_args.grad_checkpoint:
         model.language_model._set_gradient_checkpointing()
-        model.language_model._set_gradient_checkpointing()
 
     train_dataset = build_datasets(data_args, tokenizer, tcs_loader, model)
 
