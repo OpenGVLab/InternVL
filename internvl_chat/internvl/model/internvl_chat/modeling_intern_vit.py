@@ -279,6 +279,7 @@ class InternVisionEncoder(nn.Module):
 class InternVisionModel(PreTrainedModel):
     main_input_name = 'pixel_values'
     config_class = InternVisionConfig
+    _no_split_modules = ['InternVisionEncoderLayer']
 
     def __init__(self, config: InternVisionConfig):
         super().__init__(config)

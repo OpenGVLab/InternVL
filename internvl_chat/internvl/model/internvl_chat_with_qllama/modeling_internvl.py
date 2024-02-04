@@ -42,7 +42,7 @@ class InternVLPreTrainedModel(PreTrainedModel):
     _keys_to_ignore_on_load_missing = [
         r'position_ids',
     ]
-    _no_split_modules = ['InternAttention', 'LlamaDecoderLayer', 'LlamaForCausalLM']
+    _no_split_modules = ['InternVisionEncoderLayer', 'LlamaDecoderLayer', 'LlamaForCausalLM']
     _skip_keys_device_placement = 'past_key_values'
     _keep_in_fp32_modules = ['wo']
 
