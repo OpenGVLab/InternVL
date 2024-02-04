@@ -24,6 +24,7 @@ logger = logging.get_logger(__name__)
 class InternVLChatModel(PreTrainedModel):
     config_class = InternVLChatConfig
     main_input_name = 'pixel_values'
+    _no_split_modules = ['InternVisionEncoderLayer', 'LlamaDecoderLayer', 'LlamaForCausalLM']
 
     def __init__(self, config: InternVLChatConfig, internvl=None, language_model=None):
         super().__init__(config)
