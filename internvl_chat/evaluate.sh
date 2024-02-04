@@ -6,6 +6,11 @@ CHECKPOINT="$(pwd)/${CHECKPOINT}"
 export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 echo "CHECKPOINT: ${CHECKPOINT}"
 
+MASTER_PORT=${MASTER_PORT:-63661}
+PORT=${PORT:-63661}
+GPUS=${GPUS:-8}
+
+
 if  [ ${DATASET} == "mme" ]; then
   cd eval/mme/
   DIRNAME=`basename ${CHECKPOINT}`
@@ -19,8 +24,8 @@ if  [ ${DATASET} == "caption" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/caption/evaluate_caption.py --checkpoint ${CHECKPOINT}
 fi
 
@@ -28,9 +33,9 @@ if  [ ${DATASET} == "caption-coco" ]; then
   torchrun \
     --nnodes=1 \
     --node_rank=0 \
-    --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --master_addr=127--master_port=${MASTER_PORT}.0.0.1 \
+    --nproc_per_node=${GPUS} \
+     \
     eval/caption/evaluate_caption.py --checkpoint ${CHECKPOINT} --datasets coco
 fi
 
@@ -39,8 +44,8 @@ if  [ ${DATASET} == "caption-flickr30k" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/caption/evaluate_caption.py --checkpoint ${CHECKPOINT} --datasets flickr30k
 fi
 
@@ -49,8 +54,8 @@ if  [ ${DATASET} == "caption-nocaps" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/caption/evaluate_caption.py --checkpoint ${CHECKPOINT} --datasets nocaps
 fi
 
@@ -59,8 +64,8 @@ if [ ${DATASET} == "vqa" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT}
 fi
 
@@ -69,8 +74,8 @@ if [ ${DATASET} == "vqa-okvqa-val" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets okvqa_val
 fi
 
@@ -79,8 +84,8 @@ if [ ${DATASET} == "vqa-textvqa-val" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets textvqa_val_ocr
 fi
 
@@ -89,8 +94,8 @@ if [ ${DATASET} == "vqa-vizwiz-val" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets vizwiz_val
 fi
 
@@ -99,8 +104,8 @@ if [ ${DATASET} == "vqa-vizwiz-test" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets vizwiz_test
 fi
 
@@ -109,8 +114,8 @@ if [ ${DATASET} == "vqa-vqav2-testdev" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets vqav2_testdev
 fi
 
@@ -119,8 +124,8 @@ if [ ${DATASET} == "vqa-ai2d-test" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets ai2diagram_test
 fi
 
@@ -129,8 +134,8 @@ if [ ${DATASET} == "vqa-vqav2-val" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets vqav2_val
 fi
 
@@ -139,8 +144,8 @@ if [ ${DATASET} == "vqa-gqa-testdev" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets gqa_testdev_llava
 fi
 
@@ -149,8 +154,8 @@ if [ ${DATASET} == "vqa-docvqa-val" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets docvqa_val
 fi
 
@@ -159,8 +164,8 @@ if [ ${DATASET} == "vqa-docvqa-test" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets docvqa_test
 fi
 
@@ -169,8 +174,8 @@ if [ ${DATASET} == "vqa-chartqa-test-human" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets chartqa_test_human
 fi
 
@@ -179,8 +184,8 @@ if [ ${DATASET} == "vqa-chartqa-test-augmented" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets chartqa_test_augmented
 fi
 
@@ -189,8 +194,8 @@ if [ ${DATASET} == "vqa-ocrvqa-val" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets ocrvqa_val
 fi
 
@@ -199,8 +204,8 @@ if [ ${DATASET} == "vqa-ocrvqa-test" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets ocrvqa_test
 fi
 
@@ -209,8 +214,8 @@ if [ ${DATASET} == "refcoco" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/refcoco/evaluate_grounding.py --checkpoint ${CHECKPOINT}
 fi
 
@@ -234,8 +239,8 @@ if [ ${DATASET} == "pope" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/pope/evaluate_pope.py --checkpoint ${CHECKPOINT} --datasets pope
 fi
 
@@ -244,8 +249,8 @@ if [ ${DATASET} == "tiny_lvlm" ]; then
     --nnodes=1 \
     --node_rank=0 \
     --master_addr=127.0.0.1 \
-    --nproc_per_node=8 \
-    --master_port=63667 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
     eval/tiny_lvlm/evaluate_lvlm.py --checkpoint ${CHECKPOINT} --datasets updated_datasets
 fi
 
@@ -268,8 +273,8 @@ if [ ${DATASET} == "mmbench-dev-en" ]; then
       --nnodes=1 \
       --node_rank=0 \
       --master_addr=127.0.0.1 \
-      --nproc_per_node=8 \
-      --master_port=63667 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
       eval/mmbench/evaluate_mmbench.py --checkpoint ${CHECKPOINT} --datasets mmbench_dev_20230712
 fi
 
@@ -278,8 +283,8 @@ if [ ${DATASET} == "mmbench-dev-cn" ]; then
       --nnodes=1 \
       --node_rank=0 \
       --master_addr=127.0.0.1 \
-      --nproc_per_node=8 \
-      --master_port=63667 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
       eval/mmbench/evaluate_mmbench.py --checkpoint ${CHECKPOINT} --datasets mmbench_dev_cn_20231003
 fi
 
@@ -288,8 +293,8 @@ if [ ${DATASET} == "mmbench-test-en" ]; then
       --nnodes=1 \
       --node_rank=0 \
       --master_addr=127.0.0.1 \
-      --nproc_per_node=8 \
-      --master_port=63667 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
       eval/mmbench/evaluate_mmbench.py --checkpoint ${CHECKPOINT} --datasets mmbench_test_en_20231003
 fi
 
@@ -298,8 +303,8 @@ if [ ${DATASET} == "mmbench-test-cn" ]; then
       --nnodes=1 \
       --node_rank=0 \
       --master_addr=127.0.0.1 \
-      --nproc_per_node=8 \
-      --master_port=63667 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
       eval/mmbench/evaluate_mmbench.py --checkpoint ${CHECKPOINT} --datasets mmbench_test_cn_20231003
 fi
 
@@ -308,8 +313,8 @@ if [ ${DATASET} == "scienceqa" ]; then
       --nnodes=1 \
       --node_rank=0 \
       --master_addr=127.0.0.1 \
-      --nproc_per_node=8 \
-      --master_port=63667 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
       eval/scienceqa/evaluate_scienceqa.py --checkpoint ${CHECKPOINT} --datasets sqa_test
 fi
 
@@ -319,8 +324,8 @@ if [ ${DATASET} == "mmmu-dev" ]; then
       --nnodes=1 \
       --node_rank=0 \
       --master_addr=127.0.0.1 \
-      --nproc_per_node=8 \
-      --master_port=63667 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
       eval/mmmu/evaluate_mmmu.py --checkpoint ${CHECKPOINT} --datasets MMMU_dev
 fi
 
@@ -329,8 +334,8 @@ if [ ${DATASET} == "mmmu-val" ]; then
       --nnodes=1 \
       --node_rank=0 \
       --master_addr=127.0.0.1 \
-      --nproc_per_node=8 \
-      --master_port=63667 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
       eval/mmmu/evaluate_mmmu.py --checkpoint ${CHECKPOINT} --datasets MMMU_validation
 fi
 
@@ -339,8 +344,8 @@ if [ ${DATASET} == "mmmu-test" ]; then
       --nnodes=1 \
       --node_rank=0 \
       --master_addr=127.0.0.1 \
-      --nproc_per_node=8 \
-      --master_port=63667 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
       eval/mmmu/evaluate_mmmu.py --checkpoint ${CHECKPOINT} --datasets MMMU_test
 fi
 
@@ -350,7 +355,29 @@ if [ ${DATASET} == "mmvp" ]; then
       --nnodes=1 \
       --node_rank=0 \
       --master_addr=127.0.0.1 \
-      --nproc_per_node=8 \
-      --master_port=63667 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
       eval/mmvp/evaluate_mmvp.py --checkpoint ${CHECKPOINT} --datasets MMVP
+fi
+
+
+if [ ${DATASET} == "mathvista-testmini" ]; then
+    torchrun \
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
+      eval/mathvista/evaluate_mathvista.py --checkpoint ${CHECKPOINT} --datasets MathVista_testmini
+fi
+
+
+if [ ${DATASET} == "mathvista-test" ]; then
+    torchrun \
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
+      eval/mathvista/evaluate_mathvista.py --checkpoint ${CHECKPOINT} --datasets MathVista_test
 fi
