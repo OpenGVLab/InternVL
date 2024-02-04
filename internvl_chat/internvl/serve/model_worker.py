@@ -65,7 +65,8 @@ class ModelWorker:
         from transformers import CLIPImageProcessor, LlamaTokenizer
 
         self.tokenizer = LlamaTokenizer.from_pretrained(model_path)
-        self.model = InternVLChatModel.from_pretrained(model_path).half().cuda().eval()
+        self.model = InternVLChatModel.from_pretrained(
+            model_path, load_in_8bit=False, torch_dtype=torch.float16).cuda().eval()
         self.image_size = self.model.config.force_image_size
         self.image_processor = CLIPImageProcessor(
             crop_size=self.image_size, do_center_crop=True, do_normalize=True, do_resize=True,

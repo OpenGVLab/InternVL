@@ -185,7 +185,9 @@ def http_bot(state, model_selector, temperature, top_p, max_new_tokens, request:
                 else:
                     template_name = "llava_v0"
         elif "intern" in model_name.lower():
-            if "chinese" in model_name.lower():
+            if "hermes2" in model_name.lower():
+                template_name = "Hermes-2"
+            elif "chinese" in model_name.lower():
                 template_name = "internvl_zh"
             else:
                 template_name = "llava_v1"
