@@ -343,3 +343,14 @@ if [ ${DATASET} == "mmmu-test" ]; then
       --master_port=63667 \
       eval/mmmu/evaluate_mmmu.py --checkpoint ${CHECKPOINT} --datasets MMMU_test
 fi
+
+
+if [ ${DATASET} == "mmvp" ]; then
+    torchrun \
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=8 \
+      --master_port=63667 \
+      eval/mmvp/evaluate_mmvp.py --checkpoint ${CHECKPOINT} --datasets MMVP
+fi
