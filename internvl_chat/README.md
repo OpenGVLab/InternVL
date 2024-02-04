@@ -110,9 +110,9 @@ Coming Soon
 
 **MultiModal Benchmark**
 
-| model                                                                             | MME            | MMB<sub>dev/test</sub> | MMB-CN<sub>dev/test</sub> | POPE |
-| --------------------------------------------------------------------------------- | -------------- | ---------------------- | ------------------------- | ---- |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 1672.3 / 341.1 | 76.6 / 75.4            | 71.5 / 70.1               | 87.2 |
+| model                                                                             | MME            | MMB<sub>dev/test</sub> | MMB-CN<sub>dev/test</sub> | POPE | MMVP |
+| --------------------------------------------------------------------------------- | -------------- | ---------------------- | ------------------------- | ---- | ---- |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 1672.3 / 341.1 | 76.6 / 75.4            | 71.5 / 70.1               | 87.2 | 44.7 |
 
 | model                                                                             | MMMU<sub>val/test</sub> | CMMMU<sub>val/test</sub> | Tiny<sub>LVLM</sub> | LLaVA<sub>bench</sub> | MM-Vet |
 | --------------------------------------------------------------------------------- | ----------------------- | ------------------------ | ------------------- | --------------------- | ------ |
@@ -284,6 +284,13 @@ data
 │   └── Sociology
 ├── mm-vet
 │   └── images/
+├── MMVP
+│   ├── MMVP Images/
+│   ├── Questions.csv
+│   └── Questions.xlsx
+├── MMVP_VLM
+│   ├── MLLM_VLM Images/
+│   └── Questions.csv
 ```
 
 </details>
@@ -971,6 +978,30 @@ cd ../..
 
 ```bash
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmvet
+```
+
+</details>
+
+#### [MMVP](https://github.com/tsb0601/MMVP)
+
+<details>
+<summary>Data Preparation</summary>
+
+```bash
+cd data
+git lfs install
+git clone https://huggingface.co/datasets/MMVP/MMVP
+git clone https://huggingface.co/datasets/MMVP/MMVP_VLM
+cd ..
+```
+
+</details>
+
+<details>
+<summary>Evaluation</summary>
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmvp
 ```
 
 </details>
