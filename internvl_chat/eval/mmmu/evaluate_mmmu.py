@@ -51,7 +51,7 @@ class MMMUDataset(torch.utils.data.Dataset):
         # run for each subject
         sub_dataset_list = []
         for subject in tqdm(CAT_SHORT2LONG.values()):
-            sub_dataset = load_dataset(root, subject, split=split, cache_dir='~/.cache/datasets/')
+            sub_dataset = load_dataset(root, subject, split=split, cache_dir=os.path.join(os.getcwd(), 'data/MMMU/'))
             sub_dataset_list.append(sub_dataset)
 
         # merge all dataset
