@@ -260,7 +260,7 @@ if __name__ == '__main__':
         divisor = 1  # TODO: divisor
         prompt = 'Please provide the bounding box coordinate of the region this sentence describes: <ref>{}</ref>'
 
-    total_params = sum(p.numel() for p in model.parameters()) / 1e6
+    total_params = sum(p.numel() for p in model.parameters()) / 1e9
     if total_params > 30:
         args.num_beams = 1
         print(f'[test] total_params: {total_params}B, use num_beams: {args.num_beams}')

@@ -249,7 +249,7 @@ if __name__ == '__main__':
         image_size = model.config.force_image_size or model.config.vision_config.image_size
         pad2square = model.config.pad2square
 
-    total_params = sum(p.numel() for p in model.parameters()) / 1e6
+    total_params = sum(p.numel() for p in model.parameters()) / 1e9
     if total_params > 30:
         args.num_beams = 1
         print(f'[test] total_params: {total_params}B, use num_beams: {args.num_beams}')
