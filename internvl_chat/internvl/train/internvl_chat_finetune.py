@@ -370,17 +370,9 @@ class LazySupervisedDataset(Dataset):
         self.is_train = is_train
         self.pad2square = pad2square
         logger.info('Formatting inputs...Skip in lazy mode')
-        if meta['annotation'].endswith('json'):
-            try:
-                self.raw_data = json.loads(open(meta['annotation'], 'r').read())
-            except:
-                self.raw_data = [json.loads(line) for line in open(meta['annotation'], 'r').readlines()]
-        elif meta['annotation'].endswith('jsonl'):
-            try:
-                self.raw_data = [json.loads(line) for line in open(meta['annotation'], 'r').readlines()]
-            except:
-                self.raw_data = json.loads(open(meta['annotation'], 'r').read())
-
+        assert meta['annotation'].endswith('jsonl'), f'annotation must be jsonl, but got {meta["annotation"]}'
+        with open(meta['annotation'], 'r') as f:
+            self.raw_data = f.readlines()
         self.root = meta['root']
         self.cached_data_dict = {}
         self.tcs_loader = tcs_loader
@@ -439,7 +431,7 @@ class LazySupervisedDataset(Dataset):
         i = i % len(self.raw_data)
         while True:
             try:
-                data_item = self.raw_data[i]
+                data_item = json.loads(self.raw_data[i])
                 if 'image' in data_item and len(data_item['image']) != 0:
                     ret = self.multi_modal_get_item(data_item)
                 else:
@@ -447,7 +439,7 @@ class LazySupervisedDataset(Dataset):
                 break
             except Exception as e:
                 logger.info(e)
-                data_item = self.raw_data[i]
+                data_item = json.loads(self.raw_data[i])
                 if 'image' in data_item:
                     data_path = os.path.join(self.root, data_item['image'])
                     print(f'Failed to load image: {data_path}')

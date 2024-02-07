@@ -450,7 +450,7 @@ class LazySupervisedDataset(Dataset):
                 data_item = json.loads(self.raw_data[i])
                 if 'image' in data_item:
                     data_path = os.path.join(self.root, data_item['image'])
-                    logger.info(f'Failed to load image: {data_path}')
+                    print(f'Failed to load image: {data_path}')
                 i = random.randint(0, len(self.raw_data) - 1)
         return ret
 
