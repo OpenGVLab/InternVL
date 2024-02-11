@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "llava"
-version = "1.1.1"
-description = "Towards GPT-4 like large language and visual assistant."
+name = "internvl_chat"
+version = "1.2.0"
+description = "Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks."
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
@@ -23,11 +23,11 @@ dependencies = [
 ]
 
 [project.urls]
-"Homepage" = "https://llava-vl.github.io"
-"Bug Tracker" = "https://github.com/haotian-liu/LLaVA/issues"
+"Homepage" = "https://github.com/OpenGVLab/InternVL"
+"Bug Tracker" = "https://github.com/OpenGVLab/InternVL/issues"
 
 [tool.setuptools.packages.find]
-exclude = ["assets*", "benchmark*", "docs", "dist*", "playground*", "scripts*", "tests*"]
+exclude = ["data*", "benchmark*", "docs", "dist*", "playground*", "scripts*", "shell*"]
 
 [tool.wheel]
-exclude = ["assets*", "benchmark*", "docs", "dist*", "playground*", "scripts*", "tests*"]
+exclude = ["data*", "benchmark*", "docs", "dist*", "playground*", "scripts*", "shell*"]

@@ -1,15 +1,16 @@
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/5aa4cda8-b453-40a0-9336-17012b430ae8"> InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks —— An Open-Source Alternative to ViT-22B
 
+\[[Blog](./BLOG.md)\]   \[[Paper](https://arxiv.org/abs/2312.14238)\]  \[[Chat Demo](https://internvl.opengvlab.com/)\]  \[[Quick Start](#quick-start-with-huggingface)\]  \[[中文解读](https://mp.weixin.qq.com/s/bdfAJRqOF9tUk8Vy9KC_XQ)\]
+
 ## News🚀🚀🚀
 
+- `2024/02/12`: InternVL-Chat-V1.2 has been released, utilizing [Nous-Hermes-2-Yi-34B](https://huggingface.co/NousResearch/Nous-Hermes-2-Yi-34B) as the LLM. In most benchmarks, our InternVL-Chat-V1.2 achieves better performance than LLaVA-NeXT-34B. For more details, please refer to our [blog](BLOG.md) or try our [demo](https://internvl.opengvlab.com/). The model is now available on [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2), and both training/evaluation data and scripts are open-sourced.
 - `2024/02/04`: [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) achieves 44.67% on [MMVP](https://github.com/tsb0601/MMVP), higher than GPT-4V!
 - `2024/01/27`: We release 448 resolution model, achieving 76.6 on MMBench dev, see [here](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#-evaluation-chinese-models).
 - `2024/01/24`: InternVL-Chat-V1.1 is released, it supports Chinese and has stronger OCR capability, see [here](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) or try our [demo](https://internvl.opengvlab.com/).
 - `2024/01/16`: We release our [customized mmcv/mmsegmentation/mmdetection code](https://github.com/OpenGVLab/InternVL-MMDetSeg), integrated with DeepSpeed, which can be used for training large-scale object detection and semantic segmentation models.
 
 ## What is InternVL?
-
-\[[Paper](https://arxiv.org/abs/2312.14238)\]  \[[Chat Demo](https://internvl.opengvlab.com/)\]  \[[Quick Start](#quick-start-with-huggingface)\]  \[[中文解读](https://mp.weixin.qq.com/s/bdfAJRqOF9tUk8Vy9KC_XQ)\]
 
 InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 
@@ -34,14 +35,24 @@ It is _**the largest open-source vision/vision-language foundation model (14B)**
 
 ## Model Zoo
 
-| Model              | Date       | Download                                                                       | Note                             |
-| ------------------ | ---------- | ------------------------------------------------------------------------------ | -------------------------------- |
-| InternViT-6B-224px | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)              | vision foundation model          |
-| InternVL-14B-224px | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)              | vision-language foundation model |
-| InternVL-Chat-13B  | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)  | English multimodal dialogue      |
-| InternVL-Chat-19B  | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B) | English multimodal dialogue      |
-| InternVL-Chat-V1.1 | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)      | support Chinese and stronger OCR |
-| InternViT-6B-448px | 2024.01.30 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px)              | 448 resolution                   |
+**Vision-Language Foundation Model**
+
+| Model                   | Date       | Download                                                               | Note                             |
+| ----------------------- | ---------- | ---------------------------------------------------------------------- | -------------------------------- |
+| InternViT-6B-224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)      | vision foundation model          |
+| InternVL-14B-224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)      | vision-language foundation model |
+| InternViT-6B-448px      | 2024.01.30 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px)      | 448 resolution                   |
+| InternViT-6B-448px-V1.2 | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-2) | 448 resolution (🔥new)           |
+
+**Vision Large Language Model**
+
+| Model                   | Date       | Download                                                                             | Note                             |
+| ----------------------- | ---------- | ------------------------------------------------------------------------------------ | -------------------------------- |
+| InternVL-Chat-13B       | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)        | English multimodal dialogue      |
+| InternVL-Chat-19B       | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B)       | English multimodal dialogue      |
+| InternVL-Chat-19B-448px | 2024.02.03 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B-448px) | 448 resolution                   |
+| InternVL-Chat-V1.1      | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)            | support Chinese and stronger OCR |
+| InternVL-Chat-V1.2      | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)            | scaling up LLM to 34B (🔥new)    |
 
 ## What can InternVL do?
 
@@ -173,6 +184,22 @@ It is _**the largest open-source vision/vision-language foundation model (14B)**
         <td>75.0</td>
         <td>82.7</td>
         <td>85.1</td>
+     </tr>
+    <tr align=center>
+        <td align=left>EVA-CLIP-8B</td>
+        <td>95.6</td>
+        <td>99.6</td>
+        <td>99.9</td>
+        <td>80.8</td>
+        <td>95.5</td>
+        <td>97.6</td>
+        <td>70.3</td>
+        <td>89.3</td>
+        <td>93.9</td>
+        <td>53.0</td>
+        <td>76.0</td>
+        <td>83.4</td>
+        <td>86.2</td>
      </tr>
   <tr align=center>
         <td align=left>InternVL-C (ours)</td>
@@ -396,7 +423,6 @@ pixel_values = image_processor(images=image, return_tensors='pt').pixel_values
 pixel_values = pixel_values.to(torch.bfloat16).cuda()
 
 outputs = model(pixel_values)
-
 ```
 
 </details>
