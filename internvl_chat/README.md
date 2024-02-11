@@ -49,29 +49,33 @@ pretrained
 
 Coming Soon
 
-## 📊 Evaluation (Chinese Models)
+## 📊 Evaluation
 
 **MultiModal Benchmark**
 
 | model                                                                             | MME            | MMB<sub>dev/test</sub> | MMB-CN<sub>dev/test</sub> | POPE | MMVP | MathVista |
 | --------------------------------------------------------------------------------- | -------------- | ---------------------- | ------------------------- | ---- | ---- | --------- |
 | [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 1672.3 / 341.1 | 76.6 / 75.4            | 71.5 / 70.1               | 87.2 | 44.7 | 34.5      |
+| [InternVL-Chat-V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2) | 1673.0 / 509.3 | TODO                   | TODO                      | 88.0 | 56.7 | 47.7      |
 
 | model                                                                             | MMMU<sub>val/test</sub> | CMMMU<sub>val/test</sub> | Tiny<sub>LVLM</sub> | LLaVA<sub>bench</sub> | MM-Vet |
 | --------------------------------------------------------------------------------- | ----------------------- | ------------------------ | ------------------- | --------------------- | ------ |
 | [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 39.1 / 35.3             | 34.8 / 34.0              | 344.5               | 76.3                  | 45.0   |
+| [InternVL-Chat-V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2) | 51.6 / -                | TODO                     | 350.3               | TODO                  | 48.9   |
 
 **Visual Question Answering**
 
 | model                                                                             | VQAv2<sub>test</sub> | OKVQA<sub>val</sub> | TextVQA<sub>val</sub> | VizWiz<sub>val/test</sub> | AI2D<sub>test</sub> | GQA<sub>test</sub> | SQA<sub>test</sub> |
 | --------------------------------------------------------------------------------- | -------------------- | ------------------- | --------------------- | ------------------------- | ------------------- | ------------------ | ------------------ |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 80.9                 | 64.2                | 65.8                  | 58.3 / 57.3               | 70.23               | 62.4               | 91.2               |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 80.9                 | 64.2                | 65.8                  | 58.3 / 57.3               | 70.2                | 62.4               | 91.2               |
+| [InternVL-Chat-V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2) | TODO                 | 62.5                | 69.7                  | 61.9 / -                  | 71.6                | 64.0               | 83.3               |
 
 **Image Captioning**
 
 | model                                                                             | COCO<sub>test</sub> | Flickr30K<sub>test</sub> | NoCaps<sub>val</sub> |
 | --------------------------------------------------------------------------------- | ------------------- | ------------------------ | -------------------- |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 141.8               | 84.3                     | 120.4                |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 141.8\*             | 84.3                     | 120.4                |
+| [InternVL-Chat-V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2) | 113.9               | 92.4                     | 112.5                |
 
 ## 📊 Evaluation (Legacy Models)
 
