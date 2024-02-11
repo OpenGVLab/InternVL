@@ -36,7 +36,9 @@ srun -p ${PARTITION} \
   --quotatype=${QUOTA_TYPE} \
   ${SRUN_ARGS} \
   python -u internvl/train/internvl_chat_finetune.py \
-  --model_name_or_path "./work_dirs/internvl_chat_hermes2_yi34b_448_chinese_pretrain2/checkpoint-1000" \
+  --vision_path "./pretrained/intern_vit_6b_448px_v1_2" \
+  --mlp_path "./pretrained/intern_vit_6b_448px_v1_2/mlp_projector.pth" \
+  --llm_path "./pretrained/Nous-Hermes-2-Yi-34B" \
   --conv_style "Hermes-2" \
   --output_dir ${OUTPUT_DIR} \
   --meta_path "./shell/data/data_yi34b_finetune.json" \
@@ -57,7 +59,7 @@ srun -p ${PARTITION} \
   --evaluation_strategy "no" \
   --save_strategy "steps" \
   --save_steps 200 \
-  --save_total_limit 2 \
+  --save_total_limit 1 \
   --learning_rate 1e-5 \
   --weight_decay 0.05 \
   --warmup_ratio 0.03 \
