@@ -1,0 +1,56 @@
+{
+  "sharegpt4v_instruct_gpt4-vision_cap100k": {
+    "root": "playground/data/",
+    "annotation": "playground/sharegpt4v_instruct_gpt4-vision_cap100k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "llava_instruct_150k_zh": {
+    "root": "playground/data/coco/train2017/",
+    "annotation": "playground/llava_instruct_150k_zh.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "sharegpt4v_mix665k_cap23k_coco-ap9k_lcs3k_sam9k_div2k": {
+    "root": "playground/data/",
+    "annotation": "playground/sharegpt4v_mix665k_cap23k_coco-ap9k_lcs3k_sam9k_div2k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "dvqa_train_200k": {
+    "root": "playground/data/dvqa/images",
+    "annotation": "playground/dvqa_train_200k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "chartqa_train_18k": {
+    "root": "playground/data/chartqa/train/png/",
+    "annotation": "playground/chartqa_train_18k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "ai2d_train_12k": {
+    "root": "playground/data/ai2d/images",
+    "annotation": "playground/ai2d_train_12k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "docvqa_train_10k": {
+    "root": "playground/data/docvqa/train/train/documents/",
+    "annotation": "playground/docvqa_train_10k.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "geoqa+": {
+    "root": "",
+    "annotation": "data/metas/tianhao_data/stage3_v5/mathvista_indomain/geoqa+.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  },
+  "synthdog_en": {
+    "root": "playground/data/synthdog-en/",
+    "annotation": "playground/synthdog_en.jsonl",
+    "data_augment": false,
+    "repeat_time": 1
+  }
+}
