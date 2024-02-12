@@ -24,21 +24,21 @@ For more details about data preparation, please see [here](./internvl_chat#prepa
 
 \* Proprietary Model
 
-| name               | image size | MME      | MMMU<sub>val</sub> | MMMU<sub>test</sub> | MathVista | MMVP | MMB  | MMB-CN | SQA | POPE | TextVQA | SEED-IMG | ChartQA | AI2D | VizWiz | GQA  | MM-Vet |
-| ------------------ | ---------- | -------- | ------------------ | ------------------- | --------- | ---- | ---- | ------ | --------- | ---- | ------- | -------- | ------- | ---- | ------ | ---- | ------ |
-| GPT-4V\*           | unknown    | 1409/517 | 56.8               | 55.7                | 49.9      | 38.7 | 77.0 | 73.9   | -         | -    | 78.0    | 71.6     | 78.5    | 78.2 | -      | -    | 67.7   |
-| Gemini Ultra\*     | unknown    | -        | 59.4               | -                   | 53.0      | -    | -    | -      | -         | -    | 82.3    | -        | 80.8    | 79.5 | -      | -    | -      |
-| Gemini Pro\*       | unknown    | 1497/437 | 47.9               | -                   | 45.2      | 40.7 | 73.6 | 74.3   | -         | -    | 74.6    | 70.7     | 74.1    | 73.9 | -      | -    | 64.3   |
-| Qwen-VL-Plus\*     | unknown    | 1681/502 | 45.2               | 40.8                | 43.3      | -    | 67.0 | 70.7   | -         | -    | 78.9    | 65.7     | 78.1    | 75.9 | -      | -    | -      |
+| name               | image size | MMMU<sub>val</sub> | MMMU<sub>test</sub> | MathVista | MMVP | MMB  | MMB-CN | SQA | POPE | TextVQA | SEED-IMG | ChartQA | AI2D | VizWiz | GQA  | MM-Vet | MME      |
+| ------------------ | ---------- | ------------------ | ------------------- | --------- | ---- | ---- | ------ | --------- | ---- | ------- | -------- | ------- | ---- | ------ | ---- | ------ | -------- |
+| GPT-4V\*           | unknown    | 56.8               | 55.7                | 49.9      | 38.7 | 77.0 | 73.9   | -         | -    | 78.0    | 71.6     | 78.5    | 78.2 | -      | -    | 67.7   | 1409/517 |
+| Gemini Ultra\*     | unknown    | 59.4               | -                   | 53.0      | -    | -    | -      | -         | -    | 82.3    | -        | 80.8    | 79.5 | -      | -    | -      | -        |
+| Gemini Pro\*       | unknown    | 47.9               | -                   | 45.2      | 40.7 | 73.6 | 74.3   | -         | -    | 74.6    | 70.7     | 74.1    | 73.9 | -      | -    | 64.3   | 1497/437 |
+| Qwen-VL-Plus\*     | unknown    | 45.2               | 40.8                | 43.3      | -    | 67.0 | 70.7   | -         | -    | 78.9    | 65.7     | 78.1    | 75.9 | -      | -    | -      | 1681/502 |
 |                    |            |          |                    |                     |           |      |      |        |           |      |         |          |         |      |        |      |        |
-| LLaVA-NEXT-34B     | 672x672    | 1631/397 | 51.1               | 44.7                | 46.5      | -    | 79.3 | 79.0   | 81.8      | 87.7 | 69.5    | 75.9     | -       | -    | 63.8   | 67.1 | 57.4   |
-| InternVL-Chat-V1.2 | 448x448    | 1672/509 | 51.6               | 46.2                | 47.7      | 56.7 | TODO | TODO   | 83.3      | 88.0 | 69.7    | TODO     | 67.8    | 71.6 | 60.0   | 64.0 | 48.9   |
+| LLaVA-NEXT-34B     | 672x672    | 51.1               | 44.7                | 46.5      | -    | 79.3 | 79.0   | 81.8      | 87.7 | 69.5    | 75.9     | -       | -    | 63.8   | 67.1 | 57.4   | 1631/397 |
+| InternVL-Chat-V1.2 | 448x448    | 51.6               | 46.2                | 47.7      | 56.7 | 82.3 |  81.2  | 83.3      | 88.0 | 69.7    | TODO     | 67.8    | 71.6 | 60.0   | 64.0 | 48.9   | 1672/509 |
 
 - In most benchmarks, InternVL-Chat-V1.2 achieves better performance than LLaVA-NeXT-34B.
   
 ### Training (SFT)
 
-We provide [slurm scripts](./internvl_chat/shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune.sh) for multi-node multi-GPU training. You can use either 32 or 64 GPUs to train this model.
+We provide [slurm scripts](./internvl_chat/shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune.sh) for multi-node multi-GPU training. You can use either 32 or 64 GPUs to train this model. If you use 64 GPUs, training will take approximately 18 hours.
 
 For more details about training, please see [here](./internvl_chat#start-training).
 
