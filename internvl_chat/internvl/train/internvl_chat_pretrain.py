@@ -87,6 +87,10 @@ class ModelArguments:
         default=None,
         metadata={'help': 'Path to pretrained model or model identifier from huggingface.co/models'}
     )
+    mlp_path: Optional[str] = field(
+        default=None,
+        metadata={'help': 'Path to pretrained model or model identifier from huggingface.co/models'}
+    )
     freeze_llm: bool = field(
         default=False,
         metadata={'help': 'Set to True to freeze the LLM decoder.'},
@@ -576,16 +580,23 @@ def main():
         llm = LlamaForCausalLM.from_pretrained(
             model_args.llm_path, torch_dtype=torch.bfloat16, attn_implementation='flash_attention_2')
         logger.info('Building InternVLChatConfig...')
-        vision_config = InternVisionConfig.from_pretrained(model_args.vision_path)
+        vision_config = vision_model.config
         vision_config.drop_path_rate = model_args.drop_path_rate
-        llm_config = LlamaConfig.from_pretrained(model_args.llm_path)
+        llm_config = llm.config
         internvl_chat_config = InternVLChatConfig(vision_config.to_dict(), llm_config.to_dict(),
                                                   downsample_ratio=data_args.down_sample_ratio,
                                                   pad2square=data_args.pad2square,
                                                   template=data_args.conv_style)
+        internvl_chat_config.force_image_size = data_args.force_image_size
         logger.info('Building InternVLChatModel...')
         model = InternVLChatModel(internvl_chat_config, vision_model, llm)
     model.img_context_token_id = img_context_token_id
+
+    if model_args.mlp_path is not None:
+        logger.info('Loading pretrained MLP projector...')
+        state_dict = torch.load(model_args.mlp_path, map_location='cpu')
+        message = model.mlp1.load_state_dict(state_dict)
+        logger.info(message)
     logger.info('Finished')
 
     patch_size = model.config.vision_config.patch_size
