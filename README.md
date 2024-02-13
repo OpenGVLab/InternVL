@@ -4,7 +4,7 @@
 
 ## News🚀🚀🚀
 
-- `2024/02/12`: InternVL-Chat-V1.2 has been released, utilizing [Nous-Hermes-2-Yi-34B](https://huggingface.co/NousResearch/Nous-Hermes-2-Yi-34B) as the LLM. In most benchmarks, our InternVL-Chat-V1.2 achieves better performance than LLaVA-NeXT-34B. For more details, please refer to our [blog](BLOG.md) or try our [demo](https://internvl.opengvlab.com/). The model is now available on [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2), and both training/evaluation data and scripts are open-sourced.
+- `2024/02/12`: InternVL-Chat-V1.2 has been released, utilizing [Nous-Hermes-2-Yi-34B](https://huggingface.co/NousResearch/Nous-Hermes-2-Yi-34B) as the LLM. It achieves 51.6 on MMMU val and 82.3 on MMBench test. For more details, please refer to our [blog](BLOG.md) or try our [demo](https://internvl.opengvlab.com/). The model is now available on [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2), and both training/evaluation data and scripts are open-sourced.
 - `2024/02/04`: [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) achieves 44.67% on [MMVP](https://github.com/tsb0601/MMVP), higher than GPT-4V!
 - `2024/01/27`: We release 448 resolution model, achieving 76.6 on MMBench dev, see [here](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#-evaluation-chinese-models).
 - `2024/01/24`: InternVL-Chat-V1.1 is released, it supports Chinese and has stronger OCR capability, see [here](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) or try our [demo](https://internvl.opengvlab.com/).
@@ -13,25 +13,6 @@
 ## What is InternVL?
 
 InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
-
-It is _**the largest open-source vision/vision-language foundation model (14B)**_ to date, achieving _**32 state-of-the-art**_ performances on a wide range of tasks such as visual perception, cross-modal retrieval, multimodal dialogue, etc.
-
-<img width="1204" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/47878df8-2aec-446e-8a58-00640a2e1327">
-
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/zero-shot-cross-modal-retrieval-on-coco-2014)](https://paperswithcode.com/sota/zero-shot-cross-modal-retrieval-on-coco-2014?p=internvl-scaling-up-vision-foundation-models)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/zero-shot-image-retrieval-on-coco-cn)](https://paperswithcode.com/sota/zero-shot-image-retrieval-on-coco-cn?p=internvl-scaling-up-vision-foundation-models)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/zero-shot-cross-modal-retrieval-on-flickr30k)](https://paperswithcode.com/sota/zero-shot-cross-modal-retrieval-on-flickr30k?p=internvl-scaling-up-vision-foundation-models)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/image-to-text-retrieval-on-flickr30k)](https://paperswithcode.com/sota/image-to-text-retrieval-on-flickr30k?p=internvl-scaling-up-vision-foundation-models)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/zero-shot-image-retrieval-on-flickr30k-cn)](https://paperswithcode.com/sota/zero-shot-image-retrieval-on-flickr30k-cn?p=internvl-scaling-up-vision-foundation-models)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/image-retrieval-on-flickr30k-cn)](https://paperswithcode.com/sota/image-retrieval-on-flickr30k-cn?p=internvl-scaling-up-vision-foundation-models)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/zero-shot-image-retrieval-on-xtd10)](https://paperswithcode.com/sota/zero-shot-image-retrieval-on-xtd10?p=internvl-scaling-up-vision-foundation-models)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/zero-shot-transfer-image-classification-on-cn)](https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-cn?p=internvl-scaling-up-vision-foundation-models)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/zero-shot-transfer-image-classification-on-8)](https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-8?p=internvl-scaling-up-vision-foundation-models)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/zero-shot-video-retrieval-on-msr-vtt)](https://paperswithcode.com/sota/zero-shot-video-retrieval-on-msr-vtt?p=internvl-scaling-up-vision-foundation-models)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/zero-shot-transfer-image-classification-on-6)](https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-6?p=internvl-scaling-up-vision-foundation-models)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/zero-shot-transfer-image-classification-on-5)](https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-5?p=internvl-scaling-up-vision-foundation-models)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/zero-shot-transfer-image-classification-on-3)](https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-3?p=internvl-scaling-up-vision-foundation-models)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/internvl-scaling-up-vision-foundation-models/zero-shot-transfer-image-classification-on-1)](https://paperswithcode.com/sota/zero-shot-transfer-image-classification-on-1?p=internvl-scaling-up-vision-foundation-models)
 
 ## Model Zoo
 
