@@ -1101,7 +1101,7 @@ GPUS=8 sh evaluate.sh <checkpoint> mathvista-test
 <summary>Evaluation</summary>
 
 ```bash
-GPUS=8 sh evaluate.sh <checkpoint> seed-llava
+GPUS=8 sh evaluate.sh <checkpoint> seed
 ```
 
 </details>
