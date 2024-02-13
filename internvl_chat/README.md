@@ -339,6 +339,10 @@ data
 ├── MathVista
 │   ├── annot_testmini.json
 │   └── AI4Math___math_vista/
+├── SEED
+│   ├── SEED-Bench.json
+│   ├── SEED-Bench-image/
+│   └── SEED-Bench-video-image-1/
 ```
 
 </details>
