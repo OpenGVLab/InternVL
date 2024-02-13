@@ -9,54 +9,51 @@ from functools import partial
 import torch
 from internvl.train.dataset import build_transform
 from PIL import Image
+from torch.utils.data import Dataset
 from tqdm import tqdm
 from transformers import LlamaTokenizer
 
 ds_collections = {
-    'pope': {
-        'root': 'data/pope/val2014',
-        'question': 'data/pope/llava_pope_test.jsonl',
-        'metric': None,
+    'SEEDv1': {
+        'root': 'data/SEED/',
+        'annotation': 'eval/seed/seed.jsonl',
         'max_new_tokens': 100,
         'min_new_tokens': 1,
-    }
+    },
 }
 
 
 def collate_fn(batches, tokenizer):
     pixel_values = torch.cat([_['pixel_values'] for _ in batches], dim=0)
     questions = [_['question'] for _ in batches]
-    question_ids = [_['question_id'] for _ in batches]
-    annotations = [_['annotation'] for _ in batches]
+    answers = [_['answer'] for _ in batches]
+    indexes = [_['index'] for _ in batches]
+    return pixel_values, questions, answers, indexes
 
-    return pixel_values, questions, question_ids, annotations
 
+class MultipleChoiceDataset(torch.utils.data.Dataset):
 
-class VQADataset(torch.utils.data.Dataset):
-
-    def __init__(self, root, data, prompt, input_size=224, pad2square=False):
+    def __init__(self, root, annotation, input_size=224, pad2square=False):
+        f = open(annotation, 'r', encoding='utf-8')
+        self.data = [json.loads(line) for line in f.readlines()]
         self.root = root
-        self.data = open(data).readlines()
-        self.prompt = prompt
         self.transform = build_transform(is_train=False, input_size=input_size, pad2square=pad2square)
 
     def __len__(self):
         return len(self.data)
 
     def __getitem__(self, idx):
-        data = json.loads(self.data[idx].strip())
-        image, question, question_id, annotation = data['image'], data[
-            'text'], data['question_id'], data.get('answer', None)
-
-        image = os.path.join(self.root, image)
-        image = Image.open(image).convert('RGB')
+        data = self.data[idx]
+        question = data['text']
+        image_path = os.path.join(self.root, data['image'])
+        image = Image.open(image_path).convert('RGB')
         pixel_values = self.transform(image).unsqueeze(0)
-        question = question + ' ' + self.prompt
+        answer = data['answer'] if 'answer' in data else None
         return {
-            'question_id': question_id,
             'question': question,
             'pixel_values': pixel_values,
-            'annotation': annotation
+            'answer': answer,
+            'index': data['question_id'],
         }
 
 
@@ -86,15 +83,28 @@ class InferenceSampler(torch.utils.data.sampler.Sampler):
         return len(self._local_indices)
 
 
+def post_process(pred, option):
+    pred = pred.strip()
+    option_candidate = list(option.keys())
+    if len(pred) == 1:
+        return pred
+    elif len(pred) != 1 and pred[0] in option_candidate:
+        return pred[0]
+    elif len(pred) != 1 and pred[0] not in option_candidate:
+        for k, v in option.items():
+            if v in pred:
+                return k
+
+    return pred
+
+
 def evaluate_chat_model():
-    prompt = 'Answer the question using a single word or phrase.'
     random.seed(args.seed)
 
     for ds_name in args.datasets:
-        dataset = VQADataset(
+        dataset = MultipleChoiceDataset(
             root=ds_collections[ds_name]['root'],
-            data=ds_collections[ds_name]['question'],
-            prompt='',
+            annotation=ds_collections[ds_name]['annotation'],
             input_size=image_size,
             pad2square=pad2square
         )
@@ -109,13 +119,12 @@ def evaluate_chat_model():
         )
 
         outputs = []
-        for _, (pixel_values, questions, question_ids, annotations) in tqdm(enumerate(dataloader)):
+        for _, (pixel_values, questions, answers, indexes) in enumerate(tqdm(dataloader)):
             pixel_values = pixel_values.to(torch.bfloat16).cuda()
             generation_config = dict(
                 num_beams=args.num_beams,
                 max_new_tokens=ds_collections[ds_name]['max_new_tokens'],
                 min_new_tokens=ds_collections[ds_name]['min_new_tokens'],
-                length_penalty=1,
                 do_sample=True if args.temperature > 0 else False,
                 temperature=args.temperature,
             )
@@ -125,14 +134,14 @@ def evaluate_chat_model():
                 question=questions[0],
                 generation_config=generation_config,
             )
-            answers = [pred]
+            preds = [pred]
 
-            for question_id, answer, annotation in zip(question_ids, answers, annotations):
+            for question, pred, answer, index in zip(questions, preds, answers, indexes):
                 outputs.append({
-                    'question_id': question_id,
-                    'text': pred,
-                    'model_id': args.checkpoint,
-                    'metadata': {},
+                    'question_id': index,
+                    'question': question,
+                    'prediction': pred,
+                    'answer': answer,
                 })
 
         torch.distributed.barrier()
@@ -145,25 +154,33 @@ def evaluate_chat_model():
         merged_outputs = [_ for _ in itertools.chain.from_iterable(merged_outputs)]
 
         if torch.distributed.get_rank() == 0:
+
             print(f'Evaluating {ds_name} ...')
             time_prefix = time.strftime('%y%m%d%H%M%S', time.localtime())
-            results_file = f'{ds_name}_{time_prefix}.json'
-            results_file = os.path.join(args.out_dir, results_file)
-            json.dump(merged_outputs, open(results_file, 'w'))
-            print('Results saved to {}'.format(results_file))
-            cmd = 'python eval/pope/eval_pope.py ' \
-                  '--annotation-dir ./data/pope/coco ' \
-                  '--question-file ./data/pope/llava_pope_test.jsonl ' \
-                  '--result-file ' + results_file
-            print(cmd)
+            results_file = f'{ds_name}_{time_prefix}.jsonl'
+            output_path = os.path.join(args.out_dir, results_file)
+            writer = open(output_path, 'w')
+
+            results = []
+            for item in merged_outputs:
+                writer.write(json.dumps(item) + '\n')
+                answer = item['answer']
+                prediction = item['prediction']
+                if prediction == answer:
+                    results.append(1)
+                else:
+                    results.append(0)
+            writer.close()
+            print('Results saved to {}'.format(output_path))
+            print(f'Acc@1: {sum(results) / len(results)}')
+            cmd = f'python eval/seed/calculation.py --image_result_file {output_path}'
             os.system(cmd)
 
 
 if __name__ == '__main__':
-
     parser = argparse.ArgumentParser()
     parser.add_argument('--checkpoint', type=str, default='')
-    parser.add_argument('--datasets', type=str, default='pope')
+    parser.add_argument('--datasets', type=str, default='SEEDv1')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
     parser.add_argument('--num-beams', type=int, default=5)

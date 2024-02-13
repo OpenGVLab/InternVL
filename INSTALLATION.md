@@ -23,9 +23,9 @@
   pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
   ```
 
-- Install `flash-attn==0.2.8` :
+- Install `flash-attn==0.2.8` or `flash-attn==2.3.6`:
 
-  If you want to fully replicate my results, please install `v0.2.8`, otherwise install the latest version.
+  If you want to fully replicate my results in the paper, please install `v0.2.8`, otherwise install the `v2.3.6`.
 
   This is because different versions of flash attention yield slight differences in results.
 
@@ -44,10 +44,10 @@
   mim install mmcv-full==1.6.2
   ```
 
-- Install `transformers==4.32.0`:
+- Install `transformers==4.36.2`:
 
   ```bash
-  pip install transformers==4.32.0
+  pip install transformers==4.36.2
   ```
 
 - Install `apex` (optional):
@@ -66,4 +66,6 @@
 
   ```bash
   pip install opencv-python termcolor yacs pyyaml scipy
+  pip install deepspeed==0.10.0
+  pip install pycocoevalcap tqdm
   ```

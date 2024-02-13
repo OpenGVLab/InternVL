@@ -9,7 +9,7 @@ from transformers import AutoModel, AutoTokenizer, CLIPImageProcessor
 
 
 def benchmark_model(model_name, benchmark_dir, device='cuda'):
-    # model_path = '/mnt/petrelfs/share_data/wangwenhai/llm/internvl_14b_224px'
+    # model_path = 'pretrained/internvl_14b_224px'
     model_path = 'OpenGVLab/InternVL-14B-224px'
     model = AutoModel.from_pretrained(
         model_path,

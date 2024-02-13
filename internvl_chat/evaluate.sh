@@ -6,9 +6,11 @@ CHECKPOINT="$(pwd)/${CHECKPOINT}"
 export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 echo "CHECKPOINT: ${CHECKPOINT}"
 
-MASTER_PORT=${MASTER_PORT:-63661}
-PORT=${PORT:-63661}
+MASTER_PORT=${MASTER_PORT:-63665}
+PORT=${PORT:-63665}
 GPUS=${GPUS:-8}
+export MASTER_PORT=${MASTER_PORT}
+export PORT=${PORT}
 
 
 if  [ ${DATASET} == "mme" ]; then
@@ -167,6 +169,16 @@ if [ ${DATASET} == "vqa-docvqa-test" ]; then
     --nproc_per_node=${GPUS} \
     --master_port=${MASTER_PORT} \
     eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets docvqa_test
+fi
+
+if [ ${DATASET} == "vqa-chartqa-test" ]; then
+    torchrun \
+    --nnodes=1 \
+    --node_rank=0 \
+    --master_addr=127.0.0.1 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
+    eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets chartqa_test_human,chartqa_test_augmented
 fi
 
 if [ ${DATASET} == "vqa-chartqa-test-human" ]; then
@@ -380,4 +392,14 @@ if [ ${DATASET} == "mathvista-test" ]; then
       --nproc_per_node=${GPUS} \
       --master_port=${MASTER_PORT} \
       eval/mathvista/evaluate_mathvista.py --checkpoint ${CHECKPOINT} --datasets MathVista_test
+fi
+
+if [ ${DATASET} == "seed" ]; then
+    torchrun \
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
+      eval/seed/evaluate_seed.py --checkpoint ${CHECKPOINT} --datasets SEEDv1
 fi

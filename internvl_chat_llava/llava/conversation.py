@@ -411,6 +411,16 @@ internvl_zh = Conversation(
     sep2="</s>",
 )
 
+hermes2 = Conversation(
+    system='<|im_start|>system\nAnswer the questions.',
+    roles=("<|im_start|>user\n", "<|im_start|>assistant\n"),
+    version="mpt",
+    messages=(),
+    offset=0,
+    sep_style=SeparatorStyle.MPT,
+    sep="<|im_end|>",
+)
+
 
 default_conversation = conv_vicuna_v0
 conv_templates = {
@@ -429,6 +439,7 @@ conv_templates = {
     "mpt": conv_mpt,
     "internlm": conv_internlm,
     "internvl_zh": internvl_zh,
+    "Hermes-2": hermes2
 }
 
 
