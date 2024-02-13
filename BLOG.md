@@ -3,7 +3,7 @@
 ## InternVL-Chat-V1.2
 
 > Date: 2024/02/12<br>
-> Author: Zhe Chen, Weiyun Wang, Wenhai Wang
+> Developed by: Zhe Chen, Weiyun Wang, Wenhai Wang
 
 In January 2024, we released [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1), featuring a structure similar to LLaVA, including a ViT, an MLP projector, and an LLM. In that version, we explored increasing the resolution to 448x448, enhancing OCR capabilities, and improving support for Chinese conversations. However, it still lagged behind existing SOTA in some benchmarks.
 
