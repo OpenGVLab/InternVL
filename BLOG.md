@@ -7,7 +7,7 @@
 
 In January 2024, we released [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1), featuring a structure similar to LLaVA, including a ViT, an MLP projector, and an LLM. In that version, we explored increasing the resolution to 448x448, enhancing OCR capabilities, and improving support for Chinese conversations. However, it still lagged behind existing SOTA in some benchmarks.
 
-<img width="500" alt="image" src="https://github.com/czczup/InternVL-MoE/assets/23737120/9b68aa35-40fd-4e81-9595-d404cbbfc6bd">
+<img width="600" alt="image" src="https://github.com/czczup/InternVL-MoE/assets/23737120/9b68aa35-40fd-4e81-9595-d404cbbfc6bd">
 
 Today, we are excited to introduce InternVL-Chat-V1.2. Inspired by [LLaVA-NeXT-34B](https://llava-vl.github.io/blog/2024-01-30-llava-next/), we have also adopted [Nous-Hermes-2-Yi-34B](https://huggingface.co/NousResearch/Nous-Hermes-2-Yi-34B) as the language model.
 From the experimental results, **we've observed that a stronger language model (34B) can better leverage the powerful capabilities of our vision foundation model ([InternViT-6B](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-2)).**
@@ -30,9 +30,10 @@ For more details about data preparation, please see [here](./internvl_chat#prepa
 | Gemini Ultra\*     | unknown    | 59.4               | -                   | 53.0      | -    | -    | -      | -         | -    | 82.3    | -        | 80.8    | 79.5 | -      | -    | -      | -        |
 | Gemini Pro\*       | unknown    | 47.9               | -                   | 45.2      | 40.7 | 73.6 | 74.3   | -         | -    | 74.6    | 70.7     | 74.1    | 73.9 | -      | -    | 64.3   | 1497/437 |
 | Qwen-VL-Plus\*     | unknown    | 45.2               | 40.8                | 43.3      | -    | 67.0 | 70.7   | -         | -    | 78.9    | 65.7     | 78.1    | 75.9 | -      | -    | -      | 1681/502 |
+| Qwen-VL-Max\*     | unknown    |  51.4              |  -               | 51.0      | -    | - | 75.1   | -         | -    | 79.5    | -     | 79.8    | 79.3  | -      | -    | -      | - |
 |                    |            |          |                    |                     |           |      |      |        |           |      |         |          |         |      |        |      |        |
 | LLaVA-NEXT-34B     | 672x672    | 51.1               | 44.7                | 46.5      | -    | 79.3 | 79.0   | 81.8      | 87.7 | 69.5    | 75.9     | -       | -    | 63.8   | 67.1 | 57.4   | 1631/397 |
-| InternVL-Chat-V1.2 | 448x448    | 51.6               | 46.2                | 47.7      | 56.7 | 82.3 |  81.2  | 83.3      | 88.0 | 69.7    | TODO     | 67.8    | 71.6 | 60.0   | 64.0 | 48.9   | 1672/509 |
+| InternVL-Chat-V1.2 | 448x448    | 51.6               | 46.2                | 47.7      | 56.7 | 82.2 |  81.2  | 83.3      | 88.0 | 69.7    | TODO     | 67.8    | 71.6 | 60.0   | 64.0 | 48.9   | 1672/509 |
 
 - In most benchmarks, InternVL-Chat-V1.2 achieves better performance than LLaVA-NeXT-34B.
   
