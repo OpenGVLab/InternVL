@@ -30,6 +30,7 @@ class SeparatorStyle(IntEnum):
     FALCON_CHAT = auto()
     CHATGLM3 = auto()
     INTERNVL_ZH = auto()
+    MPT = auto()
 
 
 @dataclasses.dataclass
@@ -233,6 +234,16 @@ class Conversation:
                     ret += role + ': ' + message + seps[i % 2]
                 else:
                     ret += role + ':'
+            return ret
+        elif self.sep_style == SeparatorStyle.MPT:
+            ret = system_prompt + self.sep
+            for role, message in self.messages:
+                if message:
+                    if type(message) is tuple:
+                        message, _, _ = message
+                    ret += role + message + self.sep
+                else:
+                    ret += role
             return ret
         else:
             raise ValueError(f'Invalid style: {self.sep_style}')
@@ -693,6 +704,45 @@ register_conv_template(
         sep_style=SeparatorStyle.CHATML,
         sep='<|im_end|>',
         stop_token_ids=[50278, 0],
+    )
+)
+
+
+register_conv_template(
+    Conversation(
+        name='Hermes-2',
+        system_template='<|im_start|>system\n{system_message}',
+        system_message='Answer the questions.',
+        roles=('<|im_start|>user\n', '<|im_start|>assistant\n'),
+        sep_style=SeparatorStyle.MPT,
+        sep='<|im_end|>',
+        stop_token_ids=[
+            2,
+            6,
+            7,
+            8,
+        ],  # "<|endoftext|>", "<|im_start|>", "<|im_end|>", "<|im_sep|>"
+        stop_str='<|endoftext|>',
+    )
+)
+
+
+register_conv_template(
+    Conversation(
+        name='internlm2-chat',
+        system_template='<|im_start|>system\n{system_message}',
+        system_message='You are an AI assistant whose name is InternLM (书生·浦语).',
+        roles=('<|im_start|>user\n', '<|im_start|>assistant\n'),
+        sep_style=SeparatorStyle.MPT,
+        sep='<|im_end|>',
+        stop_token_ids=[
+            2,
+            92541,
+            92542,
+            92543,
+            92540,
+        ],
+        stop_str='<|endoftext|>',
     )
 )
 

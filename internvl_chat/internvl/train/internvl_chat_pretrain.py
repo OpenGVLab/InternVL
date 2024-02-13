@@ -23,7 +23,7 @@ from internvl.model.internvl_chat import (InternVisionConfig,
                                           InternVisionModel,
                                           InternVLChatConfig,
                                           InternVLChatModel)
-from internvl.patch import (replace_llama_attn_with_flash_attn,
+from internvl.patch import (replace_llama2_attn_with_flash_attn,
                             replace_llama_rmsnorm_with_fused_rmsnorm)
 from internvl.train.dataset import (TCSLoader, WeightedConcatDataset,
                                     build_transform)
@@ -36,7 +36,8 @@ from transformers.trainer_utils import get_last_checkpoint
 from transformers.utils.logging import (enable_default_handler,
                                         enable_explicit_format, set_verbosity)
 
-replace_llama_attn_with_flash_attn()
+# Upgrade transformers to v4.36.2, we don't need it anymore
+# replace_llama2_attn_with_flash_attn()
 replace_llama_rmsnorm_with_fused_rmsnorm()
 
 try:
@@ -58,6 +59,10 @@ IMG_START_TOKEN = '<img>'
 IMG_END_TOKEN = '</img>'
 QUAD_START_TOKEN = '<quad>'
 QUAD_END_TOKEN = '</quad>'
+REF_START_TOKEN = '<ref>'
+REF_END_TOKEN = '</ref>'
+BOX_START_TOKEN = '<box>'
+BOX_END_TOKEN = '</box>'
 
 warnings.filterwarnings('ignore')
 logger = logging.getLogger(__name__)
@@ -82,6 +87,10 @@ class ModelArguments:
         default=None,
         metadata={'help': 'Path to pretrained model or model identifier from huggingface.co/models'}
     )
+    mlp_path: Optional[str] = field(
+        default=None,
+        metadata={'help': 'Path to pretrained model or model identifier from huggingface.co/models'}
+    )
     freeze_llm: bool = field(
         default=False,
         metadata={'help': 'Set to True to freeze the LLM decoder.'},
@@ -97,6 +106,10 @@ class ModelArguments:
     unfreeze_vit_layers: int = field(
         default=0,
         metadata={'help': 'Specify the number of ViT layers to unfreeze. Default is 0.'},
+    )
+    vision_select_layer: int = field(
+        default=-1,
+        metadata={'help': 'Specify the layer of ViT feature map to use. Default is last layer.'},
     )
     use_backbone_lora: int = field(
         default=0,
@@ -251,7 +264,94 @@ def preprocess(
         if cur_len < tokenizer.model_max_length:
             if cur_len != total_len:
                 target[:] = IGNORE_TOKEN_ID
-                logger.info(
+                print(
+                    f'WARNING: tokenization mismatch: {cur_len} vs. {total_len}.'
+                    f' #turn = {len(turns) - 1}. (ignored)'
+                )
+                sys.stdout.flush()
+
+    return dict(
+        input_ids=input_ids,
+        labels=targets,
+        attention_mask=input_ids.ne(tokenizer.pad_token_id),
+    )
+
+
+def preprocess_mpt(
+        template_name,
+        sources,
+        tokenizer: transformers.PreTrainedTokenizer,
+        num_image_token: int,
+        text_only: bool = False,
+) -> Dict:
+    conv = get_conv_template(template_name)
+    roles = {'human': conv.roles[0], 'gpt': conv.roles[1]}
+
+    # Apply prompt templates
+    conversations = []
+    for i, source in enumerate(sources):
+        if roles[source[0]['from']] != conv.roles[0]:
+            # Skip the first one if it is not from human
+            source = source[1:]
+
+        conv.messages = []
+        for j, sentence in enumerate(source):
+            role = roles[sentence['from']]
+            assert role == conv.roles[j % 2], f'{i}'
+            if text_only:
+                sentence['value'] = sentence['value'].replace('<image>', '').replace('<query>', '')
+            conv.append_message(role, sentence['value'])
+        conversations.append(conv.get_prompt())
+
+    image_tokens = f'{IMG_START_TOKEN}{IMG_CONTEXT_TOKEN * num_image_token}{IMG_END_TOKEN}'
+    new_conversations = []
+    for conversation in conversations:
+        conversation = conversation.replace('<image>', image_tokens)
+        new_conversations.append(conversation)
+    conversations = new_conversations
+
+    # Tokenize conversations
+    input_ids = tokenizer(
+        conversations,
+        return_tensors='pt',
+        padding='max_length',
+        max_length=tokenizer.model_max_length,
+        truncation=True,
+    ).input_ids
+    targets = input_ids.clone()
+
+    # Mask targets. Only compute loss on the assistant outputs.
+    sep = conv.sep + conv.roles[1]  # <|im_end|><|im_start|>assistant\n
+    for conversation, target in zip(conversations, targets):
+        total_len = int(target.ne(tokenizer.pad_token_id).sum())
+
+        turns = conversation.split(conv.sep)
+        re_turns = [conv.sep.join(turns[:3])]  # system + user + gpt
+        for conv_idx in range(3, len(turns), 2):
+            re_turns.append(conv.sep.join(turns[conv_idx:conv_idx + 2]))  # user + gpt
+        cur_len = 0
+        target[:cur_len] = IGNORE_TOKEN_ID
+        for i, turn in enumerate(re_turns):
+            if turn == '':
+                break
+            turn_len = len(tokenizer(turn).input_ids) + 1
+
+            parts = turn.split(sep)
+            if len(parts) != 2:
+                break
+            parts[0] += sep
+            instruction_len = len(tokenizer(parts[0]).input_ids)
+
+            # Ignore the user instructions
+            target[cur_len: cur_len + instruction_len] = IGNORE_TOKEN_ID
+            cur_len += turn_len
+
+        target[cur_len:] = IGNORE_TOKEN_ID
+
+        if cur_len < tokenizer.model_max_length:
+            if cur_len != total_len:
+                target[:] = IGNORE_TOKEN_ID
+                print(
                     f'WARNING: tokenization mismatch: {cur_len} vs. {total_len}.'
                     f' #turn = {len(turns) - 1}. (ignored)'
                 )
@@ -308,8 +408,12 @@ class LazySupervisedDataset(Dataset):
         transform = build_transform(is_train=self.is_train, input_size=self.image_size,
                                     pad2square=self.pad2square)
         pixel_values = transform(image)
-        ret = preprocess(self.template_name, [deepcopy(data_item['conversations'])],
-                         self.tokenizer, self.num_image_token)
+        if self.template_name == 'Hermes-2' or self.template_name == 'internlm2-chat':
+            preprocess_function = preprocess_mpt
+        else:
+            preprocess_function = preprocess
+        ret = preprocess_function(self.template_name, [deepcopy(data_item['conversations'])],
+                                  self.tokenizer, self.num_image_token)
         ret = dict(
             input_ids=ret['input_ids'][0],
             labels=ret['labels'][0],
@@ -324,8 +428,12 @@ class LazySupervisedDataset(Dataset):
         transform = build_transform(is_train=self.is_train, input_size=self.image_size,
                                     pad2square=self.pad2square)
         pixel_values = transform(image)
-        ret = preprocess(self.template_name, [deepcopy(data_item['conversations'])],
-                         self.tokenizer, self.num_image_token, text_only=True)
+        if self.template_name == 'Hermes-2' or self.template_name == 'internlm2-chat':
+            preprocess_function = preprocess_mpt
+        else:
+            preprocess_function = preprocess
+        ret = preprocess_function(self.template_name, [deepcopy(data_item['conversations'])],
+                                  self.tokenizer, self.num_image_token, text_only=True)
         ret = dict(
             input_ids=ret['input_ids'][0],
             labels=ret['labels'][0],
@@ -350,7 +458,7 @@ class LazySupervisedDataset(Dataset):
                 data_item = json.loads(self.raw_data[i])
                 if 'image' in data_item:
                     data_path = os.path.join(self.root, data_item['image'])
-                    logger.info(f'Failed to load image: {data_path}')
+                    print(f'Failed to load image: {data_path}')
                 i = random.randint(0, len(self.raw_data) - 1)
         return ret
 
@@ -391,8 +499,9 @@ def build_datasets(data_args, tokenizer, tcs_loader, model):
 def main():
     # Parse input arguments
     # See all possible arguments in src/transformers/training_args.py
-    parser = HfArgumentParser((ModelArguments, DataTrainingArguments, TrainingArguments))
+    # If use DeepSpeed zero3, init_dist must before HfArgumentParser
     init_dist(launcher='slurm', backend='nccl')
+    parser = HfArgumentParser((ModelArguments, DataTrainingArguments, TrainingArguments))
     if len(sys.argv) == 2 and sys.argv[1].endswith('.json'):
         # If we pass only one argument to the script, and it's the path to a json file,
         # let's parse it to get our arguments.
@@ -453,7 +562,8 @@ def main():
     tokenizer.tokenizer_path = tokenizer_path
     tokenizer.model_max_length = data_args.max_seq_length
     token_list = [IMG_START_TOKEN, IMG_END_TOKEN, IMG_CONTEXT_TOKEN,
-                  QUAD_START_TOKEN, QUAD_END_TOKEN]
+                  QUAD_START_TOKEN, QUAD_END_TOKEN, REF_START_TOKEN,
+                  REF_END_TOKEN, BOX_START_TOKEN, BOX_END_TOKEN]
     num_new_tokens = tokenizer.add_tokens(token_list, special_tokens=True)
     img_context_token_id = tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
     tcs_loader = TCSLoader('~/petreloss.conf') if has_tcs_loader else None
@@ -462,37 +572,49 @@ def main():
         logger.info('Loading InternVLChatModel...')
         config = InternVLChatConfig.from_pretrained(model_args.model_name_or_path)
         config.vision_config.drop_path_rate = model_args.drop_path_rate
+        config.llm_config.attn_implementation = 'flash_attention_2'
         config.template = data_args.conv_style
         model = InternVLChatModel.from_pretrained(
-            model_args.model_name_or_path, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16,
-            device_map='cuda', config=config)
+            model_args.model_name_or_path, torch_dtype=torch.bfloat16, config=config)
     else:
         logger.info('Loading ViT-6B...')
-        vision_model = InternVisionModel.from_pretrained(
-            model_args.vision_path, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16, device_map='cuda')
-        logger.info('Loading LLaMA...')
-        llm = LlamaForCausalLM.from_pretrained(
-            model_args.llm_path, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16, device_map='cuda')
-        logger.info('Building InternVLChatConfig...')
         vision_config = InternVisionConfig.from_pretrained(model_args.vision_path)
         vision_config.drop_path_rate = model_args.drop_path_rate
+        vision_model = InternVisionModel.from_pretrained(
+            model_args.vision_path, torch_dtype=torch.bfloat16, config=vision_config)
+        logger.info('Loading LLaMA...')
         llm_config = LlamaConfig.from_pretrained(model_args.llm_path)
+        llm_config.attn_implementation = 'flash_attention_2'
+        llm = LlamaForCausalLM.from_pretrained(
+            model_args.llm_path, torch_dtype=torch.bfloat16,
+            use_flash_attention_2=True, config=llm_config)
+        logger.info('Building InternVLChatConfig...')
         internvl_chat_config = InternVLChatConfig(vision_config.to_dict(), llm_config.to_dict(),
-                                                  downsample_ratio=model_args.down_sample_ratio,
+                                                  downsample_ratio=data_args.down_sample_ratio,
                                                   pad2square=data_args.pad2square,
-                                                  template=data_args.conv_style)
+                                                  template=data_args.conv_style,
+                                                  select_layer=model_args.vision_select_layer)
+        internvl_chat_config.force_image_size = data_args.force_image_size
         logger.info('Building InternVLChatModel...')
         model = InternVLChatModel(internvl_chat_config, vision_model, llm)
     model.img_context_token_id = img_context_token_id
+
+    if model_args.mlp_path is not None:
+        logger.info('Loading pretrained MLP projector...')
+        state_dict = torch.load(model_args.mlp_path, map_location='cpu')
+        message = model.mlp1.load_state_dict(state_dict)
+        logger.info(message)
     logger.info('Finished')
 
-    if data_args.force_image_size != 224:
-        if model.config.force_image_size != data_args.force_image_size:
-            model.config.force_image_size = data_args.force_image_size
-            model.vision_model.resize_pos_embeddings(old_size=224,
-                                                     new_size=data_args.force_image_size,
-                                                     patch_size=14)
-            model.num_image_token = int((data_args.force_image_size // 14) ** 2 * (data_args.down_sample_ratio ** 2))
+    patch_size = model.config.vision_config.patch_size
+    if model.config.force_image_size != data_args.force_image_size and \
+            model.config.vision_config.image_size != data_args.force_image_size:
+        model.vision_model.resize_pos_embeddings(old_size=model.config.vision_config.image_size,
+                                                 new_size=data_args.force_image_size,
+                                                 patch_size=patch_size)
+        model.config.vision_config.image_size = data_args.force_image_size
+    model.config.force_image_size = data_args.force_image_size
+    model.num_image_token = int((data_args.force_image_size // patch_size) ** 2 * (data_args.down_sample_ratio ** 2))
     if num_new_tokens > 0:
         model.language_model.resize_token_embeddings(len(tokenizer))
         output_embeddings = model.language_model.get_output_embeddings().weight.data
@@ -506,8 +628,7 @@ def main():
     model.vision_model.gradient_checkpointing = True
     model.vision_model.encoder.gradient_checkpointing = True
     if model_args.grad_checkpoint:
-        model.language_model.gradient_checkpointing = True
-        model.language_model.model.gradient_checkpointing = True
+        model.language_model._set_gradient_checkpointing()
 
     train_dataset = build_datasets(data_args, tokenizer, tcs_loader, model)
 

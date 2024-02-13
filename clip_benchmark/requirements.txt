@@ -1,6 +1,6 @@
 open_clip_torch>=0.2.1
 opencv-python
-peft==0.6.2
+peft>=0.6.2
 protobuf==3.20.3
 pycocoevalcap
 pyyaml
@@ -11,6 +11,6 @@ task_adaptation
 tensorflow==2.11.0
 termcolor
 tqdm>=2
-transformers==4.32.0
+transformers>=4.32.0
 webdataset>=0.2.31
 yacs

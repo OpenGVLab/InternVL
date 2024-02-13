@@ -4,131 +4,176 @@ This folder contains the implementation of the InternVL-Chat.
 
 ## 🛠️ Installation
 
-> If you have already installed the environment as per the instructions in other folders, you can skip this section.
+See [INSTALLATION.md](../INSTALLATION.md)
 
-- Clone this repository:
-
-  ```bash
-  git clone https://github.com/OpenGVLab/InternVL.git
-  cd InternVL/internvl_chat
-  ```
-
-- Create a conda virtual environment and activate it:
-
-  ```bash
-  conda create -n internvl python=3.9 -y
-  conda activate internvl
-  ```
-
-- Install `PyTorch>=2.0` and `torchvision>=0.15.2` with `CUDA>=11.6`:
-
-  For examples, to install `torch==2.0.1` with `CUDA==11.8`:
-
-  ```bash
-  conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.8 -c pytorch -c nvidia
-  # or
-  pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
-  ```
-
-- Install `flash-attn==0.2.8` :
-
-  If you want to fully replicate my results, please install `v0.2.8`, otherwise install the latest version.
-
-  This is because different versions of flash attention yield slight differences in results.
-
-  ```bash
-  git clone https://github.com/Dao-AILab/flash-attention.git
-  cd flash-attention
-  git checkout v0.2.8
-  python setup.py install
-  ```
-
-- Install `timm==0.9.12` and `mmcv-full==1.6.2`:
-
-  ```bash
-  pip install -U openmim
-  pip install timm==0.9.12
-  mim install mmcv-full==1.6.2
-  ```
-
-- Install `apex`:
-
-  ```bash
-  git clone https://github.com/NVIDIA/apex.git
-  git checkout 2386a912164b0c5cfcd8be7a2b890fbac5607c82  # https://github.com/NVIDIA/apex/issues/1735
-  pip install -v --disable-pip-version-check --no-cache-dir --no-build-isolation --config-settings "--build-option=--cpp_ext" --config-settings "--build-option=--cuda_ext" ./
-  ```
+In addition, using this codebase requires executing the following steps:
 
 - Install other requirements:
 
   ```bash
-  pip install opencv-python termcolor yacs pyyaml scipy
-  pip install deepspeed==0.10.0
-  pip install pycocoevalcap tqdm
+  pip install --upgrade pip  # enable PEP 660 support
+  pip install -e .
   ```
 
 ## 📦 Model Preparation
 
-| model name         | type        | download                                                          |  size   |
-| ------------------ | ----------- | ----------------------------------------------------------------- | :-----: |
-| InternVL-14B-224px | huggingface | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px) | 27.7 GB |
-| Vicuna-7B-v1.5     | huggingface | 🤗 [HF link](https://huggingface.co/lmsys/vicuna-7b-v1.5)         | 13.5 GB |
-| Vicuna-13B-v1.5    | huggingface | 🤗 [HF link](https://huggingface.co/lmsys/vicuna-13b-v1.5)        | 26.1 GB |
+| model name              | type | download                                                               |  size   |
+| ----------------------- | ---- | ---------------------------------------------------------------------- | :-----: |
+| InternViT-6B-448px-V1-2 | ViT  | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-2) | 11.1 GB |
+| Nous-Hermes-2-Yi-34B    | LLM  | 🤗 [HF link](https://huggingface.co/NousResearch/Nous-Hermes-2-Yi-34B) | 65.0 GB |
 
 Please download the above model weights and place them in the `pretrained/` folder.
 
 ```sh
 cd pretrained/
 # pip install -U huggingface_hub
-huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-14B-224px --local-dir internvl_14b_224px
-huggingface-cli download --resume-download --local-dir-use-symlinks False lmsys/vicuna-13b-v1.5 --local-dir vicuna-13b-v1.5
-huggingface-cli download --resume-download --local-dir-use-symlinks False lmsys/vicuna-7b-v1.5 --local-dir vicuna-7b-v1.5
+huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternViT-6B-448px-V1-2 --local-dir intern_vit_6b_448px_v1_2
+huggingface-cli download --resume-download --local-dir-use-symlinks False NousResearch/Nous-Hermes-2-Yi-34B --local-dir Nous-Hermes-2-Yi-34B
 ```
 
 The directory structure is:
 
 ```sh
 pretrained
-│── internvl_14b_224px/
-│── vicuna-13b-v1.5/
-└── vicuna-7b-v1.5/
+│── intern_vit_6b_448px_v1_2/
+└── Nous-Hermes-2-Yi-34B/
 ```
 
 ## 🔥 Supervised Fine-tuning
 
-Coming Soon
+### Prepare Training Datasets
 
-## 📊 Evaluation (English Models)
+Inspired by LLaVA-NeXT, we adopted a data-efficient SFT strategy to train InternVL-Chat-V1.2, utilizing approximately 1.2M of visual instruction tuning samples in total, all of which are fully open-source. In a macro sense, we build upon [ShareGPT-4V](https://github.com/InternLM/InternLM-XComposer/blob/main/projects/ShareGPT4V/docs/Data.md#prepare-images) and additionally integrate [LLaVA-ZH](https://huggingface.co/datasets/openbmb/llava_zh), [DVQA](https://github.com/kushalkafle/DVQA_dataset), [ChartQA](https://github.com/vis-nlp/ChartQA), [AI2D](https://allenai.org/data/diagrams), [DocVQA](https://www.docvqa.org/datasets), [GeoQA+](https://github.com/SCNU203/GeoQA-Plus), and [SynthDoG-EN](https://huggingface.co/datasets/naver-clova-ix/synthdog-en). Most of the data remains consistent with LLaVA-NeXT.
 
-| model         | QLLaMA | LLM          | res | COCO  | Flickr | NoCaps | VQAv2 | GQA  | VizWiz | TextVQA | MME    | POPE | Download |
-| ------------- | ------ | ------------ | --- | ----- | ------ | ------ | ----- | ---- | ------ | ------- | ------ | ---- | -------- |
-| InternVL-Chat | ✔️     | frozen V-7B  | 224 | 141.4 | 89.7   | 120.5  | 72.3  | 57.7 | 44.5   | 42.1    | 1298.5 | 85.2 | TODO     |
-| InternVL-Chat | ✔️     | frozen V-13B | 224 | 142.4 | 89.9   | 123.1  | 71.7  | 59.5 | 54.0   | 49.1    | 1317.2 | 85.4 | TODO     |
-| InternVL-Chat | ✔️     | V-13B        | 336 | 146.2 | 92.2   | 126.2  | 81.2  | 66.6 | 58.5   | 61.5    | 1586.4 | 87.6 | TODO     |
+First, download the [annotation files](https://huggingface.co/OpenGVLab/InternVL/resolve/main/playground.zip) and place them in the `playground/` folder.
 
-## 📊 Evaluation (Chinese Models)
+Second, download all the images we used.
+
+- AI2D: [ai2d-all](https://ai2-public-datasets.s3.amazonaws.com/diagrams/ai2d-all.zip)
+- ChartQA: [ChartQA Dataset](https://huggingface.co/datasets/ahmed-masry/ChartQA/resolve/main/ChartQA%20Dataset.zip)
+- COCO: [train2017](http://images.cocodataset.org/zips/train2017.zip)
+- DocVQA: [train](https://datasets.cvc.uab.es/rrc/DocVQA/train.tar.gz), [val](https://datasets.cvc.uab.es/rrc/DocVQA/val.tar.gz), [test](https://datasets.cvc.uab.es/rrc/DocVQA/test.tar.gz)
+- DVQA: [images](https://drive.google.com/file/d/1iKH2lTi1-QxtNUVRxTUWFvUvRHq6HAsZ/view)
+- GQA: [images](https://downloads.cs.stanford.edu/nlp/data/gqa/images.zip)
+- LLaVA-Pretrain: [images](https://huggingface.co/datasets/liuhaotian/LLaVA-Pretrain/resolve/main/images.zip)
+- OCR-VQA: [download script](https://drive.google.com/drive/folders/1_GYPY5UkUy7HIcR0zq3ZCFgeZN7BAfm_?usp=sharing). We save all files as `.jpg`
+- SAM: We only use 000000~000050.tar for now. You can quickly download 9K images from [here](https://drive.google.com/file/d/1dKumdOKSXtV7lIXdrG7jsIK_z2vZv2gs/view?usp=drive_link).
+- TextVQA: [trainvalimages](https://dl.fbaipublicfiles.com/textvqa/images/train_val_images.zip)
+- SynthDoG-EN: We only use 00000~00004 parquet files for now, with a total of 30K images. We provide the converted [images](https://huggingface.co/OpenGVLab/InternVL/resolve/main/synthdog-en-images.zip).
+- VisualGenome: [part1](https://cs.stanford.edu/people/rak248/VG_100K_2/images.zip), [part2](https://cs.stanford.edu/people/rak248/VG_100K_2/images2.zip)
+- WebData: [images](https://drive.google.com/drive/folders/1tCUQ-sq6vdshZVkF0ZeF3K4eztkXJgax?usp=sharing). Only for academic usage.
+- GeoQA+: [GeoQA+](https://drive.google.com/file/d/1KL4_wIzr3p8XSKMkkLgYcYwCbb0TzZ9O/view)
+
+Then, organize the data as follows in `playground/data`:
+
+```none
+playground/
+├── sharegpt4v_instruct_gpt4-vision_cap100k.jsonl
+├── llava_instruct_150k_zh.jsonl
+├── sharegpt4v_mix665k_cap23k_coco-ap9k_lcs3k_sam9k_div2k.jsonl
+├── dvqa_train_200k.jsonl
+├── chartqa_train_18k.jsonl
+├── ai2d_train_12k.jsonl
+├── docvqa_train_10k.jsonl
+├── geoqa+.jsonl
+├── synthdog_en.jsonl
+├── data
+│   ├── ai2d
+│   │   └── images
+│   ├── chartqa
+│   │   ├── test
+│   │   ├── train
+│   │   └── val
+│   ├── coco
+│   │   └── train2017
+│   ├── docvqa
+│   │   ├── test
+│   │   ├── train
+│   │   └── val
+│   ├── dvqa
+│   │   └── images
+│   ├── gqa
+│   │   └── images
+│   ├── llava
+│   │   └── llava_pretrain
+│   │       └── images
+│   ├── ocr_vqa
+│   │   └── images
+│   ├── sam
+│   │   └── images
+│   ├── share_textvqa
+│   │   └── images
+│   ├── synthdog-en
+│   │   └── images
+│   ├── textvqa
+│   │   └── train_images
+│   ├── vg
+│   │   ├── VG_100K
+│   │   └── VG_100K_2
+│   ├── web-celebrity
+│   │   └── images
+│   ├── web-landmark
+│   │   └── images
+│   ├── wikiart
+│   │   └── images
+│   ├── geoqa+
+│   │   └── images
+```
+
+### Start Training
+
+We provide slurm scripts for multi-node multi-GPU training. You can use either 32 or 64 GPUs to train this model. If you use 64 GPUs, training will take approximately 18 hours.
+
+- If you encounter an OOM error, you can decrease the `PER_DEVICE_BATCH_SIZE`, for example, set `PER_DEVICE_BATCH_SIZE=4`.
+
+```sh
+# using 32 GPUs
+PARTITION='your partition' GPUS=32 PER_DEVICE_BATCH_SIZE=8 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune.sh
+# using 64 GPUs
+PARTITION='your partition' GPUS=64 PER_DEVICE_BATCH_SIZE=8 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune.sh
+```
+
+The hyperparameters used for finetuning are listed in the following table.
+
+| Hyperparameter     | Trainable Param | Global Batch Size | Learning rate | Epochs | Max length | Weight decay |
+| ------------------ | --------------- | ----------------- | ------------- | ------ | ---------- | ------------ |
+| InternVL-Chat-V1.2 | 40B             | 512               | 1e-5          | 1      | 2048       | 0.05         |
+
+## 📊 Evaluation
 
 **MultiModal Benchmark**
 
 | model                                                                             | MME            | MMB<sub>dev/test</sub> | MMB-CN<sub>dev/test</sub> | POPE | MMVP | MathVista |
 | --------------------------------------------------------------------------------- | -------------- | ---------------------- | ------------------------- | ---- | ---- | --------- |
 | [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 1672.3 / 341.1 | 76.6 / 75.4            | 71.5 / 70.1               | 87.2 | 44.7 | 34.5      |
+| [InternVL-Chat-V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2) | 1672.1 / 509.3 | 81.4 / 82.2            | 79.5 / 81.2               | 88.0 | 56.7 | 47.7      |
 
-| model                                                                             | MMMU<sub>val/test</sub> | CMMMU<sub>val/test</sub> | Tiny<sub>LVLM</sub> | LLaVA<sub>bench</sub> | MM-Vet |
-| --------------------------------------------------------------------------------- | ----------------------- | ------------------------ | ------------------- | --------------------- | ------ |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 39.1 / 35.3             | 34.8 / 34.0              | 344.5               | 76.3                  | 45.0   |
+| model                                                                             | MMMU<sub>val/test</sub>                                                            | CMMMU<sub>val/test</sub> | Tiny<sub>LVLM</sub> | LLaVA<sub>bench</sub> | MM-Vet |
+| --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------ | ------------------- | --------------------- | ------ |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 39.1 / 35.3                                                                        | 34.8 / 34.0              | 344.5               | 76.3                  | 45.0   |
+| [InternVL-Chat-V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2) | 51.6 / [46.2](https://eval.ai/web/challenges/challenge-page/2179/leaderboard/5377) | TODO                     | 350.3               | -                     | 48.9   |
 
 **Visual Question Answering**
 
 | model                                                                             | VQAv2<sub>test</sub> | OKVQA<sub>val</sub> | TextVQA<sub>val</sub> | VizWiz<sub>val/test</sub> | AI2D<sub>test</sub> | GQA<sub>test</sub> | SQA<sub>test</sub> |
 | --------------------------------------------------------------------------------- | -------------------- | ------------------- | --------------------- | ------------------------- | ------------------- | ------------------ | ------------------ |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 80.9                 | 64.2                | 65.8                  | 58.3 / 57.3               | 70.23               | 62.4               | 91.2               |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 80.9                 | 64.2                | 65.8                  | 58.3 / 57.3               | 70.2                | 62.4               | 91.2               |
+| [InternVL-Chat-V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2) | -                    | 62.5                | 69.7                  | 61.9 / 60.0               | 71.6                | 64.0               | 83.3               |
 
 **Image Captioning**
 
 | model                                                                             | COCO<sub>test</sub> | Flickr30K<sub>test</sub> | NoCaps<sub>val</sub> |
 | --------------------------------------------------------------------------------- | ------------------- | ------------------------ | -------------------- |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 141.8               | 84.3                     | 120.4                |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 141.8\*             | 84.3                     | 120.4                |
+| [InternVL-Chat-V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2) | 113.9               | 92.4                     | 112.5                |
+
+## 📊 Evaluation (Legacy Models)
+
+| model         | QLLaMA | LLM          | res | COCO  | Flickr | NoCaps | VQAv2 | GQA  | VizWiz | TextVQA | MME    | POPE | Download |
+| ------------- | ------ | ------------ | --- | ----- | ------ | ------ | ----- | ---- | ------ | ------- | ------ | ---- | -------- |
+| InternVL-Chat | ✔️     | frozen V-7B  | 224 | 141.4 | 89.7   | 120.5  | 72.3  | 57.7 | 44.5   | 42.1    | 1298.5 | 85.2 | TODO     |
+| InternVL-Chat | ✔️     | frozen V-13B | 224 | 142.4 | 89.9   | 123.1  | 71.7  | 59.5 | 54.0   | 49.1    | 1317.2 | 85.4 | TODO     |
+| InternVL-Chat | ✔️     | V-13B        | 336 | 146.2 | 92.2   | 126.2  | 81.2  | 66.6 | 58.5   | 61.5    | 1586.4 | 87.6 | TODO     |
 
 ## ❓ How to Evaluate
 
@@ -294,6 +339,10 @@ data
 ├── MathVista
 │   ├── annot_testmini.json
 │   └── AI4Math___math_vista/
+├── SEED
+│   ├── SEED-Bench.json
+│   ├── SEED-Bench-image/
+│   └── SEED-Bench-video-image-1/
 ```
 
 </details>
@@ -329,7 +378,7 @@ cd ../../../
 <summary>Evaluation</summary>
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> caption-coco
+GPUS=8 sh evaluate.sh <checkpoint> caption-coco
 ```
 
 </details>
@@ -356,7 +405,7 @@ cd ../..
 <summary>Evaluation</summary>
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> caption-flickr30k
+GPUS=8 sh evaluate.sh <checkpoint> caption-flickr30k
 ```
 
 </details>
@@ -382,7 +431,7 @@ cd ../..
 <summary>Evaluation</summary>
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> caption-nocaps
+GPUS=8 sh evaluate.sh <checkpoint> caption-nocaps
 ```
 
 </details>
@@ -424,9 +473,9 @@ cd ../..
 
 ```bash
 # VQAv2-val
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-vqav2-val
+GPUS=8 sh evaluate.sh <checkpoint> vqa-vqav2-val
 # VQAv2-testdev
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-vqav2-testdev
+GPUS=8 sh evaluate.sh <checkpoint> vqa-vqav2-testdev
 ```
 
 For the testdev set, submit the results to the [evaluation server](https://eval.ai/web/challenges/challenge-page/830/my-submission).
@@ -464,7 +513,7 @@ cd ../..
 <summary>Evaluation</summary>
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-okvqa-val
+GPUS=8 sh evaluate.sh <checkpoint> vqa-okvqa-val
 ```
 
 </details>
@@ -502,7 +551,7 @@ cd ../..
 <summary>Evaluation</summary>
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-textvqa-val
+GPUS=8 sh evaluate.sh <checkpoint> vqa-textvqa-val
 ```
 
 </details>
@@ -544,9 +593,9 @@ cd ../..
 
 ```bash
 # VizWiz val
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-vizwiz-val
+GPUS=8 sh evaluate.sh <checkpoint> vqa-vizwiz-val
 # VizWiz test
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-vizwiz-test
+GPUS=8 sh evaluate.sh <checkpoint> vqa-vizwiz-test
 ```
 
 For the test set, submit the results to the [evaluation server](https://eval.ai/web/challenges/challenge-page/1911/my-submission).
@@ -580,9 +629,9 @@ cd ../..
 
 ```bash
 # DocVQA-val
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-docvqa-val
+GPUS=8 sh evaluate.sh <checkpoint> vqa-docvqa-val
 # DocVQA-test
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-docvqa-test
+GPUS=8 sh evaluate.sh <checkpoint> vqa-docvqa-test
 ```
 
 For the test set, submit the results to the [evaluation server](https://rrc.cvc.uab.es/?ch=17).
@@ -615,9 +664,9 @@ cd ../..
 
 ```bash
 # ChartQA-test-human
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-chartqa-test-human
+GPUS=8 sh evaluate.sh <checkpoint> vqa-chartqa-test-human
 # ChartQA-test-augmented
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-chartqa-test-augmented
+GPUS=8 sh evaluate.sh <checkpoint> vqa-chartqa-test-augmented
 ```
 
 </details>
@@ -648,7 +697,7 @@ cd ../..
 <summary>Evaluation</summary>
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-gqa-testdev
+GPUS=8 sh evaluate.sh <checkpoint> vqa-gqa-testdev
 ```
 
 </details>
@@ -678,9 +727,9 @@ cd ../..
 
 ```bash
 # OCRVQA-val
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-ocrvqa-val
+GPUS=8 sh evaluate.sh <checkpoint> vqa-ocrvqa-val
 # OCRVQA-test
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-ocrvqa-test
+GPUS=8 sh evaluate.sh <checkpoint> vqa-ocrvqa-test
 ```
 
 </details>
@@ -709,7 +758,7 @@ cd ../..
 <summary>Evaluation</summary>
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> vqa-ai2d-test
+GPUS=8 sh evaluate.sh <checkpoint> vqa-ai2d-test
 ```
 
 </details>
@@ -742,7 +791,7 @@ cd ../..
 <summary>Evaluation</summary>
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> scienceqa
+GPUS=8 sh evaluate.sh <checkpoint> scienceqa
 ```
 
 </details>
@@ -776,7 +825,7 @@ cd ../..
 <summary>Evaluation</summary>
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> refcoco
+GPUS=8 sh evaluate.sh <checkpoint> refcoco
 ```
 
 </details>
@@ -834,13 +883,13 @@ cd ../..
 
 ```bash
 # mmbench_dev_20230712
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmbench-dev-en
+GPUS=8 sh evaluate.sh <checkpoint> mmbench-dev-en
 # mmbench_dev_cn_20231003
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmbench-dev-cn
+GPUS=8 sh evaluate.sh <checkpoint> mmbench-dev-cn
 # mmbench_test_en_20231003
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmbench-test-en
+GPUS=8 sh evaluate.sh <checkpoint> mmbench-test-en
 # mmbench_test_cn_20231003
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmbench-test-cn
+GPUS=8 sh evaluate.sh <checkpoint> mmbench-test-cn
 ```
 
 Then, submit the results to the [evaluation server](https://mmbench.opencompass.org.cn/mmbench-submission).
@@ -873,7 +922,7 @@ cd ../../..
 <summary>Evaluation</summary>
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> pope
+GPUS=8 sh evaluate.sh <checkpoint> pope
 ```
 
 </details>
@@ -892,11 +941,11 @@ The evaluation code will automatically download the dataset from hugging face.
 
 ```bash
 # dev set
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmmu-dev
+GPUS=8 sh evaluate.sh <checkpoint> mmmu-dev
 # val set
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmmu-val
+GPUS=8 sh evaluate.sh <checkpoint> mmmu-val
 # test set
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmmu-test
+GPUS=8 sh evaluate.sh <checkpoint> mmmu-test
 ```
 
 For the test set, submit the results to the [evaluation server](https://eval.ai/web/challenges/challenge-page/2179/overview).
@@ -926,7 +975,7 @@ cd ../..
 <summary>Evaluation</summary>
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> tiny_lvlm
+GPUS=8 sh evaluate.sh <checkpoint> tiny_lvlm
 ```
 
 </details>
@@ -980,7 +1029,7 @@ cd ../..
 <summary>Evaluation</summary>
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmvet
+GPUS=8 sh evaluate.sh <checkpoint> mmvet
 ```
 
 </details>
@@ -1004,7 +1053,7 @@ cd ..
 <summary>Evaluation</summary>
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mmvp
+GPUS=8 sh evaluate.sh <checkpoint> mmvp
 ```
 
 </details>
@@ -1031,9 +1080,28 @@ cd ../..
 
 ```bash
 # testmini set
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mathvista-testmini
+GPUS=8 sh evaluate.sh <checkpoint> mathvista-testmini
 # test set
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 sh evaluate.sh <checkpoint> mathvista-test
+GPUS=8 sh evaluate.sh <checkpoint> mathvista-test
+```
+
+</details>
+
+#### [SEED](https://github.com/AILab-CVC/SEED-Bench/)
+
+<details>
+<summary>Data Preparation</summary>
+
+1. Follow the official instructions [Data Preparation for SEED-Bench-1](https://github.com/AILab-CVC/SEED-Bench/blob/main/DATASET.md#data-preparation-for-seed-bench-1) to download the images and the videos. Put images under `./playground/data/eval/seed_bench/SEED-Bench-image`.
+2. Extract the video frame in the middle from the downloaded videos, and put them under `./playground/data/eval/seed_bench/SEED-Bench-video-image`. We provide our script `extract_video_frames.py` modified from the official one.
+
+</details>
+
+<details>
+<summary>Evaluation</summary>
+
+```bash
+GPUS=8 sh evaluate.sh <checkpoint> seed-llava
 ```
 
 </details>
