@@ -52,7 +52,7 @@ class InternVLChatModel(PreTrainedModel):
             nn.Linear(llm_hidden_size, llm_hidden_size)
         )
 
-        if config.force_image_size:
+        if config.force_image_size != config.vision_config.image_size:
             self.vision_model.resize_pos_embeddings(
                 old_size=config.vision_config.image_size,
                 new_size=config.force_image_size,
@@ -173,10 +173,16 @@ class InternVLChatModel(PreTrainedModel):
         return x
 
     def extract_feature(self, pixel_values):
-        vit_embeds = self.vision_model(
-            pixel_values=pixel_values,
-            output_hidden_states=True,
-            return_dict=True).hidden_states[-4]
+        if self.select_layer == -1:
+            vit_embeds = self.vision_model(
+                pixel_values=pixel_values,
+                output_hidden_states=False,
+                return_dict=True).last_hidden_state
+        else:
+            vit_embeds = self.vision_model(
+                pixel_values=pixel_values,
+                output_hidden_states=True,
+                return_dict=True).hidden_states[-4]
         vit_embeds = vit_embeds[:, 1:, :]
         # if torch.distributed.get_rank() == 0:
         #     print("before pixel shuffle:", vit_embeds.shape)

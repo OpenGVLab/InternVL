@@ -51,6 +51,8 @@ class InternVLChatConfig(PretrainedConfig):
         self.downsample_ratio = downsample_ratio
         self.template = template
 
+        logger.info(f'vision_select_layer: {self.select_layer}')
+
     def to_dict(self):
         """
         Serializes this instance to a Python dictionary. Override the default [`~PretrainedConfig.to_dict`].

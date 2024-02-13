@@ -6,69 +6,7 @@ Our segmentation code is developed on top of [MMSegmentation v0.30.0](https://gi
 
 ## 🛠️ Installation
 
-> If you have already installed the environment as per the instructions in other folders, you can skip this section.
-
-- Clone this repo:
-
-  ```bash
-  git clone https://github.com/OpenGVLab/InternVL.git
-  cd InternVL/segmentation
-  ```
-
-- Create a conda virtual environment and activate it:
-
-  ```bash
-  conda create -n internvl python=3.9 -y
-  conda activate internvl
-  ```
-
-- Install `PyTorch>=2.0` and `torchvision>=0.15.2` with `CUDA>=11.6`:
-
-  For examples, to install torch==2.0.1 with CUDA==11.8:
-
-  ```bash
-  conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.8 -c pytorch -c nvidia
-  # or
-  pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
-  ```
-
-- Install `flash-attn==0.2.8` :
-
-  If you want to fully replicate my results, please install `v0.2.8`, otherwise install the latest version.
-
-  This is because different versions of flash attention yield slight differences in results.
-
-  ```bash
-  git clone https://github.com/Dao-AILab/flash-attention.git
-  cd flash-attention
-  git checkout v0.2.8
-  python setup.py install
-  ```
-
-- Install other requirements:
-
-  note: conda opencv will break torchvision as not to support GPU, so we need to install opencv using pip.
-
-  ```bash
-  conda install -c conda-forge termcolor yacs pyyaml scipy pip -y
-  pip install opencv-python
-  ```
-
-- Install `timm==0.9.12` and `mmcv==1.6.2` and `mmsegmentation==0.30.0`:
-
-  ```bash
-  pip install -U openmim
-  mim install mmcv-full==1.6.2
-  mim install mmsegmentation==0.30.0
-  pip install timm==0.9.12
-  pip install yapf==0.40.1
-  ```
-
-- Install `tensorboard`:
-
-  ```bash
-  pip install future tensorboard
-  ```
+See [INSTALLATION.md](../INSTALLATION.md)
 
 ## 📦 Data Preparation
 

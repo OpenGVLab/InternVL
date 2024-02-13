@@ -51,7 +51,7 @@ class MMMUDataset(torch.utils.data.Dataset):
         # run for each subject
         sub_dataset_list = []
         for subject in tqdm(CAT_SHORT2LONG.values()):
-            sub_dataset = load_dataset(root, subject, split=split, cache_dir='~/.cache/datasets/')
+            sub_dataset = load_dataset(root, subject, split=split, cache_dir=os.path.join(os.getcwd(), 'data/MMMU/'))
             sub_dataset_list.append(sub_dataset)
 
         # merge all dataset
@@ -136,7 +136,7 @@ def post_process(pred, option):
             if v in pred:
                 return k
 
-    return random.choice(option_candidate)
+    return pred
 
 
 def evaluate_chat_model():
@@ -275,6 +275,12 @@ if __name__ == '__main__':
         image_size = model.config.force_image_size or model.config.vision_config.image_size
         pad2square = model.config.pad2square
 
+    total_params = sum(p.numel() for p in model.parameters()) / 1e9
+    if total_params > 30:
+        args.num_beams = 1
+        print(f'[test] total_params: {total_params}B, use num_beams: {args.num_beams}')
+    else:
+        print(f'[test] total_params: {total_params}B')
     print(f'[test] image_size: {image_size}')
     print(f'[test] pad2square: {pad2square}')
     print(f'[test] template: {model.config.template}')

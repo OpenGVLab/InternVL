@@ -6,46 +6,13 @@ We mainly use the LLaVA codebase to evaluate InternVL in creating multimodal dia
 
 We have retained the original documentation of LLaVA 1.5 as a more detailed manual. In most cases, you will only need to refer to the new documentation that we have added.
 
-> Note: To unify the environment across different tasks, we have made some compatibility modifications to the LLaVA code, allowing it to support `transformers==4.32.0` (originally locked at 4.31.0). Please note that `transformers==4.32.0` should be installed.
+> Note: To unify the environment across different tasks, we have made some compatibility modifications to the LLaVA code, allowing it to support `transformers==4.36.2` (originally locked at 4.31.0). Please note that `transformers==4.36.2` should be installed.
 
 ## 🛠️ Installation
 
-- Clone this repository:
-  
-  ```bash
-  git clone https://github.com/OpenGVLab/InternVL.git
-  cd InternVL/internvl_chat_llava
-  ```
+See [INSTALLATION.md](../INSTALLATION.md)
 
-- Create a conda virtual environment and activate it:
-  
-  ```bash
-  conda create -n internvl python=3.9 -y
-  conda activate internvl
-  ```
-
-- Install `PyTorch>=2.0` and `torchvision>=0.15.2` with `CUDA>=11.6`:
-  
-  For examples, to install `torch==2.0.1` with `CUDA==11.8`:
-  
-  ```bash
-  conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.8 -c pytorch -c nvidia
-  # or
-  pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
-  ```
-
-- Install `flash-attn==0.2.8` :
-  
-  If you want to fully replicate my results, please install `v0.2.8`, otherwise install the latest version.
-  
-  This is because different versions of flash attention yield slight differences in results.
-  
-  ```bash
-  git clone https://github.com/Dao-AILab/flash-attention.git
-  cd flash-attention
-  git checkout v0.2.8
-  python setup.py install
-  ```
+In addition, using this codebase requires executing the following steps:
 
 - Install other requirements:
   
