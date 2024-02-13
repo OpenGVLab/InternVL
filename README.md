@@ -1,6 +1,6 @@
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/5aa4cda8-b453-40a0-9336-17012b430ae8"> InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks —— An Open-Source Alternative to ViT-22B
 
-\[[Blog](./BLOG.md)\]   \[[Paper](https://arxiv.org/abs/2312.14238)\]  \[[Chat Demo](https://internvl.opengvlab.com/)\]  \[[Quick Start](#quick-start-with-huggingface)\]  \[[中文解读](https://mp.weixin.qq.com/s/bdfAJRqOF9tUk8Vy9KC_XQ)\]
+\[[InternVL-Chat-V1.2 Blog](./BLOG.md)\]   \[[Paper](https://arxiv.org/abs/2312.14238)\]  \[[Chat Demo](https://internvl.opengvlab.com/)\]  \[[Quick Start](#quick-start-with-huggingface)\]  \[[中文解读](https://mp.weixin.qq.com/s/bdfAJRqOF9tUk8Vy9KC_XQ)\]
 
 ## News🚀🚀🚀
 
