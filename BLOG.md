@@ -24,7 +24,7 @@ For more details about data preparation, please see [here](./internvl_chat#prepa
 
 \* Proprietary Model
 
-| name               | image size | MMMU<sub>val</sub> | MMMU<sub>test</sub> | MathVista | MMB  | MMB-CN | MMVP | MME      | ScienceQA | POPE | SEED-IMG | TextVQA | VizWiz | GQA  |
+| name               | image size | MMMU<br>(val) | MMMU<br>(test) | MathVista<br>(testmini) | MMB<br>(test)  | MMB&minus;CN<br>(test) | MMVP | MME      | ScienceQA<br>(image) | POPE | SEEDv1<br>(image) | TextVQA | VizWiz | GQA  |
 | ------------------ | ---------- | ------------------ | ------------------- | --------- | ---- | ------ | ---- | -------- | --------- | ---- | -------- | ------- | ------ | ---- |
 | GPT-4V\*           | unknown    | 56.8               | 55.7                | 49.9      | 77.0 | 73.9   | 38.7 | 1409/517 | -         | -    | 71.6     | 78.0    | -      | -    |
 | Gemini Ultra\*     | unknown    | 59.4               | -                   | 53.0      | -    | -      | -    | -        | -         | -    | -        | 82.3    | -      | -    |
