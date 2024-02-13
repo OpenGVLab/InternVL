@@ -122,13 +122,15 @@ playground/
 
 ### Start Training
 
-We provide slurm scripts for multi-node multi-GPU training. You can use either 32 or 64 GPUs to train this model.
+We provide slurm scripts for multi-node multi-GPU training. You can use either 32 or 64 GPUs to train this model. If you use 64 GPUs, training will take approximately 18 hours.
+
+- If you encounter an OOM error, you can decrease the `PER_DEVICE_BATCH_SIZE`, for example, set `PER_DEVICE_BATCH_SIZE=4`.
 
 ```sh
 # using 32 GPUs
-PARTITION='your partition' GPUS=32 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune.sh
+PARTITION='your partition' GPUS=32 PER_DEVICE_BATCH_SIZE=8 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune.sh
 # using 64 GPUs
-PARTITION='your partition' GPUS=64 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune.sh
+PARTITION='your partition' GPUS=64 PER_DEVICE_BATCH_SIZE=8 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune.sh
 ```
 
 The hyperparameters used for finetuning are listed in the following table.
@@ -144,12 +146,12 @@ The hyperparameters used for finetuning are listed in the following table.
 | model                                                                             | MME            | MMB<sub>dev/test</sub> | MMB-CN<sub>dev/test</sub> | POPE | MMVP | MathVista |
 | --------------------------------------------------------------------------------- | -------------- | ---------------------- | ------------------------- | ---- | ---- | --------- |
 | [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 1672.3 / 341.1 | 76.6 / 75.4            | 71.5 / 70.1               | 87.2 | 44.7 | 34.5      |
-| [InternVL-Chat-V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2) | 1672.1 / 509.3 | TODO                   | TODO                      | 88.0 | 56.7 | 47.7      |
+| [InternVL-Chat-V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2) | 1672.1 / 509.3 | 81.4 / 82.2            | 79.5 / 81.2               | 88.0 | 56.7 | 47.7      |
 
 | model                                                                             | MMMU<sub>val/test</sub>                                                            | CMMMU<sub>val/test</sub> | Tiny<sub>LVLM</sub> | LLaVA<sub>bench</sub> | MM-Vet |
 | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------ | ------------------- | --------------------- | ------ |
 | [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 39.1 / 35.3                                                                        | 34.8 / 34.0              | 344.5               | 76.3                  | 45.0   |
-| [InternVL-Chat-V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2) | 51.6 / [46.2](https://eval.ai/web/challenges/challenge-page/2179/leaderboard/5377) | TODO                     | 350.3               | TODO                  | 48.9   |
+| [InternVL-Chat-V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2) | 51.6 / [46.2](https://eval.ai/web/challenges/challenge-page/2179/leaderboard/5377) | TODO                     | 350.3               | -                     | 48.9   |
 
 **Visual Question Answering**
 
@@ -1077,6 +1079,25 @@ cd ../..
 GPUS=8 sh evaluate.sh <checkpoint> mathvista-testmini
 # test set
 GPUS=8 sh evaluate.sh <checkpoint> mathvista-test
+```
+
+</details>
+
+#### [SEED](https://github.com/AILab-CVC/SEED-Bench/)
+
+<details>
+<summary>Data Preparation</summary>
+
+1. Follow the official instructions [Data Preparation for SEED-Bench-1](https://github.com/AILab-CVC/SEED-Bench/blob/main/DATASET.md#data-preparation-for-seed-bench-1) to download the images and the videos. Put images under `./playground/data/eval/seed_bench/SEED-Bench-image`.
+2. Extract the video frame in the middle from the downloaded videos, and put them under `./playground/data/eval/seed_bench/SEED-Bench-video-image`. We provide our script `extract_video_frames.py` modified from the official one.
+
+</details>
+
+<details>
+<summary>Evaluation</summary>
+
+```bash
+GPUS=8 sh evaluate.sh <checkpoint> seed-llava
 ```
 
 </details>

@@ -1,14 +1,11 @@
 import argparse
-import base64
 import itertools
 import json
 import os
 import random
 import time
 from functools import partial
-from io import BytesIO
 
-import pandas as pd
 import torch
 from internvl.train.dataset import build_transform
 from PIL import Image
@@ -17,41 +14,12 @@ from tqdm import tqdm
 from transformers import LlamaTokenizer
 
 ds_collections = {
-    'mmbench_dev_20230712': {
-        'root': 'data/mmbench/mmbench_dev_20230712.tsv',
+    'SEEDv1': {
+        'root': 'data/SEED/',
+        'annotation': 'eval/seed/seed.jsonl',
         'max_new_tokens': 100,
         'min_new_tokens': 1,
-        'type': 'dev',
-        'language': 'en'
     },
-    'mmbench_dev_cn_20231003': {
-        'root': 'data/mmbench/mmbench_dev_cn_20231003.tsv',
-        'max_new_tokens': 100,
-        'min_new_tokens': 1,
-        'type': 'dev',
-        'language': 'cn'
-    },
-    'mmbench_dev_en_20231003': {
-        'root': 'data/mmbench/mmbench_dev_en_20231003.tsv',
-        'max_new_tokens': 100,
-        'min_new_tokens': 1,
-        'type': 'dev',
-        'language': 'en'
-    },
-    'mmbench_test_cn_20231003': {
-        'root': 'data/mmbench/mmbench_test_cn_20231003.tsv',
-        'max_new_tokens': 100,
-        'min_new_tokens': 1,
-        'type': 'test',
-        'language': 'cn'
-    },
-    'mmbench_test_en_20231003': {
-        'root': 'data/mmbench/mmbench_test_en_20231003.tsv',
-        'max_new_tokens': 100,
-        'min_new_tokens': 1,
-        'type': 'test',
-        'language': 'en'
-    }
 }
 
 
@@ -60,62 +28,33 @@ def collate_fn(batches, tokenizer):
     questions = [_['question'] for _ in batches]
     answers = [_['answer'] for _ in batches]
     indexes = [_['index'] for _ in batches]
-    options = [_['option'] for _ in batches]
-    return pixel_values, questions, answers, indexes, options
+    return pixel_values, questions, answers, indexes
 
 
-class MMBenchDataset(torch.utils.data.Dataset):
+class MultipleChoiceDataset(torch.utils.data.Dataset):
 
-    def __init__(self, root, prompt, language, input_size=224, pad2square=False):
-        self.df = pd.read_csv(root, sep='\t')
-        self.prompt = prompt
-        self.language = language
+    def __init__(self, root, annotation, input_size=224, pad2square=False):
+        f = open(annotation, 'r', encoding='utf-8')
+        self.data = [json.loads(line) for line in f.readlines()]
+        self.root = root
         self.transform = build_transform(is_train=False, input_size=input_size, pad2square=pad2square)
 
     def __len__(self):
-        return len(self.df)
+        return len(self.data)
 
     def __getitem__(self, idx):
-        index = self.df.iloc[idx]['index']
-        image = self.df.iloc[idx]['image']
-        question = self.df.iloc[idx]['question']
-        answer = self.df.iloc[idx]['answer'] if 'answer' in self.df.iloc[0].keys() else None
-        # catetory = self.df.iloc[idx]['category']
-        # l2_catetory = self.df.iloc[idx]['l2-category']
-
-        image = Image.open(BytesIO(base64.b64decode(image))).convert('RGB')
+        data = self.data[idx]
+        question = data['text']
+        image_path = os.path.join(self.root, data['image'])
+        image = Image.open(image_path).convert('RGB')
         pixel_values = self.transform(image).unsqueeze(0)
-
-        option_candidate = ['A', 'B', 'C', 'D', 'E']
-        options = {
-            cand: self.load_from_df(idx, cand)
-            for cand in option_candidate
-            if self.load_from_df(idx, cand) is not None
-        }
-
-        hint = self.load_from_df(idx, 'hint')
-        if hint is not None:
-            question = hint + '\n' + question
-        for key, item in options.items():
-            question += f'\n{key}. {item}'
-        if self.language == 'cn':
-            question = question + '\n' + self.prompt['cn']
-        else:
-            question = question + '\n' + self.prompt['en']
-
+        answer = data['answer'] if 'answer' in data else None
         return {
             'question': question,
             'pixel_values': pixel_values,
             'answer': answer,
-            'index': index,
-            'option': options
+            'index': data['question_id'],
         }
-
-    def load_from_df(self, idx, key):
-        if key in self.df.iloc[idx] and not pd.isna(self.df.iloc[idx][key]):
-            return self.df.iloc[idx][key]
-        else:
-            return None
 
 
 class InferenceSampler(torch.utils.data.sampler.Sampler):
@@ -163,10 +102,9 @@ def evaluate_chat_model():
     random.seed(args.seed)
 
     for ds_name in args.datasets:
-        dataset = MMBenchDataset(
+        dataset = MultipleChoiceDataset(
             root=ds_collections[ds_name]['root'],
-            prompt=prompt,
-            language=ds_collections[ds_name]['language'],
+            annotation=ds_collections[ds_name]['annotation'],
             input_size=image_size,
             pad2square=pad2square
         )
@@ -181,14 +119,12 @@ def evaluate_chat_model():
         )
 
         outputs = []
-        for _, (pixel_values, questions, answers, indexes, options) in tqdm(enumerate(dataloader)):
+        for _, (pixel_values, questions, answers, indexes) in enumerate(tqdm(dataloader)):
             pixel_values = pixel_values.to(torch.bfloat16).cuda()
             generation_config = dict(
                 num_beams=args.num_beams,
                 max_new_tokens=ds_collections[ds_name]['max_new_tokens'],
                 min_new_tokens=ds_collections[ds_name]['min_new_tokens'],
-                length_penalty=1,
-                repetition_penalty=1.2,
                 do_sample=True if args.temperature > 0 else False,
                 temperature=args.temperature,
             )
@@ -198,14 +134,14 @@ def evaluate_chat_model():
                 question=questions[0],
                 generation_config=generation_config,
             )
-            preds = [post_process(pred, options[0])]
+            preds = [pred]
 
             for question, pred, answer, index in zip(questions, preds, answers, indexes):
                 outputs.append({
+                    'question_id': index,
                     'question': question,
-                    'answer': pred,
-                    'gt_answers': answer,
-                    'index': int(index)
+                    'prediction': pred,
+                    'answer': answer,
                 })
 
         torch.distributed.barrier()
@@ -221,23 +157,30 @@ def evaluate_chat_model():
 
             print(f'Evaluating {ds_name} ...')
             time_prefix = time.strftime('%y%m%d%H%M%S', time.localtime())
-            results_file = f'{ds_name}_{time_prefix}.xlsx'
+            results_file = f'{ds_name}_{time_prefix}.jsonl'
             output_path = os.path.join(args.out_dir, results_file)
-            df = pd.read_table(ds_collections[ds_name]['root'])
-            cur_df = df.copy()
-            cur_df = cur_df.drop(columns=['hint', 'category', 'source', 'image', 'comment', 'l2-category'])
-            cur_df.insert(6, 'prediction', None)
-            for item in merged_outputs:
-                cur_df.loc[df['index'] == item['index'], 'prediction'] = item['answer']
+            writer = open(output_path, 'w')
 
-            cur_df.to_excel(output_path, index=False, engine='openpyxl')
+            results = []
+            for item in merged_outputs:
+                writer.write(json.dumps(item) + '\n')
+                answer = item['answer']
+                prediction = item['prediction']
+                if prediction == answer:
+                    results.append(1)
+                else:
+                    results.append(0)
+            writer.close()
             print('Results saved to {}'.format(output_path))
+            print(f'Acc@1: {sum(results) / len(results)}')
+            cmd = f'python eval/seed/calculation.py --image_result_file {output_path}'
+            os.system(cmd)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--checkpoint', type=str, default='')
-    parser.add_argument('--datasets', type=str, default='mmbench_dev_20230712')
+    parser.add_argument('--datasets', type=str, default='SEEDv1')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
     parser.add_argument('--num-beams', type=int, default=5)
@@ -286,8 +229,4 @@ if __name__ == '__main__':
     print(f'[test] pad2square: {pad2square}')
     print(f'[test] template: {model.config.template}')
 
-    prompt = {
-        'en': "Answer with the option's letter from the given choices directly.",
-        'cn': '请直接回答选项字母。'
-    }
     evaluate_chat_model()

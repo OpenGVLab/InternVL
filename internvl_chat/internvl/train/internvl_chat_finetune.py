@@ -107,6 +107,10 @@ class ModelArguments:
         default=0,
         metadata={'help': 'Specify the number of ViT layers to unfreeze. Default is 0.'},
     )
+    vision_select_layer: int = field(
+        default=-1,
+        metadata={'help': 'Specify the layer of ViT feature map to use. Default is last layer.'},
+    )
     use_backbone_lora: int = field(
         default=0,
         metadata={'help': 'Set the LoRA adapter rank for the backbone model. Default is 0.'}
@@ -562,23 +566,27 @@ def main():
         config.vision_config.drop_path_rate = model_args.drop_path_rate
         config.llm_config.attn_implementation = 'flash_attention_2'
         config.template = data_args.conv_style
+        config.select_layer = model_args.vision_select_layer
         model = InternVLChatModel.from_pretrained(
             model_args.model_name_or_path, torch_dtype=torch.bfloat16, config=config)
     else:
         logger.info('Loading ViT-6B...')
-        vision_model = InternVisionModel.from_pretrained(
-            model_args.vision_path, torch_dtype=torch.bfloat16)
-        logger.info('Loading LLaMA...')
-        llm = LlamaForCausalLM.from_pretrained(
-            model_args.llm_path, torch_dtype=torch.bfloat16, attn_implementation='flash_attention_2')
-        logger.info('Building InternVLChatConfig...')
-        vision_config = vision_model.config
+        vision_config = InternVisionConfig.from_pretrained(model_args.vision_path)
         vision_config.drop_path_rate = model_args.drop_path_rate
-        llm_config = llm.config
+        vision_model = InternVisionModel.from_pretrained(
+            model_args.vision_path, torch_dtype=torch.bfloat16, config=vision_config)
+        logger.info('Loading LLaMA...')
+        llm_config = LlamaConfig.from_pretrained(model_args.llm_path)
+        llm_config.attn_implementation = 'flash_attention_2'
+        llm = LlamaForCausalLM.from_pretrained(
+            model_args.llm_path, torch_dtype=torch.bfloat16,
+            use_flash_attention_2=True, config=llm_config)
+        logger.info('Building InternVLChatConfig...')
         internvl_chat_config = InternVLChatConfig(vision_config.to_dict(), llm_config.to_dict(),
                                                   downsample_ratio=data_args.down_sample_ratio,
                                                   pad2square=data_args.pad2square,
-                                                  template=data_args.conv_style)
+                                                  template=data_args.conv_style,
+                                                  select_layer=model_args.vision_select_layer)
         internvl_chat_config.force_image_size = data_args.force_image_size
         logger.info('Building InternVLChatModel...')
         model = InternVLChatModel(internvl_chat_config, vision_model, llm)

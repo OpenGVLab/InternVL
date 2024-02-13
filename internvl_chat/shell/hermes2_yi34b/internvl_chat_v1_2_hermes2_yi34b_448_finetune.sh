@@ -50,6 +50,7 @@ srun -p ${PARTITION} \
   --freeze_llm False \
   --freeze_mlp False \
   --freeze_backbone False \
+  --vision_select_layer -1 \
   --use_data_resampling False \
   --dataloader_num_workers 2 \
   --bf16 True \

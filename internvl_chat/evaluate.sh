@@ -393,3 +393,13 @@ if [ ${DATASET} == "mathvista-test" ]; then
       --master_port=${MASTER_PORT} \
       eval/mathvista/evaluate_mathvista.py --checkpoint ${CHECKPOINT} --datasets MathVista_test
 fi
+
+if [ ${DATASET} == "seed" ]; then
+    torchrun \
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
+      eval/seed/evaluate_seed.py --checkpoint ${CHECKPOINT} --datasets SEEDv1
+fi

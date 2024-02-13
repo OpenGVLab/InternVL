@@ -24,17 +24,18 @@ For more details about data preparation, please see [here](./internvl_chat#prepa
 
 \* Proprietary Model
 
-| name               | image size | MMMU<br>(val) | MMMU<br>(test) | MathVista<br>(testmini) | MMB<br>(test)  | MMB&minus;CN<br>(test) | MMVP | MME      | ScienceQA<br>(image) | POPE | SEEDv1<br>(image) | TextVQA | VizWiz | GQA  |
-| ------------------ | ---------- | ------------------ | ------------------- | --------- | ---- | ------ | ---- | -------- | --------- | ---- | -------- | ------- | ------ | ---- |
-| GPT-4V\*           | unknown    | 56.8               | 55.7                | 49.9      | 77.0 | 73.9   | 38.7 | 1409/517 | -         | -    | 71.6     | 78.0    | -      | -    |
-| Gemini Ultra\*     | unknown    | 59.4               | -                   | 53.0      | -    | -      | -    | -        | -         | -    | -        | 82.3    | -      | -    |
-| Gemini Pro\*       | unknown    | 47.9               | -                   | 45.2      | 73.6 | 74.3   | 40.7 | 1497/437 | -         | -    | 70.7     | 74.6    | -      | -    |
-| Qwen-VL-Plus\*     | unknown    | 45.2               | 40.8                | 43.3      | 67.0 | 70.7   | -    | 1681/502 | -         | -    | 65.7     | 78.9    | -      | -    |
-| Qwen-VL-Max\*      | unknown    | 51.4               | -                   | 51.0      | -    | 75.1   | -    | -        | -         | -    | -        | 79.5    | -      | -    |
-|                    |            |                    |                     |           |      |        |      |          |           |      |          |         |        |      |
-| LLaVA-NEXT-34B     | 672x672    | 51.1               | 44.7                | 46.5      | 79.3 | 79.0   | -    | 1631/397 | 81.8      | 87.7 | 75.9     | 69.5    | 63.8   | 67.1 |
-| InternVL-Chat-V1.2 | 448x448    | 51.6               | 46.2                | 47.7      | 82.2 | 81.2   | 56.7 | 1672/509 | 83.3      | 88.0 | TODO     | 69.7    | 60.0   | 64.0 |
+| name               | image size | MMMU<br>(val) | MMMU<br>(test) | MathVista<br>(testmini) | MMB<br>(test) | MMB−CN<br>(test) | MMVP | MME      | ScienceQA<br>(image) | POPE | TextVQA | SEEDv1<br>(image) | VizWiz<br>(test) | GQA<br>(test) |
+| ------------------ | ---------- | ------------- | -------------- | ----------------------- | ------------- | ---------------- | ---- | -------- | -------------------- | ---- | ------- | ----------------- | ---------------- | ------------- |
+| GPT-4V\*           | unknown    | 56.8          | 55.7           | 49.9                    | 77.0          | 74.4             | 38.7 | 1409/517 | -                    | -    | 78.0    | 71.6              | -                | -             |
+| Gemini Ultra\*     | unknown    | 59.4          | -              | 53.0                    | -             | -                | -    | -        | -                    | -    | 82.3    | -                 | -                | -             |
+| Gemini Pro\*       | unknown    | 47.9          | -              | 45.2                    | 73.6          | 74.3             | 40.7 | 1497/437 | -                    | -    | 74.6    | 70.7              | -                | -             |
+| Qwen-VL-Plus\*     | unknown    | 45.2          | 40.8           | 43.3                    | 67.0          | 70.7             | -    | 1681/502 | -                    | -    | 78.9    | 65.7              | -                | -             |
+| Qwen-VL-Max\*      | unknown    | 51.4          | 46.8           | 51.0                    | 77.6          | 75.7             | -    | -        | -                    | -    | 79.5    | -                 | -                | -             |
+|                    |            |               |                |                         |               |                  |      |          |                      |      |         |                   |                  |               |
+| LLaVA-NEXT-34B     | 672x672    | 51.1          | 44.7           | 46.5                    | 79.3          | 79.0             | -    | 1631/397 | 81.8                 | 87.7 | 69.5    | 75.9              | 63.8             | 67.1          |
+| InternVL-Chat-V1.2 | 448x448    | 51.6          | 46.2           | 47.7                    | 82.2          | 81.2             | 56.7 | 1672/509 | 83.3                 | 88.0 | 69.7    | 75.6              | 60.0             | 64.0          |
 
+- MMBench results are collected from the [leaderboard](https://mmbench.opencompass.org.cn/leaderboard).
 - In most benchmarks, InternVL-Chat-V1.2 achieves better performance than LLaVA-NeXT-34B.
 
 ### Training (SFT)
