@@ -141,6 +141,8 @@ The hyperparameters used for finetuning are listed in the following table.
 
 ## 📊 Evaluation
 
+\* Training set observed.
+
 **MultiModal Benchmark**
 
 | model                                                                             | MME            | MMB<sub>dev/test</sub> | MMB-CN<sub>dev/test</sub> | POPE | MMVP | MathVista |
@@ -151,14 +153,14 @@ The hyperparameters used for finetuning are listed in the following table.
 | model                                                                             | MMMU<sub>val/test</sub>                                                            | CMMMU<sub>val/test</sub> | Tiny<sub>LVLM</sub> | LLaVA<sub>bench</sub> | MM-Vet |
 | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------ | ------------------- | --------------------- | ------ |
 | [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 39.1 / 35.3                                                                        | 34.8 / 34.0              | 344.5               | 76.3                  | 45.0   |
-| [InternVL-Chat-V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2) | 51.6 / [46.2](https://eval.ai/web/challenges/challenge-page/2179/leaderboard/5377) | TODO                     | 350.3               | -                     | 48.9   |
+| [InternVL-Chat-V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2) | 51.6 / [46.2](https://eval.ai/web/challenges/challenge-page/2179/leaderboard/5377) | -                        | 350.3               | -                     | 48.9   |
 
 **Visual Question Answering**
 
 | model                                                                             | VQAv2<sub>test</sub> | OKVQA<sub>val</sub> | TextVQA<sub>val</sub> | VizWiz<sub>val/test</sub> | AI2D<sub>test</sub> | GQA<sub>test</sub> | SQA<sub>test</sub> |
 | --------------------------------------------------------------------------------- | -------------------- | ------------------- | --------------------- | ------------------------- | ------------------- | ------------------ | ------------------ |
-| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 80.9                 | 64.2                | 65.8                  | 58.3 / 57.3               | 70.2                | 62.4               | 91.2               |
-| [InternVL-Chat-V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2) | -                    | 62.5                | 69.7                  | 61.9 / 60.0               | 71.6                | 64.0               | 83.3               |
+| [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) | 80.9\*               | 64.2\*              | 65.8                  | 58.3 / 57.3               | 70.2\*              | 62.4\*             | 91.2\*             |
+| [InternVL-Chat-V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2) | -                    | 62.5\*              | 69.7                  | 61.9 / 60.0               | 71.6\*              | 64.0\*             | 83.3               |
 
 **Image Captioning**
 
