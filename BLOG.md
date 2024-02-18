@@ -58,7 +58,6 @@ We released [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-
 
 <img width="650" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/0e60912e-c52b-46fa-bd61-5f94a221d1fc">
 
-
 ## InternVL
 
 > Date: 2023/12/12<br>

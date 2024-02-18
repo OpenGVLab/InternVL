@@ -114,7 +114,7 @@ def post_process(pred, option):
             if v in pred:
                 return k
 
-    return random.choice(option_candidate)
+    return pred
 
 
 def evaluate_chat_model():

@@ -23,8 +23,10 @@ from internvl.model.internvl_chat import (InternVisionConfig,
                                           InternVisionModel,
                                           InternVLChatConfig,
                                           InternVLChatModel)
-from internvl.patch import (replace_llama2_attn_with_flash_attn,
-                            replace_llama_rmsnorm_with_fused_rmsnorm)
+from internvl.patch import (pad_data_collator,
+                            replace_llama2_attn_with_flash_attn,
+                            replace_llama_rmsnorm_with_fused_rmsnorm,
+                            replace_train_sampler)
 from internvl.train.dataset import (TCSLoader, WeightedConcatDataset,
                                     build_transform)
 from PIL import Image, ImageFile, PngImagePlugin
@@ -39,6 +41,7 @@ from transformers.utils.logging import (enable_default_handler,
 # Upgrade transformers to v4.36.2, we don't need it anymore
 # replace_llama2_attn_with_flash_attn()
 replace_llama_rmsnorm_with_fused_rmsnorm()
+replace_train_sampler()
 
 try:
     from petrel_client.client import Client
@@ -182,6 +185,7 @@ def preprocess(
         tokenizer: transformers.PreTrainedTokenizer,
         num_image_token: int,
         text_only: bool = False,
+        group_by_length: bool = False,
 ) -> Dict:
     conv = get_conv_template(template_name)
     roles = {'human': conv.roles[0], 'gpt': conv.roles[1]}
@@ -213,7 +217,7 @@ def preprocess(
     input_ids = tokenizer(
         conversations,
         return_tensors='pt',
-        padding='max_length',
+        padding=False if group_by_length else 'max_length',
         max_length=tokenizer.model_max_length,
         truncation=True,
     ).input_ids
@@ -283,6 +287,7 @@ def preprocess_mpt(
         tokenizer: transformers.PreTrainedTokenizer,
         num_image_token: int,
         text_only: bool = False,
+        group_by_length: bool = False,
 ) -> Dict:
     conv = get_conv_template(template_name)
     roles = {'human': conv.roles[0], 'gpt': conv.roles[1]}
@@ -314,7 +319,7 @@ def preprocess_mpt(
     input_ids = tokenizer(
         conversations,
         return_tensors='pt',
-        padding='max_length',
+        padding=False if group_by_length else 'max_length',
         max_length=tokenizer.model_max_length,
         truncation=True,
     ).input_ids
@@ -368,7 +373,7 @@ class LazySupervisedDataset(Dataset):
     """Dataset for supervised fine-tuning."""
 
     def __init__(self, template_name, meta, tokenizer, tcs_loader, num_image_token,
-                 image_size=224, is_train=True, pad2square=False):
+                 image_size=224, is_train=True, pad2square=False, group_by_length=False):
         super(LazySupervisedDataset, self).__init__()
         self.tokenizer = tokenizer
         self.template_name = template_name
@@ -384,6 +389,21 @@ class LazySupervisedDataset(Dataset):
         self.root = meta['root']
         self.cached_data_dict = {}
         self.tcs_loader = tcs_loader
+        self.group_by_length = group_by_length
+        if self.group_by_length:
+            self.conv2length = {}
+            self.length = []
+            for data_item in self.raw_data:
+                conversations = ''.join(data_item.split('conversations')[1:])
+                str_length = len(conversations)
+                if str_length not in self.conv2length:
+                    token_length = tokenizer(
+                        conversations, return_tensors='pt', padding=False, truncation=False,
+                    ).input_ids.size(1)
+                    self.conv2length[str_length] = token_length
+                else:
+                    token_length = self.conv2length[str_length]
+                self.length.append(token_length)
 
     def __len__(self):
         return len(self.raw_data)
@@ -405,7 +425,7 @@ class LazySupervisedDataset(Dataset):
         else:
             preprocess_function = preprocess
         ret = preprocess_function(self.template_name, [deepcopy(data_item['conversations'])],
-                                  self.tokenizer, self.num_image_token)
+                                  self.tokenizer, self.num_image_token, group_by_length=self.group_by_length)
         ret = dict(
             input_ids=ret['input_ids'][0],
             labels=ret['labels'][0],
@@ -425,7 +445,8 @@ class LazySupervisedDataset(Dataset):
         else:
             preprocess_function = preprocess
         ret = preprocess_function(self.template_name, [deepcopy(data_item['conversations'])],
-                                  self.tokenizer, self.num_image_token, text_only=True)
+                                  self.tokenizer, self.num_image_token, text_only=True,
+                                  group_by_length=self.group_by_length)
         ret = dict(
             input_ids=ret['input_ids'][0],
             labels=ret['labels'][0],
@@ -455,7 +476,7 @@ class LazySupervisedDataset(Dataset):
         return ret
 
 
-def build_datasets(data_args, tokenizer, tcs_loader, model):
+def build_datasets(data_args, tokenizer, tcs_loader, model, group_by_length=False):
     datasets = []
     lengths = []
     ds_collections = json.loads(open(data_args.meta_path).read())
@@ -469,7 +490,8 @@ def build_datasets(data_args, tokenizer, tcs_loader, model):
                 num_image_token=model.num_image_token,
                 image_size=data_args.force_image_size,
                 is_train=ds_collections[ds_name]['data_augment'],
-                pad2square=data_args.pad2square
+                pad2square=data_args.pad2square,
+                group_by_length=group_by_length
             )
         except Exception:
             logger.info(f'Error in loading dataset: {ds_name}')
@@ -623,7 +645,8 @@ def main():
     if model_args.grad_checkpoint:
         model.language_model._set_gradient_checkpointing()
 
-    train_dataset = build_datasets(data_args, tokenizer, tcs_loader, model)
+    train_dataset = build_datasets(data_args, tokenizer, tcs_loader, model,
+                                   group_by_length=training_args.group_by_length)
 
     def _freeze_params(module):
         for param in module.parameters():
@@ -672,7 +695,7 @@ def main():
         train_dataset=train_dataset if training_args.do_train else None,
         eval_dataset=None,
         tokenizer=tokenizer,
-        data_collator=default_data_collator,
+        data_collator=default_data_collator if not training_args.group_by_length else pad_data_collator,
     )
 
     # Training
