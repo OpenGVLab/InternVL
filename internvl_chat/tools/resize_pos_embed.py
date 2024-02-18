@@ -2,6 +2,7 @@ import argparse
 
 import torch
 from internvl.model.internvl_chat import InternVLChatModel
+from transformers import AutoTokenizer
 
 argparse = argparse.ArgumentParser()
 argparse.add_argument('model_path', type=str, default='')
@@ -18,4 +19,7 @@ model.config.vision_config.image_size = args.force_image_size
 model.config.force_image_size = args.force_image_size
 
 model.save_pretrained(args.output_path)
+
+tokenizer = AutoTokenizer.from_pretrained(args.model_path)
+tokenizer.save_pretrained(args.output_path)
 print('finished')
