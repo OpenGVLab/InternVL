@@ -137,7 +137,7 @@ The hyperparameters used for finetuning are listed in the following table.
 
 | Hyperparameter     | Trainable Param | Global Batch Size | Learning rate | Epochs | Max length | Weight decay |
 | ------------------ | --------------- | ----------------- | ------------- | ------ | ---------- | ------------ |
-| InternVL-Chat-V1.2 | 40B             | 512               | 1e-5          | 1      | 2048       | 0.05         |
+| InternVL-Chat-V1.2 | 40B (full model)| 512               | 1e-5          | 1      | 2048       | 0.05         |
 
 ## 📊 Evaluation
 
