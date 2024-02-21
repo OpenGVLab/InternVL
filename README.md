@@ -1,10 +1,10 @@
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/5aa4cda8-b453-40a0-9336-17012b430ae8"> InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks —— An Open-Source Alternative to ViT-22B
 
-\[[InternVL-Chat-V1.2 Blog](./BLOG.md)\]   \[[Paper](https://arxiv.org/abs/2312.14238)\]  \[[Chat Demo](https://internvl.opengvlab.com/)\]  \[[Quick Start](#quick-start-with-huggingface)\]  \[[中文解读](https://mp.weixin.qq.com/s/bdfAJRqOF9tUk8Vy9KC_XQ)\]
+\[[Update Blog](./BLOG.md)\]   \[[Paper](https://arxiv.org/abs/2312.14238)\]  \[[Chat Demo](https://internvl.opengvlab.com/)\]  \[[Quick Start](#quick-start-with-huggingface)\]  \[[中文解读](https://mp.weixin.qq.com/s/bdfAJRqOF9tUk8Vy9KC_XQ)\]
 
 ## News🚀🚀🚀
 
-- `2024/02/21`: [InternVL-Chat-V1.2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) achieves SOTA performance on MathVista, MMBench, and MMVP. See our [blog](BLOG.md) for more details.
+- `2024/02/21`: [InternVL-Chat-V1.2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) achieves SOTA performance on MathVista (59.9), MMBench (83.8), and MMVP (58.7). See our [blog](BLOG.md) for more details.
 - `2024/02/12`: InternVL-Chat-V1.2 has been released, utilizing [Nous-Hermes-2-Yi-34B](https://huggingface.co/NousResearch/Nous-Hermes-2-Yi-34B) as the LLM. It achieves 51.6 on MMMU val and 82.3 on MMBench test. For more details, please refer to our [blog](BLOG.md) or try our [demo](https://internvl.opengvlab.com/). The model is now available on [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2), and both training/evaluation data and scripts are open-sourced.
 - `2024/02/04`: [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) achieves 44.67% on [MMVP](https://github.com/tsb0601/MMVP), higher than GPT-4V!
 - `2024/01/27`: We release 448 resolution model, achieving 76.6 on MMBench dev, see [here](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#-evaluation-chinese-models).
