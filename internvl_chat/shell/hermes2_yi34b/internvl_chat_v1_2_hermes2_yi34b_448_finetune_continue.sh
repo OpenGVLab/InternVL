@@ -23,7 +23,7 @@ fi
 
 # number of gpus: 16
 # batch size per gpu: 4
-# gradient accumulation steps: 1
+# gradient accumulation steps: 2
 # total batch size: 128
 # epoch: 1
 srun -p ${PARTITION} \
