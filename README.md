@@ -27,13 +27,14 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 
 **Vision Large Language Model**
 
-| Model                   | Date       | Download                                                                             | Note                             |
-| ----------------------- | ---------- | ------------------------------------------------------------------------------------ | -------------------------------- |
-| InternVL-Chat-13B       | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)        | English multimodal dialogue      |
-| InternVL-Chat-19B       | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B)       | English multimodal dialogue      |
-| InternVL-Chat-19B-448px | 2024.02.03 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B-448px) | 448 resolution                   |
-| InternVL-Chat-V1.1      | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)            | support Chinese and stronger OCR |
-| InternVL-Chat-V1.2      | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)            | scaling up LLM to 34B (🔥new)    |
+| Model                   | Date       | Download                                                                             | Note                               |
+| ----------------------- | ---------- | ------------------------------------------------------------------------------------ | ---------------------------------- |
+| InternVL-Chat-13B       | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)        | English multimodal dialogue        |
+| InternVL-Chat-19B       | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B)       | English multimodal dialogue        |
+| InternVL-Chat-19B-448px | 2024.02.03 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B-448px) | 448 resolution                     |
+| InternVL-Chat-V1.1      | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)            | support Chinese and stronger OCR   |
+| InternVL-Chat-V1.2      | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)            | scaling up LLM to 34B (🔥new)      |
+| InternVL-Chat-V1.2-Plus | 2024.02.21 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus)       | more SFT data and stronger (🔥new) |
 
 ## What can InternVL do?
 
