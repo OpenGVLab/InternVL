@@ -141,9 +141,9 @@ The hyperparameters used for finetuning are listed in the following table.
 
 ## 📊 Evaluation
 
-\* Training set observed.
-
 **MultiModal Benchmark**
+
+\* Training set observed.
 
 | name                                                                                        | model size | MathVista<br>(testmini) | MMB<br>(dev/test) | MMB−CN<br>(dev/test) | MMMU<br>(val/test)                                                                 | CMMMU<br>(val/test) | MMVP | MME            | POPE | Tiny LVLM | SEEDv1<br>(image) | LLaVA Wild | MM−Vet |
 | ------------------------------------------------------------------------------------------- | ---------- | ----------------------- | ----------------- | -------------------- | ---------------------------------------------------------------------------------- | ------------------- | ---- | -------------- | ---- | --------- | ----------------- | ---------- | ------ |
@@ -152,6 +152,8 @@ The hyperparameters used for finetuning are listed in the following table.
 | [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B        | 59.9                    | 83.4&nbsp;/&nbsp;83.8       | 81.6&nbsp;/&nbsp;82.0          | 50.3&nbsp;/&nbsp;45.6                                                                        | TODO                | 58.7 | 1623.6&nbsp;/&nbsp;550.7 | 88.7 | 353.9     | 76.4              | 84.6       | 47.1   |
 
 **Image Captioning & Visual Question Answering**
+
+\* Training set observed.
 
 | name                                                                                        | model size | COCO<br>(test) | Flickr30K<br>(test) | NoCaps<br>(val) | VQAv2<br>(testdev) | OKVQA<br>(val) | TextVQA<br>(val) | VizWiz<br>(val/test) | AI2D<br>(test) | GQA<br>(test) | ScienceQA<br>(image) |
 | ------------------------------------------------------------------------------------------- | ---------- | -------------- | ------------------- | --------------- | ------------------ | -------------- | ---------------- | -------------------- | -------------- | ------------- | -------------------- |
