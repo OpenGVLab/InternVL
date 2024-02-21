@@ -159,7 +159,7 @@ The hyperparameters used for finetuning are listed in the following table.
 | ------------------------------------------------------------------------------------------- | ---------- | -------------- | ------------------- | --------------- | ------------------ | -------------- | ---------------- | -------------------- | -------------- | ------------- | -------------------- |
 | [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B        | 142.2\*        | 85.3                | 120.8           | 80.9\*             | 64.1\*         | 65.9             | 59.0&nbsp;/&nbsp;57.3          | 70.3\*         | 62.5\*        | 90.1\*               |
 | [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B        | 113.9          | 92.4                | 112.5           | -                  | 62.5\*         | 69.7             | 61.9&nbsp;/&nbsp;60.0          | 71.6\*         | 64.0\*        | 83.3                 |
-| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B        | 143.4\*        | 90.5                | 125.8           | TODO               | 67.6\*         | 71.3\*           | 61.3&nbsp;/&nbsp;-             | 74.2\*         | 66.9\*        | 98.1\*               |
+| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B        | 143.4\*        | 90.5                | 125.8           | -                  | 67.6\*         | 71.3\*           | 61.3&nbsp;/&nbsp;-             | 74.2\*         | 66.9\*        | 98.1\*               |
 
 **Visual Grounding**
 
