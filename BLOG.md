@@ -5,7 +5,7 @@
 > Date: 2024/02/21<br>
 > Developed by: Zhe Chen, Weiyun Wang, Wenhai Wang, Erfei Cui, Zhangwei Gao, Xizhou Zhu, Lewei Lu, Tong Lu, Yu Qiao, Jifeng Dai
 
-[InternVL-Chat-V1.2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) uses the same model architecture as InternVL-Chat-V1.2, but the difference lies in the SFT dataset: while InternVL-Chat-V1.2 only utilizes an SFT dataset with 1.2M samples, our Plus version employs an SFT dataset with 12M samples.
+[InternVL-Chat-V1.2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) uses the same model architecture as InternVL-Chat-V1.2, but the difference lies in the SFT dataset. InternVL-Chat-V1.2 only utilizes an SFT dataset with 1.2M samples, while our plus version employs an SFT dataset with 12M samples.
 
 ### Performance
 
