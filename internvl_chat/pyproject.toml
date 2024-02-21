@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "internvl_chat"
-version = "1.2.1"
+version = "1.2.2"
 description = "Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks."
 readme = "README.md"
 requires-python = ">=3.8"
