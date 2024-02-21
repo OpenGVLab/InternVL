@@ -165,9 +165,9 @@ The hyperparameters used for finetuning are listed in the following table. And, 
 
 | name                                                                                        | model size | RefCOCO<br>(val) | RefCOCO<br>(testA) | RefCOCO<br>(testB) | RefCOCO+<br>(val) | RefCOCO+<br>(testA) | RefCOCO+<br>(testB) | RefCOCO−g<br>(val) | RefCOCO−g<br>(test) |
 | ------------------------------------------------------------------------------------------- | ---------- | ---------------- | ------------------ | ------------------ | ----------------- | ------------------- | ------------------- | ------------------ | ------------------- |
-| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B        |                  |                    |                    |                   |                     |                     |                    |                     |
-| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B        |                  |                    |                    |                   |                     |                     |                    |                     |
-| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B        |                  |                    |                    |                   |                     |                     |                    |                     |
+| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B        | 84.7             | 89.9               | 78.6               | 78.5              | 85.6                | 70.1                | 81.0               | 81.4                |
+| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B        | 74.4             | 80.3               | 66.5               | 70.7              | 77.6                | 62.0                | 69.2               | 70.0                |
+| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B        | 90.2             | 93.4               | 85.5               | 85.3              | 90.4                | 79.7                | 88.5               | 88.8                |
 
 ## 📊 Evaluation (Legacy Models)
 
