@@ -128,16 +128,14 @@ def evaluate_chat_model():
         )
 
         outputs = []
-        for _, (pixel_values, questions, bboxes, hws) in tqdm(enumerate(dataloader)):
+        for _, (pixel_values, questions, bboxes, hws) in enumerate(tqdm(dataloader)):
             pixel_values = pixel_values.to(torch.bfloat16).cuda()
             generation_config = dict(
-                do_sample=args.sample,
                 num_beams=args.num_beams,
                 max_new_tokens=100,
-                min_new_tokens=20,
+                min_new_tokens=1,
                 length_penalty=1,
-                top_k=args.top_k,
-                top_p=args.top_p,
+                do_sample=True if args.temperature > 0 else False,
                 temperature=args.temperature,
             )
             pred = model.chat(
@@ -182,7 +180,8 @@ def evaluate_chat_model():
                                            dtype=torch.float32).view(-1, 4)
                 predict_bbox = torch.tensor(predict_bbox,
                                             dtype=torch.float32).view(-1, 4)
-                predict_bbox = predict_bbox / divisor
+                if predict_bbox.sum() >= 4:
+                    predict_bbox = predict_bbox / 1000
                 predict_bbox[:, 0::2] *= output['hw'][1]
                 predict_bbox[:, 1::2] *= output['hw'][0]
                 iou, _ = box_iou(predict_bbox, target_bbox)
@@ -217,10 +216,8 @@ if __name__ == '__main__':
     parser.add_argument('--num-workers', type=int, default=1)
     parser.add_argument('--num-beams', type=int, default=5)
     parser.add_argument('--out-dir', type=str, default='results')
-    parser.add_argument('--top-k', type=int, default=50)
-    parser.add_argument('--top-p', type=float, default=0.9)
-    parser.add_argument('--sample', type=bool, default=True)
-    parser.add_argument('--temperature', type=float, default=1.0)
+    parser.add_argument('--sample', type=bool, default=False)
+    parser.add_argument('--temperature', type=float, default=0.0)
     parser.add_argument('--seed', type=int, default=0)
     args = parser.parse_args()
 
@@ -240,6 +237,7 @@ if __name__ == '__main__':
     torch.cuda.set_device(int(os.getenv('LOCAL_RANK', 0)))
 
     tokenizer = LlamaTokenizer.from_pretrained(args.checkpoint)
+    PATTERN = re.compile(r'\[*\[(.*?),(.*?),(.*?),(.*?)\]\]*')
 
     if 'qllama' in args.checkpoint.lower():
         from internvl.model.internvl_chat_with_qllama import InternVLChatModel
@@ -247,8 +245,6 @@ if __name__ == '__main__':
             args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
         image_size = model.internvl.config.force_image_size or model.config.internvl_config.vision_config.image_size
         pad2square = model.config.pad2square
-        PATTERN = re.compile(r'\[(.*?),(.*?),(.*?),(.*?)\]')
-        divisor = 1  # TODO: divisor
         prompt = 'Please provide the bounding box coordinate of the region this sentence describes: {}'
     else:
         from internvl.model.internvl_chat import InternVLChatModel
@@ -256,8 +252,6 @@ if __name__ == '__main__':
             args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
         image_size = model.config.force_image_size or model.config.vision_config.image_size
         pad2square = model.config.pad2square
-        PATTERN = re.compile(r'\[\[(.*?),(.*?),(.*?),(.*?)\]\]')
-        divisor = 1  # TODO: divisor
         prompt = 'Please provide the bounding box coordinate of the region this sentence describes: <ref>{}</ref>'
 
     total_params = sum(p.numel() for p in model.parameters()) / 1e9

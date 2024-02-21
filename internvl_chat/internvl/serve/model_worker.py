@@ -189,7 +189,7 @@ class ModelWorker:
             input_ids=input_ids,
             do_sample=do_sample,
             temperature=temperature,
-            repetition_penalty=1.1,
+            repetition_penalty=1.0,
             top_p=top_p,
             max_new_tokens=max_new_tokens,
             streamer=streamer,

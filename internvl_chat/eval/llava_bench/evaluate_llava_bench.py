@@ -62,7 +62,7 @@ def evaluate_chat_model():
                 max_new_tokens=ds_collections[ds_name]['max_new_tokens'],
                 min_new_tokens=ds_collections[ds_name]['min_new_tokens'],
                 length_penalty=1,
-                repetition_penalty=1.5,
+                # repetition_penalty=1.5,
                 do_sample=True if args.temperature > 0 else False,
                 temperature=args.temperature,
             )
@@ -97,7 +97,7 @@ if __name__ == '__main__':
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
     parser.add_argument('--num-beams', type=int, default=5)
-    parser.add_argument('--temperature', type=float, default=1.0)
+    parser.add_argument('--temperature', type=float, default=0.0)
     parser.add_argument('--out-dir', type=str, default='results')
     parser.add_argument('--seed', type=int, default=0)
     args = parser.parse_args()
