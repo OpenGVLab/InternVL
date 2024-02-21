@@ -133,11 +133,22 @@ PARTITION='your partition' GPUS=32 PER_DEVICE_BATCH_SIZE=8 sh shell/hermes2_yi34
 PARTITION='your partition' GPUS=64 PER_DEVICE_BATCH_SIZE=8 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune.sh
 ```
 
-The hyperparameters used for finetuning are listed in the following table. And, you can view the training logs in tensorboard at [here](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2/tensorboard).
+The hyperparameters used for fine-tuning are listed in the following table. And, you can view the training logs in tensorboard at [here](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2/tensorboard).
 
 | Hyperparameter     | Trainable Param  | Global Batch Size | Learning rate | Epochs | Max length | Weight decay |
 | ------------------ | ---------------- | ----------------- | ------------- | ------ | ---------- | ------------ |
 | InternVL-Chat-V1.2 | 40B (full model) | 512               | 1e-5          | 1      | 2048       | 0.05         |
+
+## Continue Fine-tune
+
+You can continue to fine-tune the checkpoint from the previous training process use this [script](./shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune_continue.sh).
+
+Before fine-tuning, you should set the `--meta_path` in to your custom meta file of training data.
+
+```sh
+# using 16 GPUs
+PARTITION='your partition' GPUS=16 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune_continue.sh
+```
 
 ## 📊 Evaluation
 
