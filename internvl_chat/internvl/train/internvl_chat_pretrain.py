@@ -575,6 +575,7 @@ def main():
         config.vision_config.drop_path_rate = model_args.drop_path_rate
         config.llm_config.attn_implementation = 'flash_attention_2'
         config.template = data_args.conv_style
+        config.select_layer = model_args.vision_select_layer
         model = InternVLChatModel.from_pretrained(
             model_args.model_name_or_path, torch_dtype=torch.bfloat16, config=config)
     else:
@@ -649,8 +650,12 @@ def main():
         model.language_model.lm_head.requires_grad = True
 
     if model_args.use_backbone_lora:
-        model.wrap_backbone_lora(r=model_args.use_backbone_lora)
+        model.wrap_backbone_lora(r=model_args.use_backbone_lora, lora_alpha=2 * model_args.use_backbone_lora)
         model.config.use_backbone_lora = model_args.use_backbone_lora
+
+    if model_args.use_llm_lora:
+        model.wrap_llm_lora(r=model_args.use_llm_lora, lora_alpha=2 * model_args.use_llm_lora)
+        model.config.use_llm_lora = model_args.use_llm_lora
 
     if model_args.freeze_mlp:
         _freeze_params(model.mlp1)

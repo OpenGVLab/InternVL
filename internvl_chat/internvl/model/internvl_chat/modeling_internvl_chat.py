@@ -63,10 +63,10 @@ class InternVLChatModel(PreTrainedModel):
         self.img_context_token_id = None
 
         if config.use_backbone_lora:
-            self.wrap_backbone_lora(r=config.use_backbone_lora)
+            self.wrap_backbone_lora(r=config.use_backbone_lora, lora_alpha=2 * config.use_backbone_lora)
 
         if config.use_llm_lora:
-            self.wrap_llm_lora(r=config.use_llm_lora)
+            self.wrap_llm_lora(r=config.use_llm_lora, lora_alpha=2 * config.use_llm_lora)
 
     def wrap_backbone_lora(self, r=128, lora_alpha=256, lora_dropout=0.05):
         lora_config = LoraConfig(
@@ -88,6 +88,7 @@ class InternVLChatModel(PreTrainedModel):
             task_type='CAUSAL_LM'
         )
         self.language_model = get_peft_model(self.language_model, lora_config)
+        self.language_model.enable_input_require_grads()
         self.language_model.print_trainable_parameters()
 
     def forward(
@@ -124,7 +125,7 @@ class InternVLChatModel(PreTrainedModel):
 
         input_embeds = input_embeds.reshape(B, N, C)
 
-        outputs = self.language_model.model(
+        outputs = self.language_model(
             inputs_embeds=input_embeds,
             attention_mask=attention_mask,
             position_ids=position_ids,
@@ -134,8 +135,7 @@ class InternVLChatModel(PreTrainedModel):
             output_hidden_states=output_hidden_states,
             return_dict=return_dict,
         )
-        hidden_states = outputs[0]
-        logits = self.language_model.lm_head(hidden_states)
+        logits = outputs.logits
 
         loss = None
         if labels is not None:

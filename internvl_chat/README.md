@@ -146,8 +146,10 @@ You can continue to fine-tune the checkpoint from the previous training process 
 Before fine-tuning, you should set the `--meta_path` in to your custom meta file of training data.
 
 ```sh
-# using 16 GPUs
+# using 16 GPUs, fine-tune the full LLM
 PARTITION='your partition' GPUS=16 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune_continue.sh
+# using 2 GPUs, fine-tune the LoRA
+CUDA_VISIBLE_DEVICES=0,1 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune_continue_lora.sh
 ```
 
 ## 📊 Evaluation
