@@ -23,16 +23,12 @@
   pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
   ```
 
-- Install `flash-attn==0.2.8` or `flash-attn==2.3.6`:
-
-  If you want to fully replicate my results in the paper, please install `v0.2.8`, otherwise install the `v2.3.6`.
-
-  This is because different versions of flash attention yield slight differences in results.
+- Install `flash-attn==2.3.6`:
 
   ```bash
   git clone https://github.com/Dao-AILab/flash-attention.git
   cd flash-attention
-  git checkout v0.2.8
+  git checkout v2.3.6
   python setup.py install
   ```
 
