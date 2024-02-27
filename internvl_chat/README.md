@@ -49,7 +49,7 @@ First, download the [annotation files](https://huggingface.co/OpenGVLab/InternVL
 
 Second, download all the images we used.
 
-- AI2D: [ai2d-all](https://ai2-public-datasets.s3.amazonaws.com/diagrams/ai2d-all.zip)
+- AI2D: [ai2d_images](https://drive.google.com/file/d/1dqqa3MnrxMXaU_K9JA6C83je32ibwdOY/view?usp=sharing) (provided by InternLM-XComposer)
 - ChartQA: [ChartQA Dataset](https://huggingface.co/datasets/ahmed-masry/ChartQA/resolve/main/ChartQA%20Dataset.zip)
 - COCO: [train2017](http://images.cocodataset.org/zips/train2017.zip)
 - DocVQA: [train](https://datasets.cvc.uab.es/rrc/DocVQA/train.tar.gz), [val](https://datasets.cvc.uab.es/rrc/DocVQA/val.tar.gz), [test](https://datasets.cvc.uab.es/rrc/DocVQA/test.tar.gz)
@@ -78,45 +78,46 @@ playground/
 ├── geoqa+.jsonl
 ├── synthdog_en.jsonl
 ├── data
-│   ├── ai2d
-│   │   └── images
-│   ├── chartqa
-│   │   ├── test
-│   │   ├── train
-│   │   └── val
-│   ├── coco
-│   │   └── train2017
-│   ├── docvqa
-│   │   ├── test
-│   │   ├── train
-│   │   └── val
-│   ├── dvqa
-│   │   └── images
-│   ├── gqa
-│   │   └── images
-│   ├── llava
+│   ├── ai2d
+│   │   ├── abc_images
+│   │   └── images
+│   ├── chartqa
+│   │   ├── test
+│   │   ├── train
+│   │   └── val
+│   ├── coco
+│   │   └── train2017
+│   ├── docvqa
+│   │   ├── test
+│   │   ├── train
+│   │   └── val
+│   ├── dvqa
+│   │   └── images
+│   ├── gqa
+│   │   └── images
+│   ├── llava
 │   │   └── llava_pretrain
 │   │       └── images
-│   ├── ocr_vqa
+│   ├── ocr_vqa
 │   │   └── images
-│   ├── sam
+│   ├── sam
 │   │   └── images
-│   ├── share_textvqa
+│   ├── share_textvqa
 │   │   └── images
-│   ├── synthdog-en
+│   ├── synthdog-en
 │   │   └── images
-│   ├── textvqa
+│   ├── textvqa
 │   │   └── train_images
-│   ├── vg
+│   ├── vg
 │   │   ├── VG_100K
 │   │   └── VG_100K_2
-│   ├── web-celebrity
+│   ├── web-celebrity
 │   │   └── images
-│   ├── web-landmark
+│   ├── web-landmark
 │   │   └── images
-│   ├── wikiart
+│   ├── wikiart
 │   │   └── images
-│   ├── geoqa+
+│   ├── geoqa+
 │   │   └── images
 ```
 
@@ -160,9 +161,9 @@ CUDA_VISIBLE_DEVICES=0,1 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b
 
 | name                                                                                        | model size | MathVista<br>(testmini) | MMB<br>(dev/test) | MMB−CN<br>(dev/test) | MMMU<br>(val/test)                                                                 | CMMMU<br>(val/test) | MMVP | MME            | POPE | Tiny LVLM | SEEDv1<br>(image) | LLaVA Wild | MM−Vet |
 | ------------------------------------------------------------------------------------------- | ---------- | ----------------------- | ----------------- | -------------------- | ---------------------------------------------------------------------------------- | ------------------- | ---- | -------------- | ---- | --------- | ----------------- | ---------- | ------ |
-| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B        | 34.5                    | 76.7 / 75.4       | 71.9 / 70.3          | 39.1 / 35.3                                                                        | 34.8 / 34.0         | 44.7 | 1675.1 / 348.6 | 87.1 | 343.2     | 73.2              | 73.2       | 46.7   |
-| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B        | 47.7                    | 81.4 / 82.2       | 79.5 / 81.2          | 51.6 / [46.2](https://eval.ai/web/challenges/challenge-page/2179/leaderboard/5377) | TODO                | 56.7 | 1672.1 / 509.3 | 88.0 | 350.3     | 75.6              | 85.0       | 48.9   |
-| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B        | 59.9                    | 83.4 / 83.8       | 81.6 / 82.0          | 50.3 / 45.6                                                                        | TODO                | 58.7 | 1623.6 / 550.7 | 88.7 | 353.9     | 76.4              | 84.6       | 47.9   |
+| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B        | 34.5                    | 76.7 / 75.4       | 71.9 / 70.3          | 39.1 / 35.3                                                                        | 34.8 / 34.0         | 44.7 | 1675.1 / 348.6 | 87.1 | 343.2     | 73.2              | 73.2       | 46.7   |
+| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B        | 47.7                    | 81.4 / 82.2       | 79.5 / 81.2          | 51.6 / [46.2](https://eval.ai/web/challenges/challenge-page/2179/leaderboard/5377) | TODO                | 56.7 | 1672.1 / 509.3 | 88.0 | 350.3     | 75.6              | 85.0       | 48.9   |
+| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B        | 59.9                    | 83.4 / 83.8       | 81.6 / 82.0          | 50.3 / 45.6                                                                        | TODO                | 58.7 | 1623.6 / 550.7 | 88.7 | 353.9     | 76.4              | 84.6       | 47.9   |
 
 **Image Captioning & Visual Question Answering**
 
@@ -170,9 +171,11 @@ CUDA_VISIBLE_DEVICES=0,1 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b
 
 | name                                                                                        | model size | COCO<br>(test) | Flickr30K<br>(test) | NoCaps<br>(val) | VQAv2<br>(testdev) | OKVQA<br>(val) | TextVQA<br>(val) | VizWiz<br>(val/test) | AI2D<br>(test) | GQA<br>(test) | ScienceQA<br>(image) |
 | ------------------------------------------------------------------------------------------- | ---------- | -------------- | ------------------- | --------------- | ------------------ | -------------- | ---------------- | -------------------- | -------------- | ------------- | -------------------- |
-| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B        | 142.2\*        | 85.3                | 120.8           | 80.9\*             | 64.1\*         | 65.9             | 59.0 / 57.3          | 70.3\*         | 62.5\*        | 90.1\*               |
-| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B        | 113.9          | 92.4                | 112.5           | -                  | 62.5\*         | 69.7             | 61.9 / 60.0          | 71.6\*         | 64.0\*        | 83.3                 |
-| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B        | 143.4\*        | 90.5                | 125.8           | -                  | 67.6\*         | 71.3\*           | 61.3 / -             | 74.2\*         | 66.9\*        | 98.1\*               |
+| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B        | 142.2\*        | 85.3                | 120.8           | 80.9\*             | 64.1\*         | 65.9             | 59.0 / 57.3          | 72.2\*         | 62.5\*        | 90.1\*               |
+| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B        | 113.9          | 92.4                | 112.5           | -                  | 62.5\*         | 69.7             | 61.9 / 60.0          | 77.1\*         | 64.0\*        | 83.3                 |
+| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B        | 143.4\*        | 90.5                | 125.8           | -                  | 67.6\*         | 71.3\*           | 61.3 / -             | 78.2\*         | 66.9\*        | 98.1\*               |
+
+- We found that incorrect images were used for training and testing in `AI2D`, meaning that for problems where `abcLabel` is True, `abc_images` were not utilized. We have now corrected the images used for testing, but the results may still be somewhat lower as a consequence.
 
 **Visual Grounding**
 
@@ -298,8 +301,9 @@ data
 │   └── ocrvqa_val.jsonl
 ├── ai2diagram
 │   ├── ai2d/
-│   ├── test.jsonl
-│   └── train.jsonl
+│   │   ├── abc_images/
+│   │   └── images/
+│   └── test.jsonl
 ├── scienceqa
 │   ├── images/
 │   ├── problems.json
@@ -756,14 +760,12 @@ GPUS=8 sh evaluate.sh <checkpoint> vqa-ocrvqa-test
 
 ```bash
 mkdir -p data/ai2diagram && cd data/ai2diagram
-
-# download images
-wget https://ai2-public-datasets.s3.amazonaws.com/diagrams/ai2d-all.zip
-
 # download converted files
-wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/ai2diagram/train.jsonl
-wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/ai2diagram/test.jsonl
+wget https://huggingface.co/OpenGVLab/InternVL/raw/main/ai2d_test.jsonl -O test.jsonl
 
+# download images from Google drive (provided by InternLM-XComposer)
+# https://drive.google.com/file/d/1dqqa3MnrxMXaU_K9JA6C83je32ibwdOY/view?usp=sharing
+# images should be placed in `data/ai2diagram/ai2d/abc_images` and `data/ai2diagram/ai2d/images`
 cd ../..
 ```
 
