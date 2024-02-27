@@ -236,7 +236,8 @@ class VQADataset(torch.utils.data.Dataset):
 
         image = Image.open(image).convert('RGB')
         pixel_values = self.transform(image).unsqueeze(0)
-        question = question + ' ' + self.prompt
+        if len(self.prompt) != 0:
+            question = question + ' ' + self.prompt
         return {
             'question_id': question_id,
             'question': question,
@@ -293,7 +294,7 @@ def post_process(response):
 def evaluate_chat_model():
     base_prompt = 'Answer the question using a single word or phrase.'
     vizwiz_prompt = "When the provided information is insufficient, respond with 'Unanswerable'. "
-    ai2d_prompt = 'Please answer the question based on the options mentioned before.'
+    ai2d_prompt = ''
     random.seed(args.seed)
     summaries = []
 
