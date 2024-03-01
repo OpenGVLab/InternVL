@@ -16,10 +16,13 @@ Coming Soon
 
 Three datasets need to be prepared: COCO Caption, Flickr30K, and NoCaps.
 
+You can download the `coco_karpathy_train.json` from [here](https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_train.json).
+
 ```shell
 data
 ├── coco
 │   ├── annotations
+│   │   ├── coco_karpathy_train.json
 │   ├── test2017
 │   ├── train2014
 │   ├── train2017
@@ -76,6 +79,12 @@ To fine-tune InternVL on Flickr30K-CN with 32 GPUs, run:
 
 ```shell
 sh shell/finetune/internvl_stage2_finetune_flickrcn_364_bs1024_ep10.sh
+```
+
+To fine-tune InternVL on COCO with 32 GPUs, run:
+
+```shell
+sh shell/finetune/internvl_stage2_finetune_coco_364_bs1024_ep5.sh
 ```
 
 ## 📊 Evaluation

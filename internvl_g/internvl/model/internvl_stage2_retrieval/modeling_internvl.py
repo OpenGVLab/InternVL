@@ -367,7 +367,7 @@ class InternVLModel(InternVLPreTrainedModel):
             image_attention_mask, attention_mask, input_embeds, repeat_time
         )
         if type(self.qllama.model) == LlamaForCausalLM:
-            outputs = self.qllama.model.model.custom_forward(
+            outputs = self.qllama.model.model.forward_train(
                 inputs_embeds=input_embeds,
                 vision_hidden_states=image_embeds,
                 attention_mask=attention_mask,
@@ -377,7 +377,7 @@ class InternVLModel(InternVLPreTrainedModel):
                 repeat_time=repeat_time,
             ).last_hidden_state
         else:
-            outputs = self.qllama.model.custom_forward(
+            outputs = self.qllama.model.forward_train(
                 inputs_embeds=input_embeds,
                 vision_hidden_states=image_embeds,
                 attention_mask=attention_mask,
