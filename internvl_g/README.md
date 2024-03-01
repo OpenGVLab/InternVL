@@ -144,27 +144,20 @@ Expected results:
 
 ### Fine-tuned Image-Text Retrieval
 
+#### Flickr30K
+
 <table>
   <tr  align=center>
       <td rowspan="3" align=center><b>model</b></td>
       <td colspan="6" align=center><b>Flickr30K</b></td>
-      <td colspan="6" align=center><b>Flickr30K-CN</b></td>
       <td rowspan="3" align=center><b>avg</b></td>
 
 </tr>
    <tr  align=center>
       <td colspan="3" align=center><b>image-to-text</b></td>
       <td colspan="3" align=center><b>text-to-image</b></td>
-       <td colspan="3" align=center><b>image-to-text</b></td>
-      <td colspan="3" align=center><b>text-to-image</b></td>
    </tr>
    <tr>
-      <td>R@1</td>
-      <td>R@5</td>
-      <td>R@10</td>
-      <td>R@1</td>
-      <td>R@5</td>
-      <td>R@10</td>
       <td>R@1</td>
       <td>R@5</td>
       <td>R@10</td>
@@ -181,13 +174,7 @@ Expected results:
       <td>88.5</td>
       <td>98.4</td>
       <td>99.2</td>
-      <td>96.5</td>
-      <td>99.9</td>
-      <td>100.0</td>
-      <td>85.2</td>
-      <td>97.0</td>
-      <td>98.5</td>
-      <td>96.7</td>
+      <td>97.2</td>
    </tr>
 <tr align=center>
       <td>InternVL-G-FT</td>
@@ -197,13 +184,7 @@ Expected results:
       <td>89.6</td>
       <td>98.6</td>
       <td>99.2</td>
-      <td>96.9</td>
-      <td>99.9</td>
-      <td>100.0</td>
-      <td>85.9</td>
-      <td>97.1</td>
-      <td>98.7</td>
-      <td>97.0</td>
+      <td>97.6</td>
    </tr>
 
 </table>
@@ -230,27 +211,6 @@ Expected results:
 </details>
 
 <details>
-  <summary>[InternVL-C-FT] Flickr30K-CN</summary>
-
-```bash
-cd ../clip_benchmark/
-CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" --task "zeroshot_retrieval" \
-     --dataset "flickr30k" --dataset_root ./data/flickr30k --model internvl_c_retrieval_hf \
-     --pretrained ./work_dirs/internvl_stage2_finetune_flickrcn_364_bs1024_ep10/ --output result_ft.json
-```
-
-Expected results:
-
-```
-{"dataset": "flickr30k", "model": "internvl_c_retrieval_hf", "pretrained": "./work_dirs/internvl_stage2_finetune_flickrcn_364_bs1024_ep10", "task": "zeroshot_retrieval",
-"metrics": {"image_retrieval_recall@1": 0.8521999716758728, "text_retrieval_recall@1": 0.9649999737739563,
-"image_retrieval_recall@5": 0.9697999954223633, "text_retrieval_recall@5": 0.9990000128746033,
-"image_retrieval_recall@10": 0.9854000210762024, "text_retrieval_recall@10": 1.0}, "language": "cn"}
-```
-
-</details>
-
-<details>
   <summary>[InternVL-G-FT] Flickr30K</summary>
 
 ```bash
@@ -267,6 +227,72 @@ Expected results:
 "metrics": {"image_retrieval_recall@1": 0.895799994468689, "text_retrieval_recall@1": 0.9789999723434448,
 "image_retrieval_recall@5": 0.9861999750137329, "text_retrieval_recall@5": 1.0,
 "image_retrieval_recall@10": 0.9922000169754028, "text_retrieval_recall@10": 1.0}, "language": "en"}
+```
+
+</details>
+
+#### Flickr30K-CN
+
+<table>
+  <tr  align=center>
+      <td rowspan="3" align=center><b>model</b></td>
+      <td colspan="6" align=center><b>Flickr30K-CN</b></td>
+      <td rowspan="3" align=center><b>avg</b></td>
+
+</tr>
+   <tr  align=center>
+       <td colspan="3" align=center><b>image-to-text</b></td>
+      <td colspan="3" align=center><b>text-to-image</b></td>
+   </tr>
+   <tr>
+      <td>R@1</td>
+      <td>R@5</td>
+      <td>R@10</td>
+      <td>R@1</td>
+      <td>R@5</td>
+      <td>R@10</td>
+   </tr>
+
+<tr align=center>
+      <td>InternVL-C-FT</td>
+      <td>96.5</td>
+      <td>99.9</td>
+      <td>100.0</td>
+      <td>85.2</td>
+      <td>97.0</td>
+      <td>98.5</td>
+      <td>96.2</td>
+   </tr>
+<tr align=center>
+      <td>InternVL-G-FT</td>
+      <td>96.9</td>
+      <td>99.9</td>
+      <td>100.0</td>
+      <td>85.9</td>
+      <td>97.1</td>
+      <td>98.7</td>
+      <td>96.4</td>
+   </tr>
+
+</table>
+
+<details>
+  <summary>[InternVL-C-FT] Flickr30K-CN</summary>
+
+```bash
+cd ../clip_benchmark/
+CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" --task "zeroshot_retrieval" \
+     --dataset "flickr30k" --dataset_root ./data/flickr30k --model internvl_c_retrieval_hf \
+     --pretrained ./work_dirs/internvl_stage2_finetune_flickrcn_364_bs1024_ep10/ --output result_ft.json
+```
+
+Expected results:
+
+```
+{"dataset": "flickr30k", "model": "internvl_c_retrieval_hf", "pretrained": "./work_dirs/internvl_stage2_finetune_flickrcn_364_bs1024_ep10", "task": "zeroshot_retrieval",
+"metrics": {"image_retrieval_recall@1": 0.8521999716758728, "text_retrieval_recall@1": 0.9649999737739563,
+"image_retrieval_recall@5": 0.9697999954223633, "text_retrieval_recall@5": 0.9990000128746033,
+"image_retrieval_recall@10": 0.9854000210762024, "text_retrieval_recall@10": 1.0}, "language": "cn"}
 ```
 
 </details>
