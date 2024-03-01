@@ -32,7 +32,7 @@ srun -p ${PARTITION} \
   --dataset_name 'flickr30k_en_train' \
   --model_name_or_path "./pretrained/internvl_14b_224px" \
   --output_dir "./work_dirs/internvl_stage2_finetune_flickr_364_bs1024_ep10_128gpu" \
-  --overwrite_output_dir False \
+  --overwrite_output_dir True \
   --force_image_size 364 \
   --drop_path_rate 0.3 \
   --use_custom_trainer \
