@@ -140,18 +140,9 @@ The hyperparameters used for fine-tuning are listed in the following table. And,
 | ------------------ | ---------------- | ----------------- | ------------- | ------ | ---------- | ------------ |
 | InternVL-Chat-V1.2 | 40B (full model) | 512               | 1e-5          | 1      | 2048       | 0.05         |
 
-## Continue Fine-tune
+### Continued Fine-tune
 
-You can continue to fine-tune the checkpoint from the previous training process use this [script](./shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune_continue.sh).
-
-Before fine-tuning, you should set the `--meta_path` in to your custom meta file of training data.
-
-```sh
-# using 16 GPUs, fine-tune the full LLM
-PARTITION='your partition' GPUS=16 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune_continue.sh
-# using 2 GPUs, fine-tune the LoRA
-CUDA_VISIBLE_DEVICES=0,1 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune_continue_lora.sh
-```
+See [CONTINUED_FINETUNE.md](CONTINUED_FINETUNE.md).
 
 ## 📊 Evaluation
 
@@ -161,9 +152,9 @@ CUDA_VISIBLE_DEVICES=0,1 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b
 
 | name                                                                                        | model size | MathVista<br>(testmini) | MMB<br>(dev/test) | MMB−CN<br>(dev/test) | MMMU<br>(val/test)                                                                 | CMMMU<br>(val/test) | MMVP | MME            | POPE | Tiny LVLM | SEEDv1<br>(image) | LLaVA Wild | MM−Vet |
 | ------------------------------------------------------------------------------------------- | ---------- | ----------------------- | ----------------- | -------------------- | ---------------------------------------------------------------------------------- | ------------------- | ---- | -------------- | ---- | --------- | ----------------- | ---------- | ------ |
-| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B        | 34.5                    | 76.7&nbsp;/&nbsp;75.4       | 71.9&nbsp;/&nbsp;70.3          | 39.1&nbsp;/&nbsp;35.3                                                                        | 34.8&nbsp;/&nbsp;34.0         | 44.7 | 1675.1&nbsp;/&nbsp;348.6 | 87.1 | 343.2     | 73.2              | 73.2       | 46.7   |
-| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B        | 47.7                    | 81.4&nbsp;/&nbsp;82.2       | 79.5&nbsp;/&nbsp;81.2          | 51.6&nbsp;/&nbsp;[46.2](https://eval.ai/web/challenges/challenge-page/2179/leaderboard/5377) | TODO                | 56.7 | 1672.1&nbsp;/&nbsp;509.3 | 88.0 | 350.3     | 75.6              | 85.0       | 48.9   |
-| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B        | 59.9                    | 83.4&nbsp;/&nbsp;83.8       | 81.6&nbsp;/&nbsp;82.0          | 50.3&nbsp;/&nbsp;45.6                                                                        | TODO                | 58.7 | 1623.6&nbsp;/&nbsp;550.7 | 88.7 | 353.9     | 76.4              | 84.6       | 47.9   |
+| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B        | 34.5                    | 76.7 / 75.4       | 71.9 / 70.3          | 39.1 / 35.3                                                                        | 34.8 / 34.0         | 44.7 | 1675.1 / 348.6 | 87.1 | 343.2     | 73.2              | 73.2       | 46.7   |
+| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B        | 47.7                    | 81.4 / 82.2       | 79.5 / 81.2          | 51.6 / [46.2](https://eval.ai/web/challenges/challenge-page/2179/leaderboard/5377) | TODO                | 56.7 | 1672.1 / 509.3 | 88.0 | 350.3     | 75.6              | 85.0       | 48.9   |
+| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B        | 59.9                    | 83.4 / 83.8       | 81.6 / 82.0          | 50.3 / 45.6                                                                        | TODO                | 58.7 | 1623.6 / 550.7 | 88.7 | 353.9     | 76.4              | 84.6       | 47.9   |
 
 **Image Captioning & Visual Question Answering**
 
@@ -171,9 +162,9 @@ CUDA_VISIBLE_DEVICES=0,1 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b
 
 | name                                                                                        | model size | COCO<br>(test) | Flickr30K<br>(test) | NoCaps<br>(val) | VQAv2<br>(testdev) | OKVQA<br>(val) | TextVQA<br>(val) | VizWiz<br>(val/test) | AI2D<br>(test) | GQA<br>(test) | ScienceQA<br>(image) |
 | ------------------------------------------------------------------------------------------- | ---------- | -------------- | ------------------- | --------------- | ------------------ | -------------- | ---------------- | -------------------- | -------------- | ------------- | -------------------- |
-| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B        | 142.2\*        | 85.3                | 120.8           | 80.9\*             | 64.1\*         | 65.9             | 59.0&nbsp;/&nbsp;57.3          | 72.2\*         | 62.5\*        | 90.1\*               |
-| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B        | 113.9          | 92.4                | 112.5           | -                  | 62.5\*         | 69.7             | 61.9&nbsp;/&nbsp;60.0          | 77.1\*         | 64.0\*        | 83.3                 |
-| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B        | 143.4\*        | 90.5                | 125.8           | -                  | 67.6\*         | 71.3\*           | 61.3&nbsp;/&nbsp;59.5             | 78.2\*         | 66.9\*        | 98.1\*               |
+| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B        | 142.2\*        | 85.3                | 120.8           | 80.9\*             | 64.1\*         | 65.9             | 59.0 / 57.3          | 72.2\*         | 62.5\*        | 90.1\*               |
+| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B        | 113.9          | 92.4                | 112.5           | -                  | 62.5\*         | 69.7             | 61.9 / 60.0          | 77.1\*         | 64.0\*        | 83.3                 |
+| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B        | 143.4\*        | 90.5                | 125.8           | -                  | 67.6\*         | 71.3\*           | 61.3 / 59.5          | 78.2\*         | 66.9\*        | 98.1\*               |
 
 - We found that incorrect images were used for training and testing in `AI2D`, meaning that for problems where `abcLabel` is True, `abc_images` were not utilized. We have now corrected the images used for testing, but the results may still be somewhat lower as a consequence.
 
@@ -189,8 +180,8 @@ CUDA_VISIBLE_DEVICES=0,1 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b
 
 | model         | QLLaMA | LLM          | res | COCO  | Flickr | NoCaps | VQAv2 | GQA  | VizWiz | TextVQA | MME    | POPE | Download |
 | ------------- | ------ | ------------ | --- | ----- | ------ | ------ | ----- | ---- | ------ | ------- | ------ | ---- | -------- |
-| InternVL−Chat | ✔️     | frozen&nbsp;V−7B  | 224 | 141.4 | 89.7   | 120.5  | 72.3  | 57.7 | 44.5   | 42.1    | 1298.5 | 85.2 | TODO     |
-| InternVL−Chat | ✔️     | frozen&nbsp;V−13B | 224 | 142.4 | 89.9   | 123.1  | 71.7  | 59.5 | 54.0   | 49.1    | 1317.2 | 85.4 | TODO     |
+| InternVL−Chat | ✔️     | frozen V−7B  | 224 | 141.4 | 89.7   | 120.5  | 72.3  | 57.7 | 44.5   | 42.1    | 1298.5 | 85.2 | TODO     |
+| InternVL−Chat | ✔️     | frozen V−13B | 224 | 142.4 | 89.9   | 123.1  | 71.7  | 59.5 | 54.0   | 49.1    | 1317.2 | 85.4 | TODO     |
 | InternVL−Chat | ✔️     | V−13B        | 336 | 146.2 | 92.2   | 126.2  | 81.2  | 66.6 | 58.5   | 61.5    | 1586.4 | 87.6 | TODO     |
 
 ## ❓ How to Evaluate
@@ -411,8 +402,10 @@ GPUS=8 sh evaluate.sh <checkpoint> caption-coco
 mkdir -p data/flickr30k && cd data/flickr30k
 
 # download images from https://bryanplummer.com/Flickr30kEntities/
-# karpathy split annotations can be downloaded from https://cs.stanford.edu/people/karpathy/deepimagesent/
-# download converted files
+# karpathy split annotations can be downloaded from the following link:
+# https://github.com/mehdidc/retrieval_annotations/releases/download/1.0.0/flickr30k_test_karpathy.txt
+# this file is provided by the clip-benchmark repository.
+# We convert this txt file to json format, download the converted file:
 wget https://github.com/OpenGVLab/InternVL/releases/download/data/flickr30k_test_karpathy.json
 
 cd ../..
