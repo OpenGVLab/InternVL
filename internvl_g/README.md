@@ -8,15 +8,67 @@ See [INSTALLATION.md](../INSTALLATION.md)
 
 ## 📦 Data Preparation
 
-**Pre-training**
-
-Coming Soon
-
-**Fine-tuning**
-
 Three datasets need to be prepared: COCO Caption, Flickr30K, and NoCaps.
 
-You can download the `coco_karpathy_train.json` from [here](https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_train.json).
+<details>
+<summary>COCO Caption</summary>
+
+```bash
+mkdir -p data/coco && cd data/coco
+
+# download coco images
+wget http://images.cocodataset.org/zips/train2014.zip && unzip train2014.zip
+wget http://images.cocodataset.org/zips/val2014.zip && unzip val2014.zip
+wget http://images.cocodataset.org/zips/test2015.zip && unzip test2015.zip
+
+mkdir -p annotations && cd annotations/
+# download converted annotation files
+wget https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_train.json
+wget https://github.com/OpenGVLab/InternVL/releases/download/data/coco_karpathy_test.json
+wget https://github.com/OpenGVLab/InternVL/releases/download/data/coco_karpathy_test_gt.json
+cd ../../../
+```
+
+</details>
+
+<details>
+<summary>Flickr30K</summary>
+
+```bash
+mkdir -p data/flickr30k && cd data/flickr30k
+
+# download images from https://bryanplummer.com/Flickr30kEntities/
+# karpathy split annotations can be downloaded from the following link:
+# https://github.com/mehdidc/retrieval_annotations/releases/download/1.0.0/flickr30k_test_karpathy.txt
+# this file is provided by the clip-benchmark repository.
+# We convert this txt file to json format, download the converted file:
+wget https://github.com/OpenGVLab/InternVL/releases/download/data/flickr30k_cn_test.txt
+wget https://github.com/OpenGVLab/InternVL/releases/download/data/flickr30k_cn_train.txt
+wget https://github.com/OpenGVLab/InternVL/releases/download/data/flickr30k_test_karpathy.json
+wget https://github.com/mehdidc/retrieval_annotations/releases/download/1.0.0/flickr30k_test_karpathy.txt
+wget https://github.com/mehdidc/retrieval_annotations/releases/download/1.0.0/flickr30k_train_karpathy.txt
+wget https://github.com/mehdidc/retrieval_annotations/releases/download/1.0.0/flickr30k_val_karpathy.txt
+
+cd ../..
+```
+
+</details>
+
+<details>
+<summary>NoCaps</summary>
+
+```bash
+mkdir -p data/nocaps && cd data/nocaps
+
+# download images from https://nocaps.org/download
+# original annotations can be downloaded from https://nocaps.s3.amazonaws.com/nocaps_val_4500_captions.json
+wget https://nocaps.s3.amazonaws.com/nocaps_val_4500_captions.json
+
+cd ../..
+```
+
+</details>
+
 
 ```shell
 data
@@ -38,7 +90,6 @@ data
 │   └── Images
 └── nocaps
     ├── images
-    ├── nocaps_val_4500_captions_coco_format.json
     └── nocaps_val_4500_captions.json
 ```
 
@@ -69,22 +120,22 @@ Coming Soon
 
 ## 🔥 Retrieval Fine-tuning
 
-To fine-tune InternVL on Flickr30K with 32 GPUs, run:
+To fine-tune InternVL on Flickr30K with 32 GPUs and slurm system, run:
 
 ```bash
-sh shell/finetune/internvl_stage2_finetune_flickr_364_bs1024_ep10.sh
+GPUS=32 sh shell/finetune/internvl_stage2_finetune_flickr_364_bs1024_ep10.sh
 ```
 
-To fine-tune InternVL on Flickr30K-CN with 32 GPUs, run:
+To fine-tune InternVL on Flickr30K-CN with 32 GPUs and slurm system, run:
 
 ```shell
-sh shell/finetune/internvl_stage2_finetune_flickrcn_364_bs1024_ep10.sh
+GPUS=32 sh shell/finetune/internvl_stage2_finetune_flickrcn_364_bs1024_ep10.sh
 ```
 
-To fine-tune InternVL on COCO with 32 GPUs, run:
+To fine-tune InternVL on COCO with 32 GPUs and slurm system, run:
 
 ```shell
-sh shell/finetune/internvl_stage2_finetune_coco_364_bs1024_ep5.sh
+GPUS=32 sh shell/finetune/internvl_stage2_finetune_coco_364_bs1024_ep5.sh
 ```
 
 ## 📊 Evaluation
@@ -144,7 +195,7 @@ Expected results:
 
 ### Fine-tuned Image-Text Retrieval
 
-#### Flickr30K
+#### Flickr30K fine-tuned model: [InternVL-14B-Flickr30K-FT-364px](https://huggingface.co/OpenGVLab/InternVL-14B-Flickr30K-FT-364px)
 
 <table>
   <tr  align=center>
@@ -231,7 +282,7 @@ Expected results:
 
 </details>
 
-#### Flickr30K-CN
+#### Flickr30K-CN fine-tuned model: [InternVL-14B-FlickrCN-FT-364px](https://huggingface.co/OpenGVLab/InternVL-14B-FlickrCN-FT-364px)
 
 <table>
   <tr  align=center>
