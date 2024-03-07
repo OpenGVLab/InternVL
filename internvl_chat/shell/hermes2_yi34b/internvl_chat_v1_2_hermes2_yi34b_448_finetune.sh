@@ -67,6 +67,7 @@ srun -p ${PARTITION} \
   --lr_scheduler_type "cosine" \
   --logging_steps 1 \
   --max_seq_length 2048 \
+  --group_by_length True \
   --do_train True \
   --grad_checkpoint True \
   --deepspeed "zero_stage3_config.json" \
