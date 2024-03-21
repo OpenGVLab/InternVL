@@ -32,7 +32,7 @@
 
 We are excited to introduce InternVL-Chat-V1.2. Inspired by [LLaVA-NeXT-34B](https://llava-vl.github.io/blog/2024-01-30-llava-next/), we have also adopted [Nous-Hermes-2-Yi-34B](https://huggingface.co/NousResearch/Nous-Hermes-2-Yi-34B) as the language model. Below is the pipeline.
 
-<img width="650" alt="image" src="https://github.com/czczup/InternVL-MoE/assets/23737120/9b68aa35-40fd-4e81-9595-d404cbbfc6bd">
+<img width="650" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/c2f4da36-4b67-4c82-8ecc-857c767a591a">
 
 From the experimental results, **we've observed that a stronger language model (34B) can better leverage the powerful capabilities of our vision foundation model ([InternViT-6B](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-2)).**
 
