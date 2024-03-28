@@ -128,28 +128,28 @@ pretrained
 
 The method for deploying the demo is consistent with LLaVA-1.5. You only need to change the model path. The specific steps are as follows:
 
-1. Launch a controller
+**Launch a controller**
    
-   ```shell
-   python -m llava.serve.controller --host 0.0.0.0 --port 10000
-   ```
+ ```shell
+ python -m llava.serve.controller --host 0.0.0.0 --port 10000
+ ```
 
-2. Launch a gradio web server
+**Launch a gradio web server**
    
-   ```shell
-   python -m llava.serve.gradio_web_server --controller http://localhost:10000 --model-list-mode reload
-   ```
+ ```shell
+ python -m llava.serve.gradio_web_server --controller http://localhost:10000 --model-list-mode reload
+ ```
 
-3. Launch a model worker
+**Launch a model worker**
    
-   ```shell
-   # OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B
-   python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40000 --worker http://localhost:40000 --model-path ./pretrained/InternVL-Chat-ViT-6B-Vicuna-7B
-   # OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B
-   python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40001 --worker http://localhost:40001 --model-path ./pretrained/InternVL-Chat-ViT-6B-Vicuna-13B
-   ```
+ ```shell
+ # OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B
+ python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40000 --worker http://localhost:40000 --model-path ./pretrained/InternVL-Chat-ViT-6B-Vicuna-7B
+ # OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B
+ python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40001 --worker http://localhost:40001 --model-path ./pretrained/InternVL-Chat-ViT-6B-Vicuna-13B
+ ```
 
-For more details to deploy the demo, please refer to [here](#gradio-web-ui).
+For more details on deploying the demo, please refer to [here](#gradio-web-ui).
 
 ## 💡Testing
 
