@@ -576,6 +576,50 @@ response = model.chat(tokenizer, pixel_values, question, generation_config)
 
 </details>
 
+## Chat Web Demo
+
+<details>
+  <summary>Launch a local chat demo (click to expand)</summary>
+
+**Launch a controller**
+   
+ ```shell
+ # run the command in the `internvl_chat_llava` folder
+ python -m llava.serve.controller --host 0.0.0.0 --port 10000
+ ```
+
+**Launch a gradio web server**
+   
+ ```shell
+ # run the command in the `internvl_chat_llava` folder
+ python -m llava.serve.gradio_web_server --controller http://localhost:10000 --model-list-mode reload
+ ```
+
+**Launch a model worker**
+   
+ ```shell
+ # OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B
+ # run the command in the `internvl_chat_llava` folder
+ python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40000 --worker http://localhost:40000 --model-path ./path/to/InternVL-Chat-ViT-6B-Vicuna-7B
+
+ # OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B
+ # run the command in the `internvl_chat_llava` folder
+ python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40001 --worker http://localhost:40001 --model-path ./path/to/InternVL-Chat-ViT-6B-Vicuna-13B
+
+ # OpenGVLab/InternVL-Chat-Chinese-V1-1
+ # run the command in the `internvl_chat` folder
+ python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40002 --worker http://localhost:40002 --model-path ./path/to/InternVL-Chat-Chinese-V1-1
+
+ # OpenGVLab/InternVL-Chat-Chinese-V1-2
+ # run the command in the `internvl_chat` folder
+ python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40003 --worker http://localhost:40003 --model-path ./path/to/InternVL-Chat-Chinese-V1-2
+
+ # OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus
+ # run the command in the `internvl_chat` folder
+ python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40004 --worker http://localhost:40004 --model-path ./path/to/InternVL-Chat-Chinese-V1-2-Plus
+ ```
+</details>
+
 ## Schedule
 
 - [x] Release high-resolution models
