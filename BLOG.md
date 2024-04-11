@@ -5,7 +5,7 @@
 > Date: 2024/02/21<br>
 > Developed by: Zhe Chen, Weiyun Wang, Wenhai Wang, Erfei Cui, Zhangwei Gao, Xizhou Zhu, Lewei Lu, Tong Lu, Yu Qiao, Jifeng Dai
 
-[InternVL-Chat-V1.2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) uses the same model architecture as InternVL-Chat-V1.2, but the difference lies in the SFT dataset. InternVL-Chat-V1.2 only utilizes an SFT dataset with 1.2M samples, while our plus version employs an SFT dataset with 12M samples.
+[InternVL-Chat-V1.2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) uses the same model architecture as InternVL-Chat-V1.2, but the difference lies in the SFT dataset. InternVL-Chat-V1.2 only utilizes an SFT dataset with 1.2M samples, while our plus version employs an SFT dataset with 12M samples.
 
 ### Performance
 
@@ -20,10 +20,11 @@
 | Qwen−VL−Max\*           | unknown    | 51.4          | 46.8           | 51.0                    | 77.6          | 75.7             | -    | -        | -                    | -    | 79.5             | -                 | -                | -             |
 |                         |            |               |                |                         |               |                  |      |          |                      |      |                  |                   |                  |               |
 | LLaVA−NEXT−34B          | 672x672    | 51.1          | 44.7           | 46.5                    | 79.3          | 79.0             | -    | 1631/397 | 81.8                 | 87.7 | 69.5             | 75.9              | 63.8             | 67.1†         |
-| InternVL−Chat−V1.2      | 448x448    | 51.6          | 46.2           | 47.7                    | 82.2          | 81.2             | 56.7 | 1672/509 | 83.3                 | 88.0 | 69.7             | 75.6              | 60.0             | 64.0†         |
-| InternVL−Chat−V1.2−Plus | 448x448    | 50.3          | 45.6           | 59.9                    | 83.8          | 82.0             | 58.7 | 1624/551 | 98.1†                | 88.7 | 71.3†            | 76.4              | 59.5             | 66.9†         |
+| InternVL−Chat−V1.2      | 448x448    | 51.6          | 46.2           | 47.7                    | 82.2          | 81.2             | 56.7 | 1687/489 | 83.3                 | 88.0 | 72.5             | 75.6              | 60.0             | 64.0†         |
+| InternVL−Chat−V1.2−Plus | 448x448    | 50.3          | 45.6           | 59.9                    | 83.8          | 82.0             | 58.7 | 1625/553 | 98.1†                | 88.7 | 74.1†            | 76.4              | 59.5             | 66.9†         |
 
 - MMBench results are collected from the [leaderboard](https://mmbench.opencompass.org.cn/leaderboard).
+- Update (2024-04-21): We have fixed a bug in the evaluation code, and the TextVQA results have been corrected.
 
 ## InternVL-Chat-V1.2
 
@@ -57,10 +58,11 @@ For more details about data preparation, please see [here](./internvl_chat#prepa
 | Qwen-VL-Max\*      | unknown    | 51.4          | 46.8           | 51.0                    | 77.6          | 75.7             | -    | -        | -                    | -    | 79.5    | -                 | -                | -             |
 |                    |            |               |                |                         |               |                  |      |          |                      |      |         |                   |                  |               |
 | LLaVA−NEXT−34B     | 672x672    | 51.1          | 44.7           | 46.5                    | 79.3          | 79.0             | -    | 1631/397 | 81.8                 | 87.7 | 69.5    | 75.9              | 63.8             | 67.1          |
-| InternVL−Chat−V1.2 | 448x448    | 51.6          | 46.2           | 47.7                    | 82.2          | 81.2             | 56.7 | 1672/509 | 83.3                 | 88.0 | 69.7    | 75.6              | 60.0             | 64.0          |
+| InternVL−Chat−V1.2 | 448x448    | 51.6          | 46.2           | 47.7                    | 82.2          | 81.2             | 56.7 | 1687/489 | 83.3                 | 88.0 | 72.5    | 75.6              | 60.0             | 64.0          |
 
 - MMBench results are collected from the [leaderboard](https://mmbench.opencompass.org.cn/leaderboard).
 - In most benchmarks, InternVL-Chat-V1.2 achieves better performance than LLaVA-NeXT-34B.
+- Update (2024-04-21): We have fixed a bug in the evaluation code, and the TextVQA result has been corrected to 72.5.
 
 ### Training (SFT)
 
@@ -79,7 +81,7 @@ The hyperparameters used for finetuning are listed in the following table.
 > Date: 2024/01/24<br>
 > Developed by: Zhe Chen, Wenhai Wang, Xizhou Zhu, Lewei Lu, Tong Lu, Yu Qiao, Jifeng Dai
 
-We released [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1), featuring a structure similar to LLaVA, including a ViT, an MLP projector, and an LLM. In this version, we explored increasing the resolution to 448x448, enhancing OCR capabilities, and improving support for Chinese conversations. Below is an example of the improved capabilities.
+We released [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1), featuring a structure similar to LLaVA, including a ViT, an MLP projector, and an LLM. In this version, we explored increasing the resolution to 448x448, enhancing OCR capabilities, and improving support for Chinese conversations. Below is an example of the improved capabilities.
 
 <img width="650" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/0e60912e-c52b-46fa-bd61-5f94a221d1fc">
 

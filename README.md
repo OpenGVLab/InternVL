@@ -1,17 +1,28 @@
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/5aa4cda8-b453-40a0-9336-17012b430ae8"> InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks —— An Open-Source Alternative to ViT-22B
 
-\[[Update Blog](./BLOG.md)\]   \[[Paper](https://arxiv.org/abs/2312.14238)\]  \[[Chat Demo](https://internvl.opengvlab.com/)\]  \[[Quick Start](#quick-start-with-huggingface)\]  \[[中文解读](https://mp.weixin.qq.com/s/bdfAJRqOF9tUk8Vy9KC_XQ)\]
+\[[Update Blog](./BLOG.md)\]   \[[Paper](https://arxiv.org/abs/2312.14238)\]  \[[Chat Demo](https://internvl.opengvlab.com/)\]  \[[Quick Start](#quick-start-with-huggingface)\]  \[[中文解读](https://zhuanlan.zhihu.com/p/675877376)\]
 
 ## News🚀🚀🚀
 
+- `2024/04/18`: InternVL-Chat-V1.5 has been released at [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5), approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc.
 - `2024/02/27`: InternVL is accepted by CVPR 2024! 🎉
 - `2024/02/24`: InternVL-Chat models have been included in the [VLMEvalKit](https://github.com/open-compass/VLMEvalKit).
-- `2024/02/21`: [InternVL-Chat-V1.2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) achieves SOTA performance on MathVista (59.9), MMBench (83.8), and MMVP (58.7). See our [blog](BLOG.md) for more details.
-- `2024/02/12`: InternVL-Chat-V1.2 has been released, utilizing [Nous-Hermes-2-Yi-34B](https://huggingface.co/NousResearch/Nous-Hermes-2-Yi-34B) as the LLM. It achieves 51.6 on MMMU val and 82.3 on MMBench test. For more details, please refer to our [blog](BLOG.md), [SFT data](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#prepare-training-datasets) or try our [demo](https://internvl.opengvlab.com/). The model is now available on [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2), and both training/evaluation data and scripts are open-sourced.
-- `2024/02/04`: [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) achieves 44.67% on [MMVP](https://github.com/tsb0601/MMVP), higher than GPT-4V!
+- `2024/02/21`: [InternVL-Chat-V1.2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) achieves SOTA performance on MathVista (59.9), MMBench (83.8), and MMVP (58.7). See our [blog](BLOG.md) for more details.
+- `2024/02/12`: InternVL-Chat-V1.2 has been released. It achieves 51.6 on MMMU val and 82.3 on MMBench test. For more details, please refer to our [blog](BLOG.md), [SFT data](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#prepare-training-datasets) or try our [demo](https://internvl.opengvlab.com/). The model is now available on [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2), and both training/evaluation data and scripts are open-sourced.
+- `2024/02/04`: [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1) achieves 44.67% on [MMVP](https://github.com/tsb0601/MMVP), higher than GPT-4V!
 - `2024/01/27`: We release 448 resolution model, achieving 76.6 on MMBench dev, see [here](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#-evaluation-chinese-models).
-- `2024/01/24`: InternVL-Chat-V1.1 is released, it supports Chinese and has stronger OCR capability, see [here](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1) or try our [demo](https://internvl.opengvlab.com/).
+- `2024/01/24`: InternVL-Chat-V1.1 is released, it supports Chinese and has stronger OCR capability, see [here](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1) or try our [demo](https://internvl.opengvlab.com/).
 - `2024/01/16`: We release our [customized mmcv/mmsegmentation/mmdetection code](https://github.com/OpenGVLab/InternVL-MMDetSeg), integrated with DeepSpeed, which can be used for training large-scale object detection and semantic segmentation models.
+
+
+## Compared with SOTA VLLMs
+
+<img width="900" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/519f3edb-951a-4ddb-9ace-31add081faad">
+
+<br>
+<br>
+
+<img width="1229" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/dd43bb52-2fb2-4532-b9b9-c33761437ca9">
 
 ## What is InternVL?
 
@@ -19,25 +30,28 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 
 ## Model Zoo
 
-**Vision-Language Foundation Model**
-
-| Model                   | Date       | Download                                                               | Note                             |
-| ----------------------- | ---------- | ---------------------------------------------------------------------- | -------------------------------- |
-| InternViT-6B-224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)      | vision foundation model          |
-| InternVL-14B-224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)      | vision-language foundation model |
-| InternViT-6B-448px      | 2024.01.30 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px)      | 448 resolution                   |
-| InternViT-6B-448px-V1.2 | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-2) | 448 resolution (🔥new)           |
-
 **Vision Large Language Model**
 
 | Model                   | Date       | Download                                                                             | Note                               |
 | ----------------------- | ---------- | ------------------------------------------------------------------------------------ | ---------------------------------- |
-| InternVL-Chat-13B       | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)        | English multimodal dialogue        |
-| InternVL-Chat-19B       | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B)       | English multimodal dialogue        |
+| InternVL-Chat-V1.5      | 2024.04.18 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                    | support 4K image; super strong OCR; Approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc. (🔥new)|
+| InternVL-Chat-V1.2-Plus | 2024.02.21 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus)               | more SFT data and stronger         |
+| InternVL-Chat-V1.2      | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)                    | scaling up LLM to 34B              |
+| InternVL-Chat-V1.1      | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)                    | support Chinese and stronger OCR   |
 | InternVL-Chat-19B-448px | 2024.02.03 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B-448px) | 448 resolution                     |
-| InternVL-Chat-V1.1      | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)            | support Chinese and stronger OCR   |
-| InternVL-Chat-V1.2      | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)            | scaling up LLM to 34B (🔥new)      |
-| InternVL-Chat-V1.2-Plus | 2024.02.21 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus)       | more SFT data and stronger (🔥new) |
+| InternVL-Chat-19B       | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B)       | English multimodal dialogue        |
+| InternVL-Chat-13B       | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)        | English multimodal dialogue        |
+
+
+**Vision-Language Foundation Model**
+
+| Model                   | Date       | Download                                                               | Note                             |
+| ----------------------- | ---------- | ---------------------------------------------------------------------- | -------------------------------- |
+| InternViT-6B-448px-V1.5 | 2024.04.20 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5) | support dynamic resolution, super strong OCR (🔥new) |
+| InternViT-6B-448px-V1.2 | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-2) | 448 resolution                   |
+| InternViT-6B-448px-V1.0 | 2024.01.30 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-0) | 448 resolution                   |
+| InternViT-6B-224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)      | vision foundation model          |
+| InternVL-14B-224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)      | vision-language foundation model |
 
 ## What can InternVL do?
 
@@ -335,21 +349,6 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 <details>
   <summary>Multimodal Dialogue (click to expand)</summary>
 
-- Compared with SOTA VLLMs
-
-  | name               | image size | MMMU<br>(val) | MMMU<br>(test) | MathVista<br>(testmini) | MMB<br>(test) | MMB−CN<br>(test) | MMVP | MME      | ScienceQA<br>(image) | POPE | TextVQA | SEEDv1<br>(image) | VizWiz<br>(test) | GQA<br>(test) |
-  | ------------------ | ---------- | ------------- | -------------- | ----------------------- | ------------- | ---------------- | ---- | -------- | -------------------- | ---- | ------- | ----------------- | ---------------- | ------------- |
-  | GPT-4V\*           | unknown    | 56.8          | 55.7           | 49.9                    | 77.0          | 74.4             | 38.7 | 1409/517 | -                    | -    | 78.0    | 71.6              | -                | -             |
-  | Gemini Ultra\*     | unknown    | 59.4          | -              | 53.0                    | -             | -                | -    | -        | -                    | -    | 82.3    | -                 | -                | -             |
-  | Gemini Pro\*       | unknown    | 47.9          | -              | 45.2                    | 73.6          | 74.3             | 40.7 | 1497/437 | -                    | -    | 74.6    | 70.7              | -                | -             |
-  | Qwen-VL-Plus\*     | unknown    | 45.2          | 40.8           | 43.3                    | 67.0          | 70.7             | -    | 1681/502 | -                    | -    | 78.9    | 65.7              | -                | -             |
-  | Qwen-VL-Max\*      | unknown    | 51.4          | 46.8           | 51.0                    | 77.6          | 75.7             | -    | -        | -                    | -    | 79.5    | -                 | -                | -             |
-  |                    |            |               |                |                         |               |                  |      |          |                      |      |         |                   |                  |               |
-  | LLaVA-NEXT-34B     | 672x672    | 51.1          | 44.7           | 46.5                    | 79.3          | 79.0             | -    | 1631/397 | 81.8                 | 87.7 | 69.5    | 75.9              | 63.8             | 67.1          |
-  | InternVL-Chat-V1.2 | 448x448    | 51.6          | 46.2           | 47.7                    | 82.2          | 81.2             | 56.7 | 1672/509 | 83.3                 | 88.0 | 69.7    | 75.6              | 60.0             | 64.0          |
-
-  \* denotes proprietary models. MMBench results are collected from the [leaderboard](https://mmbench.opencompass.org.cn/leaderboard). In most benchmarks, InternVL-Chat-V1.2 achieves better performance than LLaVA-NeXT-34B.
-
 - Zero-Shot Image Captioning [\[see details\]](./internvl_g#zero-shot-image-captioning)
 
   | method            | COCO  | Flickr30K | NoCaps |
@@ -515,7 +514,7 @@ from PIL import Image
 from transformers import AutoModel, CLIPImageProcessor
 from transformers import AutoTokenizer
 
-path = "OpenGVLab/InternVL-Chat-Chinese-V1-1"
+path = "OpenGVLab/InternVL-Chat-V1-1"
 model = AutoModel.from_pretrained(
     path,
     torch_dtype=torch.bfloat16,
@@ -548,7 +547,7 @@ from PIL import Image
 from transformers import AutoModel, CLIPImageProcessor
 from transformers import AutoTokenizer
 
-path = "OpenGVLab/InternVL-Chat-Chinese-V1-1"
+path = "OpenGVLab/InternVL-Chat-V1-1"
 model = AutoModel.from_pretrained(
     path,
     torch_dtype=torch.bfloat16,
@@ -606,17 +605,17 @@ response = model.chat(tokenizer, pixel_values, question, generation_config)
  # run the command in the `internvl_chat_llava` folder
  python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40001 --worker http://localhost:40001 --model-path ./path/to/InternVL-Chat-ViT-6B-Vicuna-13B
 
- # OpenGVLab/InternVL-Chat-Chinese-V1-1
+ # OpenGVLab/InternVL-Chat-V1-1
  # run the command in the `internvl_chat` folder
- python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40002 --worker http://localhost:40002 --model-path ./path/to/InternVL-Chat-Chinese-V1-1
+ python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40002 --worker http://localhost:40002 --model-path ./path/to/InternVL-Chat-V1-1
 
- # OpenGVLab/InternVL-Chat-Chinese-V1-2
+ # OpenGVLab/InternVL-Chat-V1-2
  # run the command in the `internvl_chat` folder
- python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40003 --worker http://localhost:40003 --model-path ./path/to/InternVL-Chat-Chinese-V1-2
+ python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40003 --worker http://localhost:40003 --model-path ./path/to/InternVL-Chat-V1-2
 
- # OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus
+ # OpenGVLab/InternVL-Chat-V1-2-Plus
  # run the command in the `internvl_chat` folder
- python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40004 --worker http://localhost:40004 --model-path ./path/to/InternVL-Chat-Chinese-V1-2-Plus
+ python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40004 --worker http://localhost:40004 --model-path ./path/to/InternVL-Chat-V1-2-Plus
  ```
 </details>
 
