@@ -26,7 +26,7 @@ In addition, using this codebase requires executing the following steps:
 | model name         | type        | download                                                          |  size   |
 | ------------------ | ----------- | ----------------------------------------------------------------- | :-----: |
 | InternViT-6B-224px | huggingface | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px) | 12 GB |
-| InternViT-6B-448px | huggingface | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px) | 12 GB |
+| InternViT-6B-448px-V1-0 | huggingface | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-0) | 12 GB |
 | Vicuna-7B-v1.5     | huggingface | 🤗 [HF link](https://huggingface.co/lmsys/vicuna-7b-v1.5)         | 13.5 GB |
 | Vicuna-13B-v1.5    | huggingface | 🤗 [HF link](https://huggingface.co/lmsys/vicuna-13b-v1.5)        | 26.1 GB |
 
@@ -36,7 +36,7 @@ Please download the above model weights and place them in the `pretrained/` fold
 cd pretrained/
 # pip install -U huggingface_hub
 huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternViT-6B-224px --local-dir intern_vit_6b_224px
-huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternViT-6B-448px --local-dir intern_vit_6b_448px
+huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternViT-6B-448px-V1-0 --local-dir intern_vit_6b_448px
 huggingface-cli download --resume-download --local-dir-use-symlinks False lmsys/vicuna-13b-v1.5 --local-dir vicuna-13b-v1.5
 huggingface-cli download --resume-download --local-dir-use-symlinks False lmsys/vicuna-7b-v1.5 --local-dir vicuna-7b-v1.5
 ```
