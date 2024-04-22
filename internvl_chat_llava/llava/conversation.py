@@ -133,7 +133,7 @@ class Conversation:
     def append_message(self, role, message):
         self.messages.append([role, message])
 
-    def get_images(self, return_pil=False):
+    def get_images(self, return_pil=False, return_org=False):
         images = []
         for i, (role, msg) in enumerate(self.messages[self.offset:]):
             if i % 2 == 0:
@@ -142,6 +142,8 @@ class Conversation:
                     from io import BytesIO
                     from PIL import Image
                     msg, image, image_process_mode = msg
+                    org_image = image.copy()
+                    print(f"image_process_mode: {image_process_mode}")
                     if image_process_mode == "Pad":
                         def expand2square(pil_img, background_color=(122, 116, 104)):
                             width, height = pil_img.size
@@ -162,23 +164,32 @@ class Conversation:
                         image = image.resize((336, 336))
                     else:
                         raise ValueError(f"Invalid image_process_mode: {image_process_mode}")
-                    max_hw, min_hw = max(image.size), min(image.size)
-                    aspect_ratio = max_hw / min_hw
-                    max_len, min_len = 800, 400
-                    shortest_edge = int(min(max_len / aspect_ratio, min_len, min_hw))
-                    longest_edge = int(shortest_edge * aspect_ratio)
-                    W, H = image.size
-                    if longest_edge != max(image.size):
-                        if H > W:
-                            H, W = longest_edge, shortest_edge
-                        else:
-                            H, W = shortest_edge, longest_edge
-                        image = image.resize((W, H))
+
+                    resize_image_flag = False
+                    if resize_image_flag:
+                        max_hw, min_hw = max(image.size), min(image.size)
+                        aspect_ratio = max_hw / min_hw
+                        max_len, min_len = 896, 448
+                        shortest_edge = int(min(max_len / aspect_ratio, min_len, min_hw))
+                        longest_edge = int(shortest_edge * aspect_ratio)
+                        W, H = image.size
+                        if longest_edge != max(image.size):
+                            if H > W:
+                                H, W = longest_edge, shortest_edge
+                            else:
+                                H, W = shortest_edge, longest_edge
+                            image = image.resize((W, H))
                     if return_pil:
-                        images.append(image)
+                        if return_org:
+                            images.append(image)
+                        else:
+                            images.append(org_image)
                     else:
                         buffered = BytesIO()
-                        image.save(buffered, format="PNG")
+                        if return_org:
+                            org_image.save(buffered, format="JPEG")
+                        else:
+                            image.save(buffered, format="PNG")
                         img_b64_str = base64.b64encode(buffered.getvalue()).decode()
                         images.append(img_b64_str)
         return images
@@ -421,6 +432,15 @@ hermes2 = Conversation(
     sep="<|im_end|>",
 )
 
+internlm2_chat = Conversation(
+    system='<|im_start|>system\nYou are an AI assistant whose name is InternLM (书生·浦语).',
+    roles=("<|im_start|>user\n", "<|im_start|>assistant\n"),
+    version="mpt",
+    messages=(),
+    offset=0,
+    sep_style=SeparatorStyle.MPT,
+    sep="<|im_end|>",
+)
 
 default_conversation = conv_vicuna_v0
 conv_templates = {
@@ -439,7 +459,8 @@ conv_templates = {
     "mpt": conv_mpt,
     "internlm": conv_internlm,
     "internvl_zh": internvl_zh,
-    "Hermes-2": hermes2
+    "Hermes-2": hermes2,
+    'internlm2-chat': internlm2_chat
 }
 
 

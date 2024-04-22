@@ -6,7 +6,7 @@ import time
 
 import gradio as gr
 import requests
-
+import random
 from llava.conversation import (default_conversation, conv_templates,
                                    SeparatorStyle)
 from llava.constants import LOGDIR
@@ -35,12 +35,31 @@ def get_conv_log_filename():
     return name
 
 
+def sort_models(models):
+    def custom_sort_key(model_name):
+        # InternVL-Chat-V1-5 should be the first item
+        if model_name == "InternVL-Chat-V1-5":
+            return (1, model_name)  # 1 indicates highest precedence
+        else:
+            return (0, model_name)  # 0 indicates normal order
+
+    models.sort(key=custom_sort_key, reverse=True)
+    try:  # We have five InternVL-Chat-V1-5 models, randomly choose one to be the first
+        first_three = models[:6]
+        random.shuffle(first_three)
+        models[:6] = first_three
+    except:
+        pass
+    return models
+
+
 def get_model_list():
     ret = requests.post(args.controller_url + "/refresh_all_workers")
     assert ret.status_code == 200
     ret = requests.post(args.controller_url + "/list_models")
     models = ret.json()["models"]
-    models.sort(key=lambda x: priority.get(x, x))
+    models = sort_models(models)
+
     logger.info(f"Models: {models}")
     return models
 
@@ -138,12 +157,9 @@ def add_text(state, text, image, image_process_mode, request: gr.Request):
             return (state, state.to_gradio_chatbot(), moderation_msg, None) + (
                 no_change_btn,) * 5
 
-    text = text[:1536]  # Hard cut-off
     if image is not None:
-        text = text[:1200]  # Hard cut-off for images
         if '<image>' not in text:
-            # text = '<Image><image></Image>' + text
-            text = text + '\n<image>'
+            text = '<image>\n' + text
         text = (text, image, image_process_mode)
         if len(state.get_images(return_pil=True)) > 0:
             state = default_conversation.copy()
@@ -153,7 +169,7 @@ def add_text(state, text, image, image_process_mode, request: gr.Request):
     return (state, state.to_gradio_chatbot(), "", None) + (disable_btn,) * 5
 
 
-def http_bot(state, model_selector, temperature, top_p, max_new_tokens, request: gr.Request):
+def http_bot(state, model_selector, temperature, top_p, max_new_tokens, max_input_tiles, request: gr.Request):
     logger.info(f"http_bot. ip: {request.client.host}")
     start_tstamp = time.time()
     model_name = model_selector
@@ -187,6 +203,8 @@ def http_bot(state, model_selector, temperature, top_p, max_new_tokens, request:
         elif "intern" in model_name.lower():
             if "hermes2" in model_name.lower() or "v1-2" in model_name.lower():
                 template_name = "Hermes-2"
+            elif "internlm2" in model_name.lower() or "v1-5" in model_name.lower():
+                template_name = "internlm2-chat"
             elif "chinese" in model_name.lower() or "v1-1" in model_name.lower():
                 template_name = "internvl_zh"
             else:
@@ -234,13 +252,16 @@ def http_bot(state, model_selector, temperature, top_p, max_new_tokens, request:
         "prompt": prompt,
         "temperature": float(temperature),
         "top_p": float(top_p),
-        "max_new_tokens": min(int(max_new_tokens), 1536),
+        "max_new_tokens": max_new_tokens,
+        "max_input_tiles": max_input_tiles,
         "stop": state.sep if state.sep_style in [SeparatorStyle.SINGLE, SeparatorStyle.MPT] else state.sep2,
         "images": f'List of {len(state.get_images())} images: {all_image_hash}',
+        "org_images": f'List of {len(state.get_images(return_org=True))} images: {all_image_hash}',
     }
     logger.info(f"==== request ====\n{pload}")
 
     pload['images'] = state.get_images()
+    pload['org_images'] = state.get_images(return_org=True)
 
     state.messages[-1][-1] = "▌"
     yield (state, state.to_gradio_chatbot()) + (disable_btn,) * 5
@@ -346,10 +367,11 @@ def build_demo(embed_mode):
                     [f"{cur_dir}/examples/waterview.jpg", "What are the things I should be cautious about when I visit here?"],
                 ], inputs=[imagebox, textbox])
 
-                with gr.Accordion("Parameters", open=False) as parameter_row:
-                    temperature = gr.Slider(minimum=0.0, maximum=1.0, value=0.2, step=0.1, interactive=True, label="Temperature",)
+                with gr.Accordion("Parameters", open=True) as parameter_row:
+                    temperature = gr.Slider(minimum=0.0, maximum=1.0, value=0.8, step=0.1, interactive=True, label="Temperature",)
                     top_p = gr.Slider(minimum=0.0, maximum=1.0, value=0.7, step=0.1, interactive=True, label="Top P",)
-                    max_output_tokens = gr.Slider(minimum=0, maximum=1024, value=512, step=64, interactive=True, label="Max output tokens",)
+                    max_output_tokens = gr.Slider(minimum=0, maximum=4096, value=1024, step=64, interactive=True, label="Max output tokens",)
+                    max_input_tiles = gr.Slider(minimum=1, maximum=32, value=12, step=1, interactive=True, label="Max input tiles (control the image size)",)
 
             with gr.Column(scale=8):
                 chatbot = gr.Chatbot(elem_id="chatbot", label="InternVL-Chat", height=550)
@@ -381,15 +403,15 @@ def build_demo(embed_mode):
             [state, model_selector], [textbox, upvote_btn, downvote_btn, flag_btn])
         regenerate_btn.click(regenerate, [state, image_process_mode],
             [state, chatbot, textbox, imagebox] + btn_list).then(
-            http_bot, [state, model_selector, temperature, top_p, max_output_tokens],
+            http_bot, [state, model_selector, temperature, top_p, max_output_tokens, max_input_tiles],
             [state, chatbot] + btn_list)
         clear_btn.click(clear_history, None, [state, chatbot, textbox, imagebox] + btn_list)
 
         textbox.submit(add_text, [state, textbox, imagebox, image_process_mode], [state, chatbot, textbox, imagebox] + btn_list
-            ).then(http_bot, [state, model_selector, temperature, top_p, max_output_tokens],
+            ).then(http_bot, [state, model_selector, temperature, top_p, max_output_tokens, max_input_tiles],
                    [state, chatbot] + btn_list)
         submit_btn.click(add_text, [state, textbox, imagebox, image_process_mode], [state, chatbot, textbox, imagebox] + btn_list
-            ).then(http_bot, [state, model_selector, temperature, top_p, max_output_tokens],
+            ).then(http_bot, [state, model_selector, temperature, top_p, max_output_tokens, max_input_tiles],
                    [state, chatbot] + btn_list)
 
         if args.model_list_mode == "once":
