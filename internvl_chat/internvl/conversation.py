@@ -737,12 +737,9 @@ register_conv_template(
         sep='<|im_end|>',
         stop_token_ids=[
             2,
-            92541,
-            92542,
             92543,
-            92540,
-        ],
-        stop_str='<|endoftext|>',
+            92542
+        ]
     )
 )
 

@@ -6,7 +6,8 @@
 
 import copy
 
-from transformers import LlamaConfig
+from internvl.model.internlm2.configuration_internlm2 import InternLM2Config
+from transformers import AutoConfig, LlamaConfig
 from transformers.configuration_utils import PretrainedConfig
 from transformers.utils import logging
 
@@ -30,6 +31,11 @@ class InternVLChatConfig(PretrainedConfig):
             force_image_size=None,
             downsample_ratio=0.5,
             template=None,
+            dynamic_image_size=False,
+            use_thumbnail=False,
+            ps_version='v1',
+            min_dynamic_patch=1,
+            max_dynamic_patch=6,
             **kwargs):
         super().__init__(**kwargs)
 
@@ -42,7 +48,12 @@ class InternVLChatConfig(PretrainedConfig):
             logger.info('llm_config is None. Initializing the LlamaConfig config with default values (`LlamaConfig`).')
 
         self.vision_config = InternVisionConfig(**vision_config)
-        self.llm_config = LlamaConfig(**llm_config)
+        if llm_config['architectures'][0] == 'LlamaForCausalLM':
+            self.llm_config = LlamaConfig(**llm_config)
+        elif llm_config['architectures'][0] == 'InternLM2ForCausalLM':
+            self.llm_config = InternLM2Config(**llm_config)
+        else:
+            raise ValueError('Unsupported architecture: {}'.format(llm_config['architectures'][0]))
         self.use_backbone_lora = use_backbone_lora
         self.use_llm_lora = use_llm_lora
         self.pad2square = pad2square
@@ -50,8 +61,16 @@ class InternVLChatConfig(PretrainedConfig):
         self.force_image_size = force_image_size
         self.downsample_ratio = downsample_ratio
         self.template = template
+        self.dynamic_image_size = dynamic_image_size
+        self.use_thumbnail = use_thumbnail
+        self.ps_version = ps_version  # pixel shuffle version
+        self.min_dynamic_patch = min_dynamic_patch
+        self.max_dynamic_patch = max_dynamic_patch
 
         logger.info(f'vision_select_layer: {self.select_layer}')
+        logger.info(f'ps_version: {self.ps_version}')
+        logger.info(f'min_dynamic_patch: {self.min_dynamic_patch}')
+        logger.info(f'max_dynamic_patch: {self.max_dynamic_patch}')
 
     def to_dict(self):
         """
@@ -71,5 +90,10 @@ class InternVLChatConfig(PretrainedConfig):
         output['force_image_size'] = self.force_image_size
         output['downsample_ratio'] = self.downsample_ratio
         output['template'] = self.template
+        output['dynamic_image_size'] = self.dynamic_image_size
+        output['use_thumbnail'] = self.use_thumbnail
+        output['ps_version'] = self.ps_version
+        output['min_dynamic_patch'] = self.min_dynamic_patch
+        output['max_dynamic_patch'] = self.max_dynamic_patch
 
         return output
