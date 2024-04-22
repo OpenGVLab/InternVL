@@ -3,17 +3,25 @@ import os
 import re
 
 import torch
-from internvl.train.dataset import build_transform, expand2square
+from internvl.model.internvl_chat import InternVLChatModel
+from internvl.train.dataset import build_transform, dynamic_preprocess
 from PIL import Image
 from tqdm import tqdm
-from transformers import LlamaTokenizer
+from transformers import AutoTokenizer
 
 
-def load_image(image_file, input_size=224, pad2square=False):
+def load_image(image_file, input_size=224):
     image = Image.open(image_file).convert('RGB')
-    transform = build_transform(is_train=False, input_size=input_size, pad2square=pad2square)
-    image = transform(image)
-    return image
+    transform = build_transform(is_train=False, input_size=input_size)
+    if args.dynamic:
+        images = dynamic_preprocess(image, image_size=input_size,
+                                    use_thumbnail=use_thumbnail,
+                                    max_num=args.max_num)
+    else:
+        images = [image]
+    pixel_values = [transform(image) for image in images]
+    pixel_values = torch.stack(pixel_values)
+    return pixel_values
 
 
 def post_processing(response):
@@ -28,29 +36,20 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--checkpoint', type=str, default='')
     parser.add_argument('--root', type=str, default='./Your_Results')
-    parser.add_argument('--beam-num', type=int, default=5)
+    parser.add_argument('--num-beams', type=int, default=5)
     parser.add_argument('--top-k', type=int, default=50)
     parser.add_argument('--top-p', type=float, default=0.9)
-    parser.add_argument('--sample', type=bool, default=True)
-    parser.add_argument('--temperature', type=float, default=1.0)
-
+    parser.add_argument('--sample', type=bool, default=False)
+    parser.add_argument('--dynamic', action='store_true')
+    parser.add_argument('--max-num', type=int, default=6)
     args = parser.parse_args()
 
     prompt = 'Answer the question using a single word or phrase.'
-    tokenizer = LlamaTokenizer.from_pretrained(args.checkpoint)
-
-    if 'qllama' in args.checkpoint.lower():
-        from internvl.model.internvl_chat_with_qllama import InternVLChatModel
-        model = InternVLChatModel.from_pretrained(
-            args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
-        image_size = model.internvl.config.force_image_size or model.config.internvl_config.vision_config.image_size
-        pad2square = model.config.pad2square
-    else:
-        from internvl.model.internvl_chat import InternVLChatModel
-        model = InternVLChatModel.from_pretrained(
-            args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
-        image_size = model.config.force_image_size or model.config.vision_config.image_size
-        pad2square = model.config.pad2square
+    tokenizer = AutoTokenizer.from_pretrained(args.checkpoint, trust_remote_code=True, use_fast=False)
+    model = InternVLChatModel.from_pretrained(
+        args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
+    image_size = model.config.force_image_size or model.config.vision_config.image_size
+    use_thumbnail = model.config.use_thumbnail
 
     total_params = sum(p.numel() for p in model.parameters()) / 1e9
     if total_params > 30:
@@ -59,8 +58,10 @@ if __name__ == '__main__':
     else:
         print(f'[test] total_params: {total_params}B')
     print(f'[test] image_size: {image_size}')
-    print(f'[test] pad2square: {pad2square}')
     print(f'[test] template: {model.config.template}')
+    print(f'[test] dynamic_image_size: {args.dynamic}')
+    print(f'[test] use_thumbnail: {use_thumbnail}')
+    print(f'[test] max_num: {args.max_num}')
 
     output = os.path.basename(args.checkpoint)
     os.makedirs(output, exist_ok=True)
@@ -75,14 +76,12 @@ if __name__ == '__main__':
             question = question + ' ' + prompt
             img_path = os.path.join('images', filename, img)
             assert os.path.exists(img_path), img_path
-            pixel_values = load_image(img_path, image_size, pad2square).unsqueeze(0).cuda().to(torch.bfloat16)
+            pixel_values = load_image(img_path, image_size).cuda().to(torch.bfloat16)
             generation_config = dict(
                 do_sample=args.sample,
                 top_k=args.top_k,
                 top_p=args.top_p,
-                # repetition_penalty=1.5,
-                length_penalty=1.0,
-                num_beams=args.beam_num,
+                num_beams=args.num_beams,
                 max_new_tokens=20,
                 eos_token_id=tokenizer.eos_token_id,
             )
@@ -90,7 +89,7 @@ if __name__ == '__main__':
                 tokenizer=tokenizer,
                 pixel_values=pixel_values,
                 question=question,
-                generation_config=generation_config,
+                generation_config=generation_config
             )
             response = post_processing(response)
             print(img, question, gt, response, sep='\t', file=fout)

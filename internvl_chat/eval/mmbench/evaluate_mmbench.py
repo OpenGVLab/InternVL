@@ -10,11 +10,12 @@ from io import BytesIO
 
 import pandas as pd
 import torch
-from internvl.train.dataset import build_transform
+from internvl.model.internvl_chat import InternVLChatModel
+from internvl.train.dataset import build_transform, dynamic_preprocess
 from PIL import Image
 from torch.utils.data import Dataset
 from tqdm import tqdm
-from transformers import LlamaTokenizer
+from transformers import AutoTokenizer
 
 ds_collections = {
     'mmbench_dev_20230712': {
@@ -51,6 +52,13 @@ ds_collections = {
         'min_new_tokens': 1,
         'type': 'test',
         'language': 'en'
+    },
+    'ccbench_dev_cn': {
+        'root': 'data/mmbench/CCBench_legacy.tsv',
+        'max_new_tokens': 100,
+        'min_new_tokens': 1,
+        'type': 'dev',
+        'language': 'cn'
     }
 }
 
@@ -66,11 +74,16 @@ def collate_fn(batches, tokenizer):
 
 class MMBenchDataset(torch.utils.data.Dataset):
 
-    def __init__(self, root, prompt, language, input_size=224, pad2square=False):
+    def __init__(self, root, prompt, language, input_size=224, dynamic_image_size=False,
+                 use_thumbnail=False, max_num=6):
         self.df = pd.read_csv(root, sep='\t')
         self.prompt = prompt
         self.language = language
-        self.transform = build_transform(is_train=False, input_size=input_size, pad2square=pad2square)
+        self.input_size = input_size
+        self.dynamic_image_size = dynamic_image_size
+        self.use_thumbnail = use_thumbnail
+        self.max_num = max_num
+        self.transform = build_transform(is_train=False, input_size=input_size)
 
     def __len__(self):
         return len(self.df)
@@ -84,7 +97,14 @@ class MMBenchDataset(torch.utils.data.Dataset):
         # l2_catetory = self.df.iloc[idx]['l2-category']
 
         image = Image.open(BytesIO(base64.b64decode(image))).convert('RGB')
-        pixel_values = self.transform(image).unsqueeze(0)
+        if self.dynamic_image_size:
+            images = dynamic_preprocess(image, image_size=self.input_size,
+                                        use_thumbnail=self.use_thumbnail,
+                                        max_num=self.max_num)
+        else:
+            images = [image]
+        pixel_values = [self.transform(image) for image in images]
+        pixel_values = torch.stack(pixel_values)
 
         option_candidate = ['A', 'B', 'C', 'D', 'E']
         options = {
@@ -168,7 +188,9 @@ def evaluate_chat_model():
             prompt=prompt,
             language=ds_collections[ds_name]['language'],
             input_size=image_size,
-            pad2square=pad2square
+            dynamic_image_size=args.dynamic,
+            use_thumbnail=use_thumbnail,
+            max_num=args.max_num
         )
         dataloader = torch.utils.data.DataLoader(
             dataset=dataset,
@@ -187,8 +209,6 @@ def evaluate_chat_model():
                 num_beams=args.num_beams,
                 max_new_tokens=ds_collections[ds_name]['max_new_tokens'],
                 min_new_tokens=ds_collections[ds_name]['min_new_tokens'],
-                length_penalty=1,
-                # repetition_penalty=1.2,
                 do_sample=True if args.temperature > 0 else False,
                 temperature=args.temperature,
             )
@@ -196,7 +216,7 @@ def evaluate_chat_model():
                 tokenizer=tokenizer,
                 pixel_values=pixel_values,
                 question=questions[0],
-                generation_config=generation_config,
+                generation_config=generation_config
             )
             preds = [post_process(pred, options[0])]
 
@@ -225,8 +245,12 @@ def evaluate_chat_model():
             output_path = os.path.join(args.out_dir, results_file)
             df = pd.read_table(ds_collections[ds_name]['root'])
             cur_df = df.copy()
-            cur_df = cur_df.drop(columns=['hint', 'category', 'source', 'image', 'comment', 'l2-category'])
-            cur_df.insert(6, 'prediction', None)
+            if 'mmbench' in ds_name:
+                cur_df = cur_df.drop(columns=['hint', 'category', 'source', 'image', 'comment', 'l2-category'])
+                cur_df.insert(6, 'prediction', None)
+            else:
+                cur_df = cur_df.drop(columns=['category', 'image'])
+                cur_df.insert(8, 'prediction', None)
             for item in merged_outputs:
                 cur_df.loc[df['index'] == item['index'], 'prediction'] = item['answer']
 
@@ -244,6 +268,8 @@ if __name__ == '__main__':
     parser.add_argument('--temperature', type=float, default=0.0)
     parser.add_argument('--out-dir', type=str, default='results')
     parser.add_argument('--seed', type=int, default=0)
+    parser.add_argument('--dynamic', action='store_true')
+    parser.add_argument('--max-num', type=int, default=6)
     args = parser.parse_args()
 
     if not os.path.exists(args.out_dir):
@@ -261,30 +287,23 @@ if __name__ == '__main__':
 
     torch.cuda.set_device(int(os.getenv('LOCAL_RANK', 0)))
 
-    tokenizer = LlamaTokenizer.from_pretrained(args.checkpoint)
-
-    if 'qllama' in args.checkpoint.lower():
-        from internvl.model.internvl_chat_with_qllama import InternVLChatModel
-        model = InternVLChatModel.from_pretrained(
-            args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
-        image_size = model.internvl.config.force_image_size or model.config.internvl_config.vision_config.image_size
-        pad2square = model.config.pad2square
-    else:
-        from internvl.model.internvl_chat import InternVLChatModel
-        model = InternVLChatModel.from_pretrained(
-            args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
-        image_size = model.config.force_image_size or model.config.vision_config.image_size
-        pad2square = model.config.pad2square
+    tokenizer = AutoTokenizer.from_pretrained(args.checkpoint, trust_remote_code=True, use_fast=False)
+    model = InternVLChatModel.from_pretrained(
+        args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
+    image_size = model.config.force_image_size or model.config.vision_config.image_size
+    use_thumbnail = model.config.use_thumbnail
 
     total_params = sum(p.numel() for p in model.parameters()) / 1e9
-    if total_params > 30:
+    if total_params > 20:
         args.num_beams = 1
         print(f'[test] total_params: {total_params}B, use num_beams: {args.num_beams}')
     else:
         print(f'[test] total_params: {total_params}B')
     print(f'[test] image_size: {image_size}')
-    print(f'[test] pad2square: {pad2square}')
     print(f'[test] template: {model.config.template}')
+    print(f'[test] dynamic_image_size: {args.dynamic}')
+    print(f'[test] use_thumbnail: {use_thumbnail}')
+    print(f'[test] max_num: {args.max_num}')
 
     prompt = {
         'en': "Answer with the option's letter from the given choices directly.",

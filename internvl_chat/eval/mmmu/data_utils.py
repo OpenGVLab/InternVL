@@ -95,13 +95,10 @@ def process_single_sample(data):
         current_o_imgs_paths = parse_img_path(option)
         for img_path in current_o_imgs_paths:
             o_imgs_paths.append(img_path)
-
-    if len(o_imgs_paths) > 1:  # multiple images in options, used for random selection
-        return {'id': data['id'], 'question': question, 'options': data['options'], 'answer': data['answer'],
-                'image': None, 'question_type': data['question_type']}
-    else:
-        return {'id': data['id'], 'question': question, 'options': data['options'], 'answer': data['answer'],
-                'image': data['image_1'], 'question_type': data['question_type']}
+    images = [data['image_1'], data['image_2'], data['image_3'], data['image_4'],
+              data['image_5'], data['image_6'], data['image_7']]
+    return {'id': data['id'], 'question': question, 'options': data['options'], 'answer': data['answer'],
+            'image': images, 'question_type': data['question_type']}
 
 
 # DATA SAVING
