@@ -9,12 +9,12 @@ from functools import partial
 from typing import Optional
 
 import torch
-from internvl.train.dataset import build_transform
+from internvl.model.internvl_chat import InternVLChatModel
+from internvl.train.dataset import build_transform, dynamic_preprocess
 from PIL import Image
+from textvqa_eval import TextVQAAccuracyEvaluator
 from tqdm import tqdm
-from transformers import LlamaTokenizer
-from vqa import VQA
-from vqa_eval import VQAEval
+from transformers import AutoTokenizer
 
 ds_collections = {
     'vqav2_val': {
@@ -120,9 +120,23 @@ ds_collections = {
     },
     'ai2diagram_test': {
         'train': 'data/ai2diagram/train.jsonl',
-        'test': 'data/ai2diagram/test.jsonl',
+        'test': 'data/ai2diagram/test_vlmevalkit.jsonl',
         'metric': 'accuracy',
         'max_new_tokens': 10,
+    },
+    'infographicsvqa_val': {
+        'train': 'data/infographicsvqa/train.jsonl',
+        'test': 'data/infographicsvqa/val.jsonl',
+        'annotation': 'data/infographicsvqa/infographicsVQA_val_v1.0_withQT.json',
+        'metric': 'anls',
+        'max_new_tokens': 100,
+    },
+    'infographicsvqa_test': {
+        'train': 'data/infographicsvqa/train.jsonl',
+        'test': 'data/infographicsvqa/test.jsonl',
+        'annotation': 'data/infographicsvqa/infographicsVQA_test_v1.0.json',
+        'metric': None,
+        'max_new_tokens': 100,
     }
 }
 
@@ -208,14 +222,18 @@ def collate_fn(batches, tokenizer):
 
 class VQADataset(torch.utils.data.Dataset):
 
-    def __init__(self, train, test, prompt, few_shot, input_size=224, pad2square=False):
+    def __init__(self, train, test, prompt, few_shot, input_size=224, dynamic_image_size=False,
+                 use_thumbnail=False, max_num=6):
         self.test = open(test).readlines()
         self.prompt = prompt
-
+        self.input_size = input_size
+        self.dynamic_image_size = dynamic_image_size
+        self.use_thumbnail = use_thumbnail
         self.few_shot = few_shot
+        self.max_num = max_num
         if few_shot > 0:
             self.train = open(train).readlines()
-        self.transform = build_transform(is_train=False, input_size=input_size, pad2square=pad2square)
+        self.transform = build_transform(is_train=False, input_size=input_size)
 
     def __len__(self):
         return len(self.test)
@@ -235,7 +253,14 @@ class VQADataset(torch.utils.data.Dataset):
                     sample['question']) + f" {sample['answer']}"
 
         image = Image.open(image).convert('RGB')
-        pixel_values = self.transform(image).unsqueeze(0)
+        if self.dynamic_image_size:
+            images = dynamic_preprocess(image, image_size=self.input_size,
+                                        use_thumbnail=self.use_thumbnail,
+                                        max_num=self.max_num)
+        else:
+            images = [image]
+        pixel_values = [self.transform(image) for image in images]
+        pixel_values = torch.stack(pixel_values)
         if len(self.prompt) != 0:
             question = question + ' ' + self.prompt
         return {
@@ -294,6 +319,8 @@ def post_process(response):
 def evaluate_chat_model():
     base_prompt = 'Answer the question using a single word or phrase.'
     vizwiz_prompt = "When the provided information is insufficient, respond with 'Unanswerable'. "
+    # infovqa_prompt = 'Answer the question directly.'
+    infovqa_prompt = 'Answer the question using a single word or phrase.'
     ai2d_prompt = ''
     random.seed(args.seed)
     summaries = []
@@ -303,6 +330,8 @@ def evaluate_chat_model():
             input_prompt = vizwiz_prompt + base_prompt
         elif 'ai2d' in ds_name:
             input_prompt = ai2d_prompt
+        elif 'infographicsvqa' in ds_name:
+            input_prompt = infovqa_prompt
         else:
             input_prompt = base_prompt
 
@@ -312,7 +341,9 @@ def evaluate_chat_model():
             prompt=input_prompt,
             few_shot=args.few_shot,
             input_size=image_size,
-            pad2square=pad2square
+            dynamic_image_size=args.dynamic,
+            use_thumbnail=use_thumbnail,
+            max_num=args.max_num
         )
         dataloader = torch.utils.data.DataLoader(
             dataset=dataset,
@@ -331,7 +362,6 @@ def evaluate_chat_model():
                 num_beams=args.num_beams,
                 max_new_tokens=ds_collections[ds_name]['max_new_tokens'],
                 min_new_tokens=1,
-                length_penalty=1,
                 do_sample=True if args.temperature > 0 else False,
                 temperature=args.temperature,
             )
@@ -339,7 +369,7 @@ def evaluate_chat_model():
                 tokenizer=tokenizer,
                 pixel_values=pixel_values,
                 question=questions[0],
-                generation_config=generation_config,
+                generation_config=generation_config
             )
             answers = [pred]
 
@@ -351,8 +381,8 @@ def evaluate_chat_model():
                         'question_id': question_id,
                         'answer': answer,
                     })
-                elif ds_name in ['docvqa_val', 'infographicsvqa', 'gqa_testdev', 'ocrvqa_val',
-                                 'ocrvqa_test', 'gqa_testdev_llava']:
+                elif ds_name in ['docvqa_val', 'infographicsvqa_val', 'gqa_testdev', 'ocrvqa_val',
+                                 'ocrvqa_test', 'gqa_testdev_llava', 'infographicsvqa_test',]:
                     outputs.append({
                         'question': question,
                         'questionId': question_id,
@@ -403,16 +433,19 @@ def evaluate_chat_model():
             print('Results saved to {}'.format(results_file))
 
             if ds_collections[ds_name]['metric'] == 'vqa_score':
-                vqa = VQA(ds_collections[ds_name]['annotation'],
-                          ds_collections[ds_name]['question'])
-                results = vqa.loadRes(
-                    resFile=results_file,
-                    quesFile=ds_collections[ds_name]['question'])
-                vqa_scorer = VQAEval(vqa, results, n=2)
-                vqa_scorer.evaluate()
-
-                print(ds_name, vqa_scorer.accuracy)
-                summaries.append([args.checkpoint, ds_name, vqa_scorer.accuracy])
+                evaluator = TextVQAAccuracyEvaluator()
+                annotation = json.load(open(ds_collections[ds_name]['annotation'], 'r'))['annotations']
+                question_id2answers = {}
+                for item in annotation:
+                    question_id = item['question_id']
+                    answers = [answer['answer'] for answer in item['answers']]
+                    question_id2answers[question_id] = answers
+                for item in merged_outputs:
+                    item['pred_answer'] = item['answer']
+                    item['gt_answers'] = question_id2answers[item['question_id']]
+                accuracy = evaluator.eval_pred_list(merged_outputs)
+                print(ds_name, accuracy)
+                summaries.append([args.checkpoint, ds_name, accuracy])
 
             elif ds_collections[ds_name]['metric'] == 'anls':
                 json.dump(merged_outputs,
@@ -460,7 +493,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--checkpoint', type=str, default='')
     parser.add_argument('--datasets', type=str,
-                        default='okvqa_val,textvqa_val_ocr,vizwiz_val,ai2diagram_test,gqa_testdev_llava')
+                        default='okvqa_val,textvqa_val,vizwiz_val,ai2diagram_test,gqa_testdev_llava')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
     parser.add_argument('--num-beams', type=int, default=5)
@@ -468,6 +501,8 @@ if __name__ == '__main__':
     parser.add_argument('--out-dir', type=str, default='results')
     parser.add_argument('--few-shot', type=int, default=0)
     parser.add_argument('--seed', type=int, default=0)
+    parser.add_argument('--dynamic', action='store_true')
+    parser.add_argument('--max-num', type=int, default=6)
     args = parser.parse_args()
 
     if not os.path.exists(args.out_dir):
@@ -485,29 +520,21 @@ if __name__ == '__main__':
 
     torch.cuda.set_device(int(os.getenv('LOCAL_RANK', 0)))
 
-    tokenizer = LlamaTokenizer.from_pretrained(args.checkpoint)
-
-    if 'qllama' in args.checkpoint.lower():
-        from internvl.model.internvl_chat_with_qllama import InternVLChatModel
-        model = InternVLChatModel.from_pretrained(
-            args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
-        image_size = model.internvl.config.force_image_size or model.config.internvl_config.vision_config.image_size
-        pad2square = model.config.pad2square
-    else:
-        from internvl.model.internvl_chat import InternVLChatModel
-        model = InternVLChatModel.from_pretrained(
-            args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
-        image_size = model.config.force_image_size or model.config.vision_config.image_size
-        pad2square = model.config.pad2square
+    tokenizer = AutoTokenizer.from_pretrained(args.checkpoint, trust_remote_code=True, use_fast=False)
+    model = InternVLChatModel.from_pretrained(
+        args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
+    image_size = model.config.force_image_size or model.config.vision_config.image_size
+    use_thumbnail = model.config.use_thumbnail
 
     total_params = sum(p.numel() for p in model.parameters()) / 1e9
-    if total_params > 30:
+    if total_params > 20:
         args.num_beams = 1
         print(f'[test] total_params: {total_params}B, use num_beams: {args.num_beams}')
     else:
         print(f'[test] total_params: {total_params}B')
     print(f'[test] image_size: {image_size}')
-    print(f'[test] pad2square: {pad2square}')
     print(f'[test] template: {model.config.template}')
+    print(f'[test] dynamic_image_size: {args.dynamic}')
+    print(f'[test] use_thumbnail: {use_thumbnail}')
 
     evaluate_chat_model()
