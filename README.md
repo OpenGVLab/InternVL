@@ -1,6 +1,6 @@
-# <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/5aa4cda8-b453-40a0-9336-17012b430ae8"> InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks —— An Open-Source Alternative to ViT-22B
+# <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/5aa4cda8-b453-40a0-9336-17012b430ae8"> InternVL Family: Closing the Gap to Commercial Multimodal Models with Open-Source Suites —— A Pioneering Open-Source Alternative to GPT-4V
 
-\[[Update Blog](./BLOG.md)\]   \[[Paper](https://arxiv.org/abs/2312.14238)\]  \[[Chat Demo](https://internvl.opengvlab.com/)\]  \[[Quick Start](#quick-start-with-huggingface)\]  \[[中文解读](https://zhuanlan.zhihu.com/p/675877376)\]
+\[[Update Blog](./BLOG.md)\]   \[[Paper](https://arxiv.org/abs/2312.14238)\]   \[[InternVL 1.5 Technical Report](https://arxiv.org/abs/2404.16821)\]   \[[Chat Demo](https://internvl.opengvlab.com/)\]  \[[Quick Start](#quick-start-with-huggingface)\]  \[[中文解读](https://zhuanlan.zhihu.com/p/675877376)\]
 
 ## News🚀🚀🚀
 
@@ -17,12 +17,7 @@
 
 ## Compared with SOTA VLLMs
 
-<img width="900" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/519f3edb-951a-4ddb-9ace-31add081faad">
-
-<br>
-<br>
-
-<img width="1229" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/dd43bb52-2fb2-4532-b9b9-c33761437ca9">
+<img width="1229" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/e9065a58-86fa-47ef-be9a-eb734532e73f">
 
 ## What is InternVL?
 
@@ -599,24 +594,30 @@ response = model.chat(tokenizer, pixel_values, question, generation_config)
  ```shell
  # OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B
  # run the command in the `internvl_chat_llava` folder
- python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40000 --worker http://localhost:40000 --model-path ./path/to/InternVL-Chat-ViT-6B-Vicuna-7B
+ python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40000 --worker http://localhost:40000 --model-path OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B
 
  # OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B
  # run the command in the `internvl_chat_llava` folder
- python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40001 --worker http://localhost:40001 --model-path ./path/to/InternVL-Chat-ViT-6B-Vicuna-13B
+ python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40001 --worker http://localhost:40001 --model-path OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B
 
  # OpenGVLab/InternVL-Chat-V1-1
  # run the command in the `internvl_chat` folder
- python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40002 --worker http://localhost:40002 --model-path ./path/to/InternVL-Chat-V1-1
+ python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40002 --worker http://localhost:40002 --model-path OpenGVLab/InternVL-Chat-V1-1
 
  # OpenGVLab/InternVL-Chat-V1-2
  # run the command in the `internvl_chat` folder
- python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40003 --worker http://localhost:40003 --model-path ./path/to/InternVL-Chat-V1-2
+ python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40003 --worker http://localhost:40003 --model-path OpenGVLab/InternVL-Chat-V1-2
 
  # OpenGVLab/InternVL-Chat-V1-2-Plus
  # run the command in the `internvl_chat` folder
- python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40004 --worker http://localhost:40004 --model-path ./path/to/InternVL-Chat-V1-2-Plus
- ```
+ python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40004 --worker http://localhost:40004 --model-path OpenGVLab/InternVL-Chat-V1-2-Plus
+
+ # OpenGVLab/InternVL-Chat-V1-5
+ # run the command in the `internvl_chat` folder
+ python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40005 --worker http://localhost:40005 --model-path OpenGVLab/InternVL-Chat-V1-5
+```
+
+
 </details>
 
 ## Schedule
