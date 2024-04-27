@@ -174,7 +174,7 @@ def http_bot(state, model_selector, temperature, top_p, max_new_tokens, max_inpu
     start_tstamp = time.time()
     model_name = model_selector
 
-    if state.skip_next:
+    if hasattr(state, 'skip_next') and state.skip_next:
         # This generate call is skipped due to invalid inputs
         yield (state, state.to_gradio_chatbot()) + (no_change_btn,) * 5
         return
@@ -308,8 +308,8 @@ def http_bot(state, model_selector, temperature, top_p, max_new_tokens, max_inpu
         fout.write(json.dumps(data) + "\n")
 
 title_markdown = ("""
-# InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks
-💻 [[Code](https://github.com/OpenGVLab/InternVL)] | 📚 [[Paper](https://arxiv.org/abs/2312.14238)] | 🌟 [[Quick Start](https://github.com/OpenGVLab/InternVL?tab=readme-ov-file#quick-start-with-huggingface)]
+# InternVL Family: A Pioneering Open-Source Alternative to GPT-4V [CVPR 2024 Oral]
+💻 [[Code](https://github.com/OpenGVLab/InternVL)] | 📚 [[Paper](https://arxiv.org/abs/2312.14238)] | 🌟 [[Quick Start](https://github.com/OpenGVLab/InternVL?tab=readme-ov-file#quick-start-with-huggingface)] ｜ 🤗 [[Hugging Face](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)]
 """)
 
 tos_markdown = ("""
@@ -363,11 +363,13 @@ def build_demo(embed_mode):
 
                 cur_dir = os.path.dirname(os.path.abspath(__file__))
                 gr.Examples(examples=[
-                    [f"{cur_dir}/examples/extreme_ironing.jpg", "What is unusual about this image?"],
-                    [f"{cur_dir}/examples/waterview.jpg", "What are the things I should be cautious about when I visit here?"],
+                    [f"{cur_dir}/examples/img1.jpg", "What does this image mean"],
+                    [f"{cur_dir}/examples/img3.jpg", "Describe this image in detail"],
+                    [f"{cur_dir}/examples/img5.jpg", "Please read the text in this image and return the information in the JSON format"],
+                    [f"{cur_dir}/examples/img6.jpg", "How many dogs are in the figure, and why?"],
                 ], inputs=[imagebox, textbox])
 
-                with gr.Accordion("Parameters", open=True) as parameter_row:
+                with gr.Accordion("Parameters", open=False) as parameter_row:
                     temperature = gr.Slider(minimum=0.0, maximum=1.0, value=0.8, step=0.1, interactive=True, label="Temperature",)
                     top_p = gr.Slider(minimum=0.0, maximum=1.0, value=0.7, step=0.1, interactive=True, label="Top P",)
                     max_output_tokens = gr.Slider(minimum=0, maximum=4096, value=1024, step=64, interactive=True, label="Max output tokens",)
