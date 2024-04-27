@@ -14,7 +14,6 @@
 - `2024/01/24`: InternVL-Chat-V1.1 is released, it supports Chinese and has stronger OCR capability, see [here](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1) or try our [demo](https://internvl.opengvlab.com/).
 - `2024/01/16`: We release our [customized mmcv/mmsegmentation/mmdetection code](https://github.com/OpenGVLab/InternVL-MMDetSeg), integrated with DeepSpeed, which can be used for training large-scale object detection and semantic segmentation models.
 
-
 ## Compared with SOTA VLLMs
 
 <img width="1229" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/e9065a58-86fa-47ef-be9a-eb734532e73f">
@@ -29,26 +28,25 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 
 **Vision Large Language Model**
 
-| Model                   | Date       | Download                                                                             | Note                               |
-| ----------------------- | ---------- | ------------------------------------------------------------------------------------ | ---------------------------------- |
-| InternVL−Chat−V1.5      | 2024.04.18 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                    | support 4K image; super strong OCR; Approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc. (🔥new)|
-| InternVL−Chat−V1.2−Plus | 2024.02.21 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus)               | more SFT data and stronger         |
-| InternVL−Chat−V1.2      | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)                    | scaling up LLM to 34B              |
-| InternVL−Chat−V1.1      | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)                    | support Chinese and stronger OCR   |
-| InternVL−Chat−19B−448px | 2024.02.03 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B-448px) | 448 resolution                     |
-| InternVL−Chat−19B       | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B)       | English multimodal dialogue        |
-| InternVL−Chat−13B       | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)        | English multimodal dialogue        |
-
+| Model                   | Date       | Download                                                                             | Note                                                                                                                                                               |
+| ----------------------- | ---------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| InternVL−Chat−V1.5      | 2024.04.18 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                    | support 4K image; super strong OCR; Approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc. (🔥new) |
+| InternVL−Chat−V1.2−Plus | 2024.02.21 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus)               | more SFT data and stronger                                                                                                                                         |
+| InternVL−Chat−V1.2      | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)                    | scaling up LLM to 34B                                                                                                                                              |
+| InternVL−Chat−V1.1      | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)                    | support Chinese and stronger OCR                                                                                                                                   |
+| InternVL−Chat−19B−448px | 2024.02.03 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B-448px) | 448 resolution                                                                                                                                                     |
+| InternVL−Chat−19B       | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B)       | English multimodal dialogue                                                                                                                                        |
+| InternVL−Chat−13B       | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)        | English multimodal dialogue                                                                                                                                        |
 
 **Vision-Language Foundation Model**
 
-| Model                   | Date       | Download                                                               | Note                             |
-| ----------------------- | ---------- | ---------------------------------------------------------------------- | -------------------------------- |
+| Model                   | Date       | Download                                                               | Note                                                 |
+| ----------------------- | ---------- | ---------------------------------------------------------------------- | ---------------------------------------------------- |
 | InternViT−6B−448px−V1.5 | 2024.04.20 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5) | support dynamic resolution, super strong OCR (🔥new) |
-| InternViT−6B−448px−V1.2 | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-2) | 448 resolution                   |
-| InternViT−6B−448px−V1.0 | 2024.01.30 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-0) | 448 resolution                   |
-| InternViT−6B−224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)      | vision foundation model          |
-| InternVL−14B−224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)      | vision-language foundation model |
+| InternViT−6B−448px−V1.2 | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-2) | 448 resolution                                       |
+| InternViT−6B−448px−V1.0 | 2024.01.30 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-0) | 448 resolution                                       |
+| InternViT−6B−224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)      | vision foundation model                              |
+| InternVL−14B−224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)      | vision-language foundation model                     |
 
 ## What can InternVL do?
 
@@ -578,47 +576,46 @@ response = model.chat(tokenizer, pixel_values, question, generation_config)
   <summary>Launch a local chat demo (click to expand)</summary>
 
 **Launch a controller**
-   
- ```shell
- # run the command in the `internvl_chat_llava` folder
- python -m llava.serve.controller --host 0.0.0.0 --port 10000
- ```
 
-**Launch a gradio web server**
-   
- ```shell
- # run the command in the `internvl_chat_llava` folder
- python -m llava.serve.gradio_web_server --controller http://localhost:10000 --model-list-mode reload
- ```
-
-**Launch a model worker**
-   
- ```shell
- # OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B
- # run the command in the `internvl_chat_llava` folder
- python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40000 --worker http://localhost:40000 --model-path OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B
-
- # OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B
- # run the command in the `internvl_chat_llava` folder
- python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40001 --worker http://localhost:40001 --model-path OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B
-
- # OpenGVLab/InternVL-Chat-V1-1
- # run the command in the `internvl_chat` folder
- python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40002 --worker http://localhost:40002 --model-path OpenGVLab/InternVL-Chat-V1-1
-
- # OpenGVLab/InternVL-Chat-V1-2
- # run the command in the `internvl_chat` folder
- python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40003 --worker http://localhost:40003 --model-path OpenGVLab/InternVL-Chat-V1-2
-
- # OpenGVLab/InternVL-Chat-V1-2-Plus
- # run the command in the `internvl_chat` folder
- python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40004 --worker http://localhost:40004 --model-path OpenGVLab/InternVL-Chat-V1-2-Plus
-
- # OpenGVLab/InternVL-Chat-V1-5
- # run the command in the `internvl_chat` folder
- python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40005 --worker http://localhost:40005 --model-path OpenGVLab/InternVL-Chat-V1-5
+```shell
+# run the command in the `internvl_chat_llava` folder
+python -m llava.serve.controller --host 0.0.0.0 --port 10000
 ```
 
+**Launch a gradio web server**
+
+```shell
+# run the command in the `internvl_chat_llava` folder
+python -m llava.serve.gradio_web_server --controller http://localhost:10000 --model-list-mode reload
+```
+
+**Launch a model worker**
+
+```shell
+# OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B
+# run the command in the `internvl_chat_llava` folder
+python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40000 --worker http://localhost:40000 --model-path OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B
+
+# OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B
+# run the command in the `internvl_chat_llava` folder
+python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40001 --worker http://localhost:40001 --model-path OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B
+
+# OpenGVLab/InternVL-Chat-V1-1
+# run the command in the `internvl_chat` folder
+python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40002 --worker http://localhost:40002 --model-path OpenGVLab/InternVL-Chat-V1-1
+
+# OpenGVLab/InternVL-Chat-V1-2
+# run the command in the `internvl_chat` folder
+python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40003 --worker http://localhost:40003 --model-path OpenGVLab/InternVL-Chat-V1-2
+
+# OpenGVLab/InternVL-Chat-V1-2-Plus
+# run the command in the `internvl_chat` folder
+python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40004 --worker http://localhost:40004 --model-path OpenGVLab/InternVL-Chat-V1-2-Plus
+
+# OpenGVLab/InternVL-Chat-V1-5
+# run the command in the `internvl_chat` folder
+python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40005 --worker http://localhost:40005 --model-path OpenGVLab/InternVL-Chat-V1-5
+```
 
 </details>
 

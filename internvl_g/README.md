@@ -69,7 +69,6 @@ cd ../..
 
 </details>
 
-
 ```shell
 data
 ├── coco

@@ -26,6 +26,12 @@
 - Install `flash-attn==2.3.6`:
 
   ```bash
+  pip install flash-attn==2.3.6 --no-build-isolation
+  ```
+
+  Alternatively you can compile from source:
+
+  ```bash
   git clone https://github.com/Dao-AILab/flash-attention.git
   cd flash-attention
   git checkout v2.3.6
@@ -35,9 +41,9 @@
 - Install `timm==0.9.12` and `mmcv-full==1.6.2`:
 
   ```bash
-  pip install -U openmim
   pip install timm==0.9.12
-  mim install mmcv-full==1.6.2
+  pip install -U openmim
+  mim install mmcv-full==1.6.2  # (optional, for mmsegmentation)
   ```
 
 - Install `transformers==4.36.2`:
@@ -62,6 +68,6 @@
 
   ```bash
   pip install opencv-python termcolor yacs pyyaml scipy
-  pip install deepspeed==0.10.0
+  pip install deepspeed==0.13.5
   pip install pycocoevalcap tqdm
   ```
