@@ -1,8 +1,9 @@
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/5aa4cda8-b453-40a0-9336-17012b430ae8"> InternVL Family: Closing the Gap to Commercial Multimodal Models with Open-Source Suites —— A Pioneering Open-Source Alternative to GPT-4V
 
-\[[Update Blog](./BLOG.md)\]   \[[Paper](https://arxiv.org/abs/2312.14238)\]   \[[InternVL 1.5 Technical Report](https://arxiv.org/abs/2404.16821)\]   \[[Chat Demo](https://internvl.opengvlab.com/)\] [[HuggingFace Demo]](https://huggingface.co/spaces/OpenGVLab/InternVL) \[[Quick Start](#quick-start-with-huggingface)\]  \[[中文解读](https://zhuanlan.zhihu.com/p/675877376)\]
+\[[Update Blog](./BLOG.md)\]   \[[Paper](https://arxiv.org/abs/2312.14238)\]   \[[InternVL 1.5 Technical Report](https://arxiv.org/abs/2404.16821)\]   \[[Chat Demo](https://internvl.opengvlab.com/)\] [\[HuggingFace Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL) \[[Quick Start](#quick-start-with-huggingface)\]  \[[中文解读](https://zhuanlan.zhihu.com/p/675877376)\]
 
 ## News🚀🚀🚀
+
 - `2024/04/28`: We release the INT8 version of InternVL-Chat-V1-5, see [here](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8).
 - `2024/04/28`: We achieve the SOTA performance (75.74) on the Infographics VQA benchmark, see [here](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=3).
 - `2024/04/18`: InternVL-Chat-V1.5 has been released at [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5), approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc.
@@ -16,7 +17,6 @@
 - `2024/01/16`: We release our [customized mmcv/mmsegmentation/mmdetection code](https://github.com/OpenGVLab/InternVL-MMDetSeg), integrated with DeepSpeed, which can be used for training large-scale object detection and semantic segmentation models.
 
 ## Compared with SOTA VLLMs
-
 
 <p align="center"><img width="500" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/38e8a632-229c-4b20-b7e1-77299dfc6cee"></p>
 
@@ -34,7 +34,7 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 
 | Model                   | Date       | Download                                                                             | Note                                                                                                                                                               |
 | ----------------------- | ---------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| InternVL−Chat−V1.5-Int8 | 2024.04.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8)               | The INT8 version of InternVL-Chat-V1-5                                                                                                                  |
+| InternVL−Chat−V1.5-Int8 | 2024.04.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8)               | The INT8 version of InternVL-Chat-V1-5                                                                                                                             |
 | InternVL−Chat−V1.5      | 2024.04.18 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                    | support 4K image; super strong OCR; Approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc. (🔥new) |
 | InternVL−Chat−V1.2−Plus | 2024.02.21 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus)               | more SFT data and stronger                                                                                                                                         |
 | InternVL−Chat−V1.2      | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)                    | scaling up LLM to 34B                                                                                                                                              |
@@ -617,7 +617,6 @@ for question, response in zip(questions, responses):
     print(question)
     print(response)
 ```
-
 
 </details>
 
