@@ -279,7 +279,9 @@ torchrun --nproc-per-node=8 run.py --data RealWorldQA --model InternVL-Chat-V1-5
 
 The result is:
 ```
-
+2024-04-29 00:35:13,282 - Evaluation - INFO - Score:
+2024-04-29 00:35:13,282 - Evaluation - INFO -   split   Overall
+0  none  0.660131
 ```
 
 ### AI2D test
@@ -302,6 +304,12 @@ The result is:
 
 ### SEED Image
 
+1. Follow the official instructions [Data Preparation for SEED-Bench-1](https://github.com/AILab-CVC/SEED-Bench/blob/main/DATASET.md#data-preparation-for-seed-bench-1) to download the images and the videos. Put images under `./playground/data/eval/seed_bench/SEED-Bench-image`.
+
+2. Extract the video frame in the middle from the downloaded videos, and put them under `./playground/data/eval/seed_bench/SEED-Bench-video-image`. We provide our script `extract_video_frames.py` modified from the official one.
+
+3. 
+
 ### HallusionBench
 
 Please use [VLMEvalKit](https://github.com/open-compass/VLMEvalKit) for the test of HallusionBench.
@@ -314,8 +322,23 @@ torchrun --nproc-per-node=8 run.py --data HallusionBench --model InternVL-Chat-V
 
 The result is:
 ```
-
+2024-04-29 00:46:23,688 - Evaluation - INFO - Score:
+2024-04-29 00:46:23,688 - Evaluation - INFO -           split       aAcc       fAcc       qAcc
+0       Overall  66.771819  40.173410  40.879121
+1            VD  63.620981  40.000000  34.296029
+2            VS  71.944444  40.517241  51.123596
+3     VD_figure  77.500000  65.853659  53.846154
+4        VS_map  56.250000  18.181818  18.750000
+5   VD_illusion  66.666667  41.935484  34.722222
+6      VS_table  75.892857  46.428571  55.813953
+7        VD_ocr  78.651685  58.139535  58.139535
+8        VS_ocr  59.259259  38.461538  22.222222
+9      VS_chart  81.538462  50.000000  72.368421
+10     VD_video  51.176471  10.416667  13.043478
+11      VD_math  56.481481  25.000000  27.777778
 ```
+
+The final score reported in our paper is the average: (66.771819 + 40.173410 + 40.879121) / 3 = 49.3
 
 ## Math Benchmark
 
