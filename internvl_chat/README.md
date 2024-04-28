@@ -151,7 +151,7 @@ See [CONTINUED_FINETUNE.md](CONTINUED_FINETUNE.md).
 
 **OCR-related Benchmarks**
 
-TextVQA contains two scores, representing not using or using Rosetta OCR tokens, respectively.
+Note: TextVQA contains two scores, representing not using or using Rosetta OCR tokens, respectively.
 
 | model                                                                                       | #param | DocVQA<br>(val/test) | ChartVQA<br>(avg. test) | InfoVQA<br>(val/test) | TextVQA<br>(val, wo/w OCR) | OCRBench | AI2D |
 | ------------------------------------------------------------------------------------------- | ------ | -------------------- | ----------------------- | --------------------- | -------------------------- | -------- | ---- |
