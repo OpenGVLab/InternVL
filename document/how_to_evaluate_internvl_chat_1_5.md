@@ -156,7 +156,7 @@ Our tests will be divided into two parts. First, we will focus on OCR-related da
    cd ../..
     ```
 
-3. After preparation is complete, the directory structure is:
+2. After preparation is complete, the directory structure is:
 
    ```
    data
@@ -169,7 +169,7 @@ Our tests will be divided into two parts. First, we will focus on OCR-related da
     │   └── val.jsonl
    ```
 
-4. Test the model with the following commands:
+3. Test the model with the following commands:
 
    We use a maximum of 24 tiles to test the InfoVQA dataset:
      
@@ -187,6 +187,59 @@ Our tests will be divided into two parts. First, we will focus on OCR-related da
    ```
 
    For the test set, the test results need to be submitted to the [testing server](https://rrc.cvc.uab.es/?ch=17&com=tasks).
+
+### TextVQA
+
+1. Download the TextVQA dataset using the following instructions:
+   
+    ```shell
+    mkdir -p data/textvqa && cd data/textvqa
+
+    # download images
+    wget https://dl.fbaipublicfiles.com/textvqa/images/train_val_images.zip && unzip train_val_images.zip
+   
+    # download converted files
+    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_train_annotations.json
+    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_train_questions.json
+    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_train.jsonl
+    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_val_annotations.json
+    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_val_questions.json
+    wget https://github.com/OpenGVLab/InternVL/releases/download/data/textvqa_val.jsonl
+    wget https://github.com/OpenGVLab/InternVL/releases/download/data/textvqa_val_llava.jsonl
+   
+    cd ../..
+    ```
+
+2. After preparation is complete, the directory structure is:
+
+   ```
+   data
+    ├── textvqa
+    │   ├── textvqa_train_annotations.json
+    │   ├── textvqa_train.jsonl
+    │   ├── textvqa_train_questions.json
+    │   ├── textvqa_val_annotations.json
+    │   ├── textvqa_val.jsonl
+    │   ├── textvqa_val_llava.jsonl
+    │   ├── textvqa_val_questions.json
+    │   └── train_images
+   ```
+
+3. Test the model with the following commands:
+
+   We use a maximum of 24 tiles to test the TextVQA dataset:
+     
+   ```shell
+   # evaluation on the val set
+   sh evaluate.sh release/InternVL-Chat-V1-5 vqa-textvqa-val --dynamic --max-num 24
+   ```
+
+   The result of the val set is:
+
+   ```
+   
+   ```
+
 
 ### OCRBench
 
