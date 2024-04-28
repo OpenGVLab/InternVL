@@ -217,6 +217,7 @@ if __name__ == '__main__':
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--dynamic', action='store_true')
     parser.add_argument('--max-num', type=int, default=6)
+    parser.add_argument('--load-in-8bit', action='store_true')
     args = parser.parse_args()
 
     if not os.path.exists(args.out_dir):
@@ -236,7 +237,10 @@ if __name__ == '__main__':
 
     tokenizer = AutoTokenizer.from_pretrained(args.checkpoint, trust_remote_code=True, use_fast=False)
     model = InternVLChatModel.from_pretrained(
-        args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16).cuda().eval()
+        args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16,
+        load_in_8bit=args.load_in_8bit).eval()
+    if not args.load_in_8bit:
+        model = model.cuda()
     image_size = model.config.force_image_size or model.config.vision_config.image_size
     use_thumbnail = model.config.use_thumbnail
 
