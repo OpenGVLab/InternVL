@@ -355,14 +355,19 @@ The final score reported in our paper is the average: (66.771819 + 40.173410 + 4
 
 ### MathVista
 
-```bash
-mkdir -p data/MathVista && cd data/MathVista
-# Execute the following python code
-# from datasets import load_dataset
-# dataset = load_dataset("AI4Math/MathVista")
-# dataset.save_to_disk('./MathVista')
-wget https://huggingface.co/datasets/AI4Math/MathVista/raw/main/annot_testmini.json
-cd ../..
-```
+1. Download the MathVista dataset using the following instructions:
+   
+   ```bash
+   mkdir -p data/MathVista && cd data/MathVista
+   wget https://huggingface.co/datasets/AI4Math/MathVista/raw/main/annot_testmini.json
+   cd ../..
+   ```
+
+2. Test the model with the following commands:
+
+   ```shell
+   
+   ```
+   
 
 
