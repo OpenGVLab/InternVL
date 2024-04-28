@@ -298,6 +298,7 @@ The result is:
 
 ### MMBench-EN & CN test
 
+
 ### CCBench dev
 
 ### MMVet
@@ -306,9 +307,19 @@ The result is:
 
 1. Follow the official instructions [Data Preparation for SEED-Bench-1](https://github.com/AILab-CVC/SEED-Bench/blob/main/DATASET.md#data-preparation-for-seed-bench-1) to download the images and the videos. Put images under `./playground/data/eval/seed_bench/SEED-Bench-image`.
 
-2. Extract the video frame in the middle from the downloaded videos, and put them under `./playground/data/eval/seed_bench/SEED-Bench-video-image`. We provide our script `extract_video_frames.py` modified from the official one.
+2. Extract the video frame in the middle from the downloaded videos, and put them under `./playground/data/eval/seed_bench/SEED-Bench-video-image`. LLaVA provided the script [`extract_video_frames.py`]() modified from the official one.
 
-3. 
+3. Test the model with the following commands:
+
+   ```shell
+   sh evaluate.sh pretrained/InternVL-Chat-V1-5 seed --dynamic
+   ```
+
+   The result is:
+
+   ```
+   
+   ```
 
 ### HallusionBench
 
@@ -343,5 +354,15 @@ The final score reported in our paper is the average: (66.771819 + 40.173410 + 4
 ## Math Benchmark
 
 ### MathVista
+
+```bash
+mkdir -p data/MathVista && cd data/MathVista
+# Execute the following python code
+# from datasets import load_dataset
+# dataset = load_dataset("AI4Math/MathVista")
+# dataset.save_to_disk('./MathVista')
+wget https://huggingface.co/datasets/AI4Math/MathVista/raw/main/annot_testmini.json
+cd ../..
+```
 
 
