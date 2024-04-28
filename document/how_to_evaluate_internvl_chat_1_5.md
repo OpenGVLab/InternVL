@@ -138,3 +138,52 @@ Our tests will be divided into two parts. First, we will focus on OCR-related da
    ['chartqa_test_augmented', {'relaxed_accuracy': 0.9408}]
    # the average score = (73.6 + 94.08) / 2 = 83.8
    ```
+
+## InfoVQA
+
+1. Download the InfoVQA dataset using the following instructions:
+   
+    ```shell
+    mkdir -p data/infographicsvqa && cd data/infographicsvqa
+
+   # download images and annotations from https://rrc.cvc.uab.es/?ch=17&com=downloads
+   # infographicsVQA_test_v1.0.json, infographicsVQA_val_v1.0_withQT.json, infographicVQA_train_v1.0.json
+   
+   # download converted files
+   wget https://huggingface.co/OpenGVLab/InternVL/raw/main/infographicsvqa_val.jsonl -O val.jsonl
+   wget https://huggingface.co/OpenGVLab/InternVL/raw/main/infographicsvqa_test.jsonl -O test.jsonl
+   
+   cd ../..
+    ```
+
+3. After preparation is complete, the directory structure is:
+
+   ```
+   data
+    ├── infographicsvqa
+    │   ├── infographicsvqa_images
+    │   ├── infographicsVQA_test_v1.0.json
+    │   ├── infographicsVQA_val_v1.0_withQT.json
+    │   ├── infographicVQA_train_v1.0.json
+    │   ├── test.jsonl
+    │   └── val.jsonl
+   ```
+
+4. Test the model with the following commands:
+
+   We use a maximum of 24 tiles to test the InfoVQA dataset:
+     
+   ```shell
+   # evaluation on the val set
+   sh evaluate.sh release/InternVL-Chat-V1-5 vqa-infovqa-val --dynamic --max-num 24
+   # evaluation on the test set
+   sh evaluate.sh release/InternVL-Chat-V1-5 vqa-infovqa-test --dynamic --max-num 24
+   ```
+
+   The result of the val set is:
+
+   ```
+   
+   ```
+
+   For the test set, the test results need to be submitted to the [testing server](https://rrc.cvc.uab.es/?ch=17&com=tasks).
