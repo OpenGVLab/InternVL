@@ -134,5 +134,7 @@ Our tests will be divided into two parts. First, we will focus on OCR-related da
    The result of the test set is:
 
    ```
-   
+   ['chartqa_test_human', {'relaxed_accuracy': 0.736}]
+   ['chartqa_test_augmented', {'relaxed_accuracy': 0.9408}]
+   # the average score = (73.6 + 94.08) / 2 = 83.8
    ```
