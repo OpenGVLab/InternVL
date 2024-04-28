@@ -20,6 +20,7 @@ In addition, using this codebase requires executing the following steps:
 | model name              | type | download                                                               |  size   |
 | ----------------------- | ---- | ---------------------------------------------------------------------- | :-----: |
 | InternViT-6B-448px-V1-2 | ViT  | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-2) | 11.1 GB |
+| InternViT-6B-448px-V1-5 | ViT  | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5) | 11.1 GB |
 | Nous-Hermes-2-Yi-34B    | LLM  | 🤗 [HF link](https://huggingface.co/NousResearch/Nous-Hermes-2-Yi-34B) | 65.0 GB |
 
 Please download the above model weights and place them in the `pretrained/` folder.
@@ -28,6 +29,7 @@ Please download the above model weights and place them in the `pretrained/` fold
 cd pretrained/
 # pip install -U huggingface_hub
 huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternViT-6B-448px-V1-2 --local-dir intern_vit_6b_448px_v1_2
+huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternViT-6B-448px-V1-5 --local-dir intern_vit_6b_448px_v1_5
 huggingface-cli download --resume-download --local-dir-use-symlinks False NousResearch/Nous-Hermes-2-Yi-34B --local-dir Nous-Hermes-2-Yi-34B
 ```
 
@@ -36,6 +38,7 @@ The directory structure is:
 ```sh
 pretrained
 │── intern_vit_6b_448px_v1_2/
+│── intern_vit_6b_448px_v1_5/
 └── Nous-Hermes-2-Yi-34B/
 ```
 
