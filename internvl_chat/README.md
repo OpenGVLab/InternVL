@@ -158,7 +158,7 @@ Note: TextVQA contains two scores, representing not using or using Rosetta OCR t
 | [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B    | 47.6 / 48.1          | 59.9                    | 33.3 / 32.0           | 64.2 / 68.6                | 530      | 72.4 |
 | [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B    | 56.4 / 57.7          | 68.0                    | 36.0 / 39.5           | 67.5 / 72.5                | 569      | 79.0 |
 | [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B    | 56.9 / 56.8          | 72.8                    | 40.9 / 40.6           | 71.2 / 74.1                | 598      | 78.9 |
-| [InternVL−Chat−V1.5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                   | 26B    | 90.4 / 90.8          | 83.8                    | 72.4 / 72.5           | 80.6 / -                   | 724      | 80.7 |
+| [InternVL−Chat−V1.5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                   | 26B    | 90.5 / 90.8          | 83.8                    | 72.4 / 72.5           | 80.6 / -                   | 724      | 80.7 |
 
 **MultiModal Benchmark**
 
