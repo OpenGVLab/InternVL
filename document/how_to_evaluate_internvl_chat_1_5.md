@@ -91,3 +91,47 @@ Our tests will be divided into two parts. First, we will focus on OCR-related da
    ```
 
    For the test set, the test results need to be submitted to the [testing server](https://rrc.cvc.uab.es/?ch=17&com=tasks).
+
+### ChartQA
+
+1. Download the ChartQA dataset using the following instructions:
+   
+    ```shell
+    mkdir -p data/chartqa && cd data/chartqa
+
+   # download images from https://drive.google.com/file/d/1Lm_w6zeET1Hyl_9ks6w5nEsgpoyPHalV/view
+   
+   # download converted files
+   wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/chartqa/train_human.jsonl
+   wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/chartqa/train_augmented.jsonl
+   wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/chartqa/test_human.jsonl
+   wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/chartqa/test_augmented.jsonl
+   
+   cd ../..
+    ```
+
+2. After preparation is complete, the directory structure is:
+
+   ```
+   data
+    ├── chartqa
+    │   ├── test_augmented.jsonl
+    │   ├── test_human.jsonl
+    │   ├── train_augmented.jsonl
+    │   └── train_human.jsonl
+   ```
+
+3. Test the model with the following commands:
+
+   We use a maximum of 12 tiles to test the ChartQA dataset:
+     
+   ```shell
+   # evaluation on the test set
+   sh evaluate.sh release/InternVL-Chat-V1-5 vqa-chartqa-test --dynamic --max-num 12
+   ```
+
+   The result of the test set is:
+
+   ```
+   Overall ANLS: 0.9049
+   ```
