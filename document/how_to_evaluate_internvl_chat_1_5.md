@@ -253,7 +253,14 @@ torchrun --nproc-per-node=8 run.py --data OCRBench --model InternVL-Chat-V1-5 --
 
 The result is:
 ```
-
+2024-04-29 00:28:29,681 - Evaluation - INFO - Score:
+2024-04-29 00:28:29,681 - Evaluation - INFO - Text Recognition:238
+2024-04-29 00:28:29,681 - Evaluation - INFO - Scene Text-centric VQA:178
+2024-04-29 00:28:29,681 - Evaluation - INFO - Doc-oriented VQA:151
+2024-04-29 00:28:29,681 - Evaluation - INFO - Key Information Extraction:153
+2024-04-29 00:28:29,681 - Evaluation - INFO - Handwritten Mathematical Expression Recognition:4
+2024-04-29 00:28:29,681 - Evaluation - INFO - Final Score:724
+2024-04-29 00:28:29,681 - Evaluation - INFO - Final Score Norm:72.4
 ```
 
 ## General Multimodal Benchmarks
@@ -262,9 +269,30 @@ The result is:
 
 ### RealWorldQA
 
+Please use [VLMEvalKit](https://github.com/open-compass/VLMEvalKit) for the test of RealWorldQA.
+
+The command to test InternVL-Chat-V1-5 on RealWorldQA using VLMEvalKit is:
+
+```
+torchrun --nproc-per-node=8 run.py --data RealWorldQA --model InternVL-Chat-V1-5 --verbose
+```
+
+The result is:
+```
+
+```
+
 ### AI2D test
 
 ### MMMU val
+
+1. The evaluation code will automatically download the dataset from HuggingFace.
+   
+2. Test the model with the following commands:
+
+   ```
+   
+   ```
 
 ### MMBench-EN & CN test
 
@@ -275,6 +303,19 @@ The result is:
 ### SEED Image
 
 ### HallusionBench
+
+Please use [VLMEvalKit](https://github.com/open-compass/VLMEvalKit) for the test of HallusionBench.
+
+The command to test InternVL-Chat-V1-5 on HallusionBench using VLMEvalKit is:
+
+```
+torchrun --nproc-per-node=8 run.py --data HallusionBench --model InternVL-Chat-V1-5 --verbose
+```
+
+The result is:
+```
+
+```
 
 ## Math Benchmark
 
