@@ -139,7 +139,7 @@ Our tests will be divided into two parts. First, we will focus on OCR-related da
    # the average score = (73.6 + 94.08) / 2 = 83.8
    ```
 
-## InfoVQA
+### InfoVQA
 
 1. Download the InfoVQA dataset using the following instructions:
    
@@ -183,7 +183,11 @@ Our tests will be divided into two parts. First, we will focus on OCR-related da
    The result of the val set is:
 
    ```
-   
+   Overall ANLS: 0.7235
    ```
 
    For the test set, the test results need to be submitted to the [testing server](https://rrc.cvc.uab.es/?ch=17&com=tasks).
+
+### OCRBench
+
+Please use [VLMEvalKit](https://github.com/open-compass/VLMEvalKit) for the test of OCRBench.
