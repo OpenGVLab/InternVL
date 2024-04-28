@@ -35,7 +35,7 @@ pretrained
 
 Our tests will be divided into two parts. First, we will focus on OCR-related datasets, including DocVQA, ChartQA, InfoVQA, TextVQA, and OCRBench. Next, let's proceed to test each dataset one by one.
 
-### DocVQA
+### DocVQA val & test
 
 
 1. Download the DocVQA dataset using the following instructions:
@@ -92,7 +92,7 @@ Our tests will be divided into two parts. First, we will focus on OCR-related da
 
    For the test set, the test results need to be submitted to the [testing server](https://rrc.cvc.uab.es/?ch=17&com=tasks).
 
-### ChartQA
+### ChartQA test
 
 1. Download the ChartQA dataset using the following instructions:
    
@@ -139,7 +139,7 @@ Our tests will be divided into two parts. First, we will focus on OCR-related da
    # the average score = (73.6 + 94.08) / 2 = 83.8
    ```
 
-### InfoVQA
+### InfoVQA val & test
 
 1. Download the InfoVQA dataset using the following instructions:
    
@@ -188,7 +188,7 @@ Our tests will be divided into two parts. First, we will focus on OCR-related da
 
    For the test set, the test results need to be submitted to the [testing server](https://rrc.cvc.uab.es/?ch=17&com=tasks).
 
-### TextVQA
+### TextVQA val
 
 1. Download the TextVQA dataset using the following instructions:
    
@@ -237,10 +237,47 @@ Our tests will be divided into two parts. First, we will focus on OCR-related da
    The result of the val set is:
 
    ```
-   
+   ['release/InternVL-Chat-V1-5', 'textvqa_val', 0.8061000000000043]
    ```
 
 
 ### OCRBench
 
 Please use [VLMEvalKit](https://github.com/open-compass/VLMEvalKit) for the test of OCRBench.
+
+The command to test InternVL-Chat-V1-5 on OCRBench using VLMEvalKit is:
+
+```
+torchrun --nproc-per-node=8 run.py --data OCRBench --model InternVL-Chat-V1-5 --verbose
+```
+
+The result is:
+```
+
+```
+
+## General Multimodal Benchmarks
+
+### MME
+
+### RealWorldQA
+
+### AI2D test
+
+### MMMU val
+
+### MMBench-EN & CN test
+
+### CCBench dev
+
+### MMVet
+
+### SEED Image
+
+### HallusionBench
+
+## Math Benchmark
+
+### MathVista
+
+
