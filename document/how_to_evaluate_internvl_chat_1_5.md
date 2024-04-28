@@ -21,7 +21,7 @@ huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGV
 
 The directory structure is:
 
-```sh
+```
 pretrained
 └── InternVL-Chat-V1-5
 ```
@@ -58,7 +58,7 @@ Our tests will be divided into two parts. First, we will focus on OCR-related da
 
 2. After preparation is complete, the directory structure is:
 
-   ```shell
+   ```
    data
     ├── docvqa
     │   ├── test
@@ -71,6 +71,19 @@ Our tests will be divided into two parts. First, we will focus on OCR-related da
 
 3. Test the model with the following commands:
 
+   We use a maximum of 18 tiles to test the DocVQA dataset:
+     
    ```shell
-   
+   # evaluation on the val set
+   sh evaluate.sh release/InternVL-Chat-V1-5 vqa-docvqa-val --dynamic --max-num 18
+   # evaluation on the test set
+   sh evaluate.sh release/InternVL-Chat-V1-5 vqa-docvqa-test --dynamic --max-num 18
    ```
+
+   The result of the validation set is:
+
+   ```
+   Overall ANLS: 0.9049
+   ```
+
+   For the test set, the test results need to be submitted to the [testing server](https://rrc.cvc.uab.es/?ch=17&com=tasks).
