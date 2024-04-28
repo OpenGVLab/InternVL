@@ -115,6 +115,7 @@ Our tests will be divided into two parts. First, we will focus on OCR-related da
    ```
    data
     ├── chartqa
+    │   ├── ChartQA Dataset
     │   ├── test_augmented.jsonl
     │   ├── test_human.jsonl
     │   ├── train_augmented.jsonl
@@ -133,5 +134,5 @@ Our tests will be divided into two parts. First, we will focus on OCR-related da
    The result of the test set is:
 
    ```
-   Overall ANLS: 0.9049
+   
    ```
