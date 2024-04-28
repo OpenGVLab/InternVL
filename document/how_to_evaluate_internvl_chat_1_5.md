@@ -33,7 +33,7 @@ pretrained
 
 ## OCR-related Benchmarks
 
-Our tests will be divided into two parts. First, we will focus on OCR-related datasets, including DocVQA, ChartQA, InfoVQA, TextVQA, and OCRBench. Next, let's proceed to test each dataset one by one.
+Our tests will be divided into three parts. First, we will focus on OCR-related datasets, including DocVQA, ChartQA, InfoVQA, TextVQA, and OCRBench. Next, let's proceed to test each dataset one by one.
 
 ### DocVQA val & test
 
