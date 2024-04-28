@@ -1,9 +1,9 @@
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/5aa4cda8-b453-40a0-9336-17012b430ae8"> InternVL Family: Closing the Gap to Commercial Multimodal Models with Open-Source Suites —— A Pioneering Open-Source Alternative to GPT-4V
 
-\[[Update Blog](./BLOG.md)\]   \[[Paper](https://arxiv.org/abs/2312.14238)\]   \[[InternVL 1.5 Technical Report](https://arxiv.org/abs/2404.16821)\]   \[[Chat Demo](https://internvl.opengvlab.com/)\]  \[[Quick Start](#quick-start-with-huggingface)\]  \[[中文解读](https://zhuanlan.zhihu.com/p/675877376)\]
+\[[Update Blog](./BLOG.md)\]   \[[Paper](https://arxiv.org/abs/2312.14238)\]   \[[InternVL 1.5 Technical Report](https://arxiv.org/abs/2404.16821)\]   \[[Chat Demo](https://internvl.opengvlab.com/)\] [[HuggingFace Demo]](https://huggingface.co/spaces/OpenGVLab/InternVL) \[[Quick Start](#quick-start-with-huggingface)\]  \[[中文解读](https://zhuanlan.zhihu.com/p/675877376)\]
 
 ## News🚀🚀🚀
-
+- `2024/04/28`: We release the INT8 version of InternVL-Chat-V1-5, see [here](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8).
 - `2024/04/28`: We achieve the SOTA performance (75.74) on the Infographics VQA benchmark, see [here](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=3).
 - `2024/04/18`: InternVL-Chat-V1.5 has been released at [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5), approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc.
 - `2024/02/27`: InternVL is accepted by CVPR 2024! 🎉
@@ -16,6 +16,9 @@
 - `2024/01/16`: We release our [customized mmcv/mmsegmentation/mmdetection code](https://github.com/OpenGVLab/InternVL-MMDetSeg), integrated with DeepSpeed, which can be used for training large-scale object detection and semantic segmentation models.
 
 ## Compared with SOTA VLLMs
+
+
+<p align="center"><img width="500" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/38e8a632-229c-4b20-b7e1-77299dfc6cee"></p>
 
 <img width="1229" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/e9065a58-86fa-47ef-be9a-eb734532e73f">
 
@@ -31,6 +34,7 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 
 | Model                   | Date       | Download                                                                             | Note                                                                                                                                                               |
 | ----------------------- | ---------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| InternVL−Chat−V1.5-Int8 | 2024.04.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8)               | The INT8 version of InternVL-Chat-V1-5                                                                                                                  |
 | InternVL−Chat−V1.5      | 2024.04.18 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                    | support 4K image; super strong OCR; Approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc. (🔥new) |
 | InternVL−Chat−V1.2−Plus | 2024.02.21 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus)               | more SFT data and stronger                                                                                                                                         |
 | InternVL−Chat−V1.2      | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)                    | scaling up LLM to 34B                                                                                                                                              |
@@ -343,51 +347,7 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 </details>
 
 <details>
-  <summary>Multimodal Dialogue (click to expand)</summary>
-
-- Zero-Shot Image Captioning [\[see details\]](./internvl_g#zero-shot-image-captioning)
-
-  | method            | COCO  | Flickr30K | NoCaps |
-  | ----------------- | :---: | :-------: | :----: |
-  | Emu-I             | 117.7 |     -     |   -    |
-  | DreamLLM          | 115.4 |     -     |   -    |
-  | InternVL-G (ours) | 128.2 |   79.2    | 113.7  |
-
-- Multimodal Benchmarks with Frozen LLM [\[see details\]](./internvl_chat#-evaluation)
-
-  | method               | visual encoder | glue layer |  LLM  | res. | COCO  | Flickr | NoCaps | VQAv2 | GQA  | VizWiz | TextVQA |  MME   | POPE |
-  | -------------------- | :------------: | :--------: | :---: | :--: | :---: | :----: | :----: | :---: | :--: | :----: | :-----: | :----: | :--: |
-  | InstructBLIP         |     EVA-g      |  QFormer   | V-7B  | 224  |   –   |  82.4  | 123.1  |   –   | 49.2 |  34.5  |  50.1   |   –    |  –   |
-  | BLIP-2               |     EVA-g      |  QFormer   | V-13B | 224  |   –   |  71.6  | 103.9  | 41.0  | 41.0 |  19.6  |  42.5   | 1293.8 | 85.3 |
-  | InstructBLIP         |     EVA-g      |  QFormer   | V-13B | 224  |   –   |  82.8  | 121.9  |   –   | 49.5 |  33.4  |  50.7   | 1212.8 | 78.9 |
-  | InternVL-Chat (ours) |    IViT-6B     |   QLLaMA   | V-7B  | 224  | 141.4 |  89.7  | 120.5  | 72.3  | 57.7 |  44.5  |  42.1   | 1298.5 | 85.2 |
-  | InternVL-Chat (ours) |    IViT-6B     |   QLLaMA   | V-13B | 224  | 142.4 |  89.9  | 123.1  | 71.7  | 59.5 |  54.0  |  49.1   | 1317.2 | 85.4 |
-
-- Multimodal Benchmarks with Trainable LLM [\[see details\]](./internvl_chat_llava)
-
-  | method               | vision encoder |  LLM  | res. | VQAv2 | GQA  | VizWiz | SQA  | TextVQA | POPE |  MME   | MMB  | MMB<sub>CN</sub> | MMVet |
-  | -------------------- | :------------: | :---: | :--: | :---: | :--: | :----: | :--: | :-----: | :--: | :----: | :--: | :--------------: | :---: |
-  | LLaVA-1.5            |  CLIP-L-336px  | V-7B  | 336  | 78.5  | 62.0 |  50.0  | 66.8 |  58.2   | 85.9 | 1510.7 | 64.3 |       58.3       | 30.5  |
-  | LLaVA-1.5            |  CLIP-L-336px  | V-13B | 336  | 80.0  | 63.3 |  53.6  | 71.6 |  61.3   | 85.9 | 1531.3 | 67.7 |       63.6       | 35.4  |
-  | InternVL-Chat (ours) | IViT-6B-224px  | V-7B  | 336  | 79.3  | 62.9 |  52.5  | 66.2 |  57.0   | 86.4 | 1525.1 | 64.6 |       57.6       | 31.2  |
-  | InternVL-Chat (ours) | IViT-6B-224px  | V-13B | 336  | 80.2  | 63.9 |  54.6  | 70.1 |  58.7   | 87.1 | 1546.9 | 66.5 |       61.9       | 33.7  |
-  | InternVL-Chat (ours) | IViT-6B-448px  | V-13B | 448  | 82.0  | 64.1 |  60.1  | 71.6 |  64.8   | 87.2 | 1579.0 | 68.2 |       64.0       | 36.7  |
-
-- Tiny LVLM [\[see details\]](https://github.com/OpenGVLab/Multi-Modality-Arena/tree/main/tiny_lvlm_evaluation)
-
-  | Rank |                                        Model                                        |         Version          |   Score    |
-  | :--: | :---------------------------------------------------------------------------------: | :----------------------: | :--------: |
-  | 🏅️  |                **[InternVL](https://github.com/OpenGVLab/InternVL)**                |      InternVL-Chat       | **327.61** |
-  |  🥈  |     **[InternLM-XComposer-VL](https://github.com/InternLM/InternLM-XComposer)**     | InternLM-XComposer-VL-7B | **322.51** |
-  |  🥉  |                        **[Bard](https://bard.google.com/)**                         |           Bard           | **319.59** |
-  |  4   |                  [Qwen-VL-Chat](https://github.com/QwenLM/Qwen-VL)                  |       Qwen-VL-Chat       |   316.81   |
-  |  5   |                  [LLaVA-1.5](https://github.com/haotian-liu/LLaVA)                  |        Vicuna-7B         |   307.17   |
-  |  6   | [InstructBLIP](https://github.com/salesforce/LAVIS/tree/main/projects/instructblip) |        Vicuna-7B         |   300.64   |
-  |  7   |        [InternLM-XComposer](https://github.com/InternLM/InternLM-XComposer)         |  InternLM-XComposer-7B   |   288.89   |
-  |  8   |        [BLIP2](https://github.com/salesforce/LAVIS/tree/main/projects/blip2)        |         FlanT5xl         |   284.72   |
-  |  9   |                     [BLIVA](https://github.com/mlpc-ucsd/BLIVA)                     |        Vicuna-7B         |   284.17   |
-  |  10  |                    [Lynx](https://github.com/bytedance/lynx-llm)                    |        Vicuna-7B         |   279.24   |
-
+  <summary>Multimodal Dialogue (see "Compared with SOTA VLLMs")</summary>
 </details>
 
 ## Installation
@@ -502,62 +462,112 @@ caption = tokenizer.decode(pred[0].cpu(), skip_special_tokens=True).strip()
 <details>
   <summary>using InternVL-Chat (click to expand)</summary>
 
-- Single GPU
-
 ```python
+from transformers import AutoTokenizer, AutoModel
 import torch
+import torchvision.transforms as T
 from PIL import Image
-from transformers import AutoModel, CLIPImageProcessor
-from transformers import AutoTokenizer
 
-path = "OpenGVLab/InternVL-Chat-V1-1"
+from torchvision.transforms.functional import InterpolationMode
+
+
+IMAGENET_MEAN = (0.485, 0.456, 0.406)
+IMAGENET_STD = (0.229, 0.224, 0.225)
+
+
+def build_transform(input_size):
+    MEAN, STD = IMAGENET_MEAN, IMAGENET_STD
+    transform = T.Compose([
+        T.Lambda(lambda img: img.convert('RGB') if img.mode != 'RGB' else img),
+        T.Resize((input_size, input_size), interpolation=InterpolationMode.BICUBIC),
+        T.ToTensor(),
+        T.Normalize(mean=MEAN, std=STD)
+    ])
+    return transform
+
+
+def find_closest_aspect_ratio(aspect_ratio, target_ratios, width, height, image_size):
+    best_ratio_diff = float('inf')
+    best_ratio = (1, 1)
+    area = width * height
+    for ratio in target_ratios:
+        target_aspect_ratio = ratio[0] / ratio[1]
+        ratio_diff = abs(aspect_ratio - target_aspect_ratio)
+        if ratio_diff < best_ratio_diff:
+            best_ratio_diff = ratio_diff
+            best_ratio = ratio
+        elif ratio_diff == best_ratio_diff:
+            if area > 0.5 * image_size * image_size * ratio[0] * ratio[1]:
+                best_ratio = ratio
+    return best_ratio
+
+
+def dynamic_preprocess(image, min_num=1, max_num=6, image_size=448, use_thumbnail=False):
+    orig_width, orig_height = image.size
+    aspect_ratio = orig_width / orig_height
+
+    # calculate the existing image aspect ratio
+    target_ratios = set(
+        (i, j) for n in range(min_num, max_num + 1) for i in range(1, n + 1) for j in range(1, n + 1) if
+        i * j <= max_num and i * j >= min_num)
+    target_ratios = sorted(target_ratios, key=lambda x: x[0] * x[1])
+
+    # find the closest aspect ratio to the target
+    target_aspect_ratio = find_closest_aspect_ratio(
+        aspect_ratio, target_ratios, orig_width, orig_height, image_size)
+
+    # calculate the target width and height
+    target_width = image_size * target_aspect_ratio[0]
+    target_height = image_size * target_aspect_ratio[1]
+    blocks = target_aspect_ratio[0] * target_aspect_ratio[1]
+
+    # resize the image
+    resized_img = image.resize((target_width, target_height))
+    processed_images = []
+    for i in range(blocks):
+        box = (
+            (i % (target_width // image_size)) * image_size,
+            (i // (target_width // image_size)) * image_size,
+            ((i % (target_width // image_size)) + 1) * image_size,
+            ((i // (target_width // image_size)) + 1) * image_size
+        )
+        # split the image
+        split_img = resized_img.crop(box)
+        processed_images.append(split_img)
+    assert len(processed_images) == blocks
+    if use_thumbnail and len(processed_images) != 1:
+        thumbnail_img = image.resize((image_size, image_size))
+        processed_images.append(thumbnail_img)
+    return processed_images
+
+
+def load_image(image_file, input_size=448, max_num=6):
+    image = Image.open(image_file).convert('RGB')
+    transform = build_transform(input_size=input_size)
+    images = dynamic_preprocess(image, image_size=input_size, use_thumbnail=True, max_num=max_num)
+    pixel_values = [transform(image) for image in images]
+    pixel_values = torch.stack(pixel_values)
+    return pixel_values
+
+
+path = "OpenGVLab/InternVL-Chat-V1-5"
+# If you have an 80G A100 GPU, you can put the entire model on a single GPU.
 model = AutoModel.from_pretrained(
     path,
     torch_dtype=torch.bfloat16,
     low_cpu_mem_usage=True,
     trust_remote_code=True).eval().cuda()
+# Otherwise, you need to set device_map='auto' to use multiple GPUs for inference.
+# model = AutoModel.from_pretrained(
+#     path,
+#     torch_dtype=torch.bfloat16,
+#     low_cpu_mem_usage=True,
+#     trust_remote_code=True,
+#     device_map='auto').eval()
 
-tokenizer = AutoTokenizer.from_pretrained(path)
-image = Image.open('./examples/image2.jpg').convert('RGB')
-image = image.resize((448, 448))
-image_processor = CLIPImageProcessor.from_pretrained(path)
-
-pixel_values = image_processor(images=image, return_tensors='pt').pixel_values
-pixel_values = pixel_values.to(torch.bfloat16).cuda()
-
-generation_config = dict(
-    num_beams=1,
-    max_new_tokens=512,
-    do_sample=False,
-)
-
-question = "请详细描述图片"
-response = model.chat(tokenizer, pixel_values, question, generation_config)
-```
-
-- Multiple GPUs
-
-```python
-import torch
-from PIL import Image
-from transformers import AutoModel, CLIPImageProcessor
-from transformers import AutoTokenizer
-
-path = "OpenGVLab/InternVL-Chat-V1-1"
-model = AutoModel.from_pretrained(
-    path,
-    torch_dtype=torch.bfloat16,
-    low_cpu_mem_usage=True,
-    trust_remote_code=True,
-    device_map='auto').eval()
-
-tokenizer = AutoTokenizer.from_pretrained(path)
-image = Image.open('./examples/image2.jpg').convert('RGB')
-image = image.resize((448, 448))
-image_processor = CLIPImageProcessor.from_pretrained(path)
-
-pixel_values = image_processor(images=image, return_tensors='pt').pixel_values
-pixel_values = pixel_values.to(torch.bfloat16).cuda()
+tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True)
+# set the max number of tiles in `max_num`
+pixel_values = load_image('./examples/image1.jpg', max_num=6).to(torch.bfloat16).cuda()
 
 generation_config = dict(
     num_beams=1,
@@ -565,9 +575,49 @@ generation_config = dict(
     do_sample=False,
 )
 
-question = "请详细描述图片"
+# single-round single-image conversation
+question = "请详细描述图片" # Please describe the picture in detail
 response = model.chat(tokenizer, pixel_values, question, generation_config)
+print(question, response)
+
+# multi-round single-image conversation
+question = "请详细描述图片" # Please describe the picture in detail
+response, history = model.chat(tokenizer, pixel_values, question, generation_config, history=None, return_history=True)
+print(question, response)
+
+question = "请根据图片写一首诗" # Please write a poem according to the picture
+response, history = model.chat(tokenizer, pixel_values, question, generation_config, history=history, return_history=True)
+print(question, response)
+
+# multi-round multi-image conversation
+pixel_values1 = load_image('./examples/image1.jpg', max_num=6).to(torch.bfloat16).cuda()
+pixel_values2 = load_image('./examples/image2.jpg', max_num=6).to(torch.bfloat16).cuda()
+pixel_values = torch.cat((pixel_values1, pixel_values2), dim=0)
+
+question = "详细描述这两张图片" # Describe the two pictures in detail
+response, history = model.chat(tokenizer, pixel_values, question, generation_config, history=None, return_history=True)
+print(question, response)
+
+question = "这两张图片的相同点和区别分别是什么" # What are the similarities and differences between these two pictures
+response, history = model.chat(tokenizer, pixel_values, question, generation_config, history=history, return_history=True)
+print(question, response)
+
+# batch inference (single image per sample)
+pixel_values1 = load_image('./examples/image1.jpg', max_num=6).to(torch.bfloat16).cuda()
+pixel_values2 = load_image('./examples/image2.jpg', max_num=6).to(torch.bfloat16).cuda()
+image_counts = [pixel_values1.size(0), pixel_values2.size(0)]
+pixel_values = torch.cat((pixel_values1, pixel_values2), dim=0)
+
+questions = ["Describe the image in detail."] * len(image_counts)
+responses = model.batch_chat(tokenizer, pixel_values,
+                             image_counts=image_counts,
+                             questions=questions,
+                             generation_config=generation_config)
+for question, response in zip(questions, responses):
+    print(question)
+    print(response)
 ```
+
 
 </details>
 
@@ -620,13 +670,6 @@ python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localho
 
 </details>
 
-## Schedule
-
-- [x] Release high-resolution models
-- [x] Release InternVL-Chat
-- [x] Release InternVL-C(ontrastive) and InternVL-G(enerative)
-- [x] Release InternViT-6B
-
 ## License
 
 This project is released under the [MIT license](LICENSE). Parts of this project contain code and models from other sources, which are subject to their respective licenses.
@@ -641,6 +684,13 @@ If you find this project useful in your research, please consider cite:
   author={Chen, Zhe and Wu, Jiannan and Wang, Wenhai and Su, Weijie and Chen, Guo and Xing, Sen and Zhong, Muyan and Zhang, Qinglong and Zhu, Xizhou and Lu, Lewei and Li, Bin and Luo, Ping and Lu, Tong and Qiao, Yu and Dai, Jifeng},
   journal={arXiv preprint arXiv:2312.14238},
   year={2023}
+}
+
+@article{chen2024far,
+  title={How Far Are We to GPT-4V? Closing the Gap to Commercial Multimodal Models with Open-Source Suites},
+  author={Chen, Zhe and Wang, Weiyun and Tian, Hao and Ye, Shenglong and Gao, Zhangwei and Cui, Erfei and Tong, Wenwen and Hu, Kongzhi and Luo, Jiapeng and Ma, Zheng and others},
+  journal={arXiv preprint arXiv:2404.16821},
+  year={2024}
 }
 ```
 

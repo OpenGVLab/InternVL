@@ -67,7 +67,9 @@ class ModelWorker:
 
         self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
         self.model = InternVLChatModel.from_pretrained(
-            model_path, load_in_8bit=False, torch_dtype=torch.float16).cuda().eval()
+            model_path, load_in_8bit=load_8bit, torch_dtype=torch.float16).eval()
+        if not load_8bit:
+            self.model = self.model.cuda()
         self.image_size = self.model.config.force_image_size
         self.image_processor = CLIPImageProcessor(
             crop_size=self.image_size, do_center_crop=True, do_normalize=True, do_resize=True,
