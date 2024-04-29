@@ -16,6 +16,11 @@
 - `2024/01/24`: InternVL-Chat-V1.1 is released, it supports Chinese and has stronger OCR capability, see [here](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1) or try our [demo](https://internvl.opengvlab.com/).
 - `2024/01/16`: We release our [customized mmcv/mmsegmentation/mmdetection code](https://github.com/OpenGVLab/InternVL-MMDetSeg), integrated with DeepSpeed, which can be used for training large-scale object detection and semantic segmentation models.
 
+## Documents
+
+- How to Evaluate InternVL-Chat-V1-5? [[link]](./document/how_to_evaluate_internvl_chat_1_5.md)
+- How to Evaluate InternVL-Chat-V1-5 using VLMEvalKit? (Recommend) [[link]](./document/how_to_evaluate_internvl_chat_1_5_using_vlmevalkit.md)
+
 ## Compared with SOTA VLLMs
 
 <p align="center"><img width="500" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/38e8a632-229c-4b20-b7e1-77299dfc6cee"></p>
