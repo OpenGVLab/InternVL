@@ -4,25 +4,25 @@ In this tutorial, we will provide a detailed guide on how to evaluate InternVL-C
 
 First of all, please follow this [guide](https://github.com/open-compass/VLMEvalKit/blob/main/Quickstart.md) to install VLMEvalKit.
 
-## MMBench-EN dev
+## MMBench_DEV_EN
 
 ```
 torchrun --nproc-per-node=8 run.py --data MMBench_DEV_EN --model InternVL-Chat-V1-5 --verbose
 ```
 
-## MMBench-EN test
+## MMBench_DEV_TEST
 
 ```
 torchrun --nproc-per-node=8 run.py --data MMBench_DEV_TEST --model InternVL-Chat-V1-5 --verbose
 ```
 
-## MMBench-CN dev
+## MMBench_DEV_CN
 
 ```
 torchrun --nproc-per-node=8 run.py --data MMBench_DEV_CN --model InternVL-Chat-V1-5 --verbose
 ```
 
-## MMBench-CN test
+## MMBench_DEV_CN
 
 ```
 torchrun --nproc-per-node=8 run.py --data MMBench_DEV_CN --model InternVL-Chat-V1-5 --verbose
