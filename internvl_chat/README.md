@@ -20,6 +20,7 @@ In addition, using this codebase requires executing the following steps:
 | model name              | type | download                                                               |  size   |
 | ----------------------- | ---- | ---------------------------------------------------------------------- | :-----: |
 | InternViT-6B-448px-V1-2 | ViT  | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-2) | 11.1 GB |
+| InternViT-6B-448px-V1-5 | ViT  | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5) | 11.1 GB |
 | Nous-Hermes-2-Yi-34B    | LLM  | 🤗 [HF link](https://huggingface.co/NousResearch/Nous-Hermes-2-Yi-34B) | 65.0 GB |
 
 Please download the above model weights and place them in the `pretrained/` folder.
@@ -28,6 +29,7 @@ Please download the above model weights and place them in the `pretrained/` fold
 cd pretrained/
 # pip install -U huggingface_hub
 huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternViT-6B-448px-V1-2 --local-dir intern_vit_6b_448px_v1_2
+huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternViT-6B-448px-V1-5 --local-dir intern_vit_6b_448px_v1_5
 huggingface-cli download --resume-download --local-dir-use-symlinks False NousResearch/Nous-Hermes-2-Yi-34B --local-dir Nous-Hermes-2-Yi-34B
 ```
 
@@ -36,6 +38,7 @@ The directory structure is:
 ```sh
 pretrained
 │── intern_vit_6b_448px_v1_2/
+│── intern_vit_6b_448px_v1_5/
 └── Nous-Hermes-2-Yi-34B/
 ```
 
@@ -148,23 +151,23 @@ See [CONTINUED_FINETUNE.md](CONTINUED_FINETUNE.md).
 
 **OCR-related Benchmarks**
 
-TextVQA contains two scores, representing not using or using Rosetta OCR tokens, respectively.
+Note: TextVQA contains two scores, representing not using or using Rosetta OCR tokens, respectively.
 
 | model                                                                                       | #param | DocVQA<br>(val/test) | ChartVQA<br>(avg. test) | InfoVQA<br>(val/test) | TextVQA<br>(val, wo/w OCR) | OCRBench | AI2D |
 | ------------------------------------------------------------------------------------------- | ------ | -------------------- | ----------------------- | --------------------- | -------------------------- | -------- | ---- |
-| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B    | 47.6 / 48.1          | 59.9                    | 33.3 / 32.0           | 64.2 / 68.6                | 530      | 72.4 |
-| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B    | 56.4 / 57.7          | 68.0                    | 36.0 / 39.5           | 67.5 / 72.5                | 569      | 79.0 |
-| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B    | 56.9 / 56.8          | 72.8                    | 40.9 / 40.6           | 71.2 / 74.1                | 598      | 78.9 |
-| [InternVL−Chat−V1.5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                   | 26B    | 90.4 / 90.8          | 83.8                    | 72.4 / 72.5           | 80.2 / -                   | 724      | 78.4 |
+| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B    | 47.6 / 48.1          | 59.9                    | 33.3 / 32.0           | 64.2 / 68.6                | 530      | 72.4 |
+| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B    | 56.4 / 57.7          | 68.0                    | 36.0 / 39.5           | 67.5 / 72.5                | 569      | 79.0 |
+| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B    | 56.9 / 56.8          | 72.8                    | 40.9 / 40.6           | 71.2 / 74.1                | 598      | 78.9 |
+| [InternVL−Chat−V1.5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                   | 26B    | 90.5 / 90.8          | 83.8                    | 72.4 / 72.5           | 80.6 / -                   | 724      | 80.7 |
 
 **MultiModal Benchmark**
 
 | model                                                                                       | #param | MME            | MMB<br>(dev/test) | MMB−CN<br>(dev/test) | CCBench | MM−Vet | MMMU<br>(val/test)                                                                 | MathVista<br>(testmini) | Hallusion<br>Bench | RealWorld<br/>QA | SEEDv1<br>(image) | CMMMU<br>(val/test) | POPE | MMVP | Tiny LVLM | LLaVA Wild |
 | ------------------------------------------------------------------------------------------- | ------ | -------------- | ----------------- | -------------------- | ------- | ------ | ---------------------------------------------------------------------------------- | ----------------------- | ------------------ | ---------------- | ----------------- | ------------------- | ---- | ---- | --------- | ---------- |
-| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B    | 1659.8 / 361.4 | 76.7 / 75.4       | 71.9 / 70.3          | 43.3    | 46.7   | 39.1 / 35.3                                                                        | 34.5                    | 36.1               | 58.0             | 73.2              | 34.8 / 34.0         | 87.1 | 44.7 | 343.2     | 73.2       |
-| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B    | 1686.8 / 488.6 | 81.4 / 82.2       | 79.5 / 81.2          | 58.6    | 48.9   | 51.6 / [46.2](https://eval.ai/web/challenges/challenge-page/2179/leaderboard/5377) | 47.7                    | 47.6               | 67.5             | 75.6              | -                   | 88.0 | 56.7 | 350.3     | 85.0       |
-| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B    | 1625.2 / 552.9 | 83.4 / 83.8       | 81.6 / 82.0          | 55.9    | 47.9   | 50.3 / 45.6                                                                        | 59.9                    | 47.4               | 67.8             | 76.4              | -                   | 88.7 | 58.7 | 353.9     | 84.6       |
-| [InternVL−Chat−V1.5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                   | 26B    | 1637.8 / 550.0 | - / 82.2          | - / 82.0             | 70.0    | 62.8   | TODO                                                                               | 53.5                    | 49.3               | 66.0             | 76.0              | -                   | 88.3 | 57.3 | 356.8     | 94.7       |
+| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B    | 1659.8 / 361.4 | 76.7 / 75.4       | 71.9 / 70.3          | 43.3    | 46.7   | 39.1 / 35.3                                                                        | 34.5                    | 36.1               | 58.0             | 73.2              | 34.8 / 34.0         | 87.1 | 44.7 | 343.2     | 73.2       |
+| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B    | 1686.8 / 488.6 | 81.4 / 82.2       | 79.5 / 81.2          | 58.6    | 48.9   | 51.6 / [46.2](https://eval.ai/web/challenges/challenge-page/2179/leaderboard/5377) | 47.7                    | 47.6               | 67.5             | 75.6              | -                   | 88.0 | 56.7 | 350.3     | 85.0       |
+| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B    | 1625.2 / 552.9 | 83.4 / 83.8       | 81.6 / 82.0          | 55.9    | 47.9   | 50.3 / 45.6                                                                        | 59.9                    | 47.4               | 67.8             | 76.4              | -                   | 88.7 | 58.7 | 353.9     | 84.6       |
+| [InternVL−Chat−V1.5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                   | 26B    | 1637.8 / 550.0 | - / 82.2          | - / 82.0             | 70.0    | 62.8   | 45.2 / -                                                                           | 53.5                    | 49.3               | 66.0             | 76.0              | -                   | 88.3 | 57.3 | 356.8     | 94.7       |
 
 **Visual Question Answering & Image Captioning**
 
@@ -173,7 +176,7 @@ TextVQA contains two scores, representing not using or using Rosetta OCR tokens,
 | [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B    | 64.1           | 59.0 / 57.3          | 62.5          | 90.1           | 80.9               | 142.2          | 84.8                | 120.8           |
 | [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B    | 62.5           | 61.9 / 60.0          | 64.0          | 83.3           | -                  | 113.9          | 92.9                | 112.5           |
 | [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B    | 67.6           | 61.3 / 59.5          | 66.9          | 98.1           | -                  | 143.4          | 89.5                | 125.8           |
-| [InternVL−Chat−V1.5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                   | 26B    | 62.0           | 63.5 / -             | 65.7          | 94.0           | -                  | 98.4           | 81.2                | 99.6            |
+| [InternVL−Chat−V1.5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                   | 26B    | 62.0           | 63.5 / -             | 65.7          | 94.0           | -                  | 98.4           | 81.2                | 99.6            |
 
 **Visual Grounding**
 

@@ -17,7 +17,7 @@ from transformers import AutoTokenizer
 ds_collections = {
     'SEEDv1': {
         'root': 'data/SEED/',
-        'annotation': 'eval/seed/seed.jsonl',
+        'annotation': 'data/SEED/seed.jsonl',
         'max_new_tokens': 100,
         'min_new_tokens': 1,
     },
