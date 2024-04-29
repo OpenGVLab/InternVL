@@ -1082,13 +1082,16 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
             output = (logits,) + outputs[1:]
             return (loss,) + output if loss is not None else output
 
-        return CausalLMOutputWithPast(
+        device = input_ids.device if input_ids is not None else inputs_embeds.device
+        output = CausalLMOutputWithPast(
             loss=loss,
             logits=logits,
             past_key_values=outputs.past_key_values,
             hidden_states=outputs.hidden_states,
             attentions=outputs.attentions,
         )
+        output['logits'] = output['logits'].to(device)
+        return output
 
     def prepare_inputs_for_generation(
         self, input_ids, past_key_values=None, attention_mask=None, inputs_embeds=None, **kwargs

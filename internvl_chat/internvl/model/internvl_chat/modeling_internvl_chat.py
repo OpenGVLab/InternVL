@@ -226,7 +226,7 @@ class InternVLChatModel(PreTrainedModel):
         vit_embeds = vit_embeds.reshape(vit_embeds.shape[0], h, w, -1)
         vit_embeds = self.pixel_shuffle(vit_embeds, scale_factor=self.downsample_ratio)
         vit_embeds = vit_embeds.reshape(vit_embeds.shape[0], -1, vit_embeds.shape[-1])
-        vit_embeds = self.mlp1(vit_embeds)
+        vit_embeds = self.mlp1(vit_embeds).to(pixel_values.device)
         return vit_embeds
 
     def chat(self, tokenizer, pixel_values, question, generation_config, history=None, return_history=False,
