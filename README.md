@@ -18,8 +18,10 @@
 
 ## Documents
 
-- How to Evaluate InternVL-Chat-V1-5? [\[link\]](./document/how_to_evaluate_internvl_chat_1_5.md)
-- How to Evaluate InternVL-Chat-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/how_to_evaluate_internvl_chat_1_5_using_vlmevalkit.md)
+- How to install InternVL? [\[link\]](./INSTALLATION.md)
+- How to fine-tune InternVL? [\[link\]](./internvl_chat/README.md)
+- How to evaluate InternVL-Chat-V1-5? [\[link\]](./document/how_to_evaluate_internvl_chat_1_5.md)
+- How to evaluate InternVL-Chat-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/how_to_evaluate_internvl_chat_1_5_using_vlmevalkit.md)
 
 ## Compared with SOTA VLLMs
 
@@ -354,10 +356,6 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 <details>
   <summary>Multimodal Dialogue (see "Compared with SOTA VLLMs")</summary>
 </details>
-
-## Installation
-
-See [INSTALLATION.md](./INSTALLATION.md)
 
 ## Quick Start with Huggingface
 
