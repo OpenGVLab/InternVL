@@ -201,11 +201,11 @@ def http_bot(state, model_selector, temperature, top_p, max_new_tokens, max_inpu
                 else:
                     template_name = "llava_v0"
         elif "intern" in model_name.lower():
-            if "hermes2" in model_name.lower() or "v1-2" in model_name.lower():
+            if any(x in model_name.lower() for x in ["hermes2", "v1-2", "v1_2"]):
                 template_name = "Hermes-2"
-            elif "internlm2" in model_name.lower() or "v1-5" in model_name.lower():
+            elif any(x in model_name.lower() for x in ["internlm2", "v1-5", "v1_5"]):
                 template_name = "internlm2-chat"
-            elif "chinese" in model_name.lower() or "v1-1" in model_name.lower():
+            elif any(x in model_name.lower() for x in ["chinese", "v1-1", "v1_1"]):
                 template_name = "internvl_zh"
             else:
                 template_name = "llava_v1"
