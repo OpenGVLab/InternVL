@@ -1,24 +1,24 @@
-import os
+import concurrent.futures
 import json
-import numpy as np
-import torch
-import av
-from decord import VideoReader, cpu
-from PIL import Image
+import os
 import random
 
+import av
+import numpy as np
+import torch
+from decord import VideoReader, cpu
+from PIL import Image
 from tqdm.auto import tqdm
-import concurrent.futures
-
 
 num_segments = 1
 
 # root directory of evaluation dimension 10
-dimension10_dir = "./videos/20bn-something-something-v2"
+dimension10_dir = './videos/20bn-something-something-v2'
 # root directory of evaluation dimension 11
-dimension11_dir = "./videos/EPIC-KITCHENS"
+dimension11_dir = './videos/EPIC-KITCHENS'
 # root directory of evaluation dimension 12
-dimension12_dir = "./videos/BreakfastII_15fps_qvga_sync"
+dimension12_dir = './videos/BreakfastII_15fps_qvga_sync'
+
 
 def transform_video(buffer):
     try:
@@ -27,12 +27,13 @@ def transform_video(buffer):
         try:
             buffer = buffer.asnumpy()
         except AttributeError:
-            print("Both buffer.numpy() and buffer.asnumpy() failed.")
+            print('Both buffer.numpy() and buffer.asnumpy() failed.')
             buffer = None
     images_group = list()
     for fid in range(len(buffer)):
         images_group.append(Image.fromarray(buffer[fid]))
     return images_group
+
 
 def get_index(num_frames, num_segments):
     if num_segments > num_frames:
@@ -99,7 +100,8 @@ def fetch_images(qa_item):
 def fetch_images_parallel(qa_item):
     return qa_item, fetch_images(qa_item)
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     data = json.load(open('SEED-Bench.json'))
     video_img_dir = 'SEED-Bench-video-image'
     ques_type_id_to_name = {id:n for n,id in data['question_type'].items()}

@@ -18,8 +18,8 @@
 
 ## Documents
 
-- How to Evaluate InternVL-Chat-V1-5? [[link]](./document/how_to_evaluate_internvl_chat_1_5.md)
-- How to Evaluate InternVL-Chat-V1-5 using VLMEvalKit? (Recommend) [[link]](./document/how_to_evaluate_internvl_chat_1_5_using_vlmevalkit.md)
+- How to Evaluate InternVL-Chat-V1-5? [\[link\]](./document/how_to_evaluate_internvl_chat_1_5.md)
+- How to Evaluate InternVL-Chat-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/how_to_evaluate_internvl_chat_1_5_using_vlmevalkit.md)
 
 ## Compared with SOTA VLLMs
 

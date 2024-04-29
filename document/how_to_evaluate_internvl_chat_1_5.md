@@ -1,6 +1,6 @@
 # How to Evaluate InternVL-Chat-V1-5?
 
-In this tutorial, we will provide a detailed guide on how to replicate the results presented in the InternVL 1.5 technical report. 
+In this tutorial, we will provide a detailed guide on how to replicate the results presented in the InternVL 1.5 technical report.
 
 The results are shown in the table below.
 
@@ -12,9 +12,9 @@ _If you encounter any difficulties while testing according to this guide, please
 
 ## Model Preparation
 
-| model name         | type  | download                                                          |  #param |
-| ------------------ | ----- | ----------------------------------------------------------------- | :-----: |
-| InternVL-Chat-V1-5 | MLLM  | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5) | 25.5B   |
+| model name         | type | download                                                          | #param |
+| ------------------ | ---- | ----------------------------------------------------------------- | :----: |
+| InternVL-Chat-V1-5 | MLLM | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5) | 25.5B  |
 
 Please download the above model weights and place them in the `pretrained/` folder.
 
@@ -31,7 +31,6 @@ pretrained
 └── InternVL-Chat-V1-5
 ```
 
-
 ## OCR-related Benchmarks
 
 Our tests will be divided into three parts. First, we will focus on OCR-related datasets, including DocVQA, ChartQA, InfoVQA, TextVQA, and OCRBench. Next, let's proceed to test each dataset one by one.
@@ -40,28 +39,28 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
 
 <details>
 <summary>click to expand</summary>
-   
+
 1. Download the DocVQA dataset using the following instructions:
-   
-    ```shell
-    mkdir -p data/docvqa && cd data/docvqa
-    
-    # download images and annotations
-    wget https://datasets.cvc.uab.es/rrc/DocVQA/train.tar.gz --no-check-certificate # (optional)
-    wget https://datasets.cvc.uab.es/rrc/DocVQA/val.tar.gz --no-check-certificate
-    wget https://datasets.cvc.uab.es/rrc/DocVQA/test.tar.gz --no-check-certificate
-    
-    # unzip files
-    tar -zxvf train.tar.gz
-    tar -zxvf val.tar.gz
-    tar -zxvf test.tar.gz
-    
-    # download converted jsonl files
-    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/docvqa/train.jsonl
-    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/docvqa/val.jsonl
-    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/docvqa/test.jsonl
-    cd ../..
-    ```
+
+   ```shell
+   mkdir -p data/docvqa && cd data/docvqa
+
+   # download images and annotations
+   wget https://datasets.cvc.uab.es/rrc/DocVQA/train.tar.gz --no-check-certificate # (optional)
+   wget https://datasets.cvc.uab.es/rrc/DocVQA/val.tar.gz --no-check-certificate
+   wget https://datasets.cvc.uab.es/rrc/DocVQA/test.tar.gz --no-check-certificate
+
+   # unzip files
+   tar -zxvf train.tar.gz
+   tar -zxvf val.tar.gz
+   tar -zxvf test.tar.gz
+
+   # download converted jsonl files
+   wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/docvqa/train.jsonl
+   wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/docvqa/val.jsonl
+   wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/docvqa/test.jsonl
+   cd ../..
+   ```
 
 2. After preparation is complete, the directory structure is:
 
@@ -79,7 +78,7 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
 3. Test the model with the following commands:
 
    We use a maximum of `18 tiles` to test the DocVQA dataset.
-     
+
    ```shell
    # evaluation on the val set
    GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 vqa-docvqa-val --dynamic --max-num 18
@@ -101,22 +100,22 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
 
 <details>
 <summary>click to expand</summary>
-   
+
 1. Download the ChartQA dataset using the following instructions:
-   
-    ```shell
-    mkdir -p data/chartqa && cd data/chartqa
+
+   ```shell
+   mkdir -p data/chartqa && cd data/chartqa
 
    # download images from https://drive.google.com/file/d/1Lm_w6zeET1Hyl_9ks6w5nEsgpoyPHalV/view
-   
+
    # download converted files
    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/chartqa/train_human.jsonl
    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/chartqa/train_augmented.jsonl
    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/chartqa/test_human.jsonl
    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/chartqa/test_augmented.jsonl
-   
+
    cd ../..
-    ```
+   ```
 
 2. After preparation is complete, the directory structure is:
 
@@ -136,7 +135,7 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
 3. Test the model with the following commands:
 
    We use a maximum of `12 tiles` to test the ChartQA dataset.
-     
+
    ```shell
    # evaluation on the test set
    GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 vqa-chartqa-test --dynamic --max-num 12
@@ -158,19 +157,19 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
 <summary>click to expand</summary>
 
 1. Download the InfoVQA dataset using the following instructions:
-   
-    ```shell
-    mkdir -p data/infographicsvqa && cd data/infographicsvqa
+
+   ```shell
+   mkdir -p data/infographicsvqa && cd data/infographicsvqa
 
    # download images and annotations from https://rrc.cvc.uab.es/?ch=17&com=downloads
    # infographicsVQA_test_v1.0.json, infographicsVQA_val_v1.0_withQT.json, infographicVQA_train_v1.0.json
-   
+
    # download converted files
    wget https://huggingface.co/OpenGVLab/InternVL/raw/main/infographicsvqa_val.jsonl -O val.jsonl
    wget https://huggingface.co/OpenGVLab/InternVL/raw/main/infographicsvqa_test.jsonl -O test.jsonl
-   
+
    cd ../..
-    ```
+   ```
 
 2. After preparation is complete, the directory structure is:
 
@@ -188,7 +187,7 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
 3. Test the model with the following commands:
 
    We use a maximum of `24 tiles` to test the InfoVQA dataset.
-     
+
    ```shell
    # evaluation on the val set
    GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 vqa-infovqa-val --dynamic --max-num 24
@@ -212,24 +211,24 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
 <summary>click to expand</summary>
 
 1. Download the TextVQA dataset using the following instructions:
-   
-    ```shell
-    mkdir -p data/textvqa && cd data/textvqa
 
-    # download images
-    wget https://dl.fbaipublicfiles.com/textvqa/images/train_val_images.zip && unzip train_val_images.zip
+   ```shell
+   mkdir -p data/textvqa && cd data/textvqa
 
-    # download converted files
-    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_train_annotations.json
-    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_train_questions.json
-    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_train.jsonl
-    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_val_annotations.json
-    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_val_questions.json
-    wget https://github.com/OpenGVLab/InternVL/releases/download/data/textvqa_val.jsonl
-    wget https://github.com/OpenGVLab/InternVL/releases/download/data/textvqa_val_llava.jsonl
-   
-    cd ../..
-    ```
+   # download images
+   wget https://dl.fbaipublicfiles.com/textvqa/images/train_val_images.zip && unzip train_val_images.zip
+
+   # download converted files
+   wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_train_annotations.json
+   wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_train_questions.json
+   wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_train.jsonl
+   wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_val_annotations.json
+   wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_val_questions.json
+   wget https://github.com/OpenGVLab/InternVL/releases/download/data/textvqa_val.jsonl
+   wget https://github.com/OpenGVLab/InternVL/releases/download/data/textvqa_val_llava.jsonl
+
+   cd ../..
+   ```
 
 2. After preparation is complete, the directory structure is:
 
@@ -249,7 +248,7 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
 3. Test the model with the following commands:
 
    We use a maximum of `24 tiles` to test the TextVQA dataset.
-     
+
    ```shell
    # evaluation on the val set
    GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 vqa-textvqa-val --dynamic --max-num 24
@@ -277,6 +276,7 @@ torchrun --nproc-per-node=8 run.py --data OCRBench --model InternVL-Chat-V1-5 --
 ```
 
 The result is:
+
 ```
 2024-04-29 00:28:29,681 - Evaluation - INFO - Score:
 2024-04-29 00:28:29,681 - Evaluation - INFO - Text Recognition:238
@@ -300,15 +300,15 @@ Next, we will test InternVL-Chat-V1.5 using 10 general multimodal benchmarks, wh
 <summary>click to expand</summary>
 
 1. Download the MME dataset using the following instructions:
-   
-    ```shell
-    mkdir -p data/mme && cd data/mme
 
-    # 1. Download the data following the official instructions [here](https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models/tree/Evaluation).
-    # 2. Downloaded images to `MME_Benchmark_release_version`.
+   ```shell
+   mkdir -p data/mme && cd data/mme
 
-    cd ../..
-    ```
+   # 1. Download the data following the official instructions [here](https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models/tree/Evaluation).
+   # 2. Downloaded images to `MME_Benchmark_release_version`.
+
+   cd ../..
+   ```
 
 2. After preparation is complete, the directory structure is:
 
@@ -321,7 +321,7 @@ Next, we will test InternVL-Chat-V1.5 using 10 general multimodal benchmarks, wh
 3. Single-GPU inference and evaluate:
 
    We use a maximum of `12 tiles` to test the MME dataset.
-     
+
    ```shell
    # evaluation on the val set
    GPUS=1 sh evaluate.sh pretrained/InternVL-Chat-V1-5 mme --dynamic --max-num 12
@@ -331,7 +331,7 @@ Next, we will test InternVL-Chat-V1.5 using 10 general multimodal benchmarks, wh
 
    ```
    total score: 1658.3683473389356
-   
+
       existence  score: 190.0
       count  score: 175.0
       position  score: 171.66666666666669
@@ -342,11 +342,11 @@ Next, we will test InternVL-Chat-V1.5 using 10 general multimodal benchmarks, wh
       landmark  score: 179.5
       artwork  score: 144.0
       OCR  score: 147.5
-   
-   
+
+
    =========== Cognition ===========
    total score: 533.5714285714286
-   
+
       commonsense_reasoning  score: 133.57142857142858
       numerical_calculation  score: 117.5
       text_translation  score: 185.0
@@ -354,7 +354,6 @@ Next, we will test InternVL-Chat-V1.5 using 10 general multimodal benchmarks, wh
 
    # 1658.3683473389356 + 533.5714285714286 = 2191.939775910364
    ```
-
 
 </details>
 
@@ -372,6 +371,7 @@ torchrun --nproc-per-node=8 run.py --data RealWorldQA --model InternVL-Chat-V1-5
 ```
 
 The result is:
+
 ```
 2024-04-29 00:35:13,282 - Evaluation - INFO - Score:
 2024-04-29 00:35:13,282 - Evaluation - INFO -   split   Overall
@@ -386,18 +386,18 @@ The result is:
 <summary>click to expand</summary>
 
 1. Download the AI2D dataset using the following instructions:
-   
-    ```shell
-    mkdir -p data/ai2diagram && cd data/ai2diagram
-    # download converted files
-    wget https://huggingface.co/OpenGVLab/InternVL/raw/main/ai2d_test_vlmevalkit.jsonl -O test_vlmevalkit.jsonl
-    wget https://huggingface.co/OpenGVLab/InternVL/resolve/main/AI2D_TEST.zip && unzip AI2D_TEST.zip
-   
-    # download images from Google drive (optional, provided by InternLM-XComposer)
-    # https://drive.google.com/file/d/1dqqa3MnrxMXaU_K9JA6C83je32ibwdOY/view?usp=sharing
-    # images should be placed in `data/ai2diagram/ai2d/abc_images` and `data/ai2diagram/ai2d/images`
-    cd ../..
-    ```
+
+   ```shell
+   mkdir -p data/ai2diagram && cd data/ai2diagram
+   # download converted files
+   wget https://huggingface.co/OpenGVLab/InternVL/raw/main/ai2d_test_vlmevalkit.jsonl -O test_vlmevalkit.jsonl
+   wget https://huggingface.co/OpenGVLab/InternVL/resolve/main/AI2D_TEST.zip && unzip AI2D_TEST.zip
+
+   # download images from Google drive (optional, provided by InternLM-XComposer)
+   # https://drive.google.com/file/d/1dqqa3MnrxMXaU_K9JA6C83je32ibwdOY/view?usp=sharing
+   # images should be placed in `data/ai2diagram/ai2d/abc_images` and `data/ai2diagram/ai2d/images`
+   cd ../..
+   ```
 
 2. After preparation is complete, the directory structure is:
 
@@ -414,7 +414,7 @@ The result is:
 3. Test the model with the following commands:
 
    We use a maximum of `6 tiles` to test the AI2D dataset.
-     
+
    ```shell
    # evaluation on the test set
    GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 vqa-ai2d-test --dynamic
@@ -434,7 +434,7 @@ The result is:
 <summary>click to expand</summary>
 
 1. The evaluation code will automatically download the dataset from HuggingFace.
-   
+
 2. Test the model with the following commands:
 
    ```
@@ -458,7 +458,7 @@ The result is:
 
    ```
    mkdir -p data/mmbench && cd data/mmbench
-   
+
    # download csv files of mmbench
    wget http://opencompass.openxlab.space/utils/MMBench/CCBench_legacy.tsv
    wget https://download.openmmlab.com/mmclassification/datasets/mmbench/mmbench_dev_20230712.tsv
@@ -466,7 +466,7 @@ The result is:
    wget https://download.openmmlab.com/mmclassification/datasets/mmbench/mmbench_dev_en_20231003.tsv
    wget https://download.openmmlab.com/mmclassification/datasets/mmbench/mmbench_test_cn_20231003.tsv
    wget https://download.openmmlab.com/mmclassification/datasets/mmbench/mmbench_test_en_20231003.tsv
-   
+
    cd ../..
    ```
 
@@ -486,7 +486,7 @@ The result is:
 3. Test the model with the following commands:
 
    We use a maximum of `6 tiles` to test the MMBench dataset.
-     
+
    ```shell
    # evaluation on the test-en set
    GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 mmbench-test-en --dynamic
@@ -515,7 +515,7 @@ The result is:
 2. Test the model with the following commands:
 
    We use a maximum of `6 tiles` to test the CCBench dataset.
-     
+
    ```shell
    # evaluation on the dev set
    GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 ccbench-dev --dynamic
@@ -528,7 +528,6 @@ The result is:
    ```
 
 </details>
-
 
 </details>
 
@@ -559,7 +558,7 @@ The result is:
 3. Test the model with the following commands:
 
    We use a maximum of `6 tiles` to test the MMVet dataset.
-     
+
    ```shell
    # evaluation on the mmvet
    GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 mmvet --dynamic
@@ -591,7 +590,7 @@ The result is:
    wget https://huggingface.co/OpenGVLab/InternVL/raw/main/seed.jsonl
    cd ../..
    ```
-   
+
 2. After preparation is complete, the directory structure is:
 
    ```
@@ -632,7 +631,6 @@ The result is:
 
 </details>
 
-
 ### HallusionBench
 
 <details>
@@ -647,6 +645,7 @@ torchrun --nproc-per-node=8 run.py --data HallusionBench --model InternVL-Chat-V
 ```
 
 The result is:
+
 ```
 2024-04-29 00:46:23,688 - Evaluation - INFO - Score:
 2024-04-29 00:46:23,688 - Evaluation - INFO -           split       aAcc       fAcc       qAcc
@@ -678,7 +677,7 @@ Finally, we use a representative math dataset, MathVista, to test InternVL-Chat-
 <summary>click to expand</summary>
 
 1. Download the MathVista dataset using the following instructions:
-   
+
    ```bash
    mkdir -p data/MathVista && cd data/MathVista
    wget https://huggingface.co/datasets/AI4Math/MathVista/raw/main/annot_testmini.json
@@ -695,7 +694,7 @@ Finally, we use a representative math dataset, MathVista, to test InternVL-Chat-
    The result is:
 
    ```
-   
+
    ```
 
 </details>
