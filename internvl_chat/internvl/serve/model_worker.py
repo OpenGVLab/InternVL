@@ -66,6 +66,9 @@ class ModelWorker:
 
         self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
         if device == 'auto':
+            import os
+            os.environ["CUDA_LAUNCH_BLOCKING"] = "1"
+            # This can make distributed deployment work properly, wonder why
             self.model = InternVLChatModel.from_pretrained(
                 model_path, load_in_8bit=load_8bit, torch_dtype=torch.float16, device_map='auto').eval()
         else:
