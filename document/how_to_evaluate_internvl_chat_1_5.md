@@ -441,6 +441,12 @@ The result is:
    GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 mmmu-val --dynamic
    ```
 
+   The result of MMMU val is:
+
+   ```
+   {'Overall-Art and Design': {'num': 120, 'acc': 0.608}, 'Art': {'num': 30, 'acc': 0.7}, 'Art_Theory': {'num': 30, 'acc': 0.8}, 'Design': {'num': 30, 'acc': 0.767}, 'Music': {'num': 30, 'acc': 0.167}, 'Overall-Business': {'num': 150, 'acc': 0.413}, 'Accounting': {'num': 30, 'acc': 0.467}, 'Economics': {'num': 30, 'acc': 0.4}, 'Finance': {'num': 30, 'acc': 0.4}, 'Manage': {'num': 30, 'acc': 0.4}, 'Marketing': {'num': 30, 'acc': 0.4}, 'Overall-Science': {'num': 150, 'acc': 0.38}, 'Biology': {'num': 30, 'acc': 0.6}, 'Chemistry': {'num': 30, 'acc': 0.233}, 'Geography': {'num': 30, 'acc': 0.4}, 'Math': {'num': 30, 'acc': 0.333}, 'Physics': {'num': 30, 'acc': 0.333}, 'Overall-Health and Medicine': {'num': 150, 'acc': 0.433}, 'Basic_Medical_Science': {'num': 30, 'acc': 0.5}, 'Clinical_Medicine': {'num': 30, 'acc': 0.5}, 'Diagnostics_and_Laboratory_Medicine': {'num': 30, 'acc': 0.333}, 'Pharmacy': {'num': 30, 'acc': 0.367}, 'Public_Health': {'num': 30, 'acc': 0.467}, 'Overall-Humanities and Social Science': {'num': 120, 'acc': 0.617}, 'History': {'num': 30, 'acc': 0.633}, 'Literature': {'num': 30, 'acc': 0.8}, 'Sociology': {'num': 30, 'acc': 0.567}, 'Psychology': {'num': 30, 'acc': 0.467}, 'Overall-Tech and Engineering': {'num': 210, 'acc': 0.362}, 'Agriculture': {'num': 30, 'acc': 0.567}, 'Architecture_and_Engineering': {'num': 30, 'acc': 0.267}, 'Computer_Science': {'num': 30, 'acc': 0.367}, 'Electronics': {'num': 30, 'acc': 0.3}, 'Energy_and_Power': {'num': 30, 'acc': 0.333}, 'Materials': {'num': 30, 'acc': 0.467}, 'Mechanical_Engineering': {'num': 30, 'acc': 0.233}, 'Overall': {'num': 900, 'acc': 0.452}}
+   ```
+
 </details>
 
 ### MMBench-EN & CN test
