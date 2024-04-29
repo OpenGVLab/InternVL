@@ -61,7 +61,9 @@ torchrun --nproc-per-node=8 run.py --data SEEDBench_IMG --model InternVL-Chat-V1
 
 The result is:
 ```
-
+2024-04-29 18:58:54,973 - Evaluation - INFO - Score:
+2024-04-29 18:58:54,973 - Evaluation - INFO -   split   Overall  ...  Text Understanding  Visual Reasoning
+0  none  0.757167  ...            0.440476          0.806647
 ```
 
 ## MMVet
@@ -132,7 +134,9 @@ torchrun --nproc-per-node=8 run.py --data ScienceQA_TEST --model InternVL-Chat-V
 
 The result is:
 ```
-
+2024-04-29 19:10:03,279 - Evaluation - INFO - Score:
+2024-04-29 19:10:03,279 - Evaluation - INFO -   split   Overall  ...  Weather and climate  World religions
+0  test  0.940506  ...             0.948276              1.0
 ```
 
 ### HallusionBench
@@ -193,7 +197,9 @@ torchrun --nproc-per-node=8 run.py --data AI2D_TEST --model InternVL-Chat-V1-5 -
 
 The result is:
 ```
-
+2024-04-29 19:02:17,402 - Evaluation - INFO - Score:
+2024-04-29 19:02:17,402 - Evaluation - INFO -   split   Overall  atomStructure  ...   typesOf  volcano  waterCNPCycle
+0  none  0.806995           0.75  ...  0.752187      1.0       0.727273
 ```
 
 ### LLaVABench
@@ -204,7 +210,12 @@ torchrun --nproc-per-node=8 run.py --data LLaVABench --model InternVL-Chat-V1-5 
 
 The result is:
 ```
-
+Processing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0:00:00 60/60 100%
+     split  Relative Score (main)  VLM Score  GPT4 Score
+0  overall                   82.0       63.7        77.7
+1     conv                   82.9       74.1        89.4
+2   detail                   72.0       48.0        66.7
+3  complex                   86.0       65.7        76.4
 ```
 
 
