@@ -404,6 +404,7 @@ The result is:
    ```
    data
     ├── ai2diagram
+    │   ├── test_vlmevalkit.jsonl
     │   ├── ai2d # (optional)
     │   │    ├── abc_images
     │   │    └── images
