@@ -697,17 +697,17 @@ Finally, we use a representative math dataset, MathVista, to test InternVL-Chat-
    Correct: 535, Total: 1000, Accuracy: 53.5%
    1000
    Number of test problems: 1000
-   
+
    Type: [question_type]
    [free_form]: 47.17% (217/460)
    [multi_choice]: 58.89% (318/540)
-   
+
    Type: [answer_type]
    [float]: 0.00% (0/40)
    [integer]: 51.67% (216/418)
    [text]: 58.89% (318/540)
    [list]: 50.00% (1/2)
-   
+
    Type: [language]
    [english]: 53.31% (499/936)
    [chinese]: 56.45% (35/62)
