@@ -228,7 +228,9 @@ torchrun --nproc-per-node=8 run.py --data DocVQA_VAL --model InternVL-Chat-V1-5 
 
 The result is:
 ```
-
+2024-04-29 19:18:54,661 - Evaluation - INFO - VQA Eval Finished. Saved to ./InternVL-Chat-V1-5/InternVL-Chat-V1-5_DocVQA_VAL_acc.csv.
+2024-04-29 19:18:54,661 - Evaluation - INFO -          val    Overall
+0  90.500323  90.500323
 ```
 
 ### InfoVQA_VAL
