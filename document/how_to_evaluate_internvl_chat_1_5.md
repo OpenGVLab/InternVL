@@ -36,7 +36,9 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
 
 ### DocVQA val & test
 
-
+<details>
+<summary>click to expand</summary>
+   
 1. Download the DocVQA dataset using the following instructions:
    
     ```shell
@@ -91,8 +93,13 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
 
    For the test set, the test results need to be submitted to the [testing server](https://rrc.cvc.uab.es/?ch=17&com=tasks).
 
+</details>
+
 ### ChartQA test
 
+<details>
+<summary>click to expand</summary>
+   
 1. Download the ChartQA dataset using the following instructions:
    
     ```shell
@@ -138,7 +145,12 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
    # the average score = (73.6 + 94.08) / 2 = 83.8
    ```
 
+</details>
+
 ### InfoVQA val & test
+
+<details>
+<summary>click to expand</summary>
 
 1. Download the InfoVQA dataset using the following instructions:
    
@@ -187,7 +199,12 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
 
    For the test set, the test results need to be submitted to the [testing server](https://rrc.cvc.uab.es/?ch=17&com=tasks).
 
+</details>
+
 ### TextVQA val
+
+<details>
+<summary>click to expand</summary>
 
 1. Download the TextVQA dataset using the following instructions:
    
@@ -239,8 +256,12 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
    ['release/InternVL-Chat-V1-5', 'textvqa_val', 0.8061000000000043]
    ```
 
+</details>
 
 ### OCRBench
+
+<details>
+<summary>click to expand</summary>
 
 Please use [VLMEvalKit](https://github.com/open-compass/VLMEvalKit) for the test of OCRBench.
 
@@ -262,11 +283,21 @@ The result is:
 2024-04-29 00:28:29,681 - Evaluation - INFO - Final Score Norm:72.4
 ```
 
+</details>
+
 ## General Multimodal Benchmarks
 
 ### MME
 
+<details>
+<summary>click to expand</summary>
+
+</details>
+
 ### RealWorldQA
+
+<details>
+<summary>click to expand</summary>
 
 Please use [VLMEvalKit](https://github.com/open-compass/VLMEvalKit) for the test of RealWorldQA.
 
@@ -283,9 +314,19 @@ The result is:
 0  none  0.660131
 ```
 
+</details>
+
 ### AI2D test
 
+<details>
+<summary>click to expand</summary>
+
+</details>
+
 ### MMMU val
+
+<details>
+<summary>click to expand</summary>
 
 1. The evaluation code will automatically download the dataset from HuggingFace.
    
@@ -295,14 +336,33 @@ The result is:
    
    ```
 
+</details>
+
 ### MMBench-EN & CN test
 
+<details>
+<summary>click to expand</summary>
+
+</details>
 
 ### CCBench dev
 
+<details>
+<summary>click to expand</summary>
+
+</details>
+
 ### MMVet
 
+<details>
+<summary>click to expand</summary>
+
+</details>
+
 ### SEED Image
+
+<details>
+<summary>click to expand</summary>
 
 1. Follow the official instructions [Data Preparation for SEED-Bench-1](https://github.com/AILab-CVC/SEED-Bench/blob/main/DATASET.md#data-preparation-for-seed-bench-1) to download the images and the videos. Put images under `./playground/data/eval/seed_bench/SEED-Bench-image`.
 
@@ -337,7 +397,13 @@ The result is:
    Video accuracy: 47.27%
    ```
 
+</details>
+
+
 ### HallusionBench
+
+<details>
+<summary>click to expand</summary>
 
 Please use [VLMEvalKit](https://github.com/open-compass/VLMEvalKit) for the test of HallusionBench.
 
@@ -367,9 +433,13 @@ The result is:
 
 The final score reported in our paper is the average: (66.771819 + 40.173410 + 40.879121) / 3 = 49.3
 
+</details>
+
 ## Math Benchmark
 
-### MathVista
+### MathVista testmini
+
+<details>
 
 1. Download the MathVista dataset using the following instructions:
    
@@ -384,6 +454,7 @@ The final score reported in our paper is the average: (66.771819 + 40.173410 + 4
    ```shell
    
    ```
-   
+
+</details>
 
 
