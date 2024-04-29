@@ -61,4 +61,3 @@ python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localho
 # run the command in the `internvl_chat` folder
 python -m internvl.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40005 --worker http://localhost:40005 --model-path OpenGVLab/InternVL-Chat-V1-5
 ```
-
