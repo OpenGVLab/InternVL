@@ -78,7 +78,7 @@ if __name__ == '__main__':
         for line in tqdm(lines):
             img, question, gt = line.strip().split('\t')
             question = question + ' ' + prompt
-            img_path = os.path.join('images', filename, img)
+            img_path = os.path.join('../../data/mme/MME_Benchmark_release_version', filename, img)
             assert os.path.exists(img_path), img_path
             pixel_values = load_image(img_path, image_size).cuda().to(torch.bfloat16)
             generation_config = dict(
