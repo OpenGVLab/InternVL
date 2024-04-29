@@ -508,7 +508,7 @@ The result is:
 <details>
 <summary>click to expand</summary>
 
-1. See the [MMBench-EN & CN test](#MMBench-EN & CN test) part to prepare CCBench data
+1. See the `MMBench-EN & CN test` part to prepare CCBench data
 
 2. Test the model with the following commands:
 
