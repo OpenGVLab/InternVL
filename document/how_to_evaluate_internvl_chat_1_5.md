@@ -123,7 +123,7 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
 
 3. Test the model with the following commands:
 
-   We use a maximum of `12 tiles` to test the ChartQA dataset:
+   We use a maximum of `12 tiles` to test the ChartQA dataset.
      
    ```shell
    # evaluation on the test set
@@ -170,7 +170,7 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
 
 3. Test the model with the following commands:
 
-   We use a maximum of `24 tiles` to test the InfoVQA dataset:
+   We use a maximum of `24 tiles` to test the InfoVQA dataset.
      
    ```shell
    # evaluation on the val set
@@ -226,7 +226,7 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
 
 3. Test the model with the following commands:
 
-   We use a maximum of `24 tiles` to test the TextVQA dataset:
+   We use a maximum of `24 tiles` to test the TextVQA dataset.
      
    ```shell
    # evaluation on the val set
