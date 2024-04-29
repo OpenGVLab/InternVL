@@ -82,9 +82,9 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
      
    ```shell
    # evaluation on the val set
-   sh evaluate.sh release/InternVL-Chat-V1-5 vqa-docvqa-val --dynamic --max-num 18
+   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 vqa-docvqa-val --dynamic --max-num 18
    # evaluation on the test set
-   sh evaluate.sh release/InternVL-Chat-V1-5 vqa-docvqa-test --dynamic --max-num 18
+   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 vqa-docvqa-test --dynamic --max-num 18
    ```
 
    The result of the validation set is:
@@ -124,6 +124,9 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
    data
     ├── chartqa
     │   ├── ChartQA Dataset
+    │   │    ├── test
+    │   │    ├── train
+    │   │    └── val
     │   ├── test_augmented.jsonl
     │   ├── test_human.jsonl
     │   ├── train_augmented.jsonl
@@ -136,7 +139,7 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
      
    ```shell
    # evaluation on the test set
-   sh evaluate.sh release/InternVL-Chat-V1-5 vqa-chartqa-test --dynamic --max-num 12
+   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 vqa-chartqa-test --dynamic --max-num 12
    ```
 
    The result of the test set is:
@@ -188,9 +191,9 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
      
    ```shell
    # evaluation on the val set
-   sh evaluate.sh release/InternVL-Chat-V1-5 vqa-infovqa-val --dynamic --max-num 24
+   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 vqa-infovqa-val --dynamic --max-num 24
    # evaluation on the test set
-   sh evaluate.sh release/InternVL-Chat-V1-5 vqa-infovqa-test --dynamic --max-num 24
+   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 vqa-infovqa-test --dynamic --max-num 24
    ```
 
    The result of the val set is:
@@ -215,7 +218,7 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
 
     # download images
     wget https://dl.fbaipublicfiles.com/textvqa/images/train_val_images.zip && unzip train_val_images.zip
-   
+
     # download converted files
     wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_train_annotations.json
     wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_train_questions.json
@@ -249,7 +252,7 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
      
    ```shell
    # evaluation on the val set
-   sh evaluate.sh release/InternVL-Chat-V1-5 vqa-textvqa-val --dynamic --max-num 24
+   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 vqa-textvqa-val --dynamic --max-num 24
    ```
 
    The result of the val set is:
@@ -293,6 +296,41 @@ The result is:
 
 <details>
 <summary>click to expand</summary>
+
+1. Download the MME dataset using the following instructions:
+   
+    ```shell
+    mkdir -p data/mme && cd data/mme
+
+    # 1. Download the data following the official instructions [here](https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models/tree/Evaluation).
+    # 2. Downloaded images to `MME_Benchmark_release_version`.
+
+    cd ../..
+    ```
+
+2. After preparation is complete, the directory structure is:
+
+   ```
+   data
+    ├── mme
+    │   └── MME_Benchmark_release_version
+   ```
+
+3. Single-GPU inference and evaluate:
+
+   We use a maximum of `12 tiles` to test the MME dataset.
+     
+   ```shell
+   # evaluation on the val set
+   GPUS=1 sh evaluate.sh release/InternVL-Chat-V1-5 mme --dynamic --max-num 12
+   ```
+
+   The result of MME is:
+
+   ```
+
+   ```
+
 
 </details>
 
