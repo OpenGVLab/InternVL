@@ -670,9 +670,9 @@ The final score reported in our technical report is the average: (66.771819 + 40
 
 ## Math Benchmark
 
-### MathVista testmini
-
 Finally, we use a representative math dataset, MathVista, to test InternVL-Chat-V1.5.
+
+### MathVista testmini
 
 <details>
 <summary>click to expand</summary>
