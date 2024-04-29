@@ -29,7 +29,7 @@
 
 <img width="1229" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/e9065a58-86fa-47ef-be9a-eb734532e73f">
 
-<img width="1229" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/5b666757-b169-4ebe-893b-284c241fdc1b">
+<img width="1229" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/2b4f2978-36ea-4065-841d-3651c58955ed">
 
 ## What is InternVL?
 
