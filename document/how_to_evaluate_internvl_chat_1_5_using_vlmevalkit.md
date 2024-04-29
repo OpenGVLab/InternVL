@@ -92,6 +92,11 @@ torchrun --nproc-per-node=8 run.py --data MMMU_DEV_VAL --model InternVL-Chat-V1-
 
 The result is:
 ```
+2024-04-29 18:20:04,977 - Evaluation - INFO -         split  Overall  ...  Science  Tech & Engineering
+0         dev     0.48  ...     0.36            0.428571
+1  validation     0.45  ...     0.38            0.371429
+
+[2 rows x 38 columns]
 ```
 
 ## MathVista_MINI
