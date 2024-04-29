@@ -14,16 +14,6 @@ The result is:
 ```
 ```
 
-## MMBench_DEV_TEST
-
-```
-torchrun --nproc-per-node=8 run.py --data MMBench_DEV_TEST --model InternVL-Chat-V1-5 --verbose
-```
-
-The result is:
-```
-```
-
 ## MMBench_DEV_CN
 
 ```
@@ -34,10 +24,20 @@ The result is:
 ```
 ```
 
-## MMBench_DEV_CN
+## MMBench_TEST_EN
 
 ```
-torchrun --nproc-per-node=8 run.py --data MMBench_DEV_CN --model InternVL-Chat-V1-5 --verbose
+torchrun --nproc-per-node=8 run.py --data MMBench_TEST_EN --model InternVL-Chat-V1-5 --verbose
+```
+
+The result is:
+```
+```
+
+## MMBench_TEST_CN
+
+```
+torchrun --nproc-per-node=8 run.py --data MMBench_TEST_CN --model InternVL-Chat-V1-5 --verbose
 ```
 
 The result is:
