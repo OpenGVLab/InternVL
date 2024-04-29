@@ -480,8 +480,7 @@ The result is:
     │   ├── mmbench_dev_cn_20231003.tsv
     │   ├── mmbench_dev_en_20231003.tsv
     │   ├── mmbench_test_cn_20231003.tsv
-    │   ├── mmbench_test_en_20231003.tsv
-    │   └── AI2D_TEST
+    │   └── mmbench_test_en_20231003.tsv
    ```
 
 3. Test the model with the following commands:
@@ -525,7 +524,7 @@ The result is:
    Submit the result to the [test server](mmbench.opencompass.org.cn). The result of CCBench is:
 
    ```
-   
+   A_Overall (dev)	0.7
    ```
 
 </details>
@@ -584,8 +583,10 @@ The result is:
 
    ```
    mkdir -p data/SEED && cd data/SEED
-   # 1. Follow the official instructions [Data Preparation for SEED-Bench-1](https://github.com/AILab-CVC/SEED-Bench/blob/main/DATASET.md#data-preparation-for-seed-bench-1) to download the images and the videos. Put images under `./data/SEED/SEED-Bench-image`.
-   # 2. Extract the video frame in the middle from the downloaded videos, and put them under `./data/SEED/SEED-Bench-image`. LLaVA provided the script [`extract_video_frames.py`](../internvl_chat/tools/extract_video_frames.py) modified from the official one.
+   # 1. Follow the official instructions [Data Preparation for SEED-Bench-1](https://github.com/AILab-CVC/SEED-Bench/blob/main/DATASET.md#data-preparation-for-seed-bench-1)
+   #    to download the images and the videos. Put images under `./data/SEED/SEED-Bench-image`.
+   # 2. Extract the video frame in the middle from the downloaded videos, and put them under `./data/SEED/SEED-Bench-image`.
+   #    LLaVA provided the script [`extract_video_frames.py`](../internvl_chat/tools/extract_video_frames.py) modified from the official one.
 
    wget https://huggingface.co/OpenGVLab/InternVL/raw/main/seed.jsonl
    cd ../..
@@ -663,7 +664,7 @@ The result is:
 11      VD_math  56.481481  25.000000  27.777778
 ```
 
-The final score reported in our paper is the average: (66.771819 + 40.173410 + 40.879121) / 3 = 49.3
+The final score reported in our technical report is the average: (66.771819 + 40.173410 + 40.879121) / 3 = 49.3
 
 </details>
 
@@ -691,6 +692,10 @@ Finally, we use a representative math dataset, MathVista, to test InternVL-Chat-
    GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 mathvista-testmini --dynamic
    ```
 
+   The result is:
+
+   ```
+   
+   ```
+
 </details>
-
-
