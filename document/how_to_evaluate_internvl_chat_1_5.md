@@ -1,4 +1,4 @@
-# How to Evaluate InternVL-Chat-V1-5
+![image](https://github.com/OpenGVLab/InternVL/assets/23737120/ec2d8155-463b-487b-83fd-a61c410686e1)# How to Evaluate InternVL-Chat-V1-5
 
 In this tutorial, we will provide a detailed guide on how to replicate the results presented in the InternVL 1.5 technical report. 
 
@@ -82,9 +82,9 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
      
    ```shell
    # evaluation on the val set
-   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 vqa-docvqa-val --dynamic --max-num 18
+   GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 vqa-docvqa-val --dynamic --max-num 18
    # evaluation on the test set
-   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 vqa-docvqa-test --dynamic --max-num 18
+   GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 vqa-docvqa-test --dynamic --max-num 18
    ```
 
    The result of the validation set is:
@@ -139,7 +139,7 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
      
    ```shell
    # evaluation on the test set
-   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 vqa-chartqa-test --dynamic --max-num 12
+   GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 vqa-chartqa-test --dynamic --max-num 12
    ```
 
    The result of the test set is:
@@ -191,9 +191,9 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
      
    ```shell
    # evaluation on the val set
-   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 vqa-infovqa-val --dynamic --max-num 24
+   GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 vqa-infovqa-val --dynamic --max-num 24
    # evaluation on the test set
-   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 vqa-infovqa-test --dynamic --max-num 24
+   GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 vqa-infovqa-test --dynamic --max-num 24
    ```
 
    The result of the val set is:
@@ -252,13 +252,13 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
      
    ```shell
    # evaluation on the val set
-   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 vqa-textvqa-val --dynamic --max-num 24
+   GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 vqa-textvqa-val --dynamic --max-num 24
    ```
 
    The result of the val set is:
 
    ```
-   ['release/InternVL-Chat-V1-5', 'textvqa_val', 0.8061000000000043]
+   ['pretrained/InternVL-Chat-V1-5', 'textvqa_val', 0.8061000000000043]
    ```
 
 </details>
@@ -324,7 +324,7 @@ Next, we will test InternVL-Chat-V1.5 using 10 general multimodal benchmarks, wh
      
    ```shell
    # evaluation on the val set
-   GPUS=1 sh evaluate.sh release/InternVL-Chat-V1-5 mme --dynamic --max-num 12
+   GPUS=1 sh evaluate.sh pretrained/InternVL-Chat-V1-5 mme --dynamic --max-num 12
    ```
 
    The result of MME is:
@@ -417,7 +417,7 @@ The result is:
      
    ```shell
    # evaluation on the test set
-   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 vqa-ai2d-test --dynamic
+   GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 vqa-ai2d-test --dynamic
    ```
 
    The result of AI2D is:
@@ -490,9 +490,9 @@ The result is:
      
    ```shell
    # evaluation on the test-en set
-   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 mmbench-test-en --dynamic
+   GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 mmbench-test-en --dynamic
    # evaluation on the test-cn set
-   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 mmbench-test-cn --dynamic
+   GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 mmbench-test-cn --dynamic
    ```
 
    Submit the result to the [test server](mmbench.opencompass.org.cn). The result of MMBench is:
@@ -519,7 +519,7 @@ The result is:
      
    ```shell
    # evaluation on the dev set
-   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 ccbench-dev --dynamic
+   GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 ccbench-dev --dynamic
    ```
 
    Submit the result to the [test server](mmbench.opencompass.org.cn). The result of CCBench is:
@@ -563,7 +563,7 @@ The result is:
      
    ```shell
    # evaluation on the mmvet
-   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 mmvet --dynamic
+   GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 mmvet --dynamic
    ```
 
    Submit the result to the [test server](https://huggingface.co/spaces/whyu/MM-Vet_Evaluator). The result of MMVet is:
@@ -671,6 +671,8 @@ The final score reported in our paper is the average: (66.771819 + 40.173410 + 4
 
 ### MathVista testmini
 
+Finally, we use a representative math dataset, MathVista, to test InternVL-Chat-V1.5.
+
 <details>
 <summary>click to expand</summary>
 
@@ -685,7 +687,8 @@ The final score reported in our paper is the average: (66.771819 + 40.173410 + 4
 2. Test the model with the following commands:
 
    ```shell
-   
+   export OPENAI_API_KEY='your-openai-key'
+   GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 mathvista-testmini --dynamic
    ```
 
 </details>
