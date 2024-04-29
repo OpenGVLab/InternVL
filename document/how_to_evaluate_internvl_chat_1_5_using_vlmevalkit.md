@@ -11,6 +11,7 @@ torchrun --nproc-per-node=8 run.py --data MMBench_DEV_EN --model InternVL-Chat-V
 ```
 
 The result is:
+
 ```
 2024-04-29 18:24:58,395 - Evaluation - INFO -   split   Overall  ...  spatial_relationship  structuralized_imagetext_understanding
 0   dev  0.808419  ...              0.422222                                0.628205
@@ -23,6 +24,7 @@ torchrun --nproc-per-node=8 run.py --data MMBench_DEV_CN --model InternVL-Chat-V
 ```
 
 The result is:
+
 ```
 2024-04-29 18:26:05,209 - Evaluation - INFO -   split   Overall  ...  spatial_relationship  structuralized_imagetext_understanding
 0   dev  0.803265  ...              0.377778                                0.615385
@@ -35,6 +37,7 @@ torchrun --nproc-per-node=8 run.py --data MMStar --model InternVL-Chat-V1-5 --ve
 ```
 
 The result is:
+
 ```
 2024-04-29 18:21:56,491 - Evaluation - INFO -   split   Overall  ...   math  science & technology
 0  none  0.572667  ...  0.564                 0.408
@@ -47,6 +50,7 @@ torchrun --nproc-per-node=8 run.py --data MME --model InternVL-Chat-V1-5 --verbo
 ```
 
 The result is:
+
 ```
 2024-04-29 18:42:43,864 - Evaluation - INFO - Score:
 2024-04-29 18:42:43,864 - Evaluation - INFO -     perception   reasoning    OCR  ...     posters  scene  text_translation
@@ -60,6 +64,7 @@ torchrun --nproc-per-node=8 run.py --data SEEDBench_IMG --model InternVL-Chat-V1
 ```
 
 The result is:
+
 ```
 2024-04-29 18:58:54,973 - Evaluation - INFO - Score:
 2024-04-29 18:58:54,973 - Evaluation - INFO -   split   Overall  ...  Text Understanding  Visual Reasoning
@@ -73,6 +78,7 @@ torchrun --nproc-per-node=8 run.py --data MMVet --model InternVL-Chat-V1-5 --ver
 ```
 
 The result is:
+
 ```
 2024-04-29 18:32:38,748 - Evaluation - INFO - Score:
 2024-04-29 18:32:38,748 - Evaluation - INFO -   Category  tot        acc
@@ -94,6 +100,7 @@ torchrun --nproc-per-node=8 run.py --data MMMU_DEV_VAL --model InternVL-Chat-V1-
 ```
 
 The result is:
+
 ```
 2024-04-29 18:20:04,977 - Evaluation - INFO -         split  Overall  ...  Science  Tech & Engineering
 0         dev     0.48  ...     0.36            0.428571
@@ -107,6 +114,7 @@ torchrun --nproc-per-node=8 run.py --data MathVista_MINI --model InternVL-Chat-V
 ```
 
 The result is:
+
 ```
 2024-04-29 18:39:25,736 - Evaluation - INFO -                      Task&Skill   tot  prefetch  hit  prefetch_rate        acc
 0                       Overall  1000       545  521      54.500000  52.100000
@@ -133,6 +141,7 @@ torchrun --nproc-per-node=8 run.py --data ScienceQA_TEST --model InternVL-Chat-V
 ```
 
 The result is:
+
 ```
 2024-04-29 19:10:03,279 - Evaluation - INFO - Score:
 2024-04-29 19:10:03,279 - Evaluation - INFO -   split   Overall  ...  Weather and climate  World religions
@@ -146,6 +155,7 @@ torchrun --nproc-per-node=8 run.py --data HallusionBench --model InternVL-Chat-V
 ```
 
 The result is:
+
 ```
 2024-04-29 18:21:37,606 - Evaluation - INFO - Score:
 2024-04-29 18:21:37,606 - Evaluation - INFO -           split       aAcc       fAcc       qAcc
@@ -170,6 +180,7 @@ torchrun --nproc-per-node=8 run.py --data TextVQA_VAL --model InternVL-Chat-V1-5
 ```
 
 The result is:
+
 ```
 2024-04-29 18:41:32,873 - Evaluation - INFO - VQA Eval Finished. Saved to ./InternVL-Chat-V1-5/InternVL-Chat-V1-5_TextVQA_VAL_acc.csv.
 2024-04-29 18:41:32,873 - Evaluation - INFO -    Overall
@@ -183,6 +194,7 @@ torchrun --nproc-per-node=8 run.py --data ChartQA_TEST --model InternVL-Chat-V1-
 ```
 
 The result is:
+
 ```
 2024-04-29 18:44:05,458 - Evaluation - INFO - VQA Eval Finished. Saved to ./InternVL-Chat-V1-5/InternVL-Chat-V1-5_ChartQA_TEST_acc.csv.
 2024-04-29 18:44:05,458 - Evaluation - INFO -    test_human  test_augmented  Overall
@@ -196,6 +208,7 @@ torchrun --nproc-per-node=8 run.py --data AI2D_TEST --model InternVL-Chat-V1-5 -
 ```
 
 The result is:
+
 ```
 2024-04-29 19:02:17,402 - Evaluation - INFO - Score:
 2024-04-29 19:02:17,402 - Evaluation - INFO -   split   Overall  atomStructure  ...   typesOf  volcano  waterCNPCycle
@@ -209,6 +222,7 @@ torchrun --nproc-per-node=8 run.py --data LLaVABench --model InternVL-Chat-V1-5 
 ```
 
 The result is:
+
 ```
 Processing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0:00:00 60/60 100%
      split  Relative Score (main)  VLM Score  GPT4 Score
@@ -218,8 +232,6 @@ Processing ━━━━━━━━━━━━━━━━━━━━━━━
 3  complex                   86.0       65.7        76.4
 ```
 
-
-
 ### DocVQA_VAL
 
 ```
@@ -227,6 +239,7 @@ torchrun --nproc-per-node=8 run.py --data DocVQA_VAL --model InternVL-Chat-V1-5 
 ```
 
 The result is:
+
 ```
 2024-04-29 19:18:54,661 - Evaluation - INFO - VQA Eval Finished. Saved to ./InternVL-Chat-V1-5/InternVL-Chat-V1-5_DocVQA_VAL_acc.csv.
 2024-04-29 19:18:54,661 - Evaluation - INFO -          val    Overall
@@ -240,6 +253,7 @@ torchrun --nproc-per-node=8 run.py --data DocVQA_VAL --model InternVL-Chat-V1-5 
 ```
 
 The result is:
+
 ```
 2024-04-29 18:44:50,851 - Evaluation - INFO - VQA Eval Finished. Saved to ./InternVL-Chat-V1-5/InternVL-Chat-V1-5_InfoVQA_VAL_acc.csv.
 2024-04-29 18:44:50,851 - Evaluation - INFO -          val    Overall
@@ -253,6 +267,7 @@ torchrun --nproc-per-node=8 run.py --data DocVQA_VAL --model InternVL-Chat-V1-5 
 ```
 
 The result is:
+
 ```
 2024-04-29 18:56:05,437 - Evaluation - INFO - Score:
 2024-04-29 18:56:05,437 - Evaluation - INFO - Text Recognition:238
@@ -271,6 +286,7 @@ torchrun --nproc-per-node=8 run.py --data RealWorldQA --model InternVL-Chat-V1-5
 ```
 
 The result is:
+
 ```
 2024-04-29 18:56:43,192 - Evaluation - INFO - Score:
 2024-04-29 18:56:43,192 - Evaluation - INFO -   split   Overall
