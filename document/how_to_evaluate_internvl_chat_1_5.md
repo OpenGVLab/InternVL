@@ -1,13 +1,12 @@
-# How to evaluate InternVL-Chat-V1-5
-
+# How to Evaluate InternVL-Chat-V1-5
 
 In this tutorial, we will provide a detailed guide on how to replicate the results presented in the InternVL 1.5 technical report. 
 
 The results are shown in the table below.
 
-![image](https://github.com/OpenGVLab/InternVL/assets/23737120/8b62d429-c689-426a-9267-2727b6430b6e)
-
 > Note that if you are aiming for an exact replication, please use this code repository and follow the testing methods outlined below; otherwise, using the [VLMEvalKit](https://github.com/open-compass/VLMEvalKit) would be more convenient.
+
+![image](https://github.com/OpenGVLab/InternVL/assets/23737120/8b62d429-c689-426a-9267-2727b6430b6e)
 
 ## Model Preparation
 
