@@ -535,6 +535,40 @@ The result is:
 <details>
 <summary>click to expand</summary>
 
+1. Download the MMVet dataset using the following instructions:
+
+   ```
+   mkdir -p data/mm-vet && cd data/mm-vet
+   wget https://github.com/yuweihao/MM-Vet/releases/download/v1/mm-vet.zip
+   unzip mm-vet.zip
+   wget https://huggingface.co/OpenGVLab/InternVL/raw/main/llava-mm-vet.jsonl
+   cd ../..
+   ```
+
+2. After preparation is complete, the directory structure is:
+
+   ```
+   data
+    ├── mm-vet
+    │   ├── images
+    │   └── llava-mm-vet.jsonl
+   ```
+
+3. Test the model with the following commands:
+
+   We use a maximum of `6 tiles` to test the MMVet dataset.
+     
+   ```shell
+   # evaluation on the mmvet
+   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 mmvet --dynamic
+   ```
+
+   Submit the result to the [test server](https://huggingface.co/spaces/whyu/MM-Vet_Evaluator). The result of MMVet is:
+
+   ```
+   
+   ```
+
 </details>
 
 ### SEED Image
