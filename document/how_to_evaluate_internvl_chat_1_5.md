@@ -318,7 +318,24 @@ The result is:
    The result is:
 
    ```
-   
+   Acc@1: 0.6999444135630906
+   length: 17990
+   Accuracy for each data type:
+   Data type Scene Understanding: 80.37%
+   Data type Instance Identity: 80.45%
+   Data type Instance Location: 78.03%
+   Data type Instance Attributes: 72.39%
+   Data type Instances Counting: 69.19%
+   Data type Spatial Relation: 59.82%
+   Data type Instance Interaction: 77.32%
+   Data type Visual Reasoning: 78.85%
+   Data type Text Understanding: 55.81%
+   Data type Action Recognition: 54.08%
+   Data type Action Prediction: 44.82%
+   Data type Procedure Understanding: 40.18%
+   Total accuracy: 69.99%
+   Image accuracy: 75.99%
+   Video accuracy: 47.27%
    ```
 
 ### HallusionBench
