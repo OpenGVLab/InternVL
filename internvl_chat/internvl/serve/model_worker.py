@@ -61,14 +61,17 @@ class ModelWorker:
         else:
             self.model_name = model_name
 
-        self.device = device
         logger.info(f'Loading the model {self.model_name} on worker {worker_id} ...')
         from transformers import AutoTokenizer, CLIPImageProcessor
 
         self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
-        self.model = InternVLChatModel.from_pretrained(
-            model_path, load_in_8bit=load_8bit, torch_dtype=torch.float16).eval()
-        if not load_8bit:
+        if device == 'auto':
+            self.model = InternVLChatModel.from_pretrained(
+                model_path, load_in_8bit=load_8bit, torch_dtype=torch.float16, device_map='auto').eval()
+        else:
+            self.model = InternVLChatModel.from_pretrained(
+                model_path, load_in_8bit=load_8bit, torch_dtype=torch.float16).eval()
+        if not load_8bit and not device == 'auto':
             self.model = self.model.cuda()
         self.image_size = self.model.config.force_image_size
         self.image_processor = CLIPImageProcessor(
@@ -184,7 +187,7 @@ class ModelWorker:
         stop_str = params.get('stop', None)
         do_sample = True if temperature > 0.001 else False
         logger.info(f'num_image_tokens: {num_image_tokens}')
-        input_ids = tokenizer_image_token(prompt, tokenizer, IMAGE_TOKEN_INDEX, num_image_tokens, return_tensors='pt').unsqueeze(0).to(self.device)
+        input_ids = tokenizer_image_token(prompt, tokenizer, IMAGE_TOKEN_INDEX, num_image_tokens, return_tensors='pt').unsqueeze(0).cuda()
         input_ids[input_ids==IMAGE_TOKEN_INDEX] = model.img_context_token_id
 
         keywords = [stop_str]
