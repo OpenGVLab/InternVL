@@ -498,7 +498,10 @@ The result is:
    Submit the result to the [test server](mmbench.opencompass.org.cn). The result of MMBench is:
 
    ```
-   
+   # result of the test-en set
+   A_Overall (test)	0.8217488789237668
+   # result of the test-cn set
+   A_Overall (test)	0.8195067264573991
    ```
 
 </details>
@@ -566,7 +569,8 @@ The result is:
    Submit the result to the [test server](https://huggingface.co/spaces/whyu/MM-Vet_Evaluator). The result of MMVet is:
 
    ```
-   
+   total
+   62.7
    ```
 
 </details>
@@ -576,9 +580,25 @@ The result is:
 <details>
 <summary>click to expand</summary>
 
-1. Follow the official instructions [Data Preparation for SEED-Bench-1](https://github.com/AILab-CVC/SEED-Bench/blob/main/DATASET.md#data-preparation-for-seed-bench-1) to download the images and the videos. Put images under `./playground/data/eval/seed_bench/SEED-Bench-image`.
+1. Download the SEED dataset using the following instructions:
 
-2. Extract the video frame in the middle from the downloaded videos, and put them under `./playground/data/eval/seed_bench/SEED-Bench-video-image`. LLaVA provided the script [`extract_video_frames.py`]() modified from the official one.
+   ```
+   mkdir -p data/SEED && cd data/SEED
+   # 1. Follow the official instructions [Data Preparation for SEED-Bench-1](https://github.com/AILab-CVC/SEED-Bench/blob/main/DATASET.md#data-preparation-for-seed-bench-1) to download the images and the videos. Put images under `./data/SEED/SEED-Bench-image`.
+   # 2. Extract the video frame in the middle from the downloaded videos, and put them under `./data/SEED/SEED-Bench-image`. LLaVA provided the script [`extract_video_frames.py`](../internvl_chat/tools/extract_video_frames.py) modified from the official one.
+
+   wget https://huggingface.co/OpenGVLab/InternVL/raw/main/seed.jsonl
+   cd ../..
+   ```
+   
+2. After preparation is complete, the directory structure is:
+
+   ```
+   data
+    ├── SEED
+    │   ├── SEED-Bench-image
+    │   └── seed.jsonl
+   ```
 
 3. Test the model with the following commands:
 
@@ -652,6 +672,7 @@ The final score reported in our paper is the average: (66.771819 + 40.173410 + 4
 ### MathVista testmini
 
 <details>
+<summary>click to expand</summary>
 
 1. Download the MathVista dataset using the following instructions:
    
