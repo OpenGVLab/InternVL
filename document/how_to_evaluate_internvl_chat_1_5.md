@@ -437,7 +437,7 @@ The result is:
 2. Test the model with the following commands:
 
    ```
-   
+   GPUS=8 sh evaluate.sh pretrained/InternVL-Chat-V1-5 mmmu-val --dynamic
    ```
 
 </details>
@@ -446,6 +446,53 @@ The result is:
 
 <details>
 <summary>click to expand</summary>
+
+1. Download the MMBench dataset using the following instructions:
+
+   ```
+   mkdir -p data/mmbench && cd data/mmbench
+   
+   # download csv files of mmbench
+   wget http://opencompass.openxlab.space/utils/MMBench/CCBench_legacy.tsv
+   wget https://download.openmmlab.com/mmclassification/datasets/mmbench/mmbench_dev_20230712.tsv
+   wget https://download.openmmlab.com/mmclassification/datasets/mmbench/mmbench_dev_cn_20231003.tsv
+   wget https://download.openmmlab.com/mmclassification/datasets/mmbench/mmbench_dev_en_20231003.tsv
+   wget https://download.openmmlab.com/mmclassification/datasets/mmbench/mmbench_test_cn_20231003.tsv
+   wget https://download.openmmlab.com/mmclassification/datasets/mmbench/mmbench_test_en_20231003.tsv
+   
+   cd ../..
+   ```
+
+2. After preparation is complete, the directory structure is:
+
+   ```
+   data
+    ├── mmbench
+    │   ├── CCBench_legacy.tsv
+    │   ├── mmbench_dev_20230712.tsv
+    │   ├── mmbench_dev_cn_20231003.tsv
+    │   ├── mmbench_dev_en_20231003.tsv
+    │   ├── mmbench_test_cn_20231003.tsv
+    │   ├── mmbench_test_en_20231003.tsv
+    │   └── AI2D_TEST
+   ```
+
+3. Test the model with the following commands:
+
+   We use a maximum of `6 tiles` to test the MMBench dataset.
+     
+   ```shell
+   # evaluation on the test-en set
+   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 mmbench-test-en --dynamic
+   # evaluation on the test-cn set
+   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 mmbench-test-cn --dynamic
+   ```
+
+   The result of MMBench is:
+
+   ```
+   
+   ```
 
 </details>
 
