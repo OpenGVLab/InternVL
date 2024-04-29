@@ -495,7 +495,7 @@ The result is:
    GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 mmbench-test-cn --dynamic
    ```
 
-   The result of MMBench is:
+   Submit the result to the [test server](mmbench.opencompass.org.cn). The result of MMBench is:
 
    ```
    
@@ -507,6 +507,26 @@ The result is:
 
 <details>
 <summary>click to expand</summary>
+
+1. See the [MMBench-EN & CN test](#MMBench-EN & CN test) part to prepare CCBench data
+
+2. Test the model with the following commands:
+
+   We use a maximum of `6 tiles` to test the CCBench dataset.
+     
+   ```shell
+   # evaluation on the dev set
+   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 ccbench-dev --dynamic
+   ```
+
+   Submit the result to the [test server](mmbench.opencompass.org.cn). The result of CCBench is:
+
+   ```
+   
+   ```
+
+</details>
+
 
 </details>
 
