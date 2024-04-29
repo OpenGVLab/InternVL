@@ -330,7 +330,29 @@ Next, we will test InternVL-Chat-V1.5 using 10 general multimodal benchmarks, wh
    The result of MME is:
 
    ```
+   total score: 1658.3683473389356
+   
+      existence  score: 190.0
+      count  score: 175.0
+      position  score: 171.66666666666669
+      color  score: 178.33333333333331
+      posters  score: 173.8095238095238
+      celebrity  score: 142.05882352941177
+      scene  score: 156.5
+      landmark  score: 179.5
+      artwork  score: 144.0
+      OCR  score: 147.5
+   
+   
+   =========== Cognition ===========
+   total score: 533.5714285714286
+   
+      commonsense_reasoning  score: 133.57142857142858
+      numerical_calculation  score: 117.5
+      text_translation  score: 185.0
+      code_reasoning  score: 97.5
 
+   # 1658.3683473389356 + 533.5714285714286 = 2191.939775910364
    ```
 
 
@@ -362,6 +384,46 @@ The result is:
 
 <details>
 <summary>click to expand</summary>
+
+1. Download the AI2D dataset using the following instructions:
+   
+    ```shell
+    mkdir -p data/ai2diagram && cd data/ai2diagram
+    # download converted files
+    wget https://huggingface.co/OpenGVLab/InternVL/raw/main/ai2d_test_vlmevalkit.jsonl -O test_vlmevalkit.jsonl
+    wget https://huggingface.co/OpenGVLab/InternVL/resolve/main/AI2D_TEST.zip && unzip AI2D_TEST.zip
+   
+    # download images from Google drive (optional, provided by InternLM-XComposer)
+    # https://drive.google.com/file/d/1dqqa3MnrxMXaU_K9JA6C83je32ibwdOY/view?usp=sharing
+    # images should be placed in `data/ai2diagram/ai2d/abc_images` and `data/ai2diagram/ai2d/images`
+    cd ../..
+    ```
+
+2. After preparation is complete, the directory structure is:
+
+   ```
+   data
+    ├── ai2diagram
+    │   ├── ai2d # (optional)
+    │   │    ├── abc_images
+    │   │    └── images
+    │   └── AI2D_TEST
+   ```
+
+3. Test the model with the following commands:
+
+   We use a maximum of `6 tiles` to test the AI2D dataset.
+     
+   ```shell
+   # evaluation on the test set
+   GPUS=8 sh evaluate.sh release/InternVL-Chat-V1-5 vqa-ai2d-test --dynamic
+   ```
+
+   The result of AI2D is:
+
+   ```
+   ai2diagram_test {'accuracy': 0.8073186528497409}
+   ```
 
 </details>
 
