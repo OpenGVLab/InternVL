@@ -624,6 +624,49 @@ for question, response in zip(questions, responses):
 
 </details>
 
+## Inference Acceleration by LMDeploy
+
+We recommend using [LMDeploy](https://github.com/InternLM/lmdeploy), if InternVL-Chat model inference optimization is required.
+
+In the following subsections, we will introduce the usage of LMDeploy with the [InternVL-Chat-V1-5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5) model as an example. 
+
+First of all, please setup the inference environment as follows:
+
+```shell
+conda create -n internvl python=3.10 -y
+conda activate internvl
+
+pip install timm torchvision==0.17.2
+pip install lmdeploy
+```
+
+LMDeploy pypi package depends on CUDA 12.x by default. For a CUDA 11.x environment, please refer to the [installation guide](https://lmdeploy.readthedocs.io/en/latest/get_started.html#installation).
+
+### Offline Inference Pipeline
+
+```python
+from lmdeploy import pipeline
+from lmdeploy.vl import load_image
+pipe = pipeline('OpenGVLab/InternVL-Chat-V1-5')
+image = load_image('examples/image2.jpg')
+response = pipe(('describe this image', image))
+print(response)
+```
+For more on using the VLM pipeline, including multi-image inference or multi-turn chat, please overview [this](https://lmdeploy.readthedocs.io/en/latest/inference/vl_pipeline.html) guide.
+
+### Online Inference Service
+
+LMDeploy supports one-click packaging of the VLM model into an OpenAI service, providing seamless integration with the OpenAI API.
+
+The service can be launched by one command as below:
+```shell
+lmdeploy serve api_server OpenGVLab/InternVL-Chat-V1-5
+```
+
+The arguments of `api_server` can be viewed through the command `lmdeploy serve api_server -h`, for instance, `--tp` to set tensor parallelism, `--session-len` to specify the max length of the context window, `--cache-max-entry-count` to adjust the GPU mem ratio for k/v cache etc.
+
+For more details, including service startup with docker, RESTful API information, and openai integration methods, please refer to [this](https://lmdeploy.readthedocs.io/en/latest/serving/api_server_vl.html) guide.
+
 ## License
 
 This project is released under the [MIT license](LICENSE). Parts of this project contain code and models from other sources, which are subject to their respective licenses.
