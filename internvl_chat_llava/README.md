@@ -6,7 +6,7 @@ We mainly use the LLaVA codebase to evaluate InternVL in creating multimodal dia
 
 We have retained the original documentation of LLaVA 1.5 as a more detailed manual. In most cases, you will only need to refer to the new documentation that we have added.
 
-> Note: To unify the environment across different tasks, we have made some compatibility modifications to the LLaVA code, allowing it to support `transformers==4.36.2` (originally locked at 4.31.0). Please note that `transformers==4.36.2` should be installed.
+> Note: To unify the environment across different tasks, we have made some compatibility modifications to the LLaVA code, allowing it to support `transformers==4.37.2` (originally locked at 4.31.0). Please note that `transformers==4.37.2` should be installed.
 
 ## 🛠️ Installation
 

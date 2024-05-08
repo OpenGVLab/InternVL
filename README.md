@@ -24,6 +24,7 @@
 - How to evaluate InternVL-Chat-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/how_to_evaluate_internvl_chat_1_5_using_vlmevalkit.md)
 - How to deploy a local demo? [\[link\]](./document/how_to_deploy_a_local_demo.md)
 - How to run InternVL 1.5-8bit with Nvidia V100 GPU? [\[link\]](https://github.com/OpenGVLab/InternVL/issues/144)
+- Inference Acceleration by LMDeploy [\[link\]](#inference-acceleration-by-lmdeploy)
 
 ## Compared with SOTA VLLMs
 
@@ -629,7 +630,7 @@ for question, response in zip(questions, responses):
 
 We recommend using [LMDeploy](https://github.com/InternLM/lmdeploy), if InternVL-Chat model inference optimization is required.
 
-In the following subsections, we will introduce the usage of LMDeploy with the [InternVL-Chat-V1-5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5) model as an example. 
+In the following subsections, we will introduce the usage of LMDeploy with the [InternVL-Chat-V1-5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5) model as an example.
 
 First of all, please setup the inference environment as follows:
 
@@ -653,6 +654,7 @@ image = load_image('examples/image2.jpg')
 response = pipe(('describe this image', image))
 print(response)
 ```
+
 For more on using the VLM pipeline, including multi-image inference or multi-turn chat, please overview [this](https://lmdeploy.readthedocs.io/en/latest/inference/vl_pipeline.html) guide.
 
 ### Online Inference Service
@@ -660,6 +662,7 @@ For more on using the VLM pipeline, including multi-image inference or multi-tur
 LMDeploy supports one-click packaging of the VLM model into an OpenAI service, providing seamless integration with the OpenAI API.
 
 The service can be launched by one command as below:
+
 ```shell
 lmdeploy serve api_server OpenGVLab/InternVL-Chat-V1-5
 ```

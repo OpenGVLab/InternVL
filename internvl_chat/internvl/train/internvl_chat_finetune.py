@@ -42,7 +42,7 @@ from transformers.trainer_utils import get_last_checkpoint
 from transformers.utils.logging import (enable_default_handler,
                                         enable_explicit_format, set_verbosity)
 
-# Upgrade transformers to v4.36.2, we don't need it anymore
+# Upgrade transformers to v4.37.2, we don't need it anymore
 # replace_llama2_attn_with_flash_attn()
 replace_llama_rmsnorm_with_fused_rmsnorm()
 replace_train_sampler()

@@ -46,10 +46,10 @@
   mim install mmcv-full==1.6.2  # (optional, for mmsegmentation)
   ```
 
-- Install `transformers==4.36.2`:
+- Install `transformers==4.37.2`:
 
   ```bash
-  pip install transformers==4.36.2
+  pip install transformers==4.37.2
   ```
 
 - Install `apex` (optional):
