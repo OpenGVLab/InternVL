@@ -224,8 +224,8 @@ Our tests will be divided into three parts. First, we will focus on OCR-related 
    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_train.jsonl
    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_val_annotations.json
    wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_val_questions.json
-   wget https://github.com/OpenGVLab/InternVL/releases/download/data/textvqa_val.jsonl
-   wget https://github.com/OpenGVLab/InternVL/releases/download/data/textvqa_val_llava.jsonl
+   wget https://huggingface.co/OpenGVLab/InternVL/raw/main/textvqa_val.jsonl
+   wget https://huggingface.co/OpenGVLab/InternVL/raw/main/textvqa_val_llava.jsonl
 
    cd ../..
    ```
