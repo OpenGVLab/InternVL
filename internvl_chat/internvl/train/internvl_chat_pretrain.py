@@ -191,7 +191,7 @@ class DataTrainingArguments:
         metadata={'help': 'The minimum number of dynamic patches. Default is 1.'},
     )
     max_dynamic_patch: Optional[int] = field(
-        default=6,
+        default=12,
         metadata={'help': 'The maximum number of dynamic patches. Default is 6.'},
     )
     neftune_alpha: Optional[float] = field(
@@ -394,8 +394,10 @@ def build_datasets(data_args, tokenizer, tcs_loader, model, group_by_length=Fals
     for ds_name in ds_collections.keys():
         repeat_time = ds_collections[ds_name]['repeat_time']
         if 'max_dynamic_patch' in ds_collections[ds_name]:
-            max_dynamic_patch = ds_collections[ds_name]['max_dynamic_patch']
-            logger.info(f'max_dynamic_patch is set to {max_dynamic_patch} according to the meta file')
+            max_num = ds_collections[ds_name]['max_dynamic_patch']
+            logger.info(f'max_dynamic_patch is set to {max_num} according to the meta file')
+        else:
+            max_num = max_dynamic_patch
         try:
             dataset = LazySupervisedDataset(
                 data_args.conv_style, ds_collections[ds_name],
@@ -409,7 +411,7 @@ def build_datasets(data_args, tokenizer, tcs_loader, model, group_by_length=Fals
                 dynamic_image_size=dynamic_image_size,
                 use_thumbnail=use_thumbnail,
                 min_dynamic_patch=min_dynamic_patch,
-                max_dynamic_patch=max_dynamic_patch,
+                max_dynamic_patch=max_num,
                 normalize_type=normalize_type,
             )
         except Exception:
