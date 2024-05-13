@@ -6,6 +6,7 @@
 
 ## News🚀🚀🚀
 
+- `2024/05/13`: 🔥 InternVL can now be used as the [text encoder](https://huggingface.co/OpenGVLab/InternVL-14B-224px) for diffusion models to support multilingual generation natively in over 110 languages worldwide. See [MuLan](https://github.com/mulanai/MuLan) for more details.
 - `2024/04/28`: We release the INT8 version of InternVL-Chat-V1-5, see [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8).
 - `2024/04/28`: We achieve the SOTA performance (75.74) on the Infographics VQA benchmark, see [here](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=3).
 - `2024/04/18`: InternVL-Chat-V1.5 has been released at [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5), approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc.
