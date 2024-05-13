@@ -1,6 +1,6 @@
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/5aa4cda8-b453-40a0-9336-17012b430ae8"> InternVL Family: Closing the Gap to Commercial Multimodal Models with Open-Source Suites —— A Pioneering Open-Source Alternative to GPT-4V
 
-[[Update Blog]](./BLOG.md)  [[Paper]](https://arxiv.org/abs/2312.14238)  [[InternVL 1.5 Technical Report]](https://arxiv.org/abs/2404.16821)  [[Chat Demo]](https://internvl.opengvlab.com/) [[HuggingFace Demo]](https://huggingface.co/spaces/OpenGVLab/InternVL) [[Quick Start]](#quick-start-with-huggingface)  [[中文解读]](https://zhuanlan.zhihu.com/p/675877376)
+[\[Update Blog\]](./BLOG.md)  [\[Paper\]](https://arxiv.org/abs/2312.14238)  [\[InternVL 1.5 Technical Report\]](https://arxiv.org/abs/2404.16821)  [\[Chat Demo\]](https://internvl.opengvlab.com/) [\[HuggingFace Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL) [\[Quick Start\]](#quick-start-with-huggingface)  [\[中文解读\]](https://zhuanlan.zhihu.com/p/675877376)
 
 <a href="https://trendshift.io/repositories/9803" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9803" alt="OpenGVLab%2FInternVL | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
@@ -20,13 +20,13 @@
 
 ## Documents
 
-- How to install InternVL? [[link]](./INSTALLATION.md)
-- How to fine-tune InternVL? [[link]](./internvl_chat/README.md)
-- How to evaluate InternVL-Chat-V1-5? [[link]](./document/how_to_evaluate_internvl_chat_1_5.md)
+- How to install InternVL? [\[link\]](./INSTALLATION.md)
+- How to fine-tune InternVL? [\[link\]](./internvl_chat/README.md)
+- How to evaluate InternVL-Chat-V1-5? [\[link\]](./document/how_to_evaluate_internvl_chat_1_5.md)
 - How to evaluate InternVL-Chat-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/how_to_evaluate_internvl_chat_1_5_using_vlmevalkit.md)
-- How to deploy a local demo? [[link]](./document/how_to_deploy_a_local_demo.md)
-- How to run InternVL 1.5-8bit with Nvidia V100 GPU? [[link]](https://github.com/OpenGVLab/InternVL/issues/144) [[中文教程]](https://zhuanlan.zhihu.com/p/697188143)
-- Inference Acceleration by LMDeploy [[link]](#inference-acceleration-by-lmdeploy)
+- How to deploy a local demo? [\[link\]](./document/how_to_deploy_a_local_demo.md)
+- How to run InternVL 1.5-8bit with Nvidia V100 GPU? [\[link\]](https://github.com/OpenGVLab/InternVL/issues/144) [\[中文教程\]](https://zhuanlan.zhihu.com/p/697188143)
+- Inference Acceleration by LMDeploy [\[link\]](#inference-acceleration-by-lmdeploy)
 
 ## Compared with SOTA VLLMs
 
