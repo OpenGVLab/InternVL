@@ -73,6 +73,7 @@ class InternVisionConfig(PretrainedConfig):
             num_hidden_layers=48,
             use_flash_attn=True,
             hidden_act='gelu',
+            norm_type='rms_norm',
             layer_norm_eps=1e-6,
             dropout=0.0,
             drop_path_rate=0.0,
@@ -97,6 +98,7 @@ class InternVisionConfig(PretrainedConfig):
         self.attention_dropout = attention_dropout
         self.layer_norm_eps = layer_norm_eps
         self.hidden_act = hidden_act
+        self.norm_type = norm_type
         self.qkv_bias = qkv_bias
         self.qk_normalization = qk_normalization
         self.use_flash_attn = use_flash_attn
