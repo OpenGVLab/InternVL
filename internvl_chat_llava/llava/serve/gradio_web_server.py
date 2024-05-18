@@ -40,14 +40,16 @@ def sort_models(models):
         # InternVL-Chat-V1-5 should be the first item
         if model_name == "InternVL-Chat-V1-5":
             return (1, model_name)  # 1 indicates highest precedence
+        elif model_name.startswith("InternVL-Chat-V1-5-"):
+            return (1, model_name)  # 1 indicates highest precedence
         else:
             return (0, model_name)  # 0 indicates normal order
 
     models.sort(key=custom_sort_key, reverse=True)
     try:  # We have five InternVL-Chat-V1-5 models, randomly choose one to be the first
-        first_three = models[:6]
+        first_three = models[:5]
         random.shuffle(first_three)
-        models[:6] = first_three
+        models[:5] = first_three
     except:
         pass
     return models
@@ -282,7 +284,6 @@ def http_bot(state, model_selector, temperature, top_p, max_new_tokens, max_inpu
                     state.messages[-1][-1] = output
                     yield (state, state.to_gradio_chatbot()) + (disable_btn, disable_btn, disable_btn, enable_btn, enable_btn)
                     return
-                time.sleep(0.03)
     except requests.exceptions.RequestException as e:
         state.messages[-1][-1] = server_error_msg
         yield (state, state.to_gradio_chatbot()) + (disable_btn, disable_btn, disable_btn, enable_btn, enable_btn)
