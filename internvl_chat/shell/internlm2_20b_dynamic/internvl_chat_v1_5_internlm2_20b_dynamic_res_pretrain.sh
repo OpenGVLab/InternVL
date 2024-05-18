@@ -16,7 +16,7 @@ export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 export MASTER_PORT=34229
 export TF_CPP_MIN_LOG_LEVEL=3
 
-OUTPUT_DIR='work_dirs/internvl_chat_1_5_internlm2_20b_dynamic_res_pretrain'
+OUTPUT_DIR='work_dirs/internvl_chat_v1_5_internlm2_20b_dynamic_res_pretrain'
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
@@ -32,7 +32,7 @@ srun -p ${PARTITION} \
   --quotatype=${QUOTA_TYPE} \
   ${SRUN_ARGS} \
   python -u internvl/train/internvl_chat_pretrain.py \
-  --vision_path "./pretrained/intern_vit_6b_448px_v1_5" \
+  --vision_path "./pretrained/intern_vit_6b_448px_v1_2" \
   --llm_path "./pretrained/internlm2-chat-20b" \
   --conv_style "internlm2-chat" \
   --output_dir ${OUTPUT_DIR} \

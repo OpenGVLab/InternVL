@@ -1,7 +1,7 @@
 set -x
 
 PARTITION=${PARTITION:-"INTERN2"}
-GPUS=${GPUS:-256}
+GPUS=${GPUS:-64}
 GPUS_PER_NODE=${GPUS_PER_NODE:-8}
 QUOTA_TYPE=${QUOTA_TYPE:-"reserved"}
 NODES=$((GPUS / GPUS_PER_NODE))
@@ -16,7 +16,7 @@ export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 export MASTER_PORT=34229
 export TF_CPP_MIN_LOG_LEVEL=3
 
-OUTPUT_DIR='work_dirs/internvl_chat_v1_5_internlm2_20b_dynamic_res_finetune'
+OUTPUT_DIR='work_dirs/internvl_chat_v1_5_internlm2_1_8b_dynamic_res_finetune'
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
@@ -32,7 +32,7 @@ srun -p ${PARTITION} \
   --quotatype=${QUOTA_TYPE} \
   ${SRUN_ARGS} \
   python -u internvl/train/internvl_chat_finetune.py \
-  --model_name_or_path "./work_dirs/internvl_chat_v1_5_internlm2_20b_dynamic_res_pretrain/" \
+  --model_name_or_path "./work_dirs/internvl_chat_v1_5_internlm2_1_8b_dynamic_res_pretrain" \
   --conv_style "internlm2-chat" \
   --output_dir ${OUTPUT_DIR} \
   --meta_path "path/to/finetune/data.json" \
@@ -40,7 +40,7 @@ srun -p ${PARTITION} \
   --force_image_size 448 \
   --max_dynamic_patch 12 \
   --down_sample_ratio 0.5 \
-  --drop_path_rate 0.4 \
+  --drop_path_rate 0.1 \
   --pad2square False \
   --freeze_llm False \
   --freeze_mlp False \
@@ -56,18 +56,18 @@ srun -p ${PARTITION} \
   --save_strategy "steps" \
   --save_steps 200 \
   --save_total_limit 3 \
-  --learning_rate 2e-5 \
-  --weight_decay 0.05 \
+  --learning_rate 4e-5 \
+  --weight_decay 0.01 \
   --warmup_ratio 0.03 \
   --lr_scheduler_type "cosine" \
   --logging_steps 1 \
-  --max_seq_length 4096 \
+  --max_seq_length 6144 \
   --do_train True \
   --grad_checkpoint True \
   --group_by_length True \
   --dynamic_image_size True \
   --use_thumbnail True \
   --ps_version 'v2' \
-  --deepspeed "zero_stage3_config.json" \
+  --deepspeed "zero_stage1_config.json" \
   --report_to "tensorboard" \
   2>&1 | tee -a "${OUTPUT_DIR}/training_log.txt"

@@ -16,7 +16,7 @@ export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 export MASTER_PORT=34229
 export TF_CPP_MIN_LOG_LEVEL=3
 
-OUTPUT_DIR='work_dirs/internvl_chat_v1_5_internlm2_20b_dynamic_res_finetune'
+OUTPUT_DIR='work_dirs/internvl_chat_v1_5_hermes2_yi34b_dynamic_res_finetune'
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
@@ -32,8 +32,8 @@ srun -p ${PARTITION} \
   --quotatype=${QUOTA_TYPE} \
   ${SRUN_ARGS} \
   python -u internvl/train/internvl_chat_finetune.py \
-  --model_name_or_path "./work_dirs/internvl_chat_v1_5_internlm2_20b_dynamic_res_pretrain/" \
-  --conv_style "internlm2-chat" \
+  --model_name_or_path "./work_dirs/internvl_chat_v1_5_hermes2_yi34b_dynamic_res_pretrain/" \
+  --conv_style "Hermes-2" \
   --output_dir ${OUTPUT_DIR} \
   --meta_path "path/to/finetune/data.json" \
   --overwrite_output_dir True \
