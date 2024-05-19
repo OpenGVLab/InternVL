@@ -14,8 +14,9 @@ GRADIENT_ACC=$((BATCH_SIZE / PER_DEVICE_BATCH_SIZE / GPUS))
 
 export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 export MASTER_PORT=34223
+export TF_CPP_MIN_LOG_LEVEL=3
 
-OUTPUT_DIR='work_dirs/internvl_chat_v1_2_hermes2_yi34b_448_finetune'
+OUTPUT_DIR='work_dirs/internvl_chat_v1_2/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune'
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
@@ -41,7 +42,7 @@ srun -p ${PARTITION} \
   --llm_path "./pretrained/Nous-Hermes-2-Yi-34B" \
   --conv_style "Hermes-2" \
   --output_dir ${OUTPUT_DIR} \
-  --meta_path "./shell/data/data_yi34b_finetune.json" \
+  --meta_path "./shell/data/internvl_1_2_finetune.json" \
   --overwrite_output_dir True \
   --force_image_size 448 \
   --down_sample_ratio 0.5 \
