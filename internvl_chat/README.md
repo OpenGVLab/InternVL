@@ -186,7 +186,7 @@ Note: TextVQA contains two scores, representing not using or using Rosetta OCR t
 | [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)           | 19B    | 84.7             | 89.9               | 78.6               | 78.5              | 85.6                | 70.1                | 81.0               | 81.4                |
 | [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)           | 40B    | 74.4             | 80.3               | 66.5               | 70.7              | 77.6                | 62.0                | 69.2               | 70.0                |
 | [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) | 40B    | 90.2             | 93.4               | 85.5               | 85.3              | 90.4                | 79.7                | 88.5               | 88.8                |
-| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)      | 26B    | 91.4             | 93.7               | 87.1               | 87.0              | 92.3                | 80.9                | 88.5               | 89.3                |
+| [InternVL−Chat−V1.5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)           | 26B    | 91.4             | 93.7               | 87.1               | 87.0              | 92.3                | 80.9                | 88.5               | 89.3                |
 
 ## 📊 Evaluation (Legacy Models)
 
@@ -808,8 +808,6 @@ GPUS=8 sh evaluate.sh <checkpoint> mmmu-test
 For the test set, submit the results to the [evaluation server](https://eval.ai/web/challenges/challenge-page/2179/overview).
 
 </details>
-
-#### CMMMU
 
 #### [Tiny LVLM](https://github.com/OpenGVLab/Multi-Modality-Arena/tree/main/tiny_lvlm_evaluation)
 
