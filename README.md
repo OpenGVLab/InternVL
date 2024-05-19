@@ -1,4 +1,4 @@
-# <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/47669167/7037290e-f474-4d11-b90f-1d8316087bf8"> InternVL Family: Closing the Gap to Commercial Multimodal Models with Open-Source Suites —— A Pioneering Open-Source Alternative to GPT-4V
+`# <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/47669167/7037290e-f474-4d11-b90f-1d8316087bf8"> InternVL Family: Closing the Gap to Commercial Multimodal Models with Open-Source Suites —— A Pioneering Open-Source Alternative to GPT-4V
 
 [\[Update Blog\]](./BLOG.md)  [\[Paper\]](https://arxiv.org/abs/2312.14238)  [\[InternVL 1.5 Technical Report\]](https://arxiv.org/abs/2404.16821)  [\[Chat Demo\]](https://internvl.opengvlab.com/) [\[HuggingFace Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL) [\[Quick Start\]](#quick-start-with-huggingface)  [\[中文解读\]](https://zhuanlan.zhihu.com/p/675877376)
 
@@ -28,6 +28,7 @@
 - How to evaluate InternVL-Chat-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/how_to_evaluate_internvl_chat_1_5_using_vlmevalkit.md)
 - How to deploy a local demo? [\[link\]](./document/how_to_deploy_a_local_demo.md)
 - How to run InternVL 1.5-8bit with Nvidia V100 GPU? [\[link\]](https://github.com/OpenGVLab/InternVL/issues/144) [\[中文教程\]](https://zhuanlan.zhihu.com/p/697188143)
+- How to perform batch inference? [\[link\]](https://github.com/OpenGVLab/InternVL/blob/main/README.md?plain=1#L616)
 - Inference Acceleration by LMDeploy [\[link\]](#inference-acceleration-by-lmdeploy) [\[中文教程\]](https://zhuanlan.zhihu.com/p/696955211)
 
 ## Compared with SOTA VLLMs
