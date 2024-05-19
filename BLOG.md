@@ -66,7 +66,7 @@ For more details about data preparation, please see [here](./internvl_chat#prepa
 
 ### Training (SFT)
 
-We provide [slurm scripts](./internvl_chat/shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune.sh) for multi-node multi-GPU training. You can use either 32 or 64 GPUs to train this model. If you use 64 GPUs, training will take approximately 18 hours.
+We provide [slurm scripts](./internvl_chat/shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune.sh) for multi-node multi-GPU training. You can use either 32 or 64 GPUs to train this model. If you use 64 GPUs, training will take approximately 18 hours.
 
 For more details about training, please see [here](./internvl_chat#start-training).
 

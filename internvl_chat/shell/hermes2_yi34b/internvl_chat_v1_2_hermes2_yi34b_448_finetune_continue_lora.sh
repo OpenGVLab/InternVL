@@ -8,9 +8,10 @@ GRADIENT_ACC=$((BATCH_SIZE / PER_DEVICE_BATCH_SIZE / GPUS))
 
 export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 export MASTER_PORT=34223
+export TF_CPP_MIN_LOG_LEVEL=3
 export LAUNCHER=pytorch
 
-OUTPUT_DIR='work_dirs/internvl_chat_v1_2_hermes2_yi34b_448_finetune_continue_lora'
+OUTPUT_DIR='work_dirs/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune_continue_lora'
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
@@ -29,7 +30,7 @@ torchrun \
   --master_port=${MASTER_PORT} \
   ${SRUN_ARGS} \
   internvl/train/internvl_chat_finetune.py \
-  --model_name_or_path "./pretrained/InternVL-Chat-Chinese-V1-2-Plus" \
+  --model_name_or_path "./pretrained/InternVL-Chat-V1-2-Plus" \
   --conv_style "Hermes-2" \
   --output_dir ${OUTPUT_DIR} \
   --meta_path "./path/to/your/custom/meta/file" \
