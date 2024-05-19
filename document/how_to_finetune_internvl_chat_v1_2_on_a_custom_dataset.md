@@ -50,7 +50,7 @@ For example:
 
 #### 3. Start fine-tuning
 
-You can fine-tune our pre-trained models using this [script (train full LLM)](./shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune_continue.sh) or this [script (train LoRA adapter)](./shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune_continue_lora.sh), depending on your available GPU devices.
+You can fine-tune our pre-trained models using this [script (train full LLM)](../internvl_chat/shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune_continue.sh) or this [script (train LoRA adapter)](../internvl_chat/shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune_continue_lora.sh), depending on your available GPU devices.
 
 Before fine-tuning, you should set the `--meta_path` to the path of the JSON file you created in the last step. And, the default pre-trained model in these shell scripts is `./pretrained/InternVL-Chat-V1-2`. You should change it to `./pretrained/InternVL-Chat-V1-2-Plus` if you want to fine-tune our plus version.
 
