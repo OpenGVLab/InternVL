@@ -149,7 +149,7 @@ class InternLM2RotaryEmbedding(nn.Module):
 
     def _set_cos_sin_cache(self, seq_len, device, dtype):
         self.max_seq_len_cached = seq_len
-        t = torch.arange(self.max_seq_len_cached, device=device, dtype=self.inv_freq.dtype)
+        t = torch.arange(self.max_seq_len_cached, device=device).to(dtype=self.inv_freq.dtype)
 
         freqs = torch.einsum('i,j->ij', t, self.inv_freq)
         # Different from paper, but it uses a different permutation in order to obtain the same calculation
@@ -178,7 +178,7 @@ class InternLM2LinearScalingRotaryEmbedding(InternLM2RotaryEmbedding):
 
     def _set_cos_sin_cache(self, seq_len, device, dtype):
         self.max_seq_len_cached = seq_len
-        t = torch.arange(self.max_seq_len_cached, device=device, dtype=self.inv_freq.dtype)
+        t = torch.arange(self.max_seq_len_cached, device=device).to(dtype=self.inv_freq.dtype)
         t = t / self.scaling_factor
 
         freqs = torch.einsum('i,j->ij', t, self.inv_freq)
@@ -208,7 +208,7 @@ class InternLM2DynamicNTKScalingRotaryEmbedding(InternLM2RotaryEmbedding):
             inv_freq = 1.0 / (base ** (torch.arange(0, self.dim, 2).float().to(device) / self.dim))
             self.register_buffer('inv_freq', inv_freq, persistent=False)
 
-        t = torch.arange(self.max_seq_len_cached, device=device, dtype=self.inv_freq.dtype)
+        t = torch.arange(self.max_seq_len_cached, device=device).to(dtype=self.inv_freq.dtype)
 
         freqs = torch.einsum('i,j->ij', t, self.inv_freq)
         # Different from paper, but it uses a different permutation in order to obtain the same calculation

@@ -28,9 +28,9 @@ from internvl.train.constants import (BOX_END_TOKEN, BOX_START_TOKEN,
                                       REF_START_TOKEN)
 from internvl.train.dataset import (ConcatDataset, TCSLoader,
                                     WeightedConcatDataset, build_transform,
-                                    dynamic_preprocess,
-                                    find_closest_aspect_ratio, preprocess,
-                                    preprocess_internlm, preprocess_mpt)
+                                    dynamic_preprocess, preprocess,
+                                    preprocess_internlm, preprocess_mpt,
+                                    preprocess_phi3)
 from internvl.train.trainer_monkey_patch import replace_create_optimizer
 from PIL import Image, ImageFile, PngImagePlugin
 from torch.utils.data import Dataset
@@ -265,15 +265,6 @@ class LazySupervisedDataset(Dataset):
         if '<image>' not in data_item['conversations'][0]['value']:
             data_item['conversations'][0]['value'] = '<image>\n' + data_item['conversations'][0]['value']
 
-        # fix bug when there are multiple <image> in conversations
-        image_cnt = 0
-        for idx, conv in enumerate(data_item['conversations']):
-            conv['value'] = conv['value'].replace('<image>\n', '').replace('\n<image>', '').replace('<image>', '')
-            if idx == 0:
-                conv['value'] = '<image>\n' + conv['value']
-            image_cnt += conv['value'].count('<image>')
-        assert image_cnt == 1, f'There should be exactly one <image> in the conversation, but got {image_cnt}'
-
         if data_item['image'].startswith('s3://'):
             image_path = self.root + data_item['image']
         else:
@@ -298,6 +289,8 @@ class LazySupervisedDataset(Dataset):
             preprocess_function = preprocess_mpt
         elif self.template_name == 'internlm2-chat':
             preprocess_function = preprocess_internlm
+        elif self.template_name == 'phi3-chat':
+            preprocess_function = preprocess_phi3
         else:
             preprocess_function = preprocess
         ret = preprocess_function(self.template_name, [deepcopy(data_item['conversations'])],
@@ -326,6 +319,8 @@ class LazySupervisedDataset(Dataset):
             preprocess_function = preprocess_mpt
         elif self.template_name == 'internlm2-chat':
             preprocess_function = preprocess_internlm
+        elif self.template_name == 'phi3-chat':
+            preprocess_function = preprocess_phi3
         else:
             preprocess_function = preprocess
         ret = preprocess_function(self.template_name, [deepcopy(data_item['conversations'])],
