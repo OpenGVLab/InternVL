@@ -21,13 +21,14 @@
 
 ## Documents
 
-- How to install InternVL? [\[link\]](./INSTALLATION.md)
+- How to install the environment? [\[link\]](./INSTALLATION.md)
+- How to reproduce the SFT stage of InternVL-Chat-V1.2? [\[link\]](./internvl_chat#start-training)
 - How to fine-tune InternVL-Chat-V1.2 on a custom dataset? [\[link\]](./document/how_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md)
 - How to evaluate InternVL-Chat-V1-5? [\[link\]](./document/how_to_evaluate_internvl_chat_1_5.md)
 - How to evaluate InternVL-Chat-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/how_to_evaluate_internvl_chat_1_5_using_vlmevalkit.md)
 - How to deploy a local demo? [\[link\]](./document/how_to_deploy_a_local_demo.md)
 - How to run InternVL 1.5-8bit with Nvidia V100 GPU? [\[link\]](https://github.com/OpenGVLab/InternVL/issues/144) [\[中文教程\]](https://zhuanlan.zhihu.com/p/697188143)
-- Inference Acceleration by LMDeploy [\[link\]](#inference-acceleration-by-lmdeploy) [中文教程](https://zhuanlan.zhihu.com/p/696955211)
+- Inference Acceleration by LMDeploy [\[link\]](#inference-acceleration-by-lmdeploy) [\[中文教程\]](https://zhuanlan.zhihu.com/p/696955211)
 
 ## Compared with SOTA VLLMs
 
