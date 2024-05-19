@@ -17,7 +17,7 @@ huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGV
 
 #### 2. Prepare your custom training data
 
-After downloading the pre-trained model, you need to prepare your customized SFT data. You should write a JSON file in `internvl_chat/shell/data/`, just like [this file](./shell/data/data_yi34b_finetune.json).
+After downloading the pre-trained model, you need to prepare your customized SFT data. You should write a JSON file in `internvl_chat/shell/data/`, just like [this file](./shell/data/internvl_1_2_finetune.json).
 
 The format for organizing this JSON file is:
 
