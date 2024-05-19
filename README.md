@@ -21,13 +21,14 @@
 
 ## Documents
 
-- How to install InternVL? [\[link\]](./INSTALLATION.md)
-- How to fine-tune InternVL? [\[link\]](./internvl_chat/README.md)
+- How to install the environment? [\[link\]](./INSTALLATION.md)
+- How to reproduce the SFT stage of InternVL-Chat-V1.2? [\[link\]](./internvl_chat#start-training)
+- How to fine-tune InternVL-Chat-V1.2 on a custom dataset? [\[link\]](./document/how_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md)
 - How to evaluate InternVL-Chat-V1-5? [\[link\]](./document/how_to_evaluate_internvl_chat_1_5.md)
 - How to evaluate InternVL-Chat-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/how_to_evaluate_internvl_chat_1_5_using_vlmevalkit.md)
 - How to deploy a local demo? [\[link\]](./document/how_to_deploy_a_local_demo.md)
 - How to run InternVL 1.5-8bit with Nvidia V100 GPU? [\[link\]](https://github.com/OpenGVLab/InternVL/issues/144) [\[中文教程\]](https://zhuanlan.zhihu.com/p/697188143)
-- Inference Acceleration by LMDeploy [\[link\]](#inference-acceleration-by-lmdeploy)
+- Inference Acceleration by LMDeploy [\[link\]](#inference-acceleration-by-lmdeploy) [\[中文教程\]](https://zhuanlan.zhihu.com/p/696955211)
 
 ## Compared with SOTA VLLMs
 
@@ -45,17 +46,17 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 
 **Vision Large Language Model**
 
-| Model                   | Date       | Download                                                                             | Note                                                                                                                                                               |
-| ----------------------- | ---------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Mini-InternVL−Chat−2B-V1.5 (Preview version) | 2024.05.19 | 🤗 [HF link](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5)         | 🚀🚀 Only 2B parameters, anyone can deploy it locally.                                                                                                              |
-| InternVL−Chat−V1.5-Int8 | 2024.04.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8)               | The INT8 version of InternVL-Chat-V1-5                                                                                                                             |
-| InternVL−Chat−V1.5      | 2024.04.18 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                    | support 4K image; super strong OCR; Approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc. (🔥new) |
-| InternVL−Chat−V1.2−Plus | 2024.02.21 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus)               | more SFT data and stronger                                                                                                                                         |
-| InternVL−Chat−V1.2      | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)                    | scaling up LLM to 34B                                                                                                                                              |
-| InternVL−Chat−V1.1      | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)                    | support Chinese and stronger OCR                                                                                                                                   |
-| InternVL−Chat−19B−448px | 2024.02.03 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B-448px) | 448 resolution                                                                                                                                                     |
-| InternVL−Chat−19B       | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B)       | English multimodal dialogue                                                                                                                                        |
-| InternVL−Chat−13B       | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)        | English multimodal dialogue                                                                                                                                        |
+| Model                                        | Date       | Download                                                                             | Note                                                                                                                                                               |
+| -------------------------------------------- | ---------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Mini-InternVL−Chat−2B-V1.5 (Preview version) | 2024.05.19 | 🤗 [HF link](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5)            | 🚀🚀 Only 2B parameters, anyone can deploy it locally.                                                                                                             |
+| InternVL−Chat−V1.5-Int8                      | 2024.04.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8)               | The INT8 version of InternVL-Chat-V1-5                                                                                                                             |
+| InternVL−Chat−V1.5                           | 2024.04.18 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                    | support 4K image; super strong OCR; Approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc. (🔥new) |
+| InternVL−Chat−V1.2−Plus                      | 2024.02.21 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus)               | more SFT data and stronger                                                                                                                                         |
+| InternVL−Chat−V1.2                           | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)                    | scaling up LLM to 34B                                                                                                                                              |
+| InternVL−Chat−V1.1                           | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)                    | support Chinese and stronger OCR                                                                                                                                   |
+| InternVL−Chat−19B−448px                      | 2024.02.03 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B-448px) | 448 resolution                                                                                                                                                     |
+| InternVL−Chat−19B                            | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B)       | English multimodal dialogue                                                                                                                                        |
+| InternVL−Chat−13B                            | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)        | English multimodal dialogue                                                                                                                                        |
 
 **Vision-Language Foundation Model**
 

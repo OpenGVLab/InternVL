@@ -743,6 +743,24 @@ register_conv_template(
     )
 )
 
+
+register_conv_template(
+    Conversation(
+        name='phi3-chat',
+        system_template='<|system|>\n{system_message}',
+        system_message='You are an AI assistant whose name is Phi-3.',
+        roles=('<|user|>', '<|assistant|>'),
+        sep_style=SeparatorStyle.CHATML,
+        sep='<|end|>',
+        stop_token_ids=[
+            2,
+            32000,
+            32007
+        ],
+        stop_str='<|end|>',
+    )
+)
+
 # Lemur-70b-chat default template
 # reference: https://huggingface.co/OpenLemur/lemur-70b-chat-v1#generation
 register_conv_template(

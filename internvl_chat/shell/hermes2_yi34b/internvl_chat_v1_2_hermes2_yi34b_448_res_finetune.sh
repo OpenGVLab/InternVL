@@ -13,9 +13,10 @@ GRADIENT_ACC=$((BATCH_SIZE / PER_DEVICE_BATCH_SIZE / GPUS))
 
 
 export PYTHONPATH="${PYTHONPATH}:$(pwd)"
-export MASTER_PORT=34223
+export MASTER_PORT=34229
+export TF_CPP_MIN_LOG_LEVEL=3
 
-OUTPUT_DIR='work_dirs/internvl_chat_v1_2_hermes2_yi34b_448_finetune'
+OUTPUT_DIR='work_dirs/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune'
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
@@ -41,7 +42,7 @@ srun -p ${PARTITION} \
   --llm_path "./pretrained/Nous-Hermes-2-Yi-34B" \
   --conv_style "Hermes-2" \
   --output_dir ${OUTPUT_DIR} \
-  --meta_path "./shell/data/data_yi34b_finetune.json" \
+  --meta_path "./shell/data/internvl_1_2_finetune.json" \
   --overwrite_output_dir True \
   --force_image_size 448 \
   --down_sample_ratio 0.5 \
@@ -52,7 +53,7 @@ srun -p ${PARTITION} \
   --freeze_backbone False \
   --vision_select_layer -1 \
   --use_data_resampling False \
-  --dataloader_num_workers 2 \
+  --dataloader_num_workers 4 \
   --bf16 True \
   --num_train_epochs 1 \
   --per_device_train_batch_size ${PER_DEVICE_BATCH_SIZE} \
@@ -60,16 +61,16 @@ srun -p ${PARTITION} \
   --evaluation_strategy "no" \
   --save_strategy "steps" \
   --save_steps 200 \
-  --save_total_limit 1 \
+  --save_total_limit 3 \
   --learning_rate 1e-5 \
   --weight_decay 0.05 \
   --warmup_ratio 0.03 \
   --lr_scheduler_type "cosine" \
   --logging_steps 1 \
   --max_seq_length 2048 \
-  --group_by_length True \
   --do_train True \
   --grad_checkpoint True \
+  --group_by_length True \
   --deepspeed "zero_stage3_config.json" \
   --report_to "tensorboard" \
   2>&1 | tee -a "${OUTPUT_DIR}/training_log.txt"

@@ -48,7 +48,7 @@ pretrained
 
 Inspired by LLaVA-NeXT, we adopted a data-efficient SFT strategy to train InternVL-Chat-V1.2, utilizing approximately 1.2M of visual instruction tuning samples in total, all of which are fully open-source. In a macro sense, we build upon [ShareGPT-4V](https://github.com/InternLM/InternLM-XComposer/blob/main/projects/ShareGPT4V/docs/Data.md#prepare-images) and additionally integrate [LLaVA-ZH](https://huggingface.co/datasets/openbmb/llava_zh), [DVQA](https://github.com/kushalkafle/DVQA_dataset), [ChartQA](https://github.com/vis-nlp/ChartQA), [AI2D](https://allenai.org/data/diagrams), [DocVQA](https://www.docvqa.org/datasets), [GeoQA+](https://github.com/SCNU203/GeoQA-Plus), and [SynthDoG-EN](https://huggingface.co/datasets/naver-clova-ix/synthdog-en). Most of the data remains consistent with LLaVA-NeXT.
 
-First, download the [annotation files](https://huggingface.co/OpenGVLab/InternVL/resolve/main/playground.zip) and place them in the `playground/` folder.
+First, download the [annotation files](https://huggingface.co/OpenGVLab/InternVL/resolve/main/playground.zip) and place them in the `playground/opensource/` folder.
 
 Second, download all the images we used.
 
@@ -71,15 +71,16 @@ Then, organize the data as follows in `playground/data`:
 
 ```none
 playground/
-├── sharegpt4v_instruct_gpt4-vision_cap100k.jsonl
-├── llava_instruct_150k_zh.jsonl
-├── sharegpt4v_mix665k_cap23k_coco-ap9k_lcs3k_sam9k_div2k.jsonl
-├── dvqa_train_200k.jsonl
-├── chartqa_train_18k.jsonl
-├── ai2d_train_12k.jsonl
-├── docvqa_train_10k.jsonl
-├── geoqa+.jsonl
-├── synthdog_en.jsonl
+├── opensource
+│   ├── ai2d_train_12k.jsonl
+│   ├── chartqa_train_18k.jsonl
+│   ├── docvqa_train_10k.jsonl
+│   ├── dvqa_train_200k.jsonl
+│   ├── geoqa+.jsonl
+│   ├── llava_instruct_150k_zh.jsonl
+│   ├── sharegpt4v_instruct_gpt4-vision_cap100k.jsonl
+│   ├── sharegpt4v_mix665k_cap23k_coco-ap9k_lcs3k_sam9k_div2k.jsonl
+│   └── synthdog_en.jsonl
 ├── data
 │   ├── ai2d
 │   │   ├── abc_images
@@ -132,12 +133,12 @@ We provide slurm scripts for multi-node multi-GPU training. You can use either 3
 
 ```sh
 # using 32 GPUs
-PARTITION='your partition' GPUS=32 PER_DEVICE_BATCH_SIZE=8 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune.sh
+PARTITION='your partition' GPUS=32 PER_DEVICE_BATCH_SIZE=8 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune.sh
 # using 64 GPUs
-PARTITION='your partition' GPUS=64 PER_DEVICE_BATCH_SIZE=8 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_finetune.sh
+PARTITION='your partition' GPUS=64 PER_DEVICE_BATCH_SIZE=8 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune.sh
 ```
 
-The hyperparameters used for fine-tuning are listed in the following table. And, you can view the training logs in tensorboard at [here](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2/tensorboard).
+The hyperparameters used for fine-tuning are listed in the following table. And, you can view the training logs in tensorboard at [here](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2/tensorboard).
 
 | Hyperparameter     | Trainable Param  | Global Batch Size | Learning rate | Epochs | Max length | Weight decay |
 | ------------------ | ---------------- | ----------------- | ------------- | ------ | ---------- | ------------ |
@@ -145,7 +146,7 @@ The hyperparameters used for fine-tuning are listed in the following table. And,
 
 ### Continued Fine-tune
 
-See [CONTINUED_FINETUNE.md](CONTINUED_FINETUNE.md).
+See [this document](../document/how_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md) to finetune InternVL-Chat-V1-2.
 
 ## 📊 Evaluation
 
@@ -153,38 +154,39 @@ See [CONTINUED_FINETUNE.md](CONTINUED_FINETUNE.md).
 
 Note: TextVQA contains two scores, representing not using or using Rosetta OCR tokens, respectively.
 
-| model                                                                                       | #param | DocVQA<br>(val/test) | ChartVQA<br>(avg. test) | InfoVQA<br>(val/test) | TextVQA<br>(val, wo/w OCR) | OCRBench | AI2D |
-| ------------------------------------------------------------------------------------------- | ------ | -------------------- | ----------------------- | --------------------- | -------------------------- | -------- | ---- |
-| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B    | 47.6 / 48.1          | 59.9                    | 33.3 / 32.0           | 64.2 / 68.6                | 530      | 72.4 |
-| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B    | 56.4 / 57.7          | 68.0                    | 36.0 / 39.5           | 67.5 / 72.5                | 569      | 79.0 |
-| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B    | 56.9 / 56.8          | 72.8                    | 40.9 / 40.6           | 71.2 / 74.1                | 598      | 78.9 |
-| [InternVL−Chat−V1.5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                   | 26B    | 90.5 / 90.8          | 83.8                    | 72.4 / 72.5           | 80.6 / -                   | 724      | 80.7 |
+| model                                                                               | #param | DocVQA<br>(val/test) | ChartVQA<br>(avg. test) | InfoVQA<br>(val/test) | TextVQA<br>(val, wo/w OCR) | OCRBench | AI2D |
+| ----------------------------------------------------------------------------------- | ------ | -------------------- | ----------------------- | --------------------- | -------------------------- | -------- | ---- |
+| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)           | 19B    | 47.6 / 48.1          | 59.9                    | 33.3 / 32.0           | 64.2 / 68.6                | 530      | 72.4 |
+| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)           | 40B    | 56.4 / 57.7          | 68.0                    | 36.0 / 39.5           | 67.5 / 72.5                | 569      | 79.0 |
+| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) | 40B    | 56.9 / 56.8          | 72.8                    | 40.9 / 40.6           | 71.2 / 74.1                | 598      | 78.9 |
+| [InternVL−Chat−V1.5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)           | 26B    | 90.5 / 90.8          | 83.8                    | 72.4 / 72.5           | 80.6 / -                   | 724      | 80.7 |
 
 **MultiModal Benchmark**
 
-| model                                                                                       | #param | MME            | MMB<br>(dev/test) | MMB−CN<br>(dev/test) | CCBench | MM−Vet | MMMU<br>(val/test)                                                                 | MathVista<br>(testmini) | Hallusion<br>Bench | RealWorld<br/>QA | SEEDv1<br>(image) | CMMMU<br>(val/test) | POPE | MMVP | Tiny LVLM | LLaVA Wild |
-| ------------------------------------------------------------------------------------------- | ------ | -------------- | ----------------- | -------------------- | ------- | ------ | ---------------------------------------------------------------------------------- | ----------------------- | ------------------ | ---------------- | ----------------- | ------------------- | ---- | ---- | --------- | ---------- |
-| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B    | 1659.8 / 361.4 | 76.7 / 75.4       | 71.9 / 70.3          | 43.3    | 46.7   | 39.1 / 35.3                                                                        | 34.5                    | 36.1               | 58.0             | 73.2              | 34.8 / 34.0         | 87.1 | 44.7 | 343.2     | 73.2       |
-| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B    | 1686.8 / 488.6 | 81.4 / 82.2       | 79.5 / 81.2          | 58.6    | 48.9   | 51.6 / [46.2](https://eval.ai/web/challenges/challenge-page/2179/leaderboard/5377) | 47.7                    | 47.6               | 67.5             | 75.6              | -                   | 88.0 | 56.7 | 350.3     | 85.0       |
-| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B    | 1625.2 / 552.9 | 83.4 / 83.8       | 81.6 / 82.0          | 55.9    | 47.9   | 50.3 / 45.6                                                                        | 59.9                    | 47.4               | 67.8             | 76.4              | -                   | 88.7 | 58.7 | 353.9     | 84.6       |
-| [InternVL−Chat−V1.5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                   | 26B    | 1637.8 / 550.0 | - / 82.2          | - / 82.0             | 70.0    | 62.8   | 45.2 / -                                                                           | 53.5                    | 49.3               | 66.0             | 76.0              | -                   | 88.3 | 57.3 | 356.8     | 94.7       |
+| model                                                                               | #param | MME            | MMB<br>(dev/test) | MMB−CN<br>(dev/test) | CCBench | MM−Vet | MMMU<br>(val/test)                                                                 | MathVista<br>(testmini) | Hallusion<br>Bench | RealWorld<br/>QA | SEEDv1<br>(image) | CMMMU<br>(val/test) | POPE | MMVP | Tiny LVLM | LLaVA Wild |
+| ----------------------------------------------------------------------------------- | ------ | -------------- | ----------------- | -------------------- | ------- | ------ | ---------------------------------------------------------------------------------- | ----------------------- | ------------------ | ---------------- | ----------------- | ------------------- | ---- | ---- | --------- | ---------- |
+| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)           | 19B    | 1659.8 / 361.4 | 76.7 / 75.4       | 71.9 / 70.3          | 43.3    | 46.7   | 39.1 / 35.3                                                                        | 34.5                    | 36.1               | 58.0             | 73.2              | 34.8 / 34.0         | 87.1 | 44.7 | 343.2     | 73.2       |
+| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)           | 40B    | 1686.8 / 488.6 | 81.4 / 82.2       | 79.5 / 81.2          | 58.6    | 48.9   | 51.6 / [46.2](https://eval.ai/web/challenges/challenge-page/2179/leaderboard/5377) | 47.7                    | 47.6               | 67.5             | 75.6              | -                   | 88.0 | 56.7 | 350.3     | 85.0       |
+| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) | 40B    | 1625.2 / 552.9 | 83.4 / 83.8       | 81.6 / 82.0          | 55.9    | 47.9   | 50.3 / 45.6                                                                        | 59.9                    | 47.4               | 67.8             | 76.4              | -                   | 88.7 | 58.7 | 353.9     | 84.6       |
+| [InternVL−Chat−V1.5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)           | 26B    | 1637.8 / 550.0 | - / 82.2          | - / 82.0             | 70.0    | 62.8   | 45.2 / -                                                                           | 53.5                    | 49.3               | 66.0             | 76.0              | -                   | 88.3 | 57.3 | 356.8     | 94.7       |
 
 **Visual Question Answering & Image Captioning**
 
-| model                                                                                       | #param | OKVQA<br>(val) | VizWiz<br>(val/test) | GQA<br>(test) | SQA<br>(image) | VQAv2<br>(testdev) | COCO<br>(test) | Flickr30K<br>(test) | NoCaps<br>(val) |
-| ------------------------------------------------------------------------------------------- | ------ | -------------- | -------------------- | ------------- | -------------- | ------------------ | -------------- | ------------------- | --------------- |
-| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B    | 64.1           | 59.0 / 57.3          | 62.5          | 90.1           | 80.9               | 142.2          | 84.8                | 120.8           |
-| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B    | 62.5           | 61.9 / 60.0          | 64.0          | 83.3           | -                  | 113.9          | 92.9                | 112.5           |
-| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B    | 67.6           | 61.3 / 59.5          | 66.9          | 98.1           | -                  | 143.4          | 89.5                | 125.8           |
-| [InternVL−Chat−V1.5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                   | 26B    | 62.0           | 63.5 / -             | 65.7          | 94.0           | -                  | 98.4           | 81.2                | 99.6            |
+| model                                                                               | #param | OKVQA<br>(val) | VizWiz<br>(val/test) | GQA<br>(test) | SQA<br>(image) | VQAv2<br>(testdev) | COCO<br>(test) | Flickr30K<br>(test) | NoCaps<br>(val) |
+| ----------------------------------------------------------------------------------- | ------ | -------------- | -------------------- | ------------- | -------------- | ------------------ | -------------- | ------------------- | --------------- |
+| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)           | 19B    | 64.1           | 59.0 / 57.3          | 62.5          | 90.1           | 80.9               | 142.2          | 84.8                | 120.8           |
+| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)           | 40B    | 62.5           | 61.9 / 60.0          | 64.0          | 83.3           | -                  | 113.9          | 92.9                | 112.5           |
+| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) | 40B    | 67.6           | 61.3 / 59.5          | 66.9          | 98.1           | -                  | 143.4          | 89.5                | 125.8           |
+| [InternVL−Chat−V1.5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)           | 26B    | 62.0           | 63.5 / -             | 65.7          | 94.0           | -                  | 98.4           | 81.2                | 99.6            |
 
 **Visual Grounding**
 
-| model                                                                                       | #param | RefCOCO<br>(val) | RefCOCO<br>(testA) | RefCOCO<br>(testB) | RefCOCO+<br>(val) | RefCOCO+<br>(testA) | RefCOCO+<br>(testB) | RefCOCO−g<br>(val) | RefCOCO−g<br>(test) |
-| ------------------------------------------------------------------------------------------- | ------ | ---------------- | ------------------ | ------------------ | ----------------- | ------------------- | ------------------- | ------------------ | ------------------- |
-| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-1)           | 19B    | 84.7             | 89.9               | 78.6               | 78.5              | 85.6                | 70.1                | 81.0               | 81.4                |
-| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2)           | 40B    | 74.4             | 80.3               | 66.5               | 70.7              | 77.6                | 62.0                | 69.2               | 70.0                |
-| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-Chinese-V1-2-Plus) | 40B    | 90.2             | 93.4               | 85.5               | 85.3              | 90.4                | 79.7                | 88.5               | 88.8                |
+| model                                                                               | #param | RefCOCO<br>(val) | RefCOCO<br>(testA) | RefCOCO<br>(testB) | RefCOCO+<br>(val) | RefCOCO+<br>(testA) | RefCOCO+<br>(testB) | RefCOCO−g<br>(val) | RefCOCO−g<br>(test) |
+| ----------------------------------------------------------------------------------- | ------ | ---------------- | ------------------ | ------------------ | ----------------- | ------------------- | ------------------- | ------------------ | ------------------- |
+| [InternVL−Chat−V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)           | 19B    | 84.7             | 89.9               | 78.6               | 78.5              | 85.6                | 70.1                | 81.0               | 81.4                |
+| [InternVL−Chat−V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)           | 40B    | 74.4             | 80.3               | 66.5               | 70.7              | 77.6                | 62.0                | 69.2               | 70.0                |
+| [InternVL−Chat−V1.2−Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) | 40B    | 90.2             | 93.4               | 85.5               | 85.3              | 90.4                | 79.7                | 88.5               | 88.8                |
+| [InternVL−Chat−V1.5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)           | 26B    | 91.4             | 93.7               | 87.1               | 87.0              | 92.3                | 80.9                | 88.5               | 89.3                |
 
 ## 📊 Evaluation (Legacy Models)
 
@@ -196,181 +198,9 @@ Note: TextVQA contains two scores, representing not using or using Rosetta OCR t
 
 ## ❓ How to Evaluate
 
-Please prepare the data according to the following directory structure.
+### Image Caption Benchmarks
 
-<details>
-<summary>Directory Structure</summary>
-
-```
-data
-├── flickr30k
-│   ├── flickr30k_test_karpathy.json
-│   └── Images/
-├── coco
-│   ├── annotations
-│   │   ├── coco_karpathy_test_gt.json
-│   │   ├── coco_karpathy_test.json
-│   │   └── ...
-│   ├── train2014/
-│   ├── val2014/
-│   └── test2015/
-├── nocaps
-│   ├── nocaps_val_4500_captions.json
-│   └── images/
-├── vqav2
-│   ├── v2_mscoco_train2014_annotations.json
-│   ├── v2_mscoco_train2014_complementary_pairs.json
-│   ├── v2_mscoco_val2014_annotations.json
-│   ├── v2_OpenEnded_mscoco_test2015_questions.json
-│   ├── v2_OpenEnded_mscoco_test-dev2015_questions.json
-│   ├── v2_OpenEnded_mscoco_train2014_questions.json
-│   ├── v2_OpenEnded_mscoco_val2014_questions.json
-│   ├── vqav2_testdev.jsonl
-│   ├── vqav2_train.jsonl
-│   ├── vqav2_val.jsonl
-│   ├── train2014/ -> ../coco/train2014/
-│   ├── val2014/ -> ../coco/val2014/
-│   └── test2015/ -> ../coco/test2015/
-├── okvqa
-│   ├── mscoco_train2014_annotations.json
-│   ├── mscoco_val2014_annotations.json
-│   ├── OpenEnded_mscoco_train2014_questions.json
-│   ├── OpenEnded_mscoco_val2014_questions.json
-│   ├── okvqa_train.jsonl
-│   ├── okvqa_val.jsonl
-│   ├── train2014/ -> ../coco/train2014/
-│   └── val2014/ -> ../coco/val2014/
-├── textvqa
-│   ├── textvqa_train_annotations.json
-│   ├── textvqa_train.jsonl
-│   ├── textvqa_train_questions.json
-│   ├── textvqa_val_annotations.json
-│   ├── textvqa_val.jsonl
-│   ├── textvqa_val_questions.json
-│   ├── textvqa_val_llava.jsonl
-│   └── train_images/
-├── vizwiz
-│   ├── vizwiz_test.jsonl
-│   ├── vizwiz_train_annotations.json
-│   ├── vizwiz_train.jsonl
-│   ├── vizwiz_train_questions.json
-│   ├── vizwiz_val_annotations.json
-│   ├── vizwiz_val.jsonl
-│   ├── vizwiz_val_questions.json
-│   ├── test/
-│   ├── train/
-│   ├── val/
-│   └── annotations/
-├── docvqa
-│   ├── test.jsonl
-│   ├── train.jsonl
-│   ├── val.jsonl
-│   ├── test/
-│   ├── train/
-│   └── val/
-├── chartqa
-│   ├── ChartQA Dataset/
-│   │   ├── train/
-│   │   ├── test/
-│   │   ├── val/
-│   ├── test_augmented.jsonl
-│   ├── test_human.jsonl
-│   ├── train_augmented.jsonl
-│   └── train_human.jsonl
-├── gqa
-│   ├── images/
-│   ├── eval.py
-│   ├── challenge_all_questions.json
-│   ├── challenge_balanced_questions.json
-│   ├── llava_gqa_testdev_balanced_qwen_format.jsonl
-│   ├── submission_all_questions.json
-│   ├── test_all_questions.json
-│   ├── test_balanced.jsonl
-│   ├── test_balanced_questions.json
-│   ├── testdev_all_questions.json
-│   ├── testdev_balanced_all_questions.json
-│   ├── testdev_balanced_questions.json
-│   ├── train_all_questions/
-│   ├── train_balanced.jsonl
-│   ├── train_balanced_questions.json
-│   ├── val_all_questions.json
-│   └── val_balanced_questions.json
-├── ocrvqa
-│   ├── images/
-│   ├── ocrvqa_test.jsonl
-│   ├── ocrvqa_train.jsonl
-│   └── ocrvqa_val.jsonl
-├── ai2diagram
-│   ├── ai2d/
-│   │   ├── abc_images/
-│   │   └── images/
-│   └── test.jsonl
-├── scienceqa
-│   ├── images/
-│   ├── problems.json
-│   └── scienceqa_test_img.jsonl
-├── refcoco
-│   ├── refcocog_test.jsonl
-│   ├── refcocog_val.jsonl
-│   ├── refcoco_testA.jsonl
-│   ├── refcoco+_testA.jsonl
-│   ├── refcoco_testB.jsonl
-│   ├── refcoco+_testB.jsonl
-│   ├── refcoco_val.jsonl
-│   └── refcoco+_val.jsonl
-├── mme
-│   ├── MME_Benchmark_release/
-│   └── images/
-├── pope
-│   ├── coco/
-│   │    ├── coco_pope_adversarial.json
-│   │    ├── coco_pope_popular.json
-│   │    └── coco_pope_random.json
-│   ├── val2014/ -> ../coco/val2014/
-│   └── llava_pope_test.jsonl
-├── tiny_lvlm
-│   └── updated_datasets
-│       ├── Object_Hallucination
-│       ├── ...
-│       └── Visual_Reasoning
-├── mmbench
-│   ├── CCBench_legacy.tsv
-│   ├── mmbench_dev_20230712.tsv
-│   ├── mmbench_dev_cn_20231003.tsv
-│   ├── mmbench_dev_en_20231003.tsv
-│   ├── mmbench_test_cn_20231003.tsv
-│   └── mmbench_test_en_20231003.tsv
-├── llava-bench-in-the-wild
-│   ├── answers_gpt4.jsonl
-│   ├── ...
-│   └── images/
-├── mmmu
-│   ├── Accounting/
-│   ├── ...
-│   └── Sociology
-├── mm-vet
-│   └── images/
-├── MMVP
-│   ├── MMVP Images/
-│   ├── Questions.csv
-│   └── Questions.xlsx
-├── MMVP_VLM
-│   ├── MLLM_VLM Images/
-│   └── Questions.csv
-├── MathVista
-│   ├── annot_testmini.json
-│   └── AI4Math___math_vista/
-├── SEED
-│   ├── SEED-Bench.json
-│   ├── SEED-Bench-image/
-│   └── SEED-Bench-video-image-1/
-```
-
-</details>
-
-### Image Caption
-
-#### [COCO karpathy test](https://cocodataset.org/)
+#### [COCO Karpathy test](https://cocodataset.org/)
 
 > COCO images are used in VQAv2/OK-VQA/RefCOCO/RefCOCO+/RefCOCOg. Make sure you have already downloaded COCO images before evaluating on these benchmarks.
 
@@ -404,7 +234,7 @@ GPUS=8 sh evaluate.sh <checkpoint> caption-coco
 
 </details>
 
-#### [Flickr30K karpathy test](https://bryanplummer.com/Flickr30kEntities/)
+#### [Flickr30K Karpathy test](https://bryanplummer.com/Flickr30kEntities/)
 
 <details>
 <summary>Data Preparation</summary>
@@ -459,7 +289,7 @@ GPUS=8 sh evaluate.sh <checkpoint> caption-nocaps
 
 </details>
 
-### General VQA
+### General VQA Benchmarks
 
 #### [VQAv2 val & test-dev](https://visualqa.org/)
 
@@ -552,18 +382,14 @@ mkdir -p data/textvqa && cd data/textvqa
 # download images
 wget https://dl.fbaipublicfiles.com/textvqa/images/train_val_images.zip && unzip train_val_images.zip
 
-# download annotations and questions
-wget https://dl.fbaipublicfiles.com/textvqa/data/TextVQA_0.5.1_train.json
-wget https://dl.fbaipublicfiles.com/textvqa/data/TextVQA_0.5.1_val.json
-
 # download converted files
 wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_train_annotations.json
 wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_train_questions.json
 wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_train.jsonl
 wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_val_annotations.json
 wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_val_questions.json
-wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/textvqa/textvqa_val.jsonl
-wget https://github.com/OpenGVLab/InternVL/releases/download/data/textvqa_val_llava.jsonl
+wget https://huggingface.co/OpenGVLab/InternVL/raw/main/textvqa_val.jsonl
+wget https://huggingface.co/OpenGVLab/InternVL/raw/main/textvqa_val_llava.jsonl
 
 cd ../..
 ```
@@ -574,7 +400,10 @@ cd ../..
 <summary>Evaluation</summary>
 
 ```bash
+# without ocr tokens
 GPUS=8 sh evaluate.sh <checkpoint> vqa-textvqa-val
+# with ocr tokens
+GPUS=8 sh evaluate.sh <checkpoint> vqa-textvqa-val-ocr
 ```
 
 </details>
@@ -633,14 +462,19 @@ For the test set, submit the results to the [evaluation server](https://eval.ai/
 ```bash
 mkdir -p data/docvqa && cd data/docvqa
 
-# download images and annotations from https://www.docvqa.org/datasets
+# download images and annotations
+wget https://datasets.cvc.uab.es/rrc/DocVQA/train.tar.gz --no-check-certificate # (optional)
+wget https://datasets.cvc.uab.es/rrc/DocVQA/val.tar.gz --no-check-certificate
+wget https://datasets.cvc.uab.es/rrc/DocVQA/test.tar.gz --no-check-certificate
 
-# download converted files
-# train
+# unzip files
+tar -zxvf train.tar.gz
+tar -zxvf val.tar.gz
+tar -zxvf test.tar.gz
+
+# download converted jsonl files
 wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/docvqa/train.jsonl
-# val
 wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/docvqa/val.jsonl
-# test
 wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/docvqa/test.jsonl
 cd ../..
 ```
@@ -686,10 +520,8 @@ cd ../..
 <summary>Evaluation</summary>
 
 ```bash
-# ChartQA-test-human
-GPUS=8 sh evaluate.sh <checkpoint> vqa-chartqa-test-human
-# ChartQA-test-augmented
-GPUS=8 sh evaluate.sh <checkpoint> vqa-chartqa-test-augmented
+# test both ChartQA-test-human & ChartQA-test-augmented
+GPUS=8 sh evaluate.sh <checkpoint> vqa-chartqa-test
 ```
 
 </details>
@@ -757,7 +589,7 @@ GPUS=8 sh evaluate.sh <checkpoint> vqa-ocrvqa-test
 
 </details>
 
-#### [AI2Diagram test](https://allenai.org/data/diagrams)
+#### [AI2D test](https://allenai.org/data/diagrams)
 
 <details>
 <summary>Data Preparation</summary>
@@ -765,9 +597,10 @@ GPUS=8 sh evaluate.sh <checkpoint> vqa-ocrvqa-test
 ```bash
 mkdir -p data/ai2diagram && cd data/ai2diagram
 # download converted files
-wget https://huggingface.co/OpenGVLab/InternVL/raw/main/ai2d_test.jsonl -O test.jsonl
+wget https://huggingface.co/OpenGVLab/InternVL/raw/main/ai2d_test_vlmevalkit.jsonl -O test_vlmevalkit.jsonl
+wget https://huggingface.co/OpenGVLab/InternVL/resolve/main/AI2D_TEST.zip && unzip AI2D_TEST.zip
 
-# download images from Google drive (provided by InternLM-XComposer)
+# download images from Google drive (optional, provided by InternLM-XComposer)
 # https://drive.google.com/file/d/1dqqa3MnrxMXaU_K9JA6C83je32ibwdOY/view?usp=sharing
 # images should be placed in `data/ai2diagram/ai2d/abc_images` and `data/ai2diagram/ai2d/images`
 cd ../..
@@ -851,7 +684,7 @@ GPUS=8 sh evaluate.sh <checkpoint> refcoco
 
 </details>
 
-### MultiModal Dialogue
+### MultiModal Benchmarks
 
 #### [MME](https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models/tree/Evaluation)
 
@@ -861,9 +694,9 @@ GPUS=8 sh evaluate.sh <checkpoint> refcoco
 ```bash
 mkdir -p data/mme && cd data/mme
 
-# 1. Download MME images and eval_tool from the [MME repo](https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models/blob/Evaluation/README.md)
-# 2. Rearrange images by executing `python get_images.py`
-python get_images.py
+# 1. Download the data following the official instructions [here](https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models/tree/Evaluation).
+# 2. Downloaded images to `MME_Benchmark_release_version`.
+
 cd ../..
 ```
 
@@ -912,6 +745,8 @@ GPUS=8 sh evaluate.sh <checkpoint> mmbench-dev-cn
 GPUS=8 sh evaluate.sh <checkpoint> mmbench-test-en
 # mmbench_test_cn_20231003
 GPUS=8 sh evaluate.sh <checkpoint> mmbench-test-cn
+# ccbench_dev
+GPUS=8 sh evaluate.sh <checkpoint> ccbench-dev
 ```
 
 Then, submit the results to the [evaluation server](https://mmbench.opencompass.org.cn/mmbench-submission).
@@ -973,8 +808,6 @@ GPUS=8 sh evaluate.sh <checkpoint> mmmu-test
 For the test set, submit the results to the [evaluation server](https://eval.ai/web/challenges/challenge-page/2179/overview).
 
 </details>
-
-#### CMMMU
 
 #### [Tiny LVLM](https://github.com/OpenGVLab/Multi-Modality-Arena/tree/main/tiny_lvlm_evaluation)
 
@@ -1042,6 +875,7 @@ CUDA_VISIBLE_DEVICES=0 sh evaluate.sh <checkpoint> llava-bench
 mkdir -p data/mm-vet && cd data/mm-vet
 wget https://github.com/yuweihao/MM-Vet/releases/download/v1/mm-vet.zip
 unzip mm-vet.zip
+wget https://huggingface.co/OpenGVLab/InternVL/raw/main/llava-mm-vet.jsonl
 cd ../..
 ```
 
@@ -1087,10 +921,6 @@ GPUS=8 sh evaluate.sh <checkpoint> mmvp
 
 ```bash
 mkdir -p data/MathVista && cd data/MathVista
-# Execute the following python code
-# from datasets import load_dataset
-# dataset = load_dataset("AI4Math/MathVista")
-# dataset.save_to_disk('./MathVista')
 wget https://huggingface.co/datasets/AI4Math/MathVista/raw/main/annot_testmini.json
 cd ../..
 ```
@@ -1101,6 +931,7 @@ cd ../..
 <summary>Evaluation</summary>
 
 ```bash
+export OPENAI_API_KEY='your-openai-key'
 # testmini set
 GPUS=8 sh evaluate.sh <checkpoint> mathvista-testmini
 # test set
@@ -1114,8 +945,16 @@ GPUS=8 sh evaluate.sh <checkpoint> mathvista-test
 <details>
 <summary>Data Preparation</summary>
 
-1. Follow the official instructions [Data Preparation for SEED-Bench-1](https://github.com/AILab-CVC/SEED-Bench/blob/main/DATASET.md#data-preparation-for-seed-bench-1) to download the images and the videos. Put images under `./playground/data/eval/seed_bench/SEED-Bench-image`.
-2. Extract the video frame in the middle from the downloaded videos, and put them under `./playground/data/eval/seed_bench/SEED-Bench-video-image`. We provide our script `extract_video_frames.py` modified from the official one.
+```bash
+mkdir -p data/SEED && cd data/SEED
+# 1. Follow the official instructions [Data Preparation for SEED-Bench-1](https://github.com/AILab-CVC/SEED-Bench/blob/main/DATASET.md#data-preparation-for-seed-bench-1)
+#    to download the images and the videos. Put images under `./data/SEED/SEED-Bench-image`.
+# 2. Extract the video frame in the middle from the downloaded videos, and put them under `./data/SEED/SEED-Bench-image`.
+#    LLaVA provided the script [`extract_video_frames.py`](../internvl_chat/tools/extract_video_frames.py) modified from the official one.
+
+wget https://huggingface.co/OpenGVLab/InternVL/raw/main/seed.jsonl
+cd ../..
+```
 
 </details>
 

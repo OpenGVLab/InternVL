@@ -1,42 +1,36 @@
 set -x
 
-PARTITION=${PARTITION:-"INTERN2"}
-GPUS=${GPUS:-16}
-GPUS_PER_NODE=${GPUS_PER_NODE:-8}
-QUOTA_TYPE=${QUOTA_TYPE:-"reserved"}
-NODES=$((GPUS / GPUS_PER_NODE))
-CPUS_PER_TASK=${CPUS_PER_TASK:-1}
-SRUN_ARGS=${SRUN_ARGS:-""}
-BATCH_SIZE=${BATCH_SIZE:-128}
+GPUS=${GPUS:-2}
+BATCH_SIZE=${BATCH_SIZE:-16}
 PER_DEVICE_BATCH_SIZE=${PER_DEVICE_BATCH_SIZE:-4}
 GRADIENT_ACC=$((BATCH_SIZE / PER_DEVICE_BATCH_SIZE / GPUS))
 
 
 export PYTHONPATH="${PYTHONPATH}:$(pwd)"
-export MASTER_PORT=34223
+export MASTER_PORT=34229
+export TF_CPP_MIN_LOG_LEVEL=3
+export LAUNCHER=pytorch
 
-OUTPUT_DIR='work_dirs/internvl_chat_v1_2_hermes2_yi34b_448_finetune_continue'
+OUTPUT_DIR='work_dirs/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune_continue_lora'
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
 fi
 
-# number of gpus: 16
+# number of gpus: 2
 # batch size per gpu: 4
 # gradient accumulation steps: 2
-# total batch size: 128
+# total batch size: 16
 # epoch: 1
-srun -p ${PARTITION} \
-  --gres=gpu:${GPUS_PER_NODE} \
-  --nodes=${NODES} \
-  --ntasks=${GPUS} \
-  --ntasks-per-node=${GPUS_PER_NODE} \
-  --cpus-per-task=${CPUS_PER_TASK} \
-  --kill-on-bad-exit=1 \
-  --quotatype=${QUOTA_TYPE} \
+torchrun \
+  --nnodes=1 \
+  --node_rank=0 \
+  --master_addr=127.0.0.1 \
+  --nproc_per_node=${GPUS} \
+  --master_port=${MASTER_PORT} \
   ${SRUN_ARGS} \
-  python -u internvl/train/internvl_chat_finetune.py \
-  --model_name_or_path "./pretrained/InternVL-Chat-Chinese-V1-2-Plus" \
+  internvl/train/internvl_chat_finetune.py \
+  --model_name_or_path "./pretrained/InternVL-Chat-V1-2-Plus" \
   --conv_style "Hermes-2" \
   --output_dir ${OUTPUT_DIR} \
   --meta_path "./path/to/your/custom/meta/file" \
@@ -45,9 +39,10 @@ srun -p ${PARTITION} \
   --down_sample_ratio 0.5 \
   --drop_path_rate 0.0 \
   --pad2square False \
-  --freeze_llm False \
-  --freeze_mlp False \
+  --freeze_llm True \
+  --freeze_mlp True \
   --freeze_backbone True \
+  --use_llm_lora 16 \
   --vision_select_layer -1 \
   --use_data_resampling False \
   --dataloader_num_workers 2 \
