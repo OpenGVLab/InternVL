@@ -263,7 +263,7 @@ The result is:
 ### OCRBench
 
 ```
-torchrun --nproc-per-node=8 run.py --data DocVQA_VAL --model InternVL-Chat-V1-5 --verbose
+torchrun --nproc-per-node=8 run.py --data OCRBench --model InternVL-Chat-V1-5 --verbose
 ```
 
 The result is:
