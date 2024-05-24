@@ -148,7 +148,7 @@ The result is:
 0  test  0.940506  ...             0.948276              1.0
 ```
 
-### HallusionBench
+## HallusionBench
 
 ```
 torchrun --nproc-per-node=8 run.py --data HallusionBench --model InternVL-Chat-V1-5 --verbose
@@ -173,7 +173,7 @@ The result is:
 11       VD_ocr  78.651685  58.139535  58.139535
 ```
 
-### TextVQA_VAL
+## TextVQA_VAL
 
 ```
 torchrun --nproc-per-node=8 run.py --data TextVQA_VAL --model InternVL-Chat-V1-5 --verbose
@@ -187,7 +187,7 @@ The result is:
 0   80.488
 ```
 
-### ChartQA_TEST
+## ChartQA_TEST
 
 ```
 torchrun --nproc-per-node=8 run.py --data ChartQA_TEST --model InternVL-Chat-V1-5 --verbose
@@ -201,7 +201,7 @@ The result is:
 0       73.04           94.32    83.68
 ```
 
-### AI2D_TEST
+## AI2D_TEST
 
 ```
 torchrun --nproc-per-node=8 run.py --data AI2D_TEST --model InternVL-Chat-V1-5 --verbose
@@ -215,7 +215,7 @@ The result is:
 0  none  0.806995           0.75  ...  0.752187      1.0       0.727273
 ```
 
-### LLaVABench
+## LLaVABench
 
 ```
 torchrun --nproc-per-node=8 run.py --data LLaVABench --model InternVL-Chat-V1-5 --verbose
@@ -232,7 +232,7 @@ Processing ━━━━━━━━━━━━━━━━━━━━━━━
 3  complex                   86.0       65.7        76.4
 ```
 
-### DocVQA_VAL
+## DocVQA_VAL
 
 ```
 torchrun --nproc-per-node=8 run.py --data DocVQA_VAL --model InternVL-Chat-V1-5 --verbose
@@ -246,7 +246,7 @@ The result is:
 0  90.500323  90.500323
 ```
 
-### InfoVQA_VAL
+## InfoVQA_VAL
 
 ```
 torchrun --nproc-per-node=8 run.py --data InfoVQA_VAL --model InternVL-Chat-V1-5 --verbose
@@ -260,7 +260,7 @@ The result is:
 0  71.920408  71.920408
 ```
 
-### OCRBench
+## OCRBench
 
 ```
 torchrun --nproc-per-node=8 run.py --data OCRBench --model InternVL-Chat-V1-5 --verbose
@@ -279,7 +279,7 @@ The result is:
 2024-04-29 18:56:05,438 - Evaluation - INFO - Final Score Norm:72.4
 ```
 
-### RealWorldQA
+## RealWorldQA
 
 ```
 torchrun --nproc-per-node=8 run.py --data RealWorldQA --model InternVL-Chat-V1-5 --verbose
