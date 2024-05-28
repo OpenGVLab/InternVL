@@ -27,7 +27,7 @@ logger = logging.get_logger(__name__)
 class InternVLChatModel(PreTrainedModel):
     config_class = InternVLChatConfig
     main_input_name = 'pixel_values'
-    _no_split_modules = ['InternVisionEncoderLayer', 'LlamaDecoderLayer']
+    _no_split_modules = ['InternVisionEncoderLayer', 'LlamaDecoderLayer', 'InternLM2DecoderLayer', 'Phi3DecoderLayer']
 
     def __init__(self, config: InternVLChatConfig, vision_model=None, language_model=None):
         super().__init__(config)
@@ -237,14 +237,12 @@ class InternVLChatModel(PreTrainedModel):
 
         img_context_token_id = tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
         self.img_context_token_id = img_context_token_id
-        if tokenizer.convert_tokens_to_ids('<|im_end|>') != 0:
-            eos_token_id = tokenizer.convert_tokens_to_ids('<|im_end|>')  # 92542, InternLM2
-        else:
-            eos_token_id = tokenizer.eos_token_id
 
         from internvl.conversation import get_conv_template
 
         template = get_conv_template(self.template)
+        eos_token_id = tokenizer.convert_tokens_to_ids(template.sep)
+
         image_bs = pixel_values.shape[0]
         print(f'dynamic ViT batch size: {image_bs}')
         if history is None:
@@ -269,7 +267,7 @@ class InternVLChatModel(PreTrainedModel):
             **generation_config
         )
         response = tokenizer.batch_decode(generation_output, skip_special_tokens=True)[0]
-        response = response.split('<|im_end|>')[0].strip()  # for InternLM2
+        response = response.split(template.sep)[0].strip()
         history.append((question, response))
         if return_history:
             return response, history
@@ -284,14 +282,11 @@ class InternVLChatModel(PreTrainedModel):
 
         img_context_token_id = tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
         self.img_context_token_id = img_context_token_id
-        if tokenizer.convert_tokens_to_ids('<|im_end|>') != 0:
-            eos_token_id = tokenizer.convert_tokens_to_ids('<|im_end|>')  # 92542, InternLM2
-        else:
-            eos_token_id = tokenizer.eos_token_id
 
         from internvl.conversation import get_conv_template
 
         template = get_conv_template(self.template)
+        eos_token_id = tokenizer.convert_tokens_to_ids(template.sep)
 
         if history is None:
             history = []
@@ -320,7 +315,7 @@ class InternVLChatModel(PreTrainedModel):
             **generation_config
         )
         response = tokenizer.batch_decode(generation_output, skip_special_tokens=True)[0]
-        response = response.split('<|im_end|>')[0].strip()  # for InternLM2
+        response = response.split(template.sep)[0].strip()
         history.append((question, response))
         if return_history:
             return response, history

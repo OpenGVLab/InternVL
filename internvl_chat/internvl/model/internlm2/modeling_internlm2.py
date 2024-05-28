@@ -48,6 +48,18 @@ _CONFIG_FOR_DOC = 'InternLM2Config'
 
 flash_attn_func, flash_attn_varlen_func = None, None
 pad_input, index_first_axis, unpad_input = None, None, None
+try:
+    from flash_attn import flash_attn_func as _flash_attn_func
+    from flash_attn import flash_attn_varlen_func as _flash_attn_varlen_func
+    from flash_attn.bert_padding import index_first_axis as _index_first_axis
+    from flash_attn.bert_padding import pad_input as _pad_input
+    from flash_attn.bert_padding import unpad_input as _unpad_input
+
+    flash_attn_func, flash_attn_varlen_func = _flash_attn_func, _flash_attn_varlen_func
+    pad_input, index_first_axis, unpad_input = _pad_input, _index_first_axis, _unpad_input
+    has_flash_attn = True
+except:
+    has_flash_attn = False
 
 
 def _import_flash_attn():
@@ -82,7 +94,7 @@ def _get_unpad_data(attention_mask):
 
 # Copied from transformers.models.bart.modeling_bart._make_causal_mask
 def _make_causal_mask(
-    input_ids_shape: torch.Size, dtype: torch.dtype, device: torch.device, past_key_values_length: int = 0
+        input_ids_shape: torch.Size, dtype: torch.dtype, device: torch.device, past_key_values_length: int = 0
 ):
     """
     Make causal mask used for bi-directional self-attention.
@@ -203,7 +215,7 @@ class InternLM2DynamicNTKScalingRotaryEmbedding(InternLM2RotaryEmbedding):
 
         if seq_len > self.max_position_embeddings:
             base = self.base * (
-                (self.scaling_factor * seq_len / self.max_position_embeddings) - (self.scaling_factor - 1)
+                    (self.scaling_factor * seq_len / self.max_position_embeddings) - (self.scaling_factor - 1)
             ) ** (self.dim / (self.dim - 2))
             inv_freq = 1.0 / (base ** (torch.arange(0, self.dim, 2).float().to(device) / self.dim))
             self.register_buffer('inv_freq', inv_freq, persistent=False)
@@ -221,7 +233,7 @@ class InternLM2DynamicNTKScalingRotaryEmbedding(InternLM2RotaryEmbedding):
 def rotate_half(x):
     """Rotates half the hidden dims of the input."""
     x1 = x[..., : x.shape[-1] // 2]
-    x2 = x[..., x.shape[-1] // 2 :]
+    x2 = x[..., x.shape[-1] // 2:]
     return torch.cat((-x2, x1), dim=-1)
 
 
@@ -327,14 +339,14 @@ class InternLM2Attention(nn.Module):
         return tensor.view(bsz, seq_len, self.num_heads, self.head_dim).transpose(1, 2).contiguous()
 
     def forward(
-        self,
-        hidden_states: torch.Tensor,
-        attention_mask: Optional[torch.Tensor] = None,
-        position_ids: Optional[torch.LongTensor] = None,
-        past_key_value: Optional[Tuple[torch.Tensor]] = None,
-        output_attentions: bool = False,
-        use_cache: bool = False,
-        **kwargs,
+            self,
+            hidden_states: torch.Tensor,
+            attention_mask: Optional[torch.Tensor] = None,
+            position_ids: Optional[torch.LongTensor] = None,
+            past_key_value: Optional[Tuple[torch.Tensor]] = None,
+            output_attentions: bool = False,
+            use_cache: bool = False,
+            **kwargs,
     ) -> Tuple[torch.Tensor, Optional[torch.Tensor], Optional[Tuple[torch.Tensor]]]:
         if 'padding_mask' in kwargs:
             warnings.warn(
@@ -423,14 +435,14 @@ class InternLM2FlashAttention2(InternLM2Attention):
     """
 
     def forward(
-        self,
-        hidden_states: torch.Tensor,
-        attention_mask: Optional[torch.LongTensor] = None,
-        position_ids: Optional[torch.LongTensor] = None,
-        past_key_value: Optional[Tuple[torch.Tensor]] = None,
-        output_attentions: bool = False,
-        use_cache: bool = False,
-        **kwargs,
+            self,
+            hidden_states: torch.Tensor,
+            attention_mask: Optional[torch.LongTensor] = None,
+            position_ids: Optional[torch.LongTensor] = None,
+            past_key_value: Optional[Tuple[torch.Tensor]] = None,
+            output_attentions: bool = False,
+            use_cache: bool = False,
+            **kwargs,
     ) -> Tuple[torch.Tensor, Optional[torch.Tensor], Optional[Tuple[torch.Tensor]]]:
         # InternLM2FlashAttention2 attention does not support output_attentions
         if 'padding_mask' in kwargs:
@@ -495,7 +507,7 @@ class InternLM2FlashAttention2(InternLM2Attention):
         return attn_output, attn_weights, past_key_value
 
     def _flash_attention_forward(
-        self, query_states, key_states, value_states, attention_mask, query_length, dropout=0.0, softmax_scale=None
+            self, query_states, key_states, value_states, attention_mask, query_length, dropout=0.0, softmax_scale=None
     ):
         """
         Calls the forward method of Flash Attention - if the input hidden states contain at least one padding token
@@ -607,14 +619,14 @@ class InternLM2DecoderLayer(nn.Module):
         self.ffn_norm = InternLM2RMSNorm(config.hidden_size, eps=config.rms_norm_eps)
 
     def forward(
-        self,
-        hidden_states: torch.Tensor,
-        attention_mask: Optional[torch.Tensor] = None,
-        position_ids: Optional[torch.LongTensor] = None,
-        past_key_value: Optional[Tuple[torch.Tensor]] = None,
-        output_attentions: Optional[bool] = False,
-        use_cache: Optional[bool] = False,
-        **kwargs,
+            self,
+            hidden_states: torch.Tensor,
+            attention_mask: Optional[torch.Tensor] = None,
+            position_ids: Optional[torch.LongTensor] = None,
+            past_key_value: Optional[Tuple[torch.Tensor]] = None,
+            output_attentions: Optional[bool] = False,
+            use_cache: Optional[bool] = False,
+            **kwargs,
     ) -> Tuple[torch.FloatTensor, Optional[Tuple[torch.FloatTensor, torch.FloatTensor]]]:
         """
         Args:
@@ -795,6 +807,9 @@ class InternLM2Model(InternLM2PreTrainedModel):
         self.padding_idx = config.pad_token_id
         self.vocab_size = config.vocab_size
         self.config = config
+        if not has_flash_attn:
+            self.config.attn_implementation = 'eager'
+            print('Warning: Flash attention is not available, using eager attention instead.')
 
         self.tok_embeddings = nn.Embedding(config.vocab_size, config.hidden_size, self.padding_idx)
 
@@ -836,16 +851,16 @@ class InternLM2Model(InternLM2PreTrainedModel):
 
     @add_start_docstrings_to_model_forward(InternLM2_INPUTS_DOCSTRING)
     def forward(
-        self,
-        input_ids: torch.LongTensor = None,
-        attention_mask: Optional[torch.Tensor] = None,
-        position_ids: Optional[torch.LongTensor] = None,
-        past_key_values: Optional[List[torch.FloatTensor]] = None,
-        inputs_embeds: Optional[torch.FloatTensor] = None,
-        use_cache: Optional[bool] = None,
-        output_attentions: Optional[bool] = None,
-        output_hidden_states: Optional[bool] = None,
-        return_dict: Optional[bool] = None,
+            self,
+            input_ids: torch.LongTensor = None,
+            attention_mask: Optional[torch.Tensor] = None,
+            position_ids: Optional[torch.LongTensor] = None,
+            past_key_values: Optional[List[torch.FloatTensor]] = None,
+            inputs_embeds: Optional[torch.FloatTensor] = None,
+            use_cache: Optional[bool] = None,
+            output_attentions: Optional[bool] = None,
+            output_hidden_states: Optional[bool] = None,
+            return_dict: Optional[bool] = None,
     ) -> Union[Tuple, BaseModelOutputWithPast]:
         output_attentions = output_attentions if output_attentions is not None else self.config.output_attentions
         output_hidden_states = (
@@ -1004,17 +1019,17 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
     @add_start_docstrings_to_model_forward(InternLM2_INPUTS_DOCSTRING)
     @replace_return_docstrings(output_type=CausalLMOutputWithPast, config_class=_CONFIG_FOR_DOC)
     def forward(
-        self,
-        input_ids: torch.LongTensor = None,
-        attention_mask: Optional[torch.Tensor] = None,
-        position_ids: Optional[torch.LongTensor] = None,
-        past_key_values: Optional[List[torch.FloatTensor]] = None,
-        inputs_embeds: Optional[torch.FloatTensor] = None,
-        labels: Optional[torch.LongTensor] = None,
-        use_cache: Optional[bool] = None,
-        output_attentions: Optional[bool] = None,
-        output_hidden_states: Optional[bool] = None,
-        return_dict: Optional[bool] = None,
+            self,
+            input_ids: torch.LongTensor = None,
+            attention_mask: Optional[torch.Tensor] = None,
+            position_ids: Optional[torch.LongTensor] = None,
+            past_key_values: Optional[List[torch.FloatTensor]] = None,
+            inputs_embeds: Optional[torch.FloatTensor] = None,
+            labels: Optional[torch.LongTensor] = None,
+            use_cache: Optional[bool] = None,
+            output_attentions: Optional[bool] = None,
+            output_hidden_states: Optional[bool] = None,
+            return_dict: Optional[bool] = None,
     ) -> Union[Tuple, CausalLMOutputWithPast]:
         r"""
         Args:
@@ -1094,7 +1109,7 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
         return output
 
     def prepare_inputs_for_generation(
-        self, input_ids, past_key_values=None, attention_mask=None, inputs_embeds=None, **kwargs
+            self, input_ids, past_key_values=None, attention_mask=None, inputs_embeds=None, **kwargs
     ):
         if past_key_values is not None:
             past_length = past_key_values[0][0].shape[2]
@@ -1114,7 +1129,7 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
             position_ids = attention_mask.long().cumsum(-1) - 1
             position_ids.masked_fill_(attention_mask == 0, 1)
             if past_key_values:
-                position_ids = position_ids[:, -input_ids.shape[1] :]
+                position_ids = position_ids[:, -input_ids.shape[1]:]
 
         # if `inputs_embeds` are passed, we only want to use them in the 1st generation step
         if inputs_embeds is not None and past_key_values is None:
@@ -1155,19 +1170,19 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
 
     @torch.no_grad()
     def chat(
-        self,
-        tokenizer,
-        query: str,
-        history: List[Tuple[str, str]] = [],
-        streamer: Optional[BaseStreamer] = None,
-        max_new_tokens: int = 1024,
-        do_sample: bool = True,
-        temperature: float = 0.8,
-        top_p: float = 0.8,
-        meta_instruction: str = 'You are an AI assistant whose name is InternLM (书生·浦语).\n'
-        '- InternLM (书生·浦语) is a conversational language model that is developed by Shanghai AI Laboratory (上海人工智能实验室). It is designed to be helpful, honest, and harmless.\n'
-        '- InternLM (书生·浦语) can understand and communicate fluently in the language chosen by the user such as English and 中文.',
-        **kwargs,
+            self,
+            tokenizer,
+            query: str,
+            history: List[Tuple[str, str]] = [],
+            streamer: Optional[BaseStreamer] = None,
+            max_new_tokens: int = 1024,
+            do_sample: bool = True,
+            temperature: float = 0.8,
+            top_p: float = 0.8,
+            meta_instruction: str = 'You are an AI assistant whose name is InternLM (书生·浦语).\n'
+                                    '- InternLM (书生·浦语) is a conversational language model that is developed by Shanghai AI Laboratory (上海人工智能实验室). It is designed to be helpful, honest, and harmless.\n'
+                                    '- InternLM (书生·浦语) can understand and communicate fluently in the language chosen by the user such as English and 中文.',
+            **kwargs,
     ):
         inputs = self.build_inputs(tokenizer, query, history, meta_instruction)
         inputs = {k: v.to(self.device) for k, v in inputs.items() if torch.is_tensor(v)}
@@ -1183,7 +1198,7 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
             eos_token_id=eos_token_id,
             **kwargs,
         )
-        outputs = outputs[0].cpu().tolist()[len(inputs['input_ids'][0]) :]
+        outputs = outputs[0].cpu().tolist()[len(inputs['input_ids'][0]):]
         response = tokenizer.decode(outputs, skip_special_tokens=True)
         response = response.split('<|im_end|>')[0]
         history = history + [(query, response)]
@@ -1191,15 +1206,15 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
 
     @torch.no_grad()
     def stream_chat(
-        self,
-        tokenizer,
-        query: str,
-        history: List[Tuple[str, str]] = [],
-        max_new_tokens: int = 1024,
-        do_sample: bool = True,
-        temperature: float = 0.8,
-        top_p: float = 0.8,
-        **kwargs,
+            self,
+            tokenizer,
+            query: str,
+            history: List[Tuple[str, str]] = [],
+            max_new_tokens: int = 1024,
+            do_sample: bool = True,
+            temperature: float = 0.8,
+            top_p: float = 0.8,
+            **kwargs,
     ):
         """
         Return a generator in format: (response, history)
@@ -1310,17 +1325,17 @@ class InternLM2ForSequenceClassification(InternLM2PreTrainedModel):
 
     @add_start_docstrings_to_model_forward(InternLM2_INPUTS_DOCSTRING)
     def forward(
-        self,
-        input_ids: torch.LongTensor = None,
-        attention_mask: Optional[torch.Tensor] = None,
-        position_ids: Optional[torch.LongTensor] = None,
-        past_key_values: Optional[List[torch.FloatTensor]] = None,
-        inputs_embeds: Optional[torch.FloatTensor] = None,
-        labels: Optional[torch.LongTensor] = None,
-        use_cache: Optional[bool] = None,
-        output_attentions: Optional[bool] = None,
-        output_hidden_states: Optional[bool] = None,
-        return_dict: Optional[bool] = None,
+            self,
+            input_ids: torch.LongTensor = None,
+            attention_mask: Optional[torch.Tensor] = None,
+            position_ids: Optional[torch.LongTensor] = None,
+            past_key_values: Optional[List[torch.FloatTensor]] = None,
+            inputs_embeds: Optional[torch.FloatTensor] = None,
+            labels: Optional[torch.LongTensor] = None,
+            use_cache: Optional[bool] = None,
+            output_attentions: Optional[bool] = None,
+            output_hidden_states: Optional[bool] = None,
+            return_dict: Optional[bool] = None,
     ) -> Union[Tuple, SequenceClassifierOutputWithPast]:
         r"""
         labels (`torch.LongTensor` of shape `(batch_size,)`, *optional*):
