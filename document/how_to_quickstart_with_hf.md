@@ -1,4 +1,5 @@
 # Using InternVL-Chat
+
 ```
 from transformers import AutoTokenizer, AutoModel
 import torch
@@ -156,6 +157,7 @@ for question, response in zip(questions, responses):
 ```
 
 # Using InternViT-6B
+
 ```
 import torch
 from PIL import Image
@@ -178,6 +180,7 @@ outputs = model(pixel_values)
 ```
 
 # Using InternVL-C and InternVL-G
+
 ```
 import torch
 from PIL import Image

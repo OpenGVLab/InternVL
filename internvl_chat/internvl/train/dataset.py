@@ -365,32 +365,35 @@ def preprocess_phi3(
     targets = input_ids.clone()
 
     # Mask targets. Only compute loss on the assistant outputs.
-    sep = conv.sep + '\n' + conv.roles[1]  # <|end|>\n<|assistant|>
+    sep = conv.sep + conv.roles[1]  # <|end|>\n<|assistant|>
     for conversation, target in zip(conversations, targets):
-        total_len = int(target.ne(tokenizer.pad_token_id).sum())
+        total_len = int(target.ne(int(tokenizer.pad_token_id)).sum())
 
         turns = conversation.split(conv.sep)
         re_turns = [conv.sep.join(turns[:3])]  # system + user + gpt
         for conv_idx in range(3, len(turns), 2):
             re_turns.append(conv.sep.join(turns[conv_idx:conv_idx + 2]))  # user + gpt
-        cur_len = 0
+        cur_len = 1
         target[:cur_len] = IGNORE_TOKEN_ID
+        endoftext_id = tokenizer.convert_tokens_to_ids('<|endoftext|>')
+        target[target == endoftext_id] = IGNORE_TOKEN_ID
+
         for i, turn in enumerate(re_turns):
             if turn == '':
                 break
             if i == 0:
-                turn_len = len(tokenizer(turn).input_ids) + 1
+                turn_len = len(tokenizer(turn).input_ids)
             else:
-                turn_len = len(tokenizer(turn).input_ids) - 2
+                turn_len = len(tokenizer(turn).input_ids) - 1
             parts = turn.split(sep)
             if len(parts) != 2:
                 break
             parts[0] += sep
 
             if i == 0:
-                instruction_len = len(tokenizer(parts[0]).input_ids)
+                instruction_len = len(tokenizer(parts[0]).input_ids) - 1
             else:
-                instruction_len = len(tokenizer(parts[0]).input_ids) - 3
+                instruction_len = len(tokenizer(parts[0]).input_ids) - 2
 
             # Ignore the user instructions
             target[cur_len: cur_len + instruction_len] = IGNORE_TOKEN_ID
@@ -400,6 +403,11 @@ def preprocess_phi3(
             cur_len += turn_len
 
         target[cur_len:] = IGNORE_TOKEN_ID
+
+        if False:  # Inspect and check the correctness of masking
+            z = target.clone()
+            z = torch.where(z == IGNORE_TOKEN_ID, tokenizer.unk_token_id, z)
+            print(repr(tokenizer.decode(z)))
 
         if cur_len < tokenizer.model_max_length:
             if cur_len != total_len:
@@ -463,7 +471,7 @@ def preprocess_llama3(
     targets = input_ids.clone()
 
     # Mask targets. Only compute loss on the assistant outputs.
-    sep = conv.sep + '\n' + conv.roles[1]  # <|end|>\n<|assistant|>
+    sep = conv.sep + conv.roles[1]  # <|end|>\n<|assistant|>
     for conversation, target in zip(conversations, targets):
         total_len = int(target.ne(tokenizer.pad_token_id).sum())
 
@@ -486,19 +494,23 @@ def preprocess_llama3(
             parts[0] += sep
 
             if i == 0:
-                instruction_len = len(tokenizer(parts[0]).input_ids)
+                instruction_len = len(tokenizer(parts[0]).input_ids) - 1
             else:
-                instruction_len = len(tokenizer(parts[0]).input_ids) + 1
+                instruction_len = len(tokenizer(parts[0]).input_ids)
 
             # Ignore the user instructions
             target[cur_len: cur_len + instruction_len] = IGNORE_TOKEN_ID
-            # print(f"[question {i}]", tokenizer.decode(input_ids[:, cur_len: cur_len + instruction_len][0]))
-            # print(f"[answer {i}]", tokenizer.decode(input_ids[:, cur_len + instruction_len: cur_len + turn_len][0]))
-            # print(f"[label {i}]", target[cur_len + instruction_len: cur_len + turn_len])
+            # print(f'[question {i}]', tokenizer.decode(input_ids[:, cur_len: cur_len + instruction_len][0]))
+            # print(f'[answer {i}]', tokenizer.decode(input_ids[:, cur_len + instruction_len: cur_len + turn_len][0]))
+            # print(f'[label {i}]', target[cur_len + instruction_len: cur_len + turn_len])
             cur_len += turn_len
 
         target[cur_len:] = IGNORE_TOKEN_ID
-        cur_len += 1
+
+        if False:  # Inspect and check the correctness of masking
+            z = target.clone()
+            z = torch.where(z == IGNORE_TOKEN_ID, int(tokenizer.pad_token_id), z)
+            print(repr(tokenizer.decode(z)))
 
         if cur_len < tokenizer.model_max_length:
             if cur_len != total_len:

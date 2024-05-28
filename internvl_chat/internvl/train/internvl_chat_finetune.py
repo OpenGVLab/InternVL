@@ -1,3 +1,4 @@
+import gc
 import logging
 import math
 import os
@@ -17,8 +18,7 @@ from internvl.model.internvl_chat import (InternVisionConfig,
                                           InternVisionModel,
                                           InternVLChatConfig,
                                           InternVLChatModel)
-from internvl.patch import (concat_pad_data_collator, pad_data_collator,
-                            replace_llama2_attn_with_flash_attn,
+from internvl.patch import (concat_pad_data_collator,
                             replace_llama_rmsnorm_with_fused_rmsnorm,
                             replace_train_sampler)
 from internvl.train.constants import (BOX_END_TOKEN, BOX_START_TOKEN,
@@ -35,9 +35,8 @@ from internvl.train.trainer_monkey_patch import replace_create_optimizer
 from PIL import Image, ImageFile, PngImagePlugin
 from torch.utils.data import Dataset
 from transformers import (AutoConfig, AutoModelForCausalLM, AutoTokenizer,
-                          HfArgumentParser, LlamaConfig, LlamaForCausalLM,
-                          LlamaTokenizer, Trainer, TrainingArguments,
-                          default_data_collator, set_seed)
+                          HfArgumentParser, Trainer, TrainingArguments,
+                          set_seed)
 from transformers.trainer_utils import get_last_checkpoint
 from transformers.utils.logging import (enable_default_handler,
                                         enable_explicit_format, set_verbosity)
@@ -50,6 +49,7 @@ replace_train_sampler()
 try:
     from petrel_client.client import Client
     from petrel_client.common.config import Config
+
     has_tcs_loader = True
 except ImportError as E:
     print('petrel_client is not installed. Using PIL to load images.')
@@ -229,6 +229,7 @@ class LazySupervisedDataset(Dataset):
             if repeat_time < 1:
                 # choice top len(self.raw_data) * repeat_time samples
                 self.raw_data = self.raw_data[:int(len(self.raw_data) * repeat_time)]
+        gc.collect()
         self.root = meta['root']
         self.cached_data_dict = {}
         self.tcs_loader = tcs_loader
@@ -253,7 +254,8 @@ class LazySupervisedDataset(Dataset):
                         token_length = tokenizer(
                             conversations, return_tensors='pt', padding=False, truncation=False,
                         ).input_ids.size(1)
-                        self.conv2length[str_length] = token_length + num_image_token * (max_dynamic_patch + use_thumbnail)
+                        self.conv2length[str_length] = token_length + num_image_token * (
+                                    max_dynamic_patch + use_thumbnail)
                     else:
                         token_length = self.conv2length[str_length]
                 self.length.append(token_length)
