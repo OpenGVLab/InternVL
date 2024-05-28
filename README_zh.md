@@ -1,6 +1,6 @@
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/47669167/7037290e-f474-4d11-b90f-1d8316087bf8"> InternVL家族：通过开源组件缩小与商业多模态模型的差距 —— GPT-4V的开源替代方案
 
-[\[更新博客\]](./BLOG.md)  [\[论文\]](https://arxiv.org/abs/2312.14238)  [\[InternVL 1.5 技术报告\]](https://arxiv.org/abs/2404.16821)  [\[Chat Demo\]](https://internvl.opengvlab.com/) [\[HuggingFace Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL) [\[快速开始\]](#quick-start-with-huggingface)  [\[中文解读\]](https://zhuanlan.zhihu.com/p/675877376)
+[\[英文版本\]](https://github.com/OpenGVLab/InternVL/blob/main/README.md)[\[更新博客\]](./BLOG.md)  [\[论文\]](https://arxiv.org/abs/2312.14238)  [\[InternVL 1.5 技术报告\]](https://arxiv.org/abs/2404.16821)  [\[Chat Demo\]](https://internvl.opengvlab.com/) [\[HuggingFace Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL) [\[快速开始\]](#quick-start-with-huggingface)  [\[中文解读\]](https://zhuanlan.zhihu.com/p/675877376)
 
 <a href="https://trendshift.io/repositories/9803" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9803" alt="OpenGVLab%2FInternVL | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
