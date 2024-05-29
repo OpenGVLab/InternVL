@@ -291,5 +291,6 @@ torchrun --nproc-per-node=8 run.py --data SEEDBench2_Plus --model Mini-InternVL-
 The result is:
 
 ```
-
+2024-05-29 12:33:20,074 - Evaluation - INFO -   split   Overall     chart       map       web
+0  none  0.625823  0.616049  0.537794  0.745455
 ```
