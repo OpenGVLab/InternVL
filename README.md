@@ -1,6 +1,7 @@
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/47669167/7037290e-f474-4d11-b90f-1d8316087bf8"> InternVL Family: Closing the Gap to Commercial Multimodal Models with Open-Source Suites —— A Pioneering Open-Source Alternative to GPT-4V
 
-[\[🆕 Blog\]](https://internvl.github.io/blog/)  [\[📜 InternVL 1.0 Paper\]](https://arxiv.org/abs/2312.14238)  [\[📜 InternVL 1.5 Technical Report\]](https://arxiv.org/abs/2404.16821)  [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/) [\[🤗 HuggingFace Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL) [\[🚀 Quick Start\]](#quick-start-with-huggingface)  [\[🌐 Community-hosted API\]](https://rapidapi.com/adushar1320/api/internvl-chat)  [\[📖 中文解读\]](https://zhuanlan.zhihu.com/p/675877376)
+[\[🆕 Blog\]](https://internvl.github.io/blog/)  [\[📜 InternVL 1.0 Paper\]](https://arxiv.org/abs/2312.14238)  [\[📜 InternVL 1.5 Report\]](https://arxiv.org/abs/2404.16821)  [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/) [\[🤗 HuggingFace Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL) [\[🚀 Quick Start\]](#quick-start-with-huggingface)  
+[\[🌐 Community-hosted API\]](https://rapidapi.com/adushar1320/api/internvl-chat)  [\[📖 中文解读\]](https://zhuanlan.zhihu.com/p/675877376)
 
 <a href="https://trendshift.io/repositories/9803" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9803" alt="OpenGVLab%2FInternVL | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
