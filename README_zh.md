@@ -14,7 +14,7 @@
 - `2024/04/28`: 我们发布了 InternVL-Chat-V1-5 的 INT8 量化版本，详细请看 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8)。
 - `2024/04/28`: 我们在 Infographics VQA 的基准测试中达到了 SOTA 性能（75.74），详情请看 [here](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=3)。
 - `2024/04/18`: InternVL-Chat-V1-5 已经在 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5) 发布，在MMMU、DocVQA、ChartQA、MathVista等各种基准测试中，性能接近GPT-4V和Gemini Pro。
-- `2024/02/27`: InternVL 被 CVPR 2024 接收! 🎉
+- `2024/02/27`: InternVL 被 CVPR 2024 接收！🎉
 - `2024/02/24`: InternVL-Chat 模型已经接入 [VLMEvalKit](https://github.com/open-compass/VLMEvalKit)。
 - `2024/02/21`: [InternVL-Chat-V1-2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) 在 MathVista（59.9）、MMBench（83.8）和MMVP（58.7）上达到了SOTA性能。详情请参见我们的 [blog]([BLOG.md](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/))。
 - `2024/02/12`: InternVL-Chat-V1-2 已经发布。它在MMMU验证集上达到了51.6的分数，在MMBench测试集上达到了82.3的分数。 更多信息请参考 [blog]([BLOG.md](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/))、[SFT data](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#prepare-training-datasets) 或者尝试我们的 [demo](https://internvl.opengvlab.com/)。该模型已经在 [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2) 发布，训练、测评的数据和脚本均已开源。
