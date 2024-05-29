@@ -29,10 +29,10 @@
 
   - How to install the environment? [\[link\]](./INSTALLATION.md)
 
-- Training or Fine-tune
+- Training or Fine-tuning
 
-  - How to reproduce the SFT stage of InternVL-Chat-V1.2? [\[link\]](./internvl_chat#start-training)
-  - How to fine-tune InternVL-Chat-V1.2 on a custom dataset? [\[link\]](./document/how_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md)
+  - How to reproduce the SFT stage of InternVL-Chat-V1-2? [\[link\]](./internvl_chat#start-training)
+  - How to fine-tune InternVL-Chat-V1-2 on a custom dataset? [\[link\]](./document/how_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md)
 
 - Benchmark Test
 
