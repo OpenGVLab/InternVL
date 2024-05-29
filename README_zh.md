@@ -16,8 +16,8 @@
 - `2024/04/18`: InternVL-Chat-V1-5 已经在 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5) 发布，在MMMU、DocVQA、ChartQA、MathVista等各种基准测试中，性能接近GPT-4V和Gemini Pro。
 - `2024/02/27`: InternVL 被 CVPR 2024 接收！🎉
 - `2024/02/24`: InternVL-Chat 模型已经接入 [VLMEvalKit](https://github.com/open-compass/VLMEvalKit)。
-- `2024/02/21`: [InternVL-Chat-V1-2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) 在 MathVista（59.9）、MMBench（83.8）和MMVP（58.7）上达到了SOTA性能。详情请参见我们的 [blog]([BLOG.md](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/))。
-- `2024/02/12`: InternVL-Chat-V1-2 已经发布。它在MMMU验证集上达到了51.6的分数，在MMBench测试集上达到了82.3的分数。 更多信息请参考 [blog]([BLOG.md](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/))、[SFT data](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#prepare-training-datasets) 或者尝试我们的 [demo](https://internvl.opengvlab.com/)。该模型已经在 [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2) 发布，训练、测评的数据和脚本均已开源。
+- `2024/02/21`: [InternVL-Chat-V1-2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) 在 MathVista（59.9）、MMBench（83.8）和MMVP（58.7）上达到了SOTA性能。详情请参见我们的 [blog](<[BLOG.md](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/)>)。
+- `2024/02/12`: InternVL-Chat-V1-2 已经发布。它在MMMU验证集上达到了51.6的分数，在MMBench测试集上达到了82.3的分数。 更多信息请参考 [blog](<[BLOG.md](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/)>)、[SFT data](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#prepare-training-datasets) 或者尝试我们的 [demo](https://internvl.opengvlab.com/)。该模型已经在 [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2) 发布，训练、测评的数据和脚本均已开源。
 - `2024/02/04`: [InternVL-Chat-V1-1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1) 在 [MMVP](https://github.com/tsb0601/MMVP) 上达到了 44.67 的得分，高于GPT-4V！
 - `2024/01/27`: 我们发布了448分辨率的模型，在MMBench的验证集上达到了76.6的分数，详情请看 [here](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#-evaluation-chinese-models)。
 - `2024/01/24`: InternVL-Chat-V1-1 已经发布，它支持中文，并且有强大的OCR能力，详情请看 [here](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1) 或者尝试我们的 [demo](https://internvl.opengvlab.com/)。
@@ -33,7 +33,7 @@
 
   - 如何复现 InternVL-Chat-V1-2 的SFT阶段? [\[link\]](./internvl_chat#start-training)
   - 如何在自定义数据集上微调 InternVL-Chat-V1-2? [\[link\]](./document/how_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md)
-  - 如何在自定义数据集上微调 Mini-InternVL-Chat 系列? [TODO]()
+  - 如何在自定义数据集上微调 Mini-InternVL-Chat 系列? [TODO](<>)
 
 - Benchmark 测评
 
@@ -67,30 +67,30 @@ InternVL 将 ViT 拓展到 _**6B 参数**_ 并与大语言模型对齐。
 
 **多模态大语言模型**
 
-| Model                                        | Date       | Download                                                                             | Note                                                                                                                                                               |
-| -------------------------------------------- | ---------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Mini−InternVL−Chat−4B−V1−5 | 2024.05.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5)            | 🚀🚀 16% 的模型大小，90% 的模型性能                                                                                                              |
-| Mini-InternVL-Chat-2B-V1-5 | 2024.05.19 | 🤗 [HF link](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5)            | 🚀🚀 8% 的模型大小，80% 的模型性能                                                                                                             |
-| InternVL-Chat-V1-5-AWQ     | 2024.05.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-AWQ)                |  InternVL-Chat-V1-5的 INT4 版本                                                                                                                            |
-| InternVL-Chat-V1-5-Int8                      | 2024.04.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8)               |  InternVL-Chat-V1-5的 INT8 版本                                                                                                                             |
-| InternVL-Chat-V1-5                           | 2024.04.18 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                    | 支持4K图像；超强OCR性能；在MMMU、DocVQA、ChartQA、MathVista等各种基准测试中，其性能接近GPT-4V和Gemini Pro (🔥新) |
-| InternVL-Chat-V1-2-Plus                      | 2024.02.21 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus)               | 更多的SFT数据并且更强大                                                                                                                                         |
-| InternVL-Chat-V1-2                           | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)                    | 拓展 LLM 到 34B                                                                                                                                              |
-| InternVL-Chat-V1-1                           | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)                    | 支持中文并且有强大的OCR能力                                                                                                                                   |
-| InternVL-Chat-19B-448px                      | 2024.02.03 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B-448px) | 448 分辨率                                                                                                                                                     |
-| InternVL-Chat-19B                            | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B)       | 英语多模态对话大模型                                                                                                                                        |
-| InternVL−Chat−13B                            | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)        | 英语多模态对话大模型                                                                                                                                        |
+| Model                      | Date       | Download                                                                             | Note                                                                                                             |
+| -------------------------- | ---------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| Mini−InternVL−Chat−4B−V1−5 | 2024.05.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5)            | 🚀🚀 16% 的模型大小，90% 的模型性能                                                                              |
+| Mini-InternVL-Chat-2B-V1-5 | 2024.05.19 | 🤗 [HF link](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5)            | 🚀🚀 8% 的模型大小，80% 的模型性能                                                                               |
+| InternVL-Chat-V1-5-AWQ     | 2024.05.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-AWQ)                | InternVL-Chat-V1-5的 INT4 版本                                                                                   |
+| InternVL-Chat-V1-5-Int8    | 2024.04.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8)               | InternVL-Chat-V1-5的 INT8 版本                                                                                   |
+| InternVL-Chat-V1-5         | 2024.04.18 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                    | 支持4K图像；超强OCR性能；在MMMU、DocVQA、ChartQA、MathVista等各种基准测试中，其性能接近GPT-4V和Gemini Pro (🔥新) |
+| InternVL-Chat-V1-2-Plus    | 2024.02.21 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus)               | 更多的SFT数据并且更强大                                                                                          |
+| InternVL-Chat-V1-2         | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)                    | 拓展 LLM 到 34B                                                                                                  |
+| InternVL-Chat-V1-1         | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)                    | 支持中文并且有强大的OCR能力                                                                                      |
+| InternVL-Chat-19B-448px    | 2024.02.03 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B-448px) | 448 分辨率                                                                                                       |
+| InternVL-Chat-19B          | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B)       | 英语多模态对话大模型                                                                                             |
+| InternVL−Chat−13B          | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)        | 英语多模态对话大模型                                                                                             |
 
 **视觉语言基础模型**
 
-| Model                   | Date       | Download                                                               | Note                                                 |
-| ----------------------- | ---------- | ---------------------------------------------------------------------- | ---------------------------------------------------- |
-| InternViT-300M-448px    | 2024.05.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-300M-448px)    | 蒸馏的300M小型视觉基础模型 (🔥新)
-| InternViT-6B-448px-V1-5 | 2024.04.20 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5) | 支持动态分辨率，十分强大的OCR能力 (🔥新) |
-| InternViT-6B-448px-V1-2 | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-2) | 448 分辨率                                       |
-| InternViT−6B−448px−V1−0 | 2024.01.30 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-0) | 448 分辨率                                       |
-| InternViT-6B-224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)      | 视觉基础模型                              |
-| InternVL-14B-224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)      | 视觉语言基础模型，InternViT-6B + QLLaMA，可以用于做图文对的检索                     |
+| Model                   | Date       | Download                                                               | Note                                                            |
+| ----------------------- | ---------- | ---------------------------------------------------------------------- | --------------------------------------------------------------- |
+| InternViT-300M-448px    | 2024.05.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-300M-448px)    | 蒸馏的300M小型视觉基础模型 (🔥新)                               |
+| InternViT-6B-448px-V1-5 | 2024.04.20 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5) | 支持动态分辨率，十分强大的OCR能力 (🔥新)                        |
+| InternViT-6B-448px-V1-2 | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-2) | 448 分辨率                                                      |
+| InternViT−6B−448px−V1−0 | 2024.01.30 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-0) | 448 分辨率                                                      |
+| InternViT-6B-224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)      | 视觉基础模型                                                    |
+| InternVL-14B-224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)      | 视觉语言基础模型，InternViT-6B + QLLaMA，可以用于做图文对的检索 |
 
 ## InternVL 可以做什么?
 

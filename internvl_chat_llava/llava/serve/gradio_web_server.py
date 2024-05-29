@@ -47,9 +47,9 @@ def sort_models(models):
 
     models.sort(key=custom_sort_key, reverse=True)
     try:  # We have five InternVL-Chat-V1-5 models, randomly choose one to be the first
-        first_three = models[:5]
+        first_three = models[:4]
         random.shuffle(first_three)
-        models[:5] = first_three
+        models[:4] = first_three
     except:
         pass
     return models
@@ -203,12 +203,15 @@ def http_bot(state, model_selector, temperature, top_p, max_new_tokens, max_inpu
                 else:
                     template_name = "llava_v0"
         elif "intern" in model_name.lower():
-            if any(x in model_name.lower() for x in ["hermes2", "v1-2", "v1_2"]):
-                template_name = "Hermes-2"
-            elif any(x in model_name.lower() for x in ["internlm2", "v1-5", "v1_5"]):
-                template_name = "internlm2-chat"
-            elif any(x in model_name.lower() for x in ["chinese", "v1-1", "v1_1"]):
+            temp_model_name = model_name.lower().replace('_', '-')
+            if any(x in temp_model_name for x in ["v1-1"]):
                 template_name = "internvl_zh"
+            elif any(x in temp_model_name for x in ["v1-2", "hermes2", "yi34b", "hermes-2", "yi-34b"]):
+                template_name = "Hermes-2"
+            elif any(x in temp_model_name for x in ["v1-5", "internlm"]):
+                template_name = "internlm2-chat"
+                if any(x in temp_model_name for x in ["4b-v1-5", "phi3", "phi-3"]):
+                    template_name = "phi3-chat"
             else:
                 template_name = "llava_v1"
         elif "mpt" in model_name:
