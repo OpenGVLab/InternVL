@@ -18,7 +18,7 @@
 - `2024/02/24`: InternVL-Chat 模型已经接入 [VLMEvalKit](https://github.com/open-compass/VLMEvalKit)。
 - `2024/02/21`: [InternVL-Chat-V1-2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) 在 MathVista（59.9）、MMBench（83.8）和MMVP（58.7）上达到了SOTA性能。详情请参见我们的 [blog]([BLOG.md](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/))。
 - `2024/02/12`: InternVL-Chat-V1-2 已经发布。它在MMMU验证集上达到了51.6的分数，在MMBench测试集上达到了82.3的分数。 更多信息请参考 [blog]([BLOG.md](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/))、[SFT data](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#prepare-training-datasets) 或者尝试我们的 [demo](https://internvl.opengvlab.com/)。该模型已经在 [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2) 发布，训练、测评的数据和脚本均已开源。
-- `2024/02/04`: [InternVL-Chat-V1-1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1) 在 [MMVP](https://github.com/tsb0601/MMVP) 上达到了 44.67 的得分, 高于GPT-4V！
+- `2024/02/04`: [InternVL-Chat-V1-1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1) 在 [MMVP](https://github.com/tsb0601/MMVP) 上达到了 44.67 的得分，高于GPT-4V！
 - `2024/01/27`: 我们发布了448分辨率的模型，在MMBench的验证集上达到了76.6的分数，详情请看 [here](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#-evaluation-chinese-models)。
 - `2024/01/24`: InternVL-Chat-V1-1 已经发布，它支持中文，并且有强大的OCR能力，详情请看 [here](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1) 或者尝试我们的 [demo](https://internvl.opengvlab.com/)。
 - `2024/01/16`: 我们发布了 [定制化的 mmcv/mmsegmentation/mmdetection code](https://github.com/OpenGVLab/InternVL-MMDetSeg)，集成了DeepSpeed，可以用于训练目标检测和语义分割大模型。
@@ -726,7 +726,7 @@ lmdeploy serve api_server OpenGVLab/InternVL-Chat-V1-5
 
 ## 感谢
 
-InternVL 的代码构建参考了以下项目: [OpenAI CLIP](https://github.com/openai/CLIP), [Open CLIP](https://github.com/mlfoundations/open_clip), [CLIP Benchmark](https://github.com/LAION-AI/CLIP_benchmark), [EVA](https://github.com/baaivision/EVA/tree/master), [InternImage](https://github.com/OpenGVLab/InternImage), [ViT-Adapter](https://github.com/czczup/ViT-Adapter), [MMSegmentation](https://github.com/open-mmlab/mmsegmentation), [Transformers](https://github.com/huggingface/transformers), [DINOv2](https://github.com/facebookresearch/dinov2), [BLIP-2](https://github.com/salesforce/LAVIS/tree/main/projects/blip2), [Qwen-VL](https://github.com/QwenLM/Qwen-VL/tree/master/eval_mm), 和 [LLaVA-1.5](https://github.com/haotian-liu/LLaVA). 感谢他们的工作。
+InternVL 的代码构建参考了以下项目: [OpenAI CLIP](https://github.com/openai/CLIP)、[Open CLIP](https://github.com/mlfoundations/open_clip)、[CLIP Benchmark](https://github.com/LAION-AI/CLIP_benchmark)、[EVA](https://github.com/baaivision/EVA/tree/master)、[InternImage](https://github.com/OpenGVLab/InternImage)、[ViT-Adapter](https://github.com/czczup/ViT-Adapter)、[MMSegmentation](https://github.com/open-mmlab/mmsegmentation)、[Transformers](https://github.com/huggingface/transformers)、[DINOv2](https://github.com/facebookresearch/dinov2)、[BLIP-2](https://github.com/salesforce/LAVIS/tree/main/projects/blip2)、[Qwen-VL](https://github.com/QwenLM/Qwen-VL/tree/master/eval_mm)和 [LLaVA-1.5](https://github.com/haotian-liu/LLaVA)。感谢他们的工作。
 
 ______________________________________________________________________
 
