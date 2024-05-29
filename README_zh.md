@@ -1,38 +1,38 @@
-# <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/47669167/7037290e-f474-4d11-b90f-1d8316087bf8"> InternVL Family: Closing the Gap to Commercial Multimodal Models with Open-Source Suites —— A Pioneering Open-Source Alternative to GPT-4V
+# <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/47669167/7037290e-f474-4d11-b90f-1d8316087bf8"> InternVL家族：通过开源组件缩小与商业多模态模型的差距 —— GPT-4V的开源替代方案
 
-[\[中文版本\]](./README_zh.md) [\[Update Blog\]](./BLOG.md)  [\[Paper\]](https://arxiv.org/abs/2312.14238)  [\[InternVL 1.5 Technical Report\]](https://arxiv.org/abs/2404.16821)  [\[Chat Demo\]](https://internvl.opengvlab.com/) [\[HuggingFace Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL) [\[Quick Start\]](#quick-start-with-huggingface)  [\[Community-hosted API\]](https://rapidapi.com/adushar1320/api/internvl-chat)  [\[中文解读\]](https://zhuanlan.zhihu.com/p/675877376)
+[\[英文版本\]](./README.md) [\[更新博客\]](./BLOG.md)  [\[论文\]](https://arxiv.org/abs/2312.14238)  [\[InternVL 1.5 技术报告\]](https://arxiv.org/abs/2404.16821)  [\[Chat Demo\]](https://internvl.opengvlab.com/) [\[HuggingFace Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL) [\[快速开始\]](#quick-start-with-huggingface)  [\[Community-hosted API\]](https://rapidapi.com/adushar1320/api/internvl-chat) [\[中文解读\]](https://zhuanlan.zhihu.com/p/675877376)
 
 <a href="https://trendshift.io/repositories/9803" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9803" alt="OpenGVLab%2FInternVL | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
-## News🚀🚀🚀
+## 最新消息🚀🚀🚀
 
-- `2024/05/27`: We release the INT4 version of InternVL-Chat-V1-5, see [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-AWQ).
-- `2024/05/13`: 🔥 InternVL can now be used as the [text encoder](https://huggingface.co/OpenGVLab/InternVL-14B-224px) for diffusion models to support multilingual generation natively in over 110 languages worldwide. See [MuLan](https://github.com/mulanai/MuLan) for more details.
-- `2024/04/28`: We release the INT8 version of InternVL-Chat-V1-5, see [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8).
-- `2024/04/28`: We achieve the SOTA performance (75.74) on the Infographics VQA benchmark, see [here](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=3).
-- `2024/04/18`: InternVL-Chat-V1.5 has been released at [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5), approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc.
-- `2024/02/27`: InternVL is accepted by CVPR 2024! 🎉
-- `2024/02/24`: InternVL-Chat models have been included in the [VLMEvalKit](https://github.com/open-compass/VLMEvalKit).
-- `2024/02/21`: [InternVL-Chat-V1.2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) achieves SOTA performance on MathVista (59.9), MMBench (83.8), and MMVP (58.7). See our [blog](BLOG.md) for more details.
-- `2024/02/12`: InternVL-Chat-V1.2 has been released. It achieves 51.6 on MMMU val and 82.3 on MMBench test. For more details, please refer to our [blog](BLOG.md), [SFT data](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#prepare-training-datasets) or try our [demo](https://internvl.opengvlab.com/). The model is now available on [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2), and both training/evaluation data and scripts are open-sourced.
-- `2024/02/04`: [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1) achieves 44.67% on [MMVP](https://github.com/tsb0601/MMVP), higher than GPT-4V!
-- `2024/01/27`: We release 448 resolution model, achieving 76.6 on MMBench dev, see [here](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#-evaluation-chinese-models).
-- `2024/01/24`: InternVL-Chat-V1.1 is released, it supports Chinese and has stronger OCR capability, see [here](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1) or try our [demo](https://internvl.opengvlab.com/).
-- `2024/01/16`: We release our [customized mmcv/mmsegmentation/mmdetection code](https://github.com/OpenGVLab/InternVL-MMDetSeg), integrated with DeepSpeed, which can be used for training large-scale object detection and semantic segmentation models.
+- `2024/05/27`: 我们发布了 InternVL-Chat-V1-5 的 INT4 版本, 详细请看 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-AWQ).
+- `2024/05/13`: 🔥 InternVL 现在可以作为扩散模型的 [文本编码器](https://huggingface.co/OpenGVLab/InternVL-14B-224px)，支持全球超过110种语言的多语言生成。详情请看 [MuLan](https://github.com/mulanai/MuLan).
+- `2024/04/28`: 我们发布了 InternVL-Chat-V1-5 的 INT8 版本, 详细请看 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8).
+- `2024/04/28`: 我们在 Infographics VQA 的基准测试中达到了 SOTA 性能（75.74），详情请看 [here](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=3).
+- `2024/04/18`: InternVL-Chat-V1.5 已经在 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5) 发布, 在MMMU、DocVQA、ChartQA、MathVista等各种基准测试中，其性能接近GPT-4V和Gemini Pro.
+- `2024/02/27`: InternVL 被 CVPR 2024 接收! 🎉
+- `2024/02/24`: InternVL-Chat 模型已经被纳入 [VLMEvalKit](https://github.com/open-compass/VLMEvalKit).
+- `2024/02/21`: [InternVL-Chat-V1.2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) 在 MathVista（59.9）、MMBench（83.8）和MMVP（58.7）上达到了SOTA性能。详情请参见我们的 [blog](BLOG.md).
+- `2024/02/12`: InternVL-Chat-V1.2 已经发布。它在MMMU验证集上达到了51.6的成绩，在MMBench测试上达到了82.3的成绩。 更多信息请参考 [blog](BLOG.md), [SFT data](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#prepare-training-datasets) 或者尝试我们的 [demo](https://internvl.opengvlab.com/). 该模型已经在 [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2) 发布, 训练、测评的数据和脚本均为开源.
+- `2024/02/04`: [InternVL-Chat-V1.1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1) 在 [MMVP](https://github.com/tsb0601/MMVP) 上达到了 44.67 的成绩, 高于GPT-4V！
+- `2024/01/27`: 我们发布了448分辨率的模型，在MMBech的验证集上达到了76.6的成绩，详情请看 [here](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#-evaluation-chinese-models).
+- `2024/01/24`: InternVL-Chat-V1.1 已经发布，它支持中文，并且有强大的OCR能力, 详情请看 [here](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1) 或者尝试我们的 [demo](https://internvl.opengvlab.com/).
+- `2024/01/16`: 我们发布了 [customized mmcv/mmsegmentation/mmdetection code](https://github.com/OpenGVLab/InternVL-MMDetSeg), 集成了DeepSpeed，可以用于训练大规模目标检测和语义分割模型.
 
-## Documents
+## 文档
 
-- How to install the environment? [\[link\]](./INSTALLATION.md)
-- How to reproduce the SFT stage of InternVL-Chat-V1.2? [\[link\]](./internvl_chat#start-training)
-- How to fine-tune InternVL-Chat-V1.2 on a custom dataset? [\[link\]](./document/how_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md)
-- How to evaluate InternVL-Chat-V1-5? [\[link\]](./document/how_to_evaluate_internvl_chat_1_5.md)
-- How to evaluate InternVL-Chat-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/how_to_evaluate_internvl_chat_1_5_using_vlmevalkit.md)
-- How to deploy a local demo? [\[link\]](./document/how_to_deploy_a_local_demo.md)
-- How to run InternVL 1.5-8bit with Nvidia V100 GPU? [\[link\]](https://github.com/OpenGVLab/InternVL/issues/144) [\[中文教程\]](https://zhuanlan.zhihu.com/p/697188143)
-- How to perform batch inference? [\[link\]](https://github.com/OpenGVLab/InternVL/blob/main/README.md?plain=1#L617)
-- Inference Acceleration by LMDeploy [\[link\]](#inference-acceleration-by-lmdeploy) [\[中文教程\]](https://zhuanlan.zhihu.com/p/696955211)
+- 如何搭建运行环境? [\[link\]](./INSTALLATION.md)
+- 如何重现 InternVL-Chat-V1.2 的SFT阶段? [\[link\]](./internvl_chat#start-training)
+- 如何在自定义数据集上微调 InternVL-Chat-V1.2? [\[link\]](./document/how_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md)
+- 如何评测 InternVL-Chat-V1-5? [\[link\]](./document/how_to_evaluate_internvl_chat_1_5.md)
+- 如何使用 VLMEvalKit 评测 InternVL-Chat-V1-5? (推荐) [\[link\]](./document/how_to_evaluate_internvl_chat_1_5_using_vlmevalkit.md)
+- 如何部署本地的 demo? [\[link\]](./document/how_to_deploy_a_local_demo.md)
+- 如何在 Nvidia V100 GPU 运行 InternVL 1.5-8bit? [\[link\]](https://github.com/OpenGVLab/InternVL/issues/144) [\[中文教程\]](https://zhuanlan.zhihu.com/p/697188143)
+- 如何执行批量推理 [\[link\]](https://github.com/OpenGVLab/InternVL/blob/main/README.md?plain=1#L617)
+- LMDeploy 加速推理 [\[link\]](#inference-acceleration-by-lmdeploy) [\[中文教程\]](https://zhuanlan.zhihu.com/p/696955211)
 
-## Compared with SOTA VLLMs
+## 和 SOTA 多模态大模型对比
 
 <p align="center"><img width="500" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/38e8a632-229c-4b20-b7e1-77299dfc6cee"></p>
 
@@ -40,42 +40,42 @@
 
 <img width="1229" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/2b4f2978-36ea-4065-841d-3651c58955ed">
 
-## What is InternVL?
+## 什么是 InternVL?
 
-InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
+InternVL 将 ViT 拓展到 _**6B parameters**_ 并与LLM对齐。
 
-## Model Zoo
+## 模型
 
 **Vision Large Language Model**
 
 | Model                                        | Date       | Download                                                                             | Note                                                                                                                                                               |
 | -------------------------------------------- | ---------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Mini-InternVL−Chat−2B-V1.5 (Preview version) | 2024.05.19 | 🤗 [HF link](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5)            | 🚀🚀 Only 2B parameters, anyone can deploy it locally.                                                                                                             |
-| InternVL−Chat−V1.5-Int8                      | 2024.04.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8)               | The INT8 version of InternVL-Chat-V1-5                                                                                                                             |
-| InternVL−Chat−V1.5                           | 2024.04.18 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                    | support 4K image; super strong OCR; Approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc. (🔥new) |
-| InternVL−Chat−V1.2−Plus                      | 2024.02.21 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus)               | more SFT data and stronger                                                                                                                                         |
-| InternVL−Chat−V1.2                           | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)                    | scaling up LLM to 34B                                                                                                                                              |
-| InternVL−Chat−V1.1                           | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)                    | support Chinese and stronger OCR                                                                                                                                   |
-| InternVL−Chat−19B−448px                      | 2024.02.03 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B-448px) | 448 resolution                                                                                                                                                     |
-| InternVL−Chat−19B                            | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B)       | English multimodal dialogue                                                                                                                                        |
-| InternVL−Chat−13B                            | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)        | English multimodal dialogue                                                                                                                                        |
+| Mini-InternVL−Chat−2B-V1.5 (Preview version) | 2024.05.19 | 🤗 [HF link](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5)            | 🚀🚀 仅仅2B参数量，任何人都可以本地部署.                                                                                                             |
+| InternVL−Chat−V1.5-Int8                      | 2024.04.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8)               |  InternVL-Chat-V1-5的 INT8 版本                                                                                                                             |
+| InternVL−Chat−V1.5                           | 2024.04.18 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                    | 支持4K图像；超强OCR性能；在MMMU、DocVQA、ChartQA、MathVista等各种基准测试中，其性能接近GPT-4V和Gemini Pro。 (🔥new) |
+| InternVL−Chat−V1.2−Plus                      | 2024.02.21 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus)               | 更多的SFT数据并且更强大                                                                                                                                         |
+| InternVL−Chat−V1.2                           | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)                    | 拓展 LLM 到 34B                                                                                                                                              |
+| InternVL−Chat−V1.1                           | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)                    | 支持中文并且有强大的OCR能力                                                                                                                                   |
+| InternVL−Chat−19B−448px                      | 2024.02.03 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B-448px) | 448 分辨率                                                                                                                                                     |
+| InternVL−Chat−19B                            | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B)       | 英语多模态对话大模型                                                                                                                                        |
+| InternVL−Chat−13B                            | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)        | 英语多模态对话大模型                                                                                                                                        |
 
 **Vision-Language Foundation Model**
 
 | Model                   | Date       | Download                                                               | Note                                                 |
 | ----------------------- | ---------- | ---------------------------------------------------------------------- | ---------------------------------------------------- |
-| InternViT−6B−448px−V1.5 | 2024.04.20 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5) | support dynamic resolution, super strong OCR (🔥new) |
-| InternViT−6B−448px−V1.2 | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-2) | 448 resolution                                       |
-| InternViT−6B−448px−V1.0 | 2024.01.30 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-0) | 448 resolution                                       |
-| InternViT−6B−224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)      | vision foundation model                              |
-| InternVL−14B−224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)      | vision-language foundation model, InternViT-6B + QLLaMA, can be used for image-text retrival like CLIP                     |
+| InternViT−6B−448px−V1.5 | 2024.04.20 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5) | 支持动态分辨率，十分强大的OCR能力 (🔥new) |
+| InternViT−6B−448px−V1.2 | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-2) | 448 分辨率                                       |
+| InternViT−6B−448px−V1.0 | 2024.01.30 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-0) | 448 分辨率                                       |
+| InternViT−6B−224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)      | 视觉基础模型                              |
+| InternVL−14B−224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)      | vision-language 基础模型, InternViT-6B + QLLaMA, 可以用于做图文对的检索                     |
 
-## What can InternVL do?
+## InternVL 可以做什么?
 
 <details>
-  <summary>Visual Perception (click to expand)</summary>
+  <summary>视觉感知 (点击展开)</summary>
 
-- Linear-Probe Image Classification [\[see details\]](./classification#-evaluation)
+- Linear-Probe 图像分类 [\[see details\]](./classification#-evaluation)
 
   ViT-22B uses the private JFT-3B dataset.
 
@@ -88,7 +88,7 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
   | ViT-22B\*           | 21.7B  | 89.5  |  90.9   | 83.2  | 83.8 | 87.4 |     −     |
   | InternViT-6B (ours) |  5.9B  | 88.2  |  90.4   | 79.9  | 77.5 | 89.8 |   69.1    |
 
-- Semantic Segmentation [\[see details\]](./segmentation#-evaluation)
+- 语义分割 [\[see details\]](./segmentation#-evaluation)
 
   | method                | decoder | #param (train/total) | crop size | mIoU         |
   | --------------------- | :-----: | :------------------: | :-------: | ------------ |
@@ -100,7 +100,7 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
   | ViT-22B               | UperNet |    22.5B / 22.5B     |    504    | 55.3         |
   | InternViT-6B          | UperNet |     6.3B / 6.3B      |    504    | 58.9 (+3.6)  |
 
-- Zero-Shot Image Classification [\[see details\]](./clip_benchmark#imagenet-variants-and-objectnet)
+- 零样本图像分类 [\[see details\]](./clip_benchmark#imagenet-variants-and-objectnet)
 
   | method            | IN-1K | IN-A | IN-R | IN-V2 | IN-Sketch | ObjectNet |
   | ----------------- | :---: | :--: | :--: | :---: | :-------: | :-------: |
@@ -109,7 +109,7 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
   | ViT-22B\*         | 85.9  | 90.1 | 96.0 | 80.9  |     −     |   87.6    |
   | InternVL-C (ours) | 83.2  | 83.8 | 95.5 | 77.3  |   73.9    |   80.6    |
 
-- Multilingual Zero-Shot Image Classification [\[see details\]](./clip_benchmark#multilingual-imagenet-1k)
+- 多语言零样本图像分类 [\[see details\]](./clip_benchmark#multilingual-imagenet-1k)
 
   EN: English, ZH: Chinese, JP: Japanese, Ar: Arabic, IT: Italian
 
@@ -123,7 +123,7 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
   | OpenCLIP-XLM-R-H  |    77.0    |    55.7    |    53.1    |    37.0    |    56.8    |
   | InternVL-C (ours) |    83.2    |    64.5    |    61.5    |    44.9    |    65.7    |
 
-- Zero-Shot Video Classification \[see details\]
+- 零样本视频分类 \[see details\]
 
   | method            | #frame | K400 | K600 | K700 |
   | ----------------- | :----: | :--: | :--: | :--: |
@@ -136,9 +136,9 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 </details>
 
 <details>
-  <summary>Cross-Modal Retrieval (click to expand)</summary>
+  <summary>跨模态检索 (点击展开)</summary>
 
-- English Zero-Shot Image-Text Retrieval [\[see details\]](./clip_benchmark#flickr30k--coco)
+- 英语零样本图文检索 [\[see details\]](./clip_benchmark#flickr30k--coco)
 
   <table>
     <tr  align=center>
@@ -252,7 +252,7 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 
   </table>
 
-- Chinese Zero-Shot Image-Text Retrieval [\[see details\]](./clip_benchmark#flickr30k-cn--coco-cn)
+- 中文零样本图文对检索 [\[see details\]](./clip_benchmark#flickr30k-cn--coco-cn)
 
   <table>
     <tr  align=center>
@@ -352,7 +352,7 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 
   </table>
 
-- Multilingual Zero-Shot Image-Text Retrieval on XTD [\[see details\]](./clip_benchmark#xtd)
+- 多语言零样本图文对检索 [\[see details\]](./clip_benchmark#xtd)
 
   | method            |  EN  |  ES  |  FR  |  ZH  |  IT  |  KO  |  RU  |  JP  | average |
   | ----------------- | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :-----: |
@@ -364,13 +364,13 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 </details>
 
 <details>
-  <summary>Multimodal Dialogue (see "Compared with SOTA VLLMs")</summary>
+  <summary>多模态对话 (请看 "和SOTA的多模态大模型对比")</summary>
 </details>
 
-## Quick Start with Huggingface
+## 使用 Huggingface 快速开始
 
 <details>
-  <summary>using InternViT-6B (click to expand)</summary>
+  <summary>使用 InternViT-6B (点击展开)</summary>
 
 ```python
 import torch
@@ -396,7 +396,7 @@ outputs = model(pixel_values)
 </details>
 
 <details>
-  <summary>using InternVL-C(ontrastive) and InternVL-G(enerative) (click to expand)</summary>
+  <summary>使用 InternVL-C(ontrastive) 和 InternVL-G(enerative) (点击展开)</summary>
 
 ```python
 import torch
@@ -473,7 +473,7 @@ caption = tokenizer.decode(pred[0].cpu(), skip_special_tokens=True).strip()
 </details>
 
 <details>
-  <summary>using InternVL-Chat (click to expand)</summary>
+  <summary>使用 InternVL-Chat (点击展开)</summary>
 
 ```python
 from transformers import AutoTokenizer, AutoModel
@@ -633,13 +633,13 @@ for question, response in zip(questions, responses):
 
 </details>
 
-## Inference Acceleration by LMDeploy
+## 通过 LMDeploy 加速推理
 
-We recommend using [LMDeploy](https://github.com/InternLM/lmdeploy), if InternVL-Chat model inference optimization is required.
+如果需要优化InternVL-Chat模型的推理，我们推荐使用 [LMDeploy](https://github.com/InternLM/lmdeploy)。
 
-In the following subsections, we will introduce the usage of LMDeploy with the [InternVL-Chat-V1-5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5) model as an example.
+在接下来的小节中，我们将以 [InternVL-Chat-V1-5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5) 模型为例介绍 LMDeploy 的使用
 
-First of all, please setup the inference environment as follows:
+首先，请按照下面的步骤设置推理环境:
 
 ```shell
 conda create -n internvl python=3.10 -y
@@ -649,9 +649,9 @@ pip install timm torchvision==0.17.2
 pip install lmdeploy
 ```
 
-LMDeploy pypi package depends on CUDA 12.x by default. For a CUDA 11.x environment, please refer to the [installation guide](https://lmdeploy.readthedocs.io/en/latest/get_started.html#installation).
+LMDeploy 的 pypi 包默认依赖 CUDA 12.x。对于 CUDA 11.x 环境，请参考  [installation guide](https://lmdeploy.readthedocs.io/en/latest/get_started.html#installation).
 
-### Offline Inference Pipeline
+### 离线推理过程
 
 ```python
 from lmdeploy import pipeline
@@ -662,29 +662,30 @@ response = pipe(('describe this image', image))
 print(response)
 ```
 
-For more on using the VLM pipeline, including multi-image inference or multi-turn chat, please overview [this](https://lmdeploy.readthedocs.io/en/latest/inference/vl_pipeline.html) guide.
+有关使用VLM流程的更多信息，包括图像推理或多轮对话，请查看指南 [guide](https://lmdeploy.readthedocs.io/en/latest/inference/vl_pipeline.html) 。
 
-### Online Inference Service
+### 在线推理服务
 
-LMDeploy supports one-click packaging of the VLM model into an OpenAI service, providing seamless integration with the OpenAI API.
+LMDeploy支持将VLM模型一键打包成OpenAI服务，实现与OpenAI API的无缝集成。
 
-The service can be launched by one command as below:
+该服务可以通过以下命令启动：
 
 ```shell
 lmdeploy serve api_server OpenGVLab/InternVL-Chat-V1-5
 ```
 
-The arguments of `api_server` can be viewed through the command `lmdeploy serve api_server -h`, for instance, `--tp` to set tensor parallelism, `--session-len` to specify the max length of the context window, `--cache-max-entry-count` to adjust the GPU mem ratio for k/v cache etc.
+`api_server`的参数可以通过命令`lmdeploy serve api_server -h`查看，例如，使用`--tp`设置张量并行度，使用`--session-len`指定上下文窗口的最大长度，使用`--cache-max-entry-count`调整用于k/v缓存的GPU内存比例等。
 
-For more details, including service startup with docker, RESTful API information, and openai integration methods, please refer to [this](https://lmdeploy.readthedocs.io/en/latest/serving/api_server_vl.html) guide.
+有关更多详细信息，包括使用Docker启动服务、RESTful API信息以及OpenAI集成方法，请查看指导 [guide](https://lmdeploy.readthedocs.io/en/latest/serving/api_server_vl.html)。
 
-## License
+## 许可证
 
-This project is released under the [MIT license](LICENSE). Parts of this project contain code and models from other sources, which are subject to their respective licenses.
 
-## Citation
+本项目遵循[MIT license](LICENSE)许可证发布。项目中的部分代码和模型来自其他来源，并受其各自许可证的约束。
 
-If you find this project useful in your research, please consider cite:
+## 引用
+
+如果您在研究中发现本项目有用，请考虑引用：
 
 ```BibTeX
 @article{chen2023internvl,
@@ -702,12 +703,12 @@ If you find this project useful in your research, please consider cite:
 }
 ```
 
-## Acknowledgement
+## 感谢
 
-InternVL is built with reference to the code of the following projects: [OpenAI CLIP](https://github.com/openai/CLIP), [Open CLIP](https://github.com/mlfoundations/open_clip), [CLIP Benchmark](https://github.com/LAION-AI/CLIP_benchmark), [EVA](https://github.com/baaivision/EVA/tree/master), [InternImage](https://github.com/OpenGVLab/InternImage), [ViT-Adapter](https://github.com/czczup/ViT-Adapter), [MMSegmentation](https://github.com/open-mmlab/mmsegmentation), [Transformers](https://github.com/huggingface/transformers), [DINOv2](https://github.com/facebookresearch/dinov2), [BLIP-2](https://github.com/salesforce/LAVIS/tree/main/projects/blip2), [Qwen-VL](https://github.com/QwenLM/Qwen-VL/tree/master/eval_mm), [LMDeploy](https://github.com/InternLM/lmdeploy), and [LLaVA-1.5](https://github.com/haotian-liu/LLaVA). Thanks for their awesome work!
+InternVL 的代码构建参考了以下项目: [OpenAI CLIP](https://github.com/openai/CLIP), [Open CLIP](https://github.com/mlfoundations/open_clip), [CLIP Benchmark](https://github.com/LAION-AI/CLIP_benchmark), [EVA](https://github.com/baaivision/EVA/tree/master), [InternImage](https://github.com/OpenGVLab/InternImage), [ViT-Adapter](https://github.com/czczup/ViT-Adapter), [MMSegmentation](https://github.com/open-mmlab/mmsegmentation), [Transformers](https://github.com/huggingface/transformers), [DINOv2](https://github.com/facebookresearch/dinov2), [BLIP-2](https://github.com/salesforce/LAVIS/tree/main/projects/blip2), [Qwen-VL](https://github.com/QwenLM/Qwen-VL/tree/master/eval_mm), [LMDeploy](https://github.com/InternLM/lmdeploy), 和 [LLaVA-1.5](https://github.com/haotian-liu/LLaVA). 感谢他们的工作。
 
 ______________________________________________________________________
 
-If you want to join our WeChat group, please scan the following QR Code to add our assistant as a Wechat friend:
+如何你想加入我们的项目群，请扫描下方二维码添加我们的小助手。
 
 <p align="center"><img width="300" alt="image" src="https://github.com/OpenGVLab/DragGAN/assets/26198430/e3f0807f-956a-474e-8fd2-1f7c22d73997"></p>
