@@ -280,3 +280,16 @@ The result is:
 2024-05-25 00:13:34,645 - Evaluation - INFO -   split   Overall
 0  none  0.579085
 ```
+
+## SEEDBench2_Plus
+
+```
+torchrun --nproc-per-node=8 run.py --data SEEDBench2_Plus --model Mini-InternVL-Chat-2B-V1-5 --verbose
+```
+
+The result is:
+
+```
+2024-05-29 12:31:50,587 - Evaluation - INFO -   split   Overall     chart       map       web
+0  none  0.588933  0.562963  0.482032  0.751515
+```
