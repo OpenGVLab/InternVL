@@ -442,6 +442,16 @@ internlm2_chat = Conversation(
     sep="<|im_end|>",
 )
 
+phi3_chat = Conversation(
+    system='<|system|>\nYou are an AI assistant whose name is Phi-3.',
+    roles=('<|user|>\n', '<|assistant|>\n'),
+    version="mpt",
+    messages=(),
+    offset=0,
+    sep_style=SeparatorStyle.MPT,
+    sep='<|end|>',
+)
+
 default_conversation = conv_vicuna_v0
 conv_templates = {
     "default": conv_vicuna_v0,
@@ -460,7 +470,8 @@ conv_templates = {
     "internlm": conv_internlm,
     "internvl_zh": internvl_zh,
     "Hermes-2": hermes2,
-    'internlm2-chat': internlm2_chat
+    "internlm2-chat": internlm2_chat,
+    "phi3-chat": phi3_chat,
 }
 
 

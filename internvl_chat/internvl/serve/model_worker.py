@@ -16,7 +16,8 @@ import uvicorn
 from fastapi import BackgroundTasks, FastAPI, Request
 from fastapi.responses import StreamingResponse
 from internvl.train.dataset import dynamic_preprocess
-from transformers import TextIteratorStreamer
+from transformers import (AutoTokenizer, CLIPImageProcessor,
+                          TextIteratorStreamer)
 
 from ..model.internvl_chat import InternVLChatModel
 from .constants import (DEFAULT_IM_END_TOKEN, DEFAULT_IM_START_TOKEN,
@@ -62,9 +63,8 @@ class ModelWorker:
             self.model_name = model_name
 
         logger.info(f'Loading the model {self.model_name} on worker {worker_id} ...')
-        from transformers import AutoTokenizer, CLIPImageProcessor
 
-        self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True, use_fast=False)
         if device == 'auto':
             import os
             os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
@@ -170,7 +170,6 @@ class ModelWorker:
                 logger.info(f'Split images to {images.shape}')
 
                 replace_token = DEFAULT_IMAGE_TOKEN
-                # if getattr(self.model.config, 'mm_use_im_start_end', False):
                 replace_token = DEFAULT_IM_START_TOKEN + replace_token + DEFAULT_IM_END_TOKEN
                 prompt = prompt.replace(DEFAULT_IMAGE_TOKEN, replace_token)
                 logger.info(prompt)
@@ -190,11 +189,14 @@ class ModelWorker:
         stop_str = params.get('stop', None)
         do_sample = True if temperature > 0.001 else False
         logger.info(f'num_image_tokens: {num_image_tokens}')
+        logger.info(f'stop_str: {stop_str}')
+        eos_token_id = tokenizer.convert_tokens_to_ids(stop_str)
+
         input_ids = tokenizer_image_token(prompt, tokenizer, IMAGE_TOKEN_INDEX, num_image_tokens, return_tensors='pt').unsqueeze(0).cuda()
         input_ids[input_ids==IMAGE_TOKEN_INDEX] = model.img_context_token_id
 
         keywords = [stop_str]
-        stopping_criteria = KeywordsStoppingCriteria(keywords, tokenizer, input_ids)
+        # stopping_criteria = KeywordsStoppingCriteria(keywords, tokenizer, input_ids)
         streamer = TextIteratorStreamer(tokenizer, skip_prompt=True, skip_special_tokens=True, timeout=15)
 
         max_new_tokens = min(max_new_tokens, max_context_length - input_ids.shape[-1])
@@ -211,7 +213,7 @@ class ModelWorker:
             top_p=top_p,
             max_new_tokens=max_new_tokens,
             streamer=streamer,
-            stopping_criteria=[stopping_criteria],
+            eos_token_id=eos_token_id,
             **image_args
         ))
         thread.start()
