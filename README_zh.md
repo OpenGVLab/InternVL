@@ -2,7 +2,7 @@
 
 [\[📖 英文版本\]](./README.md) [\[🆕 博客\]](https://internvl.github.io/blog/)  [\[📜 InternVL 1.0 论文\]](https://arxiv.org/abs/2312.14238)  [\[📜 InternVL 1.5 技术报告\]](https://arxiv.org/abs/2404.16821)  [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/) [\[🤗 HuggingFace Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)
 
-[\[🚀 快速开始\]](#quick-start-with-huggingface)  [\[🌐 Community-hosted API\]](https://rapidapi.com/adushar1320/api/internvl-chat)  [\[📖 中文解读\]](https://zhuanlan.zhihu.com/p/675877376)
+[\[🚀 快速开始\]](#使用-huggingface-快速开始)  [\[🌐 Community-hosted API\]](https://rapidapi.com/adushar1320/api/internvl-chat)  [\[📖 中文解读\]](https://zhuanlan.zhihu.com/p/675877376)
 
 <a href="https://trendshift.io/repositories/9803" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9803" alt="OpenGVLab%2FInternVL | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
