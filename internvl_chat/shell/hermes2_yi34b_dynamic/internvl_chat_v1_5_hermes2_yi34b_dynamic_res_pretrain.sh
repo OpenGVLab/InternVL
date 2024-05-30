@@ -37,8 +37,8 @@ srun -p ${PARTITION} \
   --quotatype=${QUOTA_TYPE} \
   ${SRUN_ARGS} \
   python -u internvl/train/internvl_chat_pretrain.py \
-  --vision_path "./pretrained/intern_vit_6b_448px_v1_5" \
-  --mlp_path "./pretrained/intern_vit_6b_448px_v1_2/mlp_projector.pth" \
+  --vision_path "./pretrained/InternViT-6B-448px-V1-5" \
+  --mlp_path "./pretrained/InternViT-6B-448px-V1-2/mlp_projector/hermes_2_yi_34b.pth" \
   --llm_path "./pretrained/Nous-Hermes-2-Yi-34B" \
   --conv_style "Hermes-2" \
   --output_dir ${OUTPUT_DIR} \
@@ -54,7 +54,7 @@ srun -p ${PARTITION} \
   --freeze_backbone True \
   --vision_select_layer -1 \
   --use_data_resampling False \
-  --dataloader_num_workers 2 \
+  --dataloader_num_workers 4 \
   --bf16 True \
   --num_train_epochs 1 \
   --per_device_train_batch_size ${PER_DEVICE_BATCH_SIZE} \
@@ -63,7 +63,7 @@ srun -p ${PARTITION} \
   --save_strategy "steps" \
   --save_steps 200 \
   --save_total_limit 3 \
-  --learning_rate 1e-5 \
+  --learning_rate 1e-4 \
   --weight_decay 0.05 \
   --warmup_steps 100 \
   --lr_scheduler_type "cosine" \

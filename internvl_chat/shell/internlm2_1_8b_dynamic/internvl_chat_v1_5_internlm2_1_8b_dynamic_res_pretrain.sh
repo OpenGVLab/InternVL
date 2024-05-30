@@ -37,8 +37,7 @@ srun -p ${PARTITION} \
   --quotatype=${QUOTA_TYPE} \
   ${SRUN_ARGS} \
   python -u internvl/train/internvl_chat_pretrain.py \
-  --vision_path "./pretrained/intern_vit_300m_448px_v1_2" \
-  --mlp_path "./pretrained/intern_vit_300m_448px_v1_2/mlp_projector.pth" \
+  --vision_path "./pretrained/InternViT-300M-448px" \
   --llm_path "./pretrained/internlm2-chat-1_8b" \
   --conv_style "internlm2-chat" \
   --output_dir ${OUTPUT_DIR} \
@@ -54,7 +53,7 @@ srun -p ${PARTITION} \
   --freeze_backbone False \
   --vision_select_layer -1 \
   --use_data_resampling False \
-  --dataloader_num_workers 8 \
+  --dataloader_num_workers 4 \
   --bf16 True \
   --num_train_epochs 1 \
   --per_device_train_batch_size ${PER_DEVICE_BATCH_SIZE} \
