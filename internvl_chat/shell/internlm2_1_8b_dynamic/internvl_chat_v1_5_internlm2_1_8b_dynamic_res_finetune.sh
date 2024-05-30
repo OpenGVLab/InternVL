@@ -1,7 +1,7 @@
 set -x
 
 PARTITION=${PARTITION:-"INTERN2"}
-GPUS=${GPUS:-64}
+GPUS=${GPUS:-128}
 GPUS_PER_NODE=${GPUS_PER_NODE:-8}
 QUOTA_TYPE=${QUOTA_TYPE:-"reserved"}
 NODES=$((GPUS / GPUS_PER_NODE))
@@ -22,9 +22,9 @@ if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
 fi
 
-# number of gpus: 64
+# number of gpus: 128
 # batch size per gpu: 4
-# gradient accumulation steps: 4
+# gradient accumulation steps: 2
 # total batch size: 1024
 # epoch: 1
 srun -p ${PARTITION} \
@@ -66,7 +66,7 @@ srun -p ${PARTITION} \
   --warmup_ratio 0.03 \
   --lr_scheduler_type "cosine" \
   --logging_steps 1 \
-  --max_seq_length 6144 \
+  --max_seq_length 8192 \
   --do_train True \
   --grad_checkpoint True \
   --group_by_length True \
