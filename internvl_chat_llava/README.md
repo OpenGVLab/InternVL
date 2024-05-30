@@ -35,8 +35,8 @@ Please download the above model weights and place them in the `pretrained/` fold
 ```sh
 cd pretrained/
 # pip install -U huggingface_hub
-huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternViT-6B-224px --local-dir intern_vit_6b_224px
-huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternViT-6B-448px-V1-0 --local-dir intern_vit_6b_448px
+huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternViT-6B-224px --local-dir InternViT-6B-224px
+huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternViT-6B-448px-V1-0 --local-dir InternViT-6B-448px
 huggingface-cli download --resume-download --local-dir-use-symlinks False lmsys/vicuna-13b-v1.5 --local-dir vicuna-13b-v1.5
 huggingface-cli download --resume-download --local-dir-use-symlinks False lmsys/vicuna-7b-v1.5 --local-dir vicuna-7b-v1.5
 ```
@@ -45,8 +45,8 @@ The directory structure is:
 
 ```sh
 pretrained
-│── intern_vit_6b_224px/
-│── intern_vit_6b_448px/
+│── InternViT-6B-224px/
+│── InternViT-6B-448px/
 │── vicuna-13b-v1.5/
 └── vicuna-7b-v1.5/
 ```
@@ -115,8 +115,8 @@ The directory structure is:
 
 ```
 pretrained
-│── intern_vit_6b_224px/
-│── intern_vit_6b_448px/
+│── InternViT-6B-224px/
+│── InternViT-6B-448px/
 │── vicuna-13b-v1.5/
 │── vicuna-7b-v1.5/
 │── InternVL-Chat-ViT-6B-Vicuna-7B/
