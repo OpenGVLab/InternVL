@@ -8,7 +8,7 @@ import copy
 
 from internvl.model.internlm2.configuration_internlm2 import InternLM2Config
 from internvl.model.phi3.configuration_phi3 import Phi3Config
-from transformers import AutoConfig, LlamaConfig
+from transformers import AutoConfig, LlamaConfig, Qwen2Config
 from transformers.configuration_utils import PretrainedConfig
 from transformers.utils import logging
 
@@ -55,6 +55,8 @@ class InternVLChatConfig(PretrainedConfig):
             self.llm_config = InternLM2Config(**llm_config)
         elif llm_config['architectures'][0] == 'Phi3ForCausalLM':
             self.llm_config = Phi3Config(**llm_config)
+        elif llm_config['architectures'][0] == 'Qwen2ForCausalLM':
+            self.llm_config = Qwen2Config(**llm_config)
         else:
             raise ValueError('Unsupported architecture: {}'.format(llm_config['architectures'][0]))
         self.use_backbone_lora = use_backbone_lora

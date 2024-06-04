@@ -13,7 +13,7 @@ from peft import LoraConfig, get_peft_model
 from torch import nn
 from torch.nn import CrossEntropyLoss
 from transformers import (AutoModel, GenerationConfig, LlamaForCausalLM,
-                          LlamaTokenizer)
+                          LlamaTokenizer, Qwen2ForCausalLM)
 from transformers.modeling_outputs import CausalLMOutputWithPast
 from transformers.modeling_utils import PreTrainedModel
 from transformers.utils import ModelOutput, logging
@@ -27,7 +27,8 @@ logger = logging.get_logger(__name__)
 class InternVLChatModel(PreTrainedModel):
     config_class = InternVLChatConfig
     main_input_name = 'pixel_values'
-    _no_split_modules = ['InternVisionEncoderLayer', 'LlamaDecoderLayer', 'InternLM2DecoderLayer', 'Phi3DecoderLayer']
+    _no_split_modules = ['InternVisionEncoderLayer', 'LlamaDecoderLayer', 'InternLM2DecoderLayer',
+                         'Phi3DecoderLayer', 'Qwen2DecoderLayer']
 
     def __init__(self, config: InternVLChatConfig, vision_model=None, language_model=None):
         super().__init__(config)
@@ -56,6 +57,8 @@ class InternVLChatModel(PreTrainedModel):
                 self.language_model = InternLM2ForCausalLM(config.llm_config)
             elif config.llm_config.architectures[0] == 'Phi3ForCausalLM':
                 self.language_model = Phi3ForCausalLM(config.llm_config)
+            elif config.llm_config.architectures[0] == 'Qwen2ForCausalLM':
+                self.language_model = Qwen2ForCausalLM(config.llm_config)
             else:
                 raise NotImplementedError(f'{config.llm_config.architectures[0]} is not implemented.')
 
@@ -134,19 +137,21 @@ class InternVLChatModel(PreTrainedModel):
         B, N, C = input_embeds.shape
         input_embeds = input_embeds.reshape(B * N, C)
 
-        # if torch.distributed.get_rank() == 0:
-        #     print(f'dynamic ViT batch size: {vit_batch_size}, images per sample: {vit_batch_size / B}, dynamic token length: {N}')
+        if torch.dist.is_initialized() and torch.distributed.get_rank() == 0:
+            print(f'dynamic ViT batch size: {vit_batch_size}, images per sample: {vit_batch_size / B}, dynamic token length: {N}')
 
         input_ids = input_ids.reshape(B * N)
         selected = (input_ids == self.img_context_token_id)
         try:
             input_embeds[selected] = input_embeds[selected] * 0.0 + vit_embeds.reshape(-1, C)
+            ignore_flag = False
         except Exception as e:
             vit_embeds = vit_embeds.reshape(-1, C)
             print(f'warning: {e}, input_embeds[selected].shape={input_embeds[selected].shape}, '
                   f'vit_embeds.shape={vit_embeds.shape}')
             n_token = selected.sum()
             input_embeds[selected] = input_embeds[selected] * 0.0 + vit_embeds[:n_token]
+            ignore_flag = True
 
         input_embeds = input_embeds.reshape(B, N, C)
 
@@ -174,6 +179,8 @@ class InternVLChatModel(PreTrainedModel):
             # Enable model parallelism
             shift_labels = shift_labels.to(shift_logits.device)
             loss = loss_fct(shift_logits, shift_labels)
+            if ignore_flag:
+                loss = loss * 0.0
 
         if not return_dict:
             output = (logits,) + outputs[1:]
@@ -231,6 +238,45 @@ class InternVLChatModel(PreTrainedModel):
         vit_embeds = vit_embeds.reshape(vit_embeds.shape[0], -1, vit_embeds.shape[-1])
         vit_embeds = self.mlp1(vit_embeds)#.to(pixel_values.device)
         return vit_embeds
+
+    def batch_chat(self, tokenizer, pixel_values, image_counts, questions, generation_config, history=None,
+                         return_history=False, IMG_START_TOKEN='<img>', IMG_END_TOKEN='</img>',
+                         IMG_CONTEXT_TOKEN='<IMG_CONTEXT>'):
+        if history is not None or return_history:
+            print('Now multi-turn chat is not supported in batch_chat.')
+            raise NotImplementedError
+        img_context_token_id = tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
+        self.img_context_token_id = img_context_token_id
+
+        from .conversation import get_conv_template
+
+        queries = []
+        image_bs = pixel_values.shape[0]
+        # print(f'dynamic ViT batch size: {image_bs}, image_counts: {image_counts}')
+        for idx, image_count in enumerate(image_counts):
+            image_token = IMG_START_TOKEN + IMG_CONTEXT_TOKEN * self.num_image_token * image_count + IMG_END_TOKEN
+            question = image_token + '\n' + questions[idx]
+            template = get_conv_template(self.template)
+            template.append_message(template.roles[0], question)
+            template.append_message(template.roles[1], None)
+            query = template.get_prompt()
+            queries.append(query)
+        tokenizer.padding_side = 'left'
+        model_inputs = tokenizer(queries, return_tensors='pt', padding=True)
+        input_ids = model_inputs['input_ids'].cuda()
+        attention_mask = model_inputs['attention_mask'].cuda()
+        eos_token_id = tokenizer.convert_tokens_to_ids(template.sep)
+        generation_config['eos_token_id'] = eos_token_id
+
+        generation_output = self.generate(
+            pixel_values=pixel_values,
+            input_ids=input_ids,
+            attention_mask=attention_mask,
+            **generation_config
+        )
+        responses = tokenizer.batch_decode(generation_output, skip_special_tokens=True)
+        responses = [response.split(template.sep)[0].strip() for response in responses]
+        return responses
 
     def chat(self, tokenizer, pixel_values, question, generation_config, history=None, return_history=False,
              IMG_START_TOKEN='<img>', IMG_END_TOKEN='</img>', IMG_CONTEXT_TOKEN='<IMG_CONTEXT>'):

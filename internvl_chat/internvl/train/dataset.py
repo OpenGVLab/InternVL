@@ -133,7 +133,8 @@ def preprocess(
         num_image_token: int,
         text_only: bool = False,
         group_by_length: bool = False,
-        ds_name: str = None
+        ds_name: str = None,
+        num_image: int = 1
 ) -> Dict:
     conv = get_conv_template(template_name)
     roles = {'human': conv.roles[0], 'gpt': conv.roles[1]}
@@ -156,7 +157,7 @@ def preprocess(
     if not text_only:
         new_conversations = []
         for conversation in conversations:
-            conversation = conversation.replace('<image>', image_tokens, 1)
+            conversation = conversation.replace('<image>', image_tokens, num_image)
             new_conversations.append(conversation)
         conversations = new_conversations
 
@@ -235,7 +236,8 @@ def preprocess_mpt(
         num_image_token: int,
         text_only: bool = False,
         group_by_length: bool = False,
-        ds_name: str = None
+        ds_name: str = None,
+        num_image: int = 1
 ) -> Dict:
     conv = get_conv_template(template_name)
     roles = {'human': conv.roles[0], 'gpt': conv.roles[1]}
@@ -258,7 +260,7 @@ def preprocess_mpt(
     if not text_only:
         new_conversations = []
         for conversation in conversations:
-            conversation = conversation.replace('<image>', image_tokens, 1)
+            conversation = conversation.replace('<image>', image_tokens, num_image)
             new_conversations.append(conversation)
         conversations = new_conversations
 
@@ -326,7 +328,8 @@ def preprocess_phi3(
         num_image_token: int,
         text_only: bool = False,
         group_by_length: bool = False,
-        ds_name: str = None
+        ds_name: str = None,
+        num_image: int = 1
 ) -> Dict:
     conv = get_conv_template(template_name)
     roles = {'human': conv.roles[0], 'gpt': conv.roles[1]}
@@ -349,7 +352,7 @@ def preprocess_phi3(
     if not text_only:
         new_conversations = []
         for conversation in conversations:
-            conversation = conversation.replace('<image>', image_tokens, 1)
+            conversation = conversation.replace('<image>', image_tokens, num_image)
             new_conversations.append(conversation)
         conversations = new_conversations
 
@@ -432,7 +435,8 @@ def preprocess_llama3(
         num_image_token: int,
         text_only: bool = False,
         group_by_length: bool = False,
-        ds_name: str = None
+        ds_name: str = None,
+        num_image: int = 1
 ) -> Dict:
     conv = get_conv_template(template_name)
     roles = {'human': conv.roles[0], 'gpt': conv.roles[1]}
@@ -455,7 +459,7 @@ def preprocess_llama3(
     if not text_only:
         new_conversations = []
         for conversation in conversations:
-            conversation = conversation.replace('<image>', image_tokens, 1)
+            conversation = conversation.replace('<image>', image_tokens, num_image)
             new_conversations.append(conversation)
         conversations = new_conversations
 
@@ -535,7 +539,8 @@ def preprocess_internlm(
         num_image_token: int,
         text_only: bool = False,
         group_by_length: bool = False,
-        ds_name: str = None
+        ds_name: str = None,
+        num_image: int = 1
 ) -> Dict:
     conv = get_conv_template(template_name)
     roles = {'human': conv.roles[0], 'gpt': conv.roles[1]}
@@ -561,7 +566,7 @@ def preprocess_internlm(
     if not text_only:
         new_conversations = []
         for conversation in conversations:
-            conversation = conversation.replace('<image>', image_tokens, 1)
+            conversation = conversation.replace('<image>', image_tokens, num_image)
             new_conversations.append(conversation)
         conversations = new_conversations
 
