@@ -193,6 +193,10 @@ class ModelWorker:
         eos_token_id = tokenizer.convert_tokens_to_ids(stop_str)
 
         input_ids = tokenizer_image_token(prompt, tokenizer, IMAGE_TOKEN_INDEX, num_image_tokens, return_tensors='pt').unsqueeze(0).cuda()
+
+        if model.img_context_token_id is None:
+            model.img_context_token_id = 92546
+
         input_ids[input_ids==IMAGE_TOKEN_INDEX] = model.img_context_token_id
 
         keywords = [stop_str]
