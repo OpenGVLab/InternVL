@@ -33,7 +33,7 @@
 
   - 如何复现 InternVL-Chat-V1-2 的SFT阶段? [\[link\]](./internvl_chat#start-training)
   - 如何在自定义数据集上微调 InternVL-Chat-V1-2? [\[link\]](./document/how_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md)
-  - 如何在自定义数据集上微调 Mini-InternVL-Chat 系列? [TODO](<>)
+  - 如何在自定义数据集上微调 Mini-InternVL-Chat 系列? [\[link\]](./document/How_to_finetune_mini_internvl_chat_v1_5_on_a_custom_dataset.md)
 
 - Benchmark 测评
 
