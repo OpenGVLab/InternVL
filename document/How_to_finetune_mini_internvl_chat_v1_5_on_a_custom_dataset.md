@@ -66,5 +66,7 @@ If you see the following log in the terminal, it means the training is started s
 
 ![84a0498a-b565-4964-be0f-f91d2cec7612](https://github.com/G-z-w/InternVL/assets/95175307/d66a2c40-be4c-42c8-babf-052621d2995e)
 
+For a complete example training log, please refer to the [\[link\]](./training_log.txt)
+
 ## 4. Evaluate
 See [\[link\]](https://github.com/OpenGVLab/InternVL/blob/main/document/how_to_evaluate_internvl_chat_v1_5.md)
