@@ -1,6 +1,6 @@
 # How to fine-tune InternVL-Chat-V1.2 on a custom dataset?
 
-#### 1. Prepare the pre-trained model
+#### 1. Prepare the Pre-trained Model
 
 Before you start the second fine-tuning, you need to download the pre-trained model we provided. Here we provide two pre-trained models, [InternVL-Chat-V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2) and [InternVL-Chat-V1.2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus).
 
@@ -15,7 +15,7 @@ huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGV
 huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-Chat-V1-2-Plus --local-dir InternVL-Chat-V1-2-Plus
 ```
 
-#### 2. Prepare your custom training data
+#### 2. Prepare Your Custom Training Data
 
 After downloading the pre-trained model, you need to prepare your customized SFT data. You should write a JSON file in `internvl_chat/shell/data/`, just like [this file](./shell/data/internvl_1_2_finetune.json).
 
@@ -48,7 +48,7 @@ For example:
 }
 ```
 
-#### 3. Start fine-tuning
+#### 3. Start Fine-tuning
 
 You can fine-tune our pre-trained models using this [script (train full LLM)](../internvl_chat/shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune_continue.sh) or this [script (train LoRA adapter)](../internvl_chat/shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune_continue_lora.sh), depending on your available GPU devices.
 
