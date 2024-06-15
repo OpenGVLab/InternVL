@@ -80,7 +80,7 @@ class InternVisionEmbeddings(nn.Module):
         self.position_embedding = nn.Parameter(torch.randn(1, self.num_positions, self.embed_dim))
 
     def forward(self, pixel_values: torch.FloatTensor) -> torch.Tensor:
-        batch_size = pixel_values.shape[0]
+        batch_size = 0 if pixel_values is None else pixel_values.shape[0]
         target_dtype = self.patch_embedding.weight.dtype
         patch_embeds = self.patch_embedding(pixel_values)  # shape = [*, width, grid, grid]
         patch_embeds = patch_embeds.flatten(2).transpose(1, 2)
