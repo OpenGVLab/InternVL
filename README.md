@@ -36,7 +36,7 @@
 
   - How to reproduce the SFT stage of InternVL-Chat-V1-2? [\[link\]](./internvl_chat#start-training)
   - How to fine-tune InternVL-Chat-V1-2 on a custom dataset? [\[link\]](./document/how_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md)
-  - How to fine-tune the Mini-InternVL-Chat series on a custom dataset? \[TODO\]
+  - How to fine-tune the Mini-InternVL-Chat series on a custom dataset? [\[link\]](./document/How_to_finetune_mini_internvl_chat_v1_5_on_a_custom_dataset.md)
 
 - Benchmark Test
 
