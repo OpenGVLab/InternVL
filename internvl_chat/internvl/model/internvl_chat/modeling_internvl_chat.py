@@ -132,7 +132,7 @@ class InternVLChatModel(PreTrainedModel):
 
         vit_embeds = self.extract_feature(pixel_values)
         vit_embeds = vit_embeds[image_flags == 1]
-        vit_batch_size = pixel_values.shape[0]
+        vit_batch_size = 0 if pixel_values is None else pixel_values.shape[0]
 
         B, N, C = input_embeds.shape
         input_embeds = input_embeds.reshape(B * N, C)
@@ -251,7 +251,7 @@ class InternVLChatModel(PreTrainedModel):
         from .conversation import get_conv_template
 
         queries = []
-        image_bs = pixel_values.shape[0]
+        image_bs = 0 if pixel_values is None else pixel_values.shape[0]
         # print(f'dynamic ViT batch size: {image_bs}, image_counts: {image_counts}')
         for idx, image_count in enumerate(image_counts):
             image_token = IMG_START_TOKEN + IMG_CONTEXT_TOKEN * self.num_image_token * image_count + IMG_END_TOKEN
@@ -289,7 +289,7 @@ class InternVLChatModel(PreTrainedModel):
         template = get_conv_template(self.template)
         eos_token_id = tokenizer.convert_tokens_to_ids(template.sep)
 
-        image_bs = pixel_values.shape[0]
+        image_bs = 0 if pixel_values is None else pixel_values.shape[0]
         print(f'dynamic ViT batch size: {image_bs}')
         if history is None:
             history = []
@@ -337,7 +337,7 @@ class InternVLChatModel(PreTrainedModel):
         if history is None:
             history = []
             image_tokens = ''
-            image_bs = pixel_values.shape[0]
+            image_bs = 0 if pixel_values is None else pixel_values.shape[0]
             print(f'dynamic ViT batch size: {image_bs}, image_counts: {image_counts}')
             for idx, image_count in enumerate(image_counts):
                 image_tokens += f'<image {idx+1}> (图{idx+1}):' + IMG_START_TOKEN + IMG_CONTEXT_TOKEN * self.num_image_token * image_count + IMG_END_TOKEN
