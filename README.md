@@ -1,4 +1,4 @@
-# <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/47669167/7037290e-f474-4d11-b90f-1d8316087bf8"> InternVL Family: Closing the Gap to Commercial Multimodal Models with Open-Source Suites —— A Pioneering Open-Source Alternative to GPT-4V
+# <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/47669167/7037290e-f474-4d11-b90f-1d8316087bf8"> InternVL Family: Closing the Gap to Commercial Multimodal Models with Open-Source Suites —— A Pioneering Open-Source Alternative to GPT-4o
 
 [\[📖中文版本\]](./README_zh.md) [\[🆕 Blog\]](https://internvl.github.io/blog/)  [\[📜 InternVL 1.0 Paper\]](https://arxiv.org/abs/2312.14238)  [\[📜 InternVL 1.5 Report\]](https://arxiv.org/abs/2404.16821)  [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/) [\[🤗 HuggingFace Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)
 
@@ -9,6 +9,7 @@
 
 
 ## News🚀🚀🚀
+- `2024/07/04`: 🚀We are pleased to release of [InternVL-2](https://huggingface.co/collections/OpenGVLab/internvl-20-667d3961ab5eb12c7ed1463e), which features further performance improvements compared to the previous version. It achieved an accuracy of 62.0% on the MMMU Benchmark, comparable to existing closed-source commercial models and open-source models.Our model are fully accessible for academic research and can also be applied for free commercial use authorization ([English application form](https://docs.google.com/forms/d/e/1FAIpQLSfMCzhPr1OOEKau_6jwTU0EiZMSFckDo-HMlc_hUudhF_97rw/viewform?usp=sf_link))/([Chinese application form](https://wj.qq.com/s2/14910502/25a4/)).
 - `2024/06/19`: 🚀We release Needle In A Multimodal Haystack ([MM-NIAH](https://github.com/OpenGVLab/MM-NIAH)), the first benchmark designed to systematically evaluate the capability of existing MLLMs to comprehend long multimodal documents. **Experimental results show that the performance of Gemini-1.5 on tasks involving image needles is no better than random guessing.**
 - `2024/06/04`: InternVL 1.5 achieved state-of-the-art in the Image MLLM category on the [Video-MME](https://github.com/BradyFU/Video-MME) dataset, demonstrating strong generalization across multiple images, surpassing many specialized Video MLLMs and nearing the top open-source video model, LLaVA-Next-Video.
 - `2024/05/30`: 🚀 🚀 We release [ShareGPT-4o](https://sharegpt4o.github.io/), a groundbreaking large-scale resource that we plan to open-source with 200K meticulously annotated images, 10K videos with highly descriptive captions, and 10K audio files with detailed descriptions.
@@ -69,7 +70,8 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 
 | Model                      | Date       | Download                                                                             | Note                                                                                                                                                               |
 | -------------------------------- | ---------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Mini&#8209;InternVL&#8209;Chat&#8209;4B&#8209;V1&#8209;5 | 2024.05.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5)            | 🚀🚀 16% of the model size, 90% of the performance                                                                                                                 |
+| InternVL-2     | 2024.07.04 | 🤗 [HF link](https://huggingface.co/collections/OpenGVLab/internvl-20-667d3961ab5eb12c7ed1463e)                | more data and stronger (🔥new)                                                                                                                        |
+| Mini&#8209;InternVL&#8209;Chat&#8209;4B&#8209;V1&#8209;5 | 2024.05.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5)            | 🚀🚀 16% of the model size, 90% of the performance                                                                                   |
 | Mini-InternVL-Chat-2B-V1-5 | 2024.05.19 | 🤗 [HF link](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5)            | 🚀 8% of the model size, 80% of the performance                                                                                                                    |
 | InternVL-Chat-V1-5-AWQ     | 2024.05.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-AWQ)                | The 4-bit version of InternVL-Chat-V1-5                                                                                                                            |
 | InternVL-Chat-V1-5-Int8    | 2024.04.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8)               | The 8-bit version of InternVL-Chat-V1-5                                                                                                                            |
@@ -91,6 +93,9 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 | InternViT&#8209;6B&#8209;448px&#8209;V1&#8209;0 | 2024.01.30 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-0) | 448 resolution                                                                                         |
 | InternViT-6B-224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)      | vision foundation model                                                                                |
 | InternVL-14B-224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)      | vision-language foundation model, InternViT-6B + QLLaMA, can be used for image-text retrival like CLIP |
+
+**InternVL-2 API**
+We encourage everyone to use our API for development and research. For better management, please submit ([English application form](https://docs.google.com/forms/d/e/1FAIpQLSfMCzhPr1OOEKau_6jwTU0EiZMSFckDo-HMlc_hUudhF_97rw/viewform?usp=sf_link))/([Chinese application form](https://wj.qq.com/s2/14910502/25a4/)) to obtain API access.
 
 ## What can InternVL do?
 
