@@ -58,7 +58,7 @@
 
 ## Compared with SOTA VLLMs
 
-<p align="center"><img width="1000" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/cc3dbc15-befc-4441-ab1b-c14f6b356a9f"></p>
+<p align="center"><img width="1000" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/7c31c8f0-d11b-43ec-845d-70186d6c4ef3"></p>
 
 
 ## What is InternVL?
