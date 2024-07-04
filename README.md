@@ -37,21 +37,21 @@
 - Training or Fine-tuning
 
   - How to reproduce the SFT stage of InternVL-Chat-V1-2? [\[link\]](./internvl_chat#start-training)
-  - How to fine-tune InternVL-Chat-V1-2 on a custom dataset? [\[link\]](./document/how_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md)
+  - How to fine-tune InternVL-Chat-V1-2 on a custom dataset? [\[link\]](./document/How_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md)
   - How to fine-tune the Mini-InternVL-Chat series on a custom dataset? [\[link\]](./document/How_to_finetune_mini_internvl_chat_v1_5_on_a_custom_dataset.md)
 
 - Benchmark Test
 
   > Due to minor implementation differences between this codebase and VLMEvalKit, slight discrepancies in performance metrics may occur when testing the same model.
 
-  - How to evaluate InternVL-Chat-V1-5? [\[link\]](./document/how_to_evaluate_internvl_chat_v1_5.md)
-  - How to evaluate InternVL-Chat-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/how_to_evaluate_internvl_chat_v1_5_using_vlmevalkit.md)
-  - How to evaluate Mini-InternVL-Chat-2B-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/how_to_evaluate_mini_internvl_chat_2b_v1_5_using_vlmevalkit.md)
-  - How to evaluate Mini-InternVL-Chat-4B-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/how_to_evaluate_mini_internvl_chat_4b_v1_5_using_vlmevalkit.md)
+  - How to evaluate InternVL-Chat-V1-5? [\[link\]](./document/How_to_evaluate_internvl_chat_v1_5.md)
+  - How to evaluate InternVL-Chat-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/How_to_evaluate_internvl_chat_v1_5_using_vlmevalkit.md)
+  - How to evaluate Mini-InternVL-Chat-2B-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/How_to_evaluate_mini_internvl_chat_2b_v1_5_using_vlmevalkit.md)
+  - How to evaluate Mini-InternVL-Chat-4B-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/How_to_evaluate_mini_internvl_chat_4b_v1_5_using_vlmevalkit.md)
 
 - Deployment
-
-  - How to deploy a local demo? [\[link\]](./document/how_to_deploy_a_local_demo.md)
+  - How_to_use_InternVL_API? [\[link\]](./document/How_to_use_InternVL_API.md)
+  - How to deploy a local demo? [\[link\]](./document/How_to_deploy_a_local_demo.md)
   - How to run InternVL-1.5 8bit with Nvidia V100 GPU? [\[link\]](https://github.com/OpenGVLab/InternVL/issues/144) [\[中文教程\]](https://zhuanlan.zhihu.com/p/697188143)
   - How to perform batch inference? [\[link\]](https://github.com/OpenGVLab/InternVL/blob/main/README.md?plain=1#L617)
   - Inference Acceleration by LMDeploy [\[link\]](#inference-acceleration-by-lmdeploy) [\[中文教程\]](https://zhuanlan.zhihu.com/p/696955211)
