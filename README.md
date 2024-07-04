@@ -1,8 +1,10 @@
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/47669167/7037290e-f474-4d11-b90f-1d8316087bf8"> InternVL Family: Closing the Gap to Commercial Multimodal Models with Open-Source Suites —— A Pioneering Open-Source Alternative to GPT-4o
 
-[\[📖中文版本\]](./README_zh.md) [\[🆕 Blog\]](https://internvl.github.io/blog/)  [\[📜 InternVL 1.0 Paper\]](https://arxiv.org/abs/2312.14238)  [\[📜 InternVL 1.5 Report\]](https://arxiv.org/abs/2404.16821)  [\[📜 InternVL 2 Blog\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/) [\[🤗 HuggingFace Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)
+[\[📖中文版本ReadMe\]](./README_zh.md) [\[🆕 Blog\]](https://internvl.github.io/blog/)  [\[🚀🚀🚀 InternVL2 Blog\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[📜 InternVL 1.5 Report\]](https://arxiv.org/abs/2404.16821)/[\[📖 InternVL 1.5 中文解读\]](https://zhuanlan.zhihu.com/p/701942755) [\[📜 InternVL 1.0 Paper\]](https://arxiv.org/abs/2312.14238)
 
-[\[🚀 Quick Start\]](#quick-start-with-huggingface)  [\[🌐 Community-hosted API\]](https://rapidapi.com/adushar1320/api/internvl-chat)  [\[📖 中文解读\]](https://zhuanlan.zhihu.com/p/701942755)
+[\[🤗 HF Chat Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL) [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/)  [\[🌐 API\]](https://rapidapi.com/adushar1320/api/internvl-chat) 
+
+[\[🚀 Quick Start\]](#quick-start-with-huggingface)
 
 <a href="https://trendshift.io/repositories/9803" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9803" alt="OpenGVLab%2FInternVL | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>&nbsp;&nbsp;
 <img height="55" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/354aa3b7-0129-49b7-94ae-c4deb755051f">
@@ -70,7 +72,7 @@ InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
 
 | Model                      | Date       | Download                                                                             | Note                                                                                                                                                               |
 | -------------------------------- | ---------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| InternVL-2     | 2024.07.04 | 🤗 [HF link](https://huggingface.co/collections/OpenGVLab/internvl-20-667d3961ab5eb12c7ed1463e)                | achieving performance close to GPT-4o                                                                                                                        |
+| InternVL2     | 2024.07.04 | 🤗 [HF link](https://huggingface.co/collections/OpenGVLab/internvl-20-667d3961ab5eb12c7ed1463e)                | achieving performance close to GPT-4o                                                                                                                        |
 | Mini&#8209;InternVL&#8209;Chat&#8209;4B&#8209;V1&#8209;5 | 2024.05.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5)            | 🚀🚀 16% of the model size, 90% of the performance                                                                                   |
 | Mini-InternVL-Chat-2B-V1-5 | 2024.05.19 | 🤗 [HF link](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5)            | 🚀 8% of the model size, 80% of the performance                                                                                                                    |
 | InternVL-Chat-V1-5-AWQ     | 2024.05.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-AWQ)                | The 4-bit version of InternVL-Chat-V1-5                                                                                                                            |
