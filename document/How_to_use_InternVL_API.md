@@ -7,3 +7,7 @@ We encourage everyone to use our API for research. For better management, please
 ## 2. Community-Host API of InternVL 1.5
 
 https://rapidapi.com/adushar1320/api/internvl-chat
+
+## 3. Examples
+
+TBD
