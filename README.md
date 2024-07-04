@@ -50,7 +50,7 @@
   - How to evaluate Mini-InternVL-Chat-4B-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/How_to_evaluate_mini_internvl_chat_4b_v1_5_using_vlmevalkit.md)
 
 - Deployment
-  - How_to_use_InternVL_API? [\[link\]](./document/How_to_use_InternVL_API.md)
+  - How to use InternVL API? [\[link\]](./document/How_to_use_InternVL_API.md)
   - How to deploy a local demo? [\[link\]](./document/How_to_deploy_a_local_demo.md)
   - How to run InternVL-1.5 8bit with Nvidia V100 GPU? [\[link\]](https://github.com/OpenGVLab/InternVL/issues/144) [\[中文教程\]](https://zhuanlan.zhihu.com/p/697188143)
   - How to perform batch inference? [\[link\]](https://github.com/OpenGVLab/InternVL/blob/main/README.md?plain=1#L617)
