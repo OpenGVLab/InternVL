@@ -33,21 +33,21 @@
 - 训练或者微调
 
   - 如何复现 InternVL-Chat-V1-2 的SFT阶段? [\[link\]](./internvl_chat#start-training)
-  - 如何在自定义数据集上微调 InternVL-Chat-V1-2? [\[link\]](./document/how_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md)
+  - 如何在自定义数据集上微调 InternVL-Chat-V1-2? [\[link\]](./document/How_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md)
   - 如何在自定义数据集上微调 Mini-InternVL-Chat 系列? [\[link\]](./document/How_to_finetune_mini_internvl_chat_v1_5_on_a_custom_dataset.md)
 
 - Benchmark 测评
 
   > 由于此代码库与 VLMEvalKit 之间存在细微的实现差异，在测试同一模型时，性能指标可能会出现轻微差异。
 
-  - 如何评测 InternVL-Chat-V1-5? [\[link\]](./document/how_to_evaluate_internvl_chat_v1_5.md)
-  - 如何使用 VLMEvalKit 评测 InternVL-Chat-V1-5? (推荐) [\[link\]](./document/how_to_evaluate_internvl_chat_v1_5_using_vlmevalkit.md)
-  - 如何使用 VLMEvalKit 评测 Mini-InternVL-Chat-2B-V1-5? (推荐) [\[link\]](./document/how_to_evaluate_mini_internvl_chat_2b_v1_5_using_vlmevalkit.md)
-  - 如何使用 VLMEvalKit 评测 Mini-InternVL-Chat-4B-V1-5? (推荐) [\[link\]](./document/how_to_evaluate_mini_internvl_chat_4b_v1_5_using_vlmevalkit.md)
+  - 如何评测 InternVL-Chat-V1-5? [\[link\]](./document/How_to_evaluate_internvl_chat_v1_5.md)
+  - 如何使用 VLMEvalKit 评测 InternVL-Chat-V1-5? (推荐) [\[link\]](./document/How_to_evaluate_internvl_chat_v1_5_using_vlmevalkit.md)
+  - 如何使用 VLMEvalKit 评测 Mini-InternVL-Chat-2B-V1-5? (推荐) [\[link\]](./document/How_to_evaluate_mini_internvl_chat_2b_v1_5_using_vlmevalkit.md)
+  - 如何使用 VLMEvalKit 评测 Mini-InternVL-Chat-4B-V1-5? (推荐) [\[link\]](./document/How_to_evaluate_mini_internvl_chat_4b_v1_5_using_vlmevalkit.md)
 
 - 部署
 
-  - 如何部署本地的 demo? [\[link\]](./document/how_to_deploy_a_local_demo.md)
+  - 如何部署本地的 demo? [\[link\]](./document/How_to_deploy_a_local_demo.md)
   - 如何用 Nvidia V100 GPU 运行 InternVL-1.5 8bit? [\[link\]](https://github.com/OpenGVLab/InternVL/issues/144) [\[中文教程\]](https://zhuanlan.zhihu.com/p/697188143)
   - 如何进行批量推理？ [\[link\]](https://github.com/OpenGVLab/InternVL/blob/main/README.md?plain=1#L617)
   - LMDeploy 加速推理 [\[link\]](#inference-acceleration-by-lmdeploy) [\[中文教程\]](https://zhuanlan.zhihu.com/p/696955211)
