@@ -101,7 +101,7 @@ The format for organizing this JSON file is:
           "length": 499712      # total numbers of data samples
     },
    ...
- 
+
  }
 ```
 
@@ -113,9 +113,9 @@ Before fine-tuning, you should set the `--meta_path` to the path of the JSON fil
 ```bash
 # using 16 GPUs with slurm system, fine-tune the full LLM
 cd ./InternVL/internvl_chat/
-# Mini-InternVL-Chat-2B-V1-5 
+# Mini-InternVL-Chat-2B-V1-5
 PARTITION='your partition' GPUS=16 sh shell/internlm2_1_8b_dynamic/internvl_chat_v1_5_internlm2_1_8b_dynamic_res_finetune.sh
-# Mini-InternVL-Chat-4B-V1-5 
+# Mini-InternVL-Chat-4B-V1-5
 PARTITION='your partition' GPUS=16 sh shell/phi3_3_8b_dynamic/internvl_chat_v1_5_phi3_3_8b_dynamic_res_finetune.sh
 ```
 
@@ -126,4 +126,5 @@ If you see the following log in the terminal, it means the training is started s
 For a complete example training log, please refer to the [\[link\]](./training_log.txt)
 
 ## 4. Evaluate
+
 See [\[link\]](https://github.com/OpenGVLab/InternVL/blob/main/document/how_to_evaluate_internvl_chat_v1_5.md)
