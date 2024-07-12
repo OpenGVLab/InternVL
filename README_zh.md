@@ -7,6 +7,7 @@
 <a href="https://trendshift.io/repositories/9803" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9803" alt="OpenGVLab%2FInternVL | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
 ## 最新消息🚀🚀🚀
+
 - `2024/06/19`: 🚀 我们提出了 Needle In A Multimodal Haystack ([MM-NIAH](https://github.com/OpenGVLab/MM-NIAH))，这是第一个针对模型关于长多模态文档理解能力的评测基准。**实验结果表明，Gemini-1.5在包含图像针的数据上的性能并不比乱猜的性能要好。**
 - `2024/06/04`: InternVL 1.5 在 [Video-MME](https://github.com/BradyFU/Video-MME) 数据集的 Image MLLM 类别中实现了SOTA的性能，展示了在多图场景下的泛化能力，超过了许多专门的 Video MLLM，并接近开源SOTA视频模型 LLaVA-Next-Video。
 - `2024/05/29`: 🚀 我们开源了 Mini-InternVL-Chat 系列，目前包括以下两个模型：[Mini-InternVL-Chat-2B-V1-5](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5) 和 [Mini-InternVL-Chat-4B-V1-5](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5)。我们的小模型在极小的尺寸下实现了令人印象深刻的性能：2B模型仅以8%的模型尺寸实现了80%的性能，4B模型以16%的模型尺寸实现了90%的性能。更多细节请查看我们的[博客](https://internvl.github.io/blog/2024-05-25-Mini-InternVL-1.5/)。
@@ -70,7 +71,7 @@ InternVL 将 ViT 拓展到 _**6B 参数**_ 并与大语言模型对齐。
 
 | Model                      | Date       | Download                                                                             | Note                                                                                                             |
 | -------------------------- | ---------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
-| Mini&#8209;InternVL&#8209;Chat&#8209;4B&#8209;V1&#8209;5 | 2024.05.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5)            | 🚀🚀 16% 的模型大小，90% 的模型性能                                                                              |
+| Mini‑InternVL‑Chat‑4B‑V1‑5 | 2024.05.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5)            | 🚀🚀 16% 的模型大小，90% 的模型性能                                                                              |
 | Mini-InternVL-Chat-2B-V1-5 | 2024.05.19 | 🤗 [HF link](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5)            | 🚀🚀 8% 的模型大小，80% 的模型性能                                                                               |
 | InternVL-Chat-V1-5-AWQ     | 2024.05.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-AWQ)                | InternVL-Chat-V1-5的 INT4 版本                                                                                   |
 | InternVL-Chat-V1-5-Int8    | 2024.04.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8)               | InternVL-Chat-V1-5的 INT8 版本                                                                                   |
@@ -89,7 +90,7 @@ InternVL 将 ViT 拓展到 _**6B 参数**_ 并与大语言模型对齐。
 | InternViT-300M-448px    | 2024.05.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-300M-448px)    | 蒸馏的300M小型视觉基础模型 (🔥新)                               |
 | InternViT-6B-448px-V1-5 | 2024.04.20 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5) | 支持动态分辨率，十分强大的OCR能力 (🔥新)                        |
 | InternViT-6B-448px-V1-2 | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-2) | 448 分辨率                                                      |
-| InternViT&#8209;6B&#8209;448px&#8209;V1&#8209;0 | 2024.01.30 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-0) | 448 分辨率                                                      |
+| InternViT‑6B‑448px‑V1‑0 | 2024.01.30 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-0) | 448 分辨率                                                      |
 | InternViT-6B-224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)      | 视觉基础模型                                                    |
 | InternVL-14B-224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)      | 视觉语言基础模型，InternViT-6B + QLLaMA，可以用于做图文对的检索 |
 
