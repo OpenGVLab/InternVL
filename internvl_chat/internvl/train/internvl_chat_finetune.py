@@ -9,11 +9,13 @@ from copy import deepcopy
 from dataclasses import dataclass, field
 from typing import Dict, Optional
 
+import numpy as np
 import orjson as json
 import torch
 import torch.distributed as dist
 import transformers
 from internvl.dist_utils import init_dist
+from internvl.model.internlm2.modeling_internlm2 import InternLM2ForCausalLM
 from internvl.model.internvl_chat import (InternVisionConfig,
                                           InternVisionModel,
                                           InternVLChatConfig,
@@ -134,7 +136,7 @@ class ModelArguments:
         metadata={'help': 'Set the drop path rate for the ViT model. Default is 0.'},
     )
     ps_version: str = field(
-        default='v1',
+        default='v2',
         metadata={'help': 'Specify the version of pixel shuffle implementation. Default is `v1`.'
                           'Please use `v2` to fix the bug of transposed image.'}
     )
@@ -206,11 +208,31 @@ class DataTrainingArguments:
 class LazySupervisedDataset(Dataset):
     """Dataset for supervised fine-tuning."""
 
-    def __init__(self, template_name, meta, tokenizer, tcs_loader, num_image_token,
-                 image_size=224, is_train=True, pad2square=False, group_by_length=False,
-                 dynamic_image_size=False, use_thumbnail=False, min_dynamic_patch=1,
-                 max_dynamic_patch=6, repeat_time=1, normalize_type='imagenet'):
+    def __init__(
+        self,
+        template_name,
+        meta,
+        tokenizer,
+        tcs_loader,
+        ds_name,
+        num_image_token,
+        image_size=224,
+        is_train=True,
+        pad2square=False,
+        group_by_length=False,
+        dynamic_image_size=False,
+        use_thumbnail=False,
+        min_dynamic_patch=1,
+        max_dynamic_patch=6,
+        min_num_frame=4,  # for video data
+        max_num_frame=24,  # for video data
+        sampling_method='rand',  # for video data
+        repeat_time=1,
+        normalize_type='imagenet',
+        random_seed=0,
+    ):
         super(LazySupervisedDataset, self).__init__()
+        self.ds_name = ds_name
         self.tokenizer = tokenizer
         self.template_name = template_name
         self.num_image_token = num_image_token
@@ -222,6 +244,10 @@ class LazySupervisedDataset(Dataset):
         self.image_size = image_size
         self.is_train = is_train
         self.pad2square = pad2square
+        self.max_num_frame = max_num_frame
+        self.min_num_frame = min_num_frame
+        self.sampling_method = sampling_method
+
         logger.info('Formatting inputs...Skip in lazy mode')
         assert meta['annotation'].endswith('jsonl'), f'annotation must be jsonl, but got {meta["annotation"]}'
         with open(meta['annotation'], 'r') as f:
@@ -229,6 +255,15 @@ class LazySupervisedDataset(Dataset):
             if repeat_time < 1:
                 # choice top len(self.raw_data) * repeat_time samples
                 self.raw_data = self.raw_data[:int(len(self.raw_data) * repeat_time)]
+            if repeat_time > 1:
+                assert isinstance(repeat_time, int)
+                # just repeat the list
+                self.raw_data = self.raw_data * repeat_time
+
+        self.rng = np.random.default_rng(seed=random_seed)
+        if self.force_shuffle:
+            self.rng.shuffle(self.raw_data)
+
         gc.collect()
         self.root = meta['root']
         self.cached_data_dict = {}
@@ -259,6 +294,7 @@ class LazySupervisedDataset(Dataset):
                     else:
                         token_length = self.conv2length[str_length]
                 self.length.append(token_length)
+        gc.collect()
 
     def __len__(self):
         return len(self.raw_data)
@@ -296,8 +332,107 @@ class LazySupervisedDataset(Dataset):
         else:
             preprocess_function = preprocess
         ret = preprocess_function(self.template_name, [deepcopy(data_item['conversations'])],
-                                  self.tokenizer, self.num_image_token * num_patches,
+                                  self.tokenizer, [self.num_image_token * num_patches],
                                   group_by_length=self.group_by_length, ds_name=self.ds_name)
+        ret = dict(
+            input_ids=ret['input_ids'][0],
+            labels=ret['labels'][0],
+            attention_mask=ret['attention_mask'][0],
+            pixel_values=pixel_values,
+            image_flags=torch.tensor([1] * num_patches, dtype=torch.long)
+        )
+        return ret
+
+    def multi_modal_multi_image_get_item(self, data_item):
+        transform = build_transform(is_train=self.is_train, input_size=self.image_size,
+                                    pad2square=self.pad2square, normalize_type=self.normalize_type)
+        images, num_tiles = [], []
+        num_image = len(data_item['image'])
+        for image_path in data_item['image']:
+            if image_path.startswith('s3://'):
+                image_path = self.root + image_path
+            else:
+                image_path = os.path.join(self.root, image_path)
+            if self.tcs_loader is not None:
+                image = self.tcs_loader(image_path)
+            else:
+                image = Image.open(image_path).convert('RGB')
+            if self.dynamic_image_size:
+                image = dynamic_preprocess(image, min_num=self.min_dynamic_patch,
+                                           max_num=self.max_dynamic_patch // num_image,
+                                           image_size=self.image_size, use_thumbnail=self.use_thumbnail)
+                images += image
+                num_tiles.append(len(image))
+            else:
+                images.append(image)
+                num_tiles.append(1)
+
+        pixel_values = [transform(image) for image in images]
+        pixel_values = torch.stack(pixel_values)
+        num_patches = pixel_values.size(0)
+        if self.template_name == 'Hermes-2':
+            preprocess_function = preprocess_mpt
+        elif self.template_name == 'internlm2-chat':
+            preprocess_function = preprocess_internlm
+        elif self.template_name == 'phi3-chat':
+            preprocess_function = preprocess_phi3
+        else:
+            preprocess_function = preprocess
+
+        num_image_tokens = [self.num_image_token * num_tile for num_tile in num_tiles]
+        total_tile_num = sum(num_tiles)
+        if 'image_count' in data_item and total_tile_num != data_item['image_count']:
+            print(f'ds_name: {self.ds_name}, correct image_count: {total_tile_num}, expected: {data_item["image_count"]}')
+        ret = preprocess_function(self.template_name, [deepcopy(data_item['conversations'])],
+                                  self.tokenizer, num_image_tokens, group_by_length=self.group_by_length,
+                                  ds_name=self.ds_name, num_image=num_image)
+        ret = dict(
+            input_ids=ret['input_ids'][0],
+            labels=ret['labels'][0],
+            attention_mask=ret['attention_mask'][0],
+            pixel_values=pixel_values,
+            image_flags=torch.tensor([1] * num_patches, dtype=torch.long)
+        )
+        return ret
+
+    def video_get_item(self, data_item):
+        if '<video>' not in data_item['conversations'][0]['value']:
+            data_item['conversations'][0]['value'] = '<video>\n' + data_item['conversations'][0]['value']
+
+        video_file = data_item['video']
+        video_path = os.path.join(self.root, video_file)
+        transform = build_transform(is_train=self.is_train, input_size=self.image_size,
+                                    pad2square=self.pad2square, normalize_type=self.normalize_type)
+
+        clip = data_item.get('clip', None)
+        image_list = self.tcs_loader(
+            video_path,
+            image_type='video',
+            max_num_frames=self.max_num_frame,
+            min_num_frames=self.min_num_frame,
+            sample=self.sampling_method,
+            clip=clip)
+
+        special_tokens = '\n'.join(['Frame{}: <image>'.format(i + 1) for i in range(len(image_list))])
+        data_item['conversations'][0]['value'] = data_item['conversations'][0]['value'].replace(
+            '<video>\n', special_tokens)
+
+        pixel_values = [transform(image) for image in image_list]
+        pixel_values = torch.stack(pixel_values)
+        num_patches = pixel_values.size(0)
+        if self.template_name == 'Hermes-2':
+            preprocess_function = preprocess_mpt
+        elif self.template_name == 'internlm2-chat':
+            preprocess_function = preprocess_internlm
+        elif self.template_name == 'phi3-chat':
+            preprocess_function = preprocess_phi3
+        else:
+            preprocess_function = preprocess
+
+        num_image_tokens = [self.num_image_token] * num_patches
+        ret = preprocess_function(self.template_name, [deepcopy(data_item['conversations'])],
+                                  self.tokenizer, num_image_tokens, group_by_length=self.group_by_length,
+                                  ds_name=self.ds_name, num_image=num_patches)
         ret = dict(
             input_ids=ret['input_ids'][0],
             labels=ret['labels'][0],
@@ -326,7 +461,7 @@ class LazySupervisedDataset(Dataset):
         else:
             preprocess_function = preprocess
         ret = preprocess_function(self.template_name, [deepcopy(data_item['conversations'])],
-                                  self.tokenizer, self.num_image_token * num_patches, text_only=True,
+                                  self.tokenizer, [self.num_image_token * num_patches], text_only=True,
                                   group_by_length=self.group_by_length, ds_name=self.ds_name)
         ret = dict(
             input_ids=ret['input_ids'][0],
@@ -348,60 +483,72 @@ class LazySupervisedDataset(Dataset):
                     ret = self.pure_text_get_item(data_item)
                 break
             except Exception as e:
-                print(e)
+                print(e, self.ds_name)
+                sys.stdout.flush()
                 data_item = json.loads(self.raw_data[i])
                 if 'image' in data_item:
-                    if data_item['image'].startswith('s3://'):
-                        data_path = self.root + data_item['image']
+                    if type(data_item['image']) == list:
+                        images = [self.root + item for item in data_item['image']]
+                        print(f'Failed to load image: {images}, the dataset is: {self.ds_name}')
                     else:
-                        data_path = os.path.join(self.root, data_item['image'])
-                    print(f'Failed to load image: {data_path}, the dataset is: {self.ds_name}')
+                        if data_item['image'].startswith('s3://'):
+                            data_path = self.root + data_item['image']
+                        else:
+                            data_path = os.path.join(self.root, data_item['image'])
+                        print(f'Failed to load image: {data_path}, the dataset is: {self.ds_name}')
+                elif 'video' in data_item:
+                    data_path = os.path.join(self.root, data_item['video'])
+                    print(f'Failed to load video: {data_path}, the dataset is: {self.ds_name}')
                 i = random.randint(0, len(self.raw_data) - 1)
         return ret
 
 
-def build_datasets(data_args, tokenizer, tcs_loader, model, group_by_length=False,
-                   dynamic_image_size=False, use_thumbnail=False, min_dynamic_patch=1,
-                   max_dynamic_patch=6, normalize_type='imagenet'):
+def build_datasets(
+    data_args,
+    tokenizer,
+    tcs_loader,
+    model,
+    group_by_length=False,
+    dynamic_image_size=False,
+    use_thumbnail=False,
+    min_dynamic_patch=1,
+    max_dynamic_patch=6,
+    normalize_type='imagenet',
+):
     datasets = []
     lengths = []
     ds_collections = json.loads(open(data_args.meta_path).read())
-    for ds_name in ds_collections.keys():
+    for ds_idx, ds_name in enumerate(ds_collections.keys()):
         repeat_time = ds_collections[ds_name]['repeat_time']
         if 'max_dynamic_patch' in ds_collections[ds_name]:
             max_num = ds_collections[ds_name]['max_dynamic_patch']
             logger.info(f'max_dynamic_patch is set to {max_num} according to the meta file')
         else:
             max_num = max_dynamic_patch
-        try:
-            dataset = LazySupervisedDataset(
-                data_args.conv_style, ds_collections[ds_name],
-                tokenizer,
-                tcs_loader,
-                num_image_token=model.num_image_token,
-                image_size=data_args.force_image_size,
-                is_train=ds_collections[ds_name]['data_augment'],
-                pad2square=data_args.pad2square,
-                group_by_length=group_by_length,
-                dynamic_image_size=dynamic_image_size,
-                use_thumbnail=use_thumbnail,
-                min_dynamic_patch=min_dynamic_patch,
-                max_dynamic_patch=max_num,
-                repeat_time=repeat_time,
-                normalize_type=normalize_type,
-            )
-        except Exception:
-            logger.info(f'Error in loading dataset: {ds_name}')
-            exit()
-        dataset.ds_name = ds_name
-        repeat_time = 1 if repeat_time < 1 else repeat_time  # don't repeat if repeat_time is less than 1
-        for i in range(repeat_time):
-            logger.info(f'Add dataset:{ds_name}_{i} with length: {len(dataset)}')
-            datasets.append(dataset)
-            if data_args.use_data_resampling:
-                lengths.append(math.sqrt(len(dataset)))
-            else:
-                lengths.append(len(dataset))
+        dataset = LazySupervisedDataset(
+            data_args.conv_style, ds_collections[ds_name],
+            tokenizer,
+            tcs_loader,
+            ds_name=ds_name,
+            num_image_token=model.num_image_token,
+            image_size=data_args.force_image_size,
+            is_train=ds_collections[ds_name]['data_augment'],
+            pad2square=data_args.pad2square,
+            group_by_length=group_by_length,
+            dynamic_image_size=dynamic_image_size,
+            use_thumbnail=use_thumbnail,
+            min_dynamic_patch=min_dynamic_patch,
+            max_dynamic_patch=max_num,
+            repeat_time=repeat_time,
+            normalize_type=normalize_type,
+            random_seed=ds_idx,
+        )
+        logger.info(f'Add dataset: {ds_name} with length: {len(dataset)}')
+        datasets.append(dataset)
+        if data_args.use_data_resampling:
+            lengths.append(math.sqrt(len(dataset)))
+        else:
+            lengths.append(len(dataset))
     if data_args.use_data_resampling:
         total_length = sum(lengths)
         weights = [l / total_length for l in lengths]
@@ -512,12 +659,14 @@ def main():
         logger.info('Loading LLaMA...')
         llm_config = AutoConfig.from_pretrained(model_args.llm_path, trust_remote_code=True)
         if llm_config.model_type == 'internlm2':
+            model_type = InternLM2ForCausalLM
             llm_config.attn_implementation = 'flash_attention_2'  # for InternLM
             logger.info('Using flash_attention_2 for InternLM')
         else:
+            model_type = AutoModelForCausalLM
             llm_config._attn_implementation = 'flash_attention_2'  # for LLaMA
             logger.info('Using flash_attention_2 for LLaMA')
-        llm = AutoModelForCausalLM.from_pretrained(
+        llm = model_type.from_pretrained(
             model_args.llm_path, torch_dtype=torch.bfloat16,
             config=llm_config, trust_remote_code=True)
         logger.info('Building InternVLChatConfig...')
@@ -532,6 +681,8 @@ def main():
         model = InternVLChatModel(internvl_chat_config, vision_model, llm)
     model.img_context_token_id = img_context_token_id
     model.neftune_alpha = data_args.neftune_alpha
+
+    assert model.config.downsample_ratio == data_args.down_sample_ratio
 
     if model_args.mlp_path is not None:
         logger.info('Loading pretrained MLP projector...')
@@ -621,7 +772,6 @@ def main():
     if model_args.use_custom_trainer:
         replace_create_optimizer()
 
-    # do we need default_data_collator?
     trainer = Trainer(
         model=model,
         args=training_args,
@@ -642,7 +792,10 @@ def main():
         trainer.save_model()  # Saves the tokenizer too for easy upload
 
         metrics = train_result.metrics
-        metrics['train_samples'] = len(train_dataset)
+        try:
+            metrics['train_samples'] = len(train_dataset)
+        except:
+            metrics['train_samples'] = -1
 
         trainer.log_metrics('train', metrics)
         trainer.save_metrics('train', metrics)
