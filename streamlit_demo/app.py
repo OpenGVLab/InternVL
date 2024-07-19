@@ -102,7 +102,7 @@ def save_chat_history():
 
 
 def generate_response(messages):
-    send_messages = [{'role': 'system', 'content': persona_rec}]
+    send_messages = [{'role': 'system', 'content': system_message_default + '\n\n' + persona_rec}]
     for message in messages:
         if message['role'] == 'user':
             user_message = {'role': 'user', 'content': message['content']}
@@ -261,26 +261,9 @@ st.set_page_config(page_title='InternVL2')
 if 'uploader_key' not in st.session_state:
     st.session_state.uploader_key = 0
 
-# 如果用户要求绘图，请以生成符合Stable Diffusion要求的、满足```drawing-instruction\n{instruction}\n```格式的绘图指令。
-system_message = """我是书生·万象，英文名是InternVL，是由上海人工智能实验室、清华大学及多家合作单位联合开发的多模态大语言模型。
+system_message_default = "我是书生·万象，英文名是InternVL，是由上海人工智能实验室、清华大学及多家合作单位联合开发的多模态大语言模型。"
 
-对于目标检测任务，请按照以下格式输出坐标框：<ref>某类物体</ref><box>[[x1, y1, x2, y2], ...]</box>
-
-对于画图任务，请按照以下格式输出英文的绘图指令：```drawing-instruction\n{instruction}\n```
-
-在处理输入包含多张图像的情况下，请严格按照以下规则区分和处理每一张图像，并小心区分用户的提问针对的是哪一张图片：
-
-1. 图像编号：每张图像都将使用明确的编号标记，注意编号放置在图像之前，例如 "Image-1: <image>"，"Image-2: <image>"，"Image-3: <image>"，"Image-4: <image>" 等等。
-
-2. 用户提问关联：用户的提问可能会具体指向某一张编号的图像，请仔细辨别用户问题中提到的图像编号。
-
-当用户提问是英语时，请用英语回答。
-
-请尽可能详细地回答用户的问题。"""
-
-system_message_short = """我是书生·万象，英文名是InternVL，是由上海人工智能实验室、清华大学及多家合作单位联合开发的多模态大语言模型。
-
-请尽可能详细地回答用户的问题。"""
+system_message_editable = "请尽可能详细地回答用户的问题。"
 
 # Replicate Credentials
 with st.sidebar:
@@ -295,7 +278,7 @@ with st.sidebar:
                                               on_change=clear_chat_history,
                                               help='Due to the limited GPU resources with public IP addresses, we can currently only deploy models up to a maximum of 26B.')
         with st.expander('🤖 System Prompt'):
-            persona_rec = st.text_area('System Prompt', value=system_message_short,
+            persona_rec = st.text_area('System Prompt', value=system_message_editable,
                                        help='System prompt is a pre-defined message used to instruct the assistant at the beginning of a conversation.',
                                        height=200)
         with st.expander('🔥 Advanced Options'):
@@ -323,7 +306,7 @@ with st.sidebar:
                                               on_change=clear_chat_history,
                                               help='由于有限的公网GPU资源，我们暂时只能部署到最大参数26B的模型。')
         with st.expander('🤖 系统提示'):
-            persona_rec = st.text_area('系统提示', value=system_message_short,
+            persona_rec = st.text_area('系统提示', value=system_message_editable,
                                        help='系统提示是在对话开始时用于指示助手的预定义消息。',
                                        height=200)
         with st.expander('🔥 高级选项'):

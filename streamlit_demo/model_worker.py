@@ -11,10 +11,10 @@ import argparse
 import asyncio
 import base64
 import json
-import os
 import threading
 import time
 import uuid
+import math
 from functools import partial
 from io import BytesIO
 from threading import Thread
@@ -113,6 +113,33 @@ def heart_beat_worker(controller):
         controller.send_heart_beat()
 
 
+def split_model(model_name):
+    device_map = {}
+    world_size = torch.cuda.device_count()
+    num_layers = {'InternVL2-8B': 32, 'InternVL2-26B': 48,
+                  'InternVL2-40B': 60, 'InternVL2-Llama3-76B': 80,
+                  'InternVL2-78B': 80, 'InternVL2-Pro': 80}[model_name]
+    # Since the first GPU will be used for ViT, treat it as half a GPU.
+    num_layers_per_gpu = math.ceil(num_layers / (world_size - 0.5))
+    num_layers_per_gpu = [num_layers_per_gpu] * world_size
+    num_layers_per_gpu[0] = math.ceil(num_layers_per_gpu[0] * 0.5)
+    layer_cnt = 0
+    for i, num_layer in enumerate(num_layers_per_gpu):
+        for j in range(num_layer):
+            device_map[f'language_model.model.layers.{layer_cnt}'] = i
+            layer_cnt += 1
+    device_map['vision_model'] = 0
+    device_map['mlp1'] = 0
+    device_map['language_model.model.tok_embeddings'] = 0
+    device_map['language_model.model.embed_tokens'] = 0
+    device_map['language_model.output'] = 0
+    device_map['language_model.model.norm'] = 0
+    device_map['language_model.lm_head'] = 0
+    device_map[f'language_model.model.layers.{num_layers - 1}'] = 0
+
+    return device_map
+
+
 class ModelWorker:
     def __init__(self, controller_addr, worker_addr, worker_id, model_path, model_name,
                  load_8bit, device, context_len=8192):
@@ -138,13 +165,12 @@ class ModelWorker:
         self.tokenizer = tokenizer
 
         if device == 'auto':
-            os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
-            # This can make distributed deployment work properly
+            device_map = split_model(self.model_name)
             self.model = AutoModel.from_pretrained(
                 model_path,
                 load_in_8bit=load_8bit,
                 torch_dtype=torch.bfloat16,
-                device_map='auto',
+                device_map=device_map,
                 trust_remote_code=True).eval()
         else:
             self.model = AutoModel.from_pretrained(
@@ -168,13 +194,12 @@ class ModelWorker:
         del self.model
         torch.cuda.empty_cache()
         if self.device == 'auto':
-            os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
-            # This can make distributed deployment work properly
+            device_map = split_model(self.model_name)
             self.model = AutoModel.from_pretrained(
                 self.model_path,
                 load_in_8bit=self.load_8bit,
                 torch_dtype=torch.bfloat16,
-                device_map='auto',
+                device_map=device_map,
                 trust_remote_code=True).eval()
         else:
             self.model = AutoModel.from_pretrained(
