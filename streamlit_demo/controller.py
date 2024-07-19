@@ -113,6 +113,8 @@ class Controller:
             model_names.update(w_info.model_names)
 
         def extract_key(s):
+            if 'Pro' in s:
+                return 999
             match = re.match(r'InternVL2-(\d+)B', s)
             if match:
                 return int(match.group(1))
