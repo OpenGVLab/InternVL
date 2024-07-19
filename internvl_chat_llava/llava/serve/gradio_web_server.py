@@ -206,12 +206,12 @@ def http_bot(state, model_selector, temperature, top_p, max_new_tokens, max_inpu
             temp_model_name = model_name.lower().replace('_', '-')
             if any(x in temp_model_name for x in ["v1-1"]):
                 template_name = "internvl_zh"
-            elif any(x in temp_model_name for x in ["v1-2", "hermes2", "yi34b", "hermes-2", "yi-34b"]):
+            elif any(x in temp_model_name for x in ["v1-2", "hermes2", "yi34b", "hermes-2", "yi-34b", "qwen2"]):
                 template_name = "Hermes-2"
             elif any(x in temp_model_name for x in ["v1-5", "internlm"]):
                 template_name = "internlm2-chat"
-                if any(x in temp_model_name for x in ["4b-v1-5", "phi3", "phi-3"]):
-                    template_name = "phi3-chat"
+            elif any(x in temp_model_name for x in ["4b-v1-5", "phi3", "phi-3"]):
+                template_name = "phi3-chat"
             else:
                 template_name = "llava_v1"
         elif "mpt" in model_name:
