@@ -9,7 +9,8 @@
     "stage3_param_persistence_threshold": 1e7,
     "stage3_max_live_parameters": 1e9,
     "stage3_max_reuse_distance": 1e9,
-    "stage3_gather_16bit_weights_on_model_save": true
+    "stage3_gather_16bit_weights_on_model_save": true,
+    "zero_hpz_partition_size": 8
   },
   "fp16": {
     "enabled": "auto",
