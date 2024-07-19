@@ -143,6 +143,20 @@ class InternLM2RMSNorm(nn.Module):
         return self.weight * hidden_states.to(input_dtype)
 
 
+try:
+    from functools import partial
+
+    from apex.normalization import FusedRMSNorm
+    InternLM2RMSNorm = partial(FusedRMSNorm, eps=1e-6)   # noqa
+    print('Discovered apex.normalization.FusedRMSNorm - will use it instead of InternLM2RMSNorm')
+except ImportError:
+    # using the normal LlamaRMSNorm
+    pass
+except Exception:
+    print('discovered apex but it failed to load, falling back to InternLM2RMSNorm')
+    pass
+
+
 # Copied from transformers.model.llama.modeling_llama.LlamaRotaryEmbedding with Llama->InternLM2
 class InternLM2RotaryEmbedding(nn.Module):
     def __init__(self, dim, max_position_embeddings=2048, base=10000, device=None):
