@@ -261,9 +261,9 @@ st.set_page_config(page_title='InternVL2')
 if 'uploader_key' not in st.session_state:
     st.session_state.uploader_key = 0
 
-system_message_default = "我是书生·万象，英文名是InternVL，是由上海人工智能实验室、清华大学及多家合作单位联合开发的多模态大语言模型。"
+system_message_default = '我是书生·万象，英文名是InternVL，是由上海人工智能实验室、清华大学及多家合作单位联合开发的多模态大语言模型。'
 
-system_message_editable = "请尽可能详细地回答用户的问题。"
+system_message_editable = '请尽可能详细地回答用户的问题。'
 
 # Replicate Credentials
 with st.sidebar:
