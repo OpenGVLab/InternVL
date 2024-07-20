@@ -1,16 +1,17 @@
 import gc
+import json
 import logging
 import math
 import os
 import random
 import sys
+import traceback
 import warnings
 from copy import deepcopy
 from dataclasses import dataclass, field
 from typing import Dict, Optional
 
 import numpy as np
-import orjson as json
 import torch
 import torch.distributed as dist
 import transformers
@@ -34,7 +35,7 @@ from internvl.train.dataset import (ConcatDataset, TCSLoader,
                                     preprocess_internlm, preprocess_mpt,
                                     preprocess_phi3)
 from internvl.train.trainer_monkey_patch import replace_create_optimizer
-from PIL import Image, ImageFile, PngImagePlugin
+from PIL import Image, ImageFile, PngImagePlugin, UnidentifiedImageError
 from torch.utils.data import Dataset
 from transformers import (AutoConfig, AutoModelForCausalLM, AutoTokenizer,
                           HfArgumentParser, Trainer, TrainingArguments,
@@ -43,20 +44,20 @@ from transformers.trainer_utils import get_last_checkpoint
 from transformers.utils.logging import (enable_default_handler,
                                         enable_explicit_format, set_verbosity)
 
-# Upgrade transformers to v4.37.2, we don't need it anymore
-# replace_llama2_attn_with_flash_attn()
+# Apply necessary patches for the transformers library
 replace_llama_rmsnorm_with_fused_rmsnorm()
 replace_train_sampler()
 
+# Try to import petrel_client for image loading, fallback to PIL if unavailable
 try:
     from petrel_client.client import Client
     from petrel_client.common.config import Config
-
     has_tcs_loader = True
 except ImportError as E:
     print('petrel_client is not installed. Using PIL to load images.')
     has_tcs_loader = False
 
+# Set constants for image processing and logging
 IGNORE_INDEX = -100
 Image.MAX_IMAGE_PIXELS = None
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -73,7 +74,7 @@ os.environ['TOKENIZERS_PARALLELISM'] = 'true'
 @dataclass
 class ModelArguments:
     """
-    Arguments pertaining to which model/config/tokenizer we are going to fine-tune from.
+    Arguments for specifying model, tokenizer, and configurations.
     """
     model_name_or_path: Optional[str] = field(
         default=None,
@@ -145,7 +146,7 @@ class ModelArguments:
 @dataclass
 class DataTrainingArguments:
     """
-    Arguments pertaining to what data we are going to input our model for training and eval.
+    Arguments for specifying data input for training and evaluation.
     """
     max_seq_length: Optional[int] = field(
         default=2048,
@@ -157,11 +158,11 @@ class DataTrainingArguments:
         },
     )
     force_image_size: Optional[int] = field(
-        default=224,
+        default=448,
         metadata={'help': 'Set the desired size for the image. Default is 224.'},
     )
     down_sample_ratio: Optional[float] = field(
-        default=1.0,
+        default=0.5,
         metadata={'help': 'Set the desired down-sampling ratio for the image. Default is 1.0.'},
     )
     pad2square: Optional[bool] = field(
@@ -169,7 +170,7 @@ class DataTrainingArguments:
         metadata={'help': 'Pad the image to a square shape if set to True.'},
     )
     conv_style: Optional[str] = field(
-        default='internvl_zh', metadata={'help': 'Prompt style for a conversation.'}
+        default='internlm2-chat', metadata={'help': 'Prompt style for a conversation.'}
     )
     meta_path: Optional[str] = field(
         default=None,
@@ -194,10 +195,6 @@ class DataTrainingArguments:
     max_dynamic_patch: Optional[int] = field(
         default=12,
         metadata={'help': 'The maximum number of dynamic patches. Default is 6.'},
-    )
-    neftune_alpha: Optional[float] = field(
-        default=None,
-        metadata={'help': 'The noise_alpha value for NEFTune. Default is None.'},
     )
     normalize_type: Optional[str] = field(
         default='imagenet',
@@ -225,7 +222,7 @@ class LazySupervisedDataset(Dataset):
         min_dynamic_patch=1,
         max_dynamic_patch=6,
         min_num_frame=4,  # for video data
-        max_num_frame=24,  # for video data
+        max_num_frame=12,  # for video data
         sampling_method='rand',  # for video data
         repeat_time=1,
         normalize_type='imagenet',
@@ -250,14 +247,15 @@ class LazySupervisedDataset(Dataset):
 
         logger.info('Formatting inputs...Skip in lazy mode')
         assert meta['annotation'].endswith('jsonl'), f'annotation must be jsonl, but got {meta["annotation"]}'
+
         with open(meta['annotation'], 'r') as f:
             self.raw_data = f.readlines()
             if repeat_time < 1:
-                # choice top len(self.raw_data) * repeat_time samples
+                # If repeat_time is less than 1, select a portion of the data
                 self.raw_data = self.raw_data[:int(len(self.raw_data) * repeat_time)]
             if repeat_time > 1:
                 assert isinstance(repeat_time, int)
-                # just repeat the list
+                # Repeat the list if repeat_time is greater than 1
                 self.raw_data = self.raw_data * repeat_time
 
         self.rng = np.random.default_rng(seed=random_seed)
@@ -273,15 +271,18 @@ class LazySupervisedDataset(Dataset):
         self.min_dynamic_patch = min_dynamic_patch
         self.max_dynamic_patch = max_dynamic_patch
         self.normalize_type = normalize_type
+
+        # If the precomputed length does not exist, roughly estimate the length of
+        # each sample to improve the efficiency of group_by_length.
         if self.group_by_length:
-            self.conv2length = {}  # using dict to speedup the calculation of token length
+            self.conv2length = {}  # Using a dictionary to speed up token length calculation
             self.length = []
             for data_item in self.raw_data:
                 data_item = json.loads(data_item)
                 if 'length' in data_item:
-                    token_length = data_item['length']  # use precomputed length if exists
+                    token_length = data_item['length']  # Use precomputed length if available
                 else:
-                    # compute token length using tokenizer
+                    # Compute token length using the tokenizer
                     conversations = '\n'.join([temp['value'] for temp in data_item['conversations']])
                     str_length = len(conversations)
                     if str_length not in self.conv2length:
@@ -298,30 +299,8 @@ class LazySupervisedDataset(Dataset):
     def __len__(self):
         return len(self.raw_data)
 
-    def multi_modal_get_item(self, data_item):
-        if '<image>' not in data_item['conversations'][0]['value']:
-            data_item['conversations'][0]['value'] = '<image>\n' + data_item['conversations'][0]['value']
-
-        if data_item['image'].startswith('s3://'):
-            image_path = self.root + data_item['image']
-        else:
-            image_path = os.path.join(self.root, data_item['image'])
-        if self.tcs_loader is not None and 's3://' in image_path:
-            image = self.tcs_loader(image_path)
-        else:
-            image = Image.open(image_path).convert('RGB')
-        transform = build_transform(is_train=self.is_train, input_size=self.image_size,
-                                    pad2square=self.pad2square, normalize_type=self.normalize_type)
-        if self.dynamic_image_size:
-            images = dynamic_preprocess(image, min_num=self.min_dynamic_patch, max_num=self.max_dynamic_patch,
-                                        image_size=self.image_size, use_thumbnail=self.use_thumbnail)
-        else:
-            images = [image]
-        pixel_values = [transform(image) for image in images]
-        pixel_values = torch.stack(pixel_values)
-        num_patches = pixel_values.size(0)
-        if not self.dynamic_image_size:
-            assert num_patches == 1, f'The number of patches should be 1, but got {num_patches}.'
+    def get_preprocess_function(self):
+        # Select the appropriate preprocessing function based on the template name
         if self.template_name == 'Hermes-2':
             preprocess_function = preprocess_mpt
         elif self.template_name == 'internlm2-chat':
@@ -330,9 +309,65 @@ class LazySupervisedDataset(Dataset):
             preprocess_function = preprocess_phi3
         else:
             preprocess_function = preprocess
+        return preprocess_function
+
+    def load_image(self, image_path):
+        # Load the image using tcs_loader if available, otherwise use PIL
+        if self.tcs_loader is not None and 's3://' in image_path:
+            return self.tcs_loader(image_path)
+        return Image.open(image_path).convert('RGB')
+
+    def get_image_path(self, image_path):
+        if image_path.startswith('s3://'):  # for ceph
+            image_path = self.root + image_path
+        else:  # for local image
+            image_path = os.path.join(self.root, image_path)
+        return image_path
+
+    def get_transform(self):
+        # Build transformation function
+        transform = build_transform(is_train=self.is_train, input_size=self.image_size,
+                                    pad2square=self.pad2square, normalize_type=self.normalize_type)
+        return transform
+
+    def multi_modal_get_item(self, data_item):
+        # Build transformation function
+        transform = self.get_transform()
+
+        # Ensure the first conversation contains an image placeholder
+        if '<image>' not in data_item['conversations'][0]['value']:
+            data_item['conversations'][0]['value'] = '<image>\n' + data_item['conversations'][0]['value']
+
+        # Merge the image path
+        image_path = self.get_image_path(data_item['image'])
+
+        # Load the image using tcs_loader if available, otherwise use PIL
+        image = self.load_image(image_path)
+
+        if self.dynamic_image_size:  # If dynamic image size is enabled, preprocess the image dynamically
+            images = dynamic_preprocess(image, min_num=self.min_dynamic_patch, max_num=self.max_dynamic_patch,
+                                        image_size=self.image_size, use_thumbnail=self.use_thumbnail)
+        else:  # Otherwise, use the original image as a single patch
+            images = [image]
+
+        # Apply the transformation to each image and stack the results into a tensor
+        pixel_values = [transform(image) for image in images]
+        pixel_values = torch.stack(pixel_values)
+
+        # Ensure that there is only one patch if dynamic image size is not enabled
+        num_patches = pixel_values.size(0)
+        if not self.dynamic_image_size:
+            assert num_patches == 1, f'The number of patches should be 1, but got {num_patches}.'
+
+        # Select the appropriate preprocessing function based on the template name
+        preprocess_function = self.get_preprocess_function()
+
+        # Preprocess the conversations and generate the return dictionary
         ret = preprocess_function(self.template_name, [deepcopy(data_item['conversations'])],
                                   self.tokenizer, [self.num_image_token * num_patches],
                                   group_by_length=self.group_by_length, ds_name=self.ds_name)
+
+        # Create the final return dictionary
         ret = dict(
             input_ids=ret['input_ids'][0],
             labels=ret['labels'][0],
@@ -343,48 +378,39 @@ class LazySupervisedDataset(Dataset):
         return ret
 
     def multi_modal_multi_image_get_item(self, data_item):
-        transform = build_transform(is_train=self.is_train, input_size=self.image_size,
-                                    pad2square=self.pad2square, normalize_type=self.normalize_type)
+        # Build transformation function
+        transform = self.get_transform()
+
         images, num_tiles = [], []
         num_image = len(data_item['image'])
         for image_path in data_item['image']:
-            if image_path.startswith('s3://'):
-                image_path = self.root + image_path
-            else:
-                image_path = os.path.join(self.root, image_path)
-            if self.tcs_loader is not None and 's3://' in image_path:
-                image = self.tcs_loader(image_path)
-            else:
-                image = Image.open(image_path).convert('RGB')
-            if self.dynamic_image_size:
+            # Merge the image path
+            image_path = self.get_image_path(image_path)
+            # Load the image using tcs_loader if available, otherwise use PIL
+            image = self.load_image(image_path)
+            if self.dynamic_image_size:  # If dynamic image size is enabled, preprocess the image dynamically
                 image = dynamic_preprocess(image, min_num=self.min_dynamic_patch,
                                            max_num=self.max_dynamic_patch // num_image,
                                            image_size=self.image_size, use_thumbnail=self.use_thumbnail)
                 images += image
                 num_tiles.append(len(image))
-            else:
+            else:  # Otherwise, use the original image as a single patch
                 images.append(image)
                 num_tiles.append(1)
-
         pixel_values = [transform(image) for image in images]
         pixel_values = torch.stack(pixel_values)
         num_patches = pixel_values.size(0)
-        if self.template_name == 'Hermes-2':
-            preprocess_function = preprocess_mpt
-        elif self.template_name == 'internlm2-chat':
-            preprocess_function = preprocess_internlm
-        elif self.template_name == 'phi3-chat':
-            preprocess_function = preprocess_phi3
-        else:
-            preprocess_function = preprocess
 
+        # Select the appropriate preprocessing function based on the template name
+        preprocess_function = self.get_preprocess_function()
+
+        # Preprocess the conversations and generate the return dictionary
         num_image_tokens = [self.num_image_token * num_tile for num_tile in num_tiles]
-        total_tile_num = sum(num_tiles)
-        if 'image_count' in data_item and total_tile_num != data_item['image_count']:
-            print(f'ds_name: {self.ds_name}, correct image_count: {total_tile_num}, expected: {data_item["image_count"]}')
         ret = preprocess_function(self.template_name, [deepcopy(data_item['conversations'])],
                                   self.tokenizer, num_image_tokens, group_by_length=self.group_by_length,
                                   ds_name=self.ds_name, num_image=num_image)
+
+        # Create the final return dictionary
         ret = dict(
             input_ids=ret['input_ids'][0],
             labels=ret['labels'][0],
@@ -395,43 +421,47 @@ class LazySupervisedDataset(Dataset):
         return ret
 
     def video_get_item(self, data_item):
+        # Build transformation function
+        transform = self.get_transform()
+
+        # Ensure the first conversation contains a video placeholder
         if '<video>' not in data_item['conversations'][0]['value']:
             data_item['conversations'][0]['value'] = '<video>\n' + data_item['conversations'][0]['value']
 
+        # Get the video file path
         video_file = data_item['video']
         video_path = os.path.join(self.root, video_file)
-        transform = build_transform(is_train=self.is_train, input_size=self.image_size,
-                                    pad2square=self.pad2square, normalize_type=self.normalize_type)
 
-        clip = data_item.get('clip', None)
+        # Load the video frames using tcs_loader
+        # TODO: Load videos without using tcsloader.
         image_list = self.tcs_loader(
             video_path,
             image_type='video',
             max_num_frames=self.max_num_frame,
             min_num_frames=self.min_num_frame,
             sample=self.sampling_method,
-            clip=clip)
+            clip=data_item.get('clip', None))
 
+        # Generate special tokens for each video frame
         special_tokens = '\n'.join(['Frame{}: <image>'.format(i + 1) for i in range(len(image_list))])
         data_item['conversations'][0]['value'] = data_item['conversations'][0]['value'].replace(
             '<video>\n', special_tokens)
 
+        # Transform each frame image and stack them into a tensor
         pixel_values = [transform(image) for image in image_list]
         pixel_values = torch.stack(pixel_values)
         num_patches = pixel_values.size(0)
-        if self.template_name == 'Hermes-2':
-            preprocess_function = preprocess_mpt
-        elif self.template_name == 'internlm2-chat':
-            preprocess_function = preprocess_internlm
-        elif self.template_name == 'phi3-chat':
-            preprocess_function = preprocess_phi3
-        else:
-            preprocess_function = preprocess
 
+        # Select the appropriate preprocessing function based on the template name
+        preprocess_function = self.get_preprocess_function()
+
+        # Preprocess the conversations and generate the return dictionary
         num_image_tokens = [self.num_image_token] * num_patches
         ret = preprocess_function(self.template_name, [deepcopy(data_item['conversations'])],
                                   self.tokenizer, num_image_tokens, group_by_length=self.group_by_length,
                                   ds_name=self.ds_name, num_image=num_patches)
+
+        # Create the final return dictionary
         ret = dict(
             input_ids=ret['input_ids'][0],
             labels=ret['labels'][0],
@@ -442,26 +472,33 @@ class LazySupervisedDataset(Dataset):
         return ret
 
     def pure_text_get_item(self, data_item):
+        # Build transformation function
+        transform = self.get_transform()
+
+        # Create a blank white image
         image = Image.new('RGB', (224, 224), (255, 255, 255))
-        images = dynamic_preprocess(image, min_num=self.min_dynamic_patch, max_num=self.max_dynamic_patch,
+
+        # Dynamically preprocess the image to generate patches
+        images = dynamic_preprocess(image, min_num=self.min_dynamic_patch, max_num=1,
                                     image_size=self.image_size, use_thumbnail=self.use_thumbnail)
-        transform = build_transform(is_train=self.is_train, input_size=self.image_size,
-                                    pad2square=self.pad2square, normalize_type=self.normalize_type)
+
+        # Apply the transformation to each image patch and stack them into a tensor
         pixel_values = [transform(image) for image in images]
         pixel_values = torch.stack(pixel_values)
         num_patches = pixel_values.size(0)
+
+        # Ensure there is only one patch
         assert num_patches == 1, f'The number of patches should be 1, but got {num_patches}.'
-        if self.template_name == 'Hermes-2':
-            preprocess_function = preprocess_mpt
-        elif self.template_name == 'internlm2-chat':
-            preprocess_function = preprocess_internlm
-        elif self.template_name == 'phi3-chat':
-            preprocess_function = preprocess_phi3
-        else:
-            preprocess_function = preprocess
+
+        # Select the appropriate preprocessing function based on the template name
+        preprocess_function = self.get_preprocess_function()
+
+        # Preprocess the conversations and generate the return dictionary
         ret = preprocess_function(self.template_name, [deepcopy(data_item['conversations'])],
                                   self.tokenizer, [self.num_image_token * num_patches], text_only=True,
                                   group_by_length=self.group_by_length, ds_name=self.ds_name)
+
+        # Create the final return dictionary
         ret = dict(
             input_ids=ret['input_ids'][0],
             labels=ret['labels'][0],
@@ -477,13 +514,19 @@ class LazySupervisedDataset(Dataset):
             try:
                 data_item = json.loads(self.raw_data[i])
                 if 'image' in data_item and len(data_item['image']) != 0:
-                    ret = self.multi_modal_get_item(data_item)
+                    if type(data_item['image']) == list:
+                        ret = self.multi_modal_multi_image_get_item(data_item)
+                    else:
+                        ret = self.multi_modal_get_item(data_item)
+                elif 'video' in data_item and data_item['video'] is not None and data_item['video'] != '':
+                    ret = self.video_get_item(data_item)
                 else:
                     ret = self.pure_text_get_item(data_item)
                 break
             except Exception as e:
-                print(e, self.ds_name)
-                sys.stdout.flush()
+                print(e, self.ds_name, flush=True)
+                if not isinstance(e, UnidentifiedImageError):
+                    traceback.print_exc()
                 data_item = json.loads(self.raw_data[i])
                 if 'image' in data_item:
                     if type(data_item['image']) == list:
@@ -511,7 +554,7 @@ def build_datasets(
     dynamic_image_size=False,
     use_thumbnail=False,
     min_dynamic_patch=1,
-    max_dynamic_patch=6,
+    max_dynamic_patch=12,
     normalize_type='imagenet',
 ):
     datasets = []
@@ -679,7 +722,6 @@ def main():
         logger.info('Building InternVLChatModel...')
         model = InternVLChatModel(internvl_chat_config, vision_model, llm)
     model.img_context_token_id = img_context_token_id
-    model.neftune_alpha = data_args.neftune_alpha
 
     assert model.config.downsample_ratio == data_args.down_sample_ratio
 

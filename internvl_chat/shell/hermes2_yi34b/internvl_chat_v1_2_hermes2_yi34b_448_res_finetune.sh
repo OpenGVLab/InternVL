@@ -71,6 +71,6 @@ srun -p ${PARTITION} \
   --do_train True \
   --grad_checkpoint True \
   --group_by_length True \
-  --deepspeed "zero_stage3_config.json" \
+  --deepspeed "zero_stage3_config_34b.json" \
   --report_to "tensorboard" \
   2>&1 | tee -a "${OUTPUT_DIR}/training_log.txt"
