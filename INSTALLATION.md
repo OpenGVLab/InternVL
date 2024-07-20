@@ -68,6 +68,6 @@
 
   ```bash
   pip install opencv-python termcolor yacs pyyaml scipy
-  pip install deepspeed==0.13.5
+  pip install deepspeed==0.10.0
   pip install pycocoevalcap tqdm
   ```
