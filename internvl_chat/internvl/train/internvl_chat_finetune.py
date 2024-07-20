@@ -261,8 +261,7 @@ class LazySupervisedDataset(Dataset):
                 self.raw_data = self.raw_data * repeat_time
 
         self.rng = np.random.default_rng(seed=random_seed)
-        if self.force_shuffle:
-            self.rng.shuffle(self.raw_data)
+        self.rng.shuffle(self.raw_data)
 
         gc.collect()
         self.root = meta['root']
@@ -307,7 +306,7 @@ class LazySupervisedDataset(Dataset):
             image_path = self.root + data_item['image']
         else:
             image_path = os.path.join(self.root, data_item['image'])
-        if self.tcs_loader is not None:
+        if self.tcs_loader is not None and 's3://' in image_path:
             image = self.tcs_loader(image_path)
         else:
             image = Image.open(image_path).convert('RGB')
@@ -353,7 +352,7 @@ class LazySupervisedDataset(Dataset):
                 image_path = self.root + image_path
             else:
                 image_path = os.path.join(self.root, image_path)
-            if self.tcs_loader is not None:
+            if self.tcs_loader is not None and 's3://' in image_path:
                 image = self.tcs_loader(image_path)
             else:
                 image = Image.open(image_path).convert('RGB')
