@@ -40,6 +40,7 @@ class InternVLChatModel(PreTrainedModel):
     main_input_name = 'pixel_values'
     _no_split_modules = ['InternVisionModel', 'LlamaDecoderLayer', 'InternLM2DecoderLayer',
                          'Phi3DecoderLayer', 'Qwen2DecoderLayer']
+    _supports_flash_attn_2 = True
 
     def __init__(self, config: InternVLChatConfig, vision_model=None, language_model=None):
         super().__init__(config)
@@ -95,21 +96,21 @@ class InternVLChatModel(PreTrainedModel):
         if config.use_llm_lora:
             self.wrap_llm_lora(r=config.use_llm_lora, lora_alpha=2 * config.use_llm_lora)
 
-    def wrap_backbone_lora(self, r=128, lora_alpha=256, lora_dropout=0.05):
+    def wrap_backbone_lora(self, target_modules=['attn.qkv', 'attn.proj', 'mlp.fc1', 'mlp.fc2'],
+                           r=128, lora_alpha=256, lora_dropout=0.05):
         lora_config = LoraConfig(
             r=r,
-            target_modules=['attn.qkv', 'attn.proj', 'mlp.fc1', 'mlp.fc2'],
+            target_modules=target_modules,
             lora_alpha=lora_alpha,
             lora_dropout=lora_dropout,
         )
         self.vision_model = get_peft_model(self.vision_model, lora_config)
         self.vision_model.print_trainable_parameters()
 
-    def wrap_llm_lora(self, r=128, lora_alpha=256, lora_dropout=0.05):
+    def wrap_llm_lora(self, target_modules, r=128, lora_alpha=256, lora_dropout=0.05):
         lora_config = LoraConfig(
             r=r,
-            target_modules=['self_attn.q_proj', 'self_attn.k_proj', 'self_attn.v_proj', 'self_attn.o_proj',
-                            'mlp.gate_proj', 'mlp.down_proj', 'mlp.up_proj'],
+            target_modules=target_modules,
             lora_alpha=lora_alpha,
             lora_dropout=lora_dropout,
             task_type='CAUSAL_LM'
