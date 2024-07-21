@@ -1,32 +1,31 @@
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/47669167/7037290e-f474-4d11-b90f-1d8316087bf8"> InternVL Family: Closing the Gap to Commercial Multimodal Models with Open-Source Suites —— A Pioneering Open-Source Alternative to GPT-4o
 
-[\[📖中文版本ReadMe\]](./README_zh.md) [\[🆕 Blog\]](https://internvl.github.io/blog/)  [\[🚀 InternVL2 Blog\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[📜 InternVL 1.5 Report\]](https://arxiv.org/abs/2404.16821)[(中文解读)](https://zhuanlan.zhihu.com/p/699439759) [\[📜 InternVL 1.0 Paper\]](https://arxiv.org/abs/2312.14238) [\[🚀 Quick Start\]](#quick-start-with-huggingface)
+[\[🆕 Blog\]](https://internvl.github.io/blog/)  [\[🚀 InternVL2 Blog\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)    [\[🤗 HF Chat Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL) [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/)  [\[🌐 API\]](./document/How_to_use_InternVL_API.md)    [\[🚀 Quick Start\]](#quick-start-with-huggingface)
 
-[\[🤗 InternVL2 HF Chat Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL) [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/)  [\[🌐 API\]](./document/How_to_use_InternVL_API.md)
+[\[📜 InternVL 1.0 Paper\]](https://arxiv.org/abs/2312.14238) [\[📜 InternVL 1.5 Report\]](https://arxiv.org/abs/2404.16821)  [\[📖 1.0 中文解读\]](https://zhuanlan.zhihu.com/p/702946079) [\[📖 1.5 中文解读\]](https://zhuanlan.zhihu.com/p/699439759)  [\[📖 2.0 中文解读\]](https://zhuanlan.zhihu.com/p/706547971)
+
+[Switch to the Chinese version (切换至中文版)](/README_zh.md)
 
 <a href="https://trendshift.io/repositories/9803" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9803" alt="OpenGVLab%2FInternVL | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-<img height="55" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/354aa3b7-0129-49b7-94ae-c4deb755051f">
+<img height="55" alt="image" src="https://github.com/user-attachments/assets/bd62ab46-f0ea-40c6-ab10-7fde671716cc">
 
-## News🚀🚀🚀
+## News 🚀🚀🚀
 
-- `2024/07/04`: 🚀We are pleased to release InternVL2. It achieved a 62.0% accuracy on the MMMU Benchmark, matching the performance of leading closed-source commercial models like GPT-4o. The free API of our model can be applied by filling ([English application form](https://docs.google.com/forms/d/e/1FAIpQLSfMCzhPr1OOEKau_6jwTU0EiZMSFckDo-HMlc_hUudhF_97rw/viewform?usp=sf_link))/([中文申请表](https://wj.qq.com/s2/14910502/25a4/)). Models are available at [HF link](https://huggingface.co/collections/OpenGVLab/internvl-20-667d3961ab5eb12c7ed1463e).
-- `2024/06/19`: 🚀We release Needle In A Multimodal Haystack ([MM-NIAH](https://github.com/OpenGVLab/MM-NIAH)), the first benchmark designed to systematically evaluate the capability of existing MLLMs to comprehend long multimodal documents. **Experimental results show that the performance of Gemini-1.5 on tasks involving image needles is no better than random guessing.**
-- `2024/06/04`: InternVL 1.5 achieved state-of-the-art in the Image MLLM category on the [Video-MME](https://github.com/BradyFU/Video-MME) dataset, demonstrating strong generalization across multiple images, surpassing many specialized Video MLLMs and nearing the top open-source video model, LLaVA-Next-Video.
-- `2024/05/30`: 🚀 🚀 We release [ShareGPT-4o](https://sharegpt4o.github.io/), a groundbreaking large-scale resource that we plan to open-source with 200K meticulously annotated images, 10K videos with highly descriptive captions, and 10K audio files with detailed descriptions.
-- `2024/05/29`: 🚀 We release the Mini-InternVL-Chat series, which includes two models: [Mini-InternVL-Chat-2B-V1-5](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5) and [Mini-InternVL-Chat-4B-V1-5](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5). Our small models achieve impressive performance with minimal size: the 2B model delivers 80% of the performance with only 8% of the model size, and the 4B model achieves 90% of the performance with just 16% of the model size. For more details, please check our [blog](https://internvl.github.io/blog/2024-05-25-Mini-InternVL-1.5/).
+- `2024/07/18`: 🔥🔥 InternVL2-40B achieved SOTA performance among open-source models on the [Video-MME](https://github.com/BradyFU/Video-MME) dataset, scoring 61.2 when inputting 16 frames and 64.4 when inputting 32 frames. It significantly outperforms other open-source models and is the closest open-source model to GPT-4o mini.
+- `2024/07/18`: 🔥 InternVL2-Pro achieved the SOTA performance on the [DocVQA](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=1) and [InfoVQA](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=3) benchmarks.
+- `2024/07/04`: 🚀 We release the [InternVL2 series](https://huggingface.co/collections/OpenGVLab/internvl-20-667d3961ab5eb12c7ed1463e). InternVL2-Pro achieved a 62.0% accuracy on the MMMU benchmark, matching the performance of leading closed-source commercial models like GPT-4o. The free API of this model can be applied by filling ([application form](https://docs.google.com/forms/d/e/1FAIpQLSfMCzhPr1OOEKau_6jwTU0EiZMSFckDo-HMlc_hUudhF_97rw/viewform?usp=sf_link)) / ([申请表](https://wj.qq.com/s2/14910502/25a4/)). Other models are available at [HF link](https://huggingface.co/collections/OpenGVLab/internvl-20-667d3961ab5eb12c7ed1463e).
+- `2024/06/19`: We propose Needle In A Multimodal Haystack ([MM-NIAH](https://github.com/OpenGVLab/MM-NIAH)), the first benchmark designed to systematically evaluate the capability of existing MLLMs to comprehend long multimodal documents.
+- `2024/05/30`: We release [ShareGPT-4o](https://sharegpt4o.github.io/), a large-scale dataset that we plan to open-source with 200K images, 10K videos, and 10K audios with detailed descriptions.
+- `2024/05/29`: We release the Mini-InternVL series, which includes two chat models: [Mini-InternVL-Chat-2B-V1-5](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5) and [Mini-InternVL-Chat-4B-V1-5](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5). These models achieve impressive performance with minimal size: the 2B model delivers 80% of the performance with only 8% of the model size, and the 4B model achieves 90% of the performance with just 16% of the model size. For more details, please check our [blog](https://internvl.github.io/blog/2024-05-25-Mini-InternVL-1.5/).
 - `2024/05/28`: Thanks to the [lmdeploy](https://github.com/InternLM/lmdeploy) team for providing AWQ quantization support. The 4-bit model is available at [OpenGVLab/InternVL-Chat-V1-5-AWQ](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-AWQ).
-- `2024/05/13`: 🔥 InternVL can now be used as the [text encoder](https://huggingface.co/OpenGVLab/InternVL-14B-224px) for diffusion models to support multilingual generation natively in over 110 languages worldwide. See [MuLan](https://github.com/mulanai/MuLan) for more details.
-- `2024/04/28`: We release the INT8 version of InternVL-Chat-V1-5, see [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8).
-- `2024/04/28`: We achieve the SOTA performance (75.74) on the Infographics VQA benchmark, see [here](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=3).
+- `2024/05/13`: InternVL 1.0 can now be used as the [text encoder](https://huggingface.co/OpenGVLab/InternVL-14B-224px) for diffusion models to support multilingual generation natively in over 110 languages worldwide. See [MuLan](https://github.com/mulanai/MuLan) for more details.
 - `2024/04/18`: InternVL-Chat-V1-5 has been released at [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5), approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc.
-- `2024/02/27`: InternVL is accepted by CVPR 2024! 🎉
+- `2024/02/27`: InternVL is accepted by CVPR 2024 (Oral)! 🎉
 - `2024/02/24`: InternVL-Chat models have been included in the [VLMEvalKit](https://github.com/open-compass/VLMEvalKit).
-- `2024/02/21`: [InternVL-Chat-V1-2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) achieves SOTA performance on MathVista (59.9), MMBench (83.8), and MMVP (58.7). See our [blog](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/) for more details.
-- `2024/02/12`: InternVL-Chat-V1-2 has been released. It achieves 51.6 on MMMU val and 82.3 on MMBench test. For more details, please refer to our [blog](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/), [SFT data](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#prepare-training-datasets) or try our [demo](https://internvl.opengvlab.com/). The model is now available on [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2), and both training/evaluation data and scripts are open-sourced.
-- `2024/02/04`: [InternVL-Chat-V1-1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1) achieves 44.67% on [MMVP](https://github.com/tsb0601/MMVP), higher than GPT-4V!
-- `2024/01/27`: We release 448 resolution model, achieving 76.6 on MMBench dev, see [here](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#-evaluation-chinese-models).
+- `2024/02/21`: [InternVL-Chat-V1-2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) achieved SOTA performance on MathVista (59.9), MMBench (83.8), and MMVP (58.7). See our [blog](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/) for more details.
+- `2024/02/12`: InternVL-Chat-V1-2 has been released. It achieves 51.6 on MMMU val and 82.3 on MMBench test. For more details, please refer to our [blog](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/) and [SFT data](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#prepare-training-datasets). The model is now available on [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2), and both training / evaluation data and scripts are open-sourced.
 - `2024/01/24`: InternVL-Chat-V1-1 is released, it supports Chinese and has stronger OCR capability, see [here](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1).
-- `2024/01/16`: We release our [customized mmcv/mmsegmentation/mmdetection code](https://github.com/OpenGVLab/InternVL-MMDetSeg), integrated with DeepSpeed, which can be used for training large-scale object detection and semantic segmentation models.
+- `2024/01/16`: We release our [customized mmcv/mmsegmentation/mmdetection code](https://github.com/OpenGVLab/InternVL-MMDetSeg), integrated with DeepSpeed, which can be used for training large-scale detection and segmentation models.
 
 ## Documents
 
@@ -54,49 +53,220 @@
   - How to use InternVL API? [\[link\]](./document/How_to_use_InternVL_API.md)
   - How to deploy a local demo? [\[link\]](./document/How_to_deploy_a_local_demo.md)
   - How to run InternVL-1.5 8bit with Nvidia V100 GPU? [\[link\]](https://github.com/OpenGVLab/InternVL/issues/144) [\[中文教程\]](https://zhuanlan.zhihu.com/p/697188143)
-  - How to perform batch inference? [\[link\]](https://github.com/OpenGVLab/InternVL/blob/main/README.md?plain=1#L617)
-  - Inference Acceleration by LMDeploy [\[link\]](#inference-acceleration-by-lmdeploy) [\[中文教程\]](https://zhuanlan.zhihu.com/p/696955211)
+  - How to perform batch inference? [\[link\]](https://github.com/OpenGVLab/InternVL/blob/main/README.md?plain=1#L646)
 
 ## Compared with SOTA VLLMs
 
 <p align="center"><img width="1000" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/7c31c8f0-d11b-43ec-845d-70186d6c4ef3"></p>
 
-## What is InternVL?
-
-InternVL scales up the ViT to _**6B parameters**_ and aligns it with LLM.
-
 ## Model Zoo
 
-**Vision Large Language Model**
+#### Multimodal Large Language Model (InternVL 2.0)
 
-| Model                      | Date       | Download                                                                                        | Note                                                                                                                                                               |
-| -------------------------- | ---------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| InternVL2                  | 2024.07.04 | 🤗 [HF link](https://huggingface.co/collections/OpenGVLab/internvl-20-667d3961ab5eb12c7ed1463e) | achieving performance close to GPT-4o                                                                                                                              |
-| Mini‑InternVL‑Chat‑4B‑V1‑5 | 2024.05.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5)                       | 🚀🚀 16% of the model size, 90% of the performance                                                                                                                 |
-| Mini-InternVL-Chat-2B-V1-5 | 2024.05.19 | 🤗 [HF link](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5)                       | 🚀 8% of the model size, 80% of the performance                                                                                                                    |
-| InternVL-Chat-V1-5-AWQ     | 2024.05.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-AWQ)                           | The 4-bit version of InternVL-Chat-V1-5                                                                                                                            |
-| InternVL-Chat-V1-5-Int8    | 2024.04.28 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-Int8)                          | The 8-bit version of InternVL-Chat-V1-5                                                                                                                            |
-| InternVL-Chat-V1-5         | 2024.04.18 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)                               | support 4K image; super strong OCR; Approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc. (🔥new) |
-| InternVL-Chat-V1-2-Plus    | 2024.02.21 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus)                          | more SFT data and stronger                                                                                                                                         |
-| InternVL-Chat-V1-2         | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)                               | scaling up LLM to 34B                                                                                                                                              |
-| InternVL-Chat-V1-1         | 2024.01.24 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)                               | support Chinese and stronger OCR                                                                                                                                   |
-| InternVL-Chat-19B-448px    | 2024.02.03 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B-448px)            | 448 resolution                                                                                                                                                     |
-| InternVL-Chat-19B          | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B)                  | English multimodal dialogue                                                                                                                                        |
-| InternVL-Chat-13B          | 2023.12.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B)                   | English multimodal dialogue                                                                                                                                        |
+<table>
+  <tr>
+    <th>Model Name</th>
+    <th>Vision Part</th>
+    <th>Language Part</th>
+    <th>HF&nbsp;Link</th>
+    <th>MS&nbsp;Link</th>
+    <th>Document</th>
+  </tr>
+  <tr>
+    <td>InternVL2&#8209;1B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">InternViT&#8209;300M&#8209;448px</a></td>
+    <td><a href="https://huggingface.co/Qwen/Qwen2-0.5B-Instruct">Qwen2&#8209;0.5B&#8209;Instruct</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-1B">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-1B">🤖 link</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-1B#quick-start">📖 doc</a></td>
+  </tr>
+  <tr>
+    <td>InternVL2&#8209;2B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">InternViT&#8209;300M&#8209;448px</a></td>
+    <td><a href="https://huggingface.co/internlm/internlm2-chat-1_8b">internlm2&#8209;chat&#8209;1&#8209;8b</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-2B">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-2B">🤖 link</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-2B#quick-start">📖 doc</a></td>
+  </tr>
+  <tr>
+    <td>InternVL2&#8209;4B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">InternViT&#8209;300M&#8209;448px</a></td>
+    <td><a href="https://huggingface.co/microsoft/Phi-3-mini-128k-instruct">Phi&#8209;3&#8209;mini&#8209;128k&#8209;instruct</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-4B">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-4B">🤖 link</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-4B#quick-start">📖 doc</a></td>
+  </tr>
+  <tr>
+    <td>InternVL2&#8209;8B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">InternViT&#8209;300M&#8209;448px</a></td>
+    <td><a href="https://huggingface.co/internlm/internlm2_5-7b-chat">internlm2_5&#8209;7b&#8209;chat</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-8B">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-8B">🤖 link</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-8B#quick-start">📖 doc</a></td>
+  </tr>
+  <tr>
+    <td>InternVL2&#8209;26B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5">InternViT&#8209;6B&#8209;448px&#8209;V1&#8209;5</a></td>
+    <td><a href="https://huggingface.co/internlm/internlm2-chat-20b">internlm2&#8209;chat&#8209;20b</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-26B">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-26B">🤖 link</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-26B#quick-start">📖 doc</a></td>
+  </tr>
+  <tr>
+    <td>InternVL2&#8209;40B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5">InternViT&#8209;6B&#8209;448px&#8209;V1&#8209;5</a></td>
+    <td><a href="https://huggingface.co/NousResearch/Nous-Hermes-2-Yi-34B">Nous&#8209;Hermes&#8209;2&#8209;Yi&#8209;34B</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-40B">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-40B">🤖 link</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-40B#quick-start">📖 doc</a></td>
+  </tr>
+  <tr>
+    <td>InternVL2-Llama3-76B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5">InternViT&#8209;6B&#8209;448px&#8209;V1&#8209;5</a></td>
+    <td><a href="https://huggingface.co/NousResearch/Hermes-2-Theta-Llama-3-70B">Hermes‑2‑Theta‑<br>Llama‑3‑70B</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-Llama3-76B">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-Llama3-76B">🤖 link</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-Llama3-76B#quick-start">📖 doc</a></td>
+  </tr>
+</table>
 
-**Vision-Language Foundation Model**
+#### InternVL2-Pro API
 
-| Model                   | Date       | Download                                                               | Note                                                                                                   |
-| ----------------------- | ---------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| InternViT-300M-448px    | 2024.05.25 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-300M-448px)    | distilled small vision foundation model with 300M parameters (🔥new)                                   |
-| InternViT-6B-448px-V1-5 | 2024.04.20 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5) | support dynamic resolution, super strong OCR (🔥new)                                                   |
-| InternViT-6B-448px-V1-2 | 2024.02.11 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-2) | 448 resolution                                                                                         |
-| InternViT‑6B‑448px‑V1‑0 | 2024.01.30 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-0) | 448 resolution                                                                                         |
-| InternViT-6B-224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternViT-6B-224px)      | vision foundation model                                                                                |
-| InternVL-14B-224px      | 2023.12.22 | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)      | vision-language foundation model, InternViT-6B + QLLaMA, can be used for image-text retrival like CLIP |
+We encourage everyone to use our API for research. For better management, please submit ([application form](https://docs.google.com/forms/d/e/1FAIpQLSfMCzhPr1OOEKau_6jwTU0EiZMSFckDo-HMlc_hUudhF_97rw/viewform?usp=sf_link)) / ([申请表](https://wj.qq.com/s2/14910502/25a4/)) to obtain free API access.
 
-**InternVL-2 API**<br>
-We encourage everyone to use our API for research. For better management, please submit ([English application form](https://docs.google.com/forms/d/e/1FAIpQLSfMCzhPr1OOEKau_6jwTU0EiZMSFckDo-HMlc_hUudhF_97rw/viewform?usp=sf_link))/([中文申请表](https://wj.qq.com/s2/14910502/25a4/)) to obtain free API access.
+#### Multimodal Large Language Model (InternVL 1.0-1.5)
+
+<table>
+  <tr>
+    <th>Model</th>
+    <th>Date</th>
+    <th>HF&nbsp;Link</th>
+    <th>MS&nbsp;Link</th>
+    <th>Note</th>
+  </tr>
+  <tr>
+    <td>Mini&#8209;InternVL&#8209;Chat&#8209;4B&#8209;V1&#8209;5</td>
+    <td>2024.05.28</td>
+    <td><a href="https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/Mini-InternVL-Chat-4B-V1-5">🤖 link</a></td>
+    <td>🚀🚀 16% of the model size, 90% of the performance</td>
+  </tr>
+  <tr>
+    <td>Mini&#8209;InternVL&#8209;Chat&#8209;2B&#8209;V1&#8209;5</td>
+    <td>2024.05.19</td>
+    <td><a href="https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/Mini-InternVL-Chat-2B-V1-5">🤖 link</a></td>
+    <td>🚀 8% of the model size, 80% of the performance</td>
+  </tr>
+  <tr>
+    <td>InternVL&#8209;Chat&#8209;V1&#8209;5</td>
+    <td>2024.04.18</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL-Chat-V1-5">🤖 link</a></td>
+    <td>support 4K image; super strong OCR; Approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc.</td>
+  </tr>
+  <tr>
+    <td>InternVL&#8209;Chat&#8209;V1&#8209;2&#8209;Plus</td>
+    <td>2024.02.21</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL-Chat-V1-2-Plus">🤖 link</a></td>
+    <td>more SFT data and stronger</td>
+  </tr>
+  <tr>
+    <td>InternVL&#8209;Chat&#8209;V1&#8209;2</td>
+    <td>2024.02.11</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL-Chat-V1-2">🤖 link</a></td>
+    <td>scaling up LLM to 34B</td>
+  </tr>
+  <tr>
+    <td>InternVL&#8209;Chat&#8209;V1&#8209;1</td>
+    <td>2024.01.24</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL-Chat-V1-1">🤖 link</a></td>
+    <td>support Chinese and stronger OCR</td>
+  </tr>
+  <tr>
+    <td>InternVL&#8209;Chat&#8209;19B</td>
+    <td>2023.12.25</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B">🤖 link</a></td>
+    <td>English multimodal dialogue</td>
+  </tr>
+  <tr>
+    <td>InternVL&#8209;Chat&#8209;13B</td>
+    <td>2023.12.25</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B">🤖 link</a></td>
+    <td>English multimodal dialogue</td>
+  </tr>
+</table>
+
+#### Vision Foundation Model (InternVL 1.0-1.5)
+
+<table>
+  <tr>
+    <th>Model</th>
+    <th>Date</th>
+    <th>HF&nbsp;Link</th>
+    <th>MS&nbsp;Link</th>
+    <th>Note</th>
+  </tr>
+  <tr>
+    <td>InternViT&#8209;300M&#8209;448px</td>
+    <td>2024.05.25</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternViT-300M-448px">🤖 link</a></td>
+    <td>distilled small vision foundation model with 300M parameters (🔥new)</td>
+  </tr>
+  <tr>
+    <td>InternViT&#8209;6B&#8209;448px&#8209;V1&#8209;5</td>
+    <td>2024.04.20</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternViT-6B-448px-V1-5">🤖 link</a></td>
+    <td>support dynamic resolution and super strong OCR feature extraction capability by incremental pre-training (🔥new)</td>
+  </tr>
+  <tr>
+    <td>InternViT&#8209;6B&#8209;448px&#8209;V1&#8209;2</td>
+    <td>2024.02.11</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-2">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternViT-6B-448px-V1-2">🤖 link</a></td>
+    <td>support 448 resolution by incremental pre-training</td>
+  </tr>
+  <tr>
+    <td>InternViT&#8209;6B&#8209;448px&#8209;V1&#8209;0</td>
+    <td>2024.01.30</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-0">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternViT-6B-448px-V1-0">🤖 link</a></td>
+    <td>support 448 resolution by incremental pre-training</td>
+  </tr>
+  <tr>
+    <td>InternViT&#8209;6B&#8209;224px</td>
+    <td>2023.12.22</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-224px">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternViT-6B-224px">🤖 link</a></td>
+    <td>the first version of InternViT-6B, extracted from InternVL‑14B‑224px</td>
+  </tr>
+</table>
+
+#### Vision-Language Foundation Model (InternVL 1.0)
+
+<table>
+  <tr>
+    <th>Model</th>
+    <th>Date</th>
+    <th>HF&nbsp;Link</th>
+    <th>MS&nbsp;Link</th>
+    <th>Note</th>
+  </tr>
+  <tr>
+    <td>InternVL&#8209;14B&#8209;224px</td>
+    <td>2023.12.22</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL-14B-224px">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL-14B-224px">🤖 link</a></td>
+    <td>vision-language foundation model, InternViT-6B + QLLaMA, can be used for image-text retrieval like CLIP</td>
+  </tr>
+</table>
 
 ## What can InternVL do?
 
@@ -113,7 +283,7 @@ We encourage everyone to use our API for research. For better management, please
   | DINOv2-g            |  1.1B  | 86.5  |  89.6   | 78.4  | 75.9 | 78.8 |   62.5    |
   | EVA-01-CLIP-g       |  1.1B  | 86.5  |  89.3   | 77.4  | 70.5 | 87.7 |   63.1    |
   | MAWS-ViT-6.5B       |  6.5B  | 87.8  |    -    |   -   |  -   |  -   |     -     |
-  | ViT-22B\*           | 21.7B  | 89.5  |  90.9   | 83.2  | 83.8 | 87.4 |     ‑     |
+  | ViT-22B\*           | 21.7B  | 89.5  |  90.9   | 83.2  | 83.8 | 87.4 |     -     |
   | InternViT-6B (ours) |  5.9B  | 88.2  |  90.4   | 79.9  | 77.5 | 89.8 |   69.1    |
 
 - Semantic Segmentation [\[see details\]](./segmentation#-evaluation)
@@ -134,7 +304,7 @@ We encourage everyone to use our API for research. For better management, please
   | ----------------- | :---: | :--: | :--: | :---: | :-------: | :-------: |
   | OpenCLIP-G        | 80.1  | 69.3 | 92.1 | 73.6  |   68.9    |   73.0    |
   | EVA-02-CLIP-E+    | 82.0  | 82.1 | 94.5 | 75.7  |   71.6    |   79.6    |
-  | ViT-22B\*         | 85.9  | 90.1 | 96.0 | 80.9  |     ‑     |   87.6    |
+  | ViT-22B\*         | 85.9  | 90.1 | 96.0 | 80.9  |     -     |   87.6    |
   | InternVL-C (ours) | 83.2  | 83.8 | 95.5 | 77.3  |   73.9    |   80.6    |
 
 - Multilingual Zero-Shot Image Classification [\[see details\]](./clip_benchmark#multilingual-imagenet-1k)
@@ -151,7 +321,7 @@ We encourage everyone to use our API for research. For better management, please
   | OpenCLIP-XLM-R-H  |    77.0    |    55.7    |    53.1    |    37.0    |    56.8    |
   | InternVL-C (ours) |    83.2    |    64.5    |    61.5    |    44.9    |    65.7    |
 
-- Zero-Shot Video Classification \[see details\]
+- Zero-Shot Video Classification
 
   | method            | #frame | K400 | K600 | K700 |
   | ----------------- | :----: | :--: | :--: | :--: |
@@ -169,14 +339,14 @@ We encourage everyone to use our API for research. For better management, please
 - English Zero-Shot Image-Text Retrieval [\[see details\]](./clip_benchmark#flickr30k--coco)
 
   <table>
-    <tr  align=center>
+    <tr align=center>
         <td rowspan="3" align=left><b>model</b></td>
         <td colspan="6" align=center><b>Flickr30K</b></td>
         <td colspan="6" align=center><b>COCO</b></td>
         <td rowspan="3" align=center><b>avg</b></td>
 
   </tr>
-     <tr  align=center>
+     <tr align=center>
         <td colspan="3" align=center><b>image-to-text</b></td>
         <td colspan="3" align=center><b>text-to-image</b></td>
          <td colspan="3" align=center><b>image-to-text</b></td>
@@ -392,13 +562,16 @@ We encourage everyone to use our API for research. For better management, please
 </details>
 
 <details>
-  <summary>Multimodal Dialogue (see "Compared with SOTA VLLMs")</summary>
+  <summary>Multimodal Dialogue</summary>
+
+See ["Compared with SOTA VLLMs"](#compared-with-sota-vllms) section.
+
 </details>
 
-## Quick Start with Huggingface
+## Quick Start with HuggingFace
 
 <details>
-  <summary>using InternViT-6B (click to expand)</summary>
+  <summary>using InternViT-6B for visual feature extraction (click to expand)</summary>
 
 ```python
 import torch
@@ -406,14 +579,14 @@ from PIL import Image
 from transformers import AutoModel, CLIPImageProcessor
 
 model = AutoModel.from_pretrained(
-    'OpenGVLab/InternViT-6B-224px',
+    'OpenGVLab/InternViT-6B-448px-V1-5',
     torch_dtype=torch.bfloat16,
     low_cpu_mem_usage=True,
     trust_remote_code=True).cuda().eval()
 
 image = Image.open('./examples/image1.jpg').convert('RGB')
 
-image_processor = CLIPImageProcessor.from_pretrained('OpenGVLab/InternViT-6B-224px')
+image_processor = CLIPImageProcessor.from_pretrained('OpenGVLab/InternViT-6B-448px-V1-5')
 
 pixel_values = image_processor(images=image, return_tensors='pt').pixel_values
 pixel_values = pixel_values.to(torch.bfloat16).cuda()
@@ -424,7 +597,7 @@ outputs = model(pixel_values)
 </details>
 
 <details>
-  <summary>using InternVL-C(ontrastive) and InternVL-G(enerative) (click to expand)</summary>
+  <summary>using InternVL-C(ontrastive) and InternVL-G(enerative) for cross-modal retrieval (click to expand)</summary>
 
 ```python
 import torch
@@ -501,16 +674,18 @@ caption = tokenizer.decode(pred[0].cpu(), skip_special_tokens=True).strip()
 </details>
 
 <details>
-  <summary>using InternVL-Chat (click to expand)</summary>
+  <summary>using InternVL-Chat for multimodal chat (click to expand)</summary>
+
+Here, we take the smaller OpenGVLab/InternVL2-8B as an example:
 
 ```python
-from transformers import AutoTokenizer, AutoModel
+import numpy as np
 import torch
 import torchvision.transforms as T
+from decord import VideoReader, cpu
 from PIL import Image
-
 from torchvision.transforms.functional import InterpolationMode
-
+from transformers import AutoModel, AutoTokenizer
 
 IMAGENET_MEAN = (0.485, 0.456, 0.406)
 IMAGENET_STD = (0.229, 0.224, 0.225)
@@ -591,20 +766,12 @@ def load_image(image_file, input_size=448, max_num=6):
     return pixel_values
 
 
-path = "OpenGVLab/InternVL-Chat-V1-5"
-# If you have an 80G A100 GPU, you can put the entire model on a single GPU.
+path = 'OpenGVLab/InternVL2-8B'
 model = AutoModel.from_pretrained(
     path,
     torch_dtype=torch.bfloat16,
     low_cpu_mem_usage=True,
     trust_remote_code=True).eval().cuda()
-# Otherwise, you need to set device_map='auto' to use multiple GPUs for inference.
-# model = AutoModel.from_pretrained(
-#     path,
-#     torch_dtype=torch.bfloat16,
-#     low_cpu_mem_usage=True,
-#     trust_remote_code=True,
-#     device_map='auto').eval()
 
 tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True)
 # set the max number of tiles in `max_num`
@@ -612,99 +779,144 @@ pixel_values = load_image('./examples/image1.jpg', max_num=6).to(torch.bfloat16)
 
 generation_config = dict(
     num_beams=1,
-    max_new_tokens=512,
+    max_new_tokens=1024,
     do_sample=False,
 )
 
-# single-round single-image conversation
-question = "请详细描述图片" # Please describe the picture in detail
+# pure-text conversation (纯文本对话)
+question = 'Hello, who are you?'
+response, history = model.chat(tokenizer, None, question, generation_config, history=None, return_history=True)
+print(f'User: {question}')
+print(f'Assistant: {response}')
+
+question = 'Can you tell me a story?'
+response, history = model.chat(tokenizer, None, question, generation_config, history=history, return_history=True)
+print(f'User: {question}')
+print(f'Assistant: {response}')
+
+# single-image single-round conversation (单图单轮对话)
+question = '<image>\nPlease describe the image shortly.'
 response = model.chat(tokenizer, pixel_values, question, generation_config)
-print(question, response)
+print(f'User: {question}')
+print(f'Assistant: {response}')
 
-# multi-round single-image conversation
-question = "请详细描述图片" # Please describe the picture in detail
+# single-image multi-round conversation (单图多轮对话)
+question = '<image>\nPlease describe the image in detail.'
 response, history = model.chat(tokenizer, pixel_values, question, generation_config, history=None, return_history=True)
-print(question, response)
+print(f'User: {question}')
+print(f'Assistant: {response}')
 
-question = "请根据图片写一首诗" # Please write a poem according to the picture
+question = 'Please write a poem according to the image.'
 response, history = model.chat(tokenizer, pixel_values, question, generation_config, history=history, return_history=True)
-print(question, response)
+print(f'User: {question}')
+print(f'Assistant: {response}')
 
-# multi-round multi-image conversation
+# multi-image multi-round conversation, combined images (多图多轮对话，拼接图像)
 pixel_values1 = load_image('./examples/image1.jpg', max_num=6).to(torch.bfloat16).cuda()
 pixel_values2 = load_image('./examples/image2.jpg', max_num=6).to(torch.bfloat16).cuda()
 pixel_values = torch.cat((pixel_values1, pixel_values2), dim=0)
 
-question = "详细描述这两张图片" # Describe the two pictures in detail
-response, history = model.chat(tokenizer, pixel_values, question, generation_config, history=None, return_history=True)
-print(question, response)
+question = '<image>\nDescribe the two images in detail.'
+response, history = model.chat(tokenizer, pixel_values, question, generation_config,
+                               history=None, return_history=True)
 
-question = "这两张图片的相同点和区别分别是什么" # What are the similarities and differences between these two pictures
-response, history = model.chat(tokenizer, pixel_values, question, generation_config, history=history, return_history=True)
-print(question, response)
+question = 'What are the similarities and differences between these two images.'
+response, history = model.chat(tokenizer, pixel_values, question, generation_config,
+                               history=history, return_history=True)
+print(f'User: {question}')
+print(f'Assistant: {response}')
 
-# batch inference (single image per sample)
+# multi-image multi-round conversation, separate images (多图多轮对话，独立图像)
 pixel_values1 = load_image('./examples/image1.jpg', max_num=6).to(torch.bfloat16).cuda()
 pixel_values2 = load_image('./examples/image2.jpg', max_num=6).to(torch.bfloat16).cuda()
-image_counts = [pixel_values1.size(0), pixel_values2.size(0)]
+pixel_values = torch.cat((pixel_values1, pixel_values2), dim=0)
+num_patches_list = [pixel_values1.size(0), pixel_values2.size(0)]
+
+question = 'Image-1: <image>\nImage-2: <image>\nDescribe the two images in detail.'
+response, history = model.chat(tokenizer, pixel_values, question, generation_config,
+                               num_patches_list=num_patches_list,
+                               history=None, return_history=True)
+print(f'User: {question}')
+print(f'Assistant: {response}')
+
+question = 'What are the similarities and differences between these two images.'
+response, history = model.chat(tokenizer, pixel_values, question, generation_config,
+                               num_patches_list=num_patches_list,
+                               history=history, return_history=True)
+print(f'User: {question}')
+print(f'Assistant: {response}')
+
+# batch inference, single image per sample (单图批处理)
+pixel_values1 = load_image('./examples/image1.jpg', max_num=6).to(torch.bfloat16).cuda()
+pixel_values2 = load_image('./examples/image2.jpg', max_num=6).to(torch.bfloat16).cuda()
+num_patches_list = [pixel_values1.size(0), pixel_values2.size(0)]
 pixel_values = torch.cat((pixel_values1, pixel_values2), dim=0)
 
-questions = ["Describe the image in detail."] * len(image_counts)
+questions = ['<image>\nDescribe the image in detail.'] * len(num_patches_list)
 responses = model.batch_chat(tokenizer, pixel_values,
-                             image_counts=image_counts,
+                             num_patches_list=num_patches_list,
                              questions=questions,
                              generation_config=generation_config)
 for question, response in zip(questions, responses):
-    print(question)
-    print(response)
+    print(f'User: {question}')
+    print(f'Assistant: {response}')
+
+# video multi-round conversation (视频多轮对话)
+def get_index(bound, fps, max_frame, first_idx=0, num_segments=32):
+    if bound:
+        start, end = bound[0], bound[1]
+    else:
+        start, end = -100000, 100000
+    start_idx = max(first_idx, round(start * fps))
+    end_idx = min(round(end * fps), max_frame)
+    seg_size = float(end_idx - start_idx) / num_segments
+    frame_indices = np.array([
+        int(start_idx + (seg_size / 2) + np.round(seg_size * idx))
+        for idx in range(num_segments)
+    ])
+    return frame_indices
+
+def load_video(video_path, bound=None, input_size=448, max_num=1, num_segments=32):
+    vr = VideoReader(video_path, ctx=cpu(0), num_threads=1)
+    max_frame = len(vr) - 1
+    fps = float(vr.get_avg_fps())
+
+    pixel_values_list, num_patches_list = [], []
+    transform = build_transform(input_size=input_size)
+    frame_indices = get_index(bound, fps, max_frame, first_idx=0, num_segments=num_segments)
+    for frame_index in frame_indices:
+        img = Image.fromarray(vr[frame_index].asnumpy()).convert('RGB')
+        img = dynamic_preprocess(img, image_size=input_size, use_thumbnail=True, max_num=max_num)
+        pixel_values = [transform(tile) for tile in img]
+        pixel_values = torch.stack(pixel_values)
+        num_patches_list.append(pixel_values.shape[0])
+        pixel_values_list.append(pixel_values)
+    pixel_values = torch.cat(pixel_values_list)
+    return pixel_values, num_patches_list
+
+
+video_path = './examples/red-panda.mp4'
+# pixel_values, num_patches_list = load_video(video_path, num_segments=32, max_num=1)
+pixel_values, num_patches_list = load_video(video_path, num_segments=8, max_num=1)
+pixel_values = pixel_values.to(torch.bfloat16).cuda()
+video_prefix = ''.join([f'Frame{i+1}: <image>\n' for i in range(len(num_patches_list))])
+question = video_prefix + 'What is the red panda doing?'
+# Frame1: <image>\nFrame2: <image>\n...\nFrame31: <image>\n{question}
+response, history = model.chat(tokenizer, pixel_values, question, generation_config,
+                               num_patches_list=num_patches_list,
+                               history=None, return_history=True)
+print(f'User: {question}')
+print(f'Assistant: {response}')
+
+question = 'Describe this video in detail. Don\'t repeat.'
+response, history = model.chat(tokenizer, pixel_values, question, generation_config,
+                               num_patches_list=num_patches_list,
+                               history=history, return_history=True)
+print(f'User: {question}')
+print(f'Assistant: {response}')
 ```
 
 </details>
-
-## Inference Acceleration by LMDeploy
-
-We recommend using [LMDeploy](https://github.com/InternLM/lmdeploy), if InternVL-Chat model inference optimization is required.
-
-In the following subsections, we will introduce the usage of LMDeploy with the [InternVL-Chat-V1-5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5) model as an example.
-
-First of all, please setup the inference environment as follows:
-
-```shell
-conda create -n internvl python=3.10 -y
-conda activate internvl
-
-pip install timm torchvision==0.17.2
-pip install lmdeploy
-```
-
-LMDeploy pypi package depends on CUDA 12.x by default. For a CUDA 11.x environment, please refer to the [installation guide](https://lmdeploy.readthedocs.io/en/latest/get_started.html#installation).
-
-### Offline Inference Pipeline
-
-```python
-from lmdeploy import pipeline
-from lmdeploy.vl import load_image
-pipe = pipeline('OpenGVLab/InternVL-Chat-V1-5')
-image = load_image('examples/image2.jpg')
-response = pipe(('describe this image', image))
-print(response)
-```
-
-For more on using the VLM pipeline, including multi-image inference or multi-turn chat, please overview [this](https://lmdeploy.readthedocs.io/en/latest/inference/vl_pipeline.html) guide.
-
-### Online Inference Service
-
-LMDeploy supports one-click packaging of the VLM model into an OpenAI service, providing seamless integration with the OpenAI API.
-
-The service can be launched by one command as below:
-
-```shell
-lmdeploy serve api_server OpenGVLab/InternVL-Chat-V1-5
-```
-
-The arguments of `api_server` can be viewed through the command `lmdeploy serve api_server -h`, for instance, `--tp` to set tensor parallelism, `--session-len` to specify the max length of the context window, `--cache-max-entry-count` to adjust the GPU mem ratio for k/v cache etc.
-
-For more details, including service startup with docker, RESTful API information, and openai integration methods, please refer to [this](https://lmdeploy.readthedocs.io/en/latest/serving/api_server_vl.html) guide.
 
 ## License
 
