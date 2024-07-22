@@ -1,1 +1,2 @@
+huggingface_hub
 lmdeploy

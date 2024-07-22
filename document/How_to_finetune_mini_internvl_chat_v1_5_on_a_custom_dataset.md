@@ -1,10 +1,10 @@
-# How to fine-tune the Mini-InternVL-Chat series on a custom dataset?
+# How to Fine-tune the Mini-InternVL-Chat Series on a Custom Dataset
 
 ## 1. Prepare the Pre-trained Model
 
-Before you start the second fine-tuning, you need to download the models we released. Here we provide two models:
-[Mini-InternVL-Chat-2B-V1-5](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5) and [Mini-InternVL-Chat-4B-V1-5](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5).
-You can use the following command to download one of them.
+Before starting the second fine-tuning process, download the models we released. We provide two models: [Mini-InternVL-Chat-2B-V1-5](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5) and [Mini-InternVL-Chat-4B-V1-5](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5).
+
+Use the following commands to download the desired model:
 
 ```bash
 huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/Mini-InternVL-Chat-2B-V1-5 --local-dir path/to/Mini-InternVL-Chat-2B-V1-5
@@ -15,20 +15,19 @@ huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGV
 
 ### Prepare Released Training Datasets
 
-See [\[link\]](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#prepare-training-datasets)
+Refer to [this link](../internvl_chat#prepare-training-datasets) for details on preparing released training datasets.
 
 ### Prepare Your Customized Data
 
-The annotation of your customized data should be filled in as a JSONL file in the following format.
+Create a JSONL file with annotations for your custom data in the following format:
 
 ```json
 {"id": 0, "image": "image path relative to dataset path", "conversations": [{"from": "human", "value": "<image>\nyour question"}, {"from": "gpt", "value": "response"}]}
 ```
 
-If you want to train with your customized SFT data,  it is recommended to merge your data with our [internvl_1_2_finetune](../internvl_chat/shell/data/internvl_1_2_finetune.json) data by adding your data's metadata to our [JSON file](../internvl_chat/shell/data/internvl_1_2_finetune.json).
-The format for organizing this JSON file is:
+If you want to train with your customized SFT data, merge your data with our [internvl_1_2_finetune](../internvl_chat/shell/data/internvl_1_2_finetune.json) data by adding your data's metadata to our [JSON file](../internvl_chat/shell/data/internvl_1_2_finetune.json). The format for organizing this JSON file is:
 
-```
+```json
 {
   "sharegpt4v_instruct_gpt4-vision_cap100k": {
     "root": "playground/data/",
@@ -94,37 +93,34 @@ The format for organizing this JSON file is:
     "length": 29765
   },
   "your_new_dataset": {
-          "root": "path/to/images",
-          "annotation": "path/to/annotation_file",
-          "data_augment": true, # wether use data augment
-          "repeat_time": 1,     # repeat time
-          "length": 499712      # total numbers of data samples
-    },
-   ...
-
- }
+    "root": "path/to/images",
+    "annotation": "path/to/annotation_file",
+    "data_augment": false,
+    "repeat_time": 1,
+    "length": 499712
+  }
+}
 ```
 
-## 3. Start Finetuning
+## 3. Start Fine-tuning
 
-You can fine-tune our released models using this [script (Mini-InternVL-Chat-2B-V1-5)](https://github.com/OpenGVLab/InternVL/blob/main/internvl_chat/shell/internlm2_1_8b_dynamic/internvl_chat_v1_5_internlm2_1_8b_dynamic_res_finetune.sh) or [script(Mini-InternVL-Chat-4B-V1-5)](https://github.com/OpenGVLab/InternVL/blob/main/internvl_chat/shell/phi3_3_8b_dynamic/internvl_chat_v1_5_phi3_3_8b_dynamic_res_finetune.sh).
-Before fine-tuning, you should set the `--meta_path` to the path of the JSON file you created in the last step. And, You should change `--model_name_or_path` in these shell scripts to `path/to/Mini-InternVL-Chat-2B-V1-5`  or `path/to/Mini-InternVL-Chat-4B-V1-5`.
+Fine-tune the released models using either the [script for Mini-InternVL-Chat-2B-V1-5](./internvl_chat/shell/internlm2_1_8b_dynamic/internvl_chat_v1_5_internlm2_1_8b_dynamic_res_finetune.sh) or the [script for Mini-InternVL-Chat-4B-V1-5](./internvl_chat/shell/phi3_3_8b_dynamic/internvl_chat_v1_5_phi3_3_8b_dynamic_res_finetune.sh). Set the `--meta_path` to the path of the JSON file you created in the last step and update `--model_name_or_path` in these shell scripts to `path/to/Mini-InternVL-Chat-2B-V1-5` or `path/to/Mini-InternVL-Chat-4B-V1-5`.
 
 ```bash
-# using 16 GPUs with slurm system, fine-tune the full LLM
-cd ./InternVL/internvl_chat/
+# Using 16 GPUs with SLURM system, fine-tune the full LLM
+cd internvl_chat/
 # Mini-InternVL-Chat-2B-V1-5
 PARTITION='your partition' GPUS=16 sh shell/internlm2_1_8b_dynamic/internvl_chat_v1_5_internlm2_1_8b_dynamic_res_finetune.sh
 # Mini-InternVL-Chat-4B-V1-5
 PARTITION='your partition' GPUS=16 sh shell/phi3_3_8b_dynamic/internvl_chat_v1_5_phi3_3_8b_dynamic_res_finetune.sh
 ```
 
-If you see the following log in the terminal, it means the training is started successfully.
+If you see the following log in the terminal, it means the training has started successfully:
 
-![84a0498a-b565-4964-be0f-f91d2cec7612](https://github.com/G-z-w/InternVL/assets/95175307/d66a2c40-be4c-42c8-babf-052621d2995e)
+![Training Started Successfully](https://github.com/G-z-w/InternVL/assets/95175307/d66a2c40-be4c-42c8-babf-052621d2995e)
 
-For a complete example training log, please refer to the [\[link\]](./training_log.txt)
+For a complete example training log, refer to [this link](./training_log.txt).
 
 ## 4. Evaluate
 
-See [\[link\]](https://github.com/OpenGVLab/InternVL/blob/main/document/how_to_evaluate_internvl_chat_v1_5.md)
+Refer to [this link](./document/How_to_evaluate_internvl_chat_v1_5.md) for evaluation details.

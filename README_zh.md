@@ -1,3 +1,5 @@
+<div align="center">
+
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/47669167/7037290e-f474-4d11-b90f-1d8316087bf8"> InternVL家族：通过开源组件缩小与商业多模态模型的差距 —— GPT-4o的开源替代方案
 
 [\[🆕 博客\]](https://internvl.github.io/blog/)  [\[🚀 InternVL2 博客\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[🤗 HF 对话Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL) [\[🗨️ 对话Demo\]](https://internvl.opengvlab.com/)  [\[🌐 API\]](./document/How_to_use_InternVL_API.md)    [\[🚀 快速开始\]](#使用-huggingface-快速开始)
@@ -8,6 +10,10 @@
 
 <a href="https://trendshift.io/repositories/9803" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9803" alt="OpenGVLab%2FInternVL | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 <img height="55" alt="image" src="https://github.com/user-attachments/assets/bd62ab46-f0ea-40c6-ab10-7fde671716cc">
+
+![opencompass](https://github.com/user-attachments/assets/7ce93c05-84ae-4997-a480-53897d1d3a1c)
+
+</div>
 
 ## 最新消息 🚀🚀🚀
 
@@ -23,7 +29,7 @@
 - `2024/02/27`: InternVL 已被 CVPR 2024 (Oral) 接收！🎉
 - `2024/02/24`: InternVL-Chat 系列模型已经接入 [VLMEvalKit](https://github.com/open-compass/VLMEvalKit) 评测框架。
 - `2024/02/21`: [InternVL-Chat-V1-2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) 在 MathVista（59.9）、MMBench（83.8）和 MMVP（58.7）上实现了 SOTA 性能。详情请看我们的[博客](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/)。
-- `2024/02/12`: InternVL-Chat-V1-2 已经发布，它在 MMMU 验证集上达到了 51.6，在 MMBench 测试集上达到了 82.3。 更多信息请参考我们的[博客](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/)以及 [SFT 数据](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat#prepare-training-datasets)。该模型已经在 [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2) 发布，训练、测评的数据和脚本均已开源。
+- `2024/02/12`: InternVL-Chat-V1-2 已经发布，它在 MMMU 验证集上达到了 51.6，在 MMBench 测试集上达到了 82.3。 更多信息请参考我们的[博客](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/)以及 [SFT 数据](./internvl_chat#prepare-training-datasets)。该模型已经在 [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2) 发布，训练、测评的数据和脚本均已开源。
 - `2024/01/24`: InternVL-Chat-V1-1 已经发布，它支持中文对话，并具备强大的 OCR 能力，详情请看[这里](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)。
 - `2024/01/16`: 我们发布了 [定制的 mmcv/mmsegmentation/mmdetection 代码库](https://github.com/OpenGVLab/InternVL-MMDetSeg)，集成了 DeepSpeed，可以用于训练检测和分割大模型。
 
@@ -31,33 +37,33 @@
 
 - 安装
 
-  - 如何搭建运行环境?  [\[link\]](./INSTALLATION.md)
+  - 如何搭建运行环境?  [\[link\]](./INSTALLATION.md) [\[requirements.txt\]](./requirements.txt)
 
 - 训练或微调
 
   - 如何复现 InternVL-Chat-V1-2 的SFT阶段? [\[link\]](./internvl_chat#start-training)
-  - 如何在自定义数据集上微调 InternVL-Chat-V1-2? [\[link\]](./document/how_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md)
+  - 如何在自定义数据集上微调 InternVL-Chat-V1-2? [\[link\]](./document/How_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md)
   - 如何在自定义数据集上微调 Mini-InternVL-Chat 系列? [\[link\]](./document/How_to_finetune_mini_internvl_chat_v1_5_on_a_custom_dataset.md)
 
 - Benchmark 测评
 
   > 由于此代码库与 VLMEvalKit 之间存在细微的实现差异，在测试同一模型时，性能指标可能会出现轻微差异。
 
-  - 如何评测 InternVL-Chat-V1-5? [\[link\]](./document/how_to_evaluate_internvl_chat_v1_5.md)
-  - 如何使用 VLMEvalKit 评测 InternVL-Chat-V1-5? (推荐) [\[link\]](./document/how_to_evaluate_internvl_chat_v1_5_using_vlmevalkit.md)
-  - 如何使用 VLMEvalKit 评测 Mini-InternVL-Chat-2B-V1-5? (推荐) [\[link\]](./document/how_to_evaluate_mini_internvl_chat_2b_v1_5_using_vlmevalkit.md)
-  - 如何使用 VLMEvalKit 评测 Mini-InternVL-Chat-4B-V1-5? (推荐) [\[link\]](./document/how_to_evaluate_mini_internvl_chat_4b_v1_5_using_vlmevalkit.md)
+  - 如何评测 InternVL-Chat-V1-5? [\[link\]](./document/How_to_evaluate_internvl_chat_v1_5.md)
+  - 如何使用 VLMEvalKit 评测 InternVL-Chat-V1-5? (推荐) [\[link\]](./document/How_to_evaluate_internvl_chat_v1_5_using_vlmevalkit.md)
+  - 如何使用 VLMEvalKit 评测 Mini-InternVL-Chat-2B-V1-5? (推荐) [\[link\]](./document/How_to_evaluate_mini_internvl_chat_2b_v1_5_using_vlmevalkit.md)
+  - 如何使用 VLMEvalKit 评测 Mini-InternVL-Chat-4B-V1-5? (推荐) [\[link\]](./document/How_to_evaluate_mini_internvl_chat_4b_v1_5_using_vlmevalkit.md)
 
 - 模型部署
 
   - 如何使用 InternVL API? [\[link\]](./document/How_to_use_InternVL_API.md)
-  - 如何部署本地的 demo? [\[link\]](./document/how_to_deploy_a_local_demo.md)
+  - 如何部署本地的 demo? [\[link\]](./document/How_to_deploy_a_local_demo.md)
   - 如何用 Nvidia V100 GPU 运行 InternVL-1.5 8bit? [\[link\]](https://github.com/OpenGVLab/InternVL/issues/144) [\[中文教程\]](https://zhuanlan.zhihu.com/p/697188143)
-  - 如何进行批量推理？ [\[link\]](https://github.com/OpenGVLab/InternVL/blob/main/README.md?plain=1#L646)
+  - 如何进行批量推理？ [\[link\]](./README.md?plain=1#L849)
 
 ## 和 SOTA 多模态大模型对比
 
-<p align="center"><img width="1000" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/8529570/7c31c8f0-d11b-43ec-845d-70186d6c4ef3"></p>
+![waic_performance](https://github.com/user-attachments/assets/7b24ad6c-45dd-4bcd-aa77-79da1ec856ee)
 
 ## 模型库
 

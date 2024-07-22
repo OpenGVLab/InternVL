@@ -292,7 +292,7 @@ The result is:
 
 ## General Multimodal Benchmarks
 
-Next, we will test InternVL-Chat-V1.5 using 10 general multimodal benchmarks, which include MME, RealWorldQA, AI2D, MMMU, MMBench-EN, MMBench-CN, CCBench, MMVet, SEED, and HallusionBench.
+Next, we will test InternVL-Chat-V1-5 using 10 general multimodal benchmarks, which include MME, RealWorldQA, AI2D, MMMU, MMBench-EN, MMBench-CN, CCBench, MMVet, SEED, and HallusionBench.
 
 ### MME
 
@@ -669,7 +669,7 @@ The final score reported in our technical report is the average: (66.771819 + 40
 
 ## Math Benchmark
 
-Finally, we use a representative math dataset, MathVista, to test InternVL-Chat-V1.5.
+Finally, we use a representative math dataset, MathVista, to test InternVL-Chat-V1-5.
 
 ### MathVista testmini
 
