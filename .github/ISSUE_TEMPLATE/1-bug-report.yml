@@ -1,0 +1,54 @@
+name: 🐞 Bug report
+description: Create a report to help us reproduce and fix the bug
+title: "[Bug] "
+labels: ['Bug']
+
+body:
+- type: checkboxes
+  attributes:
+    label: Checklist
+    options:
+    - label: 1. I have searched related issues but cannot get the expected help.
+    - label: 2. The bug has not been fixed in the latest version.
+    - label: 3. Please note that if the bug-related issue you submitted lacks corresponding environment info and a minimal reproducible demo, it will be challenging for us to reproduce and resolve the issue, reducing the likelihood of receiving feedback.
+- type: textarea
+  attributes:
+    label: Describe the bug
+    description: A clear and concise description of what the bug is.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Reproduction
+    description: |
+      1. What command or script did you run?
+    placeholder: |
+      A placeholder for the command.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Environment
+    description: |
+      1. Please run `lmdeploy check_env` to collect necessary environment information and paste it here.
+      2. You may add addition that may be helpful for locating the problem, such as
+         - Which **model** are you using?
+         - How you installed PyTorch \[e.g., pip, conda, source\]
+         - Other environment variables that may be related (such as `$PATH`, `$LD_LIBRARY_PATH`, `$PYTHONPATH`, etc.)
+    placeholder: Environment here.
+    render: Shell
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Error traceback
+    description: |
+      If applicable, paste the error trackback here.
+    placeholder: Logs and traceback here.
+    render: Shell
+- type: markdown
+  attributes:
+    value: >
+     If you have already identified the reason, you can provide the information here. If you are willing to create a PR to fix it, please also leave a comment here and that would be much appreciated!
+
+     Thanks for your bug report. We appreciate it a lot.
