@@ -149,7 +149,7 @@ The hyperparameters used for fine-tuning are listed in the following table. And,
 
 ### Continued Fine-tune
 
-See [this document](../document/how_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md) to finetune InternVL-Chat-V1-2.
+See [this document](../document/How_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md) to finetune InternVL-Chat-V1-2.
 
 ## 📊 Evaluation
 

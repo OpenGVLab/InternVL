@@ -1,25 +1,25 @@
-# How to fine-tune InternVL-Chat-V1.2 on a custom dataset?
+# How to Fine-tune InternVL-Chat-V1-2 on a Custom Dataset
 
-#### 1. Prepare the Pre-trained Model
+## 1. Prepare the Pre-trained Model
 
-Before you start the second fine-tuning, you need to download the pre-trained model we provided. Here we provide two pre-trained models, [InternVL-Chat-V1.2](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2) and [InternVL-Chat-V1.2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus).
+Before starting the second fine-tuning process, download the pre-trained model we provide. Two versions are available: [InternVL-Chat-V1-2](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2) and [InternVL-Chat-V1-2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus). We recommend downloading the Plus version.
 
-You can use the following command to download one of them, we recommend you download the plus version.
+Use the following commands to download the desired model:
 
 ```shell
 cd pretrained/
 # pip install -U huggingface_hub
-# download OpenGVLab/InternVL-Chat-V1-2
+# Download OpenGVLab/InternVL-Chat-V1-2
 huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-Chat-V1-2 --local-dir InternVL-Chat-V1-2
-# download OpenGVLab/InternVL-Chat-V1-2-Plus
+# Download OpenGVLab/InternVL-Chat-V1-2-Plus
 huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-Chat-V1-2-Plus --local-dir InternVL-Chat-V1-2-Plus
 ```
 
-#### 2. Prepare Your Custom Training Data
+## 2. Prepare Your Customized Training Data
 
-After downloading the pre-trained model, you need to prepare your customized SFT data. You should write a JSON file in `internvl_chat/shell/data/`, just like [this file](./shell/data/internvl_1_2_finetune.json).
+After downloading the pre-trained model, prepare your customized SFT (Supervised Fine-Tuning) data. Create a JSON file in `internvl_chat/shell/data/` similar to [this example](./shell/data/internvl_1_2_finetune.json).
 
-The format for organizing this JSON file is:
+The format for the JSON file should be:
 
 ```json
 {
@@ -28,19 +28,19 @@ The format for organizing this JSON file is:
     "annotation": "path/to/the/jsonl/annotation",
     "data_augment": false,
     "repeat_time": 1,
-    "length": number of your data
+    "length": "number of your data"
   },
   ...
 }
 ```
 
-For example:
+Example:
 
 ```json
 {
   "sharegpt4v_instruct_gpt4-vision_cap100k": {
     "root": "playground/data/",
-    "annotation": "playground/sharegpt4v_instruct_gpt4-vision_cap100k.jsonl",
+    "annotation": "playground/opensource/sharegpt4v_instruct_gpt4-vision_cap100k.jsonl",
     "data_augment": false,
     "repeat_time": 1,
     "length": 102025
@@ -48,19 +48,21 @@ For example:
 }
 ```
 
-#### 3. Start Fine-tuning
+## 3. Start Fine-tuning
 
-You can fine-tune our pre-trained models using this [script (train full LLM)](../internvl_chat/shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune_continue.sh) or this [script (train LoRA adapter)](../internvl_chat/shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune_continue_lora.sh), depending on your available GPU devices.
+Fine-tune the pre-trained models using either the [script for training the full LLM](../internvl_chat/shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune_continue.sh) or the [script for training the LoRA adapter](../internvl_chat/shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune_continue_lora.sh), depending on your available GPU resources.
 
-Before fine-tuning, you should set the `--meta_path` to the path of the JSON file you created in the last step. And, the default pre-trained model in these shell scripts is `./pretrained/InternVL-Chat-V1-2`. You should change it to `./pretrained/InternVL-Chat-V1-2-Plus` if you want to fine-tune our plus version.
+Before fine-tuning, set the `--meta_path` to the path of the JSON file you created in the previous step. The default pre-trained model path in these shell scripts is `./pretrained/InternVL-Chat-V1-2`. Update it to `./pretrained/InternVL-Chat-V1-2-Plus` if you are using the Plus version.
 
-> Note: fine-tune the full LLM needs 16 A100 80G GPUs, and fine-tune the LoRA needs 2 A100 80G GPUs.
+> Note: Fine-tuning the full LLM requires 16 A100 80G GPUs, whereas fine-tuning the LoRA requires 2 A100 80G GPUs.
+
+Commands for fine-tuning:
 
 ```sh
-# using 16 GPUs with slurm system, fine-tune the full LLM
+# Using 16 GPUs with SLURM system, fine-tune the full LLM
 PARTITION='your partition' GPUS=16 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune_continue.sh
-# using 2 GPUs, fine-tune the LoRA
+# Using 2 GPUs, fine-tune the LoRA
 CUDA_VISIBLE_DEVICES=0,1 sh shell/hermes2_yi34b/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune_continue_lora.sh
 ```
 
-If you run into any problems, please let me know and I will improve the training guide to make it easier to use.
+If you encounter any issues, please let me know, and I will update the training guide to enhance its usability.
