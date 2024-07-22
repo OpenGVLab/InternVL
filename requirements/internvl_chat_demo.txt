@@ -1,0 +1,10 @@
+fastapi
+gradio==3.35.2
+gradio_client==0.2.9
+httpx==0.24.0
+markdown2[all]
+pydantic<2,>=1
+requests
+streamlit
+streamlit-image-select
+uvicorn

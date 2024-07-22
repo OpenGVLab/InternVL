@@ -1,0 +1,4 @@
+-r requirements/internvl_chat_training.txt
+-r requirements/internvl_chat_eval.txt
+-r requirements/internvl_chat_demo.txt
+-r requirements/internvl_chat_deploy.txt
