@@ -1,0 +1,9 @@
+numpy
+pycocoevalcap
+pyyaml
+scikit-learn>=1.2.2
+scipy
+shortuuid
+termcolor
+tqdm
+yacs
