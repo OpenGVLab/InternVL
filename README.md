@@ -38,7 +38,7 @@
 - [ ] Support vLLM and Ollama
 - [ ] Rebuild documents using readthedocs
 - [ ] Support fine-tuning different LLMs with LoRA
-- [ ] Add video and PDF input in online demo
+- [ ] Support video and PDF input in online demo
 - [ ] Release InternVL2 with VisionLLMv2 integration
 - [x] Release `requirements.txt` for InternVL2
 - [x] Release training / evaluation code for InternVL2 series
