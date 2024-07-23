@@ -16,7 +16,7 @@ export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 export MASTER_PORT=34229
 export TF_CPP_MIN_LOG_LEVEL=3
 
-OUTPUT_DIR='work_dirs/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune_continue'
+OUTPUT_DIR='work_dirs/internvl_chat_v1_2/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune_continue'
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
@@ -45,12 +45,10 @@ srun -p ${PARTITION} \
   --force_image_size 448 \
   --down_sample_ratio 0.5 \
   --drop_path_rate 0.0 \
-  --pad2square False \
   --freeze_llm False \
   --freeze_mlp False \
   --freeze_backbone True \
   --vision_select_layer -1 \
-  --use_data_resampling False \
   --dataloader_num_workers 4 \
   --bf16 True \
   --num_train_epochs 1 \
