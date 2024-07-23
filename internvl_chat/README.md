@@ -149,7 +149,7 @@ The hyperparameters used for fine-tuning are listed in the following table. And,
 
 ### Continued Fine-tune
 
-See [this document](../document/how_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md) to finetune InternVL-Chat-V1-2.
+See [this document](../document/How_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md) to finetune InternVL-Chat-V1-2.
 
 ## 📊 Evaluation
 
@@ -159,45 +159,45 @@ Note: TextVQA contains two scores, representing not using or using Rosetta OCR t
 
 | model                                                                               | #param | DocVQA<br>(val/test) | ChartVQA<br>(avg. test) | InfoVQA<br>(val/test) | TextVQA<br>(val, wo/w OCR) | OCRBench | AI2D |
 | ----------------------------------------------------------------------------------- | ------ | -------------------- | ----------------------- | --------------------- | -------------------------- | -------- | ---- |
-| [InternVL&#8209;Chat&#8209;V1&#8209;1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)           | 19B    | 47.6 / 48.1          | 59.9                    | 33.3 / 32.0           | 64.2 / 68.6                | 530      | 72.4 |
-| [InternVL&#8209;Chat&#8209;V1&#8209;2](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)           | 40B    | 56.4 / 57.7          | 68.0                    | 36.0 / 39.5           | 67.5 / 72.5                | 569      | 79.0 |
-| [InternVL&#8209;Chat&#8209;V1&#8209;2&#8209;Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) | 40B    | 56.9 / 56.8          | 72.8                    | 40.9 / 40.6           | 71.2 / 74.1                | 598      | 78.9 |
-| [InternVL&#8209;Chat&#8209;V1&#8209;5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)           | 26B    | 90.5 / 90.8          | 83.8                    | 72.4 / 72.5           | 80.6 / -                   | 724      | 80.7 |
+| [InternVL‑Chat‑V1‑1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)           | 19B    | 47.6 / 48.1          | 59.9                    | 33.3 / 32.0           | 64.2 / 68.6                | 530      | 72.4 |
+| [InternVL‑Chat‑V1‑2](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)           | 40B    | 56.4 / 57.7          | 68.0                    | 36.0 / 39.5           | 67.5 / 72.5                | 569      | 79.0 |
+| [InternVL‑Chat‑V1‑2‑Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) | 40B    | 56.9 / 56.8          | 72.8                    | 40.9 / 40.6           | 71.2 / 74.1                | 598      | 78.9 |
+| [InternVL‑Chat‑V1‑5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)           | 26B    | 90.5 / 90.8          | 83.8                    | 72.4 / 72.5           | 80.6 / -                   | 724      | 80.7 |
 
 **MultiModal Benchmark**
 
-| model                                                                               | #param | MME            | MMB<br>(dev/test) | MMB&#8209;CN<br>(dev/test) | CCBench | MMVet | MMMU<br>(val/test)                                                                 | MathVista<br>(testmini) | Hallusion<br>Bench | RealWorld<br/>QA | SEEDv1<br>(image) | CMMMU<br>(val/test) | POPE | MMVP | Tiny LVLM | LLaVA Wild |
+| model                                                                               | #param | MME            | MMB<br>(dev/test) | MMB‑CN<br>(dev/test) | CCBench | MMVet | MMMU<br>(val/test)                                                                 | MathVista<br>(testmini) | Hallusion<br>Bench | RealWorld<br/>QA | SEEDv1<br>(image) | CMMMU<br>(val/test) | POPE | MMVP | Tiny LVLM | LLaVA Wild |
 | ----------------------------------------------------------------------------------- | ------ | -------------- | ----------------- | -------------------- | ------- | ----- | ---------------------------------------------------------------------------------- | ----------------------- | ------------------ | ---------------- | ----------------- | ------------------- | ---- | ---- | --------- | ---------- |
-| [InternVL&#8209;Chat&#8209;V1&#8209;1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)           | 19B    | 1659.8 / 361.4 | 76.7 / 75.4       | 71.9 / 70.3          | 43.3    | 46.7  | 39.1 / 35.3                                                                        | 34.5                    | 36.1               | 58.0             | 73.2              | 34.8 / 34.0         | 87.1 | 44.7 | 343.2     | 73.2       |
-| [InternVL&#8209;Chat&#8209;V1&#8209;2](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)           | 40B    | 1686.8 / 488.6 | 81.4 / 82.2       | 79.5 / 81.2          | 58.6    | 48.9  | 51.6 / [46.2](https://eval.ai/web/challenges/challenge-page/2179/leaderboard/5377) | 47.7                    | 47.6               | 67.5             | 75.6              | -                   | 88.0 | 56.7 | 350.3     | 85.0       |
-| [InternVL&#8209;Chat&#8209;V1&#8209;2&#8209;Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) | 40B    | 1625.2 / 552.9 | 83.4 / 83.8       | 81.6 / 82.0          | 55.9    | 47.9  | 50.3 / 45.6                                                                        | 59.9                    | 47.4               | 67.8             | 76.4              | -                   | 88.7 | 58.7 | 353.9     | 84.6       |
-| [InternVL&#8209;Chat&#8209;V1&#8209;5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)           | 26B    | 1637.8 / 550.0 | - / 82.2          | - / 82.0             | 70.0    | 62.8  | 45.2 / -                                                                           | 53.5                    | 49.3               | 66.0             | 76.0              | -                   | 88.3 | 57.3 | 356.8     | 94.7       |
+| [InternVL‑Chat‑V1‑1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)           | 19B    | 1659.8 / 361.4 | 76.7 / 75.4       | 71.9 / 70.3          | 43.3    | 46.7  | 39.1 / 35.3                                                                        | 34.5                    | 36.1               | 58.0             | 73.2              | 34.8 / 34.0         | 87.1 | 44.7 | 343.2     | 73.2       |
+| [InternVL‑Chat‑V1‑2](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)           | 40B    | 1686.8 / 488.6 | 81.4 / 82.2       | 79.5 / 81.2          | 58.6    | 48.9  | 51.6 / [46.2](https://eval.ai/web/challenges/challenge-page/2179/leaderboard/5377) | 47.7                    | 47.6               | 67.5             | 75.6              | -                   | 88.0 | 56.7 | 350.3     | 85.0       |
+| [InternVL‑Chat‑V1‑2‑Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) | 40B    | 1625.2 / 552.9 | 83.4 / 83.8       | 81.6 / 82.0          | 55.9    | 47.9  | 50.3 / 45.6                                                                        | 59.9                    | 47.4               | 67.8             | 76.4              | -                   | 88.7 | 58.7 | 353.9     | 84.6       |
+| [InternVL‑Chat‑V1‑5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)           | 26B    | 1637.8 / 550.0 | - / 82.2          | - / 82.0             | 70.0    | 62.8  | 45.2 / -                                                                           | 53.5                    | 49.3               | 66.0             | 76.0              | -                   | 88.3 | 57.3 | 356.8     | 94.7       |
 
 **Visual Question Answering & Image Captioning**
 
 | model                                                                               | #param | OKVQA<br>(val) | VizWiz<br>(val/test) | GQA<br>(test) | SQA<br>(image) | VQAv2<br>(testdev) | COCO<br>(test) | Flickr30K<br>(test) | NoCaps<br>(val) |
 | ----------------------------------------------------------------------------------- | ------ | -------------- | -------------------- | ------------- | -------------- | ------------------ | -------------- | ------------------- | --------------- |
-| [InternVL&#8209;Chat&#8209;V1&#8209;1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)           | 19B    | 64.1           | 59.0 / 57.3          | 62.5          | 90.1           | 80.9               | 142.2          | 84.8                | 120.8           |
-| [InternVL&#8209;Chat&#8209;V1&#8209;2](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)           | 40B    | 62.5           | 61.9 / 60.0          | 64.0          | 83.3           | -                  | 113.9          | 92.9                | 112.5           |
-| [InternVL&#8209;Chat&#8209;V1&#8209;2&#8209;Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) | 40B    | 67.6           | 61.3 / 59.5          | 66.9          | 98.1           | -                  | 143.4          | 89.5                | 125.8           |
-| [InternVL&#8209;Chat&#8209;V1&#8209;5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)           | 26B    | 62.0           | 63.5 / -             | 65.7          | 94.0           | -                  | 98.4           | 81.2                | 99.6            |
+| [InternVL‑Chat‑V1‑1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)           | 19B    | 64.1           | 59.0 / 57.3          | 62.5          | 90.1           | 80.9               | 142.2          | 84.8                | 120.8           |
+| [InternVL‑Chat‑V1‑2](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)           | 40B    | 62.5           | 61.9 / 60.0          | 64.0          | 83.3           | -                  | 113.9          | 92.9                | 112.5           |
+| [InternVL‑Chat‑V1‑2‑Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) | 40B    | 67.6           | 61.3 / 59.5          | 66.9          | 98.1           | -                  | 143.4          | 89.5                | 125.8           |
+| [InternVL‑Chat‑V1‑5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)           | 26B    | 62.0           | 63.5 / -             | 65.7          | 94.0           | -                  | 98.4           | 81.2                | 99.6            |
 
 **Visual Grounding**
 
-| model                                                                               | #param | RefCOCO<br>(val) | RefCOCO<br>(testA) | RefCOCO<br>(testB) | RefCOCO+<br>(val) | RefCOCO+<br>(testA) | RefCOCO+<br>(testB) | RefCOCO&#8209;g<br>(val) | RefCOCO&#8209;g<br>(test) |
+| model                                                                               | #param | RefCOCO<br>(val) | RefCOCO<br>(testA) | RefCOCO<br>(testB) | RefCOCO+<br>(val) | RefCOCO+<br>(testA) | RefCOCO+<br>(testB) | RefCOCO‑g<br>(val) | RefCOCO‑g<br>(test) |
 | ----------------------------------------------------------------------------------- | ------ | ---------------- | ------------------ | ------------------ | ----------------- | ------------------- | ------------------- | ------------------ | ------------------- |
-| [InternVL&#8209;Chat&#8209;V1&#8209;1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)           | 19B    | 84.7             | 89.9               | 78.6               | 78.5              | 85.6                | 70.1                | 81.0               | 81.4                |
-| [InternVL&#8209;Chat&#8209;V1&#8209;2](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)           | 40B    | 74.4             | 80.3               | 66.5               | 70.7              | 77.6                | 62.0                | 69.2               | 70.0                |
-| [InternVL&#8209;Chat&#8209;V1&#8209;2&#8209;Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) | 40B    | 90.2             | 93.4               | 85.5               | 85.3              | 90.4                | 79.7                | 88.5               | 88.8                |
-| [InternVL&#8209;Chat&#8209;V1&#8209;5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)           | 26B    | 91.4             | 93.7               | 87.1               | 87.0              | 92.3                | 80.9                | 88.5               | 89.3                |
+| [InternVL‑Chat‑V1‑1](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)           | 19B    | 84.7             | 89.9               | 78.6               | 78.5              | 85.6                | 70.1                | 81.0               | 81.4                |
+| [InternVL‑Chat‑V1‑2](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2)           | 40B    | 74.4             | 80.3               | 66.5               | 70.7              | 77.6                | 62.0                | 69.2               | 70.0                |
+| [InternVL‑Chat‑V1‑2‑Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) | 40B    | 90.2             | 93.4               | 85.5               | 85.3              | 90.4                | 79.7                | 88.5               | 88.8                |
+| [InternVL‑Chat‑V1‑5](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5)           | 26B    | 91.4             | 93.7               | 87.1               | 87.0              | 92.3                | 80.9                | 88.5               | 89.3                |
 
 ## 📊 Evaluation (Legacy Models)
 
 | model         | QLLaMA | LLM          | res | COCO  | Flickr | NoCaps | VQAv2 | GQA  | VizWiz | TextVQA | MME    | POPE | Download |
 | ------------- | ------ | ------------ | --- | ----- | ------ | ------ | ----- | ---- | ------ | ------- | ------ | ---- | -------- |
-| InternVL&#8209;Chat | ✔️     | frozen V&#8209;7B  | 224 | 141.4 | 89.7   | 120.5  | 72.3  | 57.7 | 44.5   | 42.1    | 1298.5 | 85.2 | TODO     |
-| InternVL&#8209;Chat | ✔️     | frozen V&#8209;13B | 224 | 142.4 | 89.9   | 123.1  | 71.7  | 59.5 | 54.0   | 49.1    | 1317.2 | 85.4 | TODO     |
-| InternVL&#8209;Chat | ✔️     | V&#8209;13B        | 336 | 146.2 | 92.2   | 126.2  | 81.2  | 66.6 | 58.5   | 61.5    | 1586.4 | 87.6 | TODO     |
+| InternVL‑Chat | ✔️     | frozen V‑7B  | 224 | 141.4 | 89.7   | 120.5  | 72.3  | 57.7 | 44.5   | 42.1    | 1298.5 | 85.2 | TODO     |
+| InternVL‑Chat | ✔️     | frozen V‑13B | 224 | 142.4 | 89.9   | 123.1  | 71.7  | 59.5 | 54.0   | 49.1    | 1317.2 | 85.4 | TODO     |
+| InternVL‑Chat | ✔️     | V‑13B        | 336 | 146.2 | 92.2   | 126.2  | 81.2  | 66.6 | 58.5   | 61.5    | 1586.4 | 87.6 | TODO     |
 
 ## ❓ How to Evaluate
 
