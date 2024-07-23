@@ -259,7 +259,7 @@ if __name__ == '__main__':
     tokenizer = AutoTokenizer.from_pretrained(args.checkpoint, trust_remote_code=True, use_fast=False)
     model = InternVLChatModel.from_pretrained(
         args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16,
-        load_in_8bit=args.load_in_8bit, load_in_4bit=args.load_in_4bit,**kwargs).eval()
+        load_in_8bit=args.load_in_8bit, load_in_4bit=args.load_in_4bit, **kwargs).eval()
     if not args.load_in_8bit and not args.load_in_4bit and not args.auto:
         model = model.cuda()
     image_size = model.config.force_image_size or model.config.vision_config.image_size
