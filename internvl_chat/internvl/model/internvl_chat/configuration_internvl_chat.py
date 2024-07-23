@@ -1,6 +1,6 @@
 # --------------------------------------------------------
 # InternVL
-# Copyright (c) 2023 OpenGVLab
+# Copyright (c) 2024 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
 
@@ -28,7 +28,7 @@ class InternVLChatConfig(PretrainedConfig):
             use_backbone_lora=0,
             use_llm_lora=0,
             pad2square=False,
-            select_layer=-4,
+            select_layer=-1,
             force_image_size=None,
             downsample_ratio=0.5,
             template=None,

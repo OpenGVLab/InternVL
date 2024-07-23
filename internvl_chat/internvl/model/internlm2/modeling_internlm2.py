@@ -94,7 +94,7 @@ def _get_unpad_data(attention_mask):
 
 # Copied from transformers.models.bart.modeling_bart._make_causal_mask
 def _make_causal_mask(
-        input_ids_shape: torch.Size, dtype: torch.dtype, device: torch.device, past_key_values_length: int = 0
+    input_ids_shape: torch.Size, dtype: torch.dtype, device: torch.device, past_key_values_length: int = 0
 ):
     """
     Make causal mask used for bi-directional self-attention.
@@ -141,6 +141,20 @@ class InternLM2RMSNorm(nn.Module):
         variance = hidden_states.pow(2).mean(-1, keepdim=True)
         hidden_states = hidden_states * torch.rsqrt(variance + self.variance_epsilon)
         return self.weight * hidden_states.to(input_dtype)
+
+
+try:
+    from functools import partial
+
+    from apex.normalization import FusedRMSNorm
+    InternLM2RMSNorm = partial(FusedRMSNorm, eps=1e-6)   # noqa
+    print('Discovered apex.normalization.FusedRMSNorm - will use it instead of InternLM2RMSNorm')
+except ImportError:
+    # using the normal LlamaRMSNorm
+    pass
+except Exception:
+    print('discovered apex but it failed to load, falling back to InternLM2RMSNorm')
+    pass
 
 
 # Copied from transformers.model.llama.modeling_llama.LlamaRotaryEmbedding with Llama->InternLM2
@@ -215,7 +229,7 @@ class InternLM2DynamicNTKScalingRotaryEmbedding(InternLM2RotaryEmbedding):
 
         if seq_len > self.max_position_embeddings:
             base = self.base * (
-                    (self.scaling_factor * seq_len / self.max_position_embeddings) - (self.scaling_factor - 1)
+                (self.scaling_factor * seq_len / self.max_position_embeddings) - (self.scaling_factor - 1)
             ) ** (self.dim / (self.dim - 2))
             inv_freq = 1.0 / (base ** (torch.arange(0, self.dim, 2).float().to(device) / self.dim))
             self.register_buffer('inv_freq', inv_freq, persistent=False)
@@ -339,14 +353,14 @@ class InternLM2Attention(nn.Module):
         return tensor.view(bsz, seq_len, self.num_heads, self.head_dim).transpose(1, 2).contiguous()
 
     def forward(
-            self,
-            hidden_states: torch.Tensor,
-            attention_mask: Optional[torch.Tensor] = None,
-            position_ids: Optional[torch.LongTensor] = None,
-            past_key_value: Optional[Tuple[torch.Tensor]] = None,
-            output_attentions: bool = False,
-            use_cache: bool = False,
-            **kwargs,
+        self,
+        hidden_states: torch.Tensor,
+        attention_mask: Optional[torch.Tensor] = None,
+        position_ids: Optional[torch.LongTensor] = None,
+        past_key_value: Optional[Tuple[torch.Tensor]] = None,
+        output_attentions: bool = False,
+        use_cache: bool = False,
+        **kwargs,
     ) -> Tuple[torch.Tensor, Optional[torch.Tensor], Optional[Tuple[torch.Tensor]]]:
         if 'padding_mask' in kwargs:
             warnings.warn(
@@ -435,14 +449,14 @@ class InternLM2FlashAttention2(InternLM2Attention):
     """
 
     def forward(
-            self,
-            hidden_states: torch.Tensor,
-            attention_mask: Optional[torch.LongTensor] = None,
-            position_ids: Optional[torch.LongTensor] = None,
-            past_key_value: Optional[Tuple[torch.Tensor]] = None,
-            output_attentions: bool = False,
-            use_cache: bool = False,
-            **kwargs,
+        self,
+        hidden_states: torch.Tensor,
+        attention_mask: Optional[torch.LongTensor] = None,
+        position_ids: Optional[torch.LongTensor] = None,
+        past_key_value: Optional[Tuple[torch.Tensor]] = None,
+        output_attentions: bool = False,
+        use_cache: bool = False,
+        **kwargs,
     ) -> Tuple[torch.Tensor, Optional[torch.Tensor], Optional[Tuple[torch.Tensor]]]:
         # InternLM2FlashAttention2 attention does not support output_attentions
         if 'padding_mask' in kwargs:
@@ -507,7 +521,7 @@ class InternLM2FlashAttention2(InternLM2Attention):
         return attn_output, attn_weights, past_key_value
 
     def _flash_attention_forward(
-            self, query_states, key_states, value_states, attention_mask, query_length, dropout=0.0, softmax_scale=None
+        self, query_states, key_states, value_states, attention_mask, query_length, dropout=0.0, softmax_scale=None
     ):
         """
         Calls the forward method of Flash Attention - if the input hidden states contain at least one padding token
@@ -619,14 +633,14 @@ class InternLM2DecoderLayer(nn.Module):
         self.ffn_norm = InternLM2RMSNorm(config.hidden_size, eps=config.rms_norm_eps)
 
     def forward(
-            self,
-            hidden_states: torch.Tensor,
-            attention_mask: Optional[torch.Tensor] = None,
-            position_ids: Optional[torch.LongTensor] = None,
-            past_key_value: Optional[Tuple[torch.Tensor]] = None,
-            output_attentions: Optional[bool] = False,
-            use_cache: Optional[bool] = False,
-            **kwargs,
+        self,
+        hidden_states: torch.Tensor,
+        attention_mask: Optional[torch.Tensor] = None,
+        position_ids: Optional[torch.LongTensor] = None,
+        past_key_value: Optional[Tuple[torch.Tensor]] = None,
+        output_attentions: Optional[bool] = False,
+        use_cache: Optional[bool] = False,
+        **kwargs,
     ) -> Tuple[torch.FloatTensor, Optional[Tuple[torch.FloatTensor, torch.FloatTensor]]]:
         """
         Args:
@@ -709,6 +723,7 @@ class InternLM2PreTrainedModel(PreTrainedModel):
     supports_gradient_checkpointing = True
     _no_split_modules = ['InternLM2DecoderLayer']
     _skip_keys_device_placement = 'past_key_values'
+    _supports_flash_attn_2 = True
 
     def _init_weights(self, module):
         std = self.config.initializer_range
@@ -851,16 +866,16 @@ class InternLM2Model(InternLM2PreTrainedModel):
 
     @add_start_docstrings_to_model_forward(InternLM2_INPUTS_DOCSTRING)
     def forward(
-            self,
-            input_ids: torch.LongTensor = None,
-            attention_mask: Optional[torch.Tensor] = None,
-            position_ids: Optional[torch.LongTensor] = None,
-            past_key_values: Optional[List[torch.FloatTensor]] = None,
-            inputs_embeds: Optional[torch.FloatTensor] = None,
-            use_cache: Optional[bool] = None,
-            output_attentions: Optional[bool] = None,
-            output_hidden_states: Optional[bool] = None,
-            return_dict: Optional[bool] = None,
+        self,
+        input_ids: torch.LongTensor = None,
+        attention_mask: Optional[torch.Tensor] = None,
+        position_ids: Optional[torch.LongTensor] = None,
+        past_key_values: Optional[List[torch.FloatTensor]] = None,
+        inputs_embeds: Optional[torch.FloatTensor] = None,
+        use_cache: Optional[bool] = None,
+        output_attentions: Optional[bool] = None,
+        output_hidden_states: Optional[bool] = None,
+        return_dict: Optional[bool] = None,
     ) -> Union[Tuple, BaseModelOutputWithPast]:
         output_attentions = output_attentions if output_attentions is not None else self.config.output_attentions
         output_hidden_states = (
@@ -1019,17 +1034,17 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
     @add_start_docstrings_to_model_forward(InternLM2_INPUTS_DOCSTRING)
     @replace_return_docstrings(output_type=CausalLMOutputWithPast, config_class=_CONFIG_FOR_DOC)
     def forward(
-            self,
-            input_ids: torch.LongTensor = None,
-            attention_mask: Optional[torch.Tensor] = None,
-            position_ids: Optional[torch.LongTensor] = None,
-            past_key_values: Optional[List[torch.FloatTensor]] = None,
-            inputs_embeds: Optional[torch.FloatTensor] = None,
-            labels: Optional[torch.LongTensor] = None,
-            use_cache: Optional[bool] = None,
-            output_attentions: Optional[bool] = None,
-            output_hidden_states: Optional[bool] = None,
-            return_dict: Optional[bool] = None,
+        self,
+        input_ids: torch.LongTensor = None,
+        attention_mask: Optional[torch.Tensor] = None,
+        position_ids: Optional[torch.LongTensor] = None,
+        past_key_values: Optional[List[torch.FloatTensor]] = None,
+        inputs_embeds: Optional[torch.FloatTensor] = None,
+        labels: Optional[torch.LongTensor] = None,
+        use_cache: Optional[bool] = None,
+        output_attentions: Optional[bool] = None,
+        output_hidden_states: Optional[bool] = None,
+        return_dict: Optional[bool] = None,
     ) -> Union[Tuple, CausalLMOutputWithPast]:
         r"""
         Args:
@@ -1170,19 +1185,19 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
 
     @torch.no_grad()
     def chat(
-            self,
-            tokenizer,
-            query: str,
-            history: List[Tuple[str, str]] = [],
-            streamer: Optional[BaseStreamer] = None,
-            max_new_tokens: int = 1024,
-            do_sample: bool = True,
-            temperature: float = 0.8,
-            top_p: float = 0.8,
-            meta_instruction: str = 'You are an AI assistant whose name is InternLM (书生·浦语).\n'
-                                    '- InternLM (书生·浦语) is a conversational language model that is developed by Shanghai AI Laboratory (上海人工智能实验室). It is designed to be helpful, honest, and harmless.\n'
-                                    '- InternLM (书生·浦语) can understand and communicate fluently in the language chosen by the user such as English and 中文.',
-            **kwargs,
+        self,
+        tokenizer,
+        query: str,
+        history: List[Tuple[str, str]] = [],
+        streamer: Optional[BaseStreamer] = None,
+        max_new_tokens: int = 1024,
+        do_sample: bool = True,
+        temperature: float = 0.8,
+        top_p: float = 0.8,
+        meta_instruction: str = 'You are an AI assistant whose name is InternLM (书生·浦语).\n'
+                                '- InternLM (书生·浦语) is a conversational language model that is developed by Shanghai AI Laboratory (上海人工智能实验室). It is designed to be helpful, honest, and harmless.\n'
+                                '- InternLM (书生·浦语) can understand and communicate fluently in the language chosen by the user such as English and 中文.',
+        **kwargs,
     ):
         inputs = self.build_inputs(tokenizer, query, history, meta_instruction)
         inputs = {k: v.to(self.device) for k, v in inputs.items() if torch.is_tensor(v)}
@@ -1206,15 +1221,15 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
 
     @torch.no_grad()
     def stream_chat(
-            self,
-            tokenizer,
-            query: str,
-            history: List[Tuple[str, str]] = [],
-            max_new_tokens: int = 1024,
-            do_sample: bool = True,
-            temperature: float = 0.8,
-            top_p: float = 0.8,
-            **kwargs,
+        self,
+        tokenizer,
+        query: str,
+        history: List[Tuple[str, str]] = [],
+        max_new_tokens: int = 1024,
+        do_sample: bool = True,
+        temperature: float = 0.8,
+        top_p: float = 0.8,
+        **kwargs,
     ):
         """
         Return a generator in format: (response, history)
@@ -1325,17 +1340,17 @@ class InternLM2ForSequenceClassification(InternLM2PreTrainedModel):
 
     @add_start_docstrings_to_model_forward(InternLM2_INPUTS_DOCSTRING)
     def forward(
-            self,
-            input_ids: torch.LongTensor = None,
-            attention_mask: Optional[torch.Tensor] = None,
-            position_ids: Optional[torch.LongTensor] = None,
-            past_key_values: Optional[List[torch.FloatTensor]] = None,
-            inputs_embeds: Optional[torch.FloatTensor] = None,
-            labels: Optional[torch.LongTensor] = None,
-            use_cache: Optional[bool] = None,
-            output_attentions: Optional[bool] = None,
-            output_hidden_states: Optional[bool] = None,
-            return_dict: Optional[bool] = None,
+        self,
+        input_ids: torch.LongTensor = None,
+        attention_mask: Optional[torch.Tensor] = None,
+        position_ids: Optional[torch.LongTensor] = None,
+        past_key_values: Optional[List[torch.FloatTensor]] = None,
+        inputs_embeds: Optional[torch.FloatTensor] = None,
+        labels: Optional[torch.LongTensor] = None,
+        use_cache: Optional[bool] = None,
+        output_attentions: Optional[bool] = None,
+        output_hidden_states: Optional[bool] = None,
+        return_dict: Optional[bool] = None,
     ) -> Union[Tuple, SequenceClassifierOutputWithPast]:
         r"""
         labels (`torch.LongTensor` of shape `(batch_size,)`, *optional*):
