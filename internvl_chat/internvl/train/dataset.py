@@ -3,11 +3,17 @@ import io
 from transformers.trainer_pt_utils import LabelSmoother
 
 IGNORE_TOKEN_ID = LabelSmoother.ignore_index
+import os
+import random
 from typing import Dict
 
+import cv2
+import imageio
+import numpy as np
 import torch
 import torchvision.transforms as T
 import transformers
+from decord import VideoReader
 from internvl.conversation import get_conv_template
 from PIL import Image
 from torch.utils.data import ConcatDataset, WeightedRandomSampler
@@ -21,8 +27,135 @@ try:
     from petrel_client.client import Client
     from petrel_client.common.config import Config
 except ImportError as E:
-    print('please install petrel_client')
+    print('petrel_client is not installed. If you read data locally instead of from ceph, ignore it.')
 import sys
+
+
+def get_frame_indices(num_frames, vlen, sample='rand', fix_start=None, input_fps=1, max_num_frames=-1):
+    if sample in ['rand', 'middle']: # uniform sampling
+        acc_samples = min(num_frames, vlen)
+        # split the video into `acc_samples` intervals, and sample from each interval.
+        intervals = np.linspace(start=0, stop=vlen, num=acc_samples + 1).astype(int)
+        ranges = []
+        for idx, interv in enumerate(intervals[:-1]):
+            ranges.append((interv, intervals[idx + 1] - 1))
+        if sample == 'rand':
+            try:
+                frame_indices = [random.choice(range(x[0], x[1])) for x in ranges]
+            except:
+                frame_indices = np.random.permutation(vlen)[:acc_samples]
+                frame_indices.sort()
+                frame_indices = list(frame_indices)
+        elif fix_start is not None:
+            frame_indices = [x[0] + fix_start for x in ranges]
+        elif sample == 'middle':
+            frame_indices = [(x[0] + x[1]) // 2 for x in ranges]
+        else:
+            raise NotImplementedError
+
+        if len(frame_indices) < num_frames:  # padded with last frame
+            padded_frame_indices = [frame_indices[-1]] * num_frames
+            padded_frame_indices[:len(frame_indices)] = frame_indices
+            frame_indices = padded_frame_indices
+    elif 'fps' in sample:  # fps0.5, sequentially sample frames at 0.5 fps
+        output_fps = float(sample[3:])
+        duration = float(vlen) / input_fps
+        delta = 1 / output_fps  # gap between frames, this is also the clip length each frame represents
+        frame_seconds = np.arange(0 + delta / 2, duration + delta / 2, delta)
+        frame_indices = np.around(frame_seconds * input_fps).astype(int)
+        frame_indices = [e for e in frame_indices if e < vlen]
+        if max_num_frames > 0 and len(frame_indices) > max_num_frames:
+            frame_indices = frame_indices[:max_num_frames]
+            # frame_indices = np.linspace(0 + delta / 2, duration + delta / 2, endpoint=False, num=max_num_frames)
+    else:
+        raise ValueError
+    return frame_indices
+
+
+def read_frames_gif(
+        video_path, num_frames, sample='rand', fix_start=None,
+        client=None, min_num_frames=4
+):
+    if 's3://' in video_path:
+        video_bytes = client.get(video_path)
+        gif = imageio.get_reader(io.BytesIO(video_bytes))
+    else:
+        gif = imageio.get_reader(video_path)
+    vlen = len(gif)
+
+    t_num_frames = np.random.randint(min_num_frames, num_frames + 1)
+    frame_indices = get_frame_indices(
+        t_num_frames, vlen, sample=sample, fix_start=fix_start
+    )
+    frames = []
+    for index, frame in enumerate(gif):
+        if index in frame_indices:
+            frame = cv2.cvtColor(frame, cv2.COLOR_RGBA2RGB).astype(np.uint8)
+            frame = Image.fromarray(frame)
+            frames.append(frame)
+    return frames
+
+
+def read_frames_decord(
+        video_path, num_frames, sample='rand', fix_start=None,
+        client=None, clip=None, min_num_frames=4
+):
+    if 's3://' in video_path:
+        video_bytes = client.get(video_path)
+        video_reader = VideoReader(io.BytesIO(video_bytes), num_threads=1)
+    else:
+        video_reader = VideoReader(video_path, num_threads=1)
+    vlen = len(video_reader)
+    fps = video_reader.get_avg_fps()
+    duration = vlen / float(fps)
+    if clip:
+        start, end = clip
+        duration = end - start
+        vlen = int(duration * fps)
+        start_index = int(start * fps)
+
+    # t_num_frames = min(max(int(duration * sample_fps), min_num_frames), num_frames)
+    t_num_frames = np.random.randint(min_num_frames, num_frames + 1)
+
+    frame_indices = get_frame_indices(
+        t_num_frames, vlen, sample=sample, fix_start=fix_start,
+        input_fps=fps
+    )
+    if clip:
+        frame_indices = [f + start_index for f in frame_indices]
+    frames = video_reader.get_batch(frame_indices).asnumpy()  # (T, H, W, C), np.uint8
+    frames = [Image.fromarray(frames[i]) for i in range(frames.shape[0])]
+    return frames
+
+
+def read_frames_folder(
+        video_path, num_frames, sample='rand', fix_start=None,
+        client=None, clip=None, min_num_frames=4
+):
+    if 's3://' in video_path:
+        image_list = client.list(video_path)
+        frames = []
+        for image in image_list:
+            fp = os.path.join(video_path, image)
+            frame = Image.open(io.BytesIO(client.get(fp)))
+            frames.append(frame)
+    else:
+        image_list = sorted(list(os.listdir(video_path)))
+        frames = []
+        for image in image_list:
+            fp = os.path.join(video_path, image)
+            frame = Image.open(fp).convert('RGB')
+            frames.append(frame)
+    vlen = len(frames)
+
+    t_num_frames = np.random.randint(min_num_frames, num_frames + 1)
+
+    if vlen > t_num_frames:
+        frame_indices = get_frame_indices(
+            t_num_frames, vlen, sample=sample, fix_start=fix_start
+        )
+        frames = [frames[i] for i in frame_indices]
+    return frames
 
 
 class WeightedConcatDataset(ConcatDataset):
@@ -54,10 +187,23 @@ class TCSLoader(object):
         self.sc_config_key = sc_config_key
         print('--> after Client(conf_path)')
 
-    def __call__(self, fn):
-        img_value_str = self.client.get(fn)
-        img = pil_loader(img_value_str)
-        return img
+    def __call__(self, fn, image_type='image', max_num_frames=-1, min_num_frames=4, sample='rand', clip=None):
+        if image_type == 'image':
+            img_value_str = self.client.get(fn)
+            img = pil_loader(img_value_str)
+            return img
+
+        elif image_type == 'video':
+            if fn.endswith('/'):
+                frames = read_frames_folder(fn, num_frames=max_num_frames, min_num_frames=min_num_frames,
+                                            client=self.client, sample=sample)
+            elif fn.endswith('.gif'):
+                frames = read_frames_gif(fn, num_frames=max_num_frames, min_num_frames=min_num_frames,
+                                         client=self.client, sample=sample)
+            else:
+                frames = read_frames_decord(fn, num_frames=max_num_frames, min_num_frames=min_num_frames,
+                                            client=self.client, sample=sample, clip=clip)
+            return frames
 
 
 def expand2square(pil_img, background_color):
@@ -130,9 +276,10 @@ def preprocess(
         template_name,
         sources,
         tokenizer: transformers.PreTrainedTokenizer,
-        num_image_token: int,
+        num_image_token_list: list,
         text_only: bool = False,
         group_by_length: bool = False,
+        use_packed_ds: bool = False,
         ds_name: str = None,
         num_image: int = 1
 ) -> Dict:
@@ -153,11 +300,12 @@ def preprocess(
             conv.append_message(role, sentence['value'])
         conversations.append(conv.get_prompt())
 
-    image_tokens = f'{IMG_START_TOKEN}{IMG_CONTEXT_TOKEN * num_image_token}{IMG_END_TOKEN}'
     if not text_only:
         new_conversations = []
         for conversation in conversations:
-            conversation = conversation.replace('<image>', image_tokens, num_image)
+            for i in range(num_image):
+                image_tokens = f'{IMG_START_TOKEN}{IMG_CONTEXT_TOKEN * num_image_token_list[i]}{IMG_END_TOKEN}'
+                conversation = conversation.replace('<image>', image_tokens, 1)
             new_conversations.append(conversation)
         conversations = new_conversations
 
@@ -165,7 +313,7 @@ def preprocess(
     input_ids = tokenizer(
         conversations,
         return_tensors='pt',
-        padding=False if group_by_length else 'max_length',
+        padding=False if group_by_length or use_packed_ds else 'max_length',
         max_length=tokenizer.model_max_length,
         truncation=True,
     ).input_ids
@@ -233,9 +381,10 @@ def preprocess_mpt(
         template_name,
         sources,
         tokenizer: transformers.PreTrainedTokenizer,
-        num_image_token: int,
+        num_image_token_list: list,
         text_only: bool = False,
         group_by_length: bool = False,
+        use_packed_ds: bool = False,
         ds_name: str = None,
         num_image: int = 1
 ) -> Dict:
@@ -256,11 +405,12 @@ def preprocess_mpt(
             conv.append_message(role, sentence['value'])
         conversations.append(conv.get_prompt())
 
-    image_tokens = f'{IMG_START_TOKEN}{IMG_CONTEXT_TOKEN * num_image_token}{IMG_END_TOKEN}'
     if not text_only:
         new_conversations = []
         for conversation in conversations:
-            conversation = conversation.replace('<image>', image_tokens, num_image)
+            for i in range(num_image):
+                image_tokens = f'{IMG_START_TOKEN}{IMG_CONTEXT_TOKEN * num_image_token_list[i]}{IMG_END_TOKEN}'
+                conversation = conversation.replace('<image>', image_tokens, 1)
             new_conversations.append(conversation)
         conversations = new_conversations
 
@@ -268,7 +418,7 @@ def preprocess_mpt(
     input_ids = tokenizer(
         conversations,
         return_tensors='pt',
-        padding=False if group_by_length else 'max_length',
+        padding=False if group_by_length or use_packed_ds else 'max_length',
         max_length=tokenizer.model_max_length,
         truncation=True,
     ).input_ids
@@ -325,9 +475,10 @@ def preprocess_phi3(
         template_name,
         sources,
         tokenizer: transformers.PreTrainedTokenizer,
-        num_image_token: int,
+        num_image_token_list: list,
         text_only: bool = False,
         group_by_length: bool = False,
+        use_packed_ds: bool = False,
         ds_name: str = None,
         num_image: int = 1
 ) -> Dict:
@@ -348,11 +499,12 @@ def preprocess_phi3(
             conv.append_message(role, sentence['value'])
         conversations.append(conv.get_prompt())
 
-    image_tokens = f'{IMG_START_TOKEN}{IMG_CONTEXT_TOKEN * num_image_token}{IMG_END_TOKEN}'
     if not text_only:
         new_conversations = []
         for conversation in conversations:
-            conversation = conversation.replace('<image>', image_tokens, num_image)
+            for i in range(num_image):
+                image_tokens = f'{IMG_START_TOKEN}{IMG_CONTEXT_TOKEN * num_image_token_list[i]}{IMG_END_TOKEN}'
+                conversation = conversation.replace('<image>', image_tokens, 1)
             new_conversations.append(conversation)
         conversations = new_conversations
 
@@ -361,7 +513,7 @@ def preprocess_phi3(
     input_ids = tokenizer(
         conversations,
         return_tensors='pt',
-        padding=False if group_by_length else 'max_length',
+        padding=False if group_by_length or use_packed_ds else 'max_length',
         max_length=tokenizer.model_max_length,
         truncation=True,
     ).input_ids
@@ -428,117 +580,14 @@ def preprocess_phi3(
     )
 
 
-def preprocess_llama3(
-        template_name,
-        sources,
-        tokenizer: transformers.PreTrainedTokenizer,
-        num_image_token: int,
-        text_only: bool = False,
-        group_by_length: bool = False,
-        ds_name: str = None,
-        num_image: int = 1
-) -> Dict:
-    conv = get_conv_template(template_name)
-    roles = {'human': conv.roles[0], 'gpt': conv.roles[1]}
-
-    # Apply prompt templates
-    conversations = []
-    for i, source in enumerate(sources):
-        if roles[source[0]['from']] != conv.roles[0]:
-            # Skip the first one if it is not from human
-            source = source[1:]
-
-        conv.messages = []
-        for j, sentence in enumerate(source):
-            role = roles[sentence['from']]
-            assert role == conv.roles[j % 2], f'{i}'
-            conv.append_message(role, sentence['value'])
-        conversations.append(conv.get_prompt())
-
-    image_tokens = f'{IMG_START_TOKEN}{IMG_CONTEXT_TOKEN * num_image_token}{IMG_END_TOKEN}'
-    if not text_only:
-        new_conversations = []
-        for conversation in conversations:
-            conversation = conversation.replace('<image>', image_tokens, num_image)
-            new_conversations.append(conversation)
-        conversations = new_conversations
-
-    # Tokenize conversations
-    tokenizer.padding_side = 'right'
-    input_ids = tokenizer(
-        conversations,
-        return_tensors='pt',
-        padding=False if group_by_length else 'max_length',
-        max_length=tokenizer.model_max_length,
-        truncation=True,
-    ).input_ids
-    targets = input_ids.clone()
-
-    # Mask targets. Only compute loss on the assistant outputs.
-    sep = conv.sep + conv.roles[1]  # <|end|>\n<|assistant|>
-    for conversation, target in zip(conversations, targets):
-        total_len = int(target.ne(tokenizer.pad_token_id).sum())
-
-        turns = conversation.split(conv.sep)
-        re_turns = [conv.sep.join(turns[:3])]  # system + user + gpt
-        for conv_idx in range(3, len(turns), 2):
-            re_turns.append(conv.sep.join(turns[conv_idx:conv_idx + 2]))  # user + gpt
-        cur_len = 1
-        target[:cur_len] = IGNORE_TOKEN_ID
-        for i, turn in enumerate(re_turns):
-            if turn == '':
-                break
-            if i == 0:
-                turn_len = len(tokenizer(turn).input_ids)
-            else:
-                turn_len = len(tokenizer(turn).input_ids) + 1
-            parts = turn.split(sep)
-            if len(parts) != 2:
-                break
-            parts[0] += sep
-
-            if i == 0:
-                instruction_len = len(tokenizer(parts[0]).input_ids) - 1
-            else:
-                instruction_len = len(tokenizer(parts[0]).input_ids)
-
-            # Ignore the user instructions
-            target[cur_len: cur_len + instruction_len] = IGNORE_TOKEN_ID
-            # print(f'[question {i}]', tokenizer.decode(input_ids[:, cur_len: cur_len + instruction_len][0]))
-            # print(f'[answer {i}]', tokenizer.decode(input_ids[:, cur_len + instruction_len: cur_len + turn_len][0]))
-            # print(f'[label {i}]', target[cur_len + instruction_len: cur_len + turn_len])
-            cur_len += turn_len
-
-        target[cur_len:] = IGNORE_TOKEN_ID
-
-        if False:  # Inspect and check the correctness of masking
-            z = target.clone()
-            z = torch.where(z == IGNORE_TOKEN_ID, int(tokenizer.pad_token_id), z)
-            print(repr(tokenizer.decode(z)))
-
-        if cur_len < tokenizer.model_max_length:
-            if cur_len != total_len:
-                target[:] = IGNORE_TOKEN_ID
-                print(
-                    f'WARNING: tokenization mismatch: {cur_len} vs. {total_len}.'
-                    f' #turn = {len(turns) - 1}. (ignored). This dataset is {ds_name}.'
-                )
-                sys.stdout.flush()
-
-    return dict(
-        input_ids=input_ids,
-        labels=targets,
-        attention_mask=input_ids.ne(tokenizer.pad_token_id),
-    )
-
-
 def preprocess_internlm(
         template_name,
         sources,
         tokenizer: transformers.PreTrainedTokenizer,
-        num_image_token: int,
+        num_image_token_list: list,
         text_only: bool = False,
         group_by_length: bool = False,
+        use_packed_ds: bool = False,
         ds_name: str = None,
         num_image: int = 1
 ) -> Dict:
@@ -557,16 +606,15 @@ def preprocess_internlm(
             role = roles[sentence['from']]
             assert role == conv.roles[j % 2], f'{i}'
             sentence['value'] = sentence['value'].strip()
-            if sentence['value'][0] == '\n':
-                sentence['value'] = sentence['value'][1:]
             conv.append_message(role, sentence['value'])
         conversations.append(conv.get_prompt())
 
-    image_tokens = f'{IMG_START_TOKEN}{IMG_CONTEXT_TOKEN * num_image_token}{IMG_END_TOKEN}'
     if not text_only:
         new_conversations = []
         for conversation in conversations:
-            conversation = conversation.replace('<image>', image_tokens, num_image)
+            for i in range(num_image):
+                image_tokens = f'{IMG_START_TOKEN}{IMG_CONTEXT_TOKEN * num_image_token_list[i]}{IMG_END_TOKEN}'
+                conversation = conversation.replace('<image>', image_tokens, 1)
             new_conversations.append(conversation)
         conversations = new_conversations
 
@@ -574,7 +622,7 @@ def preprocess_internlm(
     input_ids = tokenizer(
         conversations,
         return_tensors='pt',
-        padding=False if group_by_length else 'max_length',
+        padding=False if group_by_length or use_packed_ds else 'max_length',
         max_length=tokenizer.model_max_length,
         truncation=True,
     ).input_ids

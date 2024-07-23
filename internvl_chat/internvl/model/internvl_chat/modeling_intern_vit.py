@@ -1,6 +1,6 @@
 # --------------------------------------------------------
 # InternVL
-# Copyright (c) 2023 OpenGVLab
+# Copyright (c) 2024 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
 from typing import Optional, Tuple, Union
@@ -25,7 +25,6 @@ try:
 except:
     print('FlashAttention is not installed.')
     has_flash_attn = False
-
 
 logger = logging.get_logger(__name__)
 
@@ -89,7 +88,7 @@ class InternVisionEmbeddings(nn.Module):
         target_dtype = pos_embed.dtype
         pos_embed = pos_embed.float().reshape(
             1, self.image_size // self.patch_size, self.image_size // self.patch_size, -1).permute(0, 3, 1, 2)
-        pos_embed = F.interpolate(pos_embed, size=(H, W), mode='bicubic', align_corners=False).\
+        pos_embed = F.interpolate(pos_embed, size=(H, W), mode='bicubic', align_corners=False). \
             reshape(1, -1, H * W).permute(0, 2, 1).to(target_dtype)
         return pos_embed
 
