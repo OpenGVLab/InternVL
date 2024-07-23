@@ -33,6 +33,17 @@
 - `2024/01/24`: InternVL-Chat-V1-1 is released, it supports Chinese and has stronger OCR capability, see [here](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1).
 - `2024/01/16`: We release our [customized mmcv/mmsegmentation/mmdetection code](https://github.com/OpenGVLab/InternVL-MMDetSeg), integrated with DeepSpeed, which can be used for training large-scale detection and segmentation models.
 
+## TODO List
+
+- [ ] Support vLLM and Ollama
+- [ ] Rebuild documents using readthedocs
+- [ ] Support fine-tuning different LLMs with LoRA
+- [ ] Add video and PDF input in online demo
+- [ ] Release InternVL2 with VisionLLMv2 integration
+- [x] Release `requirements.txt` for InternVL2
+- [x] Release training / evaluation code for InternVL2 series
+- [x] Release Streamlit web UI for InternVL1.5 and InternVL2
+
 ## Documents
 
 - Installation
