@@ -147,7 +147,7 @@ The hyperparameters used for fine-tuning are listed in the following table. And,
 | ------------------ | ---------------- | ----------------- | ------------- | ------ | ---------- | ------------ |
 | InternVL-Chat-V1-2 | 40B (full model) | 512               | 1e-5          | 1      | 2048       | 0.05         |
 
-### Continued Fine-tune
+### Continuous Fine-tuning
 
 See [this document](../document/How_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md) to finetune InternVL-Chat-V1-2.
 
