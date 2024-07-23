@@ -54,6 +54,7 @@ class InternVLChatModel(PreTrainedModel):
         self.num_image_token = int((image_size // patch_size) ** 2 * (config.downsample_ratio ** 2))
         self.downsample_ratio = config.downsample_ratio
         self.ps_version = config.ps_version
+        self.llm_arch_name = config.llm_config.architectures[0]
 
         logger.info(f'num_image_token: {self.num_image_token}')
         logger.info(f'ps_version: {self.ps_version}')
@@ -96,18 +97,27 @@ class InternVLChatModel(PreTrainedModel):
         if config.use_llm_lora:
             self.wrap_llm_lora(r=config.use_llm_lora, lora_alpha=2 * config.use_llm_lora)
 
-    def wrap_backbone_lora(self, target_modules=['attn.qkv', 'attn.proj', 'mlp.fc1', 'mlp.fc2'],
-                           r=128, lora_alpha=256, lora_dropout=0.05):
+    def wrap_backbone_lora(self, r=128, lora_alpha=256, lora_dropout=0.05):
         lora_config = LoraConfig(
             r=r,
-            target_modules=target_modules,
+            target_modules=['attn.qkv', 'attn.proj', 'mlp.fc1', 'mlp.fc2'],
             lora_alpha=lora_alpha,
             lora_dropout=lora_dropout,
         )
         self.vision_model = get_peft_model(self.vision_model, lora_config)
         self.vision_model.print_trainable_parameters()
 
-    def wrap_llm_lora(self, target_modules, r=128, lora_alpha=256, lora_dropout=0.05):
+    def wrap_llm_lora(self, r=128, lora_alpha=256, lora_dropout=0.05):
+        # Determine the target modules based on the architecture of the language model
+        if self.llm_arch_name == 'InternLM2ForCausalLM':
+            target_modules = ['attention.wqkv', 'attention.wo', 'feed_forward.w1', 'feed_forward.w2', 'feed_forward.w3']
+        elif self.llm_arch_name == 'Phi3ForCausalLM':
+            target_modules = ['mlp.down_proj', 'mlp.gate_up_proj', 'self_attn.o_proj', 'self_attn.qkv_proj']
+        elif self.llm_arch_name in ['Qwen2ForCausalLM', 'LlamaForCausalLM']:
+            target_modules = ['self_attn.q_proj', 'self_attn.k_proj', 'self_attn.v_proj', 'self_attn.o_proj',
+                              'mlp.gate_proj', 'mlp.down_proj', 'mlp.up_proj']
+        else:
+            raise NotImplemented
         lora_config = LoraConfig(
             r=r,
             target_modules=target_modules,

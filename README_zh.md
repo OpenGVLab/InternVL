@@ -37,7 +37,7 @@
 
 - [ ] 支持 vLLM 和 Ollama
 - [ ] 使用 readthedocs 重新构建文档
-- [ ] 支持使用 LoRA 微调不同的 LLMs
+- [x] 支持使用 LoRA 微调不同的 LLMs
 - [ ] 在 Demo 中支持视频和 PDF 输入
 - [ ] 发布集成 VisionLLMv2 的 InternVL2
 - [x] 发布 InternVL2 的 `requirements.txt`
