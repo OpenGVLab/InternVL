@@ -29,22 +29,10 @@
       "total_num_steps": "auto"
     }
   },
-  "optimizer": {
-    "type": "AdamW",
-    "params": {
-      "lr": "auto",
-      "betas": [
-        0.9,
-        0.999
-      ],
-      "eps": 1e-8,
-      "weight_decay": "auto"
-    }
-  },
   "gradient_accumulation_steps": "auto",
   "gradient_clipping": "auto",
   "steps_per_print": 2000,
   "train_batch_size": "auto",
   "train_micro_batch_size_per_gpu": "auto",
-  "wall_clock_breakdown": false
+  "wall_clock_breakdown": true
 }

@@ -220,8 +220,7 @@ if __name__ == '__main__':
     parser.add_argument('--seed', type=int, default=0)
     args = parser.parse_args()
 
-    if not os.path.exists(args.out_dir):
-        os.makedirs(args.out_dir)
+    os.makedirs(args.out_dir, exist_ok=True)
 
     args.datasets = args.datasets.split(',')
     print('datasets:', args.datasets)

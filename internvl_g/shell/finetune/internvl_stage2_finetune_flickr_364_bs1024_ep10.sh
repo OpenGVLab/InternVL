@@ -30,7 +30,7 @@ srun -p ${PARTITION} \
   ${SRUN_ARGS} \
   python -u internvl/train/internvl_stage2_finetune.py \
   --dataset_name 'flickr30k_en_train' \
-  --model_name_or_path "./pretrained/internvl_14b_224px" \
+  --model_name_or_path "./pretrained/InternVL-14B-224px" \
   --output_dir "./work_dirs/internvl_stage2_finetune_flickr_364_bs1024_ep10" \
   --overwrite_output_dir True \
   --force_image_size 364 \
@@ -54,5 +54,5 @@ srun -p ${PARTITION} \
   --max_seq_length 80 \
   --do_train True \
   --optim adamw_torch \
-  --deepspeed "zero_stage1_config_wo_opt.json" \
+  --deepspeed "zero_stage1_config.json" \
   --report_to "tensorboard"
