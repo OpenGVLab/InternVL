@@ -1,0 +1,10 @@
+future
+importlib_metadata
+mmcv-full==1.6.2
+mmsegmentation==0.30.0
+openmim
+ordered-set
+platformdirs
+tensorboard
+tomli
+yapf==0.40.1

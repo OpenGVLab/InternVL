@@ -19,9 +19,31 @@
   pip install -r requirements.txt
   ```
 
-### Additional Instructions for Optional Dependencies
+### Additional Instructions
 
-- Install `apex` (optional, if you want to use `FusedRMSNorm`):
+- Install `flash-attn==2.3.6`:
+
+  ```bash
+  pip install flash-attn==2.3.6 --no-build-isolation
+  ```
+
+  Alternatively you can compile from source:
+
+  ```bash
+  git clone https://github.com/Dao-AILab/flash-attention.git
+  cd flash-attention
+  git checkout v2.3.6
+  python setup.py install
+  ```
+
+- Install `mmcv-full==1.6.2` (optional, for `segmentation`):
+
+  ```bash
+  pip install -U openmim
+  mim install mmcv-full==1.6.2
+  ```
+
+- Install `apex` (optional, for `segmentation`):
 
   ```bash
   git clone https://github.com/NVIDIA/apex.git
