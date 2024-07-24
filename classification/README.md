@@ -11,6 +11,10 @@ InternViT-6B follows the structure of vanilla ViT, and its hyperparameters are l
 
 <img width="558" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/23737120/e6bb0151-ab2f-4436-982f-6c68c5a69bc4">
 
+## 🛠️ Installation
+
+Follow the [installation guide](../INSTALLATION.md) to perform installations.
+
 ## 📦 Data Preparation
 
 > Please prepare the dataset according to your needs.
