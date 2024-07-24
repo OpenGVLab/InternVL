@@ -16,7 +16,6 @@ from PIL import Image, ImageFile, PngImagePlugin
 from transformers import (HfArgumentParser, LlamaTokenizer, Trainer,
                           TrainingArguments, default_data_collator, set_seed)
 from transformers.trainer_utils import get_last_checkpoint
-from transformers.utils import check_min_version, send_example_telemetry
 from transformers.utils.logging import (enable_default_handler,
                                         enable_explicit_format, set_verbosity)
 
@@ -53,7 +52,6 @@ class ModelArguments:
     """
     Arguments pertaining to which model/config/tokenizer we are going to fine-tune from.
     """
-
     model_name_or_path: str = field(
         metadata={'help': 'Path to pretrained model or model identifier from huggingface.co/models'}
     )
@@ -128,8 +126,10 @@ class DataTrainingArguments:
 def main():
     # Parse input arguments
     # See all possible arguments in src/transformers/training_args.py
+    # If use DeepSpeed zero3, init_dist must before HfArgumentParser
+    launcher = os.environ.get('LAUNCHER', 'slurm')
+    init_dist(launcher=launcher, backend='nccl')
     parser = HfArgumentParser((ModelArguments, DataTrainingArguments, TrainingArguments))
-    init_dist(launcher='slurm', backend='nccl')
     if len(sys.argv) == 2 and sys.argv[1].endswith('.json'):
         # If we pass only one argument to the script, and it's the path to a json file,
         # let's parse it to get our arguments.
@@ -198,7 +198,7 @@ def main():
     config.vision_config.drop_path_rate = model_args.drop_path_rate
     model = InternVLModel.from_pretrained(
         model_args.model_name_or_path,
-        ignore_mismatched_sizes=True,
+        # ignore_mismatched_sizes=True,
         config=config
     )
     if data_args.force_image_size != 224:
@@ -228,11 +228,11 @@ def main():
         _freeze_params(model.qllama)
 
     if model_args.use_backbone_lora:
-        model.wrap_backbone_lora(r=model_args.use_backbone_lora)
+        model.wrap_backbone_lora(r=model_args.use_backbone_lora, lora_alpha=model_args.use_backbone_lora * 2)
         model.config.use_backbone_lora = model_args.use_backbone_lora
 
     if model_args.use_qllama_lora:
-        model.wrap_qllama_lora(r=model_args.use_qllama_lora)
+        model.wrap_qllama_lora(r=model_args.use_qllama_lora, lora_alpha=model_args.use_backbone_lora * 2)
         model.config.use_qllama_lora = model_args.use_qllama_lora
 
     if model_args.unfreeze_crossattn:
@@ -244,17 +244,18 @@ def main():
         model.qllama.lm_head.weight.requires_grad = True
         model.text_projection.requires_grad = True
 
-    # Print trainable parameters
+    # print trainable parameters
     if dist.get_rank() == 0:
         for name, param in model.named_parameters():
             print(name, param.requires_grad)
 
-    # Set seed for torch dataloaders
+    # set seed for torch dataloaders
     set_seed(training_args.seed)
 
     # Initialize our Trainer
     if model_args.use_custom_trainer:
         replace_create_optimizer()
+
     trainer = Trainer(
         model=model,
         args=training_args,

@@ -48,23 +48,23 @@ class InternVLPreTrainedModel(PreTrainedModel):
     _skip_keys_device_placement = 'past_key_values'
     _keep_in_fp32_modules = ['wo']
 
-    def _init_weights(self, module):
-        """Initialize the weights"""
-        factor = self.config.initializer_range
-        if isinstance(module, nn.Conv2d) or isinstance(module, nn.Embedding) or isinstance(module, nn.Linear):
-            module.weight.data.normal_(mean=0.0, std=factor)
-            if hasattr(module, 'bias') and module.bias is not None:
-                module.bias.data.zero_()
-        if isinstance(module, InternVisionEmbeddings):
-            if hasattr(self.config, 'vision_config'):
-                factor = self.config.vision_config.initializer_range
-            nn.init.trunc_normal_(module.position_embedding, mean=0.0, std=factor)
-            nn.init.trunc_normal_(module.class_embedding, mean=0.0, std=factor)
-        elif isinstance(module, nn.LayerNorm):
-            module.bias.data.zero_()
-            module.weight.data.fill_(1.0)
-        elif isinstance(module, nn.Linear) and module.bias is not None:
-            module.bias.data.zero_()
+    # def _init_weights(self, module):
+    #     """Initialize the weights"""
+    #     factor = self.config.initializer_range
+    #     if isinstance(module, nn.Conv2d) or isinstance(module, nn.Embedding) or isinstance(module, nn.Linear):
+    #         module.weight.data.normal_(mean=0.0, std=factor)
+    #         if hasattr(module, 'bias') and module.bias is not None:
+    #             module.bias.data.zero_()
+    #     if isinstance(module, InternVisionEmbeddings):
+    #         if hasattr(self.config, 'vision_config'):
+    #             factor = self.config.vision_config.initializer_range
+    #         nn.init.trunc_normal_(module.position_embedding, mean=0.0, std=factor)
+    #         nn.init.trunc_normal_(module.class_embedding, mean=0.0, std=factor)
+    #     elif isinstance(module, nn.LayerNorm):
+    #         module.bias.data.zero_()
+    #         module.weight.data.fill_(1.0)
+    #     elif isinstance(module, nn.Linear) and module.bias is not None:
+    #         module.bias.data.zero_()
 
     def _set_gradient_checkpointing(self, module, value=False):
         if isinstance(module, InternVisionModel):
@@ -248,9 +248,9 @@ class InternVLModel(InternVLPreTrainedModel):
         # self.post_init()
 
         if config.use_backbone_lora:
-            self.wrap_backbone_lora(r=config.use_backbone_lora)
+            self.wrap_backbone_lora(r=config.use_backbone_lora, lora_alpha=config.use_backbone_lora * 2)
         if config.use_qllama_lora:
-            self.wrap_qllama_lora(r=config.use_qllama_lora)
+            self.wrap_qllama_lora(r=config.use_qllama_lora, lora_alpha=config.use_qllama_lora * 2)
         if config.force_image_size:
             self.vision_model.resize_pos_embeddings(
                 old_size=config.vision_config.image_size,

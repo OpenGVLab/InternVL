@@ -1,16 +1,18 @@
-# InternVL Stage-2 Pre-training
+# InternVL Stage-2 Pre-training & Retrieval Fine-tuning
 
-This folder contains the implementation of the InternVL for stage2 pre-training and retrieval fine-tuning.
+This folder contains the implementation of the InternVL 1.0 for stage2 pre-training and retrieval fine-tuning, which corresponds to Section 4.3 of our [InternVL 1.0 paper](https://arxiv.org/pdf/2312.14238).
+
+![image](https://github.com/user-attachments/assets/239f38b2-8867-4539-9dd8-c1a1eaa40aef)
 
 ## 🛠️ Installation
 
-See [INSTALLATION.md](../INSTALLATION.md)
+Follow the [installation guide](../INSTALLATION.md) to perform installations.
 
 ## 📦 Data Preparation
 
 Three datasets need to be prepared: COCO Caption, Flickr30K, and NoCaps.
 
-<details>
+<details open>
 <summary>COCO Caption</summary>
 
 ```bash
@@ -31,7 +33,7 @@ cd ../../../
 
 </details>
 
-<details>
+<details open>
 <summary>Flickr30K</summary>
 
 ```bash
@@ -54,7 +56,7 @@ cd ../..
 
 </details>
 
-<details>
+<details open>
 <summary>NoCaps</summary>
 
 ```bash
@@ -68,6 +70,8 @@ cd ../..
 ```
 
 </details>
+
+After the download is complete, the directory structure is:
 
 ```shell
 data
@@ -103,39 +107,19 @@ Please download the above model weights and place them in the `pretrained/` fold
 ```sh
 cd pretrained/
 # pip install -U huggingface_hub
-huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-14B-224px --local-dir internvl_14b_224px
+huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-14B-224px --local-dir InternVL-14B-224px
 ```
 
 The directory structure is:
 
 ```sh
 pretrained
-└── internvl_14b_224px/
+└── InternVL-14B-224px/
 ```
 
-## 🔥 Pre-training
+## 🔥 Generative Pre-training
 
-Coming Soon
-
-## 🔥 Retrieval Fine-tuning
-
-To fine-tune InternVL on Flickr30K with 32 GPUs and slurm system, run:
-
-```bash
-GPUS=32 sh shell/finetune/internvl_stage2_finetune_flickr_364_bs1024_ep10.sh
-```
-
-To fine-tune InternVL on Flickr30K-CN with 32 GPUs and slurm system, run:
-
-```shell
-GPUS=32 sh shell/finetune/internvl_stage2_finetune_flickrcn_364_bs1024_ep10.sh
-```
-
-To fine-tune InternVL on COCO with 32 GPUs and slurm system, run:
-
-```shell
-GPUS=32 sh shell/finetune/internvl_stage2_finetune_coco_364_bs1024_ep5.sh
-```
+There are currently no plans to release this part of the code.
 
 ## 📊 Evaluation
 
@@ -151,7 +135,7 @@ GPUS=32 sh shell/finetune/internvl_stage2_finetune_coco_364_bs1024_ep5.sh
   <summary>[InternVL-G] COCO Karpathy test</summary>
 
 ```bash
-sh evaluate.sh pretrained/internvl_14b_224px caption-coco
+sh evaluate.sh pretrained/InternVL-14B-224px caption-coco
 ```
 
 Expected results:
@@ -166,7 +150,7 @@ Expected results:
   <summary>[InternVL-G] Flickr30K Karpathy test</summary>
 
 ```
-sh evaluate.sh pretrained/internvl_14b_224px caption-flickr30k
+sh evaluate.sh pretrained/InternVL-14B-224px caption-flickr30k
 ```
 
 Expected results:
@@ -181,7 +165,7 @@ Expected results:
   <summary>[InternVL-G] NoCaps val</summary>
 
 ```bash
-sh evaluate.sh pretrained/internvl_14b_224px caption-nocaps
+sh evaluate.sh pretrained/InternVL-14B-224px caption-nocaps
 ```
 
 Expected results:
@@ -197,13 +181,13 @@ Expected results:
 #### Flickr30K fine-tuned model: [InternVL-14B-Flickr30K-FT-364px](https://huggingface.co/OpenGVLab/InternVL-14B-Flickr30K-FT-364px)
 
 <table>
-  <tr  align=center>
+  <tr align=center>
       <td rowspan="3" align=center><b>model</b></td>
       <td colspan="6" align=center><b>Flickr30K</b></td>
       <td rowspan="3" align=center><b>avg</b></td>
 
 </tr>
-   <tr  align=center>
+   <tr align=center>
       <td colspan="3" align=center><b>image-to-text</b></td>
       <td colspan="3" align=center><b>text-to-image</b></td>
    </tr>
@@ -284,13 +268,13 @@ Expected results:
 #### Flickr30K-CN fine-tuned model: [InternVL-14B-FlickrCN-FT-364px](https://huggingface.co/OpenGVLab/InternVL-14B-FlickrCN-FT-364px)
 
 <table>
-  <tr  align=center>
+  <tr align=center>
       <td rowspan="3" align=center><b>model</b></td>
       <td colspan="6" align=center><b>Flickr30K-CN</b></td>
       <td rowspan="3" align=center><b>avg</b></td>
 
 </tr>
-   <tr  align=center>
+   <tr align=center>
        <td colspan="3" align=center><b>image-to-text</b></td>
       <td colspan="3" align=center><b>text-to-image</b></td>
    </tr>
@@ -367,3 +351,147 @@ Expected results:
 ```
 
 </details>
+
+## 🔥 Retrieval Fine-tuning (Fully)
+
+> Note: In our experiments, full parameter fine-tuning achieves the best results on image-text retrieval tasks in Flickr30K and COCO. By following the experimental hyperparameters in this section, you can reproduce the model performance reported in the [Evaluation section](#evaluation).
+
+To fine-tune InternVL on Flickr30K with 32 GPUs and slurm system, run:
+
+```bash
+PARTITION='your partition' GPUS=32 sh shell/finetune/internvl_stage2_finetune_flickr_364_bs1024_ep10.sh
+```
+
+To fine-tune InternVL on Flickr30K-CN with 32 GPUs and slurm system, run:
+
+```shell
+PARTITION='your partition' GPUS=32 sh shell/finetune/internvl_stage2_finetune_flickrcn_364_bs1024_ep10.sh
+```
+
+To fine-tune InternVL on COCO with 32 GPUs and slurm system, run:
+
+```shell
+PARTITION='your partition' GPUS=32 sh shell/finetune/internvl_stage2_finetune_coco_364_bs1024_ep5.sh
+```
+
+The hyperparameters used here are:
+
+| config                      | Flickr30K                           | Flickr30K-CN                        | COCO                                |
+| --------------------------- | ----------------------------------- | ----------------------------------- | ----------------------------------- |
+| learning rate               | 1e-6                                | 1e-6                                | 1e-6                                |
+| layer-wise lr<br>decay rate | InternViT-6B (0.9),<br>QLLaMA (0.9) | InternViT-6B (0.9),<br>QLLaMA (0.9) | InternViT-6B (0.9),<br>QLLaMA (0.9) |
+| optimizer                   | AdamW                               | AdamW                               | AdamW                               |
+| weight decay                | 0.05                                | 0.05                                | 0.05                                |
+| input resolution            | 364x364                             | 364x364                             | 364x364                             |
+| total batch size            | 1024                                | 1024                                | 1024                                |
+| warm-up iterations          | 100                                 | 100                                 | 100                                 |
+| training epochs             | 10                                  | 10                                  | 5                                   |
+| drop path rate              | 0.3                                 | 0.3                                 | 0.3                                 |
+| numerical precision         | zero1 + bf16                        | zero1 + bf16                        | zero1 + bf16                        |
+| trainable / total params    | 14B / 14B                           | 14B / 14B                           | 14B / 14B                           |
+| GPUs for training           | 32×A100 (80G)                       | 32×A100 (80G)                       | 32×A100 (80G)                       |
+| Required GPU memory         | 80G                                 | 80G                                 | 80G                                 |
+
+## 🔥 Retrieval Fine-tuning (Head)
+
+> Note: This section demonstrates how to perform a cost-effective fine-tuning of our model. The hyperparameters shown here are not optimized for any specific task. For practical applications, further adjustments to the hyperparameters may be necessary to achieve optimal performance.
+
+To fine-tune the head of InternVL on Flickr30K with 4 GPUs, run:
+
+```bash
+GPUS=4 BATCH_SIZE=32 sh shell/head_finetune/internvl_stage2_finetune_flickr_224_bs1024_ep10_head_4gpu.sh
+```
+
+To fine-tune the head of InternVL on Flickr30K-CN with 4 GPUs, run:
+
+```shell
+GPUS=4 BATCH_SIZE=32 sh shell/head_finetune/internvl_stage2_finetune_flickrcn_224_bs1024_ep10_head_4gpu.sh
+```
+
+To fine-tune the head of InternVL on COCO with 4 GPUs, run:
+
+```shell
+GPUS=4 BATCH_SIZE=32 shell/head_finetune/internvl_stage2_finetune_coco_224_bs1024_ep5_head_4gpu.sh
+```
+
+The hyperparameters used here are:
+
+| config                   | Flickr30K     | Flickr30K-CN  | COCO          |
+| ------------------------ | ------------- | ------------- | ------------- |
+| learning rate            | 1e-6          | 1e-6          | 1e-6          |
+| optimizer                | AdamW         | AdamW         | AdamW         |
+| weight decay             | 0.05          | 0.05          | 0.05          |
+| input resolution         | 224x224       | 224x224       | 224x224       |
+| total batch size         | 4x32          | 4x32          | 4x32          |
+| warm-up iterations       | 100           | 100           | 100           |
+| training epochs          | 10            | 10            | 5             |
+| drop path rate           | 0.0           | 0.0           | 0.3           |
+| numerical precision      | zero3 + bf16  | zero3 + bf16  | zero1 + bf16  |
+| trainable / total params | 0.2B / 14B    | 0.2B / 14B    | 0.2B / 14B    |
+| GPUs for training        | 4×GPU (>=32G) | 4×GPU (>=32G) | 4×GPU (>=32G) |
+| Required GPU memory      | 24G           | 24G           | 24G           |
+
+## 🔥 Retrieval Fine-tuning (LoRA)
+
+> Note: This section demonstrates how to perform a cost-effective fine-tuning of our model. The hyperparameters shown here are not optimized for any specific task. For practical applications, further adjustments to the hyperparameters may be necessary to achieve optimal performance.
+
+To fine-tune InternVL using LoRA on Flickr30K with 4 GPUs, run:
+
+```bash
+GPUS=4 BATCH_SIZE=32 sh shell/lora_finetune/internvl_stage2_finetune_flickr_224_bs1024_ep10_lora16_4gpu.sh
+```
+
+To fine-tune InternVL using LoRA on Flickr30K-CN with 4 GPUs, run:
+
+```shell
+GPUS=4 BATCH_SIZE=32 sh shell/lora_finetune/internvl_stage2_finetune_flickrcn_224_bs1024_ep10_lora16_4gpu.sh
+```
+
+To fine-tune InternVL using LoRA on COCO with 4 GPUs, run:
+
+```shell
+GPUS=4 BATCH_SIZE=32 shell/lora_finetune/internvl_stage2_finetune_coco_224_bs1024_ep5_lora16_4gpu.sh
+```
+
+The hyperparameters used here are:
+
+| config                   | Flickr30K     | Flickr30K-CN  | COCO          |
+| ------------------------ | ------------- | ------------- | ------------- |
+| learning rate            | 1e-6          | 1e-6          | 1e-6          |
+| optimizer                | AdamW         | AdamW         | AdamW         |
+| lora rank                | 16            | 16            | 16            |
+| weight decay             | 0.05          | 0.05          | 0.05          |
+| input resolution         | 224x224       | 224x224       | 224x224       |
+| total batch size         | 4x32          | 4x32          | 4x32          |
+| warm-up iterations       | 100           | 100           | 100           |
+| training epochs          | 10            | 10            | 5             |
+| drop path rate           | 0.0           | 0.0           | 0.3           |
+| numerical precision      | zero3 + bf16  | zero3 + bf16  | zero1 + bf16  |
+| trainable / total params | 0.3B / 14B    | 0.3B / 14B    | 0.3B / 14B    |
+| GPUs for training        | 4×GPU (>=40G) | 4×GPU (>=40G) | 4×GPU (>=40G) |
+| Required GPU memory      | 37G           | 37G           | 37G           |
+
+## Fine-Tuning a Custom Dataset
+
+1. **Organize Your Data**: Format your dataset similar to COCO or Flickr30K.
+
+2. **Update Meta Information**: Add your dataset's meta information to the `ds_collections` dictionary in `internvl_g/internvl/train/internvl_stage2_finetune.py`. For example:
+
+   ```python
+   ds_collections = {
+       'my_dataset_flickr_format': {
+           'root': './data/my_dataset/images/',
+           'annotation': './data/my_dataset/annotations.txt',
+       },
+       'my_dataset_coco_format': {
+           'root': './data/my_dataset/',
+           'annotation': './data/my_dataset/annotations.json',
+       },
+   }
+   ```
+
+3. **Name Your Dataset**:
+
+   - Include `flickr_format` or `coco_format` in your dataset's `dataset_name`. This will allow the script to reuse the Flickr30K or COCO dataloader accordingly.
+
+By following these steps, you can easily fine-tune the InternVL model on your custom dataset using the existing COCO or Flickr30K data loading mechanisms.
