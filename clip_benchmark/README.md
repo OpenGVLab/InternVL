@@ -1,12 +1,11 @@
-# InternVL for Image Classification & Image-Text Retrieval
+# InternVL for Zero-Shot Image Classification & Image-Text Retrieval
 
-This folder contains the implementation of InternVL for image classification and image-text retrieval.
-
+This folder contains the implementation of InternVL 1.0 for zero-shot image classification and zero-shot image-text retrieval, which corresponds to Section 4.3 of our [InternVL 1.0 paper](https://arxiv.org/pdf/2312.14238).
 We mainly use [CLIP Benchmark](https://github.com/LAION-AI/CLIP_benchmark) to evaluate the performance of InternVL. Thanks for this great work.
 
 ## 🛠️ Installation
 
-See [INSTALLATION.md](../INSTALLATION.md)
+First, follow the [installation guide](../INSTALLATION.md) to perform some basic installations.
 
 In addition, using this codebase requires executing the following steps:
 
@@ -26,14 +25,14 @@ In addition, using this codebase requires executing the following steps:
 
 ## 📦 Data Preparation
 
-This codebase will automatically download the required dataset. If the dataset fails to download automatically, please refer to this [file](./clip_benchmark/datasets/builder.py) for manual downloading.
+This codebase will automatically download the required dataset. If the dataset fails to download automatically, please refer to this [code](./clip_benchmark/datasets/builder.py) for manual downloading.
 
 ## 📦 Model Preparation
 
-| model name           |    type     | download                                                                                   |  size   |
-| -------------------- | :---------: | ------------------------------------------------------------------------------------------ | :-----: |
-| InternVL-C-13B-224px |   pytorch   | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL/blob/main/internvl_c_13b_224px.pth) | 25.4 GB |
-| InternVL-14B-224px   | huggingface | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)                          | 27.7 GB |
+| model name               |    type     | download                                                                                   |  size   |
+| ------------------------ | :---------: | ------------------------------------------------------------------------------------------ | :-----: |
+| internvl_c_13b_224px.pth |   pytorch   | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL/blob/main/internvl_c_13b_224px.pth) | 25.4 GB |
+| InternVL-14B-224px       | huggingface | 🤗 [HF link](https://huggingface.co/OpenGVLab/InternVL-14B-224px)                          | 27.7 GB |
 
 Please download the above model weights and place them in the `pretrained/` folder.
 
@@ -43,7 +42,7 @@ You can download either the PyTorch version or the Hugging Face version based on
 cd pretrained/
 wget https://huggingface.co/OpenGVLab/InternVL/resolve/main/internvl_c_13b_224px.pth
 # pip install -U huggingface_hub
-huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-14B-224px --local-dir internvl_14b_224px
+huggingface-cli download --resume-download --local-dir-use-symlinks False OpenGVLab/InternVL-14B-224px --local-dir InternVL-14B-224px
 ```
 
 The directory structure is:
@@ -51,8 +50,7 @@ The directory structure is:
 ```sh
 pretrained
 ├── internvl_c_13b_224px.pth
-└── internvl_14b_224px/
-
+└── InternVL-14B-224px/
 ```
 
 ## 📊 Evaluation: Zero-Shot Image Classification
@@ -618,14 +616,14 @@ Expected results:
 ### Flickr30K & COCO
 
 <table>
-  <tr  align=center>
+  <tr align=center>
       <td rowspan="3" align=center><b>model</b></td>
       <td colspan="6" align=center><b>Flickr30K</b></td>
       <td colspan="6" align=center><b>COCO</b></td>
       <td rowspan="3" align=center><b>avg</b></td>
 
 </tr>
-   <tr  align=center>
+   <tr align=center>
       <td colspan="3" align=center><b>image-to-text</b></td>
       <td colspan="3" align=center><b>text-to-image</b></td>
        <td colspan="3" align=center><b>image-to-text</b></td>
@@ -727,13 +725,13 @@ Expected results:
 ```bash
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_retrieval" \
     --dataset "flickr30k" --dataset_root ./data/flickr30k --model internvl_g_retrieval_hf \
-    --pretrained ./pretrained/internvl_14b_224px --output result_g.json
+    --pretrained ./pretrained/InternVL-14B-224px --output result_g.json
 ```
 
 Expected results:
 
 ```
-{"dataset": "flickr30k", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval",
+{"dataset": "flickr30k", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/InternVL-14B-224px", "task": "zeroshot_retrieval",
 "metrics": {"image_retrieval_recall@1": 0.8497999906539917, "text_retrieval_recall@1": 0.9570000171661377,
 "image_retrieval_recall@5": 0.9700000286102295, "text_retrieval_recall@5": 0.996999979019165,
 "image_retrieval_recall@10": 0.98580002784729, "text_retrieval_recall@10": 0.9990000128746033}, "language": "en"}
@@ -747,13 +745,13 @@ Expected results:
 ```bash
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "en" --task "zeroshot_retrieval" \
     --dataset "mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_g_retrieval_hf \
-    --pretrained ./pretrained/internvl_14b_224px --output result_g.json
+    --pretrained ./pretrained/InternVL-14B-224px --output result_g.json
 ```
 
 Expected results:
 
 ```
-{"dataset": "mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval",
+{"dataset": "mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/InternVL-14B-224px", "task": "zeroshot_retrieval",
 "metrics": {"image_retrieval_recall@1": 0.5858056545257568, "text_retrieval_recall@1": 0.7491999864578247,
 "image_retrieval_recall@5": 0.813194751739502, "text_retrieval_recall@5": 0.9129999876022339,
 "image_retrieval_recall@10": 0.8795281648635864, "text_retrieval_recall@10": 0.9521999955177307}, "language": "en"}
@@ -764,14 +762,14 @@ Expected results:
 ### Flickr30K-CN & COCO-CN
 
 <table>
-  <tr  align=center>
+  <tr align=center>
       <td rowspan="3" align=center><b>model</b></td>
       <td colspan="6" align=center><b>Flickr30K-CN</b></td>
       <td colspan="6" align=center><b>COCO-CN</b></td>
       <td rowspan="3" align=center><b>avg</b></td>
 
 </tr>
-   <tr  align=center>
+   <tr align=center>
       <td colspan="3" align=center><b>image-to-text</b></td>
       <td colspan="3" align=center><b>text-to-image</b></td>
        <td colspan="3" align=center><b>image-to-text</b></td>
@@ -873,13 +871,13 @@ Expected results:
 ```bash
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" --task "zeroshot_retrieval" \
     --dataset "flickr30k" --dataset_root ./data/flickr30k --model internvl_g_retrieval_hf \
-    --pretrained ./pretrained/internvl_14b_224px --output result_g.json
+    --pretrained ./pretrained/InternVL-14B-224px --output result_g.json
 ```
 
 Expected results:
 
 ```
-{"dataset": "flickr30k", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval",
+{"dataset": "flickr30k", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/InternVL-14B-224px", "task": "zeroshot_retrieval",
 "metrics": {"image_retrieval_recall@1": 0.7767999768257141, "text_retrieval_recall@1": 0.9290000200271606,
 "image_retrieval_recall@5": 0.9476000070571899, "text_retrieval_recall@5": 0.9940000176429749,
 "image_retrieval_recall@10": 0.9728000164031982, "text_retrieval_recall@10": 0.9980000257492065}, "language": "cn"}
@@ -894,13 +892,13 @@ Expected results:
 ```bash
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --language "cn" --task "zeroshot_retrieval" \
     --dataset "mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_g_retrieval_hf \
-    --pretrained ./pretrained/internvl_14b_224px --output result_g.json
+    --pretrained ./pretrained/InternVL-14B-224px --output result_g.json
 ```
 
 Expected results:
 
 ```
-{"dataset": "mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval",
+{"dataset": "mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/InternVL-14B-224px", "task": "zeroshot_retrieval",
 "metrics": {"image_retrieval_recall@1": 0.7378917336463928, "text_retrieval_recall@1": 0.7139999866485596,
 "image_retrieval_recall@5": 0.9439696073532104, "text_retrieval_recall@5": 0.9390000104904175,
 "image_retrieval_recall@10": 0.9810066223144531, "text_retrieval_recall@10": 0.9769999980926514}, "language": "cn"}
@@ -973,53 +971,53 @@ Expected results:
 ```bash
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --task "zeroshot_retrieval" \
     --dataset "multilingual_mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_g_retrieval_hf \
-    --pretrained ./pretrained/internvl_14b_224px --output result_g.json --language=en
+    --pretrained ./pretrained/InternVL-14B-224px --output result_g.json --language=en
 
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --task "zeroshot_retrieval" \
     --dataset "multilingual_mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_g_retrieval_hf \
-    --pretrained ./pretrained/internvl_14b_224px --output result_g.json --language=es
+    --pretrained ./pretrained/InternVL-14B-224px --output result_g.json --language=es
 
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --task "zeroshot_retrieval" \
     --dataset "multilingual_mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_g_retrieval_hf \
-    --pretrained ./pretrained/internvl_14b_224px --output result_g.json --language=fr
+    --pretrained ./pretrained/InternVL-14B-224px --output result_g.json --language=fr
 
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --task "zeroshot_retrieval" \
     --dataset "multilingual_mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_g_retrieval_hf \
-    --pretrained ./pretrained/internvl_14b_224px --output result_g.json --language=zh
+    --pretrained ./pretrained/InternVL-14B-224px --output result_g.json --language=zh
 
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --task "zeroshot_retrieval" \
     --dataset "multilingual_mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_g_retrieval_hf \
-    --pretrained ./pretrained/internvl_14b_224px --output result_g.json --language=it
+    --pretrained ./pretrained/InternVL-14B-224px --output result_g.json --language=it
 
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --task "zeroshot_retrieval" \
     --dataset "multilingual_mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_g_retrieval_hf \
-    --pretrained ./pretrained/internvl_14b_224px --output result_g.json --language=ko
+    --pretrained ./pretrained/InternVL-14B-224px --output result_g.json --language=ko
 
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --task "zeroshot_retrieval" \
     --dataset "multilingual_mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_g_retrieval_hf \
-    --pretrained ./pretrained/internvl_14b_224px --output result_g.json --language=ru
+    --pretrained ./pretrained/InternVL-14B-224px --output result_g.json --language=ru
 
 CUDA_VISIBLE_DEVICES=0 python3 clip_benchmark/cli.py eval --model_type internvl --task "zeroshot_retrieval" \
     --dataset "multilingual_mscoco_captions" --dataset_root ./data/mscoco_captions --model internvl_g_retrieval_hf \
-    --pretrained ./pretrained/internvl_14b_224px --output result_g.json --language=jp
+    --pretrained ./pretrained/InternVL-14B-224px --output result_g.json --language=jp
 ```
 
 Expected results:
 
 ```
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.8119999766349792, "text_retrieval_recall@1": 0.7979999780654907, "image_retrieval_recall@5": 0.9470000267028809, "text_retrieval_recall@5": 0.9480000138282776, "image_retrieval_recall@10": 0.9829999804496765, "text_retrieval_recall@10": 0.9860000014305115}, "language": "en"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.7549999952316284, "text_retrieval_recall@1": 0.7450000047683716, "image_retrieval_recall@5": 0.9350000023841858, "text_retrieval_recall@5": 0.925000011920929, "image_retrieval_recall@10": 0.9660000205039978, "text_retrieval_recall@10": 0.9769999980926514}, "language": "es"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.7450000047683716, "text_retrieval_recall@1": 0.7279999852180481, "image_retrieval_recall@5": 0.9179999828338623, "text_retrieval_recall@5": 0.9190000295639038, "image_retrieval_recall@10": 0.9620000123977661, "text_retrieval_recall@10": 0.9649999737739563}, "language": "fr"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6980000138282776, "text_retrieval_recall@1": 0.6949999928474426, "image_retrieval_recall@5": 0.9120000004768372, "text_retrieval_recall@5": 0.9110000133514404, "image_retrieval_recall@10": 0.9620000123977661, "text_retrieval_recall@10": 0.9670000076293945}, "language": "zh"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.7329999804496765, "text_retrieval_recall@1": 0.7450000047683716, "image_retrieval_recall@5": 0.9309999942779541, "text_retrieval_recall@5": 0.9309999942779541, "image_retrieval_recall@10": 0.9639999866485596, "text_retrieval_recall@10": 0.968999981880188}, "language": "it"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6430000066757202, "text_retrieval_recall@1": 0.6470000147819519, "image_retrieval_recall@5": 0.8790000081062317, "text_retrieval_recall@5": 0.8769999742507935, "image_retrieval_recall@10": 0.9419999718666077, "text_retrieval_recall@10": 0.9509999752044678}, "language": "ko"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6850000023841858, "text_retrieval_recall@1": 0.6899999976158142, "image_retrieval_recall@5": 0.8740000128746033, "text_retrieval_recall@5": 0.8920000195503235, "image_retrieval_recall@10": 0.9390000104904175, "text_retrieval_recall@10": 0.9480000138282776}, "language": "ru"}
-{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/internvl_14b_224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6850000023841858, "text_retrieval_recall@1": 0.703000009059906, "image_retrieval_recall@5": 0.9020000100135803, "text_retrieval_recall@5": 0.9100000262260437, "image_retrieval_recall@10": 0.9539999961853027, "text_retrieval_recall@10": 0.9610000252723694}, "language": "jp"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/InternVL-14B-224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.8119999766349792, "text_retrieval_recall@1": 0.7979999780654907, "image_retrieval_recall@5": 0.9470000267028809, "text_retrieval_recall@5": 0.9480000138282776, "image_retrieval_recall@10": 0.9829999804496765, "text_retrieval_recall@10": 0.9860000014305115}, "language": "en"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/InternVL-14B-224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.7549999952316284, "text_retrieval_recall@1": 0.7450000047683716, "image_retrieval_recall@5": 0.9350000023841858, "text_retrieval_recall@5": 0.925000011920929, "image_retrieval_recall@10": 0.9660000205039978, "text_retrieval_recall@10": 0.9769999980926514}, "language": "es"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/InternVL-14B-224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.7450000047683716, "text_retrieval_recall@1": 0.7279999852180481, "image_retrieval_recall@5": 0.9179999828338623, "text_retrieval_recall@5": 0.9190000295639038, "image_retrieval_recall@10": 0.9620000123977661, "text_retrieval_recall@10": 0.9649999737739563}, "language": "fr"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/InternVL-14B-224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6980000138282776, "text_retrieval_recall@1": 0.6949999928474426, "image_retrieval_recall@5": 0.9120000004768372, "text_retrieval_recall@5": 0.9110000133514404, "image_retrieval_recall@10": 0.9620000123977661, "text_retrieval_recall@10": 0.9670000076293945}, "language": "zh"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/InternVL-14B-224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.7329999804496765, "text_retrieval_recall@1": 0.7450000047683716, "image_retrieval_recall@5": 0.9309999942779541, "text_retrieval_recall@5": 0.9309999942779541, "image_retrieval_recall@10": 0.9639999866485596, "text_retrieval_recall@10": 0.968999981880188}, "language": "it"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/InternVL-14B-224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6430000066757202, "text_retrieval_recall@1": 0.6470000147819519, "image_retrieval_recall@5": 0.8790000081062317, "text_retrieval_recall@5": 0.8769999742507935, "image_retrieval_recall@10": 0.9419999718666077, "text_retrieval_recall@10": 0.9509999752044678}, "language": "ko"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/InternVL-14B-224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6850000023841858, "text_retrieval_recall@1": 0.6899999976158142, "image_retrieval_recall@5": 0.8740000128746033, "text_retrieval_recall@5": 0.8920000195503235, "image_retrieval_recall@10": 0.9390000104904175, "text_retrieval_recall@10": 0.9480000138282776}, "language": "ru"}
+{"dataset": "multilingual_mscoco_captions", "model": "internvl_g_retrieval_hf", "pretrained": "./pretrained/InternVL-14B-224px", "task": "zeroshot_retrieval", "metrics": {"image_retrieval_recall@1": 0.6850000023841858, "text_retrieval_recall@1": 0.703000009059906, "image_retrieval_recall@5": 0.9020000100135803, "text_retrieval_recall@5": 0.9100000262260437, "image_retrieval_recall@10": 0.9539999961853027, "text_retrieval_recall@10": 0.9610000252723694}, "language": "jp"}
 ```
 
 </details>
 
-# CLIP Benchmark
+## Original README of CLIP Benchmark
 
 [![pypi](https://img.shields.io/pypi/v/clip_benchmark.svg)](https://pypi.python.org/pypi/clip_benchmark)
 
@@ -1035,18 +1033,18 @@ on different datasets.
 The current detailed results of the benchmark can be seen [here](benchmark/README.md)
 or directly in the [notebook](benchmark/results.ipynb).
 
-## Features
+### Features
 
 - Support for zero-shot classification and zero-shot retrieval
 - Support for [OpenCLIP](https://github.com/mlfoundations/open_clip) pre-trained models
 - Support various datasets from [torchvision](https://pytorch.org/vision/stable/datasets.html), [tensorflow datasets](https://www.tensorflow.org/datasets), and [VTAB](https://github.com/google-research/task_adaptation).
 - Support [Japanese CLIP by rinna](https://github.com/rinnakk/japanese-clip)
 
-## How to install?
+### How to install?
 
 `pip install clip-benchmark`
 
-## How to use?
+### How to use?
 
 To evaluate we recommend to create a models.txt like
 
@@ -1075,13 +1073,13 @@ Then to get the full table
 clip_benchmark build benchmark_*.json --output benchmark.csv
 ```
 
-### Command line interface (CLI)
+#### Command line interface (CLI)
 
 The easiest way to benchmark the models is using the CLI, `clip_benchmark`.
 You can specify the model to use, the dataset and the task to evaluate on. Once it is done, evaluation is performed and
 the results are written into a JSON file.
 
-### Using other models than openclip
+#### Using other models than openclip
 
 It is possible to use other models than openclip ones. For example japanese-clip is supported
 
@@ -1100,7 +1098,7 @@ Here is an example of use
 {"dataset": "imagenet1k", "model": "ViT-B-32-quickgelu", "pretrained": "rinna/japanese-cloob-vit-b-16", "task": "zeroshot_classification", "metrics": {"acc1": 0.54636, "acc5": 0.72856, "mean_per_class_recall": 0.54522}, "language": "jp"}
 ```
 
-### How to add other CLIP models
+#### How to add other CLIP models
 
 Please follow these steps:
 
@@ -1115,7 +1113,7 @@ Remarks:
   - `model.encode_text(tokenized_texts)` ... `tokenized_texts` is a output from `tokenizer(texts).to(device)`
   - `model.encode_image(images)` ... `images` is a image tensor by the `transform`
 
-### CIFAR-10 example
+#### CIFAR-10 example
 
 Here is an example for CIFAR-10 zero-shot classification using OpenCLIP's pre-trained model on LAION-400m:
 
@@ -1133,7 +1131,7 @@ Here is the content of `result.json` after the evaluation is done:
 }
 ```
 
-### VOC2007 example
+#### VOC2007 example
 
 Here is another example with VOC2007, which is a multi-label classification dataset.
 
@@ -1147,7 +1145,7 @@ Here is the content of `result.json` after the evaluation is done:
 
 Here, we compute the mean average precision or mAP, more details about that metric [here](https://fangdahan.medium.com/calculate-mean-average-precision-map-for-multi-label-classification-b082679d31be) in the context of multi-label classification.
 
-### VTAB example
+#### VTAB example
 
 Here is an example on how to run it on [VTAB](https://github.com/google-research/task_adaptation) classification tasks.
 First, you need to install VTAB's dedicated package.
@@ -1162,7 +1160,7 @@ Example with `eurosat`:
 See [clip_benchmark/datasets/builder.py#L634](clip_benchmark/datasets/builder.py#L634) for the full list of
 VTAB dataset collection.
 
-### TensorFlow dataset example
+#### TensorFlow dataset example
 
 Here is an example on how to run it on [Tensorflow datasets](https://www.tensorflow.org/datasets).
 First, you need to install `tfds-nightly` and `timm`.
@@ -1175,7 +1173,7 @@ Example with `cifar10`:
 
 `clip_benchmark eval --dataset=tfds/cifar10 --task=zeroshot_classification --pretrained=laion400m_e32 --model=ViT-B-32-quickgelu --output=result.json --batch_size=64`
 
-### COCO captions example
+#### COCO captions example
 
 Here is an example for COCO captions zero-shot retrieval:
 
@@ -1183,14 +1181,14 @@ Here is an example for COCO captions zero-shot retrieval:
 
 Note that for using COCO, you also need to install `pycocotools` (e.g., using `pip install pycocotools`).
 
-### Webdataset example
+#### Webdataset example
 
 Here is an example on how to run it on [webdatasets](https://github.com/webdataset/webdataset).
 First, you need to install `webdataset`.
 
 `pip install webdataset`
 
-#### Creating a webdataset
+##### Creating a webdataset
 
 You can either convert an already supported CLIP_benchmark dataset to webdataset format, or manually create your own with the same file structure. For already supported datasets use the CLI command `clip_benchmark_export_wds` as in this example:
 
@@ -1221,7 +1219,7 @@ root_dir/
 
 Each split should be contained in its own folder and `nshards.txt` should contain a single integer corresponding to the number of TAR files. The TAR files should follow webdataset format, with an image file (.webp, .png, or .jpg) and a label (.cls) for each example. Classnames and templates are required for zeroshot classification evaluation, with each classname or template on its own line. Dataset type is required for distinguishing zeroshot retrieval evaluation: the file should just contain the text `retrieval`.
 
-#### Evaluating on a webdataset
+##### Evaluating on a webdataset
 
 The name of the dataset follows the template `wds/<DATASET_NAME>`. Note that the dataset name currently only affects the name in the results output - classnames and templates are loaded directly from the included files. The dataset root directory can be either a local path to the `root_dir` as specified above, or an HTTP URL pointing to a Huggingface Hub dataset file tree.
 
@@ -1234,12 +1232,12 @@ $ clip_benchmark eval --dataset wds/vtab/cifar10 --dataset_root https://huggingf
 
 All other arguments remain the same as in the other examples. See `https://huggingface.co/clip-benchmark` for a full list of datasets that have already been uploaded to Huggingface.
 
-## Evaluate mulitple models on multiple datasets
+### Evaluate mulitple models on multiple datasets
 
 For the purpose of benchmarking, it is possible to run the CLI with multiple
 pre-trained models on multiple datasets.
 
-### Pretrained models and datasets list as arguments
+#### Pretrained models and datasets list as arguments
 
 For models, we can provide list of pretrained model names in the form of 'model,pretrained' (so `model` and `pretrained` are comma separated). For datasets, we can provide a list of datasets.  For languages, we can provide a list of languages.
 Example:
@@ -1254,7 +1252,7 @@ Note that `--dataset_root` and `--output` can be now in the form of a template t
 
 Note that If the benchmark fails at some point, it is possible to resume it by skipping already evaluated models using `--skip_existing`.
 
-### Pretrained models and datasets list as files
+#### Pretrained models and datasets list as files
 
 We can also provide a path to files with models (each line is in the form of 'model,pretrained' where `model` and `pretrained` are comma separated) and datasets list (one dataset per line):
 
@@ -1266,7 +1264,7 @@ clip_benchmark eval --pretrained_model  benchmark/models.txt \
 
 Examples are available in [benchmark/datasets.txt](benchmark/datasets.txt) and [benchmark/models.txt](benchmark/models.txt)
 
-### Model and dataset collections
+#### Model and dataset collections
 
 We can also provide model collection names (`openai`, `openclip_base`, `openclip_multilingual`, `openclip_full` are supported) or dataset collection names (`vtab`, `vtab+`, `retrieval`, `imagenet_robustness` are supported):
 
@@ -1276,10 +1274,7 @@ clip_benchmark eval --pretrained_model openai openclip_base  --dataset vtab+ ret
 --output "{dataset}_{pretrained}_{model}_{language}_{task}.json"
 ```
 
-See [clip_benchmark/models.py#L6](clip_benchmark/models.py#L6) and [clip_benchmark/datasets/builder.py#L634](clip_benchmark/datasets/builder.py#L634) for more information
-about the collections.
-
-### Development
+#### Development
 
 For development, you can also do this:
 
@@ -1289,7 +1284,7 @@ cd CLIP_benchmark
 python setup.py install
 ```
 
-## Credits
+### Credits
 
 - Thanks to [OpenCLIP](https://github.com/mlfoundations/open_clip) authors, zero-shot accuracy code is adapted from there and pre-trained models are used in the command line interface.
 - Thanks to [SLIP](https://github.com/facebookresearch/SLIP) authors, some zero-shot templates and classnames are from there.
