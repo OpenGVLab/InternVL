@@ -7,7 +7,6 @@ einops-exts==0.0.4
 flash_attn==2.3.6
 huggingface_hub
 imageio
-lmdeploy
 numpy
 opencv-python
 orjson
