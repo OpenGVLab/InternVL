@@ -18,14 +18,14 @@
   ```bash
   pip install -r requirements.txt
   ```
-  
+
   By default, our `requirements.txt` file includes the following dependencies:
-  
+
   - `-r requirements/internvl_chat.txt`
   - `-r requirements/streamlit_demo.txt`
   - `-r requirements/classification.txt`
   - `-r requirements/segmentation.txt`
-  
+
   The `clip_benchmark.txt` is **not** included in the default installation. If you require the `clip_benchmark` functionality, please install it manually by running the following command:
 
   ```bash

@@ -33,7 +33,7 @@ torchrun \
   --model_name_or_path "./pretrained/InternVL-Chat-V1-2-Plus" \
   --conv_style "Hermes-2" \
   --output_dir ${OUTPUT_DIR} \
-  --meta_path "./path/to/your/custom/meta/file" \
+  --meta_path "./shell/data/internvl_1_2_finetune_custom.json" \
   --overwrite_output_dir True \
   --force_image_size 448 \
   --down_sample_ratio 0.5 \
