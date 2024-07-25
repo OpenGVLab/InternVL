@@ -227,7 +227,7 @@ class Conversation:
 
             return ret
         elif self.sep_style == SeparatorStyle.INTERNVL_ZH:
-            seps = [self.sep, self.sep2]
+            seps = [self.sep2, self.sep]
             ret = self.system_message + seps[0]
             for i, (role, message) in enumerate(self.messages):
                 if message:
@@ -328,6 +328,19 @@ def register_conv_template(template: Conversation, override: bool = False):
 def get_conv_template(name: str) -> Conversation:
     """Get a conversation template."""
     return conv_templates[name].copy()
+
+
+# InternVL-Chat-V1-1 template
+register_conv_template(
+    Conversation(
+        name='internvl_zh',
+        system_template='',
+        roles=('<human>', '<bot>'),
+        sep_style=SeparatorStyle.INTERNVL_ZH,
+        sep='</s>',
+        sep2=' ',
+    )
+)
 
 
 # Both Hermes-2 and internlm2-chat are chatml-format conversation templates. The difference
