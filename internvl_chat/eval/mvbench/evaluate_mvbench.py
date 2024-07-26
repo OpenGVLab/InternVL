@@ -303,7 +303,8 @@ def evaluate_chat_model():
             pixel_values=pixel_values,
             num_patches_list=num_patches_lists[0],
             question=questions[0],
-            generation_config=generation_config
+            generation_config=generation_config,
+            verbose=True
         )
         outputs.append({
             'question': questions[0],

@@ -133,7 +133,8 @@ def evaluate_chat_model():
                 tokenizer=tokenizer,
                 pixel_values=pixel_values,
                 question=data_items[0]['query'],
-                generation_config=generation_config
+                generation_config=generation_config,
+                verbose=True
             )
 
             data_item = data_items[0]

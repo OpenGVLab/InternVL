@@ -83,7 +83,8 @@ def evaluate_chat_model():
                 tokenizer=tokenizer,
                 pixel_values=pixel_values,
                 question=question,
-                generation_config=generation_config
+                generation_config=generation_config,
+                verbose=True
             )
             outputs.append({
                 'question_id': question_id,
