@@ -88,7 +88,10 @@ class InternVLChatModel(PreTrainedModel):
 
         self.img_context_token_id = None
         self.conv_template = get_conv_template(self.template)
-        self.system_message = self.conv_template.system_message
+        if hasattr(config, 'system_message'):
+            self.system_message = config.system_message
+        else:
+            self.system_message = self.conv_template.system_message
         self.num_samples = 0
 
         if config.use_backbone_lora:
