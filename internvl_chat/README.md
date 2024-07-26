@@ -453,7 +453,7 @@ GPUS=8 sh evaluate.sh <checkpoint> vqa-vizwiz-val [--dynamic]
 GPUS=8 sh evaluate.sh <checkpoint> vqa-vizwiz-test [--dynamic]
 ```
 
-For the test set, submit the results to the [evaluation server](https://eval.ai/web/challenges/challenge-page/1911/my-submission).
+For the test set, submit the results to the [evaluation server](https://eval.ai/web/challenges/challenge-page/2185/overview).
 
 </details>
 
