@@ -11,7 +11,7 @@ export MASTER_PORT=34229
 export TF_CPP_MIN_LOG_LEVEL=3
 export LAUNCHER=pytorch
 
-OUTPUT_DIR='work_dirs/internvl_chat_v1_2/internvl_chat_v1_2_hermes2_yi34b_448_res_finetune_continue_lora'
+OUTPUT_DIR='work_dirs/internvl_chat_v1_2/internvl_chat_v1_2_hermes2_yi34b_448_res_2nd_finetune_lora'
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
@@ -28,7 +28,6 @@ torchrun \
   --master_addr=127.0.0.1 \
   --nproc_per_node=${GPUS} \
   --master_port=${MASTER_PORT} \
-  ${SRUN_ARGS} \
   internvl/train/internvl_chat_finetune.py \
   --model_name_or_path "./pretrained/InternVL-Chat-V1-2-Plus" \
   --conv_style "Hermes-2" \
@@ -36,6 +35,7 @@ torchrun \
   --meta_path "./shell/data/internvl_1_2_finetune_custom.json" \
   --overwrite_output_dir True \
   --force_image_size 448 \
+  --max_dynamic_patch 1 \
   --down_sample_ratio 0.5 \
   --drop_path_rate 0.0 \
   --freeze_llm True \
@@ -61,6 +61,9 @@ torchrun \
   --do_train True \
   --grad_checkpoint True \
   --group_by_length True \
+  --dynamic_image_size False \
+  --use_thumbnail False \
+  --ps_version 'v1' \
   --deepspeed "zero_stage3_config_34b.json" \
   --report_to "tensorboard" \
   2>&1 | tee -a "${OUTPUT_DIR}/training_log.txt"
