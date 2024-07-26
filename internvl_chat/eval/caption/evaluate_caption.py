@@ -166,7 +166,8 @@ def evaluate_chat_model():
                 tokenizer=tokenizer,
                 pixel_values=pixel_values,
                 question=prompt,
-                generation_config=generation_config
+                generation_config=generation_config,
+                verbose=True
             )
             image_ids.extend(ids)
             captions.extend([pred])

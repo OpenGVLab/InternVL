@@ -95,7 +95,8 @@ def evaluate_chat_model():
                 tokenizer=tokenizer,
                 pixel_values=pixel_values,
                 question=question,
-                generation_config=generation_config
+                generation_config=generation_config,
+                verbose=True
             )
 
             outputs[f'v1_{question_id}'] = pred

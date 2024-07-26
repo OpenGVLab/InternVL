@@ -1,4 +1,4 @@
-import argparse
+ouimport argparse
 import json
 import os
 import random
@@ -125,7 +125,8 @@ def evaluate_chat_model():
                 tokenizer=tokenizer,
                 pixel_values=pixel_value,
                 question=question,
-                generation_config=generation_config
+                generation_config=generation_config,
+                verbose=True
             )
             question_id = item['question_id']
             text = item['text']

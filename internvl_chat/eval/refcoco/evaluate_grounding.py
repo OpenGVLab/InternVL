@@ -156,7 +156,8 @@ def evaluate_chat_model():
                 tokenizer=tokenizer,
                 pixel_values=pixel_values,
                 question=questions[0],
-                generation_config=generation_config
+                generation_config=generation_config,
+                verbose=True
             )
             answers = [pred]
 
