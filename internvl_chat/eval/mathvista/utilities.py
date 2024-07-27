@@ -166,22 +166,20 @@ def get_chat_response(promot, api_key, model='gpt-3.5-turbo', temperature=0, max
     messages = [
         {'role': 'user', 'content': promot},
     ]
-    # print("I am here")
     while patience > 0:
         patience -= 1
         try:
-            response = openai.ChatCompletion.create(model=model,
-                                                    messages=messages,
-                                                    api_key=api_key,
-                                                    temperature=temperature,
-                                                    max_tokens=max_tokens,
-                                                    n=n)
+            completion = openai.chat.completions.create(model=model,
+                                                        messages=messages,
+                                                        temperature=temperature,
+                                                        max_tokens=max_tokens,
+                                                        n=n)
             if n == 1:
-                prediction = response['choices'][0]['message']['content'].strip()
+                prediction = completion.choices[0].message.content.strip()
                 if prediction != '' and prediction is not None:
                     return prediction
             else:
-                prediction = [choice['message']['content'].strip() for choice in response['choices']]
+                prediction = [choice.message.content.strip() for choice in completion.choices]
                 if prediction[0] != '' and prediction[0] is not None:
                     return prediction
 
