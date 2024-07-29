@@ -16,10 +16,10 @@ dependencies = [
     "torch>=2", "torchvision>=0.15",
     "transformers==4.37.2", "tokenizers==0.15.1", "sentencepiece==0.1.99", "shortuuid",
     "accelerate", "peft>=0.4.0", "bitsandbytes==0.41.0",
-    "pydantic<2,>=1", "markdown2[all]", "numpy", "scikit-learn>=1.2.2",
+    "pydantic", "markdown2[all]", "numpy", "scikit-learn>=1.2.2",
     "gradio==3.35.2", "gradio_client==0.2.9",
     "requests", "httpx==0.24.0", "uvicorn", "fastapi",
-    "deepspeed==0.10.0", "einops", "einops-exts", "timm==0.9.12",
+    "deepspeed==0.13.5", "einops", "einops-exts", "timm==0.9.12",
 ]
 
 [project.urls]

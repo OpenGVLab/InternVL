@@ -1,10 +1,9 @@
 accelerate
 bitsandbytes==0.41.0
 decord
-deepspeed==0.10.0
+deepspeed==0.13.5
 einops==0.6.1
 einops-exts==0.0.4
-flash_attn==2.3.6
 huggingface_hub
 imageio
 numpy
