@@ -289,6 +289,76 @@ if [ ${DATASET} == "refcoco-val" ]; then
     eval/refcoco/evaluate_grounding.py --checkpoint ${CHECKPOINT} --datasets refcoco_val "${ARGS[@]:2}"
 fi
 
+if [ ${DATASET} == "refcoco-testA" ]; then
+    torchrun \
+    --nnodes=1 \
+    --node_rank=0 \
+    --master_addr=127.0.0.1 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
+    eval/refcoco/evaluate_grounding.py --checkpoint ${CHECKPOINT} --datasets refcoco_testA "${ARGS[@]:2}"
+fi
+
+if [ ${DATASET} == "refcoco-testB" ]; then
+    torchrun \
+    --nnodes=1 \
+    --node_rank=0 \
+    --master_addr=127.0.0.1 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
+    eval/refcoco/evaluate_grounding.py --checkpoint ${CHECKPOINT} --datasets refcoco_testB "${ARGS[@]:2}"
+fi
+
+if [ ${DATASET} == "refcoco+-val" ]; then
+    torchrun \
+    --nnodes=1 \
+    --node_rank=0 \
+    --master_addr=127.0.0.1 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
+    eval/refcoco/evaluate_grounding.py --checkpoint ${CHECKPOINT} --datasets refcoco+_val "${ARGS[@]:2}"
+fi
+
+if [ ${DATASET} == "refcoco+-testA" ]; then
+    torchrun \
+    --nnodes=1 \
+    --node_rank=0 \
+    --master_addr=127.0.0.1 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
+    eval/refcoco/evaluate_grounding.py --checkpoint ${CHECKPOINT} --datasets refcoco+_testA "${ARGS[@]:2}"
+fi
+
+if [ ${DATASET} == "refcoco+-testB" ]; then
+    torchrun \
+    --nnodes=1 \
+    --node_rank=0 \
+    --master_addr=127.0.0.1 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
+    eval/refcoco/evaluate_grounding.py --checkpoint ${CHECKPOINT} --datasets refcoco+_testB "${ARGS[@]:2}"
+fi
+
+if [ ${DATASET} == "refcocog-val" ]; then
+    torchrun \
+    --nnodes=1 \
+    --node_rank=0 \
+    --master_addr=127.0.0.1 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
+    eval/refcoco/evaluate_grounding.py --checkpoint ${CHECKPOINT} --datasets refcocog_val "${ARGS[@]:2}"
+fi
+
+if [ ${DATASET} == "refcocog-test" ]; then
+    torchrun \
+    --nnodes=1 \
+    --node_rank=0 \
+    --master_addr=127.0.0.1 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
+    eval/refcoco/evaluate_grounding.py --checkpoint ${CHECKPOINT} --datasets refcocog_test "${ARGS[@]:2}"
+fi
+
 if [ ${DATASET} == "llava-bench" ]; then
     rm -rf results/llava_bench_results_review.jsonl
     python eval/llava_bench/evaluate_llava_bench.py --checkpoint ${CHECKPOINT} "${ARGS[@]:2}"
