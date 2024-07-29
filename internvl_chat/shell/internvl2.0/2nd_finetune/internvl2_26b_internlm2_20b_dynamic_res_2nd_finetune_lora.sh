@@ -1,7 +1,7 @@
 set -x
 
-GPUS=${GPUS:-8}
-BATCH_SIZE=${BATCH_SIZE:-128}
+GPUS=${GPUS:-2}
+BATCH_SIZE=${BATCH_SIZE:-16}
 PER_DEVICE_BATCH_SIZE=${PER_DEVICE_BATCH_SIZE:-2}
 GRADIENT_ACC=$((BATCH_SIZE / PER_DEVICE_BATCH_SIZE / GPUS))
 
@@ -11,16 +11,16 @@ export MASTER_PORT=34229
 export TF_CPP_MIN_LOG_LEVEL=3
 export LAUNCHER=pytorch
 
-OUTPUT_DIR='work_dirs/internvl_chat_v1_5/internvl_chat_v1_5_internlm2_20b_dynamic_res_2nd_finetune_full'
+OUTPUT_DIR='work_dirs/internvl_chat_v1_5/internvl_chat_v1_5_internlm2_20b_dynamic_res_2nd_finetune_lora'
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
 fi
 
-# number of gpus: 8
+# number of gpus: 2
 # batch size per gpu: 4
-# gradient accumulation steps: 4
-# total batch size: 128
+# gradient accumulation steps: 2
+# total batch size: 16
 # epoch: 1
 torchrun \
   --nnodes=1 \
@@ -37,10 +37,11 @@ torchrun \
   --force_image_size 448 \
   --max_dynamic_patch 12 \
   --down_sample_ratio 0.5 \
-  --drop_path_rate 0.4 \
-  --freeze_llm False \
-  --freeze_mlp False \
+  --drop_path_rate 0.0 \
+  --freeze_llm True \
+  --freeze_mlp True \
   --freeze_backbone True \
+  --use_llm_lora 16 \
   --vision_select_layer -1 \
   --dataloader_num_workers 4 \
   --bf16 True \
