@@ -137,7 +137,7 @@
 
 #### InternVL2-Pro API
 
-We encourage everyone to use our API for research. For better management, please submit ([application form](https://docs.google.com/forms/d/e/1FAIpQLSfMCzhPr1OOEKau_6jwTU0EiZMSFckDo-HMlc_hUudhF_97rw/viewform?usp=sf_link)) / ([申请表](https://wj.qq.com/s2/14910502/25a4/)) to obtain free API access.
+We welcome everyone to use our API for research. For better management, please submit ([application form](https://docs.google.com/forms/d/e/1FAIpQLSfMCzhPr1OOEKau_6jwTU0EiZMSFckDo-HMlc_hUudhF_97rw/viewform?usp=sf_link)) / ([申请表](https://wj.qq.com/s2/14910502/25a4/)) to obtain free API access.
 
 #### Multimodal Large Language Model (InternVL 1.0-1.5)
 
