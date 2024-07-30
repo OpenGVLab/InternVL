@@ -1,7 +1,7 @@
 set -x
 
-GPUS=${GPUS:-2}
-BATCH_SIZE=${BATCH_SIZE:-16}
+GPUS=${GPUS:-8}
+BATCH_SIZE=${BATCH_SIZE:-128}
 PER_DEVICE_BATCH_SIZE=${PER_DEVICE_BATCH_SIZE:-4}
 GRADIENT_ACC=$((BATCH_SIZE / PER_DEVICE_BATCH_SIZE / GPUS))
 
@@ -11,16 +11,16 @@ export MASTER_PORT=34229
 export TF_CPP_MIN_LOG_LEVEL=3
 export LAUNCHER=pytorch
 
-OUTPUT_DIR='work_dirs/internvl_chat_v1_5/internvl2_2b_internlm2_1_8b_dynamic_res_2nd_finetune_lora'
+OUTPUT_DIR='work_dirs/internvl_chat_v2_0/internvl2_1b_qwen2_0_5b_dynamic_res_2nd_finetune_full'
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
 fi
 
-# number of gpus: 2
+# number of gpus: 8
 # batch size per gpu: 4
-# gradient accumulation steps: 2
-# total batch size: 16
+# gradient accumulation steps: 4
+# total batch size: 128
 # epoch: 1
 torchrun \
   --nnodes=1 \
@@ -29,19 +29,18 @@ torchrun \
   --nproc_per_node=${GPUS} \
   --master_port=${MASTER_PORT} \
   internvl/train/internvl_chat_finetune.py \
-  --model_name_or_path "./pretrained/InternVL2-2B" \
-  --conv_style "internlm2-chat" \
+  --model_name_or_path "./pretrained/InternVL2-1B" \
+  --conv_style "Hermes-2" \
   --output_dir ${OUTPUT_DIR} \
   --meta_path "./shell/data/internvl_1_2_finetune_custom.json" \
   --overwrite_output_dir True \
   --force_image_size 448 \
   --max_dynamic_patch 6 \
   --down_sample_ratio 0.5 \
-  --drop_path_rate 0.0 \
-  --freeze_llm True \
-  --freeze_mlp True \
+  --drop_path_rate 0.1 \
+  --freeze_llm False \
+  --freeze_mlp False \
   --freeze_backbone True \
-  --use_llm_lora 16 \
   --vision_select_layer -1 \
   --dataloader_num_workers 4 \
   --bf16 True \

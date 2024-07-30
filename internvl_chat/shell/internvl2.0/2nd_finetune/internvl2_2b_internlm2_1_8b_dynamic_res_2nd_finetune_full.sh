@@ -35,7 +35,7 @@ torchrun \
   --meta_path "./shell/data/internvl_1_2_finetune_custom.json" \
   --overwrite_output_dir True \
   --force_image_size 448 \
-  --max_dynamic_patch 12 \
+  --max_dynamic_patch 6 \
   --down_sample_ratio 0.5 \
   --drop_path_rate 0.1 \
   --freeze_llm False \
