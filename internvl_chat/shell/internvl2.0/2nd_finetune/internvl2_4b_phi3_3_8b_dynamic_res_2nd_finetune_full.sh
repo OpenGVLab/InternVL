@@ -11,7 +11,7 @@ export MASTER_PORT=34229
 export TF_CPP_MIN_LOG_LEVEL=3
 export LAUNCHER=pytorch
 
-OUTPUT_DIR='work_dirs/internvl_chat_v1_5/internvl_chat_v1_5_phi3_3_8b_dynamic_res_2nd_finetune_full'
+OUTPUT_DIR='work_dirs/internvl_chat_v2_0/internvl2_4b_phi3_3_8b_dynamic_res_2nd_finetune_full'
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
@@ -29,13 +29,13 @@ torchrun \
   --nproc_per_node=${GPUS} \
   --master_port=${MASTER_PORT} \
   internvl/train/internvl_chat_finetune.py \
-  --model_name_or_path "./pretrained/Mini-InternVL-Chat-4B-V1-5" \
+  --model_name_or_path "./pretrained/InternVL2-4B" \
   --conv_style "phi3-chat" \
   --output_dir ${OUTPUT_DIR} \
   --meta_path "./shell/data/internvl_1_2_finetune_custom.json" \
   --overwrite_output_dir True \
   --force_image_size 448 \
-  --max_dynamic_patch 12 \
+  --max_dynamic_patch 6 \
   --down_sample_ratio 0.5 \
   --drop_path_rate 0.1 \
   --freeze_llm False \
