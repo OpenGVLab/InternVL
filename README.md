@@ -46,29 +46,17 @@
 
 ## Documents
 
-- Installation
+- Get Started
 
-  - How to install the environment? [\[link\]](https://internvl.readthedocs.io/en/latest/get_started/installation.html) [\[requirements.txt\]](./requirements.txt)
+  - Installation: [\[link\]](https://internvl.readthedocs.io/en/latest/get_started/installation.html)  [\[requirements.txt\]](./requirements.txt)
 
-- Training or Fine-tuning
+- InternVL Family
 
-  - How to fine-tune InternVL2 series on a custom dataset? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl2.0/finetune.html)
-  - How to fine-tune InternVL1.5 series on a custom dataset? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl1.5/finetune.html)
-  - How to fine-tune InternVL-Chat-V1-2 on a custom dataset? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl1.2/finetune.html)
-  - How to reproduce the SFT stage of InternVL-Chat-V1-2? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl1.2/reproduce.html)
-
-- Benchmark Test
-
-  - How to evaluate InternVL2 series? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl2.0/evaluation.html)
-  - How to evaluate InternVL1.5 series? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl1.5/evaluation.html)
-  - How to evaluate InternVL-Chat-V1-2? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl1.2/evaluation.html)
-
-- Deployment
-
-  - How to use InternVL API? [\[link\]](./document/How_to_use_InternVL_API.md)
-  - How to deploy a local demo? [\[link\]](./document/How_to_deploy_a_local_demo.md)
-  - How to run InternVL-1.5 8bit with Nvidia V100 GPU? [\[link\]](https://github.com/OpenGVLab/InternVL/issues/144) [\[中文教程\]](https://zhuanlan.zhihu.com/p/697188143)
-  - How to perform batch inference? [\[link\]](./README.md?plain=1#L849)
+  - InternVL2: [\[Introduction\]](https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html)  [\[Quick Start\]](https://internvl.readthedocs.io/en/latest/internvl2.0/quick_start.html)  [\[Finetune\]](https://internvl.readthedocs.io/en/latest/internvl2.0/finetune.html)  [\[Evaluation\]](https://internvl.readthedocs.io/en/latest/internvl2.0/evaluation.html)  [\[Deployment\]](https://internvl.readthedocs.io/en/latest/internvl2.0/deployment.html)
+  - InternVL1.5: [\[Introduction\]](https://internvl.readthedocs.io/en/latest/internvl1.5/introduction.html)  [\[Quick Start\]](https://internvl.readthedocs.io/en/latest/internvl1.5/quick_start.html)  [\[Finetune\]](https://internvl.readthedocs.io/en/latest/internvl1.5/finetune.html)  [\[Evaluation\]](https://internvl.readthedocs.io/en/latest/internvl1.5/evaluation.html)  [\[Deployment\]](https://internvl.readthedocs.io/en/latest/internvl1.5/deployment.html)
+  - InternVL1.2: [\[Introduction\]](https://internvl.readthedocs.io/en/latest/internvl1.2/introduction.html)  [\[Quick Start\]](https://internvl.readthedocs.io/en/latest/internvl1.2/quick_start.html)  [\[Finetune\]](https://internvl.readthedocs.io/en/latest/internvl1.2/finetune.html)  [\[Evaluation\]](https://internvl.readthedocs.io/en/latest/internvl1.2/evaluation.html)
+  - InternVL1.1: [\[Introduction\]](https://internvl.readthedocs.io/en/latest/internvl1.1/introduction.html)  [\[Quick Start\]](https://internvl.readthedocs.io/en/latest/internvl1.1/quick_start.html)  [\[Evaluation\]](https://internvl.readthedocs.io/en/latest/internvl1.1/evaluation.html)
+  - InternVL1.0: [\[Classification\]](https://internvl.readthedocs.io/en/latest/internvl1.0/classification.html)  [\[CLIP-Benchmark\]](https://internvl.readthedocs.io/en/latest/internvl1.0/clip_benchmark.html)  [\[Segmentation\]](https://internvl.readthedocs.io/en/latest/internvl1.0/segmentation.html)  [\[InternVL-Chat-LLaVA\]](https://internvl.readthedocs.io/en/latest/internvl1.0/internvl_chat_llava.html)  [\[InternVL-G\]](https://internvl.readthedocs.io/en/latest/internvl1.0/internvl_g.html)
 
 ## Compared with SOTA VLLMs
 
