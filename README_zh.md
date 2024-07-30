@@ -46,29 +46,17 @@
 
 ## 使用文档
 
-- 安装
+- 开始
 
-  - 如何搭建运行环境?  [\[link\]](https://internvl.readthedocs.io/en/latest/get_started/installation.html) [\[requirements.txt\]](./requirements.txt)
+  - 配置环境:  [\[link\]](https://internvl.readthedocs.io/en/latest/get_started/installation.html)  [\[requirements.txt\]](./requirements.txt)
 
-- 训练或微调
+- InternVL 系列
 
-  - 如何在自定义数据集上微调 InternVL2 系列? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl2.0/finetune.html)
-  - 如何在自定义数据集上微调 InternVL1.5 系列? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl1.5/finetune.html)
-  - 如何在自定义数据集上微调 InternVL-Chat-V1-2? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl1.2/finetune.html)
-  - 如何复现 InternVL-Chat-V1-2 的SFT阶段? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl1.2/reproduce.html)
-
-- Benchmark 测评
-
-  - 如何评测 InternVL2 系列? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl2.0/evaluation.html)
-  - 如何评测 InternVL1.5 系列? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl1.5/evaluation.html)
-  - 如何评测 InternVL-Chat-V1-2? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl1.2/evaluation.html)
-
-- 模型部署
-
-  - 如何使用 InternVL API? [\[link\]](./document/How_to_use_InternVL_API.md)
-  - 如何部署本地的 demo? [\[link\]](./document/How_to_deploy_a_local_demo.md)
-  - 如何用 Nvidia V100 GPU 运行 InternVL-1.5 8bit? [\[link\]](https://github.com/OpenGVLab/InternVL/issues/144) [\[中文教程\]](https://zhuanlan.zhihu.com/p/697188143)
-  - 如何进行批量推理？ [\[link\]](./README.md?plain=1#L849)
+  - InternVL2: [\[介绍\]](https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html)  [\[快速开始\]](https://internvl.readthedocs.io/en/latest/internvl2.0/quick_start.html)  [\[微调\]](https://internvl.readthedocs.io/en/latest/internvl2.0/finetune.html)  [\[评测\]](https://internvl.readthedocs.io/en/latest/internvl2.0/evaluation.html)  [\[部署\]](https://internvl.readthedocs.io/en/latest/internvl2.0/deployment.html)
+  - InternVL1.5: [\[介绍\]](https://internvl.readthedocs.io/en/latest/internvl1.5/introduction.html)  [\[快速开始\]](https://internvl.readthedocs.io/en/latest/internvl1.5/quick_start.html)  [\[微调\]](https://internvl.readthedocs.io/en/latest/internvl1.5/finetune.html)  [\[评测\]](https://internvl.readthedocs.io/en/latest/internvl1.5/evaluation.html)  [\[部署\]](https://internvl.readthedocs.io/en/latest/internvl1.5/deployment.html)
+  - InternVL1.2: [\[介绍\]](https://internvl.readthedocs.io/en/latest/internvl1.2/introduction.html)  [\[快速开始\]](https://internvl.readthedocs.io/en/latest/internvl1.2/quick_start.html)  [\[微调\]](https://internvl.readthedocs.io/en/latest/internvl1.2/finetune.html)  [\[评测\]](https://internvl.readthedocs.io/en/latest/internvl1.2/evaluation.html)
+  - InternVL1.1: [\[介绍\]](https://internvl.readthedocs.io/en/latest/internvl1.1/introduction.html)  [\[快速开始\]](https://internvl.readthedocs.io/en/latest/internvl1.1/quick_start.html)  [\[微调\]](https://internvl.readthedocs.io/en/latest/internvl1.1/evaluation.html)
+  - InternVL1.0: [\[图像分类\]](https://internvl.readthedocs.io/en/latest/internvl1.0/classification.html)  [\[CLIP-Benchmark\]](https://internvl.readthedocs.io/en/latest/internvl1.0/clip_benchmark.html)  [\[语义分割\]](https://internvl.readthedocs.io/en/latest/internvl1.0/segmentation.html)  [\[InternVL-Chat-LLaVA\]](https://internvl.readthedocs.io/en/latest/internvl1.0/internvl_chat_llava.html)  [\[InternVL-G\]](https://internvl.readthedocs.io/en/latest/internvl1.0/internvl_g.html)
 
 ## 和 SOTA 多模态大模型对比
 
