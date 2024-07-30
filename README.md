@@ -2,9 +2,9 @@
 
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/47669167/7037290e-f474-4d11-b90f-1d8316087bf8"> InternVL Family: Closing the Gap to Commercial Multimodal Models with Open-Source Suites —— A Pioneering Open-Source Alternative to GPT-4o
 
-[\[🆕 Blog\]](https://internvl.github.io/blog/)  [\[🚀 InternVL2 Blog\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)    [\[🤗 HF Chat Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL) [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/)  [\[🌐 API\]](./document/How_to_use_InternVL_API.md)    [\[🚀 Quick Start\]](#quick-start-with-huggingface)
+[\[🆕 Blog\]](https://internvl.github.io/blog/)  [\[🚀 InternVL2 Blog\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/)  [\[🤗 HF Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)  [\[📖 Document\]](https://internvl.readthedocs.io/en/latest/)  [\[🌐 API\]](./document/How_to_use_InternVL_API.md)  [\[🚀 Quick Start\]](#quick-start-with-huggingface)
 
-[\[📜 InternVL 1.0 Paper\]](https://arxiv.org/abs/2312.14238) [\[📜 InternVL 1.5 Report\]](https://arxiv.org/abs/2404.16821)  [\[📖 1.0 中文解读\]](https://zhuanlan.zhihu.com/p/702946079) [\[📖 1.5 中文解读\]](https://zhuanlan.zhihu.com/p/699439759)  [\[📖 2.0 中文解读\]](https://zhuanlan.zhihu.com/p/706547971)
+[\[📜 InternVL 1.0 Paper\]](https://arxiv.org/abs/2312.14238)  [\[📜 InternVL 1.5 Report\]](https://arxiv.org/abs/2404.16821)  [\[📖 1.0 中文解读\]](https://zhuanlan.zhihu.com/p/702946079)  [\[📖 1.5 中文解读\]](https://zhuanlan.zhihu.com/p/699439759)  [\[📖 2.0 中文解读\]](https://zhuanlan.zhihu.com/p/706547971)
 
 [Switch to the Chinese version (切换至中文版)](/README_zh.md)
 
@@ -36,7 +36,7 @@
 ## TODO List
 
 - [ ] Support vLLM and Ollama
-- [ ] Rebuild documents using readthedocs
+- [x] Rebuild documents using readthedocs
 - [x] Support fine-tuning different LLMs with LoRA
 - [ ] Support video and PDF input in online demo
 - [ ] Release InternVL2 with VisionLLMv2 integration
@@ -48,22 +48,20 @@
 
 - Installation
 
-  - How to install the environment? [\[link\]](./INSTALLATION.md) [\[requirements.txt\]](./requirements.txt)
+  - How to install the environment? [\[link\]](https://internvl.readthedocs.io/en/latest/get_started/installation.html) [\[requirements.txt\]](./requirements.txt)
 
 - Training or Fine-tuning
 
-  - How to reproduce the SFT stage of InternVL-Chat-V1-2? [\[link\]](./internvl_chat#start-training)
-  - How to fine-tune InternVL-Chat-V1-2 on a custom dataset? [\[link\]](./document/How_to_finetune_internvl_chat_v1_2_on_a_custom_dataset.md)
-  - How to fine-tune the Mini-InternVL-Chat series on a custom dataset? [\[link\]](./document/How_to_finetune_mini_internvl_chat_v1_5_on_a_custom_dataset.md)
+  - How to fine-tune InternVL2 series on a custom dataset? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl2.0/finetune.html)
+  - How to fine-tune InternVL1.5 series on a custom dataset? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl1.5/finetune.html)
+  - How to fine-tune InternVL-Chat-V1-2 on a custom dataset? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl1.2/finetune.html)
+  - How to reproduce the SFT stage of InternVL-Chat-V1-2? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl1.2/reproduce.html)
 
 - Benchmark Test
 
-  > Due to minor implementation differences between this codebase and VLMEvalKit, slight discrepancies in performance metrics may occur when testing the same model.
-
-  - How to evaluate InternVL-Chat-V1-5? [\[link\]](./document/How_to_evaluate_internvl_chat_v1_5.md)
-  - How to evaluate InternVL-Chat-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/How_to_evaluate_internvl_chat_v1_5_using_vlmevalkit.md)
-  - How to evaluate Mini-InternVL-Chat-2B-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/How_to_evaluate_mini_internvl_chat_2b_v1_5_using_vlmevalkit.md)
-  - How to evaluate Mini-InternVL-Chat-4B-V1-5 using VLMEvalKit? (Recommend) [\[link\]](./document/How_to_evaluate_mini_internvl_chat_4b_v1_5_using_vlmevalkit.md)
+  - How to evaluate InternVL2 series? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl2.0/evaluation.html)
+  - How to evaluate InternVL1.5 series? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl1.5/evaluation.html)
+  - How to evaluate InternVL-Chat-V1-2? [\[link\]](https://internvl.readthedocs.io/en/latest/internvl1.2/evaluation.html)
 
 - Deployment
 
@@ -95,7 +93,7 @@
     <td><a href="https://huggingface.co/Qwen/Qwen2-0.5B-Instruct">Qwen2&#8209;0.5B&#8209;Instruct</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-1B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-1B">🤖 link</a></td>
-    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-1B#quick-start">📖 doc</a></td>
+    <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
     <td>InternVL2&#8209;2B</td>
@@ -103,7 +101,7 @@
     <td><a href="https://huggingface.co/internlm/internlm2-chat-1_8b">internlm2&#8209;chat&#8209;1&#8209;8b</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-2B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-2B">🤖 link</a></td>
-    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-2B#quick-start">📖 doc</a></td>
+    <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
     <td>InternVL2&#8209;4B</td>
@@ -111,7 +109,7 @@
     <td><a href="https://huggingface.co/microsoft/Phi-3-mini-128k-instruct">Phi&#8209;3&#8209;mini&#8209;128k&#8209;instruct</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-4B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-4B">🤖 link</a></td>
-    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-4B#quick-start">📖 doc</a></td>
+    <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
     <td>InternVL2&#8209;8B</td>
@@ -119,7 +117,7 @@
     <td><a href="https://huggingface.co/internlm/internlm2_5-7b-chat">internlm2_5&#8209;7b&#8209;chat</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-8B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-8B">🤖 link</a></td>
-    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-8B#quick-start">📖 doc</a></td>
+    <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
     <td>InternVL2&#8209;26B</td>
@@ -127,7 +125,7 @@
     <td><a href="https://huggingface.co/internlm/internlm2-chat-20b">internlm2&#8209;chat&#8209;20b</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-26B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-26B">🤖 link</a></td>
-    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-26B#quick-start">📖 doc</a></td>
+    <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
     <td>InternVL2&#8209;40B</td>
@@ -135,7 +133,7 @@
     <td><a href="https://huggingface.co/NousResearch/Nous-Hermes-2-Yi-34B">Nous&#8209;Hermes&#8209;2&#8209;Yi&#8209;34B</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-40B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-40B">🤖 link</a></td>
-    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-40B#quick-start">📖 doc</a></td>
+    <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
     <td>InternVL2-Llama3-76B</td>
@@ -143,7 +141,7 @@
     <td><a href="https://huggingface.co/NousResearch/Hermes-2-Theta-Llama-3-70B">Hermes‑2‑Theta‑<br>Llama‑3‑70B</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-Llama3-76B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-Llama3-76B">🤖 link</a></td>
-    <td><a href="https://huggingface.co/OpenGVLab/InternVL2-Llama3-76B#quick-start">📖 doc</a></td>
+    <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
 </table>
 
@@ -693,7 +691,7 @@ caption = tokenizer.decode(pred[0].cpu(), skip_special_tokens=True).strip()
 <details>
   <summary>using InternVL-Chat for multimodal chat (click to expand)</summary>
 
-Here, we take the smaller OpenGVLab/InternVL2-8B as an example:
+Here, we take the smaller `OpenGVLab/InternVL2-8B` as an example:
 
 ```python
 import numpy as np
@@ -707,7 +705,6 @@ from transformers import AutoModel, AutoTokenizer
 IMAGENET_MEAN = (0.485, 0.456, 0.406)
 IMAGENET_STD = (0.229, 0.224, 0.225)
 
-
 def build_transform(input_size):
     MEAN, STD = IMAGENET_MEAN, IMAGENET_STD
     transform = T.Compose([
@@ -717,7 +714,6 @@ def build_transform(input_size):
         T.Normalize(mean=MEAN, std=STD)
     ])
     return transform
-
 
 def find_closest_aspect_ratio(aspect_ratio, target_ratios, width, height, image_size):
     best_ratio_diff = float('inf')
@@ -734,8 +730,7 @@ def find_closest_aspect_ratio(aspect_ratio, target_ratios, width, height, image_
                 best_ratio = ratio
     return best_ratio
 
-
-def dynamic_preprocess(image, min_num=1, max_num=6, image_size=448, use_thumbnail=False):
+def dynamic_preprocess(image, min_num=1, max_num=12, image_size=448, use_thumbnail=False):
     orig_width, orig_height = image.size
     aspect_ratio = orig_width / orig_height
 
@@ -773,8 +768,7 @@ def dynamic_preprocess(image, min_num=1, max_num=6, image_size=448, use_thumbnai
         processed_images.append(thumbnail_img)
     return processed_images
 
-
-def load_image(image_file, input_size=448, max_num=6):
+def load_image(image_file, input_size=448, max_num=12):
     image = Image.open(image_file).convert('RGB')
     transform = build_transform(input_size=input_size)
     images = dynamic_preprocess(image, image_size=input_size, use_thumbnail=True, max_num=max_num)
@@ -782,70 +776,61 @@ def load_image(image_file, input_size=448, max_num=6):
     pixel_values = torch.stack(pixel_values)
     return pixel_values
 
-
+# If you have an 80G A100 GPU, you can put the entire model on a single GPU.
+# Otherwise, you need to load a model using multiple GPUs, please refer to the `Multiple GPUs` section.
 path = 'OpenGVLab/InternVL2-8B'
 model = AutoModel.from_pretrained(
     path,
     torch_dtype=torch.bfloat16,
     low_cpu_mem_usage=True,
     trust_remote_code=True).eval().cuda()
+tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True, use_fast=False)
 
-tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True)
 # set the max number of tiles in `max_num`
-pixel_values = load_image('./examples/image1.jpg', max_num=6).to(torch.bfloat16).cuda()
-
-generation_config = dict(
-    num_beams=1,
-    max_new_tokens=1024,
-    do_sample=False,
-)
+pixel_values = load_image('./examples/image1.jpg', max_num=12).to(torch.bfloat16).cuda()
+generation_config = dict(max_new_tokens=1024, do_sample=False)
 
 # pure-text conversation (纯文本对话)
 question = 'Hello, who are you?'
 response, history = model.chat(tokenizer, None, question, generation_config, history=None, return_history=True)
-print(f'User: {question}')
-print(f'Assistant: {response}')
+print(f'User: {question}\nAssistant: {response}')
 
 question = 'Can you tell me a story?'
 response, history = model.chat(tokenizer, None, question, generation_config, history=history, return_history=True)
-print(f'User: {question}')
-print(f'Assistant: {response}')
+print(f'User: {question}\nAssistant: {response}')
 
 # single-image single-round conversation (单图单轮对话)
 question = '<image>\nPlease describe the image shortly.'
 response = model.chat(tokenizer, pixel_values, question, generation_config)
-print(f'User: {question}')
-print(f'Assistant: {response}')
+print(f'User: {question}\nAssistant: {response}')
 
 # single-image multi-round conversation (单图多轮对话)
 question = '<image>\nPlease describe the image in detail.'
 response, history = model.chat(tokenizer, pixel_values, question, generation_config, history=None, return_history=True)
-print(f'User: {question}')
-print(f'Assistant: {response}')
+print(f'User: {question}\nAssistant: {response}')
 
 question = 'Please write a poem according to the image.'
 response, history = model.chat(tokenizer, pixel_values, question, generation_config, history=history, return_history=True)
-print(f'User: {question}')
-print(f'Assistant: {response}')
+print(f'User: {question}\nAssistant: {response}')
 
 # multi-image multi-round conversation, combined images (多图多轮对话，拼接图像)
-pixel_values1 = load_image('./examples/image1.jpg', max_num=6).to(torch.bfloat16).cuda()
-pixel_values2 = load_image('./examples/image2.jpg', max_num=6).to(torch.bfloat16).cuda()
+pixel_values1 = load_image('./examples/image1.jpg', max_num=12).to(torch.bfloat16).cuda()
+pixel_values2 = load_image('./examples/image2.jpg', max_num=12).to(torch.bfloat16).cuda()
 pixel_values = torch.cat((pixel_values1, pixel_values2), dim=0)
 
 question = '<image>\nDescribe the two images in detail.'
 response, history = model.chat(tokenizer, pixel_values, question, generation_config,
                                history=None, return_history=True)
+print(f'User: {question}\nAssistant: {response}')
 
 question = 'What are the similarities and differences between these two images.'
 response, history = model.chat(tokenizer, pixel_values, question, generation_config,
                                history=history, return_history=True)
-print(f'User: {question}')
-print(f'Assistant: {response}')
+print(f'User: {question}\nAssistant: {response}')
 
 # multi-image multi-round conversation, separate images (多图多轮对话，独立图像)
-pixel_values1 = load_image('./examples/image1.jpg', max_num=6).to(torch.bfloat16).cuda()
-pixel_values2 = load_image('./examples/image2.jpg', max_num=6).to(torch.bfloat16).cuda()
+pixel_values1 = load_image('./examples/image1.jpg', max_num=12).to(torch.bfloat16).cuda()
+pixel_values2 = load_image('./examples/image2.jpg', max_num=12).to(torch.bfloat16).cuda()
 pixel_values = torch.cat((pixel_values1, pixel_values2), dim=0)
 num_patches_list = [pixel_values1.size(0), pixel_values2.size(0)]
 
@@ -853,19 +838,17 @@ question = 'Image-1: <image>\nImage-2: <image>\nDescribe the two images in detai
 response, history = model.chat(tokenizer, pixel_values, question, generation_config,
                                num_patches_list=num_patches_list,
                                history=None, return_history=True)
-print(f'User: {question}')
-print(f'Assistant: {response}')
+print(f'User: {question}\nAssistant: {response}')
 
 question = 'What are the similarities and differences between these two images.'
 response, history = model.chat(tokenizer, pixel_values, question, generation_config,
                                num_patches_list=num_patches_list,
                                history=history, return_history=True)
-print(f'User: {question}')
-print(f'Assistant: {response}')
+print(f'User: {question}\nAssistant: {response}')
 
 # batch inference, single image per sample (单图批处理)
-pixel_values1 = load_image('./examples/image1.jpg', max_num=6).to(torch.bfloat16).cuda()
-pixel_values2 = load_image('./examples/image2.jpg', max_num=6).to(torch.bfloat16).cuda()
+pixel_values1 = load_image('./examples/image1.jpg', max_num=12).to(torch.bfloat16).cuda()
+pixel_values2 = load_image('./examples/image2.jpg', max_num=12).to(torch.bfloat16).cuda()
 num_patches_list = [pixel_values1.size(0), pixel_values2.size(0)]
 pixel_values = torch.cat((pixel_values1, pixel_values2), dim=0)
 
@@ -875,8 +858,7 @@ responses = model.batch_chat(tokenizer, pixel_values,
                              questions=questions,
                              generation_config=generation_config)
 for question, response in zip(questions, responses):
-    print(f'User: {question}')
-    print(f'Assistant: {response}')
+    print(f'User: {question}\nAssistant: {response}')
 
 # video multi-round conversation (视频多轮对话)
 def get_index(bound, fps, max_frame, first_idx=0, num_segments=32):
@@ -911,26 +893,20 @@ def load_video(video_path, bound=None, input_size=448, max_num=1, num_segments=3
     pixel_values = torch.cat(pixel_values_list)
     return pixel_values, num_patches_list
 
-
 video_path = './examples/red-panda.mp4'
-# pixel_values, num_patches_list = load_video(video_path, num_segments=32, max_num=1)
 pixel_values, num_patches_list = load_video(video_path, num_segments=8, max_num=1)
 pixel_values = pixel_values.to(torch.bfloat16).cuda()
 video_prefix = ''.join([f'Frame{i+1}: <image>\n' for i in range(len(num_patches_list))])
 question = video_prefix + 'What is the red panda doing?'
-# Frame1: <image>\nFrame2: <image>\n...\nFrame31: <image>\n{question}
+# Frame1: <image>\nFrame2: <image>\n...\nFrame8: <image>\n{question}
 response, history = model.chat(tokenizer, pixel_values, question, generation_config,
-                               num_patches_list=num_patches_list,
-                               history=None, return_history=True)
-print(f'User: {question}')
-print(f'Assistant: {response}')
+                               num_patches_list=num_patches_list, history=None, return_history=True)
+print(f'User: {question}\nAssistant: {response}')
 
 question = 'Describe this video in detail. Don\'t repeat.'
 response, history = model.chat(tokenizer, pixel_values, question, generation_config,
-                               num_patches_list=num_patches_list,
-                               history=history, return_history=True)
-print(f'User: {question}')
-print(f'Assistant: {response}')
+                               num_patches_list=num_patches_list, history=history, return_history=True)
+print(f'User: {question}\nAssistant: {response}')
 ```
 
 </details>
