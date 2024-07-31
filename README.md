@@ -2,7 +2,7 @@
 
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/47669167/7037290e-f474-4d11-b90f-1d8316087bf8"> InternVL Family: Closing the Gap to Commercial Multimodal Models with Open-Source Suites —— A Pioneering Open-Source Alternative to GPT-4o
 
-[\[🆕 Blog\]](https://internvl.github.io/blog/)  [\[🚀 InternVL2 Blog\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/)  [\[🤗 HF Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)  [\[📖 Document\]](https://internvl.readthedocs.io/en/latest/)  [\[🌐 API\]](./document/How_to_use_InternVL_API.md)  [\[🚀 Quick Start\]](#quick-start-with-huggingface)
+[\[🆕 Blog\]](https://internvl.github.io/blog/)  [\[🚀 InternVL2 Blog\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/)  [\[🤗 HF Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)  [\[📖 Document\]](https://internvl.readthedocs.io/en/latest/)  [\[🌐 API\]](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html)  [\[🚀 Quick Start\]](#quick-start-with-huggingface)
 
 [\[📜 InternVL 1.0 Paper\]](https://arxiv.org/abs/2312.14238)  [\[📜 InternVL 1.5 Report\]](https://arxiv.org/abs/2404.16821)  [\[📖 1.0 中文解读\]](https://zhuanlan.zhihu.com/p/702946079)  [\[📖 1.5 中文解读\]](https://zhuanlan.zhihu.com/p/699439759)  [\[📖 2.0 中文解读\]](https://zhuanlan.zhihu.com/p/706547971)
 
@@ -51,7 +51,9 @@
   - Installation: [\[Environment\]](https://internvl.readthedocs.io/en/latest/get_started/installation.html)  [\[requirements.txt\]](./requirements.txt)
   - Evaluation Data Preparation: [\[InternVL Evaluation\]](https://internvl.readthedocs.io/en/latest/get_started/eval_data_preparation.html)
   - Chat Data Format: [\[Meta File\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#meta-file)  [\[Pure Text\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#pure-text-data)  [\[Single-Image\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#single-image-data)  [\[Multi-Image\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#multi-image-data)    [\[Video\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#video-data)
+  - InternVL-Chat API: [\[InternVL2-Pro\]](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html#official-api-of-internvl2-pro)
   - Local Chat Demo: [\[Streamlit Demo\]](https://internvl.readthedocs.io/en/latest/get_started/local_chat_demo.html#streamlit-demo)  [\[Gradio Demo\]](https://internvl.readthedocs.io/en/latest/get_started/local_chat_demo.html#gradio-demo)  [\[LMDeploy Demo\]](https://internvl.readthedocs.io/en/latest/get_started/local_chat_demo.html#lmdeploy-demo)
+
 - InternVL Family
 
   - InternVL 2.0: [\[Introduction\]](https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html)  [\[Quick Start\]](https://internvl.readthedocs.io/en/latest/internvl2.0/quick_start.html)  [\[Finetune\]](https://internvl.readthedocs.io/en/latest/internvl2.0/finetune.html)  [\[Evaluation\]](https://internvl.readthedocs.io/en/latest/internvl2.0/evaluation.html)  [\[Deployment\]](https://internvl.readthedocs.io/en/latest/internvl2.0/deployment.html)
