@@ -16,7 +16,7 @@
 </div>
 
 ## 最新消息 🚀🚀🚀
-
+- `2024/08/01`: InternVL2-Pro 在[CharXiv](https://charxiv.github.io/#leaderboard) 数据集中实现了开源模型中的 SOTA 性能，也比部分知名闭源模型如GPT-4V、Gemini 1.5 Flash、Claude 3 Sonnet取得了更好成绩
 - `2024/07/18`: 🔥🔥 InternVL2-40B 在 [Video-MME](https://github.com/BradyFU/Video-MME) 数据集中实现了开源模型中的 SOTA 性能，当输入 16 帧时得分为 61.2，输入 32 帧时得分为 64.4，大幅领先其它开源模型，是最接近 GPT-4o mini 的开源模型。
 - `2024/07/18`: 🔥 InternVL2-Pro 在 [DocVQA](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=1) 和 [InfoVQA](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=3) 的基准测试中实现了 SOTA 性能。
 - `2024/07/04`: 🚀 我们发布了 InternVL2 系列模型。InternVL2-Pro 在 MMMU 基准测试中达到了 62.0% 的准确率，实现了与 GPT-4o 等领先闭源商业模型比肩的性能。该模型的免费 API 可以通过填写 ([英文申请表](https://docs.google.com/forms/d/e/1FAIpQLSfMCzhPr1OOEKau_6jwTU0EiZMSFckDo-HMlc_hUudhF_97rw/viewform?usp=sf_link)) / ([中文申请表](https://wj.qq.com/s2/14910502/25a4/)) 来申请。其它模型可在 [HF 链接](https://huggingface.co/collections/OpenGVLab/internvl-20-667d3961ab5eb12c7ed1463e) 中下载。
