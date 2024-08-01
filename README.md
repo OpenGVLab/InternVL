@@ -53,6 +53,7 @@
   - Chat Data Format: [\[Meta File\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#meta-file)  [\[Pure Text\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#pure-text-data)  [\[Single-Image\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#single-image-data)  [\[Multi-Image\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#multi-image-data)    [\[Video\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#video-data)
   - InternVL-Chat API: [\[InternVL2-Pro\]](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html#official-api-of-internvl2-pro)
   - Local Chat Demo: [\[Streamlit Demo\]](https://internvl.readthedocs.io/en/latest/get_started/local_chat_demo.html#streamlit-demo)  [\[Gradio Demo\]](https://internvl.readthedocs.io/en/latest/get_started/local_chat_demo.html#gradio-demo)  [\[LMDeploy Demo\]](https://internvl.readthedocs.io/en/latest/get_started/local_chat_demo.html#lmdeploy-demo)
+  - Tutorials: [\[Enhancing InternVL2 on COCO Caption Using LoRA Fine-Tuning\]](https://internvl.readthedocs.io/en/latest/tutorials/coco_caption_finetune.html)
 
 - InternVL Family
 

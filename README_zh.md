@@ -53,6 +53,7 @@
   - 对话数据格式: [\[元文件\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#meta-file)  [\[纯文本\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#pure-text-data)  [\[单图\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#single-image-data)  [\[多图\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#multi-image-data)    [\[视频\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#video-data)
   - InternVL-Chat API: [\[InternVL2-Pro\]](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html#official-api-of-internvl2-pro)
   - 本地在线 Demo: [\[Streamlit Demo\]](https://internvl.readthedocs.io/en/latest/get_started/local_chat_demo.html#streamlit-demo)  [\[Gradio Demo\]](https://internvl.readthedocs.io/en/latest/get_started/local_chat_demo.html#gradio-demo)  [\[LMDeploy Demo\]](https://internvl.readthedocs.io/en/latest/get_started/local_chat_demo.html#lmdeploy-demo)
+  - 教程: [\[使用LoRA微调提升InternVL2在COCO Caption上的表现\]](https://internvl.readthedocs.io/en/latest/tutorials/coco_caption_finetune.html)
 
 - InternVL 系列
 
