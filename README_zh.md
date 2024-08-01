@@ -64,7 +64,7 @@
 
 ## 和 SOTA 多模态大模型对比
 
-![waic_performance](https://github.com/user-attachments/assets/7b24ad6c-45dd-4bcd-aa77-79da1ec856ee)
+![waic_performance](https://github.com/user-attachments/assets/c8621bfb-c94c-4fef-a4dc-5709c74e4a14)
 
 ## 模型库
 

@@ -64,7 +64,7 @@
 
 ## Compared with SOTA VLLMs
 
-![waic_performance](https://github.com/user-attachments/assets/7b24ad6c-45dd-4bcd-aa77-79da1ec856ee)
+![waic_performance](https://github.com/user-attachments/assets/c8621bfb-c94c-4fef-a4dc-5709c74e4a14)
 
 ## Model Zoo
 
