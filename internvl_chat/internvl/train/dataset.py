@@ -5,6 +5,7 @@ from transformers.trainer_pt_utils import LabelSmoother
 IGNORE_TOKEN_ID = LabelSmoother.ignore_index
 import os
 import random
+import re
 from typing import Dict
 
 import cv2
@@ -128,19 +129,30 @@ def read_frames_decord(
     return frames
 
 
+def extract_frame_number(filename):
+    # Extract the numeric part from the filename using regular expressions
+    match = re.search(r'_(\d+).jpg$', filename)
+    return int(match.group(1)) if match else -1
+
+
+def sort_frames(frame_paths):
+    # Extract filenames from each path and sort by their numeric part
+    return sorted(frame_paths, key=lambda x: extract_frame_number(os.path.basename(x)))
+
+
 def read_frames_folder(
         video_path, num_frames, sample='rand', fix_start=None,
         client=None, clip=None, min_num_frames=4
 ):
     if 's3://' in video_path:
-        image_list = client.list(video_path)
+        image_list = sort_frames(client.list(video_path))
         frames = []
         for image in image_list:
             fp = os.path.join(video_path, image)
             frame = Image.open(io.BytesIO(client.get(fp)))
             frames.append(frame)
     else:
-        image_list = sorted(list(os.listdir(video_path)))
+        image_list = sort_frames(list(os.listdir(video_path)))
         frames = []
         for image in image_list:
             fp = os.path.join(video_path, image)
