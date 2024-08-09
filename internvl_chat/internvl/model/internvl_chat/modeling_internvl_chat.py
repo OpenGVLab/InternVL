@@ -275,6 +275,7 @@ class InternVLChatModel(PreTrainedModel):
             if pixel_values is not None and '<image>' not in question:
                 question = '<image>\n' + question
             template = get_conv_template(self.template)
+            template.system_message = self.system_message
             template.append_message(template.roles[0], question)
             template.append_message(template.roles[1], None)
             query = template.get_prompt()
