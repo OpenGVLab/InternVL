@@ -811,7 +811,9 @@ def main():
             iter_time=data_args.iter_time,
             llm_thresh={"thresh": data_args.llm_thresh}, # 8064 6016 4068
         )
-        concat_pad_data_collator = fast_concat_pad_data_collator
+        concat_pad_data_collator_func = fast_concat_pad_data_collator
+    else:
+        concat_pad_data_collator_func = concat_pad_data_collator
 
     def _freeze_params(module):
         for param in module.parameters():
@@ -864,7 +866,7 @@ def main():
         train_dataset=train_dataset if training_args.do_train else None,
         eval_dataset=None,
         tokenizer=tokenizer,
-        data_collator=concat_pad_data_collator
+        data_collator=concat_pad_data_collator_func
     )
 
     # Training
