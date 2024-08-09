@@ -8,12 +8,11 @@ import time
 from functools import partial
 
 import torch
-from internvl.model.internvl_chat import InternVLChatModel
+from internvl.model import load_model_and_tokenizer
 from internvl.train.dataset import build_transform, dynamic_preprocess
 from PIL import Image
 from torchvision.ops.boxes import box_area
 from tqdm import tqdm
-from transformers import AutoTokenizer
 
 ds_collections = {
     'refcoco_val': 'data/refcoco/refcoco_val.jsonl',
@@ -256,16 +255,8 @@ if __name__ == '__main__':
 
     torch.cuda.set_device(int(os.getenv('LOCAL_RANK', 0)))
 
-    if args.auto:
-        os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
-    kwargs = {'device_map': 'auto'} if args.auto else {}
     PATTERN = re.compile(r'\[*\[(.*?),(.*?),(.*?),(.*?)\]\]*')
-    tokenizer = AutoTokenizer.from_pretrained(args.checkpoint, trust_remote_code=True, use_fast=False)
-    model = InternVLChatModel.from_pretrained(
-        args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16,
-        load_in_8bit=args.load_in_8bit, load_in_4bit=args.load_in_4bit, **kwargs).eval()
-    if not args.load_in_8bit and not args.load_in_4bit and not args.auto:
-        model = model.cuda()
+    model, tokenizer = load_model_and_tokenizer(args)
     image_size = model.config.force_image_size or model.config.vision_config.image_size
     use_thumbnail = model.config.use_thumbnail
     prompt = 'Please provide the bounding box coordinate of the region this sentence describes: <ref>{}</ref>'
