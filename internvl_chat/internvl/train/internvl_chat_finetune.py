@@ -33,7 +33,7 @@ from internvl.train.dataset import (ConcatDataset, TCSLoader,
                                     WeightedConcatDataset, build_transform,
                                     dynamic_preprocess, preprocess,
                                     preprocess_internlm, preprocess_mpt,
-                                    preprocess_phi3)
+                                    preprocess_phi3, preprocess_gemma2)
 from internvl.train.trainer_monkey_patch import replace_create_optimizer
 from PIL import Image, ImageFile, PngImagePlugin, UnidentifiedImageError
 from torch.utils.data import Dataset
@@ -307,6 +307,8 @@ class LazySupervisedDataset(Dataset):
             preprocess_function = preprocess_internlm
         elif self.template_name == 'phi3-chat':
             preprocess_function = preprocess_phi3
+        elif self.template_name == 'gemma2-chat':
+            preprocess_function = preprocess_gemma2
         else:
             preprocess_function = preprocess
         return preprocess_function
@@ -710,6 +712,8 @@ def main():
             logger.info('Using flash_attention_2 for LLaMA')
         llm = model_type.from_pretrained(
             model_args.llm_path, torch_dtype=torch.bfloat16,
+            # gemma2 use eager mode for attention
+            attn_implementation="eager",
             config=llm_config, trust_remote_code=True)
         logger.info('Building InternVLChatConfig...')
         internvl_chat_config = InternVLChatConfig(

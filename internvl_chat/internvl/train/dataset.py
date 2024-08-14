@@ -5,7 +5,6 @@ from transformers.trainer_pt_utils import LabelSmoother
 IGNORE_TOKEN_ID = LabelSmoother.ignore_index
 import os
 import random
-import re
 from typing import Dict
 
 import cv2
@@ -33,7 +32,7 @@ import sys
 
 
 def get_frame_indices(num_frames, vlen, sample='rand', fix_start=None, input_fps=1, max_num_frames=-1):
-    if sample in ['rand', 'middle']: # uniform sampling
+    if sample in ['rand', 'middle']:  # uniform sampling
         acc_samples = min(num_frames, vlen)
         # split the video into `acc_samples` intervals, and sample from each interval.
         intervals = np.linspace(start=0, stop=vlen, num=acc_samples + 1).astype(int)
@@ -129,30 +128,19 @@ def read_frames_decord(
     return frames
 
 
-def extract_frame_number(filename):
-    # Extract the numeric part from the filename using regular expressions
-    match = re.search(r'_(\d+).jpg$', filename)
-    return int(match.group(1)) if match else -1
-
-
-def sort_frames(frame_paths):
-    # Extract filenames from each path and sort by their numeric part
-    return sorted(frame_paths, key=lambda x: extract_frame_number(os.path.basename(x)))
-
-
 def read_frames_folder(
         video_path, num_frames, sample='rand', fix_start=None,
         client=None, clip=None, min_num_frames=4
 ):
     if 's3://' in video_path:
-        image_list = sort_frames(client.list(video_path))
+        image_list = client.list(video_path)
         frames = []
         for image in image_list:
             fp = os.path.join(video_path, image)
             frame = Image.open(io.BytesIO(client.get(fp)))
             frames.append(frame)
     else:
-        image_list = sort_frames(list(os.listdir(video_path)))
+        image_list = sorted(list(os.listdir(video_path)))
         frames = []
         for image in image_list:
             fp = os.path.join(video_path, image)
@@ -239,6 +227,7 @@ def simulate_jpeg_degradation(quality):
             output.seek(0)  # Move the reading cursor to the start of the stream
             img_jpeg = Image.open(output).copy()  # Use .copy() to make sure the image is loaded in memory
         return img_jpeg
+
     return jpeg_degrade
 
 
@@ -674,6 +663,91 @@ def preprocess_internlm(
                 target[:] = IGNORE_TOKEN_ID
                 print(f'WARNING: tokenization mismatch: {cur_len} vs. {total_len}. This dataset is {ds_name}.')
                 sys.stdout.flush()
+
+    return dict(
+        input_ids=input_ids,
+        labels=targets,
+        attention_mask=input_ids.ne(tokenizer.pad_token_id),
+    )
+
+
+def preprocess_gemma2(
+        template_name,
+        sources,
+        tokenizer: transformers.PreTrainedTokenizer,
+        num_image_token_list: list,
+        text_only: bool = False,
+        group_by_length: bool = False,
+        use_packed_ds: bool = False,
+        ds_name: str = None,
+        num_image: int = 1
+) -> Dict:
+    conv = get_conv_template(template_name)
+    roles = {'human': conv.roles[0], 'gpt': conv.roles[1]}
+
+    # Use template
+    conversations = []
+    for i, source in enumerate(sources):
+        if roles[source[0]['from']] != conv.roles[0]:
+            source = source[1:]
+
+        conv.messages = []
+        for j, sentence in enumerate(source):
+            role = roles[sentence['from']]
+            assert role == conv.roles[j % 2], f'{i}'
+            sentence['value'] = sentence['value'].strip()
+            conv.append_message(role, sentence['value'])
+        conversations.append(conv.get_prompt())
+
+    if not text_only:
+        new_conversations = []
+        for conversation in conversations:
+            for i in range(num_image):
+                image_tokens = f'{IMG_START_TOKEN}{IMG_CONTEXT_TOKEN * num_image_token_list[i]}{IMG_END_TOKEN}'
+                conversation = conversation.replace('<image>', image_tokens, 1)
+            new_conversations.append(conversation)
+        conversations = new_conversations
+
+    # Tokenize conversations
+    input_ids = tokenizer(
+        conversations,
+        return_tensors='pt',
+        padding=False if group_by_length or use_packed_ds else 'max_length',
+        max_length=tokenizer.model_max_length,
+        truncation=True,
+    ).input_ids
+
+    targets = input_ids.clone()
+
+    for conversation, target in zip(conversations, targets):
+        total_len = int(target.ne(tokenizer.pad_token_id).sum())
+        cur_len = 1
+        target[:cur_len] = IGNORE_TOKEN_ID
+        parts = conversation.split(conv.roles[1])
+        info = parts[0] + conv.roles[1]
+        temp_len = len(tokenizer(info).input_ids) - 1
+        target[cur_len: cur_len + temp_len] = IGNORE_TOKEN_ID
+        cur_len = cur_len + temp_len
+
+        for index in range(1, len(parts) - 1):
+            info = parts[index]
+            part1, part2 = info.split(conv.roles[0])
+            temp_len = len(tokenizer(part1).input_ids) - 1
+            cur_len = cur_len + temp_len
+            part = conv.roles[0] + part2 + conv.roles[1]
+            temp_len = len(tokenizer(part).input_ids) - 1
+            target[cur_len: cur_len + temp_len] = IGNORE_TOKEN_ID
+            cur_len = cur_len + temp_len
+        last_info = parts[-1]
+        temp_len = len(tokenizer(last_info).input_ids) - 1
+        cur_len = cur_len + temp_len
+
+        target[cur_len:] = IGNORE_TOKEN_ID
+
+        if cur_len < tokenizer.model_max_length:
+            if cur_len != total_len:
+                target[:] = IGNORE_TOKEN_ID
+                print(f'WARNING: tokenization mismatch: {cur_len} vs. {total_len}. This dataset is {ds_name}.')
 
     return dict(
         input_ids=input_ids,
