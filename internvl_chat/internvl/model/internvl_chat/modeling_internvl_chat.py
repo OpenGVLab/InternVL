@@ -12,6 +12,7 @@ import transformers
 from internvl.conversation import get_conv_template
 from internvl.model.internlm2.modeling_internlm2 import InternLM2ForCausalLM
 from internvl.model.phi3.modeling_phi3 import Phi3ForCausalLM
+from internvl.model.gemma2.modeling_gemma2 import Gemma2ForCausalLM
 from peft import LoraConfig, get_peft_model
 from torch import nn
 from torch.nn import CrossEntropyLoss
@@ -39,7 +40,7 @@ class InternVLChatModel(PreTrainedModel):
     config_class = InternVLChatConfig
     main_input_name = 'pixel_values'
     _no_split_modules = ['InternVisionModel', 'LlamaDecoderLayer', 'InternLM2DecoderLayer',
-                         'Phi3DecoderLayer', 'Qwen2DecoderLayer']
+                         'Phi3DecoderLayer', 'Qwen2DecoderLayer', 'Gemma2DecoderLayer']
     _supports_flash_attn_2 = True
 
     def __init__(self, config: InternVLChatConfig, vision_model=None, language_model=None):
@@ -73,6 +74,8 @@ class InternVLChatModel(PreTrainedModel):
                 self.language_model = Phi3ForCausalLM(config.llm_config)
             elif config.llm_config.architectures[0] == 'Qwen2ForCausalLM':
                 self.language_model = Qwen2ForCausalLM(config.llm_config)
+            elif config.llm_config.architectures[0] == 'Gemma2ForCausalLM':
+                self.language_model = Gemma2ForCausalLM(config.llm_config)
             else:
                 raise NotImplementedError(f'{config.llm_config.architectures[0]} is not implemented.')
 
@@ -116,7 +119,7 @@ class InternVLChatModel(PreTrainedModel):
             target_modules = ['attention.wqkv', 'attention.wo', 'feed_forward.w1', 'feed_forward.w2', 'feed_forward.w3']
         elif self.llm_arch_name == 'Phi3ForCausalLM':
             target_modules = ['mlp.down_proj', 'mlp.gate_up_proj', 'self_attn.o_proj', 'self_attn.qkv_proj']
-        elif self.llm_arch_name in ['Qwen2ForCausalLM', 'LlamaForCausalLM']:
+        elif self.llm_arch_name in ['Qwen2ForCausalLM', 'LlamaForCausalLM', 'Gemma2ForCausalLM']:
             target_modules = ['self_attn.q_proj', 'self_attn.k_proj', 'self_attn.v_proj', 'self_attn.o_proj',
                               'mlp.gate_proj', 'mlp.down_proj', 'mlp.up_proj']
         else:
