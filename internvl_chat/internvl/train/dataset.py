@@ -5,6 +5,7 @@ from transformers.trainer_pt_utils import LabelSmoother
 IGNORE_TOKEN_ID = LabelSmoother.ignore_index
 import os
 import random
+import re
 from typing import Dict
 
 import cv2
@@ -32,7 +33,7 @@ import sys
 
 
 def get_frame_indices(num_frames, vlen, sample='rand', fix_start=None, input_fps=1, max_num_frames=-1):
-    if sample in ['rand', 'middle']:  # uniform sampling
+    if sample in ['rand', 'middle']: # uniform sampling
         acc_samples = min(num_frames, vlen)
         # split the video into `acc_samples` intervals, and sample from each interval.
         intervals = np.linspace(start=0, stop=vlen, num=acc_samples + 1).astype(int)
@@ -128,19 +129,30 @@ def read_frames_decord(
     return frames
 
 
+def extract_frame_number(filename):
+    # Extract the numeric part from the filename using regular expressions
+    match = re.search(r'_(\d+).jpg$', filename)
+    return int(match.group(1)) if match else -1
+
+
+def sort_frames(frame_paths):
+    # Extract filenames from each path and sort by their numeric part
+    return sorted(frame_paths, key=lambda x: extract_frame_number(os.path.basename(x)))
+
+
 def read_frames_folder(
         video_path, num_frames, sample='rand', fix_start=None,
         client=None, clip=None, min_num_frames=4
 ):
     if 's3://' in video_path:
-        image_list = client.list(video_path)
+        image_list = sort_frames(client.list(video_path))
         frames = []
         for image in image_list:
             fp = os.path.join(video_path, image)
             frame = Image.open(io.BytesIO(client.get(fp)))
             frames.append(frame)
     else:
-        image_list = sorted(list(os.listdir(video_path)))
+        image_list = sort_frames(list(os.listdir(video_path)))
         frames = []
         for image in image_list:
             fp = os.path.join(video_path, image)
@@ -227,7 +239,6 @@ def simulate_jpeg_degradation(quality):
             output.seek(0)  # Move the reading cursor to the start of the stream
             img_jpeg = Image.open(output).copy()  # Use .copy() to make sure the image is loaded in memory
         return img_jpeg
-
     return jpeg_degrade
 
 
@@ -685,7 +696,7 @@ def preprocess_gemma2(
     conv = get_conv_template(template_name)
     roles = {'human': conv.roles[0], 'gpt': conv.roles[1]}
 
-    # Use template
+    # Use chat template
     conversations = []
     for i, source in enumerate(sources):
         if roles[source[0]['from']] != conv.roles[0]:
@@ -754,7 +765,6 @@ def preprocess_gemma2(
         labels=targets,
         attention_mask=input_ids.ne(tokenizer.pad_token_id),
     )
-
 
 def find_closest_aspect_ratio(aspect_ratio, target_ratios, width, height, image_size):
     best_ratio_diff = float('inf')
