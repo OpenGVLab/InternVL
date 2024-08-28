@@ -17,6 +17,7 @@
 
 ## News 🚀🚀🚀
 
+- `2024/08/28`: 🚀 We release the [InternVL Omni](https://huggingface.co/OpenGVLab/InternOmni), a model capable of accepting audio input, which maintains good performance in VQA while also showing strong performance in Audio question answering.
 - `2024/08/01`: The [Chartmimic](https://chartmimic.github.io/) team evaluated the InternVL2 series models on their benchmark. The InternVL2-26B and 76B models achieved the top two performances among open-source models, with the InternVL2 76B model surpassing GeminiProVision and exhibiting comparable results to Claude-3-opus.
 - `2024/08/01`: InternVL2-Pro achieved the SOTA performance among open-source models on the [CharXiv](https://charxiv.github.io/#leaderboard) dataset, surpassing some well-known closed-source models such as GPT-4V, Gemini 1.5 Flash, and Claude 3 Sonnet.
 - `2024/07/24`: The [MLVU](https://github.com/JUNJIE99/MLVU) team evaluated InternVL-1.5 on their benchmark. The average performance on the multiple-choice task was 50.4%, while the performance on the generative tasks was 4.02. The performance on the multiple-choice task ranked #1 among all open-source MLLMs.
