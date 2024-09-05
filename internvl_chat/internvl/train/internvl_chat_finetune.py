@@ -10,6 +10,7 @@ import warnings
 from copy import deepcopy
 from dataclasses import dataclass, field
 from typing import Dict, Optional
+from datasets import load_dataset
 
 import numpy as np
 import torch
@@ -246,23 +247,28 @@ class LazySupervisedDataset(Dataset):
         self.sampling_method = sampling_method
 
         logger.info('Formatting inputs...Skip in lazy mode')
-        assert meta['annotation'].endswith('jsonl'), f'annotation must be jsonl, but got {meta["annotation"]}'
 
-        with open(meta['annotation'], 'r') as f:
-            self.raw_data = f.readlines()
-            if repeat_time < 1:
-                # If repeat_time is less than 1, select a portion of the data
-                self.raw_data = self.raw_data[:int(len(self.raw_data) * repeat_time)]
-            if repeat_time > 1:
-                assert isinstance(repeat_time, int)
-                # Repeat the list if repeat_time is greater than 1
-                self.raw_data = self.raw_data * repeat_time
+        try:
+            self.raw_data = load_dataset(meta['annotation'])[meta['split']]
+        except:
+            with open(meta['annotation'], 'r') as f:
+                self.raw_data = f.readlines()
+                if repeat_time < 1:
+                    # If repeat_time is less than 1, select a portion of the data
+                    self.raw_data = self.raw_data[:int(len(self.raw_data) * repeat_time)]
+                if repeat_time > 1:
+                    assert isinstance(repeat_time, int)
+                    # Repeat the list if repeat_time is greater than 1
+                    self.raw_data = self.raw_data * repeat_time
 
-        self.rng = np.random.default_rng(seed=random_seed)
-        self.rng.shuffle(self.raw_data)
+            self.rng = np.random.default_rng(seed=random_seed)
+            self.rng.shuffle(self.raw_data)
 
-        gc.collect()
-        self.root = meta['root']
+        # gc.collect()
+        if 'root' in meta:
+            self.root = meta['root']
+        else:
+            self.root = None
         self.cached_data_dict = {}
         self.tcs_loader = tcs_loader
         self.group_by_length = group_by_length
@@ -278,7 +284,8 @@ class LazySupervisedDataset(Dataset):
             self.conv2length = {}  # Using a dictionary to speed up token length calculation
             self.length = []
             for data_item in self.raw_data:
-                data_item = json.loads(data_item)
+                if not isinstance(data_item, dict):
+                    data_item = json.loads(data_item)
                 if 'length' in data_item:
                     token_length = data_item['length']  # Use precomputed length if available
                 else:
@@ -338,11 +345,14 @@ class LazySupervisedDataset(Dataset):
         if '<image>' not in data_item['conversations'][0]['value']:
             data_item['conversations'][0]['value'] = '<image>\n' + data_item['conversations'][0]['value']
 
-        # Merge the image path
-        image_path = self.get_image_path(data_item['image'])
+        if isinstance(data_item['image'], Image.Image):
+            image = data_item['image']
+        else:
+            # Merge the image path
+            image_path = self.get_image_path(data_item['image'])
 
-        # Load the image using tcs_loader if available, otherwise use PIL
-        image = self.load_image(image_path)
+            # Load the image using tcs_loader if available, otherwise use PIL
+            image = self.load_image(image_path)
 
         if self.dynamic_image_size:  # If dynamic image size is enabled, preprocess the image dynamically
             images = dynamic_preprocess(image, min_num=self.min_dynamic_patch, max_num=self.max_dynamic_patch,
@@ -512,12 +522,17 @@ class LazySupervisedDataset(Dataset):
         i = i % len(self.raw_data)
         while True:
             try:
-                data_item = json.loads(self.raw_data[i])
-                if 'image' in data_item and len(data_item['image']) != 0:
+                if isinstance(self.raw_data[i], dict):
+                    data_item = self.raw_data[i]
+                else:
+                    data_item = json.loads(self.raw_data[i])
+                if 'image' in data_item and (isinstance(data_item['image'], Image.Image) or len(data_item['image'])) != 0:
                     if type(data_item['image']) == list:
                         ret = self.multi_modal_multi_image_get_item(data_item)
                     else:
                         ret = self.multi_modal_get_item(data_item)
+                    
+                    
                 elif 'video' in data_item and data_item['video'] is not None and data_item['video'] != '':
                     ret = self.video_get_item(data_item)
                 else:
@@ -556,10 +571,12 @@ def build_datasets(
     min_dynamic_patch=1,
     max_dynamic_patch=12,
     normalize_type='imagenet',
+    split='train'
 ):
     datasets = []
     lengths = []
-    ds_collections = json.loads(open(data_args.meta_path).read())
+    ds_collections = json.loads(open(data_args.meta_path).read()) 
+    ds_collections = {collection: ds_collections[collection] for collection in ds_collections.keys() if ds_collections[collection]['split'] == split}
     for ds_idx, ds_name in enumerate(ds_collections.keys()):
         repeat_time = ds_collections[ds_name]['repeat_time']
         if 'max_dynamic_patch' in ds_collections[ds_name]:
@@ -768,6 +785,12 @@ def main():
         min_dynamic_patch=data_args.min_dynamic_patch, max_dynamic_patch=data_args.max_dynamic_patch,
         normalize_type=data_args.normalize_type)
 
+    eval_dataset = build_datasets(
+        data_args, tokenizer, tcs_loader, model, group_by_length=training_args.group_by_length,
+        dynamic_image_size=data_args.dynamic_image_size, use_thumbnail=data_args.use_thumbnail,
+        min_dynamic_patch=data_args.min_dynamic_patch, max_dynamic_patch=data_args.max_dynamic_patch,
+        normalize_type=data_args.normalize_type, split="val")
+    
     def _freeze_params(module):
         for param in module.parameters():
             param.requires_grad = False
@@ -817,7 +840,7 @@ def main():
         model=model,
         args=training_args,
         train_dataset=train_dataset if training_args.do_train else None,
-        eval_dataset=None,
+        eval_dataset=eval_dataset,
         tokenizer=tokenizer,
         data_collator=concat_pad_data_collator
     )
