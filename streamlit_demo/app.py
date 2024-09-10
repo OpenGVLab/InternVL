@@ -49,6 +49,7 @@ def get_model_list():
     assert ret.status_code == 200
     ret = requests.post(controller_url + '/list_models')
     models = ret.json()['models']
+    models = [item for item in models if 'InternVL2-Det' not in item]
     return models
 
 
@@ -141,6 +142,8 @@ def generate_response(messages):
                 else:
                     output = data['text'] + f" (error_code: {data['error_code']})"
                     placeholder.markdown(output)
+        if ('\[' in output and '\]' in output) or ('\(' in output and '\)' in output):
+            output = output.replace('\[', '$').replace('\]', '$').replace('\(', '$').replace('\)', '$')
         placeholder.markdown(output)
     except requests.exceptions.RequestException as e:
         placeholder.markdown(server_error_msg)

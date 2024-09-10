@@ -279,7 +279,7 @@ class ModelWorker:
                     max_input_tile_temp = []
                     for image_str in message['image']:
                         pil_images.append(load_image_from_base64(image_str))
-                        prefix += f'Image-{global_image_cnt + 1}: <image>\n\n'
+                        prefix += f'Image-{global_image_cnt + 1}: <image>\n'
                         global_image_cnt += 1
                         max_input_tile_temp.append(max(1, max_input_tiles // len(message['image'])))
                     if len(max_input_tile_temp) > 0:
@@ -291,8 +291,8 @@ class ModelWorker:
         question, history = history[-1][0], history[:-1]
 
         if global_image_cnt == 1:
-            question = question.replace('Image-1: <image>\n\n', '<image>\n')
-            history = [[item[0].replace('Image-1: <image>\n\n', '<image>\n'), item[1]] for item in history]
+            question = question.replace('Image-1: <image>\n', '<image>\n')
+            history = [[item[0].replace('Image-1: <image>\n', '<image>\n'), item[1]] for item in history]
 
         # Create a new list to store processed sublists
         flattened_list = []
@@ -308,7 +308,7 @@ class ModelWorker:
 
         old_system_message = self.model.system_message
         self.model.system_message = system_message
-        image_tiles = []
+        image_tiles, num_patches_list = [], []
         transform = build_transform(input_size=self.image_size)
         if len(pil_images) > 0:
             for current_max_input_tiles, pil_image in zip(max_input_tile_list, pil_images):
@@ -318,6 +318,7 @@ class ModelWorker:
                         use_thumbnail=self.model.config.use_thumbnail)
                 else:
                     tiles = [pil_image]
+                num_patches_list.append(len(tiles))
                 image_tiles += tiles
             pixel_values = [transform(item) for item in image_tiles]
             pixel_values = torch.stack(pixel_values).to(self.model.device, dtype=torch.bfloat16)
@@ -341,6 +342,7 @@ class ModelWorker:
         thread = Thread(target=self.model.chat, kwargs=dict(
             tokenizer=self.tokenizer,
             pixel_values=pixel_values,
+            num_patches_list=num_patches_list,
             question=question,
             history=history,
             return_history=False,
