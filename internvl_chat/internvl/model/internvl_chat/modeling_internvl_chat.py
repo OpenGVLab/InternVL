@@ -145,6 +145,7 @@ class InternVLChatModel(PreTrainedModel):
             output_attentions: Optional[bool] = None,
             output_hidden_states: Optional[bool] = None,
             return_dict: Optional[bool] = None,
+            cu_seqlens: Optional[torch.LongTensor] = None
     ) -> Union[Tuple, CausalLMOutputWithPast]:
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
 
@@ -185,6 +186,7 @@ class InternVLChatModel(PreTrainedModel):
             output_attentions=output_attentions,
             output_hidden_states=output_hidden_states,
             return_dict=return_dict,
+            cu_seqlens=cu_seqlens
         )
         logits = outputs.logits
 
