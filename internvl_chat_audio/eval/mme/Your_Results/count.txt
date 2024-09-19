@@ -1,0 +1,60 @@
+000000006040.jpg	Is there a train in the picture? Please answer yes or no.	Yes
+000000006040.jpg	Are there a total of two trains in the picture? Please answer yes or no.	No
+000000044279.jpg	Is there a total of two people in the image? Please answer yes or no.	Yes
+000000044279.jpg	Is there only one people in the image? Please answer yes or no.	No
+000000067213.jpg	Is there only one dog in the image? Please answer yes or no.	Yes
+000000067213.jpg	Is there two dogs in the image? Please answer yes or no.	No
+000000071226.jpg	Is there a total of two dogs in the image? Please answer yes or no.	Yes
+000000071226.jpg	Is there only one dogs in the image? Please answer yes or no.	No
+000000097994.jpg	Are there three laptops in the picture? Please answer yes or no.	Yes
+000000097994.jpg	Are there four laptops in the picture? Please answer yes or no.	No
+000000195918.jpg	Is there a total of two display devices in the image? Please answer yes or no.	Yes
+000000195918.jpg	Is there only one display device in the image?  Please answer yes or no.	No
+000000236721.jpg	Are there two bananas in the image? Please answer yes or no.	Yes
+000000236721.jpg	Are there three bananas in the image? Please answer yes or no.	No
+000000261712.jpg	Are there two giraffes in this image? Please answer yes or no.	Yes
+000000261712.jpg	Are there three giraffes in this picture? Please answer yes or no.	No
+000000274066.jpg	Are there four people appear in this image? Please answer yes or no.	Yes
+000000274066.jpg	Are there only three people appear in this image? Please answer yes or no.	No
+000000276434.jpg	Is there a total of three cakes in this image? Please answer yes or no.	Yes
+000000276434.jpg	Are there only two cakes in this image? Please answer yes or no.	No
+000000289059.jpg	Is there a total of two person appear in the image? Please answer yes or no.	Yes
+000000289059.jpg	Is there only one person appear in the image? Please answer yes or no.	No
+000000290081.jpg	Is there only one bowl in this image? Please answer yes or no.	Yes
+000000290081.jpg	Are there two bowls in this image? Please answer yes or no.	No
+000000301867.jpg	Are there three people appear in this image? Please answer yes or no.	Yes
+000000301867.jpg	Are there only two people appear in this image? Please answer yes or no.	No
+000000335954.jpg	Are there two bowls in this image? Please answer yes or no.	Yes
+000000335954.jpg	Are there three bowls in this image? Please answer yes or no.	No
+000000357816.jpg	Are there four people in this image? Please answer yes or no.	Yes
+000000357816.jpg	Are there five people in this image? Please answer yes or no.	No
+000000372819.jpg	Are there four dogs appear in this image? Please answer yes or no.	Yes
+000000372819.jpg	Are there only three dogs appear in this image? Please answer yes or no.	No
+000000410612.jpg	Is there only one ship in the picture? Please answer yes or no.	Yes
+000000410612.jpg	Is there a total of two ships in the picture? Please answer yes or no.	No
+000000423944.jpg	Is there no person in this picture? Please answer yes or no.	Yes
+000000423944.jpg	Are there two people appear in this image? Please answer yes or no.	No
+000000427034.jpg	Is there a dog in the picture? Please answer yes or no.	Yes
+000000427034.jpg	Are there a total of two dogs in the picture? Please answer yes or no.	No
+000000430286.jpg	Are there three remotes in this image? Please answer yes or no.	Yes
+000000430286.jpg	Are there only two remotes in this image? Please answer yes or no.	No
+000000432468.jpg	Are there three zippers in the picture? Please answer yes or no.	Yes
+000000432468.jpg	Is there a zipper in the picture? Please answer yes or no.	No
+000000434479.jpg	Are there two pieces of pizza in this image? Please answer yes or no.	Yes
+000000434479.jpg	Is there only one piece of pizza in this image? Please answer yes or no.	No
+000000438304.jpg	Are there two tennis rackets in the picture? Please answer yes or no.	Yes
+000000438304.jpg	Are there only one tennis racket in the picture? Please answer yes or no.	No
+000000450303.jpg	Are there six people appear in this image? Please answer yes or no.	Yes
+000000450303.jpg	Are there seven people appear in this image? Please answer yes or no.	No
+000000470121.jpg	Is there only one bottle in the image? Please answer yes or no.	Yes
+000000470121.jpg	Is there two bottles in the image? Please answer yes or no.	No
+000000476215.jpg	Are there two horses in this image? Please answer yes or no.	Yes
+000000476215.jpg	Is there only one horse in this image? Please answer yes or no.	No
+000000482100.jpg	Are there two toilets in the picture? Please answer yes or no.	Yes
+000000482100.jpg	Is there only one toilet in the picture? Please answer yes or no.	No
+000000491867.jpg	Is there only one necktie in the image? Please answer yes or no.	Yes
+000000491867.jpg	Is there three neckties in the image? Please answer yes or no.	No
+000000556000.jpg	Are there four people in the image? Please answer yes or no.	Yes
+000000556000.jpg	Are there only three people in the image? Please answer yes or no.	No
+000000565045.jpg	Are there two bath towels in the picture? Please answer yes or no.	Yes
+000000565045.jpg	Is there only one bath towel in the picture? Please answer yes or no.	No

@@ -1,0 +1,294 @@
+tt0048028.jpg	Is this movie directed by elia kazan? Please answer yes or no.	Yes
+tt0048028.jpg	Is this movie directed by maneesh sharma? Please answer yes or no.	No
+tt0053221.jpg	Is this movie titled rio bravo (1959)? Please answer yes or no.	Yes
+tt0053221.jpg	Is this movie titled the matrix (1999)? Please answer yes or no.	No
+tt0062622.jpg	Is this movie originated from the country or region of uk? Please answer yes or no.	Yes
+tt0062622.jpg	Is this movie originated from the country or region of china? Please answer yes or no.	No
+tt0063442.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0063442.jpg	Is this movie originated from the country or region of japan? Please answer yes or no.	No
+tt0065724.jpg	Is this movie directed by bob rafelson? Please answer yes or no.	Yes
+tt0065724.jpg	Is this movie directed by anthony minghella? Please answer yes or no.	No
+tt0067116.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0067116.jpg	Is this movie originated from the country or region of uk? Please answer yes or no.	No
+tt0067140.jpg	Is this movie titled duck, you sucker (1971)? Please answer yes or no.	Yes
+tt0067140.jpg	Is this movie titled crimson tide (1995)? Please answer yes or no.	No
+tt0067185.jpg	Is this movie directed by hal ashby? Please answer yes or no.	Yes
+tt0067185.jpg	Is this movie directed by john hillcoat? Please answer yes or no.	No
+tt0068646.jpg	Is this movie titled the godfather (1972)? Please answer yes or no.	Yes
+tt0068646.jpg	Is this movie titled bring on the melody (2017)? Please answer yes or no.	No
+tt0070291.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0070291.jpg	Is this movie originated from the country or region of spain? Please answer yes or no.	No
+tt0071315.jpg	Is this movie titled chinatown (1974)? Please answer yes or no.	Yes
+tt0071315.jpg	Is this movie titled planet of the apes (1968)? Please answer yes or no.	No
+tt0074119.jpg	Is this movie directed by alan j. pakula? Please answer yes or no.	Yes
+tt0074119.jpg	Is this movie directed by stanley kubrick? Please answer yes or no.	No
+tt0074749.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0074749.jpg	Is this movie originated from the country or region of venezuela? Please answer yes or no.	No
+tt0082186.jpg	Is this movie directed by desmond davis? Please answer yes or no.	Yes
+tt0082186.jpg	Is this movie directed by edward zwick? Please answer yes or no.	No
+tt0083907.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0083907.jpg	Is this movie originated from the country or region of bulgaria? Please answer yes or no.	No
+tt0083946.jpg	Is this movie originated from the country or region of west germany? Please answer yes or no.	Yes
+tt0083946.jpg	Is this movie originated from the country or region of denmark? Please answer yes or no.	No
+tt0084787.jpg	Is this movie titled the thing (1982)? Please answer yes or no.	Yes
+tt0084787.jpg	Is this movie titled jay and silent bob strike back (2001)? Please answer yes or no.	No
+tt0086250.jpg	Is this movie directed by brian de palma? Please answer yes or no.	Yes
+tt0086250.jpg	Is this movie directed by patrice leconte? Please answer yes or no.	No
+tt0093565.jpg	Is this movie titled moonstruck (1987)? Please answer yes or no.	Yes
+tt0093565.jpg	Is this movie titled now you see me (2013)? Please answer yes or no.	No
+tt0093773.jpg	Is this movie titled predator (1987)? Please answer yes or no.	Yes
+tt0093773.jpg	Is this movie titled the cell (2000)? Please answer yes or no.	No
+tt0094291.jpg	Is this movie directed by oliver stone? Please answer yes or no.	Yes
+tt0094291.jpg	Is this movie directed by raja gosnell? Please answer yes or no.	No
+tt0096446.jpg	Is this movie directed by ron howard? Please answer yes or no.	Yes
+tt0096446.jpg	Is this movie directed by peter jackson? Please answer yes or no.	No
+tt0096463.jpg	Is this movie directed by mike nichols? Please answer yes or no.	Yes
+tt0096463.jpg	Is this movie directed by cary joji fukunaga? Please answer yes or no.	No
+tt0096895.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0096895.jpg	Is this movie originated from the country or region of china? Please answer yes or no.	No
+tt0097576.jpg	Is this movie directed by steven spielberg? Please answer yes or no.	Yes
+tt0097576.jpg	Is this movie directed by francis ford coppola? Please answer yes or no.	No
+tt0098635.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0098635.jpg	Is this movie originated from the country or region of spain? Please answer yes or no.	No
+tt0098724.jpg	Is this movie titled sex, lies, and videotape (1989)? Please answer yes or no.	Yes
+tt0098724.jpg	Is this movie titled final destination (2000)? Please answer yes or no.	No
+tt0099653.jpg	Is this movie directed by jerry zucker? Please answer yes or no.	Yes
+tt0099653.jpg	Is this movie directed by felix chong,alan mak? Please answer yes or no.	No
+tt0100112.jpg	Is this movie originated from the country or region of france? Please answer yes or no.	Yes
+tt0100112.jpg	Is this movie originated from the country or region of new zealand? Please answer yes or no.	No
+tt0100150.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0100150.jpg	Is this movie originated from the country or region of hong kong? Please answer yes or no.	No
+tt0100935.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0100935.jpg	Is this movie originated from the country or region of canada? Please answer yes or no.	No
+tt0101889.jpg	Is this movie titled the fisher king (1991)? Please answer yes or no.	Yes
+tt0101889.jpg	Is this movie titled a good day to die hard (2013)? Please answer yes or no.	No
+tt0101921.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0101921.jpg	Is this movie originated from the country or region of australia? Please answer yes or no.	No
+tt0107653.jpg	Is this movie titled naked (1993)? Please answer yes or no.	Yes
+tt0107653.jpg	Is this movie titled captain america: civil war (2016)? Please answer yes or no.	No
+tt0107808.jpg	Is this movie titled a perfect world (1993)? Please answer yes or no.	Yes
+tt0107808.jpg	Is this movie titled harold and maude (1971)? Please answer yes or no.	No
+tt0110201.jpg	Is this movie titled hail the judge (1994)? Please answer yes or no.	Yes
+tt0110201.jpg	Is this movie titled batman (1989)? Please answer yes or no.	No
+tt0112740.jpg	Is this movie titled crimson tide (1995)? Please answer yes or no.	Yes
+tt0112740.jpg	Is this movie titled insidious: the last key (2018)? Please answer yes or no.	No
+tt0113497.jpg	Is this movie titled jumanji (1995)? Please answer yes or no.	Yes
+tt0113497.jpg	Is this movie titled morgan (2016)? Please answer yes or no.	No
+tt0114369.jpg	Is this movie titled se7en (1995)? Please answer yes or no.	Yes
+tt0114369.jpg	Is this movie titled a perfect world (1993)? Please answer yes or no.	No
+tt0114388.jpg	Is this movie directed by ang lee? Please answer yes or no.	Yes
+tt0114388.jpg	Is this movie directed by david lowery? Please answer yes or no.	No
+tt0116209.jpg	Is this movie directed by anthony minghella? Please answer yes or no.	Yes
+tt0116209.jpg	Is this movie directed by john cassavetes? Please answer yes or no.	No
+tt0116629.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0116629.jpg	Is this movie originated from the country or region of australia? Please answer yes or no.	No
+tt0118636.jpg	Is this movie titled apt pupil (1998)? Please answer yes or no.	Yes
+tt0118636.jpg	Is this movie titled a good day to die hard (2013)? Please answer yes or no.	No
+tt0118655.jpg	Is this movie directed by jay roach? Please answer yes or no.	Yes
+tt0118655.jpg	Is this movie directed by peter jackson? Please answer yes or no.	No
+tt0118715.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0118715.jpg	Is this movie originated from the country or region of venezuela? Please answer yes or no.	No
+tt0119303.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0119303.jpg	Is this movie originated from the country or region of spain? Please answer yes or no.	No
+tt0120738.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0120738.jpg	Is this movie originated from the country or region of germany? Please answer yes or no.	No
+tt0129387.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0129387.jpg	Is this movie originated from the country or region of germany? Please answer yes or no.	No
+tt0133093.jpg	Is this movie directed by lana wachowski,lilly wachowski? Please answer yes or no.	Yes
+tt0133093.jpg	Is this movie directed by siu-tung ching? Please answer yes or no.	No
+tt0163025.jpg	Is this movie directed by joe johnston? Please answer yes or no.	Yes
+tt0163025.jpg	Is this movie directed by adam robitel? Please answer yes or no.	No
+tt0166924.jpg	Is this movie titled mulholland drive (2001)? Please answer yes or no.	Yes
+tt0166924.jpg	Is this movie titled lucky number slevin (2006)? Please answer yes or no.	No
+tt0167261.jpg	Is this movie directed by peter jackson? Please answer yes or no.	Yes
+tt0167261.jpg	Is this movie directed by gabe ibáñez? Please answer yes or no.	No
+tt0182789.jpg	Is this movie titled bicentennial man (1999)? Please answer yes or no.	Yes
+tt0182789.jpg	Is this movie titled ocean's eleven (2001)? Please answer yes or no.	No
+tt0187078.jpg	Is this movie titled gone in 60 seconds (2000)? Please answer yes or no.	Yes
+tt0187078.jpg	Is this movie titled avatar (2009)? Please answer yes or no.	No
+tt0195714.jpg	Is this movie directed by james wong? Please answer yes or no.	Yes
+tt0195714.jpg	Is this movie directed by bob rafelson? Please answer yes or no.	No
+tt0209958.jpg	Is this movie titled the cell (2000)? Please answer yes or no.	Yes
+tt0209958.jpg	Is this movie titled the matrix revolutions (2003)? Please answer yes or no.	No
+tt0232500.jpg	Is this movie titled the fast and the furious (2001)? Please answer yes or no.	Yes
+tt0232500.jpg	Is this movie titled east of eden (1955)? Please answer yes or no.	No
+tt0240772.jpg	Is this movie directed by steven soderbergh? Please answer yes or no.	Yes
+tt0240772.jpg	Is this movie directed by paul mcguigan? Please answer yes or no.	No
+tt0242653.jpg	Is this movie titled the matrix revolutions (2003)? Please answer yes or no.	Yes
+tt0242653.jpg	Is this movie titled sense and sensibility (1995)? Please answer yes or no.	No
+tt0244244.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0244244.jpg	Is this movie originated from the country or region of argentina? Please answer yes or no.	No
+tt0258463.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0258463.jpg	Is this movie originated from the country or region of italy? Please answer yes or no.	No
+tt0261392.jpg	Is this movie titled jay and silent bob strike back (2001)? Please answer yes or no.	Yes
+tt0261392.jpg	Is this movie titled avatar (2009)? Please answer yes or no.	No
+tt0264395.jpg	Is this movie originated from the country or region of germany? Please answer yes or no.	Yes
+tt0264395.jpg	Is this movie originated from the country or region of australia? Please answer yes or no.	No
+tt0266697.jpg	Is this movie directed by quentin tarantino? Please answer yes or no.	Yes
+tt0266697.jpg	Is this movie directed by peyton reed? Please answer yes or no.	No
+tt0268978.jpg	Is this movie titled a beautiful mind (2001)? Please answer yes or no.	Yes
+tt0268978.jpg	Is this movie titled blue jasmine (2013)? Please answer yes or no.	No
+tt0318627.jpg	Is this movie titled resident evil: apocalypse (2004)? Please answer yes or no.	Yes
+tt0318627.jpg	Is this movie titled the meddler (2015)? Please answer yes or no.	No
+tt0328107.jpg	Is this movie titled man on fire (2004)? Please answer yes or no.	Yes
+tt0328107.jpg	Is this movie titled real steel (2011)? Please answer yes or no.	No
+tt0338751.jpg	Is this movie directed by martin scorsese? Please answer yes or no.	Yes
+tt0338751.jpg	Is this movie directed by chris columbus? Please answer yes or no.	No
+tt0341495.jpg	Is this movie directed by siu-tung ching? Please answer yes or no.	Yes
+tt0341495.jpg	Is this movie directed by lorenzo vigas? Please answer yes or no.	No
+tt0351977.jpg	Is this movie directed by kevin bray? Please answer yes or no.	Yes
+tt0351977.jpg	Is this movie directed by joe johnston? Please answer yes or no.	No
+tt0369702.jpg	Is this movie originated from the country or region of spain? Please answer yes or no.	Yes
+tt0369702.jpg	Is this movie originated from the country or region of france? Please answer yes or no.	No
+tt0373469.jpg	Is this movie directed by shane black? Please answer yes or no.	Yes
+tt0373469.jpg	Is this movie directed by dennis dugan? Please answer yes or no.	No
+tt0378194.jpg	Is this movie directed by quentin tarantino? Please answer yes or no.	Yes
+tt0378194.jpg	Is this movie directed by todd phillips? Please answer yes or no.	No
+tt0379786.jpg	Is this movie titled serenity (2005)? Please answer yes or no.	Yes
+tt0379786.jpg	Is this movie titled bad genius (2017)? Please answer yes or no.	No
+tt0393109.jpg	Is this movie titled brick (2005)? Please answer yes or no.	Yes
+tt0393109.jpg	Is this movie titled sense and sensibility (1995)? Please answer yes or no.	No
+tt0399201.jpg	Is this movie directed by michael bay? Please answer yes or no.	Yes
+tt0399201.jpg	Is this movie directed by angelina jolie? Please answer yes or no.	No
+tt0425210.jpg	Is this movie titled lucky number slevin (2006)? Please answer yes or no.	Yes
+tt0425210.jpg	Is this movie titled the godfather (1972)? Please answer yes or no.	No
+tt0433035.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0433035.jpg	Is this movie originated from the country or region of new zealand? Please answer yes or no.	No
+tt0443680.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0443680.jpg	Is this movie originated from the country or region of germany? Please answer yes or no.	No
+tt0449088.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0449088.jpg	Is this movie originated from the country or region of japan? Please answer yes or no.	No
+tt0450259.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt0450259.jpg	Is this movie originated from the country or region of china? Please answer yes or no.	No
+tt0462499.jpg	Is this movie titled rambo (2008)? Please answer yes or no.	Yes
+tt0462499.jpg	Is this movie titled walking tall (2004)? Please answer yes or no.	No
+tt0499549.jpg	Is this movie directed by james cameron? Please answer yes or no.	Yes
+tt0499549.jpg	Is this movie directed by jerry zucker? Please answer yes or no.	No
+tt0780653.jpg	Is this movie titled the wolfman (2010)? Please answer yes or no.	Yes
+tt0780653.jpg	Is this movie titled wild at heart (1990)? Please answer yes or no.	No
+tt0829482.jpg	Is this movie directed by greg mottola? Please answer yes or no.	Yes
+tt0829482.jpg	Is this movie directed by jing wong? Please answer yes or no.	No
+tt0848228.jpg	Is this movie titled the avengers (2012)? Please answer yes or no.	Yes
+tt0848228.jpg	Is this movie titled wolf warrior 2 (2017)? Please answer yes or no.	No
+tt0898367.jpg	Is this movie directed by john hillcoat? Please answer yes or no.	Yes
+tt0898367.jpg	Is this movie directed by franklin j. schaffner? Please answer yes or no.	No
+tt0942385.jpg	Is this movie titled tropic thunder (2008)? Please answer yes or no.	Yes
+tt0942385.jpg	Is this movie titled bad teacher (2011)? Please answer yes or no.	No
+tt0993846.jpg	Is this movie titled the wolf of wall street (2013)? Please answer yes or no.	Yes
+tt0993846.jpg	Is this movie titled lucky number slevin (2006)? Please answer yes or no.	No
+tt1017460.jpg	Is this movie directed by vincenzo natali? Please answer yes or no.	Yes
+tt1017460.jpg	Is this movie directed by raja gosnell? Please answer yes or no.	No
+tt1057500.jpg	Is this movie directed by clint eastwood? Please answer yes or no.	Yes
+tt1057500.jpg	Is this movie directed by john cassavetes? Please answer yes or no.	No
+tt1068680.jpg	Is this movie titled yes man (2008)? Please answer yes or no.	Yes
+tt1068680.jpg	Is this movie titled rio bravo (1959)? Please answer yes or no.	No
+tt1099212.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt1099212.jpg	Is this movie originated from the country or region of japan? Please answer yes or no.	No
+tt1119646.jpg	Is this movie directed by todd phillips? Please answer yes or no.	Yes
+tt1119646.jpg	Is this movie directed by franklin j. schaffner? Please answer yes or no.	No
+tt1124037.jpg	Is this movie directed by gary ross? Please answer yes or no.	Yes
+tt1124037.jpg	Is this movie directed by francis ford coppola? Please answer yes or no.	No
+tt1229822.jpg	Is this movie titled jane eyre (2011)? Please answer yes or no.	Yes
+tt1229822.jpg	Is this movie titled kiss kiss bang bang (2005)? Please answer yes or no.	No
+tt1284575.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt1284575.jpg	Is this movie originated from the country or region of bulgaria? Please answer yes or no.	No
+tt1291150.jpg	Is this movie directed by jonathan liebesman? Please answer yes or no.	Yes
+tt1291150.jpg	Is this movie directed by masahide ichii? Please answer yes or no.	No
+tt1300851.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt1300851.jpg	Is this movie originated from the country or region of germany? Please answer yes or no.	No
+tt1305806.jpg	Is this movie titled the secret in their eyes (2009)? Please answer yes or no.	Yes
+tt1305806.jpg	Is this movie titled ocean's eleven (2001)? Please answer yes or no.	No
+tt1343092.jpg	Is this movie directed by baz luhrmann? Please answer yes or no.	Yes
+tt1343092.jpg	Is this movie directed by lorenzo vigas? Please answer yes or no.	No
+tt1385826.jpg	Is this movie titled the adjustment bureau (2011)? Please answer yes or no.	Yes
+tt1385826.jpg	Is this movie titled the last of sheila (1973)? Please answer yes or no.	No
+tt1403865.jpg	Is this movie directed by ethan coen,joel coen? Please answer yes or no.	Yes
+tt1403865.jpg	Is this movie directed by john hillcoat? Please answer yes or no.	No
+tt1438176.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt1438176.jpg	Is this movie originated from the country or region of west germany? Please answer yes or no.	No
+tt1454029.jpg	Is this movie titled the help (2011)? Please answer yes or no.	Yes
+tt1454029.jpg	Is this movie titled avatar (2009)? Please answer yes or no.	No
+tt1560747.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt1560747.jpg	Is this movie originated from the country or region of canada? Please answer yes or no.	No
+tt1564367.jpg	Is this movie titled just go with it (2011)? Please answer yes or no.	Yes
+tt1564367.jpg	Is this movie titled journey to the west (2013)? Please answer yes or no.	No
+tt1606378.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt1606378.jpg	Is this movie originated from the country or region of uk? Please answer yes or no.	No
+tt1637725.jpg	Is this movie titled ted (2012)? Please answer yes or no.	Yes
+tt1637725.jpg	Is this movie titled lost in space (1998)? Please answer yes or no.	No
+tt1670345.jpg	Is this movie titled now you see me (2013)? Please answer yes or no.	Yes
+tt1670345.jpg	Is this movie titled bicentennial man (1999)? Please answer yes or no.	No
+tt1703957.jpg	Is this movie titled genius (2016)? Please answer yes or no.	Yes
+tt1703957.jpg	Is this movie titled fan (2016)? Please answer yes or no.	No
+tt1722484.jpg	Is this movie directed by hermine huntgeburth? Please answer yes or no.	Yes
+tt1722484.jpg	Is this movie directed by todd phillips? Please answer yes or no.	No
+tt1800241.jpg	Is this movie directed by david o. russell? Please answer yes or no.	Yes
+tt1800241.jpg	Is this movie directed by raja gosnell? Please answer yes or no.	No
+tt1809398.jpg	Is this movie titled unbroken (2014)? Please answer yes or no.	Yes
+tt1809398.jpg	Is this movie titled home alone 3 (1997)? Please answer yes or no.	No
+tt1971325.jpg	Is this movie originated from the country or region of bulgaria? Please answer yes or no.	Yes
+tt1971325.jpg	Is this movie originated from the country or region of spain? Please answer yes or no.	No
+tt1974419.jpg	Is this movie titled the neon demon (2016)? Please answer yes or no.	Yes
+tt1974419.jpg	Is this movie titled man on fire (2004)? Please answer yes or no.	No
+tt2017561.jpg	Is this movie directed by stephen chow,chi-kin kwok? Please answer yes or no.	Yes
+tt2017561.jpg	Is this movie directed by craig gillespie? Please answer yes or no.	No
+tt2078768.jpg	Is this movie originated from the country or region of hong kong? Please answer yes or no.	Yes
+tt2078768.jpg	Is this movie originated from the country or region of venezuela? Please answer yes or no.	No
+tt2132285.jpg	Is this movie titled the bling ring (2013)? Please answer yes or no.	Yes
+tt2132285.jpg	Is this movie titled tropic thunder (2008)? Please answer yes or no.	No
+tt2238032.jpg	Is this movie titled skiptrace (2016)? Please answer yes or no.	Yes
+tt2238032.jpg	Is this movie titled the bourne identity (2002)? Please answer yes or no.	No
+tt2334873.jpg	Is this movie titled blue jasmine (2013)? Please answer yes or no.	Yes
+tt2334873.jpg	Is this movie titled a good day to die hard (2013)? Please answer yes or no.	No
+tt2788732.jpg	Is this movie titled pete's dragon (2016)? Please answer yes or no.	Yes
+tt2788732.jpg	Is this movie titled willow (1988)? Please answer yes or no.	No
+tt2802144.jpg	Is this movie directed by matthew vaughn? Please answer yes or no.	Yes
+tt2802144.jpg	Is this movie directed by dietrich brüggemann? Please answer yes or no.	No
+tt2908856.jpg	Is this movie directed by israel horovitz? Please answer yes or no.	Yes
+tt2908856.jpg	Is this movie directed by mike nichols? Please answer yes or no.	No
+tt2980516.jpg	Is this movie titled the theory of everything (2014)? Please answer yes or no.	Yes
+tt2980516.jpg	Is this movie titled stations of the cross (2014)? Please answer yes or no.	No
+tt3077214.jpg	Is this movie titled suffragette (2015)? Please answer yes or no.	Yes
+tt3077214.jpg	Is this movie titled east of eden (1955)? Please answer yes or no.	No
+tt3316960.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt3316960.jpg	Is this movie originated from the country or region of west germany? Please answer yes or no.	No
+tt3465916.jpg	Is this movie originated from the country or region of germany? Please answer yes or no.	Yes
+tt3465916.jpg	Is this movie originated from the country or region of spain? Please answer yes or no.	No
+tt3495026.jpg	Is this movie titled fan (2016)? Please answer yes or no.	Yes
+tt3495026.jpg	Is this movie titled from afar (2015)? Please answer yes or no.	No
+tt3498820.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt3498820.jpg	Is this movie originated from the country or region of germany? Please answer yes or no.	No
+tt3700804.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt3700804.jpg	Is this movie originated from the country or region of uk? Please answer yes or no.	No
+tt3824458.jpg	Is this movie titled tangerine (2015)? Please answer yes or no.	Yes
+tt3824458.jpg	Is this movie titled miller's crossing (1990)? Please answer yes or no.	No
+tt3860916.jpg	Is this movie directed by ben howling? Please answer yes or no.	Yes
+tt3860916.jpg	Is this movie directed by quentin tarantino? Please answer yes or no.	No
+tt4046784.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt4046784.jpg	Is this movie originated from the country or region of uk? Please answer yes or no.	No
+tt4242158.jpg	Is this movie titled lost in hong kong (2015)? Please answer yes or no.	Yes
+tt4242158.jpg	Is this movie titled harold and maude (1971)? Please answer yes or no.	No
+tt4273292.jpg	Is this movie directed by babak anvari? Please answer yes or no.	Yes
+tt4273292.jpg	Is this movie directed by ethan coen,joel coen? Please answer yes or no.	No
+tt4501454.jpg	Is this movie directed by lorene scafaria? Please answer yes or no.	Yes
+tt4501454.jpg	Is this movie directed by herbert ross? Please answer yes or no.	No
+tt4520364.jpg	Is this movie directed by luke scott? Please answer yes or no.	Yes
+tt4520364.jpg	Is this movie directed by dominic sena? Please answer yes or no.	No
+tt4651520.jpg	Is this movie originated from the country or region of usa? Please answer yes or no.	Yes
+tt4651520.jpg	Is this movie originated from the country or region of china? Please answer yes or no.	No
+tt4721400.jpg	Is this movie directed by lorenzo vigas? Please answer yes or no.	Yes
+tt4721400.jpg	Is this movie directed by jonathan liebesman? Please answer yes or no.	No
+tt4972062.jpg	Is this movie directed by mike birbiglia? Please answer yes or no.	Yes
+tt4972062.jpg	Is this movie directed by david fincher? Please answer yes or no.	No
+tt5564148.jpg	Is this movie directed by masahide ichii? Please answer yes or no.	Yes
+tt5564148.jpg	Is this movie directed by dietrich brüggemann? Please answer yes or no.	No
+tt5688868.jpg	Is this movie titled primal rage: the legend of konga (2018)? Please answer yes or no.	Yes
+tt5688868.jpg	Is this movie titled the neon demon (2016)? Please answer yes or no.	No
+tt5726086.jpg	Is this movie directed by adam robitel? Please answer yes or no.	Yes
+tt5726086.jpg	Is this movie directed by gore verbinski? Please answer yes or no.	No
+tt6788942.jpg	Is this movie originated from the country or region of thailand? Please answer yes or no.	Yes
+tt6788942.jpg	Is this movie originated from the country or region of argentina? Please answer yes or no.	No
+tt7055592.jpg	Is this movie titled brotherhood of blades ii: the infernal battlefield (2017)? Please answer yes or no.	Yes
+tt7055592.jpg	Is this movie titled stations of the cross (2014)? Please answer yes or no.	No
+tt7131870.jpg	Is this movie directed by jing wu? Please answer yes or no.	Yes
+tt7131870.jpg	Is this movie directed by david lynch? Please answer yes or no.	No
