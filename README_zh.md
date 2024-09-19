@@ -2,7 +2,7 @@
 
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/47669167/7037290e-f474-4d11-b90f-1d8316087bf8"> InternVL家族：通过开源组件缩小与商业多模态模型的差距 —— GPT-4o的开源替代方案
 
-[\[🆕 博客\]](https://internvl.github.io/blog/) [\[🤔 FAQs\]](https://internvl.readthedocs.io/en/latest/tutorials/faqs.html) [\[🚀 InternVL2 博客\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[🗨️ 对话Demo\]](https://internvl.opengvlab.com/)  [\[🤗 HF Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)  [\[📖 文档\]](https://internvl.readthedocs.io/en/latest/)  [\[🌐 API\]](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html)  [\[🚀 快速开始\]](#使用-huggingface-快速开始)
+[\[🆕 博客\]](https://internvl.github.io/blog/) [\[🤔 常见问题\]](https://internvl.readthedocs.io/en/latest/tutorials/faqs.html) [\[🚀 InternVL2 博客\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[🗨️ 对话Demo\]](https://internvl.opengvlab.com/)  [\[🤗 HF Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)  [\[📖 文档\]](https://internvl.readthedocs.io/en/latest/)  [\[🌐 API\]](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html)  [\[🚀 快速开始\]](#使用-huggingface-快速开始)
 
 [\[📜 InternVL 1.0 论文\]](https://arxiv.org/abs/2312.14238)  [\[📜 InternVL 1.5 报告\]](https://arxiv.org/abs/2404.16821)  [\[📖 1.0 中文解读\]](https://zhuanlan.zhihu.com/p/702946079)  [\[📖 1.5 中文解读\]](https://zhuanlan.zhihu.com/p/699439759)  [\[📖 2.0 中文解读\]](https://zhuanlan.zhihu.com/p/706547971)
 
