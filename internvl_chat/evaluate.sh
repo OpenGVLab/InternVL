@@ -581,3 +581,63 @@ if [ ${DATASET} == "mvbench" ]; then
       --master_port=${MASTER_PORT} \
       eval/mvbench/evaluate_mvbench.py --checkpoint ${CHECKPOINT} "${ARGS[@]:2}"
 fi
+
+if [ ${DATASET} == "drivelm" ]; then
+    torchrun \
+        --nnodes=1 \
+        --node_rank=0 \
+        --master_addr=127.0.0.1 \
+        --nproc_per_node=${GPUS} \
+        --master_port=${MASTER_PORT} \
+        eval/domain_specific/drivelm/evaluate.py --checkpoint ${CHECKPOINT} --datasets DriveLM_val --dynamic --max-num  12
+fi
+
+if [ ${DATASET} == "mme—realworld" ]; then
+    torchrun \
+        --nnodes=1 \
+        --node_rank=0 \
+        --master_addr=127.0.0.1 \
+        --nproc_per_node=${GPUS} \
+        --master_port=${MASTER_PORT} \
+        eval/domain_specific/mme_rw/evaluate.py --checkpoint ${CHECKPOINT} --datasets MME_RealWorld  "${ARGS[@]:2}"
+fi
+
+if [ ${DATASET} == "dior-rsvg" ]; then
+    torchrun \
+        --nnodes=1 \
+        --node_rank=0 \
+        --master_addr=127.0.0.1 \
+        --nproc_per_node=${GPUS} \
+        --master_port=${MASTER_PORT} \
+        eval/domain_specific/rs_det/evaluate.py --checkpoint ${CHECKPOINT} --datasets DIOR_RSVG  "${ARGS[@]:2}"
+fi
+
+if [ ${DATASET} == "rsvqa-lr" ]; then
+    torchrun \
+        --nnodes=1 \
+        --node_rank=0 \
+        --master_addr=127.0.0.1 \
+        --nproc_per_node=${GPUS} \
+        --master_port=${MASTER_PORT} \
+        eval/domain_specific/rs_vqa/evaluate.py --checkpoint ${CHECKPOINT} --datasets RSVQA_H_TEST2  "${ARGS[@]:2}"
+fi
+
+if [ ${DATASET} == "rsvqa-hr-test1" ]; then
+    torchrun \
+        --nnodes=1 \
+        --node_rank=0 \
+        --master_addr=127.0.0.1 \
+        --nproc_per_node=${GPUS} \
+        --master_port=${MASTER_PORT} \
+        eval/domain_specific/rs_vqa/evaluate.py --checkpoint ${CHECKPOINT} --datasets RSVQA_H_TEST1  "${ARGS[@]:2}"
+fi
+
+if [ ${DATASET} == "rsvqa-hr-test2" ]; then
+    torchrun \
+        --nnodes=1 \
+        --node_rank=0 \
+        --master_addr=127.0.0.1 \
+        --nproc_per_node=${GPUS} \
+        --master_port=${MASTER_PORT} \
+        eval/domain_specific/rs_vqa/evaluate.py --checkpoint ${CHECKPOINT} --datasets RSVQA_L  "${ARGS[@]:2}"
+fi
