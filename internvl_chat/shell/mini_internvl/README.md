@@ -1,10 +1,19 @@
-# Mini-InternVL
+# Mini-InternVL: A Flexible-Transfer Pocket Multimodal Model with 5\% Parameters and 90\% Performance
 
-## Abstract
+## Introduction
 
-We introduce Mini-InternVL, a series of MLLMs with parameters ranging from 1B to 4B, which achieves 90\% of the performance with only 5\% of the parameters. This significant improvement in efficiency and effectiveness makes our models more accessible and applicable in various real-world scenarios. To further promote the adoption of our models, we develop a unified adaptation framework for Mini-InternVL, which enables our models to transfer and outperform specialized models in downstream tasks, including autonomous driving, medical imaging, and remote sensing. We believe that our models can provide valuable insights and resources to advance the development of efficient and effective MLLMs.
+We introduce Mini-InternVL, a series of MLLMs with parameters ranging from 1B to 4B, which achieves 90\% of the performance with only 5\% of the parameters. 
+This significant improvement in efficiency and effectiveness makes our models more accessible and applicable in various real-world scenarios. 
 
-放图
+![internvl 1 5_wwh_33_2](https://github.com/user-attachments/assets/820ed173-4bd1-45a6-95d6-59c1be01d53f)
+
+- InternViT-300M
+
+We employ InternViT-300M as our visual encoder, a lightweight vision model that inherits the capabilities of a powerful vision encoder. We directly leverage InternViT-6B that has undergone generative training on diverse datasets to transfer knowledge to a lightweight vision model, CLIP-ViT-L-336px. 
+
+- Adaptation for Mini-InternVL
+  
+To further promote the adoption of our models, we develop a unified adaptation framework for Mini-InternVL, which enables our models to transfer and outperform specialized models in downstream tasks, including autonomous driving, medical images, and remote sensing. We hope to provide insights into the application of MLLMs.
 
 ## Models and Performance
 
@@ -22,11 +31,31 @@ We introduce Mini-InternVL, a series of MLLMs with parameters ranging from 1B to
 
 ## Domain Adaptation
 
-放图
+Visual tasks (*e.g.* Image classification, region perception, multi-view images tasks, video related tasks and visual grounding) can be  formulated into VQA format.
+
+![framework_03_2](https://github.com/user-attachments/assets/63bffb31-cf05-4f52-a679-4700650d0c37)
+
 
 In the [document](http://xxx.xxx.xxx), we provide detailed information on the datasets and the fine-tuning process.
 
 ## Citation
+If you find this project useful in your research, please consider citing:
+
+```BibTeX
+@article{chen2023internvl,
+  title={InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks},
+  author={Chen, Zhe and Wu, Jiannan and Wang, Wenhai and Su, Weijie and Chen, Guo and Xing, Sen and Zhong, Muyan and Zhang, Qinglong and Zhu, Xizhou and Lu, Lewei and Li, Bin and Luo, Ping and Lu, Tong and Qiao, Yu and Dai, Jifeng},
+  journal={arXiv preprint arXiv:2312.14238},
+  year={2023}
+}
+@article{chen2024far,
+  title={How Far Are We to GPT-4V? Closing the Gap to Commercial Multimodal Models with Open-Source Suites},
+  author={Chen, Zhe and Wang, Weiyun and Tian, Hao and Ye, Shenglong and Gao, Zhangwei and Cui, Erfei and Tong, Wenwen and Hu, Kongzhi and Luo, Jiapeng and Ma, Zheng and others},
+  journal={arXiv preprint arXiv:2404.16821},
+  year={2024}
+}
+```
+
 
 ## Acknowledgements
 
