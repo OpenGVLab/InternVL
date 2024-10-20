@@ -21,13 +21,12 @@ fi
 
 
 srun -p ${PARTITION} \
-  --gres=gpu:0 \
+  --gres=gpu:${GPUS_PER_NODE} \
   --nodes=${NODES} \
   --ntasks=${GPUS} \
   --ntasks-per-node=${GPUS_PER_NODE} \
   --cpus-per-task=${CPUS_PER_TASK} \
   --kill-on-bad-exit=1 \
-  -w SH-IDC1-10-140-37-112 \
   --quotatype=${QUOTA_TYPE} \
   ${SRUN_ARGS} \
   python -u internvl/train/internvl_chat_finetune.py \
