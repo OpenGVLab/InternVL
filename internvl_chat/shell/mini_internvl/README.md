@@ -36,7 +36,7 @@ Visual tasks (*e.g.* Image classification, region perception, multi-view images 
 ![framework_03_2](https://github.com/user-attachments/assets/63bffb31-cf05-4f52-a679-4700650d0c37)
 
 
-In the [document](http://xxx.xxx.xxx), we provide detailed information on the datasets and the fine-tuning process.
+In the [document](https://internvl.readthedocs.io/en/latest/internvl2.0/domain_adaptation.html), we provide detailed information on the datasets and the fine-tuning process.
 
 ## Citation
 If you find this project useful in your research, please consider citing:
