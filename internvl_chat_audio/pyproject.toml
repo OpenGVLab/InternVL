@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "internvl_chat"
+version = "2.0.0"
+description = "Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+]
+dependencies = [
+    "torch>=2", "torchvision>=0.15",
+    "transformers==4.37.2", "tokenizers==0.15.1", "sentencepiece==0.1.99", "shortuuid",
+    "accelerate", "peft>=0.4.0", "bitsandbytes==0.41.0",
+    "pydantic", "markdown2[all]", "numpy", "scikit-learn>=1.2.2",
+    "gradio==3.35.2", "gradio_client==0.2.9",
+    "requests", "httpx==0.24.0", "uvicorn", "fastapi",
+    "deepspeed==0.13.5", "einops", "einops-exts", "timm==0.9.12",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/OpenGVLab/InternVL"
+"Bug Tracker" = "https://github.com/OpenGVLab/InternVL/issues"
+
+[tool.setuptools.packages.find]
+exclude = ["data*", "benchmark*", "docs", "dist*", "playground*", "scripts*", "shell*"]
+
+[tool.wheel]
+exclude = ["data*", "benchmark*", "docs", "dist*", "playground*", "scripts*", "shell*"]
