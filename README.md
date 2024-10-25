@@ -2,9 +2,9 @@
 
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/47669167/7037290e-f474-4d11-b90f-1d8316087bf8"> InternVL Family: Closing the Gap to Commercial Multimodal Models with Open-Source Suites —— A Pioneering Open-Source Alternative to GPT-4o
 
-[\[🆕 Blog\]](https://internvl.github.io/blog/) [\[🤔 FAQs\]](https://internvl.readthedocs.io/en/latest/tutorials/faqs.html) [\[🚀 InternVL2 Blog\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/)  [\[🤗 HF Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)  [\[📖 Document\]](https://internvl.readthedocs.io/en/latest/)  [\[🌐 API\]](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html)  [\[🚀 Quick Start\]](#quick-start-with-huggingface)
+[\[🔥 Mini-InternVL\]](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/mini_internvl) [\[🆕 Blog\]](https://internvl.github.io/blog/) [\[🤔 FAQs\]](https://internvl.readthedocs.io/en/latest/tutorials/faqs.html)  [\[🚀 InternVL2 Blog\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/)  [\[🤗 HF Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)  [\[📖 Document\]](https://internvl.readthedocs.io/en/latest/)  [\[🌐 API\]](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html)  [\[🚀 Quick Start\]](#quick-start-with-huggingface)
 
-[\[📜 InternVL 1.0 Paper\]](https://arxiv.org/abs/2312.14238)  [\[📜 InternVL 1.5 Report\]](https://arxiv.org/abs/2404.16821)  [\[📖 1.0 中文解读\]](https://zhuanlan.zhihu.com/p/702946079)  [\[📖 1.5 中文解读\]](https://zhuanlan.zhihu.com/p/699439759)  [\[📖 2.0 中文解读\]](https://zhuanlan.zhihu.com/p/706547971) 
+[\[🔥 Mini-InternVL Report\]](https://arxiv.org/abs/2410.16261) [\[📜 InternVL 1.5 Report\]](https://arxiv.org/abs/2404.16821) [\[📜 InternVL 1.0 Paper\]](https://arxiv.org/abs/2312.14238)   [\[📖 2.0 中文解读\]](https://zhuanlan.zhihu.com/p/706547971) [\[📖 1.5 中文解读\]](https://zhuanlan.zhihu.com/p/699439759)    [\[📖 1.0 中文解读\]](https://zhuanlan.zhihu.com/p/702946079)  
 
 [Switch to the Chinese version (切换至中文版)](/README_zh.md)
 
@@ -16,7 +16,7 @@
 </div>
 
 ## News 🚀🚀🚀
-
+- `2024/10/21`: We release the Mini-InternVL series, which includes three chat models: __Mini-InternVL-1B__,  __Mini-InternVL-2B__ and __Mini-InternVL-4B__. These models achieve impressive performance with minimal size: the 4B model achieves 90% of the performance with just 5% of the model size. For more details, please check our [Project page](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/mini_internvl) and [Document](https://internvl.readthedocs.io/en/latest/internvl2.0/domain_adaptation.html).
 - `2024/08/01`: The [Chartmimic](https://chartmimic.github.io/) team evaluated the InternVL2 series models on their benchmark. The InternVL2-26B and 76B models achieved the top two performances among open-source models, with the InternVL2 76B model surpassing GeminiProVision and exhibiting comparable results to Claude-3-opus.
 - `2024/08/01`: InternVL2-Pro achieved the SOTA performance among open-source models on the [CharXiv](https://charxiv.github.io/#leaderboard) dataset, surpassing some well-known closed-source models such as GPT-4V, Gemini 1.5 Flash, and Claude 3 Sonnet.
 - `2024/07/24`: The [MLVU](https://github.com/JUNJIE99/MLVU) team evaluated InternVL-1.5 on their benchmark. The average performance on the multiple-choice task was 50.4%, while the performance on the generative tasks was 4.02. The performance on the multiple-choice task ranked #1 among all open-source MLLMs.
@@ -25,7 +25,6 @@
 - `2024/07/04`: 🚀 We release the [InternVL2 series](https://huggingface.co/collections/OpenGVLab/internvl-20-667d3961ab5eb12c7ed1463e). InternVL2-Pro achieved a 62.0% accuracy on the MMMU benchmark, matching the performance of leading closed-source commercial models like GPT-4o. The free API of this model can be applied by filling ([application form](https://docs.google.com/forms/d/e/1FAIpQLSfMCzhPr1OOEKau_6jwTU0EiZMSFckDo-HMlc_hUudhF_97rw/viewform?usp=sf_link)) / ([申请表](https://wj.qq.com/s2/14910502/25a4/)). Other models are available at [HF link](https://huggingface.co/collections/OpenGVLab/internvl-20-667d3961ab5eb12c7ed1463e).
 - `2024/06/19`: We propose Needle In A Multimodal Haystack ([MM-NIAH](https://github.com/OpenGVLab/MM-NIAH)), the first benchmark designed to systematically evaluate the capability of existing MLLMs to comprehend long multimodal documents.
 - `2024/05/30`: We release [ShareGPT-4o](https://sharegpt4o.github.io/), a large-scale dataset that we plan to open-source with 200K images, 10K videos, and 10K audios with detailed descriptions.
-- `2024/05/29`: We release the Mini-InternVL series, which includes two chat models: [Mini-InternVL-Chat-2B-V1-5](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5) and [Mini-InternVL-Chat-4B-V1-5](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5). These models achieve impressive performance with minimal size: the 2B model delivers 80% of the performance with only 8% of the model size, and the 4B model achieves 90% of the performance with just 16% of the model size. For more details, please check our [blog](https://internvl.github.io/blog/2024-05-25-Mini-InternVL-1.5/).
 - `2024/05/28`: Thanks to the [lmdeploy](https://github.com/InternLM/lmdeploy) team for providing AWQ quantization support. The 4-bit model is available at [OpenGVLab/InternVL-Chat-V1-5-AWQ](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-AWQ).
 - `2024/05/13`: InternVL 1.0 can now be used as the [text encoder](https://huggingface.co/OpenGVLab/InternVL-14B-224px) for diffusion models to support multilingual generation natively in over 110 languages worldwide. See [MuLan](https://github.com/mulanai/MuLan) for more details.
 - `2024/04/18`: InternVL-Chat-V1-5 has been released at [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5), approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc.
@@ -927,6 +926,12 @@ If you find this project useful in your research, please consider cite:
   title={How Far Are We to GPT-4V? Closing the Gap to Commercial Multimodal Models with Open-Source Suites},
   author={Chen, Zhe and Wang, Weiyun and Tian, Hao and Ye, Shenglong and Gao, Zhangwei and Cui, Erfei and Tong, Wenwen and Hu, Kongzhi and Luo, Jiapeng and Ma, Zheng and others},
   journal={arXiv preprint arXiv:2404.16821},
+  year={2024}
+}
+@article{gao2024mini,
+  title={Mini-InternVL: A Flexible-Transfer Pocket Multimodal Model with 5\% Parameters and 90\% Performance},
+  author={Gao, Zhangwei and Chen, Zhe and Cui, Erfei and Ren, Yiming and Wang, Weiyun and Zhu, Jinguo and Tian, Hao and Ye, Shenglong and He, Junjun and Zhu, Xizhou and others},
+  journal={arXiv preprint arXiv:2410.16261},
   year={2024}
 }
 ```

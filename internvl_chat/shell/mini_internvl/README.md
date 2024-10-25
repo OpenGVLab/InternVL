@@ -54,6 +54,12 @@ If you find this project useful in your research, please consider citing:
   journal={arXiv preprint arXiv:2404.16821},
   year={2024}
 }
+@article{gao2024mini,
+  title={Mini-InternVL: A Flexible-Transfer Pocket Multimodal Model with 5\% Parameters and 90\% Performance},
+  author={Gao, Zhangwei and Chen, Zhe and Cui, Erfei and Ren, Yiming and Wang, Weiyun and Zhu, Jinguo and Tian, Hao and Ye, Shenglong and He, Junjun and Zhu, Xizhou and others},
+  journal={arXiv preprint arXiv:2410.16261},
+  year={2024}
+}
 ```
 
 
