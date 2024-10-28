@@ -50,15 +50,15 @@ def collate_fn(batches, tokenizer):
     indexes = [_['index'] for _ in batches]
     question_types = [_['question_type'] for _ in batches]
 
-    return pixel_values, questions, answers, indexes,question_types
+    return pixel_values, questions, answers, indexes, question_types
 
 
 class RSVQADataset(torch.utils.data.Dataset):
 
-    def __init__(self, root, prompt,image_root, input_size=224, dynamic_image_size=False,
+    def __init__(self, root, prompt, image_root, input_size=224, dynamic_image_size=False,
                  use_thumbnail=False, max_num=6):
-        
-        with open(root,"r") as f:
+
+        with open(root, 'r') as f:
             self.ann_data = json.load(f)
 
         self.prompt = prompt
@@ -74,16 +74,16 @@ class RSVQADataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         data_item = self.ann_data[idx]
-        index = data_item["id"]
+        index = data_item['id']
         image = data_item['image']
         # print(data_item)
         # print( self.prompt)
-        question =  data_item['question'] + "\n" + self.prompt
+        question = data_item['question'] + '\n' + self.prompt
         answer = data_item['gt_answer']
-        question_type = data_item['type'] 
+        question_type = data_item['type']
         # catetory = self.df.iloc[idx]['category']
         # l2_catetory = self.df.iloc[idx]['l2-category']
-        image = Image.open(os.path.join(self.image_root,image)).convert('RGB')
+        image = Image.open(os.path.join(self.image_root, image)).convert('RGB')
         if self.dynamic_image_size:
             images = dynamic_preprocess(image, image_size=self.input_size,
                                         use_thumbnail=self.use_thumbnail,
@@ -93,41 +93,38 @@ class RSVQADataset(torch.utils.data.Dataset):
         pixel_values = [self.transform(image) for image in images]
         pixel_values = torch.stack(pixel_values)
 
-
         return {
             'question': question,
             'pixel_values': pixel_values,
             'answer': answer,
             'index': index,
-            'question_type':question_type
+            'question_type': question_type
         }
 
 
 def evaluation_metrics(outputs):
-        
-    correct=0
-    incorrect=0
+    correct = 0
+    incorrect = 0
     for output in outputs:
-        gt=output['gt_answers']
-        answer=output['answer'].split(',')[0].lower().replace('.','')
-        if gt==answer:
-                correct=correct+1
+        gt = output['gt_answers']
+        answer = output['answer'].split(',')[0].lower().replace('.', '')
+        if gt == answer:
+            correct = correct + 1
         else:
-                incorrect=incorrect+1
+            incorrect = incorrect + 1
         # else:
         #     continue
-    print('correct:',correct)
-    print('incorrect:',incorrect)
-    print('Total:',correct+incorrect)
-    print('Acc:',(correct/(correct+incorrect)))
+    print('correct:', correct)
+    print('incorrect:', incorrect)
+    print('Total:', correct + incorrect)
+    print('Acc:', (correct / (correct + incorrect)))
 
     return {
-        'correct:':correct,
-        'incorrect:':incorrect,
-        'Total:':correct+incorrect,
-        'Acc:':correct/(correct+incorrect)
+        'correct:': correct,
+        'incorrect:': incorrect,
+        'Total:': correct + incorrect,
+        'Acc:': correct / (correct + incorrect)
     }
-
 
 
 class InferenceSampler(torch.utils.data.sampler.Sampler):
@@ -154,7 +151,6 @@ class InferenceSampler(torch.utils.data.sampler.Sampler):
 
     def __len__(self):
         return len(self._local_indices)
-
 
 
 def evaluate_chat_model():
@@ -191,7 +187,7 @@ def evaluate_chat_model():
                 do_sample=True if args.temperature > 0 else False,
                 temperature=args.temperature,
             )
-            pred= model.chat(
+            pred = model.chat(
                 tokenizer=tokenizer,
                 pixel_values=pixel_values,
                 question=questions[0],
@@ -200,13 +196,13 @@ def evaluate_chat_model():
             preds = [pred]
             # preds = [post_process(output)]
 
-            for question, pred, answer, index,question_type in zip(questions, preds, answers, indexes, question_types):
+            for question, pred, answer, index, question_type in zip(questions, preds, answers, indexes, question_types):
                 outputs.append({
                     'question': question,
                     'response': pred,
                     'gt_answer': answer,
                     'index': int(index),
-                    "question_type":question_type
+                    'question_type': question_type
                 })
 
         torch.distributed.barrier()
@@ -219,19 +215,16 @@ def evaluate_chat_model():
         merged_outputs = [_ for _ in itertools.chain.from_iterable(merged_outputs)]
 
         if torch.distributed.get_rank() == 0:
-
             print(f'Evaluating {ds_name} ...')
             time_prefix = time.strftime('%y%m%d%H%M%S', time.localtime())
             results_file = f'{ds_name}_{time_prefix}.json'
             output_path = os.path.join(args.out_dir, results_file)
-            with open(output_path,"w") as f:
+            with open(output_path, 'w') as f:
                 json.dump(merged_outputs
-                ,f,indent=4)            
+                          , f, indent=4)
             cmd = f'python eval/rs_vqa/score.py --output_file {output_path}'
             print(cmd)
             os.system(cmd)
-  
-
 
 
 if __name__ == '__main__':
@@ -289,5 +282,5 @@ if __name__ == '__main__':
     print(f'[test] use_thumbnail: {use_thumbnail}')
     print(f'[test] max_num: {args.max_num}')
 
-    prompt = "Answer the question using a single word or phrase."
+    prompt = 'Answer the question using a single word or phrase.'
     evaluate_chat_model()

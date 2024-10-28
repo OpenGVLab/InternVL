@@ -49,7 +49,7 @@ def get_model_list():
     assert ret.status_code == 200
     ret = requests.post(controller_url + '/list_models')
     models = ret.json()['models']
-    models = [item for item in models if 'InternVL2-Det' not in item]
+    models = [item for item in models if 'InternVL2-Det' not in item and 'InternVL2-Gen' not in item]
     return models
 
 

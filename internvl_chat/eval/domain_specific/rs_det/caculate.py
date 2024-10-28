@@ -1,9 +1,11 @@
+import argparse
 import json
 import os
 import re
-import argparse
+
 import torch
 from torchvision.ops.boxes import box_area
+
 
 def calculate_iou(box1, box2):
     x1, y1, x2, y2 = box1
@@ -27,6 +29,7 @@ def calculate_iou(box1, box2):
 
     return iou
 
+
 def box_iou(boxes1, boxes2):
     area1 = box_area(boxes1)
     area2 = box_area(boxes2)
@@ -43,76 +46,77 @@ def box_iou(boxes1, boxes2):
     return iou, union
 
 
-def transform_bbox(bbox,image_size):
-    x1,y1,x2,y2 = bbox
-    W,H = image_size
-    x1 = min(max(x1/1000 * W,0),W)
-    x2 = min(max(x2/1000 * W,0),W)
-    y1 = min(max(y1/1000 * H,0),H)
-    y2 = min(max(y2/1000 * H,0),H)
+def transform_bbox(bbox, image_size):
+    x1, y1, x2, y2 = bbox
+    W, H = image_size
+    x1 = min(max(x1 / 1000 * W, 0), W)
+    x2 = min(max(x2 / 1000 * W, 0), W)
+    y1 = min(max(y1 / 1000 * H, 0), H)
+    y2 = min(max(y2 / 1000 * H, 0), H)
 
-    return [x1,y1,x2,y2]
+    return [x1, y1, x2, y2]
+
+
 def evaluation_metrics(outputs):
-        
-    correct=0
-    incorrect=0
+    correct = 0
+    incorrect = 0
     pattern = r'\[*\[.*?,.*?,.*?,.*?\]\]*'
     # pattern = r'\[*\[(.*?),(.*?),(.*?),(.*?)\]\]*'
     # print(outputs)
     for output in outputs:
         bbox = output['gt_answers']
-        image_size =   output["image_size"]
-        pred = output["answer"]
+        image_size = output['image_size']
+        pred = output['answer']
         # 查找所有匹配
         matches = re.findall(pattern, pred)
         if len(matches) > 1:
-            print("大于一个匹配")
+            print('大于一个匹配')
             print(matches)
-        if len(matches) ==0:
-             incorrect=incorrect+1
+        if len(matches) == 0:
+            incorrect = incorrect + 1
         else:
             try:
-                pred_bbox = json.loads(matches[0])  
-                pred_bbox = transform_bbox(pred_bbox[0],image_size)
-                iou_score  = calculate_iou(pred_bbox,bbox)
+                pred_bbox = json.loads(matches[0])
+                pred_bbox = transform_bbox(pred_bbox[0], image_size)
+                iou_score = calculate_iou(pred_bbox, bbox)
                 if iou_score > 0.5:
-                        correct=correct+1
+                    correct = correct + 1
                 else:
-                        incorrect=incorrect+1
+                    incorrect = incorrect + 1
             except Exception as e:
-                 print(e)
-                 print(output)
-                 incorrect=incorrect+1
+                print(e)
+                print(output)
+                incorrect = incorrect + 1
 
         # else:
         #     continue
-    print('correct:',correct)
-    print('incorrect:',incorrect)
-    print('Total:',correct+incorrect)
-    print('Acc@0.5:',(correct/(correct+incorrect)))
+    print('correct:', correct)
+    print('incorrect:', incorrect)
+    print('Total:', correct + incorrect)
+    print('Acc@0.5:', (correct / (correct + incorrect)))
 
     return {
-        'correct:':correct,
-        'incorrect:':incorrect,
-        'Total:':correct+incorrect,
-        'Acc@0.5:':correct/(correct+incorrect)
+        'correct:': correct,
+        'incorrect:': incorrect,
+        'Total:': correct + incorrect,
+        'Acc@0.5:': correct / (correct + incorrect)
     }
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--output_file', type=str, default='')
     args = parser.parse_args()
-    with open(args.output_file,"r") as f:
-        data= json.load(f)
-    if "outputs" in data:
-        data = data["outputs"]
+    with open(args.output_file, 'r') as f:
+        data = json.load(f)
+    if 'outputs' in data:
+        data = data['outputs']
     outputs = data
     results = evaluation_metrics(outputs)
     results_file = args.output_file
-    with open(results_file,"w") as f:
+    with open(results_file, 'w') as f:
         json.dump({
-                    "results":results,
-                    "outputs":outputs
-                },f,indent=4)
-    
+            'results': results,
+            'outputs': outputs
+        }, f, indent=4)

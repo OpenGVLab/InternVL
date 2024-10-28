@@ -2,9 +2,16 @@
 
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/47669167/7037290e-f474-4d11-b90f-1d8316087bf8"> InternVL家族：通过开源组件缩小与商业多模态模型的差距 —— GPT-4o的开源替代方案
 
+<div align="center">
+  <img width="500" alt="image" src="https://github.com/user-attachments/assets/930e6814-8a9f-43e1-a284-118a5732daa4">
+  <br>
+</div>
+
 [\[🆕 博客\]](https://internvl.github.io/blog/) [\[🤔 常见问题\]](https://internvl.readthedocs.io/en/latest/tutorials/faqs.html) [\[🚀 InternVL2 博客\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[🗨️ 对话Demo\]](https://internvl.opengvlab.com/)  [\[🤗 HF Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)  [\[📖 文档\]](https://internvl.readthedocs.io/en/latest/)  [\[🌐 API\]](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html)  [\[🚀 快速开始\]](#使用-huggingface-快速开始)
 
-[\[📜 InternVL 1.0 论文\]](https://arxiv.org/abs/2312.14238)  [\[📜 InternVL 1.5 报告\]](https://arxiv.org/abs/2404.16821)  [\[📖 1.0 中文解读\]](https://zhuanlan.zhihu.com/p/702946079)  [\[📖 1.5 中文解读\]](https://zhuanlan.zhihu.com/p/699439759)  [\[📖 2.0 中文解读\]](https://zhuanlan.zhihu.com/p/706547971)
+[\[🔥 Mini-InternVL 报告\]](https://arxiv.org/abs/2410.16261)  [\[📜 InternVL 1.5 报告\]](https://arxiv.org/abs/2404.16821)  [\[📜 InternVL 1.0 论文\]](https://arxiv.org/abs/2312.14238)
+
+[\[📖 2.0 中文解读\]](https://zhuanlan.zhihu.com/p/706547971)  [\[📖 1.5 中文解读\]](https://zhuanlan.zhihu.com/p/699439759)  [\[📖 1.0 中文解读\]](https://zhuanlan.zhihu.com/p/702946079)
 
 [Switch to the English version (切换至英文版)](/README.md)
 
@@ -17,6 +24,7 @@
 
 ## 最新消息 🚀🚀🚀
 
+- `2024/10/21`: 我们发布了 Mini-InternVL 系列。这些模型在保持极小模型体积的同时实现了出色的性能：4B 模型仅用 5% 的模型大小便达到了 90% 的性能。有关更多详细信息，请查看我们的 [项目页面](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/mini_internvl) 和 [文档](https://internvl.readthedocs.io/en/latest/internvl2.0/domain_adaptation.html)。
 - `2024/08/01`: [Chartmimic](https://chartmimic.github.io/) 团队在他们的基准测试中评估了 InternVL2 系列模型。InternVL2-26B 和 76B 模型在开源模型中取得了前两名的成绩，其中 InternVL2-Llama3-76B 模型超过了 GeminiProVision，并表现出与 Claude-3-opus 相当的结果。
 - `2024/08/01`: InternVL2-Pro 在 [CharXiv](https://charxiv.github.io/#leaderboard) 数据集中实现了开源模型中的 SOTA 性能，也比部分知名闭源模型如 GPT-4V、Gemini 1.5 Flash、Claude 3 Sonnet 取得了更好成绩
 - `2024/07/24`: [MLVU](https://github.com/JUNJIE99/MLVU)团队在它们的基准测试中评估了InternVL-1.5。在多项选择任务上的平均表现为50.4%，而在生成任务上的表现为4.02。多项选择任务的表现在所有开源多模态大语言模型中排名第一。
@@ -26,11 +34,9 @@
 - `2024/06/19`: 我们提出了 Needle In A Multimodal Haystack ([MM-NIAH](https://github.com/OpenGVLab/MM-NIAH))，这是第一个针对模型关于长多模态文档理解能力的评测基准。
 - `2024/05/30`: 我们发布了 [ShareGPT-4o](https://sharegpt4o.github.io/)，这是一个大规模、高质量的多模态数据集。我们计划开源一批使用 GPT-4o 精心标注的数据，包括 200K 条图像详细描述、10K 条视频详细描述，以及 10K 条音频详细描述。
 - `2024/05/29`: 我们开源了 Mini-InternVL 系列，包括以下两个对话模型：[Mini-InternVL-Chat-2B-V1-5](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5) 和 [Mini-InternVL-Chat-4B-V1-5](https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5)。这些模型在极小的尺寸下实现了令人印象深刻的性能：2B 模型以 8% 的模型尺寸实现了 80% 的性能，4B 模型以 16% 的模型尺寸实现了 90% 的性能。更多细节请查看我们的[博客](https://internvl.github.io/blog/2024-05-25-Mini-InternVL-1.5/)。
-- `2024/05/28`: 感谢 [lmdeploy](https://github.com/InternLM/lmdeploy) 团队提供的 AWQ 量化支持。InternVL 1.5 的 4-bit 模型发布在 [OpenGVLab/InternVL-Chat-V1-5-AWQ](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-AWQ)。
 - `2024/05/13`: InternVL 1.0 现在可以作为扩散模型的 [文本编码器](https://huggingface.co/OpenGVLab/InternVL-14B-224px)，支持全球超过 110 种语言的多语言生成。详情请看 [MuLan](https://github.com/mulanai/MuLan)。
 - `2024/04/18`: InternVL-Chat-V1-5 已经在 [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5) 发布，在 MMMU、DocVQA、ChartQA、MathVista 等各种基准测试中，性能接近 GPT-4V 和 Gemini Pro。
 - `2024/02/27`: InternVL 已被 CVPR 2024 (Oral) 接收！🎉
-- `2024/02/24`: InternVL-Chat 系列模型已经接入 [VLMEvalKit](https://github.com/open-compass/VLMEvalKit) 评测框架。
 - `2024/02/21`: [InternVL-Chat-V1-2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) 在 MathVista（59.9）、MMBench（83.8）和 MMVP（58.7）上实现了 SOTA 性能。详情请看我们的[博客](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/)。
 - `2024/02/12`: InternVL-Chat-V1-2 已经发布，它在 MMMU 验证集上达到了 51.6，在 MMBench 测试集上达到了 82.3。 更多信息请参考我们的[博客](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/)以及 [SFT 数据](./internvl_chat#prepare-training-datasets)。该模型已经在 [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2) 发布，训练、测评的数据和脚本均已开源。
 - `2024/01/24`: InternVL-Chat-V1-1 已经发布，它支持中文对话，并具备强大的 OCR 能力，详情请看[这里](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1)。
@@ -927,6 +933,12 @@ print(f'User: {question}\nAssistant: {response}')
   title={How Far Are We to GPT-4V? Closing the Gap to Commercial Multimodal Models with Open-Source Suites},
   author={Chen, Zhe and Wang, Weiyun and Tian, Hao and Ye, Shenglong and Gao, Zhangwei and Cui, Erfei and Tong, Wenwen and Hu, Kongzhi and Luo, Jiapeng and Ma, Zheng and others},
   journal={arXiv preprint arXiv:2404.16821},
+  year={2024}
+}
+@article{gao2024mini,
+  title={Mini-InternVL: A Flexible-Transfer Pocket Multimodal Model with 5\% Parameters and 90\% Performance},
+  author={Gao, Zhangwei and Chen, Zhe and Cui, Erfei and Ren, Yiming and Wang, Weiyun and Zhu, Jinguo and Tian, Hao and Ye, Shenglong and He, Junjun and Zhu, Xizhou and others},
+  journal={arXiv preprint arXiv:2410.16261},
   year={2024}
 }
 ```

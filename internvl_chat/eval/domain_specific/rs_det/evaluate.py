@@ -2,6 +2,7 @@ import argparse
 import base64
 import itertools
 import json
+import math
 import os
 import random
 import time
@@ -16,15 +17,15 @@ from PIL import Image
 from torch.utils.data import Dataset
 from tqdm import tqdm
 from transformers import AutoTokenizer
-import math
+
 ds_collections = {
     'DIOR_RSVG': {
         'root': 'InternVL-Domain-Adaptation-Data/val/dior_rsvg_test.json',
-        'max_new_tokens':200,
+        'max_new_tokens': 200,
         'min_new_tokens': 1,
         'type': 'test',
-        'image_root':"InternVL-Domain-Adaptation-Data/images/"
-},
+        'image_root': 'InternVL-Domain-Adaptation-Data/images/'
+    },
 }
 
 
@@ -39,10 +40,10 @@ def collate_fn(batches, tokenizer):
 
 class GroundingDataset(torch.utils.data.Dataset):
 
-    def __init__(self, root, image_root,prompt="", input_size=224, dynamic_image_size=False,
+    def __init__(self, root, image_root, prompt='', input_size=224, dynamic_image_size=False,
                  use_thumbnail=False, max_num=6):
-        
-        with open(root,"r") as f:
+
+        with open(root, 'r') as f:
             self.ann_data = json.load(f)
         self.image_root = image_root
         self.input_size = input_size
@@ -51,6 +52,7 @@ class GroundingDataset(torch.utils.data.Dataset):
         self.max_num = max_num
         self.transform = build_transform(is_train=False, input_size=input_size)
         self.prompt = prompt
+
     def __len__(self):
         return len(self.ann_data)
 
@@ -58,12 +60,12 @@ class GroundingDataset(torch.utils.data.Dataset):
         data_item = self.ann_data[idx]
         # index = data_item["id"]
         image = data_item['image']
-        question =  self.prompt + data_item['prompt']
+        question = self.prompt + data_item['prompt']
         answer = data_item['bbox']
-        image_size_ = data_item["size"]
+        image_size_ = data_item['size']
         # catetory = self.df.iloc[idx]['category']
         # l2_catetory = self.df.iloc[idx]['l2-category']
-        image = Image.open(os.path.join(self.image_root,image)).convert('RGB')
+        image = Image.open(os.path.join(self.image_root, image)).convert('RGB')
         if self.dynamic_image_size:
             images = dynamic_preprocess(image, image_size=self.input_size,
                                         use_thumbnail=self.use_thumbnail,
@@ -73,14 +75,14 @@ class GroundingDataset(torch.utils.data.Dataset):
         pixel_values = [self.transform(image) for image in images]
         pixel_values = torch.stack(pixel_values)
 
-
         return {
             'question': question,
             'pixel_values': pixel_values,
             'answer': answer,
-            "image_size":image_size_
+            'image_size': image_size_
             # 'index': index,
         }
+
 
 def calculate_iou(box1, box2):
     x1, y1, x2, y2 = box1
@@ -103,8 +105,6 @@ def calculate_iou(box1, box2):
     iou = intersection_area / union_area
 
     return iou
-
-
 
 
 class InferenceSampler(torch.utils.data.sampler.Sampler):
@@ -133,16 +133,14 @@ class InferenceSampler(torch.utils.data.sampler.Sampler):
         return len(self._local_indices)
 
 
-
 def evaluate_chat_model():
     random.seed(args.seed)
 
     for ds_name in args.datasets:
         dataset = GroundingDataset(
             root=ds_collections[ds_name]['root'],
-            image_root = ds_collections[ds_name]['image_root'],
+            image_root=ds_collections[ds_name]['image_root'],
             prompt=prompt_prefix,
-            
             # language=ds_collections[ds_name]['language'],
             input_size=image_size,
             dynamic_image_size=args.dynamic,
@@ -169,7 +167,7 @@ def evaluate_chat_model():
                 do_sample=True if args.temperature > 0 else False,
                 temperature=args.temperature,
             )
-            pred= model.chat(
+            pred = model.chat(
                 tokenizer=tokenizer,
                 pixel_values=pixel_values,
                 question=questions[0],
@@ -196,21 +194,21 @@ def evaluate_chat_model():
         merged_outputs = [_ for _ in itertools.chain.from_iterable(merged_outputs)]
 
         if torch.distributed.get_rank() == 0:
-
             print(f'Evaluating {ds_name} ...')
             time_prefix = time.strftime('%y%m%d%H%M%S', time.localtime())
             results_file = f'{ds_name}_{time_prefix}.json'
             output_path = os.path.join(args.out_dir, results_file)
             # results = evaluation_metrics(merged_outputs)
-            with open(output_path,"w") as f:
+            with open(output_path, 'w') as f:
                 json.dump({
                     # "results":results,
-                    "outputs":merged_outputs
-                },f,indent=4)
+                    'outputs': merged_outputs
+                }, f, indent=4)
             print('Results saved to {}'.format(output_path))
             cmd = f'python eval/rs_det/caculate.py --output_file {output_path}'
             print(cmd)
             os.system(cmd)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -246,7 +244,7 @@ if __name__ == '__main__':
     if args.auto:
         os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
 
-    kwargs = {'device_map': "auto"} if args.auto else {}
+    kwargs = {'device_map': 'auto'} if args.auto else {}
 
     tokenizer = AutoTokenizer.from_pretrained(args.checkpoint, trust_remote_code=True, use_fast=False)
     model = InternVLChatModel.from_pretrained(
@@ -269,7 +267,7 @@ if __name__ == '__main__':
     print(f'[test] use_thumbnail: {use_thumbnail}')
     print(f'[test] max_num: {args.max_num}')
 
-    prompt_prefix = "Detect "
+    prompt_prefix = 'Detect '
     # prompt_prefix =  "Please provide the bounding box coordinate of the region this sentence describes: "
-    
+
     evaluate_chat_model()

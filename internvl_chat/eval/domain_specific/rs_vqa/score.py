@@ -20,6 +20,7 @@ def is_correct_count(response, answer):
         return True
     return False
 
+
 def is_correct_area(response, answer):
     try:
         response = int(response) if response is not None else 0
@@ -27,6 +28,7 @@ def is_correct_area(response, answer):
     except ValueError:
         return False
     return is_correct_count(response, answer)
+
 
 def calculate_scores(data):
     type_counts = {}
@@ -60,33 +62,31 @@ def calculate_scores(data):
     total_count = sum(type_counts.values())
     total_score = round(total_correct / total_count, 4) if total_count > 0 else 0.0
 
-    total_correct_useful = sum([v for k,v in type_correct.items() if k not in ["count","area"] ])
-    total_count_useful = sum([v for k,v in type_counts.items() if k not in ["count","area"] ])
+    total_correct_useful = sum([v for k, v in type_correct.items() if k not in ['count', 'area']])
+    total_count_useful = sum([v for k, v in type_counts.items() if k not in ['count', 'area']])
     total_score_useful = round(total_correct_useful / total_count_useful, 4) if total_count_useful > 0 else 0.0
-    print(f"{type_scores=}")
-    print(f"{total_score_useful=}")
-    return type_scores, total_score,total_score_useful,type_counts
+    print(f'{type_scores=}')
+    print(f'{total_score_useful=}')
+    return type_scores, total_score, total_score_useful, type_counts
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--output_file', type=str, default='')
     args = parser.parse_args()
-    
-    with open(args.output_file,"r") as f:
-        data= json.load(f)
-    if "outputs" in data:
-        data = data["outputs"]
-    type_scores, total_score,total_score_useful,type_counts = calculate_scores(data)
+
+    with open(args.output_file, 'r') as f:
+        data = json.load(f)
+    if 'outputs' in data:
+        data = data['outputs']
+    type_scores, total_score, total_score_useful, type_counts = calculate_scores(data)
 
     results = {
-        "type_scores":type_scores,
-        "type_counts":type_counts,
-        "total_score":total_score,
-        "total_score_useful":total_score_useful,
-        "outputs":data
+        'type_scores': type_scores,
+        'type_counts': type_counts,
+        'total_score': total_score,
+        'total_score_useful': total_score_useful,
+        'outputs': data
     }
-    with open(args.output_file,"w") as f:
-        json.dump(results,f,indent=4)
-
-
-
+    with open(args.output_file, 'w') as f:
+        json.dump(results, f, indent=4)
