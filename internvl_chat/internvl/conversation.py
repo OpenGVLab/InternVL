@@ -404,3 +404,16 @@ register_conv_template(
         ]
     )
 )
+
+register_conv_template(
+    Conversation(
+        name='gemma2-chat',
+        system_template='',
+        roles=('<start_of_turn>user\n', '<start_of_turn>model\n'),
+        sep_style=SeparatorStyle.MPT,
+        sep='<end_of_turn>',
+        stop_token_ids=[
+            107
+        ]
+    )
+)
