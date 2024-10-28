@@ -333,7 +333,7 @@ class InternViT6B(nn.Module):
                  embed_dim=3200, num_heads=25, mlp_ratio=4, init_values=0.1, qk_normalization=True, depth=48,
                  use_flash_attn=True, with_cp=True, layerscale_force_fp32=False, freeze_vit=True,
                  cls_target='cls_patch_concat', num_classes=1000, attn_pool_num_heads=16, clip_embed_dim=768,
-                 head_norm_type='bn', pretrained=None):
+                 norm_type='rms', pretrained=None):
         super().__init__()
         self.num_features = self.embed_dim = embed_dim  # num_features for consistency with other models
 
@@ -349,7 +349,13 @@ class InternViT6B(nn.Module):
             print('Warning: Flash Attention is not available, use_flash_attn is set to False.')
         use_flash_attn = [use_flash_attn] * depth if not isinstance(use_flash_attn, list) else use_flash_attn
 
-        norm_layer_for_blocks = partial(RMSNorm, eps=1e-6)
+        if norm_type == 'rms':
+            norm_layer_for_blocks = partial(RMSNorm, eps=1e-6)
+        elif norm_type == 'ln':
+            norm_layer_for_blocks = partial(nn.LayerNorm, eps=1e-6)
+        else:
+            raise NotImplementedError
+
         self.norm_layer_for_blocks = norm_layer_for_blocks
         self.patch_embed = PatchEmbed(img_size, patch_size, in_chans, embed_dim)
         num_patches = self.patch_embed.num_patches
@@ -381,16 +387,16 @@ class InternViT6B(nn.Module):
             _freeze_params(self)
 
         if cls_target == 'cls_patch_concat':
-            if head_norm_type == 'bn':
-                self.norm = nn.SyncBatchNorm(embed_dim * 2, eps=1e-6)
-            else:
-                self.norm = nn.LayerNorm(embed_dim * 2, eps=1e-6)
+            self.norm = nn.SyncBatchNorm(embed_dim * 2, eps=1e-6)
             self.head = nn.Linear(embed_dim * 2, num_classes) if num_classes > 0 else nn.Identity()
+        elif cls_target == 'attention_pooling':
+            self.attn_pooling = AttentionPoolingBlock(
+                dim=embed_dim, num_heads=num_heads, qkv_bias=True, qk_scale=None,
+                drop=0., attn_drop=0.0, norm_layer=partial(nn.LayerNorm, eps=1e-5), out_dim=embed_dim)
+            self.norm = nn.SyncBatchNorm(embed_dim, eps=1e-6)
+            self.head = nn.Linear(embed_dim, num_classes) if num_classes > 0 else nn.Identity()
         elif cls_target == 'clip_projector':
-            if head_norm_type == 'bn':
-                self.norm = nn.SyncBatchNorm(clip_embed_dim, eps=1e-6)
-            else:
-                self.norm = nn.LayerNorm(clip_embed_dim, eps=1e-6)
+            self.norm = nn.SyncBatchNorm(clip_embed_dim, eps=1e-6)
             self.head = nn.Linear(clip_embed_dim, num_classes) if num_classes > 0 else nn.Identity()
         else:
             raise NotImplementedError
@@ -447,6 +453,8 @@ class InternViT6B(nn.Module):
         x = self.forward_features(x)
         if self.cls_target == 'cls_patch_concat':
             x = torch.cat((x[:, 0, :], x[:, 1:, :].mean(dim=1)), dim=-1)
+        elif self.cls_target == 'attention_pooling':
+            x = self.attn_pooling(x)
         elif self.cls_target == 'clip_projector':
             x = self.clip_projector(x)
         else:
