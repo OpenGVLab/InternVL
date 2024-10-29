@@ -53,6 +53,7 @@ try:
                                          unpad_input)
 
     _flash_supports_window_size = 'window_size' in list(inspect.signature(flash_attn_func).parameters)
+    has_flash_attn = True
 except ImportError as error:
     logger.warning(
         f'`flash-attention` package not found, consider installing for better performance: {error}.'
@@ -61,6 +62,7 @@ except ImportError as error:
         logger.warning(
             "Current `flash-attenton` does not support `window_size`. Either upgrade or use `attn_implementation='eager'`."
         )
+    has_flash_attn = False
 
 _CHECKPOINT_FOR_DOC = 'microsoft/Phi-3-mini-4k-instruct'
 _CONFIG_FOR_DOC = 'Phi3Config'
@@ -937,6 +939,12 @@ class Phi3PreTrainedModel(PreTrainedModel):
 
     _version = '0.0.5'
 
+    def __init__(self, config: Phi3Config):
+        if not has_flash_attn:
+            config._attn_implementation = 'eager'
+            print('Warning: Flash attention is not available, using eager attention instead.')
+        super().__init__(config)
+
     def _init_weights(self, module):
         std = self.config.initializer_range
         if isinstance(module, nn.Linear):
@@ -1042,6 +1050,7 @@ class Phi3Model(Phi3PreTrainedModel):
             [Phi3DecoderLayer(config, layer_idx) for layer_idx in range(config.num_hidden_layers)]
         )
         self._attn_implementation = config._attn_implementation
+
         self.norm = Phi3RMSNorm(config.hidden_size, eps=config.rms_norm_eps)
 
         self.gradient_checkpointing = False
@@ -1361,7 +1370,7 @@ class Phi3ForCausalLM(Phi3PreTrainedModel):
                 position_ids = position_ids[:, -input_ids.shape[1] :]
 
         # if `inputs_embeds` are passed, we only want to use them in the 1st generation step
-        if inputs_embeds is not None and past_key_values is None:
+        if (inputs_embeds is not None and past_key_values is None) or (inputs_embeds is not None and len(past_key_values) == 0):
             model_inputs = {'inputs_embeds': inputs_embeds}
         else:
             model_inputs = {'input_ids': input_ids}

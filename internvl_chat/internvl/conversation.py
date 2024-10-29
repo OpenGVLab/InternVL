@@ -357,12 +357,6 @@ register_conv_template(
         roles=('<|im_start|>user\n', '<|im_start|>assistant\n'),
         sep_style=SeparatorStyle.MPT,
         sep='<|im_end|>',
-        stop_token_ids=[
-            2,
-            6,
-            7,
-            8,
-        ],
         stop_str='<|endoftext|>',
     )
 )
@@ -378,11 +372,6 @@ register_conv_template(
         roles=('<|im_start|>user\n', '<|im_start|>assistant\n'),
         sep_style=SeparatorStyle.MPT,
         sep='<|im_end|>',
-        stop_token_ids=[
-            2,
-            92543,
-            92542
-        ]
     )
 )
 
@@ -397,10 +386,17 @@ register_conv_template(
         roles=('<|user|>\n', '<|assistant|>\n'),
         sep_style=SeparatorStyle.MPT,
         sep='<|end|>',
-        stop_token_ids=[
-            2,
-            32000,
-            32007
-        ]
+    )
+)
+
+
+register_conv_template(
+    Conversation(
+        name='internvl2_5',
+        system_template='<|im_start|>system\n{system_message}',
+        system_message='你是书生·万象，英文名是InternVL，是由上海人工智能实验室、清华大学及多家合作单位联合开发的多模态大语言模型。',
+        roles=('<|im_start|>user\n', '<|im_start|>assistant\n'),
+        sep_style=SeparatorStyle.MPT,
+        sep='<|im_end|>\n',
     )
 )

@@ -3,6 +3,7 @@
 # Copyright (c) 2024 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
+
 from typing import Optional, Tuple, Union
 
 import torch
@@ -296,6 +297,7 @@ class InternVisionEncoder(nn.Module):
 
 class InternVisionModel(PreTrainedModel):
     main_input_name = 'pixel_values'
+    _supports_flash_attn_2 = True
     config_class = InternVisionConfig
     _no_split_modules = ['InternVisionEncoderLayer']
 
