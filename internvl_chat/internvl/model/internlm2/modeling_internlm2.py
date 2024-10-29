@@ -360,6 +360,7 @@ class InternLM2Attention(nn.Module):
         past_key_value: Optional[Tuple[torch.Tensor]] = None,
         output_attentions: bool = False,
         use_cache: bool = False,
+        cu_seqlens: Optional[torch.LongTensor] = None,
         **kwargs,
     ) -> Tuple[torch.Tensor, Optional[torch.Tensor], Optional[Tuple[torch.Tensor]]]:
         if 'padding_mask' in kwargs:
@@ -456,6 +457,7 @@ class InternLM2FlashAttention2(InternLM2Attention):
         past_key_value: Optional[Tuple[torch.Tensor]] = None,
         output_attentions: bool = False,
         use_cache: bool = False,
+        cu_seqlens: Optional[torch.LongTensor] = None,
         **kwargs,
     ) -> Tuple[torch.Tensor, Optional[torch.Tensor], Optional[Tuple[torch.Tensor]]]:
         # InternLM2FlashAttention2 attention does not support output_attentions
@@ -510,7 +512,7 @@ class InternLM2FlashAttention2(InternLM2Attention):
         value_states = value_states.transpose(1, 2)
 
         attn_output = self._flash_attention_forward(
-            query_states, key_states, value_states, attention_mask, q_len
+            query_states, key_states, value_states, attention_mask, q_len, cu_seqlens=cu_seqlens
         )
         attn_output = attn_output.reshape(bsz, q_len, self.hidden_size).contiguous()
         attn_output = self.wo(attn_output)
@@ -521,7 +523,7 @@ class InternLM2FlashAttention2(InternLM2Attention):
         return attn_output, attn_weights, past_key_value
 
     def _flash_attention_forward(
-        self, query_states, key_states, value_states, attention_mask, query_length, dropout=0.0, softmax_scale=None
+        self, query_states, key_states, value_states, attention_mask, query_length, dropout=0.0, softmax_scale=None, cu_seqlens=None
     ):
         """
         Calls the forward method of Flash Attention - if the input hidden states contain at least one padding token
@@ -544,7 +546,31 @@ class InternLM2FlashAttention2(InternLM2Attention):
         """
         # Contains at least one padding token in the sequence
         causal = self.is_causal and query_length != 1
-        if attention_mask is not None:
+        if cu_seqlens is not None:
+            cu_seqlens = cu_seqlens.to(query_states.device).to(torch.int32).view(-1)
+            cu_seqlens_offset = torch.zeros_like(cu_seqlens)
+            cu_seqlens_offset[:-1] = cu_seqlens[1:]
+            max_seqlen = max(cu_seqlens_offset[:-1] - cu_seqlens[:-1]).item()
+
+            _, _, q_heads, head_dim = query_states.shape
+            _, _, k_heads, head_dim = key_states.shape
+            query_states = query_states.view(-1, q_heads, head_dim)
+            key_states = key_states.view(-1, k_heads, head_dim)
+            value_states = value_states.view(-1, k_heads, head_dim)
+
+            attn_output = flash_attn_varlen_func(
+                query_states,
+                key_states,
+                value_states,
+                cu_seqlens_q=cu_seqlens,
+                cu_seqlens_k=cu_seqlens,
+                max_seqlen_q=max_seqlen,
+                max_seqlen_k=max_seqlen,
+                dropout_p=dropout,
+                softmax_scale=softmax_scale,
+                causal=True,
+            )
+        elif attention_mask is not None:
             batch_size = query_states.shape[0]
             query_states, key_states, value_states, indices_q, cu_seq_lens, max_seq_lens = self._unpad_input(
                 query_states, key_states, value_states, attention_mask, query_length
@@ -640,6 +666,7 @@ class InternLM2DecoderLayer(nn.Module):
         past_key_value: Optional[Tuple[torch.Tensor]] = None,
         output_attentions: Optional[bool] = False,
         use_cache: Optional[bool] = False,
+        cu_seqlens: Optional[torch.LongTensor] = None,
         **kwargs,
     ) -> Tuple[torch.FloatTensor, Optional[Tuple[torch.FloatTensor, torch.FloatTensor]]]:
         """
@@ -674,6 +701,7 @@ class InternLM2DecoderLayer(nn.Module):
             past_key_value=past_key_value,
             output_attentions=output_attentions,
             use_cache=use_cache,
+            cu_seqlens=cu_seqlens,
             **kwargs,
         )
         hidden_states = residual + hidden_states
@@ -876,6 +904,7 @@ class InternLM2Model(InternLM2PreTrainedModel):
         output_attentions: Optional[bool] = None,
         output_hidden_states: Optional[bool] = None,
         return_dict: Optional[bool] = None,
+        cu_seqlens: Optional[torch.LongTensor] = None,
     ) -> Union[Tuple, BaseModelOutputWithPast]:
         output_attentions = output_attentions if output_attentions is not None else self.config.output_attentions
         output_hidden_states = (
@@ -952,7 +981,7 @@ class InternLM2Model(InternLM2PreTrainedModel):
                 def create_custom_forward(module):
                     def custom_forward(*inputs):
                         # None for past_key_value
-                        return module(*inputs, output_attentions, None)
+                        return module(*inputs, output_attentions, None, cu_seqlens=cu_seqlens)
 
                     return custom_forward
 
@@ -971,6 +1000,7 @@ class InternLM2Model(InternLM2PreTrainedModel):
                     past_key_value=past_key_value,
                     output_attentions=output_attentions,
                     use_cache=use_cache,
+                    cu_seqlens=cu_seqlens
                 )
 
             hidden_states = layer_outputs[0]
@@ -1045,6 +1075,7 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
         output_attentions: Optional[bool] = None,
         output_hidden_states: Optional[bool] = None,
         return_dict: Optional[bool] = None,
+        cu_seqlens: Optional[torch.LongTensor] = None,
     ) -> Union[Tuple, CausalLMOutputWithPast]:
         r"""
         Args:
@@ -1089,6 +1120,7 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
             output_attentions=output_attentions,
             output_hidden_states=output_hidden_states,
             return_dict=return_dict,
+            cu_seqlens=cu_seqlens
         )
 
         hidden_states = outputs[0]
