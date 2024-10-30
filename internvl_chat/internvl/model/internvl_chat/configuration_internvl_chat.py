@@ -72,6 +72,9 @@ class InternVLChatConfig(PretrainedConfig):
         self.min_dynamic_patch = min_dynamic_patch
         self.max_dynamic_patch = max_dynamic_patch
 
+        self.hidden_size = self.llm_config.hidden_size
+        self.tie_word_embeddings = False
+
         logger.info(f'vision_select_layer: {self.select_layer}')
         logger.info(f'ps_version: {self.ps_version}')
         logger.info(f'min_dynamic_patch: {self.min_dynamic_patch}')

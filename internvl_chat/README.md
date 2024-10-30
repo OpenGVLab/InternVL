@@ -22,6 +22,7 @@ In addition, using this codebase requires executing the following steps:
   - Introduction [\[link\]](https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html)
   - Quick Start [\[link\]](https://internvl.readthedocs.io/en/latest/internvl2.0/quick_start.html)
   - Finetune [\[link\]](https://internvl.readthedocs.io/en/latest/internvl2.0/finetune.html)
+  - Preference Optimization [\[link\]](https://internvl.readthedocs.io/en/latest/internvl2.0/preference_optimization.html)
   - Evaluation [\[link\]](https://internvl.readthedocs.io/en/latest/internvl2.0/evaluation.html)
   - Deployment [\[link\]](https://internvl.readthedocs.io/en/latest/internvl2.0/deployment.html)
 

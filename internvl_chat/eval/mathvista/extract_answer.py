@@ -1,12 +1,20 @@
+import re
+import httpx
 import argparse
 
-# OpenAI
-import openai
 from tqdm import tqdm
 from utilities import *
 
-openai.api_key = os.getenv('OPENAI_API_KEY')
-print(openai.api_key)
+api_key = os.getenv('OPENAI_API_KEY')
+print(api_key)
+
+# proxy_url = ""
+# proxies = {
+#     "http://": f"{proxy_url}",
+#     "https://": f"{proxy_url}",
+# }
+# http_client = httpx.Client(proxies=proxies)
+http_client = None
 
 # load demo prompt
 from prompts.ext_ans import demo_prompt
@@ -24,6 +32,13 @@ def create_test_prompt(demo_prompt, query, response):
     test_prompt = f'{query}\n\n{response}'
     full_prompt = f'{demo_prompt}\n\n{test_prompt}\n\nExtracted answer: '
     return full_prompt
+
+
+def _extract_answer(text):
+    match = re.search(r'(Final answer:|Answer:)\s*(.*)', text, re.IGNORECASE)
+    if match:
+        return match.group(2).strip()
+    return text
 
 
 def extract_answer(response, problem, quick_extract=False):
@@ -57,17 +72,19 @@ def extract_answer(response, problem, quick_extract=False):
         print('Quickly extracting answer...')
         # The answer is "text". -> "text"
         try:
-            result = re.search(r'The answer is "(.*)"\.', response)
-            if result:
-                extraction = result.group(1)
-                return extraction
+            result = _extract_answer(response)
+            return result
+            # result = re.search(r'The answer is "(.*)"\.', response)
+            # if result:
+            #     extraction = result.group(1)
+            #     return extraction
         except:
             pass
 
     # general extraction
     try:
         full_prompt = create_test_prompt(demo_prompt, query, response)
-        extraction = get_chat_response(full_prompt, openai.api_key, patience=5)
+        extraction = get_chat_response(full_prompt, api_key, patience=5, http_client=http_client)
         return extraction
     except Exception as e:
         print(e)
