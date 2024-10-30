@@ -5,7 +5,7 @@ GPUS=${GPUS:-8}
 GPUS_PER_NODE=${GPUS_PER_NODE:-8}
 QUOTA_TYPE=${QUOTA_TYPE:-"reserved"}
 NODES=$((GPUS / GPUS_PER_NODE))
-CPUS_PER_TASK=${CPUS_PER_TASK:-5}
+CPUS_PER_TASK=${CPUS_PER_TASK:-10}
 SRUN_ARGS=${SRUN_ARGS:-""}
 
 
@@ -13,7 +13,7 @@ export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 export MASTER_PORT=34229
 export TF_CPP_MIN_LOG_LEVEL=3
 
-OUTPUT_DIR='work_dirs/internvl2_1b_qwen2_0_5b_dynamic_res_finetune_medical'
+OUTPUT_DIR='work_dirs/domain_adaptation/internvl2_1b_qwen2_0_5b_dynamic_res_finetune_medical'
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
@@ -30,8 +30,8 @@ srun -p ${PARTITION} \
   --quotatype=${QUOTA_TYPE} \
   ${SRUN_ARGS} \
   python -u internvl/train/internvl_chat_finetune.py \
-  --model_name_or_path "release/InternVL2-1B" \
-  --conv_style  "Hermes-2" \
+  --model_name_or_path "./pretrained/InternVL2-1B" \
+  --conv_style "Hermes-2" \
   --output_dir ${OUTPUT_DIR} \
   --meta_path "./InternVL-Domain-Adaptation-Data/train_meta/internvl_1_2_finetune_medical.json" \
   --overwrite_output_dir True \

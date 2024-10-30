@@ -98,7 +98,7 @@ if __name__ == '__main__':
                         num_classes=0,
                         attn_pool_num_heads=16,
                         clip_embed_dim=768,
-                        head_norm_type='bn').to(torch.bfloat16)
+                        norm_type='rms').to(torch.bfloat16)
 
     for k, v in model.named_parameters():
         v.requires_grad = True

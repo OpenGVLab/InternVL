@@ -4,10 +4,12 @@ import itertools
 import json
 import os
 import random
+import re
 import time
 from functools import partial
 from io import BytesIO
-import re
+from typing import Literal
+
 import pandas as pd
 import torch
 from internvl.model.internvl_chat import InternVLChatModel
@@ -16,14 +18,13 @@ from PIL import Image
 from torch.utils.data import Dataset
 from tqdm import tqdm
 from transformers import AutoTokenizer
-from typing import Literal 
 
 ds_collections = {
-    'MME_RealWorld':{
+    'MME_RealWorld': {
         'root': 'InternVL-Domain-Adaptation-DataMME-RealWorld/val/MME_RealWorld.json',
         'max_new_tokens': 100,
         'min_new_tokens': 1,
-        'img_root':'InternVL-Domain-Adaptation-DataMME-RealWorld/images/MME-RealWorld/data',
+        'img_root': 'InternVL-Domain-Adaptation-DataMME-RealWorld/images/MME-RealWorld/data',
         'type': 'dev',
         'language': 'en'
     }
@@ -38,18 +39,19 @@ def collate_fn(batches, tokenizer):
     choices = [_['choice'] for _ in batches]
     categorys = [_['category'] for _ in batches]
     tasks = [_['task'] for _ in batches]
-    return pixel_values, questions, answers, indexes, choices,categorys,tasks
+    return pixel_values, questions, answers, indexes, choices, categorys, tasks
 
 
 class MMERealworldDataset(torch.utils.data.Dataset):
 
-    def __init__(self, root, prompt, language, subtask:Literal["Monitoring","OCR with Complex Context","Diagram and Table",'Autonomous_Driving','Remote Sensing'],
-    img_root,input_size=224, dynamic_image_size=False,
+    def __init__(self, root, prompt, language, subtask: Literal[
+        'Monitoring', 'OCR with Complex Context', 'Diagram and Table', 'Autonomous_Driving', 'Remote Sensing'],
+                 img_root, input_size=224, dynamic_image_size=False,
                  use_thumbnail=False, max_num=6):
-        with open(root,"r") as f:
+        with open(root, 'r') as f:
             self.data_meta = json.load(f)
         self.subtask = subtask
-        self.data_meta = [item for item in self.data_meta if item["Subtask"]==self.subtask]
+        self.data_meta = [item for item in self.data_meta if item['Subtask'] == self.subtask]
         self.img_root = img_root
         self.prompt = prompt
         self.language = language
@@ -63,14 +65,14 @@ class MMERealworldDataset(torch.utils.data.Dataset):
         return len(self.data_meta)
 
     def __getitem__(self, idx):
-        index = self.data_meta[idx]["Question_id"]
-        assert self.data_meta[idx]["Question Type"] ==  "Multiple Choice"
-        image = os.path.join( self.img_root,self.data_meta[idx]['Image'])
+        index = self.data_meta[idx]['Question_id']
+        assert self.data_meta[idx]['Question Type'] == 'Multiple Choice'
+        image = os.path.join(self.img_root, self.data_meta[idx]['Image'])
         question = self.data_meta[idx]['Text']
-        choices = self.data_meta[idx]["Answer choices"]
-        answer = self.data_meta[idx]["Ground truth"]
-        category =self.data_meta[idx]["Category"]
-        task =self.data_meta[idx]["Task"]
+        choices = self.data_meta[idx]['Answer choices']
+        answer = self.data_meta[idx]['Ground truth']
+        category = self.data_meta[idx]['Category']
+        task = self.data_meta[idx]['Task']
         # catetory = self.df.iloc[idx]['category']
         # l2_catetory = self.df.iloc[idx]['l2-category']
 
@@ -87,7 +89,7 @@ class MMERealworldDataset(torch.utils.data.Dataset):
         if self.language == 'cn':
             question = question + 'The choices are listed below:\n' + '\n'.join(choices) + '\n' + self.prompt['cn']
         else:
-            question = question + '选项如下所示:\n'+'\n'.join(choices) + '\n' + self.prompt['en']
+            question = question + '选项如下所示:\n' + '\n'.join(choices) + '\n' + self.prompt['en']
 
         return {
             'question': question,
@@ -95,10 +97,9 @@ class MMERealworldDataset(torch.utils.data.Dataset):
             'answer': answer,
             'index': index,
             'choice': choices,
-            'category':category,
-            'task':task
+            'category': category,
+            'task': task
         }
-
 
 
 class InferenceSampler(torch.utils.data.sampler.Sampler):
@@ -130,41 +131,42 @@ class InferenceSampler(torch.utils.data.sampler.Sampler):
 def post_process(s, choices):
     s = s.strip()
     answer_prefixes = [
-        "The best answer is",
-        "The correct answer is",
-        "The answer is",
-        "The answer",
-        "The best option is"
-        "The correct option is",
-        "Best answer:",
-        "Best option:",
+        'The best answer is',
+        'The correct answer is',
+        'The answer is',
+        'The answer',
+        'The best option is'
+        'The correct option is',
+        'Best answer:',
+        'Best option:',
     ]
     for answer_prefix in answer_prefixes:
-        s = s.replace(answer_prefix, "")
+        s = s.replace(answer_prefix, '')
 
-    if len(s.split()) > 10 and not re.search("[ABCDE]", s):
-        return ""
+    if len(s.split()) > 10 and not re.search('[ABCDE]', s):
+        return ''
     matches = re.search(r'[ABCDE]', s)
     if matches is None:
         for choice in choices:
             if s.lower() in choice.lower():
                 return choice[1]
-        return ""
+        return ''
     return matches[0]
 
+
 def evaluate(outputs):
-    results= {"Reasoning":{},
-              "Perception":{}}
+    results = {'Reasoning': {},
+               'Perception': {}}
     for data_item in outputs:
-        cnt = data_item["answer"] == data_item['gt_answers']
+        cnt = data_item['answer'] == data_item['gt_answers']
         category = data_item['category']
         task = data_item['task']
         if category not in results[task]:
-            results[task][category] = {'true': cnt, 'false': 1-cnt}
+            results[task][category] = {'true': cnt, 'false': 1 - cnt}
         else:
             results[task][category]['true'] += cnt
             results[task][category]['false'] += 1 - cnt
-    
+
     cnt_subtask, sum_subtask = 0, 0
     for task, tasks_values in results.items():
         cnt_task, sum_task = 0, 0
@@ -172,22 +174,23 @@ def evaluate(outputs):
             cnt_task += category_dict['true']
             sum_task += category_dict['false'] + category_dict['true']
             acc = category_dict['true'] / (category_dict['false'] + category_dict['true'])
-            print(f'-'*4 + f'\t' + 'Acc ' + '{:.4f}'.format(acc) + f'\t{category.capitalize()}')
-        
-        cnt_subtask +=cnt_task 
+            print(f'-' * 4 + f'\t' + 'Acc ' + '{:.4f}'.format(acc) + f'\t{category.capitalize()}')
+
+        cnt_subtask += cnt_task
         sum_subtask += sum_task
         if sum_task == 0:
             acc_task = 0
         else:
             acc_task = cnt_task / sum_task
-        print(f'*'*32 + f'Acc' + '{:.4f}'.format(acc_task) + f'\t{task}')
+        print(f'*' * 32 + f'Acc' + '{:.4f}'.format(acc_task) + f'\t{task}')
 
     if sum_subtask == 0:
         acc_subtasks = 0
     else:
         acc_subtasks = cnt_subtask / sum_subtask
-    print(f'+'*16 + f'\t Acc ' + '{:.4f}'.format(acc_subtasks))
+    print(f'+' * 16 + f'\t Acc ' + '{:.4f}'.format(acc_subtasks))
     return acc_subtasks
+
 
 def evaluate_chat_model():
     random.seed(args.seed)
@@ -215,7 +218,7 @@ def evaluate_chat_model():
         )
 
         outputs = []
-        for pixel_values, questions, answers, indexes, options,categorys,tasks in tqdm(dataloader):
+        for pixel_values, questions, answers, indexes, options, categorys, tasks in tqdm(dataloader):
             pixel_values = pixel_values.to(torch.bfloat16).cuda()
             generation_config = dict(
                 num_beams=args.num_beams,
@@ -233,17 +236,17 @@ def evaluate_chat_model():
             outs = [out]
             preds = [post_process(out, options[0])]
 
-            for question, pred, answer, index, out,category,task in zip(questions, preds, answers, indexes,outs,categorys,tasks):
+            for question, pred, answer, index, out, category, task in zip(questions, preds, answers, indexes, outs,
+                                                                          categorys, tasks):
                 outputs.append({
                     'question': question,
-                    'output':out,
+                    'output': out,
                     'answer': pred,
                     'gt_answers': answer,
                     'index': index,
-                    'category':category,
-                    'task':task
+                    'category': category,
+                    'task': task
                 })
-
 
         torch.distributed.barrier()
 
@@ -255,14 +258,13 @@ def evaluate_chat_model():
         merged_outputs = [_ for _ in itertools.chain.from_iterable(merged_outputs)]
 
         if torch.distributed.get_rank() == 0:
-
             print(f'Evaluating {ds_name} ...')
             time_prefix = time.strftime('%y%m%d%H%M%S', time.localtime())
             results_file = f'{ds_name}_{args.subtask}_{time_prefix}.json'
             output_path = os.path.join(args.out_dir, results_file)
 
-            with open(output_path,"w") as f:
-                json.dump(merged_outputs,f,indent=4)
+            with open(output_path, 'w') as f:
+                json.dump(merged_outputs, f, indent=4)
             evaluate(merged_outputs)
 
             print('Results saved to {}'.format(output_path))
@@ -307,7 +309,7 @@ if __name__ == '__main__':
     tokenizer = AutoTokenizer.from_pretrained(args.checkpoint, trust_remote_code=True, use_fast=False)
     model = InternVLChatModel.from_pretrained(
         args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16,
-        load_in_8bit=args.load_in_8bit, load_in_4bit=args.load_in_4bit,**kwargs).eval()
+        load_in_8bit=args.load_in_8bit, load_in_4bit=args.load_in_4bit, **kwargs).eval()
     if not args.load_in_8bit and not args.load_in_4bit and not args.auto:
         model = model.cuda()
     image_size = model.config.force_image_size or model.config.vision_config.image_size

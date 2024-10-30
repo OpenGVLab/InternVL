@@ -13,7 +13,7 @@ export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 export MASTER_PORT=34229
 export TF_CPP_MIN_LOG_LEVEL=3
 
-OUTPUT_DIR='work_dirs/internvl2_2b_internlm2_1_8b_dynamic_res_finetune_bdd'
+OUTPUT_DIR='work_dirs/domain_adaptation/internvl2_2b_internlm2_1_8b_dynamic_res_finetune_bdd'
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
@@ -30,7 +30,7 @@ srun -p ${PARTITION} \
   --quotatype=${QUOTA_TYPE} \
   ${SRUN_ARGS} \
   python -u internvl/train/internvl_chat_finetune.py \
-  --model_name_or_path "release/InternVL2-2B" \
+  --model_name_or_path "./pretrained/InternVL2-2B" \
   --conv_style "internlm2-chat" \
   --output_dir ${OUTPUT_DIR} \
   --meta_path "./InternVL-Domain-Adaptation-Data/train_meta/internvl_1_2_finetune_bdd.json" \

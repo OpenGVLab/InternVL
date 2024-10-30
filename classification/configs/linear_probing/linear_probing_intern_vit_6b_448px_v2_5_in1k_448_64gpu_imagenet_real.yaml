@@ -1,0 +1,37 @@
+DATA:
+  IMG_ON_MEMORY: False
+  BATCH_SIZE: 16 # single GPU batch size
+  DATASET: 'imagenet-real'
+  TRANSFORM: 'build_transform_for_linear_probe'
+  DATA_PATH: './data/imagenet-1k'
+  IMG_SIZE: 448
+MODEL:
+  TYPE: intern_vit_6b
+  DROP_PATH_RATE: 0.0
+  INTERN_VIT_6B:
+    FREEZE_VIT: True
+    PATCH_SIZE: 14
+    PRETRAIN_SIZE: 448
+    QKV_BIAS: False
+    EMBED_DIM: 3200
+    NUM_HEADS: 25
+    MLP_RATIO: 4
+    INIT_VALUES: 0.1
+    QK_NORMALIZATION: True
+    DEPTH: 45
+    USE_FLASH_ATTN: True
+    PRETRAINED: "./pretrained/intern_vit_6b_448px_v2_5.pth"
+    CLS_TARGET: 'cls_patch_concat'
+TRAIN:
+  EMA:
+    ENABLE: True
+    DECAY: 0.998
+  EPOCHS: 10
+  WARMUP_EPOCHS: 1
+  WEIGHT_DECAY: 0.0
+  BASE_LR: 0.1 # 512
+  WARMUP_LR: .0
+  MIN_LR: .0
+  LR_LAYER_DECAY: false
+  OPTIMIZER:
+    NAME: 'sgd'

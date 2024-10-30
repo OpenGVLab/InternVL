@@ -3,6 +3,7 @@
 # Copyright (c) 2024 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
+
 import warnings
 from typing import Any, List, Optional, Tuple, Union
 
@@ -38,6 +39,7 @@ def version_cmp(v1, v2, op='eq'):
 class InternVLChatModel(PreTrainedModel):
     config_class = InternVLChatConfig
     main_input_name = 'pixel_values'
+    base_model_prefix = 'language_model'
     _no_split_modules = ['InternVisionModel', 'LlamaDecoderLayer', 'InternLM2DecoderLayer',
                          'Phi3DecoderLayer', 'Qwen2DecoderLayer']
     _supports_flash_attn_2 = True
@@ -146,6 +148,9 @@ class InternVLChatModel(PreTrainedModel):
             output_attentions: Optional[bool] = None,
             output_hidden_states: Optional[bool] = None,
             return_dict: Optional[bool] = None,
+            statistics: Optional[torch.LongTensor] = None,
+            loss_weight: Optional[List] = None,
+            loss_reduction_all_gather: Optional[bool] = False,
     ) -> Union[Tuple, CausalLMOutputWithPast]:
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
 
@@ -161,6 +166,10 @@ class InternVLChatModel(PreTrainedModel):
 
         if torch.distributed.is_initialized() and torch.distributed.get_rank() == 0:
             print(f'dynamic ViT batch size: {vit_batch_size}, images per sample: {vit_batch_size / B}, dynamic token length: {N}')
+            if statistics is not None:
+                num_samples, num_padding_tokens, num_padding_images = statistics.tolist()
+                self.num_samples += num_samples
+                print(f'total_samples={self.num_samples}, {num_samples=}, {num_padding_tokens=}, {num_padding_images=}')
 
         input_ids = input_ids.reshape(B * N)
         selected = (input_ids == self.img_context_token_id)
@@ -190,7 +199,31 @@ class InternVLChatModel(PreTrainedModel):
         logits = outputs.logits
 
         loss = None
-        if labels is not None:
+        if labels is not None and loss_weight is not None:
+            loss_weight = torch.tensor(loss_weight, dtype=torch.float32, device=labels.device)
+            # Shift so that tokens < n predict n
+            shift_logits = logits[..., :-1, :].contiguous()
+            shift_labels = labels[..., 1:].contiguous()
+            shift_weights = loss_weight[..., 1:].contiguous()
+            # Flatten the tokens
+            loss_fct = CrossEntropyLoss(reduction='none')
+            shift_logits = shift_logits.view(-1, self.language_model.config.vocab_size)
+            shift_labels = shift_labels.view(-1)
+            shift_weights = shift_weights.view(-1)
+            # Enable model parallelism
+            shift_labels = shift_labels.to(shift_logits.device)
+            shift_weights = shift_weights.to(shift_logits.device)
+            loss = loss_fct(shift_logits, shift_labels)
+
+            shift_weights_sum = shift_weights.sum()
+            if loss_reduction_all_gather:
+                dist.all_reduce(shift_weights_sum, op=dist.ReduceOp.AVG)
+
+            loss = loss * shift_weights
+            loss = loss.sum() / shift_weights_sum
+            if ignore_flag:
+                loss = loss * 0.0
+        elif labels is not None:
             # Shift so that tokens < n predict n
             shift_logits = logits[..., :-1, :].contiguous()
             shift_labels = labels[..., 1:].contiguous()
@@ -289,7 +322,7 @@ class InternVLChatModel(PreTrainedModel):
         model_inputs = tokenizer(queries, return_tensors='pt', padding=True)
         input_ids = model_inputs['input_ids'].cuda()
         attention_mask = model_inputs['attention_mask'].cuda()
-        eos_token_id = tokenizer.convert_tokens_to_ids(template.sep)
+        eos_token_id = tokenizer.convert_tokens_to_ids(template.sep.strip())
         generation_config['eos_token_id'] = eos_token_id
         generation_output = self.generate(
             pixel_values=pixel_values,
@@ -298,7 +331,7 @@ class InternVLChatModel(PreTrainedModel):
             **generation_config
         )
         responses = tokenizer.batch_decode(generation_output, skip_special_tokens=True)
-        responses = [response.split(template.sep)[0].strip() for response in responses]
+        responses = [response.split(template.sep.strip())[0].strip() for response in responses]
         return responses
 
     def chat(self, tokenizer, pixel_values, question, generation_config, history=None, return_history=False,
@@ -317,7 +350,7 @@ class InternVLChatModel(PreTrainedModel):
 
         template = get_conv_template(self.template)
         template.system_message = self.system_message
-        eos_token_id = tokenizer.convert_tokens_to_ids(template.sep)
+        eos_token_id = tokenizer.convert_tokens_to_ids(template.sep.strip())
 
         history = [] if history is None else history
         for (old_question, old_answer) in history:
@@ -346,7 +379,7 @@ class InternVLChatModel(PreTrainedModel):
             **generation_config
         )
         response = tokenizer.batch_decode(generation_output, skip_special_tokens=True)[0]
-        response = response.split(template.sep)[0].strip()
+        response = response.split(template.sep.strip())[0].strip()
         history.append((question, response))
         if return_history:
             return response, history

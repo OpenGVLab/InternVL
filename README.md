@@ -2,9 +2,16 @@
 
 # <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/47669167/7037290e-f474-4d11-b90f-1d8316087bf8"> InternVL Family: Closing the Gap to Commercial Multimodal Models with Open-Source Suites —— A Pioneering Open-Source Alternative to GPT-4o
 
-[\[🔥 Mini-InternVL\]](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/mini_internvl) [\[🆕 Blog\]](https://internvl.github.io/blog/) [\[🤔 FAQs\]](https://internvl.readthedocs.io/en/latest/tutorials/faqs.html)  [\[🚀 InternVL2 Blog\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/)  [\[🤗 HF Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)  [\[📖 Document\]](https://internvl.readthedocs.io/en/latest/)  [\[🌐 API\]](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html)  [\[🚀 Quick Start\]](#quick-start-with-huggingface)
+<div align="center">
+  <img width="500" alt="image" src="https://github.com/user-attachments/assets/930e6814-8a9f-43e1-a284-118a5732daa4">
+  <br>
+</div>
 
-[\[🔥 Mini-InternVL Report\]](https://arxiv.org/abs/2410.16261) [\[📜 InternVL 1.5 Report\]](https://arxiv.org/abs/2404.16821) [\[📜 InternVL 1.0 Paper\]](https://arxiv.org/abs/2312.14238)   [\[📖 2.0 中文解读\]](https://zhuanlan.zhihu.com/p/706547971) [\[📖 1.5 中文解读\]](https://zhuanlan.zhihu.com/p/699439759)    [\[📖 1.0 中文解读\]](https://zhuanlan.zhihu.com/p/702946079)  
+[\[🆕 Blog\]](https://internvl.github.io/blog/)  [\[🤔 FAQs\]](https://internvl.readthedocs.io/en/latest/tutorials/faqs.html)  [\[🚀 InternVL2 Blog\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/)  [\[🤗 HF Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)  [\[📖 Document\]](https://internvl.readthedocs.io/en/latest/)  [\[🌐 API\]](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html)  [\[🚀 Quick Start\]](#quick-start-with-huggingface)
+
+[\[🔥 Mini-InternVL Report\]](https://arxiv.org/abs/2410.16261)  [\[📜 InternVL 1.5 Report\]](https://arxiv.org/abs/2404.16821)  [\[📜 InternVL 1.0 Paper\]](https://arxiv.org/abs/2312.14238)
+
+[\[📖 2.0 中文解读\]](https://zhuanlan.zhihu.com/p/706547971)  [\[📖 1.5 中文解读\]](https://zhuanlan.zhihu.com/p/699439759)  [\[📖 1.0 中文解读\]](https://zhuanlan.zhihu.com/p/702946079)
 
 [Switch to the Chinese version (切换至中文版)](/README_zh.md)
 
@@ -16,9 +23,10 @@
 </div>
 
 ## News 🚀🚀🚀
-- `2024/10/21`: We release the Mini-InternVL series, which includes three chat models: __Mini-InternVL-1B__,  __Mini-InternVL-2B__ and __Mini-InternVL-4B__. These models achieve impressive performance with minimal size: the 4B model achieves 90% of the performance with just 5% of the model size. For more details, please check our [Project page](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/mini_internvl) and [Document](https://internvl.readthedocs.io/en/latest/internvl2.0/domain_adaptation.html).
+
+- `2024/10/21`: We release the Mini-InternVL series. These models achieve impressive performance with minimal size: the 4B model achieves 90% of the performance with just 5% of the model size. For more details, please check our [project page](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/mini_internvl) and [document](https://internvl.readthedocs.io/en/latest/internvl2.0/domain_adaptation.html).
 - `2024/08/01`: The [Chartmimic](https://chartmimic.github.io/) team evaluated the InternVL2 series models on their benchmark. The InternVL2-26B and 76B models achieved the top two performances among open-source models, with the InternVL2 76B model surpassing GeminiProVision and exhibiting comparable results to Claude-3-opus.
-- `2024/08/01`: InternVL2-Pro achieved the SOTA performance among open-source models on the [CharXiv](https://charxiv.github.io/#leaderboard) dataset, surpassing some well-known closed-source models such as GPT-4V, Gemini 1.5 Flash, and Claude 3 Sonnet.
+- `2024/08/01`: InternVL2-Pro achieved the SOTA performance among open-source models on the [CharXiv](https://charxiv.github.io/#leaderboard) dataset, surpassing many closed-source models such as GPT-4V, Gemini 1.5 Flash, and Claude 3 Sonnet.
 - `2024/07/24`: The [MLVU](https://github.com/JUNJIE99/MLVU) team evaluated InternVL-1.5 on their benchmark. The average performance on the multiple-choice task was 50.4%, while the performance on the generative tasks was 4.02. The performance on the multiple-choice task ranked #1 among all open-source MLLMs.
 - `2024/07/18`: 🔥🔥 InternVL2-40B achieved SOTA performance among open-source models on the [Video-MME](https://github.com/BradyFU/Video-MME) dataset, scoring 61.2 when inputting 16 frames and 64.4 when inputting 32 frames. It significantly outperforms other open-source models and is the closest open-source model to GPT-4o mini.
 - `2024/07/18`: 🔥 InternVL2-Pro achieved the SOTA performance on the [DocVQA](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=1) and [InfoVQA](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=3) benchmarks.
@@ -29,7 +37,6 @@
 - `2024/05/13`: InternVL 1.0 can now be used as the [text encoder](https://huggingface.co/OpenGVLab/InternVL-14B-224px) for diffusion models to support multilingual generation natively in over 110 languages worldwide. See [MuLan](https://github.com/mulanai/MuLan) for more details.
 - `2024/04/18`: InternVL-Chat-V1-5 has been released at [HF link](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5), approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc.
 - `2024/02/27`: InternVL is accepted by CVPR 2024 (Oral)! 🎉
-- `2024/02/24`: InternVL-Chat models have been included in the [VLMEvalKit](https://github.com/open-compass/VLMEvalKit).
 - `2024/02/21`: [InternVL-Chat-V1-2-Plus](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus) achieved SOTA performance on MathVista (59.9), MMBench (83.8), and MMVP (58.7). See our [blog](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/) for more details.
 - `2024/02/12`: InternVL-Chat-V1-2 has been released. It achieves 51.6 on MMMU val and 82.3 on MMBench test. For more details, please refer to our [blog](https://internvl.github.io/blog/2024-02-21-InternVL-1.2/) and [SFT data](./internvl_chat#prepare-training-datasets). The model is now available on [HuggingFace](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2), and both training / evaluation data and scripts are open-sourced.
 - `2024/01/24`: InternVL-Chat-V1-1 is released, it supports Chinese and has stronger OCR capability, see [here](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1).
@@ -287,14 +294,14 @@ We welcome everyone to use our API for research. For better management, please s
 
   ViT-22B uses the private JFT-3B dataset.
 
-  | method              | #param | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |
-  | ------------------- | :----: | :---: | :-----: | :---: | :--: | :--: | :-------: |
-  | OpenCLIP-G          |  1.8B  | 86.2  |  89.4   | 77.2  | 63.8 | 87.8 |   66.4    |
-  | DINOv2-g            |  1.1B  | 86.5  |  89.6   | 78.4  | 75.9 | 78.8 |   62.5    |
-  | EVA-01-CLIP-g       |  1.1B  | 86.5  |  89.3   | 77.4  | 70.5 | 87.7 |   63.1    |
-  | MAWS-ViT-6.5B       |  6.5B  | 87.8  |    -    |   -   |  -   |  -   |     -     |
-  | ViT-22B\*           | 21.7B  | 89.5  |  90.9   | 83.2  | 83.8 | 87.4 |     -     |
-  | InternViT-6B (ours) |  5.9B  | 88.2  |  90.4   | 79.9  | 77.5 | 89.8 |   69.1    |
+  | method              | #param | IN-1K | IN-ReaL | IN-V2 | IN-A  | IN-R  | IN-Sketch |
+  | ------------------- | :----: | :---: | :-----: | :---: | :---: | :---: | :-------: |
+  | OpenCLIP-G          |  1.8B  | 86.2  |  89.4   | 77.2  | 63.8  | 87.8  |   66.4    |
+  | DINOv2-g            |  1.1B  | 86.5  |  89.6   | 78.4  | 75.9  | 78.8  |   62.5    |
+  | EVA-01-CLIP-g       |  1.1B  | 86.5  |  89.3   | 77.4  | 70.5  | 87.7  |   63.1    |
+  | MAWS-ViT-6.5B       |  6.5B  | 87.8  |    -    |   -   |   -   |   -   |     -     |
+  | ViT-22B\*           | 21.7B  | 89.5  |  90.9   | 83.2  | 83.8  | 87.4  |     -     |
+  | InternViT-6B (ours) |  5.9B  | 88.2  |  90.4   | 79.9  | 77.5  | 89.8  |   69.1    |
 
 - Semantic Segmentation [\[see details\]](./segmentation#-evaluation)
 
@@ -310,12 +317,12 @@ We welcome everyone to use our API for research. For better management, please s
 
 - Zero-Shot Image Classification [\[see details\]](./clip_benchmark#imagenet-variants-and-objectnet)
 
-  | method            | IN-1K | IN-A | IN-R | IN-V2 | IN-Sketch | ObjectNet |
-  | ----------------- | :---: | :--: | :--: | :---: | :-------: | :-------: |
-  | OpenCLIP-G        | 80.1  | 69.3 | 92.1 | 73.6  |   68.9    |   73.0    |
-  | EVA-02-CLIP-E+    | 82.0  | 82.1 | 94.5 | 75.7  |   71.6    |   79.6    |
-  | ViT-22B\*         | 85.9  | 90.1 | 96.0 | 80.9  |     -     |   87.6    |
-  | InternVL-C (ours) | 83.2  | 83.8 | 95.5 | 77.3  |   73.9    |   80.6    |
+  | method            | IN-1K | IN-A  | IN-R  | IN-V2 | IN-Sketch | ObjectNet |
+  | ----------------- | :---: | :---: | :---: | :---: | :-------: | :-------: |
+  | OpenCLIP-G        | 80.1  | 69.3  | 92.1  | 73.6  |   68.9    |   73.0    |
+  | EVA-02-CLIP-E+    | 82.0  | 82.1  | 94.5  | 75.7  |   71.6    |   79.6    |
+  | ViT-22B\*         | 85.9  | 90.1  | 96.0  | 80.9  |     -     |   87.6    |
+  | InternVL-C (ours) | 83.2  | 83.8  | 95.5  | 77.3  |   73.9    |   80.6    |
 
 - Multilingual Zero-Shot Image Classification [\[see details\]](./clip_benchmark#multilingual-imagenet-1k)
 
@@ -333,13 +340,13 @@ We welcome everyone to use our API for research. For better management, please s
 
 - Zero-Shot Video Classification
 
-  | method            | #frame | K400 | K600 | K700 |
-  | ----------------- | :----: | :--: | :--: | :--: |
-  | OpenCLIP-G        |   1    | 65.9 | 66.1 | 59.2 |
-  | EVA-02-CLIP-E+    |   1    | 69.8 | 69.3 | 63.4 |
-  | InternVL-C (ours) |   1    | 71.0 | 71.3 | 65.7 |
-  | ViCLIP            |   8    | 75.7 | 73.5 | 66.4 |
-  | InternVL-C (ours) |   8    | 79.4 | 78.8 | 71.5 |
+  | method            | #frame | K400  | K600  | K700  |
+  | ----------------- | :----: | :---: | :---: | :---: |
+  | OpenCLIP-G        |   1    | 65.9  | 66.1  | 59.2  |
+  | EVA-02-CLIP-E+    |   1    | 69.8  | 69.3  | 63.4  |
+  | InternVL-C (ours) |   1    | 71.0  | 71.3  | 65.7  |
+  | ViCLIP            |   8    | 75.7  | 73.5  | 66.4  |
+  | InternVL-C (ours) |   8    | 79.4  | 78.8  | 71.5  |
 
 </details>
 
@@ -562,12 +569,12 @@ We welcome everyone to use our API for research. For better management, please s
 
 - Multilingual Zero-Shot Image-Text Retrieval on XTD [\[see details\]](./clip_benchmark#xtd)
 
-  | method            |  EN  |  ES  |  FR  |  ZH  |  IT  |  KO  |  RU  |  JP  | average |
-  | ----------------- | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :-----: |
-  | AltCLIP           | 95.4 | 94.1 | 92.9 | 95.1 | 94.2 | 94.4 | 91.8 | 91.7 |  93.7   |
-  | OpenCLIP-XLM-R-H  | 97.3 | 96.1 | 94.5 | 94.7 | 96.0 | 90.2 | 93.9 | 94.0 |  94.6   |
-  | InternVL-C (ours) | 97.3 | 95.7 | 95.1 | 95.6 | 96.0 | 92.2 | 93.3 | 95.5 |  95.1   |
-  | InternVL-G (ours) | 98.6 | 97.7 | 96.5 | 96.7 | 96.9 | 95.1 | 94.8 | 96.1 |  96.6   |
+  | method            |  EN   |  ES   |  FR   |  ZH   |  IT   |  KO   |  RU   |  JP   | average |
+  | ----------------- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :-----: |
+  | AltCLIP           | 95.4  | 94.1  | 92.9  | 95.1  | 94.2  | 94.4  | 91.8  | 91.7  |  93.7   |
+  | OpenCLIP-XLM-R-H  | 97.3  | 96.1  | 94.5  | 94.7  | 96.0  | 90.2  | 93.9  | 94.0  |  94.6   |
+  | InternVL-C (ours) | 97.3  | 95.7  | 95.1  | 95.6  | 96.0  | 92.2  | 93.3  | 95.5  |  95.1   |
+  | InternVL-G (ours) | 98.6  | 97.7  | 96.5  | 96.7  | 96.9  | 95.1  | 94.8  | 96.1  |  96.6   |
 
 </details>
 

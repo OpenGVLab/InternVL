@@ -4,6 +4,7 @@
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
 
+from .clip_vit import CLIPViT
 from .intern_vit_6b import InternViT6B
 
 
@@ -28,7 +29,21 @@ def build_model(config):
             freeze_vit=config.MODEL.INTERN_VIT_6B.FREEZE_VIT,
             pretrained=config.MODEL.INTERN_VIT_6B.PRETRAINED,
             cls_target=config.MODEL.INTERN_VIT_6B.CLS_TARGET,
-            head_norm_type=config.MODEL.INTERN_VIT_6B.HEAD_NORM_TYPE,
+            norm_type=config.MODEL.INTERN_VIT_6B.NORM_TYPE,
+        )
+    elif model_type == 'clip_vit':
+        model = CLIPViT(
+            patch_size=config.MODEL.CLIP_VIT.PATCH_SIZE,
+            img_size=config.DATA.IMG_SIZE,
+            pretrain_size=config.MODEL.CLIP_VIT.PRETRAIN_SIZE,
+            embed_dim=config.MODEL.CLIP_VIT.EMBED_DIM,
+            num_heads=config.MODEL.CLIP_VIT.NUM_HEADS,
+            mlp_ratio=config.MODEL.CLIP_VIT.MLP_RATIO,
+            depth=config.MODEL.CLIP_VIT.DEPTH,
+            with_cp=config.TRAIN.USE_CHECKPOINT,
+            freeze_vit=config.MODEL.CLIP_VIT.FREEZE_VIT,
+            pretrained=config.MODEL.CLIP_VIT.PRETRAINED,
+            cls_target=config.MODEL.CLIP_VIT.CLS_TARGET,
         )
     else:
         raise NotImplementedError(f'Unkown model: {model_type}')

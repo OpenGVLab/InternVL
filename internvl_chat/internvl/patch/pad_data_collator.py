@@ -1,3 +1,9 @@
+# --------------------------------------------------------
+# InternVL
+# Copyright (c) 2024 OpenGVLab
+# Licensed under The MIT License [see LICENSE for details]
+# --------------------------------------------------------
+
 import numpy as np
 import torch
 
@@ -48,13 +54,13 @@ def pad_data_collator(features, pad_id=0):
     return batch
 
 
-def concat_pad_data_collator(features, pad_id=0):
+def concat_pad_data_collator(features, max_item_length=None, pad_id=0):
 
     first = features[0]
     batch = {}
 
     batch_lens = [feat['input_ids'].shape for feat in features]
-    max_item_length = max(batch_lens)[0]
+    max_item_length = max_item_length or max(batch_lens)[0]
     for idx in range(len(features)):
         feat = features[idx]
         temp_input_ids = torch.LongTensor([pad_id] * max_item_length)
@@ -64,6 +70,16 @@ def concat_pad_data_collator(features, pad_id=0):
         temp_labels[:feat['labels'].shape[0]] = feat['labels']
         feat['labels'] = temp_labels
         feat['attention_mask'] = feat['input_ids'].ne(pad_id)
+
+        if 'position_ids' in feat:
+            temp_position_ids = torch.LongTensor([pad_id] * max_item_length)
+            temp_position_ids[:feat['position_ids'].shape[0]] = feat['position_ids']
+            feat['position_ids'] = temp_position_ids
+
+        if 'loss_weight' in feat:
+            temp_loss_weight = torch.FloatTensor([pad_id] * max_item_length)
+            temp_loss_weight[:feat['loss_weight'].shape[0]] = feat['loss_weight']
+            feat['loss_weight'] = temp_loss_weight
 
     # Special handling for labels.
     # Ensure that tensor is created with the correct type
