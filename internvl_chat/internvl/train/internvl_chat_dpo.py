@@ -9,7 +9,7 @@ import traceback
 import warnings
 from copy import deepcopy
 from dataclasses import dataclass, field
-from typing import Dict, Optional
+from typing import Dict, Optional, Literal
 
 import numpy as np
 import torch
@@ -35,7 +35,6 @@ from internvl.train.dataset import (ConcatDataset, TCSLoader,
                                     dynamic_preprocess, preprocess,
                                     preprocess_internlm, preprocess_mpt,
                                     preprocess_phi3)
-from internvl.train.trainer_monkey_patch import replace_create_optimizer
 from PIL import Image, ImageFile, PngImagePlugin, UnidentifiedImageError
 from torch.utils.data import Dataset
 from transformers import (AutoConfig, AutoModelForCausalLM, AutoTokenizer,
@@ -45,7 +44,7 @@ from transformers.trainer_utils import get_last_checkpoint
 from transformers.utils.logging import (enable_default_handler,
                                         enable_explicit_format, set_verbosity)
 
-from trl import DPOConfig
+from trl import DPOConfig as DPOConfigTRL
 from internvl.train.trainer_dpo import MultimodalDPOTrainer
 
 
@@ -205,6 +204,21 @@ class DataTrainingArguments:
         default='imagenet',
         metadata={'help': 'The normalize type for the image. Default is imagenet.'},
     )
+    sigmoid_loss_weight: Optional[float] = field(
+        default=1.0,
+        metadata={'help': 'Loss weight for DPO loss. Default is 1.0'},
+    )
+    bco_pair_loss_weight: Optional[float] = field(
+        default=1.0,
+        metadata={'help': 'Loss weight for BCO loss. Default is 1.0'},
+    )
+
+
+class DPOConfig(DPOConfigTRL):
+    loss_type: Literal[
+        "sigmoid", "hinge", "ipo", "bco_pair", "sppo_hard", "nca_pair", "robust", "aot", "aot_pair", "exo_pair",
+        "sigmoid,bco_pair",
+    ] = "sigmoid"
 
 
 class LazySupervisedDataset(Dataset):
@@ -687,6 +701,8 @@ def main():
 
     training_args.remove_unused_columns = False
     training_args.gradient_checkpointing = model_args.grad_checkpoint
+    training_args.sigmoid_loss_weight = data_args.sigmoid_loss_weight
+    training_args.bco_pair_loss_weight = data_args.bco_pair_loss_weight
 
     # Sending telemetry. Tracking the example usage helps us better allocate resources to maintain them. The
     # information sent is the one passed as arguments along with your Python/PyTorch versions.

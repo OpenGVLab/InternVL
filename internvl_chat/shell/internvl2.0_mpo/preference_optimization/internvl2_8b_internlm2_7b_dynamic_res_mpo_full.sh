@@ -16,7 +16,7 @@ export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 export MASTER_PORT=34229
 export TF_CPP_MIN_LOG_LEVEL=3
 
-OUTPUT_DIR='work_dirs/internvl_chat_v2_0/internvl2_8b_internlm2_7b_dynamic_res_rpo_full'
+OUTPUT_DIR='work_dirs/internvl_chat_v2_0/internvl2_8b_internlm2_7b_dynamic_res_mpo_full'
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
@@ -40,7 +40,7 @@ srun -p ${PARTITION} \
   --model_name_or_path "ckpt/OpenGVLab/InternVL2-8B" \
   --conv_style "internlm2-chat" \
   --output_dir ${OUTPUT_DIR} \
-  --meta_path "MM-Reasoning/meta.json" \
+  --meta_path "MMPR/meta.json" \
   --overwrite_output_dir True \
   --force_image_size 448 \
   --down_sample_ratio 0.5 \
@@ -74,5 +74,8 @@ srun -p ${PARTITION} \
   --ps_version 'v2' \
   --deepspeed "zero_stage1_config.json" \
   --report_to "tensorboard" \
+  --loss_type sigmoid,bco_pair \
+  --sigmoid_loss_weight 0.8 \
+  --bco_pair_loss_weight 0.2 \
   --rpo_alpha 1 \
   2>&1 | tee -a "${OUTPUT_DIR}/training_log.txt"

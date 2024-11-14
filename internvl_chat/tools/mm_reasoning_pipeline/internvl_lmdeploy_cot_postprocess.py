@@ -36,7 +36,10 @@ def parse_answer(text):
 
     assert text.count(answer_trigger) <= 2
 
-    return None, answer
+    rationale = text.lower().split(answer_trigger.lower())[0].strip().strip('*').strip()
+    assert len(rationale) > 0
+
+    return rationale, answer
 
 
 def isfloat(x):

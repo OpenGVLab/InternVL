@@ -283,7 +283,11 @@ def evaluate_chat_model():
         if len(inputs[0]) < 1:
             continue
 
-        query_list = [inputs[0][0]] * cnt
+        if args.load_image:
+            query_list = [inputs[0][0]] * cnt
+        else:
+            query_list = [inputs[0]] * cnt
+
         for item_idx, item in enumerate(items):
             n = cnt
             for r in response_list[item_idx * n: item_idx * n + n]:

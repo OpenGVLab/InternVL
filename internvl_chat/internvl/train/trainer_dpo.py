@@ -3,7 +3,7 @@ import torch.nn.functional as F
 from typing import Optional, Union, Tuple, Dict, List, Literal
 from torch import nn
 from trl import DPOTrainer
-from trl.trainer.utils import pad_to_length
+from trl.trainer.utils import pad_to_length, RunningMoments
 from torch.utils.data import ConcatDataset
 
 
@@ -13,6 +13,12 @@ def _map(self, *args, **kwargs):
 ConcatDataset.map = _map
 
 class MultimodalDPOTrainer(DPOTrainer):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if self.loss_type != "bco_pair" and "bco_pair" in self.loss_type:
+            self.running = RunningMoments(self.accelerator)
+
     @staticmethod
     def concatenated_inputs(
         batch: Dict[str, Union[List, torch.LongTensor]],
@@ -222,12 +228,34 @@ class MultimodalDPOTrainer(DPOTrainer):
                         _,
                     ) = self.concatenated_forward(self.ref_model, batch)
 
-        losses, chosen_rewards, rejected_rewards = self.dpo_loss(
-            policy_chosen_logps,
-            policy_rejected_logps,
-            reference_chosen_logps,
-            reference_rejected_logps,
-        )
+
+        if ',' in self.loss_type:
+            loss_type = self.loss_type
+            loss_type_list = loss_type.split(',')
+
+            losses, chosen_rewards, rejected_rewards = 0, 0, 0
+            for curr_type in loss_type_list:
+                self.loss_type = curr_type
+                curr_losses, curr_chosen_rewards, curr_rejected_rewards = self.dpo_loss(
+                    policy_chosen_logps,
+                    policy_rejected_logps,
+                    reference_chosen_logps,
+                    reference_rejected_logps,
+                )
+                curr_weight = getattr(self.args, f'{curr_type}_loss_weight')
+                losses = losses + curr_losses * curr_weight
+                chosen_rewards = chosen_rewards + curr_chosen_rewards * curr_weight
+                rejected_rewards = rejected_rewards + curr_rejected_rewards * curr_weight
+
+            self.loss_type = loss_type
+        else:
+            losses, chosen_rewards, rejected_rewards = self.dpo_loss(
+                policy_chosen_logps,
+                policy_rejected_logps,
+                reference_chosen_logps,
+                reference_rejected_logps,
+            )
+
         reward_accuracies = (chosen_rewards > rejected_rewards).float()
 
         if self.args.rpo_alpha is not None:
