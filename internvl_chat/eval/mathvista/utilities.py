@@ -8,6 +8,7 @@ import cv2
 import openai
 from word2number import w2n
 
+openai_client = None
 
 def create_dir(output_dir):
     if not os.path.exists(output_dir):
@@ -162,24 +163,33 @@ def get_image_size(img_path):
 
 
 def get_chat_response(promot, api_key, model='gpt-3.5-turbo', temperature=0, max_tokens=256, n=1, patience=10000000,
-                      sleep_time=0):
+                      sleep_time=0, http_client=None):
+    global openai_client
+    if openai_client is None:
+        print(f'{api_key=}')
+        openai_client = openai.OpenAI(api_key=api_key, http_client=http_client)
+
     messages = [
         {'role': 'user', 'content': promot},
     ]
     while patience > 0:
         patience -= 1
         try:
-            completion = openai.chat.completions.create(model=model,
-                                                        messages=messages,
-                                                        temperature=temperature,
-                                                        max_tokens=max_tokens,
-                                                        n=n)
+            response = openai_client.chat.completions.create(
+                model=model,
+                messages=messages,
+                # api_key=api_key,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                n=n,
+            )
+            response = response.to_dict()
             if n == 1:
-                prediction = completion.choices[0].message.content.strip()
+                prediction = response['choices'][0]['message']['content'].strip()
                 if prediction != '' and prediction is not None:
                     return prediction
             else:
-                prediction = [choice.message.content.strip() for choice in completion.choices]
+                prediction = [choice['message']['content'].strip() for choice in response['choices']]
                 if prediction[0] != '' and prediction[0] is not None:
                     return prediction
 

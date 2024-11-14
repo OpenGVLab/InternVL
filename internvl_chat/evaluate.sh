@@ -468,6 +468,15 @@ if [ ${DATASET} == "scienceqa" ]; then
       eval/scienceqa/evaluate_scienceqa.py --checkpoint ${CHECKPOINT} --datasets sqa_test "${ARGS[@]:2}"
 fi
 
+if [ ${DATASET} == "m3cot" ]; then
+    torchrun \
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
+      eval/scienceqa/evaluate_scienceqa.py --checkpoint ${CHECKPOINT} --datasets m3cot_test "${ARGS[@]:2}"
+fi
 
 if [ ${DATASET} == "mmmu-dev" ]; then
     torchrun \

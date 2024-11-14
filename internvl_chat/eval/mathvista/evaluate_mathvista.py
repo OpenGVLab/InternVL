@@ -16,17 +16,28 @@ from tqdm import tqdm
 ds_collections = {
     'MathVista_testmini': {
         'root': 'AI4Math/MathVista',
-        'max_new_tokens': 1000,
+        'max_new_tokens': 4096,
         'min_new_tokens': 1,
         'split': 'testmini'
     },
     'MathVista_test': {
         'root': 'AI4Math/MathVista',
-        'max_new_tokens': 1000,
+        'max_new_tokens': 4096,
         'min_new_tokens': 1,
         'split': 'test'
     },
 }
+
+
+COT_INSTRUCTION = (
+    "Your task is to answer the question below. "
+    "Give step by step reasoning before you answer, and when you're ready to answer, "
+    "please use the format \"Final answer: ..\""
+    "\n\n"
+    "Question:"
+    "\n\n"
+    "{question}"
+)
 
 
 def collate_fn(batches, tokenizer):
@@ -120,10 +131,15 @@ def evaluate_chat_model():
 
         outputs = []
         for _, (pixel_values, data_items) in tqdm(enumerate(dataloader)):
+            if args.cot:
+                question = COT_INSTRUCTION.format(question=data_items[0]['query'])
+            else:
+                question = data_items[0]['query']
+
             pixel_values = pixel_values.to(torch.bfloat16).cuda()
             generation_config = dict(
                 num_beams=args.num_beams,
-                max_new_tokens=ds_collections[ds_name]['max_new_tokens'],
+                max_new_tokens=ds_collections[ds_name]['max_new_tokens'] if not args.cot else 4096,
                 min_new_tokens=ds_collections[ds_name]['min_new_tokens'],
                 do_sample=True if args.temperature > 0 else False,
                 temperature=args.temperature,
@@ -131,7 +147,7 @@ def evaluate_chat_model():
             pred = model.chat(
                 tokenizer=tokenizer,
                 pixel_values=pixel_values,
-                question=data_items[0]['query'],
+                question=question,
                 generation_config=generation_config,
                 verbose=True
             )
@@ -162,11 +178,14 @@ def evaluate_chat_model():
             json.dump(temp, open(output_path, 'w'), indent=4)
             print('Results saved to {}'.format(output_path))
 
-            cmd = f'python eval/mathvista/extract_answer.py --output_file {results_file}'
+            if args.cot:
+                cmd = f'python eval/mathvista/extract_answer.py --output_file {results_file} --output_dir {args.out_dir} --quick_extract'
+            else:
+                cmd = f'python eval/mathvista/extract_answer.py --output_file {results_file} --output_dir {args.out_dir}'
             print(cmd)
             os.system(cmd)
 
-            cmd = f'python eval/mathvista/calculate_score.py --output_file {results_file} --score_file {results_file[:-5]}_score.json'
+            cmd = f'python eval/mathvista/calculate_score.py --output_file {results_file} --output_dir {args.out_dir} --score_file {results_file[:-5]}_score.json'
             print(cmd)
             os.system(cmd)
 
@@ -186,10 +205,15 @@ if __name__ == '__main__':
     parser.add_argument('--load-in-8bit', action='store_true')
     parser.add_argument('--load-in-4bit', action='store_true')
     parser.add_argument('--auto', action='store_true')
+    parser.add_argument('--cot', action='store_true')
     args = parser.parse_args()
 
+    model_name = '_'.join(args.checkpoint.split('/')[-2:])
+    model_name = f'{model_name}_cot' if args.cot else model_name
+    args.out_dir = os.path.join(args.out_dir, model_name)
+
     if not os.path.exists(args.out_dir):
-        os.makedirs(args.out_dir)
+        os.makedirs(args.out_dir, exist_ok=True)
 
     args.datasets = args.datasets.split(',')
     print('datasets:', args.datasets)

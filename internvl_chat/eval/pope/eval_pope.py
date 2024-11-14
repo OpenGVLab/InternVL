@@ -62,6 +62,8 @@ def eval_pope(answers, label_file):
     print('Yes ratio: {}'.format(yes_ratio))
     print('%.3f, %.3f, %.3f, %.3f, %.3f' % (f1, acc, precision, recall, yes_ratio))
 
+    return f1
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -70,6 +72,7 @@ if __name__ == '__main__':
     parser.add_argument('--result-file', type=str)
     args = parser.parse_args()
 
+    f1_list = []
     questions = [json.loads(line) for line in open(args.question_file)]
     questions = {question['question_id']: question for question in questions}
     answers = json.loads(open(args.result_file).read())
@@ -79,5 +82,7 @@ if __name__ == '__main__':
         category = file[10:-5]
         cur_answers = [x for x in answers if questions[x['question_id']]['category'] == category]
         print('Category: {}, # samples: {}'.format(category, len(cur_answers)))
-        eval_pope(cur_answers, os.path.join(args.annotation_dir, file))
+        f1_list.append(eval_pope(cur_answers, os.path.join(args.annotation_dir, file)))
         print('====================================')
+
+    print(f'Overall F1: {sum(f1_list)/len(f1_list)*100:.2f}')

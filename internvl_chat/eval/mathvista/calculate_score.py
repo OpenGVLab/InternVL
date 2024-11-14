@@ -55,7 +55,7 @@ def normalize_extracted_answer(extraction, choices, question_type, answer_type, 
 
     elif answer_type == 'float':
         try:
-            extraction = str(round(float(extraction), precision))
+            extraction = str(round(float(extraction), int(precision)))
         except:
             extraction = None
 
@@ -147,7 +147,10 @@ if __name__ == '__main__':
         if 'answer' in problem:
             answer = problem['answer']
         else:
-            answer = gts[pid]['answer']
+            if pid in gts:
+                answer = gts[pid]['answer']
+            else:
+                answer = ''
             problem['answer'] = answer
 
         # normalize the extracted answer to match the answer type

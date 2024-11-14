@@ -1,6 +1,7 @@
 import argparse
 import itertools
 import json
+import re
 import os
 import random
 import time
@@ -19,7 +20,30 @@ ds_collections = {
         'max_new_tokens': 100,
         'min_new_tokens': 1,
     },
+    'm3cot_test': {
+        'root': 'data/M3CoT/test.jsonl',
+        'max_new_tokens': 100,
+        'min_new_tokens': 1,
+    },
 }
+
+
+COT_INSTRUCTION = (
+    "Your task is to answer the question below. "
+    "Give step by step reasoning before you answer, and when you're ready to answer, "
+    "please use the format \"Final answer: ..\""
+    "\n\n"
+    "Question:"
+    "\n\n"
+    "{question}"
+)
+
+
+def extract_answer(text):
+    match = re.search(r'(Final answer:|Answer:)\s*(.*)', text, re.IGNORECASE)
+    if match:
+        return match.group(2).strip()
+    return text
 
 
 def collate_fn(batches, tokenizer):
@@ -80,7 +104,7 @@ class ScienceQADataset(torch.utils.data.Dataset):
         question += '\n' + self.prompt
 
         return {
-            'question': question,
+            'question': question.strip(),
             'pixel_values': pixel_values,
             'answer': multiple_choices[answer],
             'image_path': image_path,
@@ -119,18 +143,24 @@ def post_process(pred, option):
     option_candidate = list(option.keys())
     if len(pred) == 1:
         return pred
-    elif len(pred) != 1 and pred[0] in option_candidate:
+    elif len(pred) > 1 and pred[0] in option_candidate:
         return pred[0]
-    elif len(pred) != 1 and pred[0] not in option_candidate:
+    elif len(pred) > 1 and pred[0] not in option_candidate:
         for k, v in option.items():
             if v in pred:
                 return k
+
+    if len(pred) > 1 and pred[1] == '.':
+        pred = pred[0]
+
+    if len(pred) > 1 and pred[0] == '(' and pred[2] == ')':
+        pred = pred[1]
 
     return pred
 
 
 def evaluate_chat_model():
-    prompt = "Answer with the option's letter from the given choices directly."
+    prompt = "" if args.cot else "Answer with the option's letter from the given choices directly."
     random.seed(args.seed)
 
     for ds_name in args.datasets:
@@ -154,10 +184,13 @@ def evaluate_chat_model():
 
         outputs = []
         for _, (pixel_values, questions, answers, image_paths, options) in tqdm(enumerate(dataloader)):
+            if args.cot:
+                questions = [COT_INSTRUCTION.format(question=q) for q in questions]
+
             pixel_values = pixel_values.to(torch.bfloat16).cuda()
             generation_config = dict(
                 num_beams=args.num_beams,
-                max_new_tokens=ds_collections[ds_name]['max_new_tokens'],
+                max_new_tokens=ds_collections[ds_name]['max_new_tokens'] if not args.cot else 4096,
                 min_new_tokens=ds_collections[ds_name]['min_new_tokens'],
                 do_sample=True if args.temperature > 0 else False,
                 temperature=args.temperature,
@@ -169,12 +202,16 @@ def evaluate_chat_model():
                 generation_config=generation_config,
                 verbose=True
             )
+            pred_orig = pred
+            if args.cot:
+                pred = extract_answer(pred).strip()
             preds = [post_process(pred, options[0])]
 
             for question, pred, answer, image_path in zip(questions, preds, answers, image_paths):
                 outputs.append({
                     'question': question,
                     'answer': pred,
+                    'answer_orig': pred_orig,
                     'gt_answers': answer,
                     'image_path': image_path
                 })
@@ -220,10 +257,15 @@ if __name__ == '__main__':
     parser.add_argument('--load-in-8bit', action='store_true')
     parser.add_argument('--load-in-4bit', action='store_true')
     parser.add_argument('--auto', action='store_true')
+    parser.add_argument('--cot', action='store_true')
     args = parser.parse_args()
 
+    model_name = '_'.join(args.checkpoint.split('/')[-2:])
+    model_name = f'{model_name}_cot' if args.cot else model_name
+    args.out_dir = os.path.join(args.out_dir, model_name)
+
     if not os.path.exists(args.out_dir):
-        os.makedirs(args.out_dir)
+        os.makedirs(args.out_dir, exist_ok=True)
 
     args.datasets = args.datasets.split(',')
     print('datasets:', args.datasets)

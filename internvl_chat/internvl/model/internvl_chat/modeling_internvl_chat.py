@@ -43,6 +43,7 @@ class InternVLChatModel(PreTrainedModel):
     _no_split_modules = ['InternVisionModel', 'LlamaDecoderLayer', 'InternLM2DecoderLayer',
                          'Phi3DecoderLayer', 'Qwen2DecoderLayer']
     _supports_flash_attn_2 = True
+    supports_gradient_checkpointing=True
 
     def __init__(self, config: InternVLChatConfig, vision_model=None, language_model=None):
         super().__init__(config)
@@ -432,3 +433,13 @@ class InternVLChatModel(PreTrainedModel):
         )
 
         return outputs
+
+    @property
+    def lm_head(self):
+        return self.language_model.get_output_embeddings()
+
+    def get_input_embeddings(self):
+        return self.language_model.get_input_embeddings()
+
+    def get_output_embeddings(self):
+        return self.language_model.get_output_embeddings()
