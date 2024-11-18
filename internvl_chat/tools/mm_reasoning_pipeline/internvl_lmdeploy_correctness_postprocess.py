@@ -14,7 +14,7 @@ option_candidate = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 
 
 # you can download this file from this url: https://huggingface.co/datasets/Weiyun1025/M3CoT-ScienceQA-Format/blob/main/train_pair_with_res.jsonl
 gt_path_map = {
-    'm3cot': '/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL-RL-DPO/internvl_chat_dev/data/M3CoT/train_pair_with_res.jsonl',
+    'm3cot': 'M3CoT/train_pair_with_res.jsonl',
 }
 
 
