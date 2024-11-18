@@ -12,7 +12,7 @@ import torch
 
 from PIL import Image
 from collections import defaultdict
-from lmdeploy import pipeline, TurbomindEngineConfig, VisionConfig
+from lmdeploy import pipeline, TurbomindEngineConfig, VisionConfig, GenerationConfig
 from lmdeploy.vl.constants import IMAGE_TOKEN
 
 try:
@@ -24,6 +24,9 @@ except:
         'Fail to import petrel_client! '
         'You can ignore this warning if you do not need to load image from ceph.'
     )
+
+
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 
 IMG_PLACEHOLDER = '<image>'
@@ -53,6 +56,7 @@ INSTRUCTION_ZH = (
 VALID_INSTRUCTIONS = [
     'Answer the question using a single word or phrase.',
     "Answer with the option's letter from the given choices directly.",
+    'Please answer Yes or No.',
 ]
 VALID_INSTRUCTIONS = set(VALID_INSTRUCTIONS)
 
@@ -66,13 +70,6 @@ def init_distributed_mode():
 
     if "MASTER_PORT" not in os.environ:
         port = 22222
-        # for i in range(22222, 65535):
-        #     cmd = f'netstat -aon|grep {i}'
-        #     with os.popen(cmd, 'r') as file:
-        #         if '' == file.read():
-        #             port = i
-        #             break
-
         print(f'MASTER_PORT = {port}')
         os.environ["MASTER_PORT"] = str(port)
 
@@ -140,6 +137,14 @@ class VQADataset(torch.utils.data.Dataset):
         for instruction in VALID_INSTRUCTIONS:
             if question.endswith(instruction):
                 question = question[:-len(instruction)].strip()
+        question = INSTRUCTION.format(question=question)
+
+        if question.count(IMG_PLACEHOLDER) == 1:
+            question = question.replace(IMG_PLACEHOLDER + '\n', '')
+            question = question.replace(IMG_PLACEHOLDER, '')
+
+        if question.count(IMG_PLACEHOLDER) == 0:
+            question = IMG_PLACEHOLDER + '\n' + question
 
         return {
             'question': question.replace(IMG_PLACEHOLDER, IMAGE_TOKEN),
@@ -174,126 +179,16 @@ class InferenceSampler(torch.utils.data.sampler.Sampler):
         return len(self._local_indices)
 
 
-def evaluate_chat_model():
-    dataset = VQADataset(
-        data=args.prompt_path,
-        sample_max_num=args.sample_max_num,
-    )
-    dataloader = torch.utils.data.DataLoader(
-        dataset,
-        batch_size=1,
-        collate_fn=collate_fn,
-        shuffle=False,
-        drop_last=False,
-        num_workers=args.num_workers,
-        sampler=InferenceSampler(len(dataset)),
-    )
+def get_global_min(value):
+    world_size = torch.distributed.get_world_size()
+    merged_values = [None for _ in range(world_size)]
+    torch.distributed.all_gather_object(merged_values, value)
 
-    generation_config = dict(
-        request_output_len=args.max_new_tokens,
-        min_new_tokens=args.min_new_tokens,
-        temperature=args.temperature,
-        top_k=args.top_k,
-        top_p=args.top_p,
-    )
+    return min(merged_values)
 
-    item2num = defaultdict(int)
-    results_file = os.path.basename(args.prompt_path)
-    results_file = os.path.join(args.out_dir, results_file)
-    if os.path.exists(results_file):
-        with open(results_file) as file:
-            lines = file.readlines()
-        for line in lines:
-            item = json.loads(line)
-            if isinstance(item['image'], list):
-                item2num[(tuple(item['image']), item['question'])] += 1
-            else:
-                item2num[(item['image'], item['question'])] += 1
 
-    if args.ref_dir is not None:
-        ref_items = set()
-        ref_file = os.path.join(args.ref_dir, os.path.basename(results_file))
-
-        with open(ref_file) as file:
-            lines = file.readlines()
-        for line in lines:
-            item = json.loads(line)
-            ref_items.add((item['image'], item['question']))
-
-        print(f'{len(ref_items)=}')
-
-    print(
-        f'[Rank {torch.distributed.get_rank()}] '
-        f'Begin to answer {len(dataloader)} batches '
-        f'(about {len(dataloader) * args.batch_size} samples), '
-        f'{args.prompt_path=}, '
-        f'{len(item2num)=}'
-    )
-
-    log_freq = max(len(dataloader) // 100, 1)
-    print_freq = max(len(dataloader) // 100, 1)
-    outputs = []
-    for idx, (inputs, items) in enumerate(dataloader):
-        assert len(inputs) == len(items)
-        assert len(inputs) == 1
-
-        if args.ref_dir is not None and (items[0]['image'], items[0]['question']) not in ref_items:
-            continue
-
-        if isinstance(items[0]['image'], list):
-            cnt = args.num_return_sequences - item2num[(tuple(items[0]['image']), items[0]['question'])]
-        else:
-            cnt = args.num_return_sequences - item2num[(items[0]['image'], items[0]['question'])]
-
-        if cnt <= 0:
-            continue
-
-        response_list = []
-        for _ in range(0, cnt, args.batch_size):
-            curr_response_list = pipe([inputs[0]] * args.batch_size, **generation_config)
-            response_list.extend([response.text for response in curr_response_list])
-        assert len(response_list) == cnt
-
-        response_key = 'response'
-        query_list = [inputs[0][0]] * cnt
-        for item_idx, item in enumerate(items):
-            n = cnt
-            for r in response_list[item_idx * n: item_idx * n + n]:
-                item = item.copy()
-                item[response_key] = r
-                outputs.append(item)
-
-        if idx % log_freq == 0:
-            print(
-                f'[{localtime()}] '
-                f'[Rank {torch.distributed.get_rank()}] '
-                f'[Progress {idx}/{len(dataloader)}] '
-            )
-
-        if idx % print_freq == 0 and torch.distributed.get_rank() == 0:
-            print(
-                f'[Prompt]\n{query_list[-1]}\n'
-                f'[Image]\n{outputs[-1]["image"]}\n'
-                f'[Input]\n{outputs[-1]["question"]}\n'
-                f'[Output]\n{outputs[-1][response_key]}\n'
-                f'[Answer]\n{outputs[-1]["answer"]}\n'
-                f'[End]\n'
-            )
-
-        if idx % print_freq == 0 and torch.distributed.get_rank() == 0 and cnt > 2:
-            print(
-                f'[Prompt]\n{query_list[-2]}\n'
-                f'[Image]\n{outputs[-2]["image"]}\n'
-                f'[Input]\n{outputs[-2]["question"]}\n'
-                f'[Output]\n{outputs[-2][response_key]}\n'
-                f'[Answer]\n{outputs[-2]["answer"]}\n'
-                f'[End]\n'
-            )
-
-        if torch.distributed.get_rank() == 0:
-            print(f'[Item {idx} {localtime()}] Finish to log')
-
-    print(f'[{localtime()}] [Rank {torch.distributed.get_rank()}] Finish')
+def save_outputs(outputs, results_file):
+    outputs = sorted(outputs, key=lambda x:x['image'])
 
     world_size = torch.distributed.get_world_size()
     merged_outputs = [None for _ in range(world_size)]
@@ -309,13 +204,115 @@ def evaluate_chat_model():
         print(f'[{localtime()}] Results ({len(merged_outputs)=}) saved to {results_file}')
 
 
+def evaluate_chat_model():
+    dataset = VQADataset(
+        data=args.prompt_path,
+        sample_max_num=args.sample_max_num,
+    )
+    dataloader = torch.utils.data.DataLoader(
+        dataset,
+        batch_size=args.batch_size,
+        collate_fn=collate_fn,
+        shuffle=False,
+        drop_last=False,
+        num_workers=args.num_workers,
+        sampler=InferenceSampler(len(dataset)),
+    )
+    min_len = get_global_min(len(dataloader))
+
+    gen_config = GenerationConfig(
+        top_k=args.top_k,
+        top_p=args.top_p,
+        temperature=args.temperature,
+        max_new_tokens=args.max_new_tokens,
+        min_new_tokens=args.min_new_tokens,
+    )
+
+    item2num = defaultdict(int)
+    results_file = os.path.basename(args.prompt_path)
+    results_file = os.path.join(args.out_dir, results_file)
+    if os.path.exists(results_file):
+        with open(results_file) as file:
+            lines = file.readlines()
+        for line in lines:
+            item = json.loads(line)
+            item2num[(str(item['image']), item['question'])] += 1
+
+    print(
+        f'[{localtime()}] [Rank {torch.distributed.get_rank()}] '
+        f'Begin to answer {len(dataloader)} batches '
+        f'(about {len(dataloader) * args.batch_size * args.num_return_sequences} samples), '
+        f'{args.prompt_path=}, '
+        f'{len(item2num)=}'
+    )
+
+    log_freq = max(len(dataloader) // 100, 1)
+    print_freq = max(len(dataloader) // 100, 1)
+    outputs = []
+    for idx, (inputs, items) in enumerate(dataloader):
+        assert len(inputs) == len(items)
+
+        cnt_list = []
+        filtered_items = []
+        filtered_inputs = []
+        for i in range(len(inputs)):
+            cnt = args.num_return_sequences - item2num[(str(items[i]['image']), items[i]['question'])]
+            if cnt <= 0:
+                continue
+            cnt_list.append(cnt)
+            filtered_items.append(items[i])
+            filtered_inputs.append(inputs[i])
+
+        items = filtered_items
+        inputs = filtered_inputs
+
+        if len(inputs) <= 0:
+            continue
+
+        for _ in range(max(cnt_list)):
+            gen_config.random_seed = None
+            response_list = pipe(inputs, gen_config=gen_config)
+
+            for item, response in zip(items, response_list):
+                item = item.copy()
+                item["response"] = response.text
+                outputs.append(item)
+
+        if idx % print_freq == 0 and torch.distributed.get_rank() == 0:
+            print(
+                f'[Prompt]\n{inputs[-1][0]}\n'
+                f'[Image]\n{outputs[-1]["image"]}\n'
+                f'[Input]\n{outputs[-1]["question"]}\n'
+                f'[Output]\n{outputs[-1]["response"]}\n'
+                f'[Answer]\n{outputs[-1]["answer"]}\n'
+                f'[End]\n'
+            )
+
+        if idx % log_freq == 0:
+            print(
+                f'[{localtime()}] '
+                f'[Rank {torch.distributed.get_rank()}] '
+                f'[Progress {idx}/{len(dataloader)}] '
+            )
+
+        if idx % log_freq == 0 and idx < min_len:
+            save_outputs(outputs, results_file)
+            outputs = []
+
+    print(f'[{localtime()}] [Rank {torch.distributed.get_rank()}] Finish to generate')
+
+    save_outputs(outputs, results_file)
+
+    print(f'[{localtime()}] [Rank {torch.distributed.get_rank()}] Finish to save outputs')
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--checkpoint', type=str, default='')
     parser.add_argument('--prompt-path', type=str, default='')
     parser.add_argument('--out-dir', type=str, default='sampled_outputs')
-    parser.add_argument('--ref-dir', type=str, default=None)
     parser.add_argument('--batch-size', type=int, default=1)
+    parser.add_argument('--vit-batch-size', type=int, default=8)
     parser.add_argument('--num-workers', type=int, default=8)
     parser.add_argument('--top-k', type=int, default=50)
     parser.add_argument('--top-p', type=float, default=1.0)
@@ -344,7 +341,7 @@ if __name__ == '__main__':
     init_distributed_mode()
 
     model_name = '_'.join(args.checkpoint.split('/')[-2:])
-    args.out_dir = os.path.join(args.out_dir, model_name)
+    args.out_dir = os.path.join(args.out_dir, model_name, f'max_tiles_{args.max_num}')
 
     if not os.path.exists(args.out_dir):
         os.makedirs(args.out_dir, exist_ok=True)
@@ -370,11 +367,11 @@ if __name__ == '__main__':
     torch.distributed.barrier()
     print(f'world_size={torch.distributed.get_world_size()}, ip={socket.gethostbyname(socket.gethostname())}')
 
-    vision_config = VisionConfig(max_batch_size=25)
+    vision_config = VisionConfig(max_batch_size=args.vit_batch_size)
     pipe = pipeline(
         args.checkpoint,
         vision_config=vision_config,
-        backend_config=TurbomindEngineConfig(session_len=8192, tp=args.tp)
+        backend_config=TurbomindEngineConfig(session_len=8192, cache_max_entry_count=0.1, tp=args.tp)
     )
     pipe.vl_encoder.model.config.max_dynamic_patch = args.max_num
     pipe.vl_encoder.model.config.dynamic_image_size = args.dynamic
