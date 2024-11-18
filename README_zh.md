@@ -24,6 +24,7 @@
 
 ## 最新消息 🚀🚀🚀
 
+- `2024/11/14`: 我们发布了 [MMPR](https://huggingface.co/datasets/OpenGVLab/MMPR) 数据集，这是一个高质量的大规模多模态偏好数据集，并提出了一种新的更高效的偏好优化算法[MPO](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/internvl2.0_mpo)。基于该数据和算法训练得到的模型 [InternVL2-8B-MPO](https://huggingface.co/OpenGVLab/InternVL2-8B-MPO) 在 MathVista 上取得了67.0%的准确率。有关更多细节，请查看我们的[论文](https://arxiv.org/abs/2411.10442)、[项目页面](https://internvl.github.io/blog/2024-11-14-InternVL-2.0-MPO/)和[文档](https://internvl.readthedocs.io/en/latest/internvl2.0/preference_optimization.html)。
 - `2024/10/21`: 我们发布了 Mini-InternVL 系列。这些模型在保持极小模型体积的同时实现了出色的性能：4B 模型仅用 5% 的模型大小便达到了 90% 的性能。有关更多详细信息，请查看我们的 [项目页面](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/mini_internvl) 和 [文档](https://internvl.readthedocs.io/en/latest/internvl2.0/domain_adaptation.html)。
 - `2024/08/01`: [Chartmimic](https://chartmimic.github.io/) 团队在他们的基准测试中评估了 InternVL2 系列模型。InternVL2-26B 和 76B 模型在开源模型中取得了前两名的成绩，其中 InternVL2-Llama3-76B 模型超过了 GeminiProVision，并表现出与 Claude-3-opus 相当的结果。
 - `2024/08/01`: InternVL2-Pro 在 [CharXiv](https://charxiv.github.io/#leaderboard) 数据集中实现了开源模型中的 SOTA 性能，也比部分知名闭源模型如 GPT-4V、Gemini 1.5 Flash、Claude 3 Sonnet 取得了更好成绩
@@ -939,6 +940,12 @@ print(f'User: {question}\nAssistant: {response}')
   title={Mini-InternVL: A Flexible-Transfer Pocket Multimodal Model with 5\% Parameters and 90\% Performance},
   author={Gao, Zhangwei and Chen, Zhe and Cui, Erfei and Ren, Yiming and Wang, Weiyun and Zhu, Jinguo and Tian, Hao and Ye, Shenglong and He, Junjun and Zhu, Xizhou and others},
   journal={arXiv preprint arXiv:2410.16261},
+  year={2024}
+}
+@article{wang2024mpo,
+  title={Enhancing the Reasoning Ability of Multimodal Large Language Models via Mixed Preference Optimization},
+  author={Wang, Weiyun and Chen, Zhe and Wang, Wenhai and Cao, Yue and Liu, Yangzhou and Gao, Zhangwei and Zhu, Jinguo and Zhu, Xizhou and Lu, Lewei and Qiao, Yu and Dai, Jifeng},
+  journal={arXiv preprint arXiv:2411.10442},
   year={2024}
 }
 ```

@@ -24,7 +24,7 @@
 
 ## News 🚀🚀🚀
 
-- `2024/11/14`: We introduce [MMPR](https://huggingface.co/datasets/OpenGVLab/MMPR), a high-quality, large-scale multimodal reasoning preference dataset, and [MPO](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/internvl2.0_mpo), an effective preference optimization algorithm. The resulting model, [InternVL2-8B-MPO](https://huggingface.co/OpenGVLab/InternVL2-8B-MPO), achieves an accuracy of 67.0 on MathVista. Please refer to our [project page](https://internvl.github.io/blog/2024-11-14-InternVL-2.0-MPO/) and [document](https://internvl.readthedocs.io/en/latest/internvl2.0/preference_optimization.html) for more details. Our paper is coming soon.
+- `2024/11/14`: We introduce [MMPR](https://huggingface.co/datasets/OpenGVLab/MMPR), a high-quality, large-scale multimodal reasoning preference dataset, and [MPO](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/internvl2.0_mpo), an effective preference optimization algorithm. The resulting model, [InternVL2-8B-MPO](https://huggingface.co/OpenGVLab/InternVL2-8B-MPO), achieves an accuracy of 67.0 on MathVista. Please refer to our [paper](https://arxiv.org/abs/2411.10442), [project page](https://internvl.github.io/blog/2024-11-14-InternVL-2.0-MPO/) and [document](https://internvl.readthedocs.io/en/latest/internvl2.0/preference_optimization.html) for more details.
 - `2024/10/21`: We release the Mini-InternVL series. These models achieve impressive performance with minimal size: the 4B model achieves 90% of the performance with just 5% of the model size. For more details, please check our [project page](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/mini_internvl) and [document](https://internvl.readthedocs.io/en/latest/internvl2.0/domain_adaptation.html).
 - `2024/08/01`: The [Chartmimic](https://chartmimic.github.io/) team evaluated the InternVL2 series models on their benchmark. The InternVL2-26B and 76B models achieved the top two performances among open-source models, with the InternVL2 76B model surpassing GeminiProVision and exhibiting comparable results to Claude-3-opus.
 - `2024/08/01`: InternVL2-Pro achieved the SOTA performance among open-source models on the [CharXiv](https://charxiv.github.io/#leaderboard) dataset, surpassing many closed-source models such as GPT-4V, Gemini 1.5 Flash, and Claude 3 Sonnet.
@@ -940,6 +940,12 @@ If you find this project useful in your research, please consider cite:
   title={Mini-InternVL: A Flexible-Transfer Pocket Multimodal Model with 5\% Parameters and 90\% Performance},
   author={Gao, Zhangwei and Chen, Zhe and Cui, Erfei and Ren, Yiming and Wang, Weiyun and Zhu, Jinguo and Tian, Hao and Ye, Shenglong and He, Junjun and Zhu, Xizhou and others},
   journal={arXiv preprint arXiv:2410.16261},
+  year={2024}
+}
+@article{wang2024mpo,
+  title={Enhancing the Reasoning Ability of Multimodal Large Language Models via Mixed Preference Optimization},
+  author={Wang, Weiyun and Chen, Zhe and Wang, Wenhai and Cao, Yue and Liu, Yangzhou and Gao, Zhangwei and Zhu, Jinguo and Zhu, Xizhou and Lu, Lewei and Qiao, Yu and Dai, Jifeng},
+  journal={arXiv preprint arXiv:2411.10442},
   year={2024}
 }
 ```

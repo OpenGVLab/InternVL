@@ -1,12 +1,14 @@
 # Enhancing the Reasoning Ability of Multimodal Large Language Models via Mixed Preference Optimization
 
+[\[📂 GitHub\]](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/internvl2.0_mpo)  [\[🆕 Blog\]](https://internvl.github.io/blog/2024-11-14-InternVL-2.0-MPO/)  [\[📜 Paper\]](https://arxiv.org/abs/2411.10442) [\[📖 Documents\]](https://internvl.readthedocs.io/en/latest/internvl2.0/preference_optimization.html)
+
 ## Introduction
 
 Existing open-source multimodal large language models (MLLMs) generally follow a training process involving pre-training and supervised fine-tuning. However, these models suffer from distribution shifts, which limit their multimodal reasoning, particularly in the Chain-of-Thought (CoT) performance.
 
 To address this, we introduce a preference optimization (PO) process to enhance the multimodal reasoning capabilities of MLLMs. Specifically, (1) on the data side, we design an automated preference data construction pipeline to create [MMPR](https://huggingface.co/datasets/OpenGVLab/MMPR), a high-quality, large-scale multimodal reasoning preference dataset. and (2) on the model side, we explore integrating PO with MLLMs, developing a simple yet effective method, termed Mixed Preference Optimization (MPO), which boosts multimodal CoT performance.
 
-Our approach demonstrates improved performance across multiple benchmarks, particularly in multimodal reasoning tasks. Notably, our model, [InternVL2-8B-MPO](https://huggingface.co/OpenGVLab/InternVL2-8B-MPO), achieves an accuracy of 67.0 on MathVista, outperforming InternVL2-8B by 8.7 points and achieving performance comparable to the 10$\times$ larger InternVL2-76B. We hope this study could inspire further advancements in MLLMs.
+Our approach demonstrates improved performance across multiple benchmarks, particularly in multimodal reasoning tasks. Notably, our model, [InternVL2-8B-MPO](https://huggingface.co/OpenGVLab/InternVL2-8B-MPO), achieves an accuracy of 67.0 on MathVista, outperforming InternVL2-8B by 8.7 points and achieving performance comparable to the 10$`\times`$ larger InternVL2-76B. We hope this study could inspire further advancements in MLLMs.
 
 
 ![image/jpeg](https://cdn-uploads.huggingface.co/production/uploads/619507e7b74b6c591f794340/sy8aVC1Y5wtAjG-OQzrDI.jpeg)
@@ -47,14 +49,14 @@ The data construction pipeline is open-sourced, see more details in our [documen
 ## Mixed Preference Optimization
 
 The key insight behind MPO is that *an effective PO process should enable the model to learn the relative preference between pairs of responses, the absolute quality of individual responses, and the process for generating preferred responses.* We define the training objective as a combination of
-preference loss $\mathcal{L}_{\text{p}}$,
-quality loss $\mathcal{L}_{\text{q}}$,
-and generation loss $\mathcal{L}_{\text{g}}$,
+preference loss $`\mathcal{L}_{\text{p}}`$,
+quality loss $`\mathcal{L}_{\text{q}}`$,
+and generation loss $`\mathcal{L}_{\text{g}}`$,
 referred to as Mixed Preference Optimization:
 
-$$
+```math
 \mathcal{L}=w_{p}\cdot\mathcal{L}_{\text{p}} + w_{q}\cdot\mathcal{L}_{\text{q}} + w_{g}\cdot\mathcal{L}_{\text{g}}, 
-$$
+```
 
 where $w_{*}$ represents the weight assigned to each loss component.
 In this work, we empirically compare different variants of preference loss.
@@ -64,9 +66,9 @@ Specifically, the DPO serves as the preference loss to enable the model to learn
 relative preference between chosen and rejected responses.
 This algorithm optimizes the following loss function:
 
-$$
+```math
 \mathcal{L}_{\text{p}}=-\log \sigma\left(\beta \log \frac{\pi_\theta\left(y_c \mid x\right)}{\pi_0\left(y_c \mid x\right)}-\beta \log \frac{\pi_\theta\left(y_r \mid x\right)}{\pi_0\left(y_r \mid x\right)}\right),
-$$
+```
 
 where $\beta$ is the KL penalty coefficient, and $x$, $y_c$, and $y_r$ are user query, chosen response, and rejected response, respectively.
 The policy model $\pi_\theta$ is initialized from model $\pi_0$.
@@ -74,22 +76,22 @@ The policy model $\pi_\theta$ is initialized from model $\pi_0$.
 Additionally, the BCO loss is employed as the quality loss, which helps the model to understand the absolute quality of individual responses.
 The loss function is defined as:
 
-$$
+```math
 \mathcal{L}_{\text{q}}=\mathcal{L}_{\text{q}}^+ + \mathcal{L}_{\text{q}}^-,
-$$
+```
 
-where $\mathcal{L}_{\text{q}}^{+}$ and $\mathcal{L}_{\text{q}}^{+}$ represent the loss for chosen and rejected responses, respectively.
+where $`\mathcal{L}_{\text{q}}^{+}`$ and $`\mathcal{L}_{\text{q}}^{+}`$ represent the loss for chosen and rejected responses, respectively.
 Each response type's loss is calculated independently, requiring the model to differentiate the absolute quality of individual responses. The loss terms are given by:
 
 
-$$
+```math
 \mathcal{L}_{\text{q}}^+=-\log \sigma\left(\beta \log \frac{\pi_\theta\left(y_c \mid x\right)}{\pi_0\left(y_c \mid x\right)} - \delta\right),
-$$
+```
 
 
-$$
+```math
 \mathcal{L}_{\text{q}}^-=-\log \sigma\left(-\left(\beta \log \frac{\pi_\theta\left(y_r \mid x\right)}{\pi_0\left(y_r \mid x\right)} - \delta\right) \right),
-$$
+```
 
 
 where $\delta$ represents the reward shift, calculated as the moving average of previous rewards to stabilize training.
@@ -98,15 +100,15 @@ Finally, the SFT loss is used as the generation loss to help the model learn the
 The loss function is defined as:
 
 
-$$
+```math
 \mathcal{L}_{\text{gen}}=-\frac{\log\pi_\theta\left(y_c \mid x\right)}{\left| y_c \right|}.
-$$
+```
 
 
 ## Models and Performance
 
 Our [InternVL2-8B-MPO](https://huggingface.co/OpenGVLab/InternVL2-8B) achieves superior performance across 8 benchmarks, particularly excelling in multimodal reasoning tasks.
-**On the MathVista benchmark, our model achieves an accuracy of 67.0%**, outperforming InternVL2-8B by 8.7 points and achieving performance comparable to the 10$\times$ larger InternVL2-76B.
+**On the MathVista benchmark, our model achieves an accuracy of 67.0%**, outperforming InternVL2-8B by 8.7 points and achieving performance comparable to the 10$`\times`$ larger InternVL2-76B.
 **On the MathVision benchmark, our model achieves an accuracy of 25.7%**, establishing a new state-of-the-art performance among open-source models.
 These results demonstrate the effectiveness of our preference optimization approach in enhancing multimodal reasoning capabilities.
 
@@ -139,6 +141,12 @@ Please refer to [our document](https://internvl.readthedocs.io/en/latest/internv
 If you find this project useful in your research, please consider citing:
 
 ```BibTeX
+@article{wang2024mpo,
+  title={Enhancing the Reasoning Ability of Multimodal Large Language Models via Mixed Preference Optimization},
+  author={Wang, Weiyun and Chen, Zhe and Wang, Wenhai and Cao, Yue and Liu, Yangzhou and Gao, Zhangwei and Zhu, Jinguo and Zhu, Xizhou and Lu, Lewei and Qiao, Yu and Dai, Jifeng},
+  journal={arXiv preprint arXiv:2411.10442},
+  year={2024}
+}
 @article{chen2023internvl,
   title={InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks},
   author={Chen, Zhe and Wu, Jiannan and Wang, Wenhai and Su, Weijie and Chen, Guo and Xing, Sen and Zhong, Muyan and Zhang, Qinglong and Zhu, Xizhou and Lu, Lewei and Li, Bin and Luo, Ping and Lu, Tong and Qiao, Yu and Dai, Jifeng},
