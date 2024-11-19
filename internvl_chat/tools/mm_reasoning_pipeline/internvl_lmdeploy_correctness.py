@@ -276,7 +276,7 @@ def evaluate_chat_model():
             for input, item, response in zip(inputs, items, response_list):
                 item = item.copy()
                 item["question_orig"] = item["question"]
-                item["question"] = input[0]
+                item["question"] = input[0].replace(IMAGE_TOKEN, IMG_PLACEHOLDER)
                 item["response"] = response.text
                 outputs.append(item)
 
