@@ -246,8 +246,8 @@ def evaluate_chat_model():
         f'{len(item2num)=}'
     )
 
-    log_freq = max(len(dataloader) // 100, 1)
-    print_freq = max(len(dataloader) // 100, 1)
+    log_freq = max(len(dataloader) // args.batch_size // 100, 1)
+    print_freq = max(len(dataloader) // args.batch_size // 100, 1)
     outputs = []
     for idx, (inputs, items) in enumerate(dataloader):
         assert len(inputs) == len(items)
@@ -273,8 +273,10 @@ def evaluate_chat_model():
             gen_config.random_seed = None
             response_list = pipe(inputs, gen_config=gen_config)
 
-            for item, response in zip(items, response_list):
+            for input, item, response in zip(inputs, items, response_list):
                 item = item.copy()
+                item["question_orig"] = item["question"]
+                item["question"] = input[0]
                 item["response"] = response.text
                 outputs.append(item)
 
@@ -282,7 +284,7 @@ def evaluate_chat_model():
             print(
                 f'[Prompt]\n{inputs[-1][0]}\n'
                 f'[Image]\n{outputs[-1]["image"]}\n'
-                f'[Input]\n{outputs[-1]["question"]}\n'
+                f'[Question]\n{outputs[-1]["question_orig"]}\n'
                 f'[Output]\n{outputs[-1]["response"]}\n'
                 f'[Answer]\n{outputs[-1]["answer"]}\n'
                 f'[End]\n'
