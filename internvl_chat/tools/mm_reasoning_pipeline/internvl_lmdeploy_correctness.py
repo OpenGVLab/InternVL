@@ -236,7 +236,7 @@ def evaluate_chat_model():
             lines = file.readlines()
         for line in lines:
             item = json.loads(line)
-            item2num[(str(item['image']), item['question'])] += 1
+            item2num[(str(item['image']), item['question_orig'])] += 1
 
     print(
         f'[{localtime()}] [Rank {torch.distributed.get_rank()}] '
