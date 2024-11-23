@@ -14,9 +14,6 @@ from lmdeploy import (GenerationConfig, TurbomindEngineConfig, VisionConfig,
 from lmdeploy.vl.constants import IMAGE_TOKEN
 from PIL import Image
 
-# import deepspeed
-
-
 try:
     from petrel_client.client import Client
     client = Client()

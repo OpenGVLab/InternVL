@@ -200,13 +200,21 @@ class DataTrainingArguments:
         default=False,
         metadata={'help': 'Set to True to add a thumbnail image. Default is False.'},
     )
-    min_dynamic_patch: Optional[int] = field(
+    min_dynamic_patch: int = field(
         default=1,
         metadata={'help': 'The minimum number of dynamic patches. Default is 1.'},
     )
-    max_dynamic_patch: Optional[int] = field(
+    max_dynamic_patch: int = field(
         default=12,
         metadata={'help': 'The maximum number of dynamic patches. Default is 12.'},
+    )
+    min_num_frame: int = field(
+        default=8,
+        metadata={'help': 'The minimum number of frames for video data. Default is 8.'},
+    )
+    max_num_frame: int = field(
+        default=32,
+        metadata={'help': 'The maximum number of frames for video data. Default is 32.'},
     )
     normalize_type: Literal['imagenet', 'clip', 'siglip'] = field(
         default='imagenet',
@@ -691,7 +699,7 @@ class LazySupervisedDataset(Dataset):
             except Exception as e:
                 try_cnt += 1
                 print(e, self.ds_name, flush=True)
-                if not isinstance(e, UnidentifiedImageError):
+                if not isinstance(e, (UnidentifiedImageError, FileNotFoundError)):
                     traceback.print_exc()
                 data_item = json.loads(self.raw_data[i])
                 if 'image' in data_item:
