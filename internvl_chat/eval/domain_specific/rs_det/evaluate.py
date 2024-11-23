@@ -1,20 +1,15 @@
 import argparse
-import base64
 import itertools
 import json
-import math
 import os
 import random
 import time
 from functools import partial
-from io import BytesIO
 
-import pandas as pd
 import torch
 from internvl.model.internvl_chat import InternVLChatModel
 from internvl.train.dataset import build_transform, dynamic_preprocess
 from PIL import Image
-from torch.utils.data import Dataset
 from tqdm import tqdm
 from transformers import AutoTokenizer
 
@@ -227,7 +222,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if not os.path.exists(args.out_dir):
-        os.makedirs(args.out_dir)
+        os.makedirs(args.out_dir, exist_ok=True)
 
     args.datasets = args.datasets.split(',')
     print('datasets:', args.datasets)

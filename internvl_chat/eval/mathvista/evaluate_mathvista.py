@@ -10,7 +10,6 @@ import torch
 from datasets import concatenate_datasets, load_dataset
 from internvl.model import load_model_and_tokenizer
 from internvl.train.dataset import build_transform, dynamic_preprocess
-from torch.utils.data import Dataset
 from tqdm import tqdm
 
 ds_collections = {
@@ -203,7 +202,6 @@ if __name__ == '__main__':
     parser.add_argument('--dynamic', action='store_true')
     parser.add_argument('--max-num', type=int, default=6)
     parser.add_argument('--load-in-8bit', action='store_true')
-    parser.add_argument('--load-in-4bit', action='store_true')
     parser.add_argument('--auto', action='store_true')
     parser.add_argument('--cot', action='store_true')
     args = parser.parse_args()

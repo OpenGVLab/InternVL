@@ -1,6 +1,5 @@
 import argparse
 import json
-import os
 import re
 
 import torch
