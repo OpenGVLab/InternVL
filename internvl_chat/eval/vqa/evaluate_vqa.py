@@ -496,7 +496,7 @@ if __name__ == '__main__':
                         default='okvqa_val,textvqa_val,vizwiz_val,ai2diagram_test,gqa_testdev_llava')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
-    parser.add_argument('--num-beams', type=int, default=5)
+    parser.add_argument('--num-beams', type=int, default=1)
     parser.add_argument('--temperature', type=float, default=0.0)
     parser.add_argument('--out-dir', type=str, default='results')
     parser.add_argument('--few-shot', type=int, default=0)
