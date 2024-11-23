@@ -30,13 +30,13 @@ ds_collections = {
 
 
 COT_INSTRUCTION = (
-    "Your task is to answer the question below. "
+    'Your task is to answer the question below. '
     "Give step by step reasoning before you answer, and when you're ready to answer, "
     "please use the format \"Final answer: ..\""
-    "\n\n"
-    "Question:"
-    "\n\n"
-    "{question}"
+    '\n\n'
+    'Question:'
+    '\n\n'
+    '{question}'
 )
 
 

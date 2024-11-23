@@ -1,9 +1,9 @@
 import argparse
 import itertools
 import json
-import re
 import os
 import random
+import re
 import time
 from functools import partial
 
@@ -25,13 +25,13 @@ ds_collections = {
 
 
 COT_INSTRUCTION = (
-    "Your task is to answer the question below. "
+    'Your task is to answer the question below. '
     "Give step by step reasoning before you answer, and when you're ready to answer, "
     "please use the format \"Final answer: ..\""
-    "\n\n"
-    "Question:"
-    "\n\n"
-    "{question}"
+    '\n\n'
+    'Question:'
+    '\n\n'
+    '{question}'
 )
 
 
@@ -122,7 +122,7 @@ class InferenceSampler(torch.utils.data.sampler.Sampler):
 
 
 def evaluate_chat_model():
-    prompt = "" if args.cot else 'Answer the question using a single word or phrase.'
+    prompt = '' if args.cot else 'Answer the question using a single word or phrase.'
     random.seed(args.seed)
 
     for ds_name in args.datasets:

@@ -1,9 +1,9 @@
 import argparse
 import itertools
 import json
-import re
 import os
 import random
+import re
 import time
 from functools import partial
 
@@ -29,13 +29,13 @@ ds_collections = {
 
 
 COT_INSTRUCTION = (
-    "Your task is to answer the question below. "
+    'Your task is to answer the question below. '
     "Give step by step reasoning before you answer, and when you're ready to answer, "
     "please use the format \"Final answer: ..\""
-    "\n\n"
-    "Question:"
-    "\n\n"
-    "{question}"
+    '\n\n'
+    'Question:'
+    '\n\n'
+    '{question}'
 )
 
 
@@ -160,7 +160,7 @@ def post_process(pred, option):
 
 
 def evaluate_chat_model():
-    prompt = "" if args.cot else "Answer with the option's letter from the given choices directly."
+    prompt = '' if args.cot else "Answer with the option's letter from the given choices directly."
     random.seed(args.seed)
 
     for ds_name in args.datasets:

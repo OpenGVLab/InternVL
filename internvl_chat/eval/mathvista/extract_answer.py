@@ -1,7 +1,7 @@
-import re
-import httpx
 import argparse
+import re
 
+import httpx
 from tqdm import tqdm
 from utilities import *
 

@@ -9,7 +9,7 @@ import traceback
 import warnings
 from copy import deepcopy
 from dataclasses import dataclass, field
-from typing import Dict, Optional, Literal
+from typing import Dict, Literal, Optional
 
 import numpy as np
 import torch
@@ -35,6 +35,7 @@ from internvl.train.dataset import (ConcatDataset, TCSLoader,
                                     dynamic_preprocess, preprocess,
                                     preprocess_internlm, preprocess_mpt,
                                     preprocess_phi3)
+from internvl.train.trainer_dpo import MultimodalDPOTrainer
 from PIL import Image, ImageFile, PngImagePlugin, UnidentifiedImageError
 from torch.utils.data import Dataset
 from transformers import (AutoConfig, AutoModelForCausalLM, AutoTokenizer,
@@ -43,10 +44,7 @@ from transformers import (AutoConfig, AutoModelForCausalLM, AutoTokenizer,
 from transformers.trainer_utils import get_last_checkpoint
 from transformers.utils.logging import (enable_default_handler,
                                         enable_explicit_format, set_verbosity)
-
 from trl import DPOConfig as DPOConfigTRL
-from internvl.train.trainer_dpo import MultimodalDPOTrainer
-
 
 # Apply necessary patches for the transformers library
 replace_llama_rmsnorm_with_fused_rmsnorm()
@@ -216,9 +214,9 @@ class DataTrainingArguments:
 
 class DPOConfig(DPOConfigTRL):
     loss_type: Literal[
-        "sigmoid", "hinge", "ipo", "bco_pair", "sppo_hard", "nca_pair", "robust", "aot", "aot_pair", "exo_pair",
-        "sigmoid,bco_pair",
-    ] = "sigmoid"
+        'sigmoid', 'hinge', 'ipo', 'bco_pair', 'sppo_hard', 'nca_pair', 'robust', 'aot', 'aot_pair', 'exo_pair',
+        'sigmoid,bco_pair',
+    ] = 'sigmoid'
 
 
 class LazySupervisedDataset(Dataset):
