@@ -172,3 +172,10 @@ data_process/
 
 batchscript-*
 results/
+
+# dev/dpo
+.*
+*/ckpt
+*/data
+*/MMPR
+*/outputs
