@@ -197,7 +197,8 @@ def evaluate_chat_model():
             os.system(cmd)
 
 
-
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
     parser.add_argument('--checkpoint', type=str, default='')
     parser.add_argument('--datasets', type=str, default='DIOR_RSVG')
     parser.add_argument('--batch-size', type=int, default=1)
