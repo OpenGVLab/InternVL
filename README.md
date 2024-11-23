@@ -45,11 +45,14 @@
 
 ## TODO List
 
+- [x] Support liger kernels to save GPU memory
+- [x] Release the code, model, and data of MPO
+- [x] Support multimodal packed dataset
 - [ ] Support vLLM and Ollama
-- [x] Rebuild documents using readthedocs
-- [x] Support fine-tuning different LLMs with LoRA
 - [ ] Support video and PDF input in online demo
 - [ ] Release InternVL2 with VisionLLMv2 integration
+- [x] Rebuild documents using readthedocs
+- [x] Support fine-tuning different LLMs with LoRA
 - [x] Release `requirements.txt` for InternVL2
 - [x] Release training / evaluation code for InternVL2 series
 - [x] Release Streamlit web UI for InternVL1.5 and InternVL2
