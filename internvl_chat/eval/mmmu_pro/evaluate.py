@@ -3,11 +3,9 @@ import json
 import os
 import random
 import re
-import sys
 from collections import defaultdict
 
 import numpy as np
-import pandas as pd
 
 temp_path = './eval/mmmu_pro/options.jsonl'
 f = open(temp_path, 'r')

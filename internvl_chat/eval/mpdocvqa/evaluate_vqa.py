@@ -3,10 +3,8 @@ import itertools
 import json
 import os
 import random
-import subprocess
 import time
 from functools import partial
-from typing import Optional
 
 import torch
 from internvl.model import load_model_and_tokenizer

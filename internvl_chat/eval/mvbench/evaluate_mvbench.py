@@ -14,7 +14,6 @@ from decord import VideoReader, cpu
 from internvl.model import load_model_and_tokenizer
 from internvl.train.dataset import build_transform, dynamic_preprocess
 from PIL import Image
-from torch.utils.data import Dataset
 from tqdm import tqdm
 
 data_list = {

@@ -7,11 +7,10 @@ import time
 from functools import partial
 
 import torch
-from internvl.model.internvl_chat import InternVLChatModel
+from internvl.model import load_model_and_tokenizer
 from internvl.train.dataset import build_transform, dynamic_preprocess
 from PIL import Image
 from tqdm import tqdm
-from transformers import AutoTokenizer
 
 ds_collections = {
     'DIOR_RSVG': {
@@ -75,7 +74,6 @@ class GroundingDataset(torch.utils.data.Dataset):
             'pixel_values': pixel_values,
             'answer': answer,
             'image_size': image_size_
-            # 'index': index,
         }
 
 
@@ -136,7 +134,6 @@ def evaluate_chat_model():
             root=ds_collections[ds_name]['root'],
             image_root=ds_collections[ds_name]['image_root'],
             prompt=prompt_prefix,
-            # language=ds_collections[ds_name]['language'],
             input_size=image_size,
             dynamic_image_size=args.dynamic,
             use_thumbnail=use_thumbnail,
@@ -169,7 +166,6 @@ def evaluate_chat_model():
                 generation_config=generation_config
             )
             preds = [pred]
-            # preds = [post_process(output)]
 
             for question, pred, answer, image_size_ in zip(questions, preds, answers, image_sizes):
                 outputs.append({
@@ -193,22 +189,17 @@ def evaluate_chat_model():
             time_prefix = time.strftime('%y%m%d%H%M%S', time.localtime())
             results_file = f'{ds_name}_{time_prefix}.json'
             output_path = os.path.join(args.out_dir, results_file)
-            # results = evaluation_metrics(merged_outputs)
             with open(output_path, 'w') as f:
-                json.dump({
-                    # "results":results,
-                    'outputs': merged_outputs
-                }, f, indent=4)
+                json.dump({'outputs': merged_outputs}, f, indent=4)
             print('Results saved to {}'.format(output_path))
             cmd = f'python eval/rs_det/caculate.py --output_file {output_path}'
             print(cmd)
             os.system(cmd)
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
+
     parser.add_argument('--checkpoint', type=str, default='')
-    parser.add_argument('--datasets', type=str, default='mmbench_dev_20230712')
+    parser.add_argument('--datasets', type=str, default='DIOR_RSVG')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
     parser.add_argument('--num-beams', type=int, default=1)
@@ -236,17 +227,7 @@ if __name__ == '__main__':
 
     torch.cuda.set_device(int(os.getenv('LOCAL_RANK', 0)))
 
-    if args.auto:
-        os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
-
-    kwargs = {'device_map': 'auto'} if args.auto else {}
-
-    tokenizer = AutoTokenizer.from_pretrained(args.checkpoint, trust_remote_code=True, use_fast=False)
-    model = InternVLChatModel.from_pretrained(
-        args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16,
-        load_in_8bit=args.load_in_8bit, **kwargs).eval()
-    if not args.load_in_8bit and not args.auto:
-        model = model.cuda()
+    model, tokenizer = load_model_and_tokenizer(args)
     image_size = model.config.force_image_size or model.config.vision_config.image_size
     use_thumbnail = model.config.use_thumbnail
 
@@ -264,5 +245,4 @@ if __name__ == '__main__':
 
     prompt_prefix = 'Detect '
     # prompt_prefix =  "Please provide the bounding box coordinate of the region this sentence describes: "
-
     evaluate_chat_model()

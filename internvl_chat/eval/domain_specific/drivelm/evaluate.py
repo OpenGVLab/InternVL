@@ -78,8 +78,6 @@ class DriveLMDataset(torch.utils.data.Dataset):
 
     def __init__(self, root, split, prompt, image_path, input_size=224, dynamic_image_size=False,
                  use_thumbnail=False, max_num=6, ):
-        # run for each subject
-
         with open(root, 'r') as f:
             self.data = [json.loads(line) for line in f.readlines()]
             # data_val = json.load(f)
@@ -105,7 +103,6 @@ class DriveLMDataset(torch.utils.data.Dataset):
         image_file = os.path.join(self.image_path, data['image'])
         image = Image.open(image_file).convert('RGB')
         # question_type = data['question_type']
-
         # choices = eval(data['options'])
         answer = data['conversations'][1]['value'].strip()
 

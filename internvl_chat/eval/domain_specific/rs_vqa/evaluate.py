@@ -1,5 +1,4 @@
 import argparse
-import base64
 import itertools
 import json
 import os
@@ -8,11 +7,10 @@ import time
 from functools import partial
 
 import torch
-from internvl.model.internvl_chat import InternVLChatModel
+from internvl.model import load_model_and_tokenizer
 from internvl.train.dataset import build_transform, dynamic_preprocess
 from PIL import Image
 from tqdm import tqdm
-from transformers import AutoTokenizer
 
 ds_collections = {
     'RSVQA_H_TEST2': {
@@ -56,7 +54,6 @@ class RSVQADataset(torch.utils.data.Dataset):
 
         with open(root, 'r') as f:
             self.ann_data = json.load(f)
-
         self.prompt = prompt
         self.image_root = image_root
         self.input_size = input_size
@@ -72,8 +69,6 @@ class RSVQADataset(torch.utils.data.Dataset):
         data_item = self.ann_data[idx]
         index = data_item['id']
         image = data_item['image']
-        # print(data_item)
-        # print( self.prompt)
         question = data_item['question'] + '\n' + self.prompt
         answer = data_item['gt_answer']
         question_type = data_item['type']
@@ -156,7 +151,6 @@ def evaluate_chat_model():
         dataset = RSVQADataset(
             root=ds_collections[ds_name]['root'],
             prompt=prompt,
-            # language=ds_collections[ds_name]['language'],
             image_root=ds_collections[ds_name]['image_root'],
             input_size=image_size,
             dynamic_image_size=args.dynamic,
@@ -190,7 +184,6 @@ def evaluate_chat_model():
                 generation_config=generation_config
             )
             preds = [pred]
-            # preds = [post_process(output)]
 
             for question, pred, answer, index, question_type in zip(questions, preds, answers, indexes, question_types):
                 outputs.append({
@@ -216,8 +209,7 @@ def evaluate_chat_model():
             results_file = f'{ds_name}_{time_prefix}.json'
             output_path = os.path.join(args.out_dir, results_file)
             with open(output_path, 'w') as f:
-                json.dump(merged_outputs
-                          , f, indent=4)
+                json.dump(merged_outputs, f, indent=4)
             cmd = f'python eval/rs_vqa/score.py --output_file {output_path}'
             print(cmd)
             os.system(cmd)
@@ -226,7 +218,7 @@ def evaluate_chat_model():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--checkpoint', type=str, default='')
-    parser.add_argument('--datasets', type=str, default='mmbench_dev_20230712')
+    parser.add_argument('--datasets', type=str, default='RSVQA_H_TEST2')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
     parser.add_argument('--num-beams', type=int, default=1)
