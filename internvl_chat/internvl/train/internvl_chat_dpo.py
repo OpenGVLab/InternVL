@@ -1,5 +1,9 @@
-import gc
-import json
+# --------------------------------------------------------
+# InternVL
+# Copyright (c) 2024 OpenGVLab
+# Licensed under The MIT License [see LICENSE for details]
+# --------------------------------------------------------
+
 import logging
 import math
 import os
@@ -12,6 +16,12 @@ from dataclasses import dataclass, field
 from typing import Dict, Literal, Optional
 
 import numpy as np
+
+try:
+    import orjson as json
+except:
+    import json
+
 import torch
 import torch.distributed as dist
 import transformers
@@ -33,7 +43,8 @@ from internvl.train.constants import (BOX_END_TOKEN, BOX_START_TOKEN,
 from internvl.train.dataset import (ConcatDataset, TCSLoader,
                                     WeightedConcatDataset, build_transform,
                                     dynamic_preprocess, preprocess,
-                                    preprocess_internlm, preprocess_mpt,
+                                    preprocess_internlm,
+                                    preprocess_internvl2_5, preprocess_mpt,
                                     preprocess_phi3)
 from internvl.train.trainer_dpo import MultimodalDPOTrainer
 from PIL import Image, ImageFile, PngImagePlugin, UnidentifiedImageError
@@ -45,10 +56,6 @@ from transformers.trainer_utils import get_last_checkpoint
 from transformers.utils.logging import (enable_default_handler,
                                         enable_explicit_format, set_verbosity)
 from trl import DPOConfig as DPOConfigTRL
-
-# Apply necessary patches for the transformers library
-replace_llama_rmsnorm_with_fused_rmsnorm()
-replace_train_sampler()
 
 # Try to import petrel_client for image loading, fallback to PIL if unavailable
 try:
@@ -333,6 +340,8 @@ class LazySupervisedDataset(Dataset):
             preprocess_function = preprocess_internlm
         elif self.template_name == 'phi3-chat':
             preprocess_function = preprocess_phi3
+        elif self.template_name == 'internvl2_5':
+            preprocess_function = preprocess_internvl2_5
         else:
             preprocess_function = preprocess
         return preprocess_function
@@ -451,7 +460,7 @@ class LazySupervisedDataset(Dataset):
             image = self.load_image(image_path)
             if self.dynamic_image_size:  # If dynamic image size is enabled, preprocess the image dynamically
                 image = dynamic_preprocess(image, min_num=self.min_dynamic_patch,
-                                           max_num=self.max_dynamic_patch // num_image,
+                                           max_num=max(1, self.max_dynamic_patch // num_image),
                                            image_size=self.image_size, use_thumbnail=self.use_thumbnail)
                 images += image
                 num_tiles.append(len(image))
@@ -629,6 +638,8 @@ def build_datasets(
     use_thumbnail=False,
     min_dynamic_patch=1,
     max_dynamic_patch=12,
+    min_num_frame=8,
+    max_num_frame=32,
     normalize_type='imagenet',
 ):
     datasets = []
@@ -655,6 +666,8 @@ def build_datasets(
             use_thumbnail=use_thumbnail,
             min_dynamic_patch=min_dynamic_patch,
             max_dynamic_patch=max_num,
+            min_num_frame=min_num_frame,
+            max_num_frame=max_num_frame,
             repeat_time=repeat_time,
             normalize_type=normalize_type,
             random_seed=ds_idx,
@@ -676,6 +689,10 @@ def build_datasets(
 
 
 def main():
+    # Apply necessary patches for the transformers library
+    replace_llama_rmsnorm_with_fused_rmsnorm()
+    replace_train_sampler()
+
     # Parse input arguments
     # See all possible arguments in src/transformers/training_args.py
     # If use DeepSpeed zero3, init_dist must before HfArgumentParser
@@ -743,7 +760,7 @@ def main():
     tokenizer_path = model_args.model_name_or_path or model_args.llm_path
     logger.info(f'Loading Tokenizer: {tokenizer_path}')
     tokenizer = AutoTokenizer.from_pretrained(
-        tokenizer_path, add_eos_token=False, trust_remote_code=True, use_fast=False)
+        tokenizer_path, add_eos_token=False, trust_remote_code=True, use_fast=model_args.use_fast_tokenizer)
     tokenizer.tokenizer_path = tokenizer_path
     tokenizer.model_max_length = data_args.max_seq_length
     token_list = [IMG_START_TOKEN, IMG_END_TOKEN, IMG_CONTEXT_TOKEN,
@@ -752,6 +769,14 @@ def main():
     num_new_tokens = tokenizer.add_tokens(token_list, special_tokens=True)
     img_context_token_id = tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
     tcs_loader = TCSLoader('~/petreloss.conf') if has_tcs_loader else None
+
+    if model_args.use_liger:
+        from internvl.patch import apply_liger_kernel_to_internvit
+        from liger_kernel.transformers import (apply_liger_kernel_to_llama,
+                                               apply_liger_kernel_to_qwen2)
+        apply_liger_kernel_to_llama()
+        apply_liger_kernel_to_qwen2()
+        # apply_liger_kernel_to_internvit()
 
     if model_args.model_name_or_path is not None:
         logger.info('Loading InternVLChatModel...')
@@ -853,7 +878,8 @@ def main():
         data_args, tokenizer, tcs_loader, model, group_by_length=training_args.group_by_length,
         dynamic_image_size=data_args.dynamic_image_size, use_thumbnail=data_args.use_thumbnail,
         min_dynamic_patch=data_args.min_dynamic_patch, max_dynamic_patch=data_args.max_dynamic_patch,
-        normalize_type=data_args.normalize_type)
+        normalize_type=data_args.normalize_type, min_num_frame=data_args.min_num_frame,
+        max_num_frame=data_args.max_num_frame)
 
     def _freeze_params(module):
         for param in module.parameters():

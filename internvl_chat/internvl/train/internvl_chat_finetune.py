@@ -4,7 +4,6 @@
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
 
-import json
 import logging
 import math
 import os
@@ -18,6 +17,12 @@ from functools import partial
 from typing import Dict, Literal, Optional
 
 import numpy as np
+
+try:
+    import orjson as json
+except:
+    import json
+
 import torch
 import torch.distributed as dist
 import transformers
@@ -55,11 +60,6 @@ from transformers import (AutoConfig, AutoModelForCausalLM, AutoTokenizer,
 from transformers.trainer_utils import get_last_checkpoint
 from transformers.utils.logging import (enable_default_handler,
                                         enable_explicit_format, set_verbosity)
-
-# Apply necessary patches for the transformers library
-replace_llama_rmsnorm_with_fused_rmsnorm()
-replace_train_sampler()
-replace_train_dataloader()
 
 # Try to import petrel_client for image loading, fallback to PIL if unavailable
 try:
@@ -152,6 +152,10 @@ class ModelArguments:
     use_fast_tokenizer: bool = field(
         default=False,
         metadata={'help': 'Set to True to use the fast mode of the tokenizer.'}
+    )
+    use_liger: bool = field(
+        default=False,
+        metadata={'help': 'Set to True to use the liger kernel.'}
     )
 
 
@@ -704,6 +708,8 @@ def build_datasets(
     use_thumbnail=False,
     min_dynamic_patch=1,
     max_dynamic_patch=12,
+    min_num_frame=8,
+    max_num_frame=32,
     normalize_type='imagenet',
 ):
     datasets = []
@@ -732,6 +738,8 @@ def build_datasets(
             use_thumbnail=use_thumbnail,
             min_dynamic_patch=min_dynamic_patch,
             max_dynamic_patch=max_num,
+            min_num_frame=min_num_frame,
+            max_num_frame=max_num_frame,
             repeat_time=repeat_time,
             normalize_type=normalize_type,
             # hyperparameters for packed training
@@ -788,6 +796,11 @@ def len2weight(x, loss_reduction):
 
 
 def main():
+    # Apply necessary patches for the transformers library
+    replace_llama_rmsnorm_with_fused_rmsnorm()
+    replace_train_sampler()
+    replace_train_dataloader()
+
     # Parse input arguments
     # See all possible arguments in src/transformers/training_args.py
     # If use DeepSpeed zero3, init_dist must before HfArgumentParser
@@ -867,6 +880,14 @@ def main():
         replace_qwen2_attention_class()
         replace_phi3_attention_class()
         replace_llama_attention_class()
+
+    if model_args.use_liger:
+        from internvl.patch import apply_liger_kernel_to_internvit
+        from liger_kernel.transformers import (apply_liger_kernel_to_llama,
+                                               apply_liger_kernel_to_qwen2)
+        apply_liger_kernel_to_llama()
+        apply_liger_kernel_to_qwen2()
+        # apply_liger_kernel_to_internvit()
 
     if model_args.model_name_or_path is not None:
         logger.info('Loading InternVLChatModel...')
@@ -961,7 +982,8 @@ def main():
         data_args, tokenizer, tcs_loader, model, group_by_length=training_args.group_by_length,
         dynamic_image_size=data_args.dynamic_image_size, use_thumbnail=data_args.use_thumbnail,
         min_dynamic_patch=data_args.min_dynamic_patch, max_dynamic_patch=data_args.max_dynamic_patch,
-        normalize_type=data_args.normalize_type)
+        normalize_type=data_args.normalize_type, min_num_frame=data_args.min_num_frame,
+        max_num_frame=data_args.max_num_frame)
 
     def _freeze_params(module):
         for param in module.parameters():

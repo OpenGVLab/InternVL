@@ -760,7 +760,8 @@ def preprocess_internvl2_5(
         else:
             raise NotImplementedError
 
-    if tokenizer.add_bos_token:  # for InternLM series
+    add_bos_token = getattr(tokenizer, 'add_bos_token', False)
+    if add_bos_token:  # for InternLM series
         batches[0] = tokenizer.bos_token + batches[0]
 
     # Tokenize conversations
@@ -772,12 +773,12 @@ def preprocess_internvl2_5(
         truncation=False,
     ).input_ids
 
-    if tokenizer.add_bos_token:  # for InternLM series
+    if add_bos_token:  # for InternLM series
         input_ids = [item[1:] for item in input_ids]
 
     final_input_ids, final_targets = [], []
     ignore_ids = tokenizer('<|im_start|>assistant\n', return_tensors='np').input_ids[0]
-    ignore_len = ignore_ids.shape[0] - 1 if tokenizer.add_bos_token else ignore_ids.shape[0]
+    ignore_len = ignore_ids.shape[0] - 1 if add_bos_token else ignore_ids.shape[0]
     for role, input_id in zip(roles, input_ids):
         final_input_ids.append(input_id)
         if role == 'system' or role == 'human':
