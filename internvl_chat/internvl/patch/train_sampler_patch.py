@@ -122,4 +122,4 @@ def _get_train_sampler(self) -> Optional[torch.utils.data.Sampler]:
 
 def replace_train_sampler():
     transformers.Trainer._get_train_sampler = _get_train_sampler
-    print('Replace train sampler!!')
+    # print('Replace train sampler!!')

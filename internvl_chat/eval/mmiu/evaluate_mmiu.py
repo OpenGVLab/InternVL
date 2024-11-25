@@ -1,14 +1,11 @@
 import argparse
-import base64
 import itertools
 import json
 import os
 import random
 import time
 from functools import partial
-from io import BytesIO
 
-import pandas as pd
 import torch
 from internvl.model import load_model_and_tokenizer
 from internvl.train.dataset import build_transform, dynamic_preprocess
@@ -16,48 +13,12 @@ from PIL import Image
 from tqdm import tqdm
 
 ds_collections = {
-    'mmbench_dev_20230712': {
-        'root': 'data/mmbench/mmbench_dev_20230712.tsv',
+    'mmiu': {
+        'root': 'data/mmiu',
+        'annotation': 'eval/mmiu/mmiu.jsonl',
         'max_new_tokens': 100,
         'min_new_tokens': 1,
-        'type': 'dev',
-        'language': 'en'
     },
-    'mmbench_dev_cn_20231003': {
-        'root': 'data/mmbench/mmbench_dev_cn_20231003.tsv',
-        'max_new_tokens': 100,
-        'min_new_tokens': 1,
-        'type': 'dev',
-        'language': 'cn'
-    },
-    'mmbench_dev_en_20231003': {
-        'root': 'data/mmbench/mmbench_dev_en_20231003.tsv',
-        'max_new_tokens': 100,
-        'min_new_tokens': 1,
-        'type': 'dev',
-        'language': 'en'
-    },
-    'mmbench_test_cn_20231003': {
-        'root': 'data/mmbench/mmbench_test_cn_20231003.tsv',
-        'max_new_tokens': 100,
-        'min_new_tokens': 1,
-        'type': 'test',
-        'language': 'cn'
-    },
-    'mmbench_test_en_20231003': {
-        'root': 'data/mmbench/mmbench_test_en_20231003.tsv',
-        'max_new_tokens': 100,
-        'min_new_tokens': 1,
-        'type': 'test',
-        'language': 'en'
-    },
-    'ccbench_dev_cn': {
-        'root': 'data/mmbench/CCBench_legacy.tsv',
-        'max_new_tokens': 100,
-        'min_new_tokens': 1,
-        'type': 'dev',
-        'language': 'cn'
-    }
 }
 
 
@@ -65,18 +26,22 @@ def collate_fn(batches, tokenizer):
     pixel_values = torch.cat([_['pixel_values'] for _ in batches], dim=0)
     questions = [_['question'] for _ in batches]
     answers = [_['answer'] for _ in batches]
-    indexes = [_['index'] for _ in batches]
+    num_patches_lists = [_['num_patches_list'] for _ in batches]
     options = [_['option'] for _ in batches]
-    return pixel_values, questions, answers, indexes, options
+    lines = [_['line'] for _ in batches]
+    return pixel_values, questions, answers, num_patches_lists, options, lines
 
 
-class MMBenchDataset(torch.utils.data.Dataset):
+class MMIUDataset(torch.utils.data.Dataset):
 
-    def __init__(self, root, prompt, language, input_size=224, dynamic_image_size=False,
+    def __init__(self, meta, input_size=224, dynamic_image_size=False,
                  use_thumbnail=False, max_num=6):
-        self.df = pd.read_csv(root, sep='\t')
-        self.prompt = prompt
-        self.language = language
+        # run for each subject
+        meta_path = meta['annotation']
+        f = open(meta_path, 'r')
+        lines = f.readlines()
+        self.data = [json.loads(line) for line in lines]
+        self.root = meta['root']
         self.input_size = input_size
         self.dynamic_image_size = dynamic_image_size
         self.use_thumbnail = use_thumbnail
@@ -84,56 +49,63 @@ class MMBenchDataset(torch.utils.data.Dataset):
         self.transform = build_transform(is_train=False, input_size=input_size)
 
     def __len__(self):
-        return len(self.df)
+        return len(self.data)
 
     def __getitem__(self, idx):
-        index = self.df.iloc[idx]['index']
-        image = self.df.iloc[idx]['image']
-        question = self.df.iloc[idx]['question']
-        answer = self.df.iloc[idx]['answer'] if 'answer' in self.df.iloc[0].keys() else None
-        # catetory = self.df.iloc[idx]['category']
-        # l2_catetory = self.df.iloc[idx]['l2-category']
-
-        image = Image.open(BytesIO(base64.b64decode(image))).convert('RGB')
-        if self.dynamic_image_size:
-            images = dynamic_preprocess(image, image_size=self.input_size,
-                                        use_thumbnail=self.use_thumbnail,
-                                        max_num=self.max_num)
+        data = self.data[idx]
+        input_image_path = data['input']['input_image_path']
+        if len(input_image_path) == 1:
+            image_prefix = ''
         else:
-            images = [image]
+            image_cnt = len(input_image_path)
+            image_prefix = ''.join([f'Image-{i+1}: <image>\n' for i in range(image_cnt)])
+        question = data['input']['question']
+        context = data['input']['context']
+        question = image_prefix + question + '\n' + context + "\nAnswer with the option's letter from the given choices directly."
+
+        input_image_path = [os.path.join(self.root, item) for item in input_image_path]
+        image_list = []
+        for image_path in input_image_path:
+            image = Image.open(image_path).convert('RGB')
+            image_list.append(image)
+
+        options = data['options'].split('\n')
+        answer = data['output']['output_text']
+
+        new_options = {}
+        multiple_choices = ['A', 'B', 'C', 'D', 'E', 'F', 'G',
+                            'H', 'I', 'J', 'K', 'L', 'M', 'N',
+                            'O', 'P', 'Q', 'R', 'S', 'T', 'U',
+                            'V', 'W', 'X', 'Y', 'Z']
+        for i, c in enumerate(options):
+            c = c.strip()
+            if c.startswith(f'{multiple_choices[i]}:'):
+                c = c.replace(f'{multiple_choices[i]}:', '')
+            new_options[multiple_choices[i]] = c.strip()
+
+        num_patches_list = []
+        if self.dynamic_image_size:
+            images = []
+            for image in image_list:
+                tiles = dynamic_preprocess(image, image_size=self.input_size,
+                                           use_thumbnail=self.use_thumbnail,
+                                           max_num=max(1, self.max_num // len(image_list)))
+                images += tiles
+                num_patches_list.append(len(tiles))
+        else:
+            images = image_list
+            num_patches_list.append(1)
         pixel_values = [self.transform(image) for image in images]
         pixel_values = torch.stack(pixel_values)
-
-        option_candidate = ['A', 'B', 'C', 'D', 'E']
-        options = {
-            cand: self.load_from_df(idx, cand)
-            for cand in option_candidate
-            if self.load_from_df(idx, cand) is not None
-        }
-
-        hint = self.load_from_df(idx, 'hint')
-        if hint is not None:
-            question = hint + '\n' + question
-        for key, item in options.items():
-            question += f'\n{key}. {item}'
-        if self.language == 'cn':
-            question = question + '\n' + self.prompt['cn']
-        else:
-            question = question + '\n' + self.prompt['en']
 
         return {
             'question': question,
             'pixel_values': pixel_values,
             'answer': answer,
-            'index': index,
-            'option': options
+            'option': new_options,
+            'num_patches_list': num_patches_list,
+            'line': data
         }
-
-    def load_from_df(self, idx, key):
-        if key in self.df.iloc[idx] and not pd.isna(self.df.iloc[idx][key]):
-            return self.df.iloc[idx][key]
-        else:
-            return None
 
 
 class InferenceSampler(torch.utils.data.sampler.Sampler):
@@ -181,10 +153,8 @@ def evaluate_chat_model():
     random.seed(args.seed)
 
     for ds_name in args.datasets:
-        dataset = MMBenchDataset(
-            root=ds_collections[ds_name]['root'],
-            prompt=prompt,
-            language=ds_collections[ds_name]['language'],
+        dataset = MMIUDataset(
+            meta=ds_collections[ds_name],
             input_size=image_size,
             dynamic_image_size=args.dynamic,
             use_thumbnail=use_thumbnail,
@@ -201,7 +171,7 @@ def evaluate_chat_model():
         )
 
         outputs = []
-        for _, (pixel_values, questions, answers, indexes, options) in tqdm(enumerate(dataloader)):
+        for _, (pixel_values, questions, answers, num_patches_lists, options, lines) in tqdm(enumerate(dataloader)):
             pixel_values = pixel_values.to(torch.bfloat16).cuda()
             generation_config = dict(
                 num_beams=args.num_beams,
@@ -210,21 +180,29 @@ def evaluate_chat_model():
                 do_sample=True if args.temperature > 0 else False,
                 temperature=args.temperature,
             )
-            pred = model.chat(
-                tokenizer=tokenizer,
-                pixel_values=pixel_values,
-                question=questions[0],
-                generation_config=generation_config,
-                verbose=True
-            )
+            with torch.inference_mode():
+                try:
+                    pred = model.chat(
+                        tokenizer=tokenizer,
+                        pixel_values=pixel_values,
+                        question=questions[0],
+                        generation_config=generation_config,
+                        num_patches_list=num_patches_lists[0],
+                        verbose=True
+                    )
+                except:
+                    print('Out of memory, skip this batch')
+                    pred = 'A'
+                torch.cuda.empty_cache()
             preds = [post_process(pred, options[0])]
 
-            for question, pred, answer, index in zip(questions, preds, answers, indexes):
+            for question, pred, answer, line in zip(questions, preds, answers, lines):
                 outputs.append({
+                    'image': line['input']['input_image_path'],
                     'question': question,
-                    'answer': pred,
-                    'gt_answers': answer,
-                    'index': int(index)
+                    'pred': pred,
+                    'gt': answer,
+                    'task': line['task'],
                 })
 
         torch.distributed.barrier()
@@ -239,27 +217,47 @@ def evaluate_chat_model():
         if torch.distributed.get_rank() == 0:
             print(f'Evaluating {ds_name} ...')
             time_prefix = time.strftime('%y%m%d%H%M%S', time.localtime())
-            results_file = f'{ds_name}_{time_prefix}.xlsx'
+            results_file = f'{ds_name}_{time_prefix}.jsonl'
             output_path = os.path.join(args.out_dir, results_file)
-            df = pd.read_table(ds_collections[ds_name]['root'])
-            cur_df = df.copy()
-            if 'mmbench' in ds_name:
-                cur_df = cur_df.drop(columns=['hint', 'category', 'source', 'image', 'comment', 'l2-category'])
-                cur_df.insert(6, 'prediction', None)
-            else:
-                cur_df = cur_df.drop(columns=['category', 'image'])
-                cur_df.insert(8, 'prediction', None)
-            for item in merged_outputs:
-                cur_df.loc[df['index'] == item['index'], 'prediction'] = item['answer']
+            writer = open(output_path, 'w')
 
-            cur_df.to_excel(output_path, index=False, engine='openpyxl')
+            acc_dict = {}
+            for item in merged_outputs:
+                writer.write(json.dumps(item) + '\n')
+                task = item['task']
+                pred = item['pred']
+                gt = item['gt']
+
+                if task not in acc_dict:
+                    acc_dict[task] = []
+                if pred == gt:
+                    acc_dict[task].append(1)
+                else:
+                    acc_dict[task].append(0)
+            writer.close()
             print('Results saved to {}'.format(output_path))
+            orders = ['point_tracking', 'ravens_progressive_matrices', 'single_object_tracking',
+                      'threed_cad_recognition', 'threed_indoor_recognition', 'Egocentric_Video_QuestionAnswering',
+                      'Homography_estimation', 'Icon_Question_Answering_with_Spatial_Context',
+                      'Image_Captioning_with_Spatial_Context', 'Image_Spatial_Transformation_Estimation',
+                      'Image_text_retrieval_with_Spatial_Context', 'Multiview_Action_Recognition',
+                      'Multiview_reasoning', 'jigsaw_puzzle_solving', 'threeD_Depth_Estimation',
+                      'threeD_Object_Detection', 'threeD_Object_Tracking', 'threeD_Pose_Estimation',
+                      'threeD_Scene_Reconstruction', 'threeD_question_answering']
+            scores = []
+            for task in orders:
+                acc = acc_dict[task]
+                num_correct = sum(acc)
+                num_total = len(acc)
+                print(f'{task} accuracy: {num_correct/num_total}')
+                scores.append(num_correct/num_total)
+            print(f'Overall accuracy: {sum(scores)/len(scores)}')
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--checkpoint', type=str, default='')
-    parser.add_argument('--datasets', type=str, default='mmbench_dev_20230712')
+    parser.add_argument('--datasets', type=str, default='mmiu')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
     parser.add_argument('--num-beams', type=int, default=1)
@@ -304,8 +302,4 @@ if __name__ == '__main__':
     print(f'[test] use_thumbnail: {use_thumbnail}')
     print(f'[test] max_num: {args.max_num}')
 
-    prompt = {
-        'en': "Answer with the option's letter from the given choices directly.",
-        'cn': '请直接回答选项字母。'
-    }
     evaluate_chat_model()

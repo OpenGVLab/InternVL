@@ -35,7 +35,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--checkpoint', type=str, default='')
     parser.add_argument('--root', type=str, default='./Your_Results')
-    parser.add_argument('--num-beams', type=int, default=5)
+    parser.add_argument('--num-beams', type=int, default=1)
     parser.add_argument('--top-k', type=int, default=50)
     parser.add_argument('--top-p', type=float, default=0.9)
     parser.add_argument('--sample', type=bool, default=False)

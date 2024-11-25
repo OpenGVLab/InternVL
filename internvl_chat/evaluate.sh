@@ -199,6 +199,26 @@ if [ ${DATASET} == "vqa-docvqa-test" ]; then
     eval/vqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets docvqa_test "${ARGS[@]:2}"
 fi
 
+if [ ${DATASET} == "vqa-mpdocvqa-val" ]; then
+    torchrun \
+    --nnodes=1 \
+    --node_rank=0 \
+    --master_addr=127.0.0.1 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
+    eval/mpdocvqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets mpdocvqa_val "${ARGS[@]:2}"
+fi
+
+if [ ${DATASET} == "vqa-mpdocvqa-test" ]; then
+    torchrun \
+    --nnodes=1 \
+    --node_rank=0 \
+    --master_addr=127.0.0.1 \
+    --nproc_per_node=${GPUS} \
+    --master_port=${MASTER_PORT} \
+    eval/mpdocvqa/evaluate_vqa.py --checkpoint ${CHECKPOINT} --datasets mpdocvqa_test "${ARGS[@]:2}"
+fi
+
 if [ ${DATASET} == "vqa-chartqa-test" ]; then
     torchrun \
     --nnodes=1 \
@@ -398,16 +418,6 @@ if [ ${DATASET} == "mmvet" ]; then
     python eval/mmvet/evaluate_mmvet.py --checkpoint ${CHECKPOINT} --datasets mmvet "${ARGS[@]:2}"
 fi
 
-if [ ${DATASET} == "cmmmu" ]; then
-  CUDA_VISIBLE_DEVICES=0 python eval/cmmmu/evaluate_cmmmu.py --checkpoint ${CHECKPOINT} --datasets art_and_design "${ARGS[@]:2}" &
-  CUDA_VISIBLE_DEVICES=1 python eval/cmmmu/evaluate_cmmmu.py --checkpoint ${CHECKPOINT} --datasets business "${ARGS[@]:2}" &
-  CUDA_VISIBLE_DEVICES=2 python eval/cmmmu/evaluate_cmmmu.py --checkpoint ${CHECKPOINT} --datasets health_and_medicine "${ARGS[@]:2}" &
-  CUDA_VISIBLE_DEVICES=3 python eval/cmmmu/evaluate_cmmmu.py --checkpoint ${CHECKPOINT} --datasets humanities_and_social_sciences "${ARGS[@]:2}" &
-  CUDA_VISIBLE_DEVICES=4 python eval/cmmmu/evaluate_cmmmu.py --checkpoint ${CHECKPOINT} --datasets science "${ARGS[@]:2}" &
-  CUDA_VISIBLE_DEVICES=5 python eval/cmmmu/evaluate_cmmmu.py --checkpoint ${CHECKPOINT} --datasets technology_and_engineering "${ARGS[@]:2}" &
-  wait
-fi
-
 if [ ${DATASET} == "mmbench-dev-en" ]; then
     torchrun \
       --nnodes=1 \
@@ -466,6 +476,26 @@ if [ ${DATASET} == "scienceqa" ]; then
       --nproc_per_node=${GPUS} \
       --master_port=${MASTER_PORT} \
       eval/scienceqa/evaluate_scienceqa.py --checkpoint ${CHECKPOINT} --datasets sqa_test "${ARGS[@]:2}"
+fi
+
+if [ ${DATASET} == "mantis" ]; then
+    torchrun \
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
+      eval/mantis_eval/evaluate_mantis.py --checkpoint ${CHECKPOINT} --datasets Mantis-Eval "${ARGS[@]:2}"
+fi
+
+if [ ${DATASET} == "mirb" ]; then
+    torchrun \
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
+      eval/mirb/evaluate_mirb.py --checkpoint ${CHECKPOINT} --datasets MIRB "${ARGS[@]:2}"
 fi
 
 if [ ${DATASET} == "m3cot" ]; then
@@ -538,7 +568,6 @@ if [ ${DATASET} == "mmmu-test-cot" ]; then
       eval/mmmu/evaluate_mmmu_cot.py --checkpoint ${CHECKPOINT} --datasets MMMU_test "${ARGS[@]:2}"
 fi
 
-
 if [ ${DATASET} == "mmvp" ]; then
     torchrun \
       --nnodes=1 \
@@ -549,7 +578,6 @@ if [ ${DATASET} == "mmvp" ]; then
       eval/mmvp/evaluate_mmvp.py --checkpoint ${CHECKPOINT} --datasets MMVP "${ARGS[@]:2}"
 fi
 
-
 if [ ${DATASET} == "mathvista-testmini" ]; then
     torchrun \
       --nnodes=1 \
@@ -559,7 +587,6 @@ if [ ${DATASET} == "mathvista-testmini" ]; then
       --master_port=${MASTER_PORT} \
       eval/mathvista/evaluate_mathvista.py --checkpoint ${CHECKPOINT} --datasets MathVista_testmini "${ARGS[@]:2}"
 fi
-
 
 if [ ${DATASET} == "mathvista-test" ]; then
     torchrun \
@@ -588,65 +615,92 @@ if [ ${DATASET} == "mvbench" ]; then
       --master_addr=127.0.0.1 \
       --nproc_per_node=${GPUS} \
       --master_port=${MASTER_PORT} \
-      eval/mvbench/evaluate_mvbench.py --checkpoint ${CHECKPOINT} "${ARGS[@]:2}"
+      eval/mvbench/evaluate_mvbench.py --checkpoint ${CHECKPOINT} --num_segments 16 "${ARGS[@]:2}"
+fi
+
+if [ ${DATASET} == "mmiu" ]; then
+    torchrun \
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
+      eval/mmiu/evaluate_mmiu.py --checkpoint ${CHECKPOINT} "${ARGS[@]:2}"
+fi
+
+if [ ${DATASET} == "mmmu-pro" ]; then
+    python -u eval/mmmu_pro/evaluate_mmmu_pro.py --model ${CHECKPOINT} --mode direct --setting "standard (10 options)" "${ARGS[@]:2}"
+    python -u eval/mmmu_pro/evaluate_mmmu_pro.py --model ${CHECKPOINT} --mode cot --setting "standard (10 options)" "${ARGS[@]:2}"
+    python -u eval/mmmu_pro/evaluate_mmmu_pro.py --model ${CHECKPOINT} --mode direct --setting vision "${ARGS[@]:2}"
+    python -u eval/mmmu_pro/evaluate_mmmu_pro.py --model ${CHECKPOINT} --mode cot --setting vision "${ARGS[@]:2}"
+fi
+
+if [ ${DATASET} == "mmmu-pro-std10" ]; then
+    python -u eval/mmmu_pro/evaluate_mmmu_pro.py --model ${CHECKPOINT} --mode direct --setting "standard (10 options)" "${ARGS[@]:2}"
+    python -u eval/mmmu_pro/evaluate_mmmu_pro.py --model ${CHECKPOINT} --mode cot --setting "standard (10 options)" "${ARGS[@]:2}"
+fi
+
+if [ ${DATASET} == "mmmu-pro-vision" ]; then
+    python -u eval/mmmu_pro/evaluate_mmmu_pro.py --model ${CHECKPOINT} --mode direct --setting vision "${ARGS[@]:2}"
+    python -u eval/mmmu_pro/evaluate_mmmu_pro.py --model ${CHECKPOINT} --mode cot --setting vision "${ARGS[@]:2}"
 fi
 
 if [ ${DATASET} == "drivelm" ]; then
     torchrun \
-        --nnodes=1 \
-        --node_rank=0 \
-        --master_addr=127.0.0.1 \
-        --nproc_per_node=${GPUS} \
-        --master_port=${MASTER_PORT} \
-        eval/domain_specific/drivelm/evaluate.py --checkpoint ${CHECKPOINT} --datasets DriveLM_val --dynamic --max-num  12
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
+      eval/domain_specific/drivelm/evaluate.py --checkpoint ${CHECKPOINT} --datasets DriveLM_val --dynamic --max-num 12
 fi
 
 if [ ${DATASET} == "mme—realworld" ]; then
     torchrun \
-        --nnodes=1 \
-        --node_rank=0 \
-        --master_addr=127.0.0.1 \
-        --nproc_per_node=${GPUS} \
-        --master_port=${MASTER_PORT} \
-        eval/domain_specific/mme_rw/evaluate.py --checkpoint ${CHECKPOINT} --datasets MME_RealWorld  "${ARGS[@]:2}"
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
+      eval/domain_specific/mme_rw/evaluate.py --checkpoint ${CHECKPOINT} --datasets MME_RealWorld "${ARGS[@]:2}"
 fi
 
 if [ ${DATASET} == "dior-rsvg" ]; then
     torchrun \
-        --nnodes=1 \
-        --node_rank=0 \
-        --master_addr=127.0.0.1 \
-        --nproc_per_node=${GPUS} \
-        --master_port=${MASTER_PORT} \
-        eval/domain_specific/rs_det/evaluate.py --checkpoint ${CHECKPOINT} --datasets DIOR_RSVG  "${ARGS[@]:2}"
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
+      eval/domain_specific/rs_det/evaluate.py --checkpoint ${CHECKPOINT} --datasets DIOR_RSVG "${ARGS[@]:2}"
 fi
 
 if [ ${DATASET} == "rsvqa-lr" ]; then
     torchrun \
-        --nnodes=1 \
-        --node_rank=0 \
-        --master_addr=127.0.0.1 \
-        --nproc_per_node=${GPUS} \
-        --master_port=${MASTER_PORT} \
-        eval/domain_specific/rs_vqa/evaluate.py --checkpoint ${CHECKPOINT} --datasets RSVQA_H_TEST2  "${ARGS[@]:2}"
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
+      eval/domain_specific/rs_vqa/evaluate.py --checkpoint ${CHECKPOINT} --datasets RSVQA_H_TEST2 "${ARGS[@]:2}"
 fi
 
 if [ ${DATASET} == "rsvqa-hr-test1" ]; then
     torchrun \
-        --nnodes=1 \
-        --node_rank=0 \
-        --master_addr=127.0.0.1 \
-        --nproc_per_node=${GPUS} \
-        --master_port=${MASTER_PORT} \
-        eval/domain_specific/rs_vqa/evaluate.py --checkpoint ${CHECKPOINT} --datasets RSVQA_H_TEST1  "${ARGS[@]:2}"
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
+      eval/domain_specific/rs_vqa/evaluate.py --checkpoint ${CHECKPOINT} --datasets RSVQA_H_TEST1 "${ARGS[@]:2}"
 fi
 
 if [ ${DATASET} == "rsvqa-hr-test2" ]; then
     torchrun \
-        --nnodes=1 \
-        --node_rank=0 \
-        --master_addr=127.0.0.1 \
-        --nproc_per_node=${GPUS} \
-        --master_port=${MASTER_PORT} \
-        eval/domain_specific/rs_vqa/evaluate.py --checkpoint ${CHECKPOINT} --datasets RSVQA_L  "${ARGS[@]:2}"
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
+      eval/domain_specific/rs_vqa/evaluate.py --checkpoint ${CHECKPOINT} --datasets RSVQA_L "${ARGS[@]:2}"
 fi

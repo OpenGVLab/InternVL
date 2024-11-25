@@ -1,63 +1,25 @@
 import argparse
-import base64
 import itertools
 import json
 import os
 import random
 import time
 from functools import partial
-from io import BytesIO
 
-import pandas as pd
+import numpy as np
 import torch
+from datasets import load_dataset
 from internvl.model import load_model_and_tokenizer
 from internvl.train.dataset import build_transform, dynamic_preprocess
-from PIL import Image
 from tqdm import tqdm
 
 ds_collections = {
-    'mmbench_dev_20230712': {
-        'root': 'data/mmbench/mmbench_dev_20230712.tsv',
-        'max_new_tokens': 100,
+    'Mantis-Eval': {
+        'root': 'TIGER-Lab/Mantis-Eval',
+        'max_new_tokens': 50,
         'min_new_tokens': 1,
-        'type': 'dev',
-        'language': 'en'
+        'split': 'test'
     },
-    'mmbench_dev_cn_20231003': {
-        'root': 'data/mmbench/mmbench_dev_cn_20231003.tsv',
-        'max_new_tokens': 100,
-        'min_new_tokens': 1,
-        'type': 'dev',
-        'language': 'cn'
-    },
-    'mmbench_dev_en_20231003': {
-        'root': 'data/mmbench/mmbench_dev_en_20231003.tsv',
-        'max_new_tokens': 100,
-        'min_new_tokens': 1,
-        'type': 'dev',
-        'language': 'en'
-    },
-    'mmbench_test_cn_20231003': {
-        'root': 'data/mmbench/mmbench_test_cn_20231003.tsv',
-        'max_new_tokens': 100,
-        'min_new_tokens': 1,
-        'type': 'test',
-        'language': 'cn'
-    },
-    'mmbench_test_en_20231003': {
-        'root': 'data/mmbench/mmbench_test_en_20231003.tsv',
-        'max_new_tokens': 100,
-        'min_new_tokens': 1,
-        'type': 'test',
-        'language': 'en'
-    },
-    'ccbench_dev_cn': {
-        'root': 'data/mmbench/CCBench_legacy.tsv',
-        'max_new_tokens': 100,
-        'min_new_tokens': 1,
-        'type': 'dev',
-        'language': 'cn'
-    }
 }
 
 
@@ -65,18 +27,19 @@ def collate_fn(batches, tokenizer):
     pixel_values = torch.cat([_['pixel_values'] for _ in batches], dim=0)
     questions = [_['question'] for _ in batches]
     answers = [_['answer'] for _ in batches]
-    indexes = [_['index'] for _ in batches]
+    num_patches_lists = [_['num_patches_list'] for _ in batches]
     options = [_['option'] for _ in batches]
-    return pixel_values, questions, answers, indexes, options
+    lines = [_['line'] for _ in batches]
+    return pixel_values, questions, answers, num_patches_lists, options, lines
 
 
-class MMBenchDataset(torch.utils.data.Dataset):
+class MantisEvalDataset(torch.utils.data.Dataset):
 
-    def __init__(self, root, prompt, language, input_size=224, dynamic_image_size=False,
+    def __init__(self, root, split, prompt, input_size=224, dynamic_image_size=False,
                  use_thumbnail=False, max_num=6):
-        self.df = pd.read_csv(root, sep='\t')
+        dataset = load_dataset(root, split=split, cache_dir=os.path.join(os.getcwd(), 'data/mantis_eval/'))
+        self.data = dataset
         self.prompt = prompt
-        self.language = language
         self.input_size = input_size
         self.dynamic_image_size = dynamic_image_size
         self.use_thumbnail = use_thumbnail
@@ -84,56 +47,57 @@ class MMBenchDataset(torch.utils.data.Dataset):
         self.transform = build_transform(is_train=False, input_size=input_size)
 
     def __len__(self):
-        return len(self.df)
+        return len(self.data)
 
     def __getitem__(self, idx):
-        index = self.df.iloc[idx]['index']
-        image = self.df.iloc[idx]['image']
-        question = self.df.iloc[idx]['question']
-        answer = self.df.iloc[idx]['answer'] if 'answer' in self.df.iloc[0].keys() else None
-        # catetory = self.df.iloc[idx]['category']
-        # l2_catetory = self.df.iloc[idx]['l2-category']
+        data = self.data[idx]
+        question_type = data['question_type']
+        question = data['question']
+        image_list = data['images']
+        del data['images']
+        del data['data_source']
+        images_to_remove = ' '.join(['<image>'] * len(image_list))
+        question = question.replace(images_to_remove, '').strip()
+        for i in range(len(image_list)):
+            question = question.replace('<image>', f'Image-{i + 1}', 1)
+        options = data['options']
+        options = [item.strip() for item in options]
+        answer = data['answer']
+        choice_txt = '\n'.join(options)
 
-        image = Image.open(BytesIO(base64.b64decode(image))).convert('RGB')
+        num_patches_list = []
         if self.dynamic_image_size:
-            images = dynamic_preprocess(image, image_size=self.input_size,
-                                        use_thumbnail=self.use_thumbnail,
-                                        max_num=self.max_num)
+            images = []
+            for image in image_list:
+                tiles = dynamic_preprocess(image, image_size=self.input_size,
+                                           use_thumbnail=self.use_thumbnail,
+                                           max_num=max(1, self.max_num // len(image_list)))
+                images += tiles
+                num_patches_list.append(len(tiles))
         else:
             images = [image]
+            num_patches_list.append(1)
         pixel_values = [self.transform(image) for image in images]
         pixel_values = torch.stack(pixel_values)
 
-        option_candidate = ['A', 'B', 'C', 'D', 'E']
-        options = {
-            cand: self.load_from_df(idx, cand)
-            for cand in option_candidate
-            if self.load_from_df(idx, cand) is not None
-        }
-
-        hint = self.load_from_df(idx, 'hint')
-        if hint is not None:
-            question = hint + '\n' + question
-        for key, item in options.items():
-            question += f'\n{key}. {item}'
-        if self.language == 'cn':
-            question = question + '\n' + self.prompt['cn']
+        if question_type == 'multi-choice':
+            question = question + '\n' + choice_txt + '\n' + self.prompt[question_type]
         else:
-            question = question + '\n' + self.prompt['en']
-
+            question = question + '\n' + self.prompt[question_type]
+        question = question.strip()
+        if len(image_list) == 1:
+            prefix = '<image>\n'
+        else:
+            prefix = ''.join([f'Image-{i + 1}: <image>\n' for i in range(len(image_list))])
+        question = prefix + question
         return {
             'question': question,
             'pixel_values': pixel_values,
             'answer': answer,
-            'index': index,
-            'option': options
+            'option': options,
+            'num_patches_list': num_patches_list,
+            'line': data
         }
-
-    def load_from_df(self, idx, key):
-        if key in self.df.iloc[idx] and not pd.isna(self.df.iloc[idx][key]):
-            return self.df.iloc[idx][key]
-        else:
-            return None
 
 
 class InferenceSampler(torch.utils.data.sampler.Sampler):
@@ -162,29 +126,18 @@ class InferenceSampler(torch.utils.data.sampler.Sampler):
         return len(self._local_indices)
 
 
-def post_process(pred, option):
-    pred = pred.strip()
-    option_candidate = list(option.keys())
-    if len(pred) == 1:
-        return pred
-    elif len(pred) != 1 and pred[0] in option_candidate:
-        return pred[0]
-    elif len(pred) != 1 and pred[0] not in option_candidate:
-        for k, v in option.items():
-            if v in pred:
-                return k
-
-    return pred
-
-
 def evaluate_chat_model():
+    prompt = {
+        'multi-choice': "Answer with the option's letter from the given choices directly.",
+        'short-answer': 'Answer the question using a single word or phrase.'
+    }
     random.seed(args.seed)
 
     for ds_name in args.datasets:
-        dataset = MMBenchDataset(
+        dataset = MantisEvalDataset(
             root=ds_collections[ds_name]['root'],
+            split=ds_collections[ds_name]['split'],
             prompt=prompt,
-            language=ds_collections[ds_name]['language'],
             input_size=image_size,
             dynamic_image_size=args.dynamic,
             use_thumbnail=use_thumbnail,
@@ -201,7 +154,7 @@ def evaluate_chat_model():
         )
 
         outputs = []
-        for _, (pixel_values, questions, answers, indexes, options) in tqdm(enumerate(dataloader)):
+        for _, (pixel_values, questions, answers, num_patches_lists, options, lines) in tqdm(enumerate(dataloader)):
             pixel_values = pixel_values.to(torch.bfloat16).cuda()
             generation_config = dict(
                 num_beams=args.num_beams,
@@ -215,17 +168,29 @@ def evaluate_chat_model():
                 pixel_values=pixel_values,
                 question=questions[0],
                 generation_config=generation_config,
+                num_patches_list=num_patches_lists[0],
                 verbose=True
             )
-            preds = [post_process(pred, options[0])]
-
-            for question, pred, answer, index in zip(questions, preds, answers, indexes):
-                outputs.append({
-                    'question': question,
-                    'answer': pred,
-                    'gt_answers': answer,
-                    'index': int(index)
-                })
+            preds = [pred]
+            for question, pred, answer, line in zip(questions, preds, answers, lines):
+                line['question'] = question
+                line['pred'] = pred
+                line['answer'] = answer
+                options = line['options']
+                question_type = line['question_type']
+                if question_type == 'multi-choice':
+                    if len(pred) == 3 and pred[0] == '(' and pred[-1] == ')':
+                        pred = pred[1:-1]
+                    if pred == options[ord(answer) - ord('A')] or pred == answer:
+                        line['correct'] = 1
+                    else:
+                        line['correct'] = 0
+                else:
+                    if pred.lower() == answer.lower():
+                        line['correct'] = 1
+                    else:
+                        line['correct'] = 0
+                outputs.append(line)
 
         torch.distributed.barrier()
 
@@ -239,27 +204,30 @@ def evaluate_chat_model():
         if torch.distributed.get_rank() == 0:
             print(f'Evaluating {ds_name} ...')
             time_prefix = time.strftime('%y%m%d%H%M%S', time.localtime())
-            results_file = f'{ds_name}_{time_prefix}.xlsx'
+            results_file = f'{ds_name}_{time_prefix}.jsonl'
             output_path = os.path.join(args.out_dir, results_file)
-            df = pd.read_table(ds_collections[ds_name]['root'])
-            cur_df = df.copy()
-            if 'mmbench' in ds_name:
-                cur_df = cur_df.drop(columns=['hint', 'category', 'source', 'image', 'comment', 'l2-category'])
-                cur_df.insert(6, 'prediction', None)
-            else:
-                cur_df = cur_df.drop(columns=['category', 'image'])
-                cur_df.insert(8, 'prediction', None)
+            writer = open(output_path, 'w')
             for item in merged_outputs:
-                cur_df.loc[df['index'] == item['index'], 'prediction'] = item['answer']
-
-            cur_df.to_excel(output_path, index=False, engine='openpyxl')
+                writer.write(json.dumps(item) + '\n')
+            writer.close()
             print('Results saved to {}'.format(output_path))
+
+            multi_choice_items = [item for item in merged_outputs if item['question_type'] == 'multi-choice']
+            if len(multi_choice_items) > 0:
+                print(f'Multi-choice Accuracy: {np.mean([q["correct"] for q in multi_choice_items]):.4f}')
+
+            open_ended_items = [item for item in merged_outputs if item['question_type'] == 'short-answer']
+            if len(open_ended_items) > 0:
+                print(f'Short-answer Accuracy: {np.mean([q["correct"] for q in open_ended_items]):.4f}')
+
+            if len(merged_outputs) > 0:
+                print(f"Overall Accuracy: {np.mean([q['correct'] for q in merged_outputs]):.4f}")
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--checkpoint', type=str, default='')
-    parser.add_argument('--datasets', type=str, default='mmbench_dev_20230712')
+    parser.add_argument('--datasets', type=str, default='Mantis-Eval')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
     parser.add_argument('--num-beams', type=int, default=1)
@@ -304,8 +272,4 @@ if __name__ == '__main__':
     print(f'[test] use_thumbnail: {use_thumbnail}')
     print(f'[test] max_num: {args.max_num}')
 
-    prompt = {
-        'en': "Answer with the option's letter from the given choices directly.",
-        'cn': '请直接回答选项字母。'
-    }
     evaluate_chat_model()
