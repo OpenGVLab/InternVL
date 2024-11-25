@@ -1,44 +1,42 @@
 #!/bin/bash
 
-PARTITION=${PARTITION:-"llm_s"}
-GPUS=${GPUS:-16}
+PARTITION=${PARTITION:-"INTERN2"}
+GPUS=${GPUS:-256}
 GPUS_PER_NODE=${GPUS_PER_NODE:-8}
-QUOTA_TYPE=${QUOTA_TYPE:-"spot"}
+QUOTA_TYPE=${QUOTA_TYPE:-"reserved"}
 NODES=$((GPUS / GPUS_PER_NODE))
 CPUS_PER_TASK=${CPUS_PER_TASK:-10}
 
 LOG_DIR="logs_sampling/correctness"
 
-# model_path="/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL-RL-DPO/internvl_chat_dev/work_dirs/internvl_sft/internvl2_8b_dynamic_res_sft_cotv0"
-# model_path="/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL-RL-DPO/internvl_chat_dev/work_dirs/internvl_sft/internvl2_pro_dynamic_res_sft_cotv0"
-model_path="/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL-RL-DPO/internvl_chat_dev/work_dirs/internvl_sft/internvl2_pro_dynamic_res_sft_cotv4"
+model_path="/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/work_dirs/internvl_sft/internvl2_5_8b_dynamic_res_sft_cotv4"
 
 declare -a datasets=( \
-    # 'outputs/correctness_prompt_mmpr/CLEVR_math_en_20240402_extracted.jsonl,6' \
-    # 'outputs/correctness_prompt_mmpr/geos_en_20240402_extracted.jsonl,6' \
-    # 'outputs/correctness_prompt_mmpr/geometry3k_en_20240402_extracted.jsonl,6' \
-    # 'outputs/correctness_prompt_mmpr/scienceqa_multi_choice_en_20240402_extracted.jsonl,6' \
-    # 'outputs/correctness_prompt_mmpr/m3cot_train_extracted.jsonl,6' \
-    # 'outputs/correctness_prompt_mmpr/ai2d_train_12k_en_20240410_extracted.jsonl,6' \
-    # #
+    'outputs/correctness_prompt_mmpr/CLEVR_math_en_20240402_extracted.jsonl,6' \
+    'outputs/correctness_prompt_mmpr/geos_en_20240402_extracted.jsonl,6' \
+    'outputs/correctness_prompt_mmpr/geometry3k_en_20240402_extracted.jsonl,6' \
+    'outputs/correctness_prompt_mmpr/scienceqa_multi_choice_en_20240402_extracted.jsonl,6' \
+    'outputs/correctness_prompt_mmpr/m3cot_train_extracted.jsonl,6' \
+    'outputs/correctness_prompt_mmpr/ai2d_train_12k_en_20240410_extracted.jsonl,6' \
+    #
     'outputs/correctness_prompt_mmpr/SROIE_information_extraction_multi_turn_20240620_extracted.jsonl,12' \
     'outputs/correctness_prompt_mmpr/chartqa_trainval_30k_w_csv_en_20240402_extracted.jsonl,12' \
     'outputs/correctness_prompt_mmpr/docvqa_train_56k_en_20240402_extracted.jsonl,18' \
     'outputs/correctness_prompt_mmpr/infographics_20240403_qa_20240407_v2_extracted.jsonl,24' \
-    # #
-    # 'outputs/correctness_prompt_mmpr/mapqa_suv_en_20240402_extracted.jsonl,12' \
-    # 'outputs/correctness_prompt_mmpr/figureqa_en_20240402_extracted.jsonl,12' \
-    # #
-    # 'outputs/correctness_prompt_mmpr/dvqa_en_20240402_extracted_int_only.jsonl,6' \
-    # 'outputs/correctness_prompt_mmpr/iconqa_train_extracted.jsonl,6' \
-    # #
-    # 'outputs/correctness_prompt_mmpr/geometry3k_en_20240402_extracted_open_ended_only.jsonl,6' \
-    # 'outputs/correctness_prompt_mmpr/geoqa+_en_20240402_extracted_open_ended_only.jsonl,6' \
-    # 'outputs/correctness_prompt_mmpr/geos_en_20240402_extracted_open_ended_only.jsonl,6' \
-    # 'outputs/correctness_prompt_mmpr/unigeo_calc_en_20240402_extracted_open_ended_only.jsonl,6' \
-    # 'outputs/correctness_prompt_mmpr/geomverse_extracted.jsonl,6' \
-    # 'outputs/correctness_prompt_mmpr/geo170k_extracted_full.jsonl'
-    # 'outputs/correctness_prompt_mmpr/geoqa+_extracted_en_version.jsonl,6' \
+    #
+    'outputs/correctness_prompt_mmpr/mapqa_suv_en_20240402_extracted.jsonl,12' \
+    'outputs/correctness_prompt_mmpr/figureqa_en_20240402_extracted.jsonl,12' \
+    #
+    'outputs/correctness_prompt_mmpr/dvqa_en_20240402_extracted_int_only.jsonl,6' \
+    'outputs/correctness_prompt_mmpr/iconqa_train_extracted.jsonl,6' \
+    #
+    'outputs/correctness_prompt_mmpr/geometry3k_en_20240402_extracted_open_ended_only.jsonl,6' \
+    'outputs/correctness_prompt_mmpr/geoqa+_en_20240402_extracted_open_ended_only.jsonl,6' \
+    'outputs/correctness_prompt_mmpr/geos_en_20240402_extracted_open_ended_only.jsonl,6' \
+    'outputs/correctness_prompt_mmpr/unigeo_calc_en_20240402_extracted_open_ended_only.jsonl,6' \
+    'outputs/correctness_prompt_mmpr/geomverse_extracted.jsonl,6' \
+    'outputs/correctness_prompt_mmpr/geo170k_extracted_full.jsonl'
+    'outputs/correctness_prompt_mmpr/geoqa+_extracted_en_version.jsonl,6' \
 )
 
 # set -x
@@ -68,7 +66,6 @@ for ((i=0; i<${#datasets[@]}; i++)); do
         --job-name "wwy_sampling" \
         -o "${CUR_LOG_DIR}/${dataset_name}_max_tiles_${max_num}.log" \
         -e "${CUR_LOG_DIR}/${dataset_name}_max_tiles_${max_num}.log" \
-        --async \
     python -u tools/mm_reasoning_pipeline/internvl_lmdeploy_correctness.py \
         --checkpoint $model_path \
         --prompt-path $dataset \
@@ -80,7 +77,7 @@ for ((i=0; i<${#datasets[@]}; i++)); do
         --temperature 1.0 \
         --dynamic \
         --max-num ${max_num} \
-        --sample-max-num 10000 \
+        --sample-max-num 30000 \
         --tp 8
 
 done

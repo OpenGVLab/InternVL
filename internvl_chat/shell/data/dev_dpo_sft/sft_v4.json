@@ -1,0 +1,233 @@
+{
+    "gpt-4o_v2_infographics_20240403_qa_20240407_v2_extracted": {
+        "root": "langchao:s3://ocr/ocr_data/InfoVQA/infographicVQA_train_v1.0_images/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/infographics_20240403_qa_20240407_v2_extracted_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 408
+    },
+    "gpt-4o_v2_docvqa_train_56k_en_20240402_extracted": {
+        "root": "langchao:s3://multi_modal/playground/data/docvqa/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/docvqa_train_56k_en_20240402_extracted_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 797
+    },
+    "gpt-4o_v2_figureqa_en_20240402_extracted": {
+        "root": "langchao:s3://multi_modal/FigureQA/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/figureqa_en_20240402_extracted_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 1297
+    },
+    "gpt-4o_v2_SROIE_information_extraction_multi_turn_20240620_extracted": {
+        "root": "langchao:s3://internvl2/datasets/SROIE/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/SROIE_information_extraction_multi_turn_20240620_extracted_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 265
+    },
+    "gpt-4o_v2_mapqa_suv_en_20240402_extracted": {
+        "root": "langchao:s3://multi_modal/MapQA/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/mapqa_suv_en_20240402_extracted_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 544
+    },
+    "gpt-4o_v2_chartqa_trainval_30k_w_csv_en_20240402_extracted": {
+        "root": "langchao:s3://multi_modal/playground/data/chartqa/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/chartqa_trainval_30k_w_csv_en_20240402_extracted_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 3989
+    },
+    "gpt-4o_v2_textvqa_train_21k_wo_ocr_en_20240611_extracted": {
+        "root": "langchao:s3://mm_dataset/ocr_data/TextVQA/train_images/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/textvqa_train_21k_wo_ocr_en_20240611_extracted_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 392
+    },
+    "gpt-4o_v2_gqa_train_en_20240402_extracted": {
+        "root": "langchao:s3://mm_dataset/gqa/images/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/gqa_train_en_20240402_extracted_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 661
+    },
+    "gpt-4o_v2_geometry3k_en_20240402_extracted": {
+        "root": "langchao:s3://multi_modal/Geometry3K/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/geometry3k_en_20240402_extracted_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 281
+    },
+    "gpt-4o_v2_m3cot_train_extracted": {
+        "root": "langchao:s3://internvl2/datasets/M3CoT/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/m3cot_train_extracted_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 2948
+    },
+    "gpt-4o_v2_vqav2_en_20240402_extracted": {
+        "root": "langchao:s3://multi_modal/coco/train2014/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/vqav2_en_20240402_extracted_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 339
+    },
+    "gpt-4o_v2_ai2d_train_12k_en_20240410_extracted": {
+        "root": "langchao:s3://internvl2/datasets/ai2diagram/ai2d/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/ai2d_train_12k_en_20240410_extracted_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 5116
+    },
+    "gpt-4o_v2_okvqa_train_9k_en_20240402_extracted": {
+        "root": "langchao:s3://multi_modal/coco/train2014/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/okvqa_train_9k_en_20240402_extracted_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 4563
+    },
+    "gpt-4o_v2_scienceqa_multi_choice_en_20240402_extracted": {
+        "root": "langchao:s3://multi_modal/ScienceQA/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/scienceqa_multi_choice_en_20240402_extracted_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 5607
+    },
+    "gpt-4o_v2_geos_en_20240402_extracted": {
+        "root": "langchao:s3://multi_modal/GEOS/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/geos_en_20240402_extracted_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 173
+    },
+    "gpt-4o_v2_CLEVR_math_en_20240402_extracted": {
+        "root": "langchao:s3://multi_modal/CLEVR/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/CLEVR_math_en_20240402_extracted_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 736
+    },
+    "gpt-4o-2024-08-06_v2_cmm_math_train_data_dpo": {
+        "root": "langchao:s3://internvl2/datasets/EduChat-Math/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/cmm_math_train_data_dpo_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 13155
+    },
+    "infographics_20240403_qa_20240407_v2_extracted": {
+        "root": "langchao:s3://ocr/ocr_data/InfoVQA/infographicVQA_train_v1.0_images/",
+        "annotation": "outputs/dpo_sft_warmup_general_4o/infographics_20240403_qa_20240407_v2_extracted_general_vqa.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 1041
+    },
+    "docvqa_train_56k_en_20240402_extracted": {
+        "root": "langchao:s3://multi_modal/playground/data/docvqa/",
+        "annotation": "outputs/dpo_sft_warmup_general_4o/docvqa_train_56k_en_20240402_extracted_general_vqa.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 2010
+    },
+    "figureqa_en_20240402_extracted": {
+        "root": "langchao:s3://multi_modal/FigureQA/",
+        "annotation": "outputs/dpo_sft_warmup_general_4o/figureqa_en_20240402_extracted_general_vqa.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 1001
+    },
+    "SROIE_information_extraction_multi_turn_20240620_extracted": {
+        "root": "langchao:s3://internvl2/datasets/SROIE/",
+        "annotation": "outputs/dpo_sft_warmup_general_4o/SROIE_information_extraction_multi_turn_20240620_extracted_general_vqa.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 1250
+    },
+    "mapqa_suv_en_20240402_extracted": {
+        "root": "langchao:s3://multi_modal/MapQA/",
+        "annotation": "outputs/dpo_sft_warmup_general_4o/mapqa_suv_en_20240402_extracted_general_vqa.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 1001
+    },
+    "chartqa_trainval_30k_w_csv_en_20240402_extracted": {
+        "root": "langchao:s3://multi_modal/playground/data/chartqa/",
+        "annotation": "outputs/dpo_sft_warmup_general_4o/chartqa_trainval_30k_w_csv_en_20240402_extracted_general_vqa.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 2015
+    },
+    "textvqa_train_21k_wo_ocr_en_20240611_extracted": {
+        "root": "langchao:s3://mm_dataset/ocr_data/TextVQA/train_images/",
+        "annotation": "outputs/dpo_sft_warmup_general_4o/textvqa_train_21k_wo_ocr_en_20240611_extracted_general_vqa.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 1018
+    },
+    "gqa_train_en_20240402_extracted": {
+        "root": "langchao:s3://mm_dataset/gqa/images/",
+        "annotation": "outputs/dpo_sft_warmup_general_4o/gqa_train_en_20240402_extracted_general_vqa.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 1000
+    },
+    "m3cot_train_extracted": {
+        "root": "langchao:s3://internvl2/datasets/M3CoT/",
+        "annotation": "outputs/dpo_sft_warmup_general_4o/m3cot_train_extracted_general_vqa.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 3304
+    },
+    "vqav2_en_20240402_extracted": {
+        "root": "langchao:s3://multi_modal/coco/train2014/",
+        "annotation": "outputs/dpo_sft_warmup_general_4o/vqav2_en_20240402_extracted_general_vqa.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 1007
+    },
+    "ai2d_train_12k_en_20240410_extracted": {
+        "root": "langchao:s3://internvl2/datasets/ai2diagram/ai2d/",
+        "annotation": "outputs/dpo_sft_warmup_general_4o/ai2d_train_12k_en_20240410_extracted_general_vqa.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 3104
+    },
+    "okvqa_train_9k_en_20240402_extracted": {
+        "root": "langchao:s3://multi_modal/coco/train2014/",
+        "annotation": "outputs/dpo_sft_warmup_general_4o/okvqa_train_9k_en_20240402_extracted_general_vqa.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 4583
+    },
+    "scienceqa_multi_choice_en_20240402_extracted": {
+        "root": "langchao:s3://multi_modal/ScienceQA/",
+        "annotation": "outputs/dpo_sft_warmup_general_4o/scienceqa_multi_choice_en_20240402_extracted_general_vqa.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 3109
+    },
+    "CLEVR_math_en_20240402_extracted": {
+        "root": "langchao:s3://multi_modal/CLEVR/",
+        "annotation": "outputs/dpo_sft_warmup_general_4o/CLEVR_math_en_20240402_extracted_general_vqa.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 1001
+    },
+    "gpt-4o-2024-08-06_v2_geomverse_extracted": {
+        "root": "langchao:s3://internvl2/datasets/GeomVerse/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/geomverse_extracted_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 8552
+    },
+    "gpt-4o-2024-08-06_v2_geo170k_extracted": {
+        "root": "langchao:s3://internvl2/datasets/Geo170K/images/",
+        "annotation": "outputs/dpo_sft_warmup_cot_4o/geo170k_extracted_cot.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 5838
+    }
+}
