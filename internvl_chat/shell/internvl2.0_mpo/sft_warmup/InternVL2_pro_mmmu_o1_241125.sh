@@ -70,7 +70,7 @@ srun -p ${PARTITION} \
   --dynamic_image_size True \
   --use_thumbnail True \
   --ps_version 'v2' \
-  --deepspeed "zero_stage1_config.json" \
+  --deepspeed "zero_stage3_config_100b.json" \
   --report_to "tensorboard" \
   --use_packed_ds False \
   2>&1 | tee -a "${OUTPUT_DIR}/training_log.txt"
