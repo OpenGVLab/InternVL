@@ -66,7 +66,7 @@ for ((i=0; i<${#datasets[@]}; i++)); do
         --job-name "wwy_sampling" \
         -o "${CUR_LOG_DIR}/${dataset_name}_max_tiles_${max_num}.log" \
         -e "${CUR_LOG_DIR}/${dataset_name}_max_tiles_${max_num}.log" \
-    python -u tools/mm_reasoning_pipeline/internvl_lmdeploy_correctness.py \
+    python -u tools/mmpr_pipeline/internvl_lmdeploy_correctness.py \
         --checkpoint $model_path \
         --prompt-path $dataset \
         --out-dir "outputs/correctness_mmpr" \
