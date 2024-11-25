@@ -1,23 +1,20 @@
-import io
-import os
-import time
-import json
-import socket
-import random
 import argparse
 import datetime
+import io
+import json
+import os
+import random
+import socket
 import subprocess
+import time
+from collections import defaultdict
 
 import torch
-# import deepspeed
-
-from PIL import Image
-from collections import defaultdict
-from lmdeploy import pipeline, TurbomindEngineConfig, VisionConfig
+from lmdeploy import TurbomindEngineConfig, VisionConfig, pipeline
+from lmdeploy.model import InternVL2InternLM2, Qwen7BChat
 from lmdeploy.vl.constants import IMAGE_TOKEN
 from petrel_client.client import Client
-from lmdeploy.model import InternVL2InternLM2, Qwen7BChat
-
+from PIL import Image
 
 client = Client()
 IMG_PLACEHOLDER = '<image>'
@@ -69,10 +66,10 @@ def init_distributed_mode():
     rank = int(os.environ['SLURM_PROCID'])
     local_rank = rank % torch.cuda.device_count()
 
-    world_size = int(os.environ["SLURM_NTASKS"])
-    local_size = int(os.environ["SLURM_NTASKS_PER_NODE"])
+    world_size = int(os.environ['SLURM_NTASKS'])
+    local_size = int(os.environ['SLURM_NTASKS_PER_NODE'])
 
-    if "MASTER_PORT" not in os.environ:
+    if 'MASTER_PORT' not in os.environ:
         port = 22222
         # for i in range(22222, 65535):
         #     cmd = f'netstat -aon|grep {i}'
@@ -82,14 +79,14 @@ def init_distributed_mode():
         #             break
 
         print(f'MASTER_PORT = {port}')
-        os.environ["MASTER_PORT"] = str(port)
+        os.environ['MASTER_PORT'] = str(port)
 
         time.sleep(3)
 
-    node_list = os.environ["SLURM_NODELIST"]
-    addr = subprocess.getoutput(f"scontrol show hostname {node_list} | head -n1")
-    if "MASTER_ADDR" not in os.environ:
-        os.environ["MASTER_ADDR"] = addr
+    node_list = os.environ['SLURM_NODELIST']
+    addr = subprocess.getoutput(f'scontrol show hostname {node_list} | head -n1')
+    if 'MASTER_ADDR' not in os.environ:
+        os.environ['MASTER_ADDR'] = addr
 
     os.environ['RANK'] = str(rank)
     os.environ['LOCAL_RANK'] = str(local_rank)
@@ -177,10 +174,10 @@ class VQADataset(torch.utils.data.Dataset):
             }
 
         return {
-                'question': question.replace(IMG_PLACEHOLDER, IMAGE_TOKEN),
-                'prefix': prefix,
-                'item': item.copy(),
-            }
+            'question': question.replace(IMG_PLACEHOLDER, IMAGE_TOKEN),
+            'prefix': prefix,
+            'item': item.copy(),
+        }
 
 
 class InferenceSampler(torch.utils.data.sampler.Sampler):

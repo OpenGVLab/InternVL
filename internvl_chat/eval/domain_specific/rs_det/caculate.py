@@ -1,6 +1,5 @@
 import argparse
 import json
-import os
 import re
 
 import torch
@@ -104,7 +103,6 @@ def evaluation_metrics(outputs):
 
 
 if __name__ == '__main__':
-
     parser = argparse.ArgumentParser()
     parser.add_argument('--output_file', type=str, default='')
     args = parser.parse_args()

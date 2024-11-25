@@ -1,9 +1,9 @@
 import argparse
 import itertools
 import json
-import re
 import os
 import random
+import re
 import time
 from functools import partial
 
@@ -11,7 +11,6 @@ import torch
 from internvl.model import load_model_and_tokenizer
 from internvl.train.dataset import build_transform, dynamic_preprocess
 from PIL import Image
-from torch.utils.data import Dataset
 from tqdm import tqdm
 
 ds_collections = {
@@ -29,13 +28,13 @@ ds_collections = {
 
 
 COT_INSTRUCTION = (
-    "Your task is to answer the question below. "
+    'Your task is to answer the question below. '
     "Give step by step reasoning before you answer, and when you're ready to answer, "
     "please use the format \"Final answer: ..\""
-    "\n\n"
-    "Question:"
-    "\n\n"
-    "{question}"
+    '\n\n'
+    'Question:'
+    '\n\n'
+    '{question}'
 )
 
 
@@ -160,7 +159,7 @@ def post_process(pred, option):
 
 
 def evaluate_chat_model():
-    prompt = "" if args.cot else "Answer with the option's letter from the given choices directly."
+    prompt = '' if args.cot else "Answer with the option's letter from the given choices directly."
     random.seed(args.seed)
 
     for ds_name in args.datasets:
@@ -226,7 +225,6 @@ def evaluate_chat_model():
         merged_outputs = [_ for _ in itertools.chain.from_iterable(merged_outputs)]
 
         if torch.distributed.get_rank() == 0:
-
             print(f'Evaluating {ds_name} ...')
             time_prefix = time.strftime('%y%m%d%H%M%S', time.localtime())
             results_file = f'{ds_name}_{time_prefix}.jsonl'
@@ -248,7 +246,7 @@ if __name__ == '__main__':
     parser.add_argument('--datasets', type=str, default='sqa_test')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
-    parser.add_argument('--num-beams', type=int, default=5)
+    parser.add_argument('--num-beams', type=int, default=1)
     parser.add_argument('--temperature', type=float, default=0.0)
     parser.add_argument('--out-dir', type=str, default='results')
     parser.add_argument('--seed', type=int, default=0)

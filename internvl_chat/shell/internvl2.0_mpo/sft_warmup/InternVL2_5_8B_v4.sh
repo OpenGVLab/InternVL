@@ -37,7 +37,7 @@ srun -p ${PARTITION} \
   ${SRUN_ARGS} \
   python -u internvl/train/internvl_chat_finetune.py \
   --model_name_or_path "/mnt/petrelfs/share_data/wangweiyun/share_internvl/InternVL2_5-8B" \
-  --conv_style "internlm2-chat" \
+  --conv_style "internvl2_5" \
   --output_dir ${OUTPUT_DIR} \
   --meta_path "shell/data/dev_dpo_sft/sft_v4.json" \
   --overwrite_output_dir True \

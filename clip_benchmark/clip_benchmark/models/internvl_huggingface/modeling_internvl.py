@@ -206,9 +206,9 @@ class InternVLModel(InternVLPreTrainedModel):
         # self.post_init()
 
         if config.use_backbone_lora:
-            self.wrap_backbone_lora(r=config.use_backbone_lora)
+            self.wrap_backbone_lora(r=config.use_backbone_lora, lora_alpha=config.use_backbone_lora * 2)
         if config.use_qllama_lora:
-            self.wrap_qllama_lora(r=config.use_qllama_lora)
+            self.wrap_qllama_lora(r=config.use_qllama_lora, lora_alpha=config.use_qllama_lora * 2)
         if config.force_image_size:
             self.vision_model.resize_pos_embeddings(
                 old_size=config.vision_config.image_size,

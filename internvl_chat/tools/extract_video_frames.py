@@ -1,7 +1,6 @@
 import concurrent.futures
 import json
 import os
-import random
 
 import av
 import numpy as np

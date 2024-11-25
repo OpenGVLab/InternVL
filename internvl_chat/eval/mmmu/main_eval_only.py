@@ -3,8 +3,7 @@ import json
 from argparse import ArgumentParser
 
 from data_utils import CAT_SHORT2LONG, DOMAIN_CAT2SUB_CAT, save_json
-from eval_utils import (calculate_ins_level_acc, evaluate,
-                        parse_multi_choice_response, parse_open_response)
+from eval_utils import calculate_ins_level_acc, evaluate, parse_open_response
 
 if __name__ == '__main__':
 

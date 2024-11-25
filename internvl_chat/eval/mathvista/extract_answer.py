@@ -1,5 +1,3 @@
-import re
-import httpx
 import argparse
 
 from tqdm import tqdm
