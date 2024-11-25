@@ -14,7 +14,7 @@ export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 export MASTER_PORT=34229
 export TF_CPP_MIN_LOG_LEVEL=3
 
-PROJECT_NAME='internvl2_5_8b_dynamic_res_sft_cotv4'
+PROJECT_NAME='internvl2_5_8b_dynamic_res_sft_mmmu_o1_241125'
 OUTPUT_DIR="work_dirs/internvl_sft/${PROJECT_NAME}"
 
 if [ ! -d "$OUTPUT_DIR" ]; then
@@ -39,7 +39,7 @@ srun -p ${PARTITION} \
   --model_name_or_path "/mnt/petrelfs/share_data/wangweiyun/share_internvl/InternVL2_5-8B" \
   --conv_style "internvl2_5" \
   --output_dir ${OUTPUT_DIR} \
-  --meta_path "shell/data/dev_dpo_sft/sft_v4.json" \
+  --meta_path "shell/data/dev_dpo_sft/sft_mmmu_o1_241125.json" \
   --overwrite_output_dir True \
   --force_image_size 448 \
   --down_sample_ratio 0.5 \
@@ -63,7 +63,7 @@ srun -p ${PARTITION} \
   --warmup_ratio 0.03 \
   --lr_scheduler_type "cosine" \
   --logging_steps 1 \
-  --max_seq_length 8192 \
+  --max_seq_length 32768 \
   --do_train True \
   --grad_checkpoint True \
   --group_by_length True \

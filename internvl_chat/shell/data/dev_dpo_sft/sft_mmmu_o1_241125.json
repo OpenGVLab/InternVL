@@ -1,0 +1,290 @@
+{
+    "mmmu_similar_images_qa_cot_training_21092": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_mmmu/mmmu_similar_images_qa_cot_training_21092.jsonl",
+        "domain": "CoT",
+        "length": 21092,
+        "repeat_time": 1,
+        "root": "langchao:s3://internvl2/",
+        "source": "cot",
+        "data_augment": false
+    },
+    "test_dev_set_cot_training_241125_4535": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_mmmu/test_dev_set_cot_training_241125_4535.jsonl",
+        "domain": "CoT",
+        "length": 4535,
+        "repeat_time": 1,
+        "root": "langchao:s3://internvl2/datasets/mmmu",
+        "source": "cot",
+        "data_augment": false
+    },
+    "val_new_question_cot_training_241125_2253": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_mmmu/val_new_question_cot_training_241125_2253.jsonl",
+        "domain": "CoT",
+        "length": 2253,
+        "repeat_time": 1,
+        "root": "langchao:s3://internvl2/datasets/mmmu",
+        "source": "cot",
+        "data_augment": false
+    },
+    "TACO_code_5k_index_cot_text_training_241125_1839": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/TACO_code_5k_index_cot_text_training_241125_1839.jsonl",
+        "domain": "CoT",
+        "length": 1839,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "aime_except2024_cot_text_training_241125_907": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/aime_except2024_cot_text_training_241125_907.jsonl",
+        "domain": "CoT",
+        "length": 907,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "aops_index_cot_text_training_241125_3053": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/aops_index_cot_text_training_241125_3053.jsonl",
+        "domain": "CoT",
+        "length": 3053,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "gaokao_biology_question_textonly_cot_text_training_241125_2854": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/gaokao_biology_question_textonly_cot_text_training_241125_2854.jsonl",
+        "domain": "CoT",
+        "length": 2854,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "gaokao_chemistry_question_textonly_cot_text_training_241125_2519": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/gaokao_chemistry_question_textonly_cot_text_training_241125_2519.jsonl",
+        "domain": "CoT",
+        "length": 2519,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "gaokao_chinese_question_textonly_cot_text_training_241125_1362": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/gaokao_chinese_question_textonly_cot_text_training_241125_1362.jsonl",
+        "domain": "CoT",
+        "length": 1362,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "gaokao_geography_question_textonly_cot_text_training_241125_1990": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/gaokao_geography_question_textonly_cot_text_training_241125_1990.jsonl",
+        "domain": "CoT",
+        "length": 1990,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "gaokao_history_question_textonly_cot_text_training_241125_1913": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/gaokao_history_question_textonly_cot_text_training_241125_1913.jsonl",
+        "domain": "CoT",
+        "length": 1913,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "gaokao_math_question_textonly_cot_text_training_241125_2862": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/gaokao_math_question_textonly_cot_text_training_241125_2862.jsonl",
+        "domain": "CoT",
+        "length": 2862,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "gaokao_physics_question_textonly_cot_text_training_241125_2742": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/gaokao_physics_question_textonly_cot_text_training_241125_2742.jsonl",
+        "domain": "CoT",
+        "length": 2742,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "gaokao_politics_question_textonly_cot_text_training_241125_1857": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/gaokao_politics_question_textonly_cot_text_training_241125_1857.jsonl",
+        "domain": "CoT",
+        "length": 1857,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "leetcode-hard_cot_text_training_241125_2103": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/leetcode-hard_cot_text_training_241125_2103.jsonl",
+        "domain": "CoT",
+        "length": 2103,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "leetcode_dataset-cn-GPT4o_1664_20240809_index_cot_text_training_241125_1984": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/leetcode_dataset-cn-GPT4o_1664_20240809_index_cot_text_training_241125_1984.jsonl",
+        "domain": "CoT",
+        "length": 1984,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "math_hard_cot_text_training_241125_2124": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/math_hard_cot_text_training_241125_2124.jsonl",
+        "domain": "CoT",
+        "length": 2124,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "mmmu_similar_images_qa_cot_training_21083": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/mmmu_similar_images_qa_cot_training_21083.jsonl",
+        "domain": "CoT",
+        "length": 21083,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "omini_prepared_index_cot_text_training_241125_2034": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/omini_prepared_index_cot_text_training_241125_2034.jsonl",
+        "domain": "CoT",
+        "length": 2034,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "puzzles_cot_text_training_241125_221": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/puzzles_cot_text_training_241125_221.jsonl",
+        "domain": "CoT",
+        "length": 221,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "test_dev_set_cot_text_training_241125_4535": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/test_dev_set_cot_text_training_241125_4535.jsonl",
+        "domain": "CoT",
+        "length": 4535,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "tigerbot-kaggle-leetcodesolutions-en-2k_debup_2048_20240226_20240606_process-by-gpt_t_2040_20240606_index_cot_text_training_241125_497": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/tigerbot-kaggle-leetcodesolutions-en-2k_debup_2048_20240226_20240606_process-by-gpt_t_2040_20240606_index_cot_text_training_241125_497.jsonl",
+        "domain": "CoT",
+        "length": 497,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "val_new_question_cot_text_training_241125_3063": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/val_new_question_cot_text_training_241125_3063.jsonl",
+        "domain": "CoT",
+        "length": 3063,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "validation_set_cot_text_training_241125_541": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_text/validation_set_cot_text_training_241125_541.jsonl",
+        "domain": "CoT",
+        "length": 541,
+        "repeat_time": 1,
+        "root": null,
+        "source": "cot",
+        "data_augment": false
+    },
+    "gaokao_biology_question_textonly_cot_training_241125_2854": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_vl/gaokao_biology_question_textonly_cot_training_241125_2854.jsonl",
+        "domain": "CoT",
+        "length": 2854,
+        "repeat_time": 1,
+        "root": "langchao:s3://internvl2/datasets/",
+        "source": "cot",
+        "data_augment": false
+    },
+    "gaokao_chemistry_question_textonly_cot_training_241125_2519": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_vl/gaokao_chemistry_question_textonly_cot_training_241125_2519.jsonl",
+        "domain": "CoT",
+        "length": 2519,
+        "repeat_time": 1,
+        "root": "langchao:s3://internvl2/datasets/",
+        "source": "cot",
+        "data_augment": false
+    },
+    "gaokao_chinese_question_textonly_cot_training_241125_1362": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_vl/gaokao_chinese_question_textonly_cot_training_241125_1362.jsonl",
+        "domain": "CoT",
+        "length": 1362,
+        "repeat_time": 1,
+        "root": "langchao:s3://internvl2/datasets/",
+        "source": "cot",
+        "data_augment": false
+    },
+    "gaokao_geography_question_textonly_cot_training_241125_1990": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_vl/gaokao_geography_question_textonly_cot_training_241125_1990.jsonl",
+        "domain": "CoT",
+        "length": 1990,
+        "repeat_time": 1,
+        "root": "langchao:s3://internvl2/datasets/",
+        "source": "cot",
+        "data_augment": false
+    },
+    "gaokao_history_question_textonly_cot_training_241125_1913": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_vl/gaokao_history_question_textonly_cot_training_241125_1913.jsonl",
+        "domain": "CoT",
+        "length": 1913,
+        "repeat_time": 1,
+        "root": "langchao:s3://internvl2/datasets/",
+        "source": "cot",
+        "data_augment": false
+    },
+    "gaokao_math_question_textonly_cot_training_241125_2864": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_vl/gaokao_math_question_textonly_cot_training_241125_2864.jsonl",
+        "domain": "CoT",
+        "length": 2864,
+        "repeat_time": 1,
+        "root": "langchao:s3://internvl2/datasets/",
+        "source": "cot",
+        "data_augment": false
+    },
+    "gaokao_physics_question_textonly_cot_training_241125_2742": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_vl/gaokao_physics_question_textonly_cot_training_241125_2742.jsonl",
+        "domain": "CoT",
+        "length": 2742,
+        "repeat_time": 1,
+        "root": "langchao:s3://internvl2/datasets/",
+        "source": "cot",
+        "data_augment": false
+    },
+    "gaokao_politics_question_textonly_cot_training_241125_1857": {
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/dpo_sft_warmup_mmmu_o1_241125/annotations_vl/gaokao_politics_question_textonly_cot_training_241125_1857.jsonl",
+        "domain": "CoT",
+        "length": 1857,
+        "repeat_time": 1,
+        "root": "langchao:s3://internvl2/datasets/",
+        "source": "cot",
+        "data_augment": false
+    }
+}
