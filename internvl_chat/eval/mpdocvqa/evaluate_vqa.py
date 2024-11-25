@@ -241,6 +241,7 @@ if __name__ == '__main__':
     parser.add_argument('--max-num', type=int, default=6)
     parser.add_argument('--total-max-num', type=int, default=64)
     parser.add_argument('--load-in-8bit', action='store_true')
+    parser.add_argument('--load-in-4bit', action='store_true')
     parser.add_argument('--auto', action='store_true')
     args = parser.parse_args()
 
