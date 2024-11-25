@@ -14,7 +14,6 @@ from decord import VideoReader, cpu
 from internvl.model import load_model_and_tokenizer
 from internvl.train.dataset import build_transform, dynamic_preprocess
 from PIL import Image
-from torch.utils.data import Dataset
 from tqdm import tqdm
 
 data_list = {
@@ -366,13 +365,12 @@ if __name__ == '__main__':
     parser.add_argument('--dynamic', action='store_true')
     parser.add_argument('--max-num', type=int, default=6)
     parser.add_argument('--load-in-8bit', action='store_true')
-    parser.add_argument('--load-in-4bit', action='store_true')
     parser.add_argument('--auto', action='store_true')
     parser.add_argument('--num_segments', type=int, default=16)
     args = parser.parse_args()
 
     if not os.path.exists(args.out_dir):
-        os.makedirs(args.out_dir)
+        os.makedirs(args.out_dir, exist_ok=True)
 
     args.datasets = args.datasets.split(',')
     print('datasets:', args.datasets)

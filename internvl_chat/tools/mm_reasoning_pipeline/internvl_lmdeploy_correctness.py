@@ -1,19 +1,18 @@
-import io
-import os
-import time
-import json
-import socket
 import argparse
 import datetime
+import io
+import json
+import os
+import socket
 import subprocess
+import time
+from collections import defaultdict
 
 import torch
-# import deepspeed
-
-from PIL import Image
-from collections import defaultdict
-from lmdeploy import pipeline, TurbomindEngineConfig, VisionConfig, GenerationConfig
+from lmdeploy import (GenerationConfig, TurbomindEngineConfig, VisionConfig,
+                      pipeline)
 from lmdeploy.vl.constants import IMAGE_TOKEN
+from PIL import Image
 
 try:
     from petrel_client.client import Client
@@ -26,7 +25,7 @@ except:
     )
 
 
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
+os.environ['TOKENIZERS_PARALLELISM'] = 'false'
 
 
 IMG_PLACEHOLDER = '<image>'
@@ -36,21 +35,21 @@ IMG_END_TOKEN = '</img>'
 
 
 INSTRUCTION_EN = (
-    "Your task is to answer the question below. "
+    'Your task is to answer the question below. '
     "Give step by step reasoning before you answer, and when you're ready to answer, "
     "please use the format \"Final answer: ..\""
-    "\n\n"
-    "Question:"
-    "\n\n"
-    "{question}"
+    '\n\n'
+    'Question:'
+    '\n\n'
+    '{question}'
 )
 
 INSTRUCTION_ZH = (
     "你的任务是回答以下问题。在回答之前，请逐步推理说明您的思路。当你准备好给出答案时，请使用以下格式：\"答案: ...\""
-    "\n\n"
-    "问题:"
-    "\n\n"
-    "{question}"
+    '\n\n'
+    '问题:'
+    '\n\n'
+    '{question}'
 )
 
 VALID_INSTRUCTIONS = [
@@ -65,20 +64,20 @@ def init_distributed_mode():
     rank = int(os.environ['SLURM_PROCID'])
     local_rank = rank % torch.cuda.device_count()
 
-    world_size = int(os.environ["SLURM_NTASKS"])
-    local_size = int(os.environ["SLURM_NTASKS_PER_NODE"])
+    world_size = int(os.environ['SLURM_NTASKS'])
+    local_size = int(os.environ['SLURM_NTASKS_PER_NODE'])
 
-    if "MASTER_PORT" not in os.environ:
+    if 'MASTER_PORT' not in os.environ:
         port = 22222
         print(f'MASTER_PORT = {port}')
-        os.environ["MASTER_PORT"] = str(port)
+        os.environ['MASTER_PORT'] = str(port)
 
         time.sleep(3)
 
-    node_list = os.environ["SLURM_NODELIST"]
-    addr = subprocess.getoutput(f"scontrol show hostname {node_list} | head -n1")
-    if "MASTER_ADDR" not in os.environ:
-        os.environ["MASTER_ADDR"] = addr
+    node_list = os.environ['SLURM_NODELIST']
+    addr = subprocess.getoutput(f'scontrol show hostname {node_list} | head -n1')
+    if 'MASTER_ADDR' not in os.environ:
+        os.environ['MASTER_ADDR'] = addr
 
     os.environ['RANK'] = str(rank)
     os.environ['LOCAL_RANK'] = str(local_rank)
@@ -275,9 +274,9 @@ def evaluate_chat_model():
 
             for input, item, response in zip(inputs, items, response_list):
                 item = item.copy()
-                item["question_orig"] = item["question"]
-                item["question"] = input[0].replace(IMAGE_TOKEN, IMG_PLACEHOLDER)
-                item["response"] = response.text
+                item['question_orig'] = item['question']
+                item['question'] = input[0].replace(IMAGE_TOKEN, IMG_PLACEHOLDER)
+                item['response'] = response.text
                 outputs.append(item)
 
         if idx % print_freq == 0 and torch.distributed.get_rank() == 0:

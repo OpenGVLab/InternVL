@@ -3,63 +3,42 @@ import itertools
 import json
 import os
 import random
-import re
 import time
 from functools import partial
 
+import numpy as np
 import torch
+from datasets import load_dataset
 from internvl.model import load_model_and_tokenizer
 from internvl.train.dataset import build_transform, dynamic_preprocess
-from PIL import Image
 from tqdm import tqdm
 
 ds_collections = {
-    'sqa_test': {
-        'root': 'data/scienceqa/scienceqa_test_img.jsonl',
-        'max_new_tokens': 100,
+    'Mantis-Eval': {
+        'root': 'TIGER-Lab/Mantis-Eval',
+        'max_new_tokens': 50,
         'min_new_tokens': 1,
-    },
-    'm3cot_test': {
-        'root': 'data/M3CoT/test.jsonl',
-        'max_new_tokens': 100,
-        'min_new_tokens': 1,
+        'split': 'test'
     },
 }
-
-
-COT_INSTRUCTION = (
-    'Your task is to answer the question below. '
-    "Give step by step reasoning before you answer, and when you're ready to answer, "
-    "please use the format \"Final answer: ..\""
-    '\n\n'
-    'Question:'
-    '\n\n'
-    '{question}'
-)
-
-
-def extract_answer(text):
-    match = re.search(r'(Final answer:|Answer:)\s*(.*)', text, re.IGNORECASE)
-    if match:
-        return match.group(2).strip()
-    return text
 
 
 def collate_fn(batches, tokenizer):
     pixel_values = torch.cat([_['pixel_values'] for _ in batches], dim=0)
     questions = [_['question'] for _ in batches]
     answers = [_['answer'] for _ in batches]
-    image_paths = [_['image_path'] for _ in batches]
+    num_patches_lists = [_['num_patches_list'] for _ in batches]
     options = [_['option'] for _ in batches]
-    return pixel_values, questions, answers, image_paths, options
+    lines = [_['line'] for _ in batches]
+    return pixel_values, questions, answers, num_patches_lists, options, lines
 
 
-class ScienceQADataset(torch.utils.data.Dataset):
+class MantisEvalDataset(torch.utils.data.Dataset):
 
-    def __init__(self, root, prompt, input_size=224, dynamic_image_size=False,
+    def __init__(self, root, split, prompt, input_size=224, dynamic_image_size=False,
                  use_thumbnail=False, max_num=6):
-        f = open(root, 'r', encoding='utf-8')
-        self.data = [json.loads(line) for line in f.readlines()]
+        dataset = load_dataset(root, split=split, cache_dir=os.path.join(os.getcwd(), 'data/mantis_eval/'))
+        self.data = dataset
         self.prompt = prompt
         self.input_size = input_size
         self.dynamic_image_size = dynamic_image_size
@@ -72,42 +51,52 @@ class ScienceQADataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         data = self.data[idx]
-        image_path = data['image']
-        hint = data['hint'] if data['hint'] else None
+        question_type = data['question_type']
         question = data['question']
-
-        choices = data['choices']
+        image_list = data['images']
+        del data['images']
+        del data['data_source']
+        images_to_remove = ' '.join(['<image>'] * len(image_list))
+        question = question.replace(images_to_remove, '').strip()
+        for i in range(len(image_list)):
+            question = question.replace('<image>', f'Image-{i + 1}', 1)
+        options = data['options']
+        options = [item.strip() for item in options]
         answer = data['answer']
-        choice_list = []
+        choice_txt = '\n'.join(options)
 
-        options = {}
-        multiple_choices = ['A', 'B', 'C', 'D', 'E']
-        for i, c in enumerate(choices):
-            choice_list.append('{}. {}'.format(multiple_choices[i], c))
-            options[multiple_choices[i]] = c
-        choice_txt = '\n'.join(choice_list)
-
-        image = Image.open(image_path).convert('RGB')
+        num_patches_list = []
         if self.dynamic_image_size:
-            images = dynamic_preprocess(image, image_size=self.input_size,
-                                        use_thumbnail=self.use_thumbnail,
-                                        max_num=self.max_num)
+            images = []
+            for image in image_list:
+                tiles = dynamic_preprocess(image, image_size=self.input_size,
+                                           use_thumbnail=self.use_thumbnail,
+                                           max_num=max(1, self.max_num // len(image_list)))
+                images += tiles
+                num_patches_list.append(len(tiles))
         else:
             images = [image]
+            num_patches_list.append(1)
         pixel_values = [self.transform(image) for image in images]
         pixel_values = torch.stack(pixel_values)
 
-        if hint is not None:
-            question = hint + '\n' + question
-        question += '\n' + choice_txt
-        question += '\n' + self.prompt
-
+        if question_type == 'multi-choice':
+            question = question + '\n' + choice_txt + '\n' + self.prompt[question_type]
+        else:
+            question = question + '\n' + self.prompt[question_type]
+        question = question.strip()
+        if len(image_list) == 1:
+            prefix = '<image>\n'
+        else:
+            prefix = ''.join([f'Image-{i + 1}: <image>\n' for i in range(len(image_list))])
+        question = prefix + question
         return {
-            'question': question.strip(),
+            'question': question,
             'pixel_values': pixel_values,
-            'answer': multiple_choices[answer],
-            'image_path': image_path,
-            'option': options
+            'answer': answer,
+            'option': options,
+            'num_patches_list': num_patches_list,
+            'line': data
         }
 
 
@@ -137,34 +126,17 @@ class InferenceSampler(torch.utils.data.sampler.Sampler):
         return len(self._local_indices)
 
 
-def post_process(pred, option):
-    pred = pred.strip()
-    option_candidate = list(option.keys())
-    if len(pred) == 1:
-        return pred
-    elif len(pred) > 1 and pred[0] in option_candidate:
-        return pred[0]
-    elif len(pred) > 1 and pred[0] not in option_candidate:
-        for k, v in option.items():
-            if v in pred:
-                return k
-
-    if len(pred) > 1 and pred[1] == '.':
-        pred = pred[0]
-
-    if len(pred) > 1 and pred[0] == '(' and pred[2] == ')':
-        pred = pred[1]
-
-    return pred
-
-
 def evaluate_chat_model():
-    prompt = '' if args.cot else "Answer with the option's letter from the given choices directly."
+    prompt = {
+        'multi-choice': "Answer with the option's letter from the given choices directly.",
+        'short-answer': 'Answer the question using a single word or phrase.'
+    }
     random.seed(args.seed)
 
     for ds_name in args.datasets:
-        dataset = ScienceQADataset(
+        dataset = MantisEvalDataset(
             root=ds_collections[ds_name]['root'],
+            split=ds_collections[ds_name]['split'],
             prompt=prompt,
             input_size=image_size,
             dynamic_image_size=args.dynamic,
@@ -182,14 +154,11 @@ def evaluate_chat_model():
         )
 
         outputs = []
-        for _, (pixel_values, questions, answers, image_paths, options) in tqdm(enumerate(dataloader)):
-            if args.cot:
-                questions = [COT_INSTRUCTION.format(question=q) for q in questions]
-
+        for _, (pixel_values, questions, answers, num_patches_lists, options, lines) in tqdm(enumerate(dataloader)):
             pixel_values = pixel_values.to(torch.bfloat16).cuda()
             generation_config = dict(
                 num_beams=args.num_beams,
-                max_new_tokens=ds_collections[ds_name]['max_new_tokens'] if not args.cot else 4096,
+                max_new_tokens=ds_collections[ds_name]['max_new_tokens'],
                 min_new_tokens=ds_collections[ds_name]['min_new_tokens'],
                 do_sample=True if args.temperature > 0 else False,
                 temperature=args.temperature,
@@ -199,21 +168,29 @@ def evaluate_chat_model():
                 pixel_values=pixel_values,
                 question=questions[0],
                 generation_config=generation_config,
+                num_patches_list=num_patches_lists[0],
                 verbose=True
             )
-            pred_orig = pred
-            if args.cot:
-                pred = extract_answer(pred).strip()
-            preds = [post_process(pred, options[0])]
-
-            for question, pred, answer, image_path in zip(questions, preds, answers, image_paths):
-                outputs.append({
-                    'question': question,
-                    'answer': pred,
-                    'answer_orig': pred_orig,
-                    'gt_answers': answer,
-                    'image_path': image_path
-                })
+            preds = [pred]
+            for question, pred, answer, line in zip(questions, preds, answers, lines):
+                line['question'] = question
+                line['pred'] = pred
+                line['answer'] = answer
+                options = line['options']
+                question_type = line['question_type']
+                if question_type == 'multi-choice':
+                    if len(pred) == 3 and pred[0] == '(' and pred[-1] == ')':
+                        pred = pred[1:-1]
+                    if pred == options[ord(answer) - ord('A')] or pred == answer:
+                        line['correct'] = 1
+                    else:
+                        line['correct'] = 0
+                else:
+                    if pred.lower() == answer.lower():
+                        line['correct'] = 1
+                    else:
+                        line['correct'] = 0
+                outputs.append(line)
 
         torch.distributed.barrier()
 
@@ -229,21 +206,28 @@ def evaluate_chat_model():
             time_prefix = time.strftime('%y%m%d%H%M%S', time.localtime())
             results_file = f'{ds_name}_{time_prefix}.jsonl'
             output_path = os.path.join(args.out_dir, results_file)
-            with open(output_path, 'w') as f:
-                for output in merged_outputs:
-                    f.write(json.dumps(output) + '\n')
-            print('Results saved to {}'.format(output_path))
-            cnt = 0
+            writer = open(output_path, 'w')
             for item in merged_outputs:
-                if item['answer'] == item['gt_answers']:
-                    cnt += 1
-            print(f'Acc@1: {cnt / len(merged_outputs)}')
+                writer.write(json.dumps(item) + '\n')
+            writer.close()
+            print('Results saved to {}'.format(output_path))
+
+            multi_choice_items = [item for item in merged_outputs if item['question_type'] == 'multi-choice']
+            if len(multi_choice_items) > 0:
+                print(f'Multi-choice Accuracy: {np.mean([q["correct"] for q in multi_choice_items]):.4f}')
+
+            open_ended_items = [item for item in merged_outputs if item['question_type'] == 'short-answer']
+            if len(open_ended_items) > 0:
+                print(f'Short-answer Accuracy: {np.mean([q["correct"] for q in open_ended_items]):.4f}')
+
+            if len(merged_outputs) > 0:
+                print(f"Overall Accuracy: {np.mean([q['correct'] for q in merged_outputs]):.4f}")
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--checkpoint', type=str, default='')
-    parser.add_argument('--datasets', type=str, default='sqa_test')
+    parser.add_argument('--datasets', type=str, default='Mantis-Eval')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
     parser.add_argument('--num-beams', type=int, default=1)
@@ -254,12 +238,7 @@ if __name__ == '__main__':
     parser.add_argument('--max-num', type=int, default=6)
     parser.add_argument('--load-in-8bit', action='store_true')
     parser.add_argument('--auto', action='store_true')
-    parser.add_argument('--cot', action='store_true')
     args = parser.parse_args()
-
-    model_name = '_'.join(args.checkpoint.split('/')[-2:])
-    model_name = f'{model_name}_cot' if args.cot else model_name
-    args.out_dir = os.path.join(args.out_dir, model_name)
 
     if not os.path.exists(args.out_dir):
         os.makedirs(args.out_dir, exist_ok=True)
@@ -290,5 +269,6 @@ if __name__ == '__main__':
     print(f'[test] template: {model.config.template}')
     print(f'[test] dynamic_image_size: {args.dynamic}')
     print(f'[test] use_thumbnail: {use_thumbnail}')
+    print(f'[test] max_num: {args.max_num}')
 
     evaluate_chat_model()

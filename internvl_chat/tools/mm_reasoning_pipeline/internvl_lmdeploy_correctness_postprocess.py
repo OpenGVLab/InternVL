@@ -1,9 +1,10 @@
-import os
-import re
-import json
-import random
 import argparse
+import json
+import os
+import random
+import re
 from collections import defaultdict
+
 from eval.vqa.textvqa_eval import TextVQAAccuracyEvaluator
 
 random.seed(0)

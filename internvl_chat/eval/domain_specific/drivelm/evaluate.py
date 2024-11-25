@@ -8,13 +8,10 @@ import time
 from functools import partial
 
 import torch
-from datasets import concatenate_datasets, load_dataset
-from internvl.model.internvl_chat import InternVLChatModel
+from internvl.model import load_model_and_tokenizer
 from internvl.train.dataset import build_transform, dynamic_preprocess
 from PIL import Image
-from torch.utils.data import Dataset
 from tqdm import tqdm
-from transformers import AutoTokenizer
 
 ds_collections = {
     'DriveLM_val': {
@@ -74,7 +71,6 @@ def collate_fn(batches, tokenizer):
     questions_old = [_['question_old'] for _ in batches]
     answers = [_['answer'] for _ in batches]
     data_ids = [_['data_id'] for _ in batches]
-    # images_sizes = [_['images_size'] for _ in batches]
     return pixel_values, questions_old, questions, answers, data_ids
 
 
@@ -82,8 +78,6 @@ class DriveLMDataset(torch.utils.data.Dataset):
 
     def __init__(self, root, split, prompt, image_path, input_size=224, dynamic_image_size=False,
                  use_thumbnail=False, max_num=6, ):
-        # run for each subject
-
         with open(root, 'r') as f:
             self.data = [json.loads(line) for line in f.readlines()]
             # data_val = json.load(f)
@@ -97,9 +91,6 @@ class DriveLMDataset(torch.utils.data.Dataset):
         self.transform = build_transform(is_train=False, input_size=input_size)
         self.image_path = image_path
 
-        # with open(image_meta,"r") as f:
-        #     self.image_meta = json.load(f)
-
     def __len__(self):
         return len(self.data)
 
@@ -112,13 +103,10 @@ class DriveLMDataset(torch.utils.data.Dataset):
         image_file = os.path.join(self.image_path, data['image'])
         image = Image.open(image_file).convert('RGB')
         # question_type = data['question_type']
-
         # choices = eval(data['options'])
         answer = data['conversations'][1]['value'].strip()
 
         if self.dynamic_image_size:
-            # images = []
-
             pil_image = dynamic_preprocess(image, image_size=self.input_size,
                                            use_thumbnail=self.use_thumbnail,
                                            max_num=self.max_num)
@@ -128,14 +116,10 @@ class DriveLMDataset(torch.utils.data.Dataset):
         pixel_values = [self.transform(image) for image in images]
         pixel_values = torch.stack(pixel_values)
 
-        # image_id = os.path.basename(image_file).split(".")[0]
-        # images_size = self.image_meta[image_id]["images_size"]
-
         return {
             'question_old': question_old,
             'question': question,
             'pixel_values': pixel_values,
-            # 'images_size':images_size,
             'answer': answer,
             'data_id': data_id
         }
@@ -209,10 +193,6 @@ def evaluate_chat_model():
                 generation_config=generation_config
             )
 
-            # preds = [pred]
-            # if len(options[0]) == 0:
-            #     preds = [pred]
-            # else:
             preds = [post_process(pred)]
 
             for question, pred, answer, data_id, question_old in zip(questions, preds, answers, data_ids,
@@ -247,10 +227,10 @@ def evaluate_chat_model():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--checkpoint', type=str, default='')
-    parser.add_argument('--datasets', type=str, default='MMMU_dev')
+    parser.add_argument('--datasets', type=str, default='DriveLM_val')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
-    parser.add_argument('--num-beams', type=int, default=5)
+    parser.add_argument('--num-beams', type=int, default=1)
     parser.add_argument('--temperature', type=float, default=0.0)
     parser.add_argument('--out-dir', type=str, default='results')
     parser.add_argument('--seed', type=int, default=0)
@@ -261,7 +241,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if not os.path.exists(args.out_dir):
-        os.makedirs(args.out_dir)
+        os.makedirs(args.out_dir, exist_ok=True)
 
     args.datasets = args.datasets.split(',')
     print('datasets:', args.datasets)
@@ -275,15 +255,7 @@ if __name__ == '__main__':
 
     torch.cuda.set_device(int(os.getenv('LOCAL_RANK', 0)))
 
-    if args.auto:
-        os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
-    kwargs = {'device_map': 'auto'} if args.auto else {}
-    tokenizer = AutoTokenizer.from_pretrained(args.checkpoint, trust_remote_code=True, use_fast=False)
-    model = InternVLChatModel.from_pretrained(
-        args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16,
-        load_in_8bit=args.load_in_8bit, **kwargs).eval()
-    if not args.load_in_8bit and not args.auto:
-        model = model.cuda()
+    model, tokenizer = load_model_and_tokenizer(args)
     image_size = model.config.force_image_size or model.config.vision_config.image_size
     use_thumbnail = model.config.use_thumbnail
 

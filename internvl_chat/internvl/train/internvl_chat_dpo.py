@@ -1,5 +1,9 @@
-import gc
-import json
+# --------------------------------------------------------
+# InternVL
+# Copyright (c) 2024 OpenGVLab
+# Licensed under The MIT License [see LICENSE for details]
+# --------------------------------------------------------
+
 import logging
 import math
 import os
@@ -9,9 +13,15 @@ import traceback
 import warnings
 from copy import deepcopy
 from dataclasses import dataclass, field
-from typing import Dict, Optional, Literal
+from typing import Dict, Literal, Optional
 
 import numpy as np
+
+try:
+    import orjson as json
+except:
+    import json
+
 import torch
 import torch.distributed as dist
 import transformers
@@ -33,8 +43,10 @@ from internvl.train.constants import (BOX_END_TOKEN, BOX_START_TOKEN,
 from internvl.train.dataset import (ConcatDataset, TCSLoader,
                                     WeightedConcatDataset, build_transform,
                                     dynamic_preprocess, preprocess,
-                                    preprocess_internlm, preprocess_mpt,
+                                    preprocess_internlm,
+                                    preprocess_internvl2_5, preprocess_mpt,
                                     preprocess_phi3)
+from internvl.train.trainer_dpo import MultimodalDPOTrainer
 from PIL import Image, ImageFile, PngImagePlugin, UnidentifiedImageError
 from torch.utils.data import Dataset
 from transformers import (AutoConfig, AutoModelForCausalLM, AutoTokenizer,
@@ -43,14 +55,7 @@ from transformers import (AutoConfig, AutoModelForCausalLM, AutoTokenizer,
 from transformers.trainer_utils import get_last_checkpoint
 from transformers.utils.logging import (enable_default_handler,
                                         enable_explicit_format, set_verbosity)
-
 from trl import DPOConfig as DPOConfigTRL
-from internvl.train.trainer_dpo import MultimodalDPOTrainer
-
-
-# Apply necessary patches for the transformers library
-replace_llama_rmsnorm_with_fused_rmsnorm()
-replace_train_sampler()
 
 # Try to import petrel_client for image loading, fallback to PIL if unavailable
 try:
@@ -82,31 +87,31 @@ class ModelArguments:
     """
     model_name_or_path: Optional[str] = field(
         default=None,
-        metadata={'help': 'Path to pretrained model or model identifier from huggingface.co/models'}
+        metadata={'help': 'Path to a pretrained model (local or from huggingface.co/models).'}
     )
     vision_path: Optional[str] = field(
         default=None,
-        metadata={'help': 'Path to pretrained model or model identifier from huggingface.co/models'}
+        metadata={'help': 'Path to a pretrained model (local or from huggingface.co/models).'}
     )
     llm_path: Optional[str] = field(
         default=None,
-        metadata={'help': 'Path to pretrained model or model identifier from huggingface.co/models'}
+        metadata={'help': 'Path to a pretrained model (local or from huggingface.co/models).'}
     )
     mlp_path: Optional[str] = field(
         default=None,
-        metadata={'help': 'Path to pretrained model or model identifier from huggingface.co/models'}
+        metadata={'help': 'Path to a pretrained model (local or from huggingface.co/models).'}
     )
     freeze_llm: bool = field(
         default=False,
-        metadata={'help': 'Set to True to freeze the LLM decoder.'},
+        metadata={'help': 'Set to True to freeze the LLM. Default is False.'},
     )
     freeze_backbone: bool = field(
         default=False,
-        metadata={'help': 'Set to True to freeze the vision backbone of the model.'},
+        metadata={'help': 'Set to True to freeze the ViT. Default is False.'},
     )
     freeze_mlp: bool = field(
         default=False,
-        metadata={'help': 'Set to True to freeze the MLP layers of the model.'},
+        metadata={'help': 'Set to True to freeze the MLP. Default is False.'},
     )
     unfreeze_vit_layers: int = field(
         default=0,
@@ -114,11 +119,11 @@ class ModelArguments:
     )
     vision_select_layer: int = field(
         default=-1,
-        metadata={'help': 'Specify the layer of ViT feature map to use. Default is last layer.'},
+        metadata={'help': 'Specify the layer of ViT feature map to use. Default is -1 for the last layer.'},
     )
     use_backbone_lora: int = field(
         default=0,
-        metadata={'help': 'Set the LoRA adapter rank for the backbone model. Default is 0.'}
+        metadata={'help': 'Set the LoRA adapter rank for the ViT. Default is 0.'}
     )
     use_llm_lora: int = field(
         default=0,
@@ -126,24 +131,27 @@ class ModelArguments:
     )
     unfreeze_lm_head: bool = field(
         default=False,
-        metadata={'help': "Set to True to unfreeze the language model's head."},
+        metadata={'help': 'Set to True to unfreeze the head of LLM. Default is False.'},
     )
-    use_custom_trainer: bool = field(
-        default=False,
-        metadata={'help': 'Set to True to enable the use of a custom trainer.'},
-    )
-    grad_checkpoint: Optional[bool] = field(
-        default=False,
-        metadata={'help': 'Set to True to use gradient checkpointing.'},
+    grad_checkpoint: bool = field(
+        default=True,
+        metadata={'help': 'Set to True to use gradient checkpointing. Default is True.'},
     )
     drop_path_rate: float = field(
         default=0.0,
-        metadata={'help': 'Set the drop path rate for the ViT model. Default is 0.'},
+        metadata={'help': 'Set the drop path rate for the ViT. Default is 0.'},
     )
-    ps_version: str = field(
+    ps_version: Literal['v1', 'v2'] = field(
         default='v2',
-        metadata={'help': 'Specify the version of pixel shuffle implementation. Default is `v1`.'
-                          'Please use `v2` to fix the bug of transposed image.'}
+        metadata={'help': 'Specify the version of pixel shuffle implementation. Default is v2.'}
+    )
+    use_fast_tokenizer: bool = field(
+        default=False,
+        metadata={'help': 'Set to True to use the fast mode of the tokenizer.'}
+    )
+    use_liger: bool = field(
+        default=False,
+        metadata={'help': 'Set to True to use the liger kernel.'}
     )
 
 
@@ -152,8 +160,8 @@ class DataTrainingArguments:
     """
     Arguments for specifying data input for training and evaluation.
     """
-    max_seq_length: Optional[int] = field(
-        default=2048,
+    max_seq_length: int = field(
+        default=8192,
         metadata={
             'help': (
                 'The maximum total input sequence length after tokenization. Sequences longer '
@@ -161,54 +169,62 @@ class DataTrainingArguments:
             )
         },
     )
-    force_image_size: Optional[int] = field(
+    force_image_size: int = field(
         default=448,
-        metadata={'help': 'Set the desired size for the image. Default is 224.'},
+        metadata={'help': 'Set the desired size for the image. Default is 448.'},
     )
-    down_sample_ratio: Optional[float] = field(
+    down_sample_ratio: float = field(
         default=0.5,
-        metadata={'help': 'Set the desired down-sampling ratio for the image. Default is 1.0.'},
+        metadata={'help': 'Set the desired down-sampling ratio for the image. Default is 0.5.'},
     )
-    pad2square: Optional[bool] = field(
+    pad2square: bool = field(
         default=False,
-        metadata={'help': 'Pad the image to a square shape if set to True.'},
+        metadata={'help': 'Pad the image to a square shape if set to True. Default is False.'},
     )
-    conv_style: Optional[str] = field(
+    conv_style: str = field(
         default='internlm2-chat', metadata={'help': 'Prompt style for a conversation.'}
     )
-    meta_path: Optional[str] = field(
+    meta_path: str = field(
         default=None,
         metadata={'help': 'The path of the meta file of datasets.'},
     )
-    use_data_resampling: Optional[bool] = field(
+    use_data_resampling: bool = field(
         default=False,
-        metadata={'help': 'Set to True to use data resampling.'},
+        metadata={'help': 'Set to True to use data resampling. Default is False.'},
     )
-    dynamic_image_size: Optional[bool] = field(
+    dynamic_image_size: bool = field(
         default=False,
-        metadata={'help': 'Set to True to use dynamic image size.'},
+        metadata={'help': 'Set to True to use dynamic high resolution strategy. Default is False.'},
     )
-    use_thumbnail: Optional[bool] = field(
+    use_thumbnail: bool = field(
         default=False,
-        metadata={'help': 'Set to True to add a thumbnail image.'},
+        metadata={'help': 'Set to True to add a thumbnail image. Default is False.'},
     )
-    min_dynamic_patch: Optional[int] = field(
+    min_dynamic_patch: int = field(
         default=1,
         metadata={'help': 'The minimum number of dynamic patches. Default is 1.'},
     )
-    max_dynamic_patch: Optional[int] = field(
+    max_dynamic_patch: int = field(
         default=12,
-        metadata={'help': 'The maximum number of dynamic patches. Default is 6.'},
+        metadata={'help': 'The maximum number of dynamic patches. Default is 12.'},
     )
-    normalize_type: Optional[str] = field(
+    min_num_frame: int = field(
+        default=8,
+        metadata={'help': 'The minimum number of frames for video data. Default is 8.'},
+    )
+    max_num_frame: int = field(
+        default=32,
+        metadata={'help': 'The maximum number of frames for video data. Default is 32.'},
+    )
+    normalize_type: Literal['imagenet', 'clip', 'siglip'] = field(
         default='imagenet',
-        metadata={'help': 'The normalize type for the image. Default is imagenet.'},
+        metadata={'help': 'The normalization type for the image. Default is imagenet.'},
     )
-    sigmoid_loss_weight: Optional[float] = field(
+    sigmoid_loss_weight: float = field(
         default=1.0,
         metadata={'help': 'Loss weight for DPO loss. Default is 1.0'},
     )
-    bco_pair_loss_weight: Optional[float] = field(
+    bco_pair_loss_weight: float = field(
         default=1.0,
         metadata={'help': 'Loss weight for BCO loss. Default is 1.0'},
     )
@@ -216,9 +232,9 @@ class DataTrainingArguments:
 
 class DPOConfig(DPOConfigTRL):
     loss_type: Literal[
-        "sigmoid", "hinge", "ipo", "bco_pair", "sppo_hard", "nca_pair", "robust", "aot", "aot_pair", "exo_pair",
-        "sigmoid,bco_pair",
-    ] = "sigmoid"
+        'sigmoid', 'hinge', 'ipo', 'bco_pair', 'sppo_hard', 'nca_pair', 'robust', 'aot', 'aot_pair', 'exo_pair',
+        'sigmoid,bco_pair',
+    ] = 'sigmoid'
 
 
 class LazySupervisedDataset(Dataset):
@@ -232,16 +248,16 @@ class LazySupervisedDataset(Dataset):
         tcs_loader,
         ds_name,
         num_image_token,
-        image_size=224,
+        image_size=448,
         is_train=True,
         pad2square=False,
         group_by_length=False,
         dynamic_image_size=False,
         use_thumbnail=False,
         min_dynamic_patch=1,
-        max_dynamic_patch=6,
-        min_num_frame=4,  # for video data
-        max_num_frame=12,  # for video data
+        max_dynamic_patch=12,
+        min_num_frame=8,  # for video data
+        max_num_frame=32,  # for video data
         sampling_method='rand',  # for video data
         repeat_time=1,
         normalize_type='imagenet',
@@ -271,7 +287,6 @@ class LazySupervisedDataset(Dataset):
             self.raw_data = f.readlines()
             if repeat_time < 1:
                 # If repeat_time is less than 1, select a portion of the data
-                # self.raw_data = self.raw_data[:int(len(self.raw_data) * repeat_time)]
                 self.raw_data = random.sample(self.raw_data, k=int(len(self.raw_data) * repeat_time))
             if repeat_time > 1:
                 assert isinstance(repeat_time, int)
@@ -281,7 +296,6 @@ class LazySupervisedDataset(Dataset):
         self.rng = np.random.default_rng(seed=random_seed)
         self.rng.shuffle(self.raw_data)
 
-        gc.collect()
         self.root = meta['root']
         self.cached_data_dict = {}
         self.tcs_loader = tcs_loader
@@ -314,7 +328,6 @@ class LazySupervisedDataset(Dataset):
                     else:
                         token_length = self.conv2length[str_length]
                 self.length.append(token_length)
-        gc.collect()
 
     def __len__(self):
         return len(self.raw_data)
@@ -327,6 +340,8 @@ class LazySupervisedDataset(Dataset):
             preprocess_function = preprocess_internlm
         elif self.template_name == 'phi3-chat':
             preprocess_function = preprocess_phi3
+        elif self.template_name == 'internvl2_5':
+            preprocess_function = preprocess_internvl2_5
         else:
             preprocess_function = preprocess
         return preprocess_function
@@ -419,12 +434,6 @@ class LazySupervisedDataset(Dataset):
             ds_name=self.ds_name,
         )
 
-        # Calculate position_ids for packed dataset
-        # position_ids = ret['attention_mask'].long().cumsum(-1) - 1
-        # position_ids.masked_fill_(ret['attention_mask'] == 0, 1)
-        # image_end_token_id = self.tokenizer.convert_tokens_to_ids(IMG_END_TOKEN)
-        # assert (ret['input_ids'][0] == image_end_token_id).sum() == 1, f'image tokens are truncated, this dataset is {self.ds_name}'
-
         # Create the final return dictionary
         ret = dict(
             chosen_input_ids=chosen_ret['input_ids'][0],
@@ -451,7 +460,7 @@ class LazySupervisedDataset(Dataset):
             image = self.load_image(image_path)
             if self.dynamic_image_size:  # If dynamic image size is enabled, preprocess the image dynamically
                 image = dynamic_preprocess(image, min_num=self.min_dynamic_patch,
-                                           max_num=self.max_dynamic_patch // num_image,
+                                           max_num=max(1, self.max_dynamic_patch // num_image),
                                            image_size=self.image_size, use_thumbnail=self.use_thumbnail)
                 images += image
                 num_tiles.append(len(image))
@@ -495,12 +504,6 @@ class LazySupervisedDataset(Dataset):
             ds_name=self.ds_name,
             num_image=num_image,
         )
-
-        # Calculate position_ids for packed dataset
-        # position_ids = ret['attention_mask'].long().cumsum(-1) - 1
-        # position_ids.masked_fill_(ret['attention_mask'] == 0, 1)
-        # image_end_token_id = self.tokenizer.convert_tokens_to_ids(IMG_END_TOKEN)
-        # assert (ret['input_ids'][0] == image_end_token_id).sum() == num_image, f'image tokens are truncated, this dataset is {self.ds_name}'
 
         # Create the final return dictionary
         ret = dict(
@@ -570,10 +573,6 @@ class LazySupervisedDataset(Dataset):
             ds_name=self.ds_name,
         )
 
-        # Calculate position_ids for packed dataset
-        # position_ids = ret['attention_mask'].long().cumsum(-1) - 1
-        # position_ids.masked_fill_(ret['attention_mask'] == 0, 1)
-
         # Create the final return dictionary
         ret = dict(
             chosen_input_ids=chosen_ret['input_ids'][0],
@@ -639,6 +638,8 @@ def build_datasets(
     use_thumbnail=False,
     min_dynamic_patch=1,
     max_dynamic_patch=12,
+    min_num_frame=8,
+    max_num_frame=32,
     normalize_type='imagenet',
 ):
     datasets = []
@@ -665,6 +666,8 @@ def build_datasets(
             use_thumbnail=use_thumbnail,
             min_dynamic_patch=min_dynamic_patch,
             max_dynamic_patch=max_num,
+            min_num_frame=min_num_frame,
+            max_num_frame=max_num_frame,
             repeat_time=repeat_time,
             normalize_type=normalize_type,
             random_seed=ds_idx,
@@ -686,6 +689,10 @@ def build_datasets(
 
 
 def main():
+    # Apply necessary patches for the transformers library
+    replace_llama_rmsnorm_with_fused_rmsnorm()
+    replace_train_sampler()
+
     # Parse input arguments
     # See all possible arguments in src/transformers/training_args.py
     # If use DeepSpeed zero3, init_dist must before HfArgumentParser
@@ -753,7 +760,7 @@ def main():
     tokenizer_path = model_args.model_name_or_path or model_args.llm_path
     logger.info(f'Loading Tokenizer: {tokenizer_path}')
     tokenizer = AutoTokenizer.from_pretrained(
-        tokenizer_path, add_eos_token=False, trust_remote_code=True, use_fast=False)
+        tokenizer_path, add_eos_token=False, trust_remote_code=True, use_fast=model_args.use_fast_tokenizer)
     tokenizer.tokenizer_path = tokenizer_path
     tokenizer.model_max_length = data_args.max_seq_length
     token_list = [IMG_START_TOKEN, IMG_END_TOKEN, IMG_CONTEXT_TOKEN,
@@ -762,6 +769,14 @@ def main():
     num_new_tokens = tokenizer.add_tokens(token_list, special_tokens=True)
     img_context_token_id = tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
     tcs_loader = TCSLoader('~/petreloss.conf') if has_tcs_loader else None
+
+    if model_args.use_liger:
+        from internvl.patch import apply_liger_kernel_to_internvit
+        from liger_kernel.transformers import (apply_liger_kernel_to_llama,
+                                               apply_liger_kernel_to_qwen2)
+        apply_liger_kernel_to_llama()
+        apply_liger_kernel_to_qwen2()
+        # apply_liger_kernel_to_internvit()
 
     if model_args.model_name_or_path is not None:
         logger.info('Loading InternVLChatModel...')
@@ -863,7 +878,8 @@ def main():
         data_args, tokenizer, tcs_loader, model, group_by_length=training_args.group_by_length,
         dynamic_image_size=data_args.dynamic_image_size, use_thumbnail=data_args.use_thumbnail,
         min_dynamic_patch=data_args.min_dynamic_patch, max_dynamic_patch=data_args.max_dynamic_patch,
-        normalize_type=data_args.normalize_type)
+        normalize_type=data_args.normalize_type, min_num_frame=data_args.min_num_frame,
+        max_num_frame=data_args.max_num_frame)
 
     def _freeze_params(module):
         for param in module.parameters():
@@ -908,10 +924,6 @@ def main():
 
     # set seed for torch dataloaders
     set_seed(training_args.seed)
-
-    # Initialize our Trainer
-    if model_args.use_custom_trainer:
-        replace_create_optimizer()
 
     trainer = MultimodalDPOTrainer(
         model=model,

@@ -1,5 +1,4 @@
 import argparse
-import base64
 import itertools
 import json
 import os
@@ -7,17 +6,13 @@ import random
 import re
 import time
 from functools import partial
-from io import BytesIO
 from typing import Literal
 
-import pandas as pd
 import torch
-from internvl.model.internvl_chat import InternVLChatModel
+from internvl.model import load_model_and_tokenizer
 from internvl.train.dataset import build_transform, dynamic_preprocess
 from PIL import Image
-from torch.utils.data import Dataset
 from tqdm import tqdm
-from transformers import AutoTokenizer
 
 ds_collections = {
     'MME_RealWorld': {
@@ -273,23 +268,22 @@ def evaluate_chat_model():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--checkpoint', type=str, default='')
-    parser.add_argument('--datasets', type=str, default='mmbench_dev_20230712')
+    parser.add_argument('--datasets', type=str, default='MME_RealWorld')
     parser.add_argument('--subtask', type=str, default='Autonomous_Driving')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
-    parser.add_argument('--num-beams', type=int, default=5)
+    parser.add_argument('--num-beams', type=int, default=1)
     parser.add_argument('--temperature', type=float, default=0.0)
     parser.add_argument('--out-dir', type=str, default='results')
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--dynamic', action='store_true')
     parser.add_argument('--max-num', type=int, default=6)
     parser.add_argument('--load-in-8bit', action='store_true')
-    parser.add_argument('--load-in-4bit', action='store_true')
     parser.add_argument('--auto', action='store_true')
     args = parser.parse_args()
 
     if not os.path.exists(args.out_dir):
-        os.makedirs(args.out_dir)
+        os.makedirs(args.out_dir, exist_ok=True)
 
     args.datasets = args.datasets.split(',')
     print('datasets:', args.datasets)
@@ -303,15 +297,7 @@ if __name__ == '__main__':
 
     torch.cuda.set_device(int(os.getenv('LOCAL_RANK', 0)))
 
-    if args.auto:
-        os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
-    kwargs = {'device_map': 'auto'} if args.auto else {}
-    tokenizer = AutoTokenizer.from_pretrained(args.checkpoint, trust_remote_code=True, use_fast=False)
-    model = InternVLChatModel.from_pretrained(
-        args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16,
-        load_in_8bit=args.load_in_8bit, load_in_4bit=args.load_in_4bit, **kwargs).eval()
-    if not args.load_in_8bit and not args.load_in_4bit and not args.auto:
-        model = model.cuda()
+    model, tokenizer = load_model_and_tokenizer(args)
     image_size = model.config.force_image_size or model.config.vision_config.image_size
     use_thumbnail = model.config.use_thumbnail
 

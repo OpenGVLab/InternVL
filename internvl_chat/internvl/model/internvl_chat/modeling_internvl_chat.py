@@ -43,7 +43,7 @@ class InternVLChatModel(PreTrainedModel):
     _no_split_modules = ['InternVisionModel', 'LlamaDecoderLayer', 'InternLM2DecoderLayer',
                          'Phi3DecoderLayer', 'Qwen2DecoderLayer']
     _supports_flash_attn_2 = True
-    supports_gradient_checkpointing=True
+    supports_gradient_checkpointing = True
 
     def __init__(self, config: InternVLChatConfig, vision_model=None, language_model=None):
         super().__init__(config)

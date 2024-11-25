@@ -1,21 +1,16 @@
 import argparse
-import base64
 import itertools
 import json
 import os
 import random
 import time
 from functools import partial
-from io import BytesIO
 
-import pandas as pd
 import torch
-from internvl.model.internvl_chat import InternVLChatModel
+from internvl.model import load_model_and_tokenizer
 from internvl.train.dataset import build_transform, dynamic_preprocess
 from PIL import Image
-from torch.utils.data import Dataset
 from tqdm import tqdm
-from transformers import AutoTokenizer
 
 ds_collections = {
     'RSVQA_H_TEST2': {
@@ -39,7 +34,6 @@ ds_collections = {
         'type': 'test',
         'image_root': 'InternVL-Domain-Adaptation-Data/images/RSVQA_L/Images_LR'
     },
-
 }
 
 
@@ -60,7 +54,6 @@ class RSVQADataset(torch.utils.data.Dataset):
 
         with open(root, 'r') as f:
             self.ann_data = json.load(f)
-
         self.prompt = prompt
         self.image_root = image_root
         self.input_size = input_size
@@ -76,8 +69,6 @@ class RSVQADataset(torch.utils.data.Dataset):
         data_item = self.ann_data[idx]
         index = data_item['id']
         image = data_item['image']
-        # print(data_item)
-        # print( self.prompt)
         question = data_item['question'] + '\n' + self.prompt
         answer = data_item['gt_answer']
         question_type = data_item['type']
@@ -160,7 +151,6 @@ def evaluate_chat_model():
         dataset = RSVQADataset(
             root=ds_collections[ds_name]['root'],
             prompt=prompt,
-            # language=ds_collections[ds_name]['language'],
             image_root=ds_collections[ds_name]['image_root'],
             input_size=image_size,
             dynamic_image_size=args.dynamic,
@@ -194,7 +184,6 @@ def evaluate_chat_model():
                 generation_config=generation_config
             )
             preds = [pred]
-            # preds = [post_process(output)]
 
             for question, pred, answer, index, question_type in zip(questions, preds, answers, indexes, question_types):
                 outputs.append({
@@ -220,8 +209,7 @@ def evaluate_chat_model():
             results_file = f'{ds_name}_{time_prefix}.json'
             output_path = os.path.join(args.out_dir, results_file)
             with open(output_path, 'w') as f:
-                json.dump(merged_outputs
-                          , f, indent=4)
+                json.dump(merged_outputs, f, indent=4)
             cmd = f'python eval/rs_vqa/score.py --output_file {output_path}'
             print(cmd)
             os.system(cmd)
@@ -230,10 +218,10 @@ def evaluate_chat_model():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--checkpoint', type=str, default='')
-    parser.add_argument('--datasets', type=str, default='mmbench_dev_20230712')
+    parser.add_argument('--datasets', type=str, default='RSVQA_H_TEST2')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
-    parser.add_argument('--num-beams', type=int, default=5)
+    parser.add_argument('--num-beams', type=int, default=1)
     parser.add_argument('--temperature', type=float, default=0.0)
     parser.add_argument('--out-dir', type=str, default='results')
     parser.add_argument('--seed', type=int, default=0)
@@ -244,7 +232,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if not os.path.exists(args.out_dir):
-        os.makedirs(args.out_dir)
+        os.makedirs(args.out_dir, exist_ok=True)
 
     args.datasets = args.datasets.split(',')
     print('datasets:', args.datasets)
@@ -258,15 +246,7 @@ if __name__ == '__main__':
 
     torch.cuda.set_device(int(os.getenv('LOCAL_RANK', 0)))
 
-    if args.auto:
-        os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
-    kwargs = {'device_map': 'auto'} if args.auto else {}
-    tokenizer = AutoTokenizer.from_pretrained(args.checkpoint, trust_remote_code=True, use_fast=False)
-    model = InternVLChatModel.from_pretrained(
-        args.checkpoint, low_cpu_mem_usage=True, torch_dtype=torch.bfloat16,
-        load_in_8bit=args.load_in_8bit, **kwargs).eval()
-    if not args.load_in_8bit and not args.auto:
-        model = model.cuda()
+    model, tokenizer = load_model_and_tokenizer(args)
     image_size = model.config.force_image_size or model.config.vision_config.image_size
     use_thumbnail = model.config.use_thumbnail
 

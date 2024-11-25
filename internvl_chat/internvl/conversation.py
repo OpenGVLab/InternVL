@@ -352,7 +352,7 @@ register_conv_template(
         name='Hermes-2',
         system_template='<|im_start|>system\n{system_message}',
         # note: The new system prompt was not used here to avoid changes in benchmark performance.
-        # system_message='我是书生·万象，英文名是InternVL，是由上海人工智能实验室及多家合作单位联合开发的多模态大语言模型。',
+        # system_message='我是书生·万象，英文名是InternVL，是由上海人工智能实验室、清华大学及多家合作单位联合开发的多模态大语言模型。',
         system_message='你是由上海人工智能实验室联合商汤科技开发的书生多模态大模型，英文名叫InternVL, 是一个有用无害的人工智能助手。',
         roles=('<|im_start|>user\n', '<|im_start|>assistant\n'),
         sep_style=SeparatorStyle.MPT,
@@ -367,7 +367,7 @@ register_conv_template(
         name='internlm2-chat',
         system_template='<|im_start|>system\n{system_message}',
         # note: The new system prompt was not used here to avoid changes in benchmark performance.
-        # system_message='我是书生·万象，英文名是InternVL，是由上海人工智能实验室及多家合作单位联合开发的多模态大语言模型。',
+        # system_message='我是书生·万象，英文名是InternVL，是由上海人工智能实验室、清华大学及多家合作单位联合开发的多模态大语言模型。',
         system_message='你是由上海人工智能实验室联合商汤科技开发的书生多模态大模型，英文名叫InternVL, 是一个有用无害的人工智能助手。',
         roles=('<|im_start|>user\n', '<|im_start|>assistant\n'),
         sep_style=SeparatorStyle.MPT,
@@ -381,7 +381,7 @@ register_conv_template(
         name='phi3-chat',
         system_template='<|system|>\n{system_message}',
         # note: The new system prompt was not used here to avoid changes in benchmark performance.
-        # system_message='我是书生·万象，英文名是InternVL，是由上海人工智能实验室及多家合作单位联合开发的多模态大语言模型。',
+        # system_message='我是书生·万象，英文名是InternVL，是由上海人工智能实验室、清华大学及多家合作单位联合开发的多模态大语言模型。',
         system_message='你是由上海人工智能实验室联合商汤科技开发的书生多模态大模型，英文名叫InternVL, 是一个有用无害的人工智能助手。',
         roles=('<|user|>\n', '<|assistant|>\n'),
         sep_style=SeparatorStyle.MPT,

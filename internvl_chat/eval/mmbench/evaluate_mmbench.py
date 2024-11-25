@@ -13,7 +13,6 @@ import torch
 from internvl.model import load_model_and_tokenizer
 from internvl.train.dataset import build_transform, dynamic_preprocess
 from PIL import Image
-from torch.utils.data import Dataset
 from tqdm import tqdm
 
 ds_collections = {
@@ -238,7 +237,6 @@ def evaluate_chat_model():
         merged_outputs = [_ for _ in itertools.chain.from_iterable(merged_outputs)]
 
         if torch.distributed.get_rank() == 0:
-
             print(f'Evaluating {ds_name} ...')
             time_prefix = time.strftime('%y%m%d%H%M%S', time.localtime())
             results_file = f'{ds_name}_{time_prefix}.xlsx'
@@ -264,19 +262,18 @@ if __name__ == '__main__':
     parser.add_argument('--datasets', type=str, default='mmbench_dev_20230712')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
-    parser.add_argument('--num-beams', type=int, default=5)
+    parser.add_argument('--num-beams', type=int, default=1)
     parser.add_argument('--temperature', type=float, default=0.0)
     parser.add_argument('--out-dir', type=str, default='results')
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--dynamic', action='store_true')
     parser.add_argument('--max-num', type=int, default=6)
     parser.add_argument('--load-in-8bit', action='store_true')
-    parser.add_argument('--load-in-4bit', action='store_true')
     parser.add_argument('--auto', action='store_true')
     args = parser.parse_args()
 
     if not os.path.exists(args.out_dir):
-        os.makedirs(args.out_dir)
+        os.makedirs(args.out_dir, exist_ok=True)
 
     args.datasets = args.datasets.split(',')
     print('datasets:', args.datasets)

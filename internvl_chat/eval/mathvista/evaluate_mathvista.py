@@ -10,7 +10,6 @@ import torch
 from datasets import concatenate_datasets, load_dataset
 from internvl.model import load_model_and_tokenizer
 from internvl.train.dataset import build_transform, dynamic_preprocess
-from torch.utils.data import Dataset
 from tqdm import tqdm
 
 ds_collections = {
@@ -30,13 +29,13 @@ ds_collections = {
 
 
 COT_INSTRUCTION = (
-    "Your task is to answer the question below. "
+    'Your task is to answer the question below. '
     "Give step by step reasoning before you answer, and when you're ready to answer, "
     "please use the format \"Final answer: ..\""
-    "\n\n"
-    "Question:"
-    "\n\n"
-    "{question}"
+    '\n\n'
+    'Question:'
+    '\n\n'
+    '{question}'
 )
 
 
@@ -196,14 +195,13 @@ if __name__ == '__main__':
     parser.add_argument('--datasets', type=str, default='MathVista_testmini')
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=1)
-    parser.add_argument('--num-beams', type=int, default=5)
+    parser.add_argument('--num-beams', type=int, default=1)
     parser.add_argument('--temperature', type=float, default=0.0)
     parser.add_argument('--out-dir', type=str, default='results')
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--dynamic', action='store_true')
     parser.add_argument('--max-num', type=int, default=6)
     parser.add_argument('--load-in-8bit', action='store_true')
-    parser.add_argument('--load-in-4bit', action='store_true')
     parser.add_argument('--auto', action='store_true')
     parser.add_argument('--cot', action='store_true')
     args = parser.parse_args()
