@@ -52,6 +52,9 @@ IMG_DIR_LIST = [
     '/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/GeomVerse/',
     '/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/Geo170K/images/',
     '/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets_vision_only/',
+    'langchao:s3://internvl2/datasets/mmmu/',
+    'langchao:s3://internvl2/datasets/',
+    'langchao:s3://internvl2/',
 ]
 
 for i in range(len(IMG_DIR_LIST)):
@@ -125,7 +128,7 @@ def main(args):
             ref_prefix = ref_meta[filename.replace('_filtered.jsonl', '')]['root']
         elif filename.replace('_extracted.jsonl', '') in ref_meta:
             ref_prefix = ref_meta[filename.replace('_extracted.jsonl', '')]['root']
-        else:
+        elif not prefix:
             print(f'[Warning] Fail to find ref_prefix: {filename}')
             ref_prefix = None
 
@@ -145,13 +148,13 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--data-dir', type=str, default='')
-    parser.add_argument('--no-prompt-mode', action='store_true', default=False)
     parser.add_argument('--force', action='store_true', default=False)
     parser.add_argument('--suffix', type=str, default='')
     args = parser.parse_args()
     if args.data_dir.endswith('/'):
         args.data_dir = args.data_dir[:-1]
-    args.save_dir = f'{args.data_dir}_clean'
+    args.save_dir = os.path.join(args.data_dir, 'clean')
+    args.data_dir = os.path.join(args.data_dir, 'raw')
 
     os.makedirs(args.save_dir, exist_ok=True)
     main(args)

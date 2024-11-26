@@ -7,9 +7,13 @@ QUOTA_TYPE=${QUOTA_TYPE:-"reserved"}
 NODES=$((GPUS / GPUS_PER_NODE))
 CPUS_PER_TASK=${CPUS_PER_TASK:-10}
 
-LOG_DIR="logs_sampling/correctness"
+LOG_DIR="logs_sampling/correctness_mmpr"
 
-model_path="/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/work_dirs/internvl_sft/internvl2_5_8b_dynamic_res_sft_cotv4"
+
+# model_path="/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/work_dirs/internvl_sft/internvl2_5_8b_dynamic_res_sft_cotv4"
+# model_path="/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL-RL-DPO/internvl_chat_dev/work_dirs/internvl_sft/internvl2_pro_dynamic_res_sft_cotv4"
+model_path="/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/work_dirs/internvl_sft/internvl2_5_8b_dynamic_res_sft_mmmu_o1_241125"
+
 
 declare -a datasets=( \
     'outputs/correctness_prompt_mmpr/CLEVR_math_en_20240402_extracted.jsonl,6' \

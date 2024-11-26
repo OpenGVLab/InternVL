@@ -15,7 +15,7 @@ option_candidate = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 
 
 # you can download this file from this url: https://huggingface.co/datasets/Weiyun1025/M3CoT-ScienceQA-Format/blob/main/train_pair_with_res.jsonl
 gt_path_map = {
-    'm3cot': 'M3CoT/train_pair_with_res.jsonl',
+    'm3cot': 'outputs/correctness_prompt_mmpr_gt/m3cot.jsonl',
 }
 
 
@@ -171,7 +171,7 @@ def check_answer(answer_pred, answer_gt, mode):
                 'gt_answers': [answer_gt] * 10,
             },
         ]
-        accuracy = max(accuracy, evaluator.eval_pred_list(merged_outputs))
+        accuracy = max(accuracy, evaluator.eval_pred_list(merged_outputs, disable_tqdm=True))
 
         if len(evaluator.answer_processor(answer_pred)) == 0:
             accuracy = 0
@@ -519,13 +519,13 @@ def main(args):
 
         save_dir = args.save_dir
         ds_name = os.path.basename(filename).replace('.jsonl', '')
-        os.makedirs(save_dir, exist_ok=True)
-        os.makedirs(f'{save_dir}_pos_items', exist_ok=True)
-        os.makedirs(f'{save_dir}_neg_items', exist_ok=True)
+        os.makedirs(os.path.join(save_dir, 'raw'), exist_ok=True)
+        os.makedirs(os.path.join(save_dir, 'pos_items'), exist_ok=True)
+        os.makedirs(os.path.join(save_dir, 'neg_items'), exist_ok=True)
 
-        pairs_vqa_correctness_rules_save_path = os.path.join(save_dir, f'{ds_name}_pairs_vqa_correctness_rules.jsonl')
-        pairs_vqa_correctness_rules_and_claims_save_path = os.path.join(save_dir, f'{ds_name}_pairs_vqa_correctness_rules_and_claims.jsonl')
-        pairs_vqa_format_rules_save_path = os.path.join(save_dir, f'{ds_name}_pairs_vqa_format_rules.jsonl')
+        pairs_vqa_correctness_rules_save_path = os.path.join(save_dir, 'raw', f'{ds_name}_pairs_vqa_correctness_rules.jsonl')
+        pairs_vqa_correctness_rules_and_claims_save_path = os.path.join(save_dir, 'raw', f'{ds_name}_pairs_vqa_correctness_rules_and_claims.jsonl')
+        pairs_vqa_format_rules_save_path = os.path.join(save_dir, 'raw', f'{ds_name}_pairs_vqa_format_rules.jsonl')
 
         if not args.overwrite and os.path.exists(pairs_vqa_correctness_rules_save_path):
             print(f'skip {filename}')
@@ -573,11 +573,11 @@ def main(args):
 
         save_items(
             merge_dict(pos_id2item, pos_inconsistent_id2item),
-            os.path.join(f'{save_dir}_pos_items', f'{ds_name}.jsonl'),
+            os.path.join(save_dir, 'pos_items', f'{ds_name}.jsonl'),
         )
         save_items(
             neg_id2item,
-            os.path.join(f'{save_dir}_neg_items', f'{ds_name}.jsonl'),
+            os.path.join(save_dir, 'neg_items', f'{ds_name}.jsonl'),
             question_only=True,
             all_incorrect_keys=all_incorrect_keys,
         )
