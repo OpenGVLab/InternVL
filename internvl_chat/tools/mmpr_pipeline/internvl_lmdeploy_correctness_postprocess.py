@@ -301,29 +301,33 @@ def _build_items_based_on_correctness(lines, mode):
         else:
             consistent = True
 
-        try:
-            _, answer_pred = parse_answer(response)
-            item['answer_pred'] = answer_pred
-        except:
-            item['answer_pred'] = 'None'
-            neg_format_id2item[(image, question, answer_gt)].append(item)
-            continue
+        if args.use_correctness_cache:
+            correct = int(item['is_correctness'])
+        else:
+            try:
+                _, answer_pred = parse_answer(response)
+                item['answer_pred'] = answer_pred
+            except:
+                item['answer_pred'] = 'None'
+                neg_format_id2item[(image, question, answer_gt)].append(item)
+                continue
 
-        if args.answer_fix:
-            if (
-                'mc_score' in mode
-                and "Answer with the option's letter from the given choices directly." in question
-            ):
-                mc = True
-            else:
-                assert "Answer with the option's letter from the given choices directly." not in question
-                mc = False
+            if args.answer_fix:
+                if (
+                    'mc_score' in mode
+                    and "Answer with the option's letter from the given choices directly." in question
+                ):
+                    mc = True
+                else:
+                    assert "Answer with the option's letter from the given choices directly." not in question
+                    mc = False
 
-            item = _fix_answer(item, answer_pred, answer_gt, mc=mc)
-            response = item['response']
-            answer_pred = item['answer_pred']
+                item = _fix_answer(item, answer_pred, answer_gt, mc=mc)
+                response = item['response']
+                answer_pred = item['answer_pred']
 
-        correct = check_answer(answer_pred, answer_gt, mode=mode)
+            correct = check_answer(answer_pred, answer_gt, mode=mode)
+
         assert correct in [0, 1], correct
 
         if correct == 1 and not consistent:
@@ -603,6 +607,7 @@ if __name__ == '__main__':
     parser.add_argument('--overwrite', action='store_true', default=False)
     parser.add_argument('--answer-fix', action='store_true', default=False)
     parser.add_argument('--force', action='store_true', default=False)
+    parser.add_argument('--use-correctness-cache', action='store_true', default=False)
     args = parser.parse_args()
     NUM_PAIRS_PER_KEY = args.num_pairs_per_key
     main(args)

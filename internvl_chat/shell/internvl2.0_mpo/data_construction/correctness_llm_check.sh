@@ -8,8 +8,8 @@ NODES=$((GPUS / GPUS_PER_NODE))
 CPUS_PER_TASK=${CPUS_PER_TASK:-10}
 
 LOG_DIR="logs_sampling/correctness_llm_check"
-DATA_DIR="outputs/correctness_prompt_mmmu_o1_241125"
-SAVE_DIR="outputs/correctness_llm_check_prompt_mmmu_o1_241125"
+DATA_DIR="outputs/correctness_mmmu_o1_241125/internvl_sft_internvl2_5_8b_dynamic_res_sft_mmmu_o1_241125"
+SAVE_DIR="outputs/correctness_llm_check_mmmu_o1_241125/internvl_sft_internvl2_5_8b_dynamic_res_sft_mmmu_o1_241125"
 
 model_path="/mnt/petrelfs/share_data/wangweiyun/share_ckpt_hf/Qwen2.5-72B-Instruct"
 
