@@ -10,7 +10,8 @@ from collections import defaultdict
 # from lmdeploy.model import InternVL2InternLM2, Qwen7BChat
 from lmdeploy.vl.constants import IMAGE_TOKEN
 
-from tools.internvlo1_pipeline.utils_mcts import build_trees
+from tools.internvlo1_pipeline.utils_eval import get_mode
+from tools.internvlo1_pipeline.utils_mcts import build_trees, print_trees, model_name
 from tools.internvlo1_pipeline.utils_dist import (
     init_dist,
     localtime,
@@ -128,11 +129,8 @@ def evaluate_chat_model():
     min_len = get_global_min(len(dataloader))
 
     gen_config = dict(
-        top_k=args.top_k,
         top_p=args.top_p,
         temperature=args.temperature,
-        max_new_tokens=args.max_new_tokens,
-        min_new_tokens=args.min_new_tokens,
     )
 
     item2num = defaultdict(int)
@@ -174,15 +172,20 @@ def evaluate_chat_model():
 
         outputs.extend(build_trees(args=args, inputs=inputs, items=items, gen_config=gen_config))
 
+        for output in outputs:
+            output['question_orig'] = output['question']
+            output['question'] = inputs[0][0].replace(IMAGE_TOKEN, IMG_PLACEHOLDER)
+
         if idx % log_freq == 0 and torch.distributed.get_rank() == 0:
             print(
+                f'[Start]\n'
                 f'[Prompt]\n{inputs[-1][0]}\n'
                 f'[Image]\n{outputs[-1]["image"]}\n'
                 f'[Question]\n{outputs[-1]["question_orig"]}\n'
-                f'[Output]\n{outputs[-1]["tree"].root.rollouts[0]}\n'
                 f'[Answer]\n{outputs[-1]["answer"]}\n'
                 f'[End]\n'
             )
+            print_trees(outputs[-1]['tree'])
 
         if idx % log_freq == 0:
             print(
@@ -204,19 +207,12 @@ def evaluate_chat_model():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--checkpoint', type=str, default='')
-    parser.add_argument('--prompt-path', type=str, default='')
-    parser.add_argument('--out-dir', type=str, default='sampled_outputs')
+    parser.add_argument('--prompt-path', type=str, default='outputs/correctness_prompt_mmpr/m3cot_train_extracted.jsonl')
+    parser.add_argument('--out-dir', type=str, default='outputs/prm_mmpr')
     parser.add_argument('--batch-size', type=int, default=1)
-    # parser.add_argument('--vit-batch-size', type=int, default=8)
     parser.add_argument('--num-workers', type=int, default=8)
-    parser.add_argument('--top-k', type=int, default=50)
     parser.add_argument('--top-p', type=float, default=1.0)
-    parser.add_argument('--temperature', type=float, default=1.0)
-    parser.add_argument('--max-new-tokens', type=int, default=2048)
-    parser.add_argument('--min-new-tokens', type=int, default=1)
-    parser.add_argument('--tp', type=int, default=1)
-    parser.add_argument('--dynamic', action='store_true')
+    parser.add_argument('--temperature', type=float, default=0.7)
     parser.add_argument('--max-num', type=int, default=6)
     parser.add_argument('--sample-max-num', type=int, default=None)
     parser.add_argument('--prompt-version', type=str, default='en', choices=['en', 'zh'])
@@ -231,6 +227,8 @@ if __name__ == '__main__':
     parser.add_argument('--use-advantage', action='store_true')
     parser.add_argument('--answer-fix', action='store_true')
     args = parser.parse_args()
+    args.tp = 1
+    args.verification_mode = get_mode(os.path.basename(args.prompt_path))
 
     global INSTRUCTION
     if args.prompt_version == 'zh':
@@ -242,32 +240,12 @@ if __name__ == '__main__':
 
     assert args.temperature > 0
     assert args.batch_size == 1, 'only batch_size=1 is supported'
-    assert args.tp == 1, 'model is invoked in the format of API'
 
     init_dist(args)
 
-    model_name = '_'.join(args.checkpoint.split('/')[-2:])
+    model_name = '_'.join(model_name.split('/')[-2:])
     args.out_dir = os.path.join(args.out_dir, model_name, f'max_tiles_{args.max_num}')
     os.makedirs(args.out_dir, exist_ok=True)
 
-    # Qwen7BChat.messages2prompt = messages2prompt
-    # InternVL2InternLM2.messages2prompt = messages2prompt
-
-    # vision_config = VisionConfig(max_batch_size=args.vit_batch_size)
-    # pipe = pipeline(
-    #     args.checkpoint,
-    #     vision_config=vision_config,
-    #     backend_config=TurbomindEngineConfig(session_len=8192, cache_max_entry_count=0.1, tp=args.tp)
-    # )
-    # pipe.vl_encoder.model.config.max_dynamic_patch = args.max_num
-    # pipe.vl_encoder.model.config.dynamic_image_size = args.dynamic
-
-    # # lmdeploy will update the current_device
-    # torch.cuda.set_device(int(os.environ['RANK']) % torch.cuda.device_count())
-
-    print(
-        f'Begin to sample data from model {args.checkpoint}, '
-        # f'dynamic: {pipe.vl_encoder.model.config.dynamic_image_size}, '
-        # f'max_num: {pipe.vl_encoder.model.config.max_dynamic_patch}, '
-    )
+    print(f'Begin to sample data from model {model_name}')
     evaluate_chat_model()

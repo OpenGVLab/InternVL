@@ -489,3 +489,16 @@ def post_process(pred):
         return pred[1]
 
     raise RuntimeError(f'Fail to parse pred: {pred}')
+
+
+def get_mode(ds_name):
+    if contain_keywords(ds_name, ['chartqa']):
+        return ['relaxed_accuracy']
+
+    if contain_keywords(ds_name, ['docvqa', 'infographics']):
+        return ['anls']
+
+    if contain_keywords(ds_name, ['SROIE', 'CLEVR_math', 'geos', 'geometry']):
+        return ['relaxed_accuracy', 'vqa_score', 'mc_score']
+
+    return ['vqa_score', 'mc_score', 'math_score']

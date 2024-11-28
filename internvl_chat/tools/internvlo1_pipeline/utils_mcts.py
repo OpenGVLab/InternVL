@@ -9,7 +9,9 @@ from tools.internvlo1_pipeline.utils_eval import check_answer, parse_answer, fix
 
 # TODO: set correctness to 0 when all answer is distinct (备注：暂时不，否则root可能会直接mc_score=0受影响)
 # TODO: update base_url
-openai_client = OpenAI(api_key='YOUR_API_KEY', base_url='http://0.0.0.0:23333/v1')
+openai_client = OpenAI(api_key='YOUR_API_KEY', base_url='http://10.140.37.1:8000/v1')
+model_name = openai_client.models.list().data[0].id
+
 NODE_ID_GLOBAL = 0
 
 
@@ -62,15 +64,16 @@ class Node:
         num_return_sequences: int,
         max_tiles: int,
         gen_config: Dict,
+        verification_mode: List[str],
         parent=None,
         prefix: List[str] = None,
         use_advantage = False,
         prompt_version = 'en',
         min_token_threshold = 50,
     ):
-        self.node_id = NODE_ID_GLOBAL
-
         global NODE_ID_GLOBAL
+
+        self.node_id = NODE_ID_GLOBAL
         NODE_ID_GLOBAL += 1
 
         self.prefix = prefix if prefix else []
@@ -80,6 +83,7 @@ class Node:
         self.num_return_sequences = num_return_sequences
         self.max_tiles = max_tiles
         self.gen_config = gen_config
+        self.verification_mode = verification_mode
 
         self.use_advantage = use_advantage
         self.prompt_version = prompt_version
@@ -105,14 +109,20 @@ class Node:
         return ' '.join(prefix)
 
     def prepare_inputs(self):
-        prompt, image = self.base_input
-        image = base64.b64encode(image).decode('utf-8')
+        prompt, images = self.base_input
+        images = [base64.b64encode(image).decode('utf-8') for image in images]
+        content = [{'type': 'text', 'text': prompt}]
+        for image in images:
+            content.append({
+                'type': 'image_url',
+                'image_url': {
+                    'max_dynamic_patch': self.max_tiles,
+                    'url': f'data:image/jpeg;base64,{image}'
+                },
+            })
         messages = [{
             'role': 'user',
-            'content': [
-                {'type': 'text', 'text': prompt},
-                {'type': 'image_url', 'image_url': {'max_dynamic_patch': self.max_tiles, 'url': f'data:image/jpeg;base64,{image}'}},
-            ]
+            'content': content,
         }]
         if self.prefix:
             messages.append({
@@ -136,26 +146,30 @@ class Node:
     def update_rollouts(self):
         messages = self.prepare_inputs()
         for _ in range(self.num_return_sequences - len(self.rollouts)):
-            response = openai_client.chat.completions.create(messages=messages, **self.gen_config)
-            response = response.choices[0].message.content
+            completion = openai_client.chat.completions.create(model=model_name, messages=messages, **self.gen_config)
+            response = completion.choices[0].message.content
             self.rollouts.append(response)
             self.rollouts_is_visited.append(False)
 
             if self.answer_fix:
                 response = fix_answer(
                     response,
-                    parse_answer(response, version=self.prompt_version),
+                    parse_answer(response, version=self.prompt_version)[-1],
                     self.answer_gt,
                 )
 
             try:
-                correctness = check_answer(parse_answer(response, version=self.prompt_version), self.answer_gt)
+                correctness = check_answer(
+                    answer_pred=parse_answer(response, version=self.prompt_version)[-1],
+                    answer_gt=self.answer_gt,
+                    mode=self.verification_mode
+                )
             except:
                 correctness = 0.0
             self.correctness.append(correctness)
 
             # TODO: debug
-            num_tokens = response.usage.completion_tokens_details.accepted_prediction_tokens
+            num_tokens = completion.usage.completion_tokens
 
         self.mc_estimation = sum(self.correctness) / len(self.correctness)
 
@@ -184,6 +198,7 @@ class Node:
                 answer_gt=parent_node.answer_gt,
                 num_return_sequences=parent_node.num_return_sequences,
                 gen_config=parent_node.gen_config,
+                verification_mode=parent_node.verification_mode,
                 parent=parent_node,
                 prefix=current_prefix,
                 use_advantage=parent_node.use_advantage,
@@ -234,6 +249,8 @@ class Tree:
         use_advantage: bool,
         prompt_version: str,
         min_token_threshold: int,
+        gen_config: Dict,
+        verification_mode: List[str],
     ):
         self.base_input = base_input
         self.answer_gt = answer_gt
@@ -248,6 +265,8 @@ class Tree:
         self.use_advantage = use_advantage
         self.prompt_version = prompt_version
         self.min_token_threshold = min_token_threshold
+        self.gen_config = gen_config
+        self.verification_mode = verification_mode
 
         self.root = Node(
             base_input=self.base_input,
@@ -261,6 +280,7 @@ class Tree:
             use_advantage=self.use_advantage,
             prompt_version=self.prompt_version,
             min_token_threshold=self.min_token_threshold,
+            verification_mode=self.verification_mode,
         )
         self.root.update_rollouts()
         self.root.update_visible()
@@ -337,6 +357,8 @@ class Tree:
         # del obj.use_advantage
         # del obj.prompt_version
         del obj.min_token_threshold
+        del obj.gen_config
+        del obj.verification_mode
 
     def remove_unnecessary_attributes(self):
         del self.alpha
@@ -369,12 +391,13 @@ def build_trees(args, inputs, items, gen_config):
         num_return_sequences=args.num_return_sequences,
         max_tiles=args.max_num,
         gen_config=gen_config,
+        verification_mode=args.verification_mode,
         use_advantage=args.use_advantage,
         prompt_version=args.prompt_version,
         min_token_threshold=args.min_token_threshold,
     )
 
-    while tree.num_nodes <= args.max_nodes and tree.has_available_nodes():
+    while tree.num_nodes <= args.max_nodes and tree.has_available_nodes:
         # select nodes
         node, rollout_idx = tree.select_node()
         # binary search (sample rollouts, extend new nodes)
@@ -392,12 +415,12 @@ def build_trees(args, inputs, items, gen_config):
 
 
 def print_trees(tree: Tree):
-    answer_gt = tree.answer_gt
-    print(f'Global Info: {answer_gt=}')
+    print(f'Global Info: {tree.answer_gt=}, {tree.num_nodes=}')
 
     num_nodes = 0
     nodes_list: List[Node] = [(tree.root, 0)]
     while len(nodes_list) > 0:
+        num_nodes += 1
         node, depth = nodes_list.pop(-1)
         nodes_list.extend(reversed([
             (child, depth+1)
@@ -416,8 +439,13 @@ def print_trees(tree: Tree):
             f'{sep}[Node {node_id}] {prefix=} {len(children)=} {mc_score=}',
             f'{sep}\t[Rollouts]',
         ]
-        for rollout, is_correct in zip(rollouts, correctness):
-            node_info.append(f'{sep}\t{rollout} ({is_correct=})')
+        for rollout_idx, (rollout, is_correct) in enumerate(zip(rollouts, correctness)):
+            node_info.append(
+                f'[{rollout_idx} Start]\n'
+                f'{rollout}\n'
+                f'({is_correct=})\n'
+                f'[{rollout_idx} End]\n'
+            )
 
         print('\n'.join(node_info))
     print(f'[Finish] {num_nodes=}, {tree.num_nodes=}')
