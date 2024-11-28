@@ -103,6 +103,17 @@ def save_outputs_with_pickle(outputs, results_file):
         print(f'[{localtime()}] Results ({len(merged_outputs)=}) saved to {results_file}')
 
 
+def load_outputs_with_pickle(results_file):
+    outputs = []
+    with open(results_file, 'rb') as file:
+        while True:
+            try:
+                outputs.extend(pickle.load(file))
+            except EOFError:
+                break
+    return outputs
+
+
 def localtime():
     return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
 

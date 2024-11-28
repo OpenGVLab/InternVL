@@ -445,6 +445,30 @@ def check_answer(answer_pred, answer_gt, mode):
     return accuracy
 
 
+def fix_answer(response, answer_pred, answer_gt):
+    answer_pred_orig = answer_pred
+    answer_gt_orig = answer_gt
+    answer_pred = answer_pred.lower()
+    answer_gt = answer_gt.lower()
+
+    if answer_gt.upper() in option_candidate:
+        try:
+            answer_pred = post_process(answer_pred_orig)
+        except:
+            return response
+
+        answer_gt = answer_gt.upper()
+
+    if (
+        answer_gt in answer_pred
+        # 30,594 -> 30594
+        or answer_gt.strip('.').replace(',', '') in answer_pred.strip('.').replace(',', '')
+    ):
+        response = answer_gt_orig.join(response.rsplit(answer_pred_orig, 1))
+
+    return response
+
+
 def contain_keywords(ds_name, keywords):
     for keyword in keywords:
         if keyword in ds_name:
