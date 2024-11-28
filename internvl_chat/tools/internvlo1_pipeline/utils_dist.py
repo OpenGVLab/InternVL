@@ -1,6 +1,7 @@
 import os
 import time
 import json
+import pickle
 import socket
 import datetime
 import subprocess
@@ -81,6 +82,23 @@ def save_outputs(outputs, results_file):
         with open(results_file, 'a') as file:
             for output in merged_outputs:
                 file.write(json.dumps(output) + '\n')
+
+        print(f'[{localtime()}] Results ({len(merged_outputs)=}) saved to {results_file}')
+
+
+def save_outputs_with_pickle(outputs, results_file):
+    outputs = sorted(outputs, key=lambda x:x['image'])
+
+    world_size = torch.distributed.get_world_size()
+    merged_outputs = [None for _ in range(world_size)]
+    torch.distributed.all_gather_object(merged_outputs, outputs)
+
+    results_file = results_file.replace('.jsonl', '.pkl')
+    merged_outputs = sum(merged_outputs, start=[])
+
+    if torch.distributed.get_rank() == 0:
+        with open(results_file, 'ab') as file:
+            pickle.dump(merged_outputs, file)
 
         print(f'[{localtime()}] Results ({len(merged_outputs)=}) saved to {results_file}')
 

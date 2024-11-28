@@ -9,15 +9,18 @@ from PIL import Image
 from collections import defaultdict
 from typing import List, Tuple, Dict
 from openai import OpenAI
-from lmdeploy import GenerationConfig, TurbomindEngineConfig, VisionConfig, pipeline
-from lmdeploy.model import InternVL2InternLM2, Qwen7BChat
+# from lmdeploy import GenerationConfig, TurbomindEngineConfig, VisionConfig, pipeline
+# from lmdeploy.model import InternVL2InternLM2, Qwen7BChat
 from lmdeploy.vl.constants import IMAGE_TOKEN
 
 from tools.internvlo1_pipeline.utils_eval import check_answer, parse_answer
 from tools.internvlo1_pipeline.utils_dist import (
+    init_dist,
+    localtime,
+    get_global_min,
     InferenceSampler,
     multimodal_collate_fn as collate_fn,
-    init_dist, save_outputs, localtime, get_global_min,
+    save_outputs_with_pickle as save_outputs,
 )
 
 try:
