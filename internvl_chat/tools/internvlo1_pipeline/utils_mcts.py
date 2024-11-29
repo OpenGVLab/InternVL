@@ -143,13 +143,12 @@ class Node:
         self.rollouts_is_visited.append(True)
         self.correctness.append(correctness)
 
-    def update_rollouts(self):
+    def update_rollouts(self, n=None):
         messages = self.prepare_inputs()
-        for _ in range(self.num_return_sequences - len(self.rollouts)):
+        n = self.num_return_sequences if n is None else n
+        for _ in range(n - len(self.rollouts)):
             completion = openai_client.chat.completions.create(model=model_name, messages=messages, **self.gen_config)
             response = completion.choices[0].message.content
-            self.rollouts.append(response)
-            self.rollouts_is_visited.append(False)
 
             if self.answer_fix:
                 response = fix_answer(
@@ -157,6 +156,9 @@ class Node:
                     parse_answer(response, version=self.prompt_version)[-1],
                     self.answer_gt,
                 )
+
+            self.rollouts.append(response)
+            self.rollouts_is_visited.append(False)
 
             try:
                 correctness = check_answer(
@@ -196,7 +198,9 @@ class Node:
             node = Node(
                 base_input=parent_node.base_input,
                 answer_gt=parent_node.answer_gt,
+                answer_fix=parent_node.answer_fix,
                 num_return_sequences=parent_node.num_return_sequences,
+                max_tiles=parent_node.max_tiles,
                 gen_config=parent_node.gen_config,
                 verification_mode=parent_node.verification_mode,
                 parent=parent_node,
@@ -207,7 +211,6 @@ class Node:
             )
             node.register_rollout(current_suffix, correctness)
             node.update_rollouts()
-            NODE_ID_GLOBAL += 1
 
             if node.mc_estimation > 0:
                 left = mid + 1
@@ -284,6 +287,10 @@ class Tree:
         )
         self.root.update_rollouts()
         self.root.update_visible()
+
+        # in case no positive signal for a certain prompt
+        if self.root.mc_estimation == 0:
+            self.root.update_rollouts(n=self.num_return_sequences * 2)
 
         self.num_nodes = 1
         self.total_cnt = 0
@@ -379,6 +386,9 @@ class Tree:
 
 
 def build_trees(args, inputs, items, gen_config):
+    global NODE_ID_GLOBAL
+    NODE_ID_GLOBAL = 0
+
     # initialize rollouts of root node
     tree = Tree(
         base_input=inputs[0],
@@ -414,7 +424,7 @@ def build_trees(args, inputs, items, gen_config):
     return [item]
 
 
-def print_trees(tree: Tree):
+def print_trees(tree: Tree, print_rollouts=False):
     print(f'Global Info: {tree.answer_gt=}, {tree.num_nodes=}')
 
     num_nodes = 0
@@ -424,9 +434,11 @@ def print_trees(tree: Tree):
         node, depth = nodes_list.pop(-1)
         nodes_list.extend(reversed([
             (child, depth+1)
-            for child in node.children if not child.is_visited
+            for child in node.children
         ]))
 
+        parent = node.parent
+        parent_id = parent.node_id if parent else -1
         node_id = node.node_id
         prefix = Node.join_prefix(node.prefix)
         rollouts = node.rollouts
@@ -434,18 +446,25 @@ def print_trees(tree: Tree):
         mc_score = node.mc_estimation
         children = node.children
 
-        sep = '\t' * depth
         node_info = [
-            f'{sep}[Node {node_id}] {prefix=} {len(children)=} {mc_score=}',
-            f'{sep}\t[Rollouts]',
+            f'[Node {node_id}] {parent_id=} {depth=} {len(children)=} {mc_score=}',
+            f'[Node {node_id}] {prefix=}',
         ]
         for rollout_idx, (rollout, is_correct) in enumerate(zip(rollouts, correctness)):
-            node_info.append(
-                f'[{rollout_idx} Start]\n'
-                f'{rollout}\n'
-                f'({is_correct=})\n'
-                f'[{rollout_idx} End]\n'
-            )
+            num_words = len(Node.split_response(rollout))
+            if print_rollouts:
+                node_info.append(
+                    f'[Rollouts {rollout_idx} Start]'
+                    f'{rollout}\n'
+                    f'({num_words=})\n'
+                    f'({is_correct=})\n'
+                    f'[Rollouts {rollout_idx} End]\n'
+                )
+            else:
+                node_info.append(
+                    f'[Rollouts {rollout_idx}] {num_words=}, {is_correct=}'
+                )
 
         print('\n'.join(node_info))
+        print()
     print(f'[Finish] {num_nodes=}, {tree.num_nodes=}')

@@ -11,6 +11,8 @@ ref_meta_path_list = [
 ]
 
 for ref_meta_path in ref_meta_path_list:
+    if not os.path.exists(ref_meta_path):
+        continue
     with open(ref_meta_path) as file:
         ref_meta.update(json.load(file))
 

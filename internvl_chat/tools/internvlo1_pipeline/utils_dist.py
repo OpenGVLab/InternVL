@@ -93,7 +93,6 @@ def save_outputs_with_pickle(outputs, results_file):
     merged_outputs = [None for _ in range(world_size)]
     torch.distributed.all_gather_object(merged_outputs, outputs)
 
-    results_file = results_file.replace('.jsonl', '.pkl')
     merged_outputs = sum(merged_outputs, start=[])
 
     if torch.distributed.get_rank() == 0:

@@ -19,6 +19,7 @@ from tools.internvlo1_pipeline.utils_dist import (
     InferenceSampler,
     multimodal_collate_fn as collate_fn,
     save_outputs_with_pickle as save_outputs,
+    load_outputs_with_pickle as load_outputs,
 )
 
 try:
@@ -136,12 +137,12 @@ def evaluate_chat_model():
     item2num = defaultdict(int)
     results_file = os.path.basename(args.prompt_path)
     results_file = os.path.join(args.out_dir, results_file)
+    results_file = results_file.replace('.jsonl', '.pkl')
     if os.path.exists(results_file):
-        with open(results_file) as file:
-            lines = file.readlines()
-        for line in lines:
-            item = json.loads(line)
+        items = load_outputs(results_file)
+        for item in items:
             item2num[(str(item['image']), item['question_orig'])] += 1
+        del items
 
     print(
         f'[{localtime()}] [Rank {torch.distributed.get_rank()}] '
@@ -151,7 +152,7 @@ def evaluate_chat_model():
         f'{len(item2num)=}'
     )
 
-    log_freq = max(len(dataloader) // args.batch_size // 100, 1)
+    log_freq = max(len(dataloader) // args.batch_size // 1000, 1)
     outputs = []
     for idx, (inputs, items) in enumerate(dataloader):
         assert len(inputs) == len(items)
@@ -212,20 +213,20 @@ if __name__ == '__main__':
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--num-workers', type=int, default=8)
     parser.add_argument('--top-p', type=float, default=1.0)
-    parser.add_argument('--temperature', type=float, default=0.7)
+    parser.add_argument('--temperature', type=float, default=1.0)
     parser.add_argument('--max-num', type=int, default=6)
     parser.add_argument('--sample-max-num', type=int, default=None)
     parser.add_argument('--prompt-version', type=str, default='en', choices=['en', 'zh'])
     # hyper-parameters for mcts
     parser.add_argument('--num-return-sequences', type=int, default=4)
-    parser.add_argument('--max-nodes', type=int, default=96)
-    parser.add_argument('--min-token-threshold', type=int, default=50)
+    parser.add_argument('--max-nodes', type=int, default=32)
+    parser.add_argument('--min-token-threshold', type=int, default=20)
     parser.add_argument('--alpha', type=float, default=0.5)
     parser.add_argument('--beta', type=float, default=0.9)
     parser.add_argument('--base-length', type=float, default=500)
     parser.add_argument('--c-puct', type=float, default=0.125)
     parser.add_argument('--use-advantage', action='store_true')
-    parser.add_argument('--answer-fix', action='store_true')
+    parser.add_argument('--answer-fix', action='store_true', default=True)
     args = parser.parse_args()
     args.tp = 1
     args.verification_mode = get_mode(os.path.basename(args.prompt_path))
