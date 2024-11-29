@@ -16,5 +16,4 @@ srun -p INTERN2 \
 lmdeploy serve proxy \
     --server-name 0.0.0.0 \
     --server-port 8000 \
-    --strategy min_observed_latency
-
+    --strategy min_expected_latency

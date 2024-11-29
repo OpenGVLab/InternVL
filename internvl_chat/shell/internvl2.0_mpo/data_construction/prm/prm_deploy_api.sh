@@ -31,5 +31,5 @@ lmdeploy serve api_server \
     --cache-max-entry-count 0.1 \
     --session-len 16384 \
     --tp ${GPUS_PER_TASK} \
-    --max-batch-size 8 \
+    --enable-prefix-caching \
     --server-port 23333

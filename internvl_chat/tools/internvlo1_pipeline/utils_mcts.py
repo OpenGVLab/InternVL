@@ -147,15 +147,22 @@ class Node:
         messages = self.prepare_inputs()
         n = self.num_return_sequences if n is None else n
         for _ in range(n - len(self.rollouts)):
-            completion = openai_client.chat.completions.create(model=model_name, messages=messages, **self.gen_config)
+            completion = openai_client.chat.completions.create(
+                model=model_name,
+                messages=messages,
+                **self.gen_config,
+            )
             response = completion.choices[0].message.content
 
             if self.answer_fix:
-                response = fix_answer(
-                    response,
-                    parse_answer(response, version=self.prompt_version)[-1],
-                    self.answer_gt,
-                )
+                try:
+                    response = fix_answer(
+                        response,
+                        parse_answer(response, version=self.prompt_version)[-1],
+                        self.answer_gt,
+                    )
+                except:
+                    pass
 
             self.rollouts.append(response)
             self.rollouts_is_visited.append(False)
@@ -229,7 +236,10 @@ class Node:
     @property
     def weight(self):
         if self.use_advantage:
-            return self.mc_estimation - self.parent.mc_estimation
+            if self.parent is not None:
+                return self.mc_estimation - self.parent.mc_estimation
+            else:
+                return 0
         return self.mc_estimation
 
     @property

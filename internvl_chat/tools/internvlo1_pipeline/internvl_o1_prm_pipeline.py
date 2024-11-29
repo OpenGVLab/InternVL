@@ -152,7 +152,7 @@ def evaluate_chat_model():
         f'{len(item2num)=}'
     )
 
-    log_freq = max(len(dataloader) // args.batch_size // 1000, 1)
+    log_freq = max(len(dataloader) // args.batch_size // 100, 1)
     outputs = []
     for idx, (inputs, items) in enumerate(dataloader):
         assert len(inputs) == len(items)
@@ -211,7 +211,7 @@ if __name__ == '__main__':
     parser.add_argument('--prompt-path', type=str, default='outputs/correctness_prompt_mmpr/m3cot_train_extracted.jsonl')
     parser.add_argument('--out-dir', type=str, default='outputs/prm_mmpr')
     parser.add_argument('--batch-size', type=int, default=1)
-    parser.add_argument('--num-workers', type=int, default=8)
+    parser.add_argument('--num-workers', type=int, default=2)
     parser.add_argument('--top-p', type=float, default=1.0)
     parser.add_argument('--temperature', type=float, default=1.0)
     parser.add_argument('--max-num', type=int, default=6)
