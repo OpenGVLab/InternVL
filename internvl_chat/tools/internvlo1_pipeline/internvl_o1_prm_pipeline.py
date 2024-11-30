@@ -156,6 +156,7 @@ def evaluate_chat_model():
     outputs = []
     for idx, (inputs, items) in enumerate(dataloader):
         assert len(inputs) == len(items)
+        assert len(inputs) == 1
 
         filtered_items = []
         filtered_inputs = []
@@ -169,13 +170,20 @@ def evaluate_chat_model():
         items = filtered_items
         inputs = filtered_inputs
         if len(inputs) <= 0:
+            print(
+                f'[{localtime()}] '
+                f'[Rank {torch.distributed.get_rank()}] '
+                f'skip'
+            )
             continue
 
-        outputs.extend(build_trees(args=args, inputs=inputs, items=items, gen_config=gen_config))
+        curr_outputs = build_trees(args=args, inputs=inputs, items=items, gen_config=gen_config)
+        assert len(curr_outputs) == len(inputs)
 
-        for output in outputs:
+        for input, output in zip(inputs, curr_outputs):
             output['question_orig'] = output['question']
-            output['question'] = inputs[0][0].replace(IMAGE_TOKEN, IMG_PLACEHOLDER)
+            output['question'] = input[0].replace(IMAGE_TOKEN, IMG_PLACEHOLDER)
+        outputs.extend(curr_outputs)
 
         if idx % log_freq == 0 and torch.distributed.get_rank() == 0:
             print(
