@@ -434,6 +434,19 @@ class LazySupervisedDataset(Dataset):
             ds_name=self.ds_name,
         )
 
+        process_supervision = data_item.get('process_supervision', False)
+
+        if process_supervision:
+            assert (chosen_ret['input_ids'][:, -1] == self.tokenizer.eos_token_id).all()
+            chosen_ret['input_ids'] = chosen_ret['input_ids'][:,:-1]
+            chosen_ret['labels'] = chosen_ret['labels'][:,:-1]
+            chosen_ret['attention_mask'] = chosen_ret['attention_mask'][:,:-1]
+
+            assert (rejected_ret['input_ids'][:, -1] == self.tokenizer.eos_token_id).all()
+            rejected_ret['input_ids'] = rejected_ret['input_ids'][:,:-1]
+            rejected_ret['labels'] = rejected_ret['labels'][:,:-1]
+            rejected_ret['attention_mask'] = rejected_ret['attention_mask'][:,:-1]
+
         # Create the final return dictionary
         ret = dict(
             chosen_input_ids=chosen_ret['input_ids'][0],
@@ -444,6 +457,7 @@ class LazySupervisedDataset(Dataset):
             rejected_attention_mask=rejected_ret['attention_mask'][0],
             pixel_values=pixel_values,
             image_flags=torch.tensor([1] * num_patches, dtype=torch.long),
+            process_supervision=process_supervision,
         )
         return ret
 
@@ -505,6 +519,19 @@ class LazySupervisedDataset(Dataset):
             num_image=num_image,
         )
 
+        process_supervision = data_item.get('process_supervision', False)
+
+        if process_supervision:
+            assert (chosen_ret['input_ids'][:, -1] == self.tokenizer.eos_token_id).all()
+            chosen_ret['input_ids'] = chosen_ret['input_ids'][:,:-1]
+            chosen_ret['labels'] = chosen_ret['labels'][:,:-1]
+            chosen_ret['attention_mask'] = chosen_ret['attention_mask'][:,:-1]
+
+            assert (rejected_ret['input_ids'][:, -1] == self.tokenizer.eos_token_id).all()
+            rejected_ret['input_ids'] = rejected_ret['input_ids'][:,:-1]
+            rejected_ret['labels'] = rejected_ret['labels'][:,:-1]
+            rejected_ret['attention_mask'] = rejected_ret['attention_mask'][:,:-1]
+
         # Create the final return dictionary
         ret = dict(
             chosen_input_ids=chosen_ret['input_ids'][0],
@@ -515,12 +542,102 @@ class LazySupervisedDataset(Dataset):
             rejected_attention_mask=rejected_ret['attention_mask'][0],
             pixel_values=pixel_values,
             image_flags=torch.tensor([1] * num_patches, dtype=torch.long),
+            process_supervision=process_supervision,
         )
         return ret
 
-    # TODO: support pair data loading
     def video_get_item(self, data_item):
-        raise NotImplementedError
+        # Build transformation function
+        transform = self.get_transform()
+
+        # Ensure the first conversation contains a video placeholder
+        if '<video>' not in data_item['question']:
+            data_item['question'] = '<video>\n' + data_item['question']
+
+        # Get the video file path
+        video_file = data_item['video']
+        video_path = os.path.join(self.root, video_file)
+
+        # Load the video frames using tcs_loader
+        # TODO: Load videos without using tcsloader.
+        image_list = self.tcs_loader(
+            video_path,
+            image_type='video',
+            max_num_frames=self.max_num_frame,
+            min_num_frames=self.min_num_frame,
+            sample=self.sampling_method,
+            clip=data_item.get('clip', None))
+
+        # Generate special tokens for each video frame
+        special_tokens = '\n'.join(['Frame{}: <image>'.format(i + 1) for i in range(len(image_list))])
+        data_item['question'] = data_item['question'].replace('<video>\n', special_tokens)
+
+        # Transform each frame image and stack them into a tensor
+        pixel_values = [transform(image) for image in image_list]
+        pixel_values = torch.stack(pixel_values)
+        num_patches = pixel_values.size(0)
+
+        # Select the appropriate preprocessing function based on the template name
+        preprocess_function = self.get_preprocess_function()
+
+        # Preprocess the conversations and generate the return dictionary
+        num_image_tokens = [self.num_image_token] * num_patches
+
+        chosen_conversations = [
+            {'from': 'human', 'value': data_item['question']},
+            {'from': 'gpt', 'value': data_item['chosen']},
+        ]
+        chosen_ret = preprocess_function(
+            self.template_name,
+            [deepcopy(chosen_conversations)],
+            self.tokenizer,
+            num_image_tokens,
+            group_by_length=True,
+            use_packed_ds=self.use_packed_ds,
+            ds_name=self.ds_name,
+            num_image=num_patches,
+        )
+
+        rejected_conversations = [
+            {'from': 'human', 'value': data_item['question']},
+            {'from': 'gpt', 'value': data_item['rejected']},
+        ]
+        rejected_ret = preprocess_function(
+            self.template_name,
+            [deepcopy(rejected_conversations)],
+            self.tokenizer,
+            num_image_tokens,
+            group_by_length=True,
+            use_packed_ds=self.use_packed_ds,
+            ds_name=self.ds_name,
+            num_image=num_patches,
+        )
+
+        process_supervision = data_item.get('process_supervision', False)
+
+        if process_supervision:
+            assert (chosen_ret['input_ids'][:, -1] == self.tokenizer.eos_token_id).all()
+            chosen_ret['input_ids'] = chosen_ret['input_ids'][:,:-1]
+            chosen_ret['labels'] = chosen_ret['labels'][:,:-1]
+            chosen_ret['attention_mask'] = chosen_ret['attention_mask'][:,:-1]
+
+            assert (rejected_ret['input_ids'][:, -1] == self.tokenizer.eos_token_id).all()
+            rejected_ret['input_ids'] = rejected_ret['input_ids'][:,:-1]
+            rejected_ret['labels'] = rejected_ret['labels'][:,:-1]
+            rejected_ret['attention_mask'] = rejected_ret['attention_mask'][:,:-1]
+
+        ret = dict(
+            chosen_input_ids=chosen_ret['input_ids'][0],
+            chosen_labels=chosen_ret['labels'][0],
+            chosen_attention_mask=chosen_ret['attention_mask'][0],
+            rejected_input_ids=rejected_ret['input_ids'][0],
+            rejected_labels=rejected_ret['labels'][0],
+            rejected_attention_mask=rejected_ret['attention_mask'][0],
+            pixel_values=pixel_values,
+            image_flags=torch.tensor([1] * num_patches, dtype=torch.long),
+            process_supervision=process_supervision,
+        )
+        return ret
 
     def pure_text_get_item(self, data_item):
         # Build transformation function
@@ -573,6 +690,19 @@ class LazySupervisedDataset(Dataset):
             ds_name=self.ds_name,
         )
 
+        process_supervision = data_item.get('process_supervision', False)
+
+        if process_supervision:
+            assert (chosen_ret['input_ids'][:, -1] == self.tokenizer.eos_token_id).all()
+            chosen_ret['input_ids'] = chosen_ret['input_ids'][:,:-1]
+            chosen_ret['labels'] = chosen_ret['labels'][:,:-1]
+            chosen_ret['attention_mask'] = chosen_ret['attention_mask'][:,:-1]
+
+            assert (rejected_ret['input_ids'][:, -1] == self.tokenizer.eos_token_id).all()
+            rejected_ret['input_ids'] = rejected_ret['input_ids'][:,:-1]
+            rejected_ret['labels'] = rejected_ret['labels'][:,:-1]
+            rejected_ret['attention_mask'] = rejected_ret['attention_mask'][:,:-1]
+
         # Create the final return dictionary
         ret = dict(
             chosen_input_ids=chosen_ret['input_ids'][0],
@@ -583,6 +713,7 @@ class LazySupervisedDataset(Dataset):
             rejected_attention_mask=rejected_ret['attention_mask'][0],
             pixel_values=pixel_values,
             image_flags=torch.tensor([0] * num_patches, dtype=torch.long),
+            process_supervision=process_supervision,
         )
         return ret
 

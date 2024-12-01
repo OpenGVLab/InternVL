@@ -152,7 +152,8 @@ def evaluate_chat_model():
         f'{len(item2num)=}'
     )
 
-    log_freq = max(len(dataloader) // args.batch_size // 100, 1)
+    log_freq = max(len(dataloader) // args.batch_size // 1000, 1)
+    save_freq = max(len(dataloader) // args.batch_size // 25, 1)
     outputs = []
     for idx, (inputs, items) in enumerate(dataloader):
         assert len(inputs) == len(items)
@@ -173,6 +174,7 @@ def evaluate_chat_model():
             print(
                 f'[{localtime()}] '
                 f'[Rank {torch.distributed.get_rank()}] '
+                f'[Progress {idx}/{len(dataloader)}] '
                 f'skip'
             )
             continue
@@ -203,7 +205,7 @@ def evaluate_chat_model():
                 f'[Progress {idx}/{len(dataloader)}] '
             )
 
-        if idx % log_freq == 0 and idx < min_len:
+        if idx % save_freq == 0 and idx < min_len:
             save_outputs(outputs, results_file)
             outputs = []
 

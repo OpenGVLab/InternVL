@@ -69,6 +69,7 @@ def list2pair(item):
             'answer_gt': answer_gt,
             'chosen': chosen['response'],
             'rejected': rejected['response'],
+            'process_supervision': True,
             'meta': {
                 'chosen_mc_score': chosen['mc_score'],
                 'rejected_mc_score': rejected['mc_score'],
