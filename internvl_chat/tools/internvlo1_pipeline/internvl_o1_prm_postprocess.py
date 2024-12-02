@@ -41,6 +41,62 @@ def tree2list(item) -> List[Dict]:
     return response_list
 
 
+# {'response': 'xxx', 'mc_score': xxx}
+def tree2conv(item) -> List[Dict]:
+    tree: Tree = item['tree']
+    question = item['question']
+    image = item['image']
+    response_list = []
+
+    nodes_list: List[Node] = [node for node in tree.root.children]
+    while len(nodes_list) > 0:
+        node = nodes_list.pop(-1)
+        nodes_list.extend([child for child in node.children])
+
+        if len(node.children) > 0:
+            continue
+
+        node_sequence = [node]
+        while node_sequence[-1].parent is not None:
+            node_sequence.append(node_sequence[-1].parent)
+
+        conversation = []
+        while len(node_sequence) > 0:
+            curr_node = node_sequence.pop(-1)
+            mc_score = node.mc_estimation
+
+            if curr_node.parent is not None:
+                assert curr_node.prefix[:len(curr_node.parent.prefix)] == curr_node.parent.prefix
+
+                prefix = curr_node.prefix[len(curr_node.parent.prefix):]
+                prefix = Node.join_prefix(prefix)
+
+            else:
+                continue
+
+            conversation.extend([
+                {'from': 'user', 'value': prefix},
+                {'from': 'gpt', 'value': '+' if mc_score > 0 else '-', 'soft_score': mc_score},
+            ])
+
+            if len(node_sequence) == 0:
+                rollout = node.rollouts[0]
+                mc_score = node.correctness[0]
+                conversation.extend([
+                    {'from': 'user', 'value': rollout},
+                    {'from': 'gpt', 'value': '+' if mc_score > 0 else '-', 'soft_score': mc_score},
+                ])
+
+        response_list.append({
+            'id': -1,
+            'image': image,
+            'question': question,
+            'conversation': conversation,
+        })
+
+    return response_list
+
+
 # {'image': 'xxx', 'question': 'xxx', 'chosen': 'xxx', 'chosen_mc_score': xxx, 'rejected': 'xxx', 'rejected_mc_score': xxx}
 def list2pair(item):
     pairs = []
@@ -93,9 +149,11 @@ def main():
         save_dir = args.save_dir
         ds_name = os.path.basename(filename).replace('.jsonl', '')
         os.makedirs(os.path.join(save_dir, 'raw'), exist_ok=True)
+        os.makedirs(os.path.join(save_dir, 'convs'), exist_ok=True)
         os.makedirs(os.path.join(save_dir, 'lines'), exist_ok=True)
 
         pairs_save_path = os.path.join(save_dir, 'raw', f'{ds_name}.jsonl')
+        convs_save_path = os.path.join(save_dir, 'convs', f'{ds_name}.jsonl')
         lines_save_path = os.path.join(save_dir, 'lines', f'{ds_name}.jsonl')
 
         if os.path.exists(pairs_save_path) and not args.overwrite:
@@ -103,13 +161,18 @@ def main():
 
         statistics = defaultdict(list)
         pairs = []
+        convs = []
         items = load_outputs_with_pickle(os.path.join(args.data_dir, filename))
         for item in items:
             item['response_list'] = tree2list(item)
-            tree = item.pop('tree')
 
             local_pairs = list2pair(item)
             pairs.extend(local_pairs)
+
+            local_convs = tree2conv(item)
+            convs.extend(local_convs)
+
+            tree = item.pop('tree')
 
             statistics['num_nodes'].append(tree.num_nodes)
             statistics['num_pairs'].append(len(local_pairs))
@@ -121,6 +184,7 @@ def main():
         print()
 
         save_outputs(pairs, pairs_save_path)
+        save_outputs(convs, convs_save_path)
         save_outputs(items, lines_save_path)
 
 

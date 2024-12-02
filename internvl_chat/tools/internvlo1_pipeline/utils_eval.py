@@ -372,29 +372,47 @@ def multi_choice_score(answer_pred, answer_gt):
     return answer_pred.lower() == answer_gt.lower()
 
 
-def parse_answer(text, version):
+# def parse_answer(text, version):
+#     if version == 'en':
+#         match = re.search(r'(Final answer:|Answer:)\s*(.*)', text, re.IGNORECASE)
+#     elif version == 'zh':
+#         match = re.search(r'(答案:)\s*(.*)', text, re.IGNORECASE)
+#     else:
+#         raise NotImplementedError(f'Unsupported prompt version {version}')
+
+#     if not match:
+#         raise RuntimeError(f'Fail to parse answer: {text}')
+
+#     answer_trigger = match.group(1).strip()
+#     answer = match.group(2).strip().strip('*').strip()
+
+#     if text.count(answer_trigger) > 2:
+#         raise RuntimeError(f'Duplicated answer trigger: {text}')
+
+#     rationale = text.lower().split(answer_trigger.lower())[0].strip().strip('*').strip()
+
+#     if len(rationale) == 0:
+#         raise RuntimeError(f'Fail to parse rationale: {text}')
+
+#     return rationale, answer
+
+
+def parse_answer(response, version):
     if version == 'en':
-        match = re.search(r'(Final answer:|Answer:)\s*(.*)', text, re.IGNORECASE)
+        answer_trigger = 'Final answer:'
     elif version == 'zh':
-        match = re.search(r'(答案:)\s*(.*)', text, re.IGNORECASE)
+        answer_trigger = '答案:'
     else:
         raise NotImplementedError(f'Unsupported prompt version {version}')
 
-    if not match:
-        raise RuntimeError(f'Fail to parse answer: {text}')
+    assert response.count(answer_trigger) <= 2, f"Fail to find Answer, {response.count(answer_trigger)=}"
+    assert response.count('\n') >= 2, f"Fail to find rationale, {response=}"
 
-    answer_trigger = match.group(1).strip()
-    answer = match.group(2).strip().strip('*').strip()
+    rationale, answer = response.rsplit(answer_trigger, 1)
+    assert len(rationale.strip()) > 0, f"Empty rationale:\n{response}"
+    assert '\n' not in answer.strip(), f"Answer with multiple paragraphs:\n{answer}"
 
-    if text.count(answer_trigger) > 2:
-        raise RuntimeError(f'Duplicated answer trigger: {text}')
-
-    rationale = text.lower().split(answer_trigger.lower())[0].strip().strip('*').strip()
-
-    if len(rationale) == 0:
-        raise RuntimeError(f'Fail to parse rationale: {text}')
-
-    return rationale, answer
+    return rationale.strip(), answer.strip()
 
 
 def check_answer(answer_pred, answer_gt, mode):
@@ -466,6 +484,11 @@ def fix_answer(response, answer_pred, answer_gt):
     ):
         response = answer_gt_orig.join(response.rsplit(answer_pred_orig, 1))
         response = response.strip().strip('**').strip()
+
+    other_lines, last_line = response.rsplit('\n', 1)
+    if '**Final' in last_line:
+        last_line = last_line.replace('**Final', 'Final')
+        response = f'{other_lines}\n{last_line}'.strip()
 
     return response
 
