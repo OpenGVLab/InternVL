@@ -279,6 +279,7 @@ class LazySupervisedDataset(Dataset):
         self.max_num_frame = max_num_frame
         self.min_num_frame = min_num_frame
         self.sampling_method = sampling_method
+        self.conv_end_token_id = tokenizer.convert_tokens_to_ids('<|im_end|>')
 
         logger.info('Formatting inputs...Skip in lazy mode')
         assert meta['annotation'].endswith('jsonl'), f'annotation must be jsonl, but got {meta["annotation"]}'
@@ -437,15 +438,19 @@ class LazySupervisedDataset(Dataset):
         process_supervision = data_item.get('process_supervision', False)
 
         if process_supervision:
-            assert (chosen_ret['input_ids'][:, -1] == self.tokenizer.eos_token_id).all()
-            chosen_ret['input_ids'] = chosen_ret['input_ids'][:,:-1]
-            chosen_ret['labels'] = chosen_ret['labels'][:,:-1]
-            chosen_ret['attention_mask'] = chosen_ret['attention_mask'][:,:-1]
+            assert (chosen_ret['input_ids'][:, -2] == self.conv_end_token_id).all(), (
+                f"\n{chosen_ret['input_ids']}\n\n"
+                f"{chosen_ret['input_ids'][:, -2]}\n\n"
+                f"{self.conv_end_token_id}"
+            )
+            chosen_ret['input_ids'] = chosen_ret['input_ids'][:,:-2]
+            chosen_ret['labels'] = chosen_ret['labels'][:,:-2]
+            chosen_ret['attention_mask'] = chosen_ret['attention_mask'][:,:-2]
 
-            assert (rejected_ret['input_ids'][:, -1] == self.tokenizer.eos_token_id).all()
-            rejected_ret['input_ids'] = rejected_ret['input_ids'][:,:-1]
-            rejected_ret['labels'] = rejected_ret['labels'][:,:-1]
-            rejected_ret['attention_mask'] = rejected_ret['attention_mask'][:,:-1]
+            assert (rejected_ret['input_ids'][:, -2] == self.conv_end_token_id).all()
+            rejected_ret['input_ids'] = rejected_ret['input_ids'][:,:-2]
+            rejected_ret['labels'] = rejected_ret['labels'][:,:-2]
+            rejected_ret['attention_mask'] = rejected_ret['attention_mask'][:,:-2]
 
         # Create the final return dictionary
         ret = dict(
@@ -522,15 +527,15 @@ class LazySupervisedDataset(Dataset):
         process_supervision = data_item.get('process_supervision', False)
 
         if process_supervision:
-            assert (chosen_ret['input_ids'][:, -1] == self.tokenizer.eos_token_id).all()
-            chosen_ret['input_ids'] = chosen_ret['input_ids'][:,:-1]
-            chosen_ret['labels'] = chosen_ret['labels'][:,:-1]
-            chosen_ret['attention_mask'] = chosen_ret['attention_mask'][:,:-1]
+            assert (chosen_ret['input_ids'][:, -2] == self.conv_end_token_id).all()
+            chosen_ret['input_ids'] = chosen_ret['input_ids'][:,:-2]
+            chosen_ret['labels'] = chosen_ret['labels'][:,:-2]
+            chosen_ret['attention_mask'] = chosen_ret['attention_mask'][:,:-2]
 
-            assert (rejected_ret['input_ids'][:, -1] == self.tokenizer.eos_token_id).all()
-            rejected_ret['input_ids'] = rejected_ret['input_ids'][:,:-1]
-            rejected_ret['labels'] = rejected_ret['labels'][:,:-1]
-            rejected_ret['attention_mask'] = rejected_ret['attention_mask'][:,:-1]
+            assert (rejected_ret['input_ids'][:, -2] == self.conv_end_token_id).all()
+            rejected_ret['input_ids'] = rejected_ret['input_ids'][:,:-2]
+            rejected_ret['labels'] = rejected_ret['labels'][:,:-2]
+            rejected_ret['attention_mask'] = rejected_ret['attention_mask'][:,:-2]
 
         # Create the final return dictionary
         ret = dict(
@@ -616,15 +621,15 @@ class LazySupervisedDataset(Dataset):
         process_supervision = data_item.get('process_supervision', False)
 
         if process_supervision:
-            assert (chosen_ret['input_ids'][:, -1] == self.tokenizer.eos_token_id).all()
-            chosen_ret['input_ids'] = chosen_ret['input_ids'][:,:-1]
-            chosen_ret['labels'] = chosen_ret['labels'][:,:-1]
-            chosen_ret['attention_mask'] = chosen_ret['attention_mask'][:,:-1]
+            assert (chosen_ret['input_ids'][:, -2] == self.conv_end_token_id).all()
+            chosen_ret['input_ids'] = chosen_ret['input_ids'][:,:-2]
+            chosen_ret['labels'] = chosen_ret['labels'][:,:-2]
+            chosen_ret['attention_mask'] = chosen_ret['attention_mask'][:,:-2]
 
-            assert (rejected_ret['input_ids'][:, -1] == self.tokenizer.eos_token_id).all()
-            rejected_ret['input_ids'] = rejected_ret['input_ids'][:,:-1]
-            rejected_ret['labels'] = rejected_ret['labels'][:,:-1]
-            rejected_ret['attention_mask'] = rejected_ret['attention_mask'][:,:-1]
+            assert (rejected_ret['input_ids'][:, -2] == self.conv_end_token_id).all()
+            rejected_ret['input_ids'] = rejected_ret['input_ids'][:,:-2]
+            rejected_ret['labels'] = rejected_ret['labels'][:,:-2]
+            rejected_ret['attention_mask'] = rejected_ret['attention_mask'][:,:-2]
 
         ret = dict(
             chosen_input_ids=chosen_ret['input_ids'][0],
@@ -693,15 +698,15 @@ class LazySupervisedDataset(Dataset):
         process_supervision = data_item.get('process_supervision', False)
 
         if process_supervision:
-            assert (chosen_ret['input_ids'][:, -1] == self.tokenizer.eos_token_id).all()
-            chosen_ret['input_ids'] = chosen_ret['input_ids'][:,:-1]
-            chosen_ret['labels'] = chosen_ret['labels'][:,:-1]
-            chosen_ret['attention_mask'] = chosen_ret['attention_mask'][:,:-1]
+            assert (chosen_ret['input_ids'][:, -2] == self.conv_end_token_id).all()
+            chosen_ret['input_ids'] = chosen_ret['input_ids'][:,:-2]
+            chosen_ret['labels'] = chosen_ret['labels'][:,:-2]
+            chosen_ret['attention_mask'] = chosen_ret['attention_mask'][:,:-2]
 
-            assert (rejected_ret['input_ids'][:, -1] == self.tokenizer.eos_token_id).all()
-            rejected_ret['input_ids'] = rejected_ret['input_ids'][:,:-1]
-            rejected_ret['labels'] = rejected_ret['labels'][:,:-1]
-            rejected_ret['attention_mask'] = rejected_ret['attention_mask'][:,:-1]
+            assert (rejected_ret['input_ids'][:, -2] == self.conv_end_token_id).all()
+            rejected_ret['input_ids'] = rejected_ret['input_ids'][:,:-2]
+            rejected_ret['labels'] = rejected_ret['labels'][:,:-2]
+            rejected_ret['attention_mask'] = rejected_ret['attention_mask'][:,:-2]
 
         # Create the final return dictionary
         ret = dict(

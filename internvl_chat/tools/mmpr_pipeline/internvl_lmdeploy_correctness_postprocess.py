@@ -244,6 +244,7 @@ def _fix_answer(item, answer_pred, answer_gt, mc=False):
         or answer_gt.strip('.').replace(',', '') in answer_pred.strip('.').replace(',', '')
     ):
         item['response'] = answer_gt_orig.join(item['response'].rsplit(answer_pred_orig, 1))
+        item['response'] = item['response'].strip().strip('**').strip()
         _, answer_pred_after_fix = parse_answer(item['response'])
         item['answer_pred'] = answer_pred_after_fix
 
@@ -251,7 +252,7 @@ def _fix_answer(item, answer_pred, answer_gt, mc=False):
 
 
 def post_process(pred):
-    pred = pred.strip().strip('*').upper()
+    pred = pred.strip().strip('*').strip().upper()
 
     if len(pred) == 1:
         return pred
@@ -564,7 +565,7 @@ def main(args):
                 gt_data_path = gt_path_map[key]
                 break
 
-        if gt_data_path is not None:
+        if gt_data_path is not None and os.path.exists(gt_data_path):
             print(f'[{filename}] Include gt data path: {gt_data_path}')
             with open(gt_data_path) as file:
                 gt_lines = file.readlines()

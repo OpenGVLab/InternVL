@@ -465,6 +465,7 @@ def fix_answer(response, answer_pred, answer_gt):
         or answer_gt.strip('.').replace(',', '') in answer_pred.strip('.').replace(',', '')
     ):
         response = answer_gt_orig.join(response.rsplit(answer_pred_orig, 1))
+        response = response.strip().strip('**').strip()
 
     return response
 
@@ -477,7 +478,7 @@ def contain_keywords(ds_name, keywords):
 
 
 def post_process(pred):
-    pred = pred.strip().strip('*').upper()
+    pred = pred.strip().strip('*').strip().upper()
 
     if len(pred) == 1:
         return pred

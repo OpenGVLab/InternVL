@@ -29,3 +29,4 @@ done
 python -u tools/mmpr_pipeline/internvl_auto_meta.py \
     --data-dir "${save_dir}/${model}" \
     --force\
+    --suffix "_process" \
