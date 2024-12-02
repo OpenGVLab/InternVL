@@ -50,7 +50,7 @@ for ((j=0; j<${#tasks[@]}; j++)); do
 
     if [ "${task}" == "vqa-chartqa-test" ]; then
         srun \
-            -p VC5 \
+            -p VC2 \
             --gres=gpu:8 \
             --ntasks=1 \
             --ntasks-per-node=1 \
@@ -61,7 +61,7 @@ for ((j=0; j<${#tasks[@]}; j++)); do
         sh evaluate.sh ${model_path} ${task} --dynamic --max-num 12 --cot "${ARGS[@]:1}"
     elif [ "${task}" == "vqa-infovqa-val" ]; then
         srun \
-            -p VC5 \
+            -p VC2 \
             --gres=gpu:8 \
             --ntasks=1 \
             --ntasks-per-node=1 \
@@ -72,7 +72,7 @@ for ((j=0; j<${#tasks[@]}; j++)); do
         sh evaluate.sh ${model_path} ${task} --dynamic --max-num 24 --cot "${ARGS[@]:1}"
     elif [ "${task}" == "vqa-docvqa-val" ]; then
         srun \
-            -p VC5 \
+            -p VC2 \
             --gres=gpu:8 \
             --ntasks=1 \
             --ntasks-per-node=1 \
@@ -83,7 +83,7 @@ for ((j=0; j<${#tasks[@]}; j++)); do
         sh evaluate.sh ${model_path} ${task} --dynamic --max-num 18 --cot "${ARGS[@]:1}"
     else
         srun \
-            -p VC5 \
+            -p VC2 \
             --gres=gpu:8 \
             --ntasks=1 \
             --ntasks-per-node=1 \

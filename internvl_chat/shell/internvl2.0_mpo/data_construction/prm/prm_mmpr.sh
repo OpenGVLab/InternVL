@@ -5,7 +5,7 @@ GPUS=${GPUS:-24}
 GPUS_PER_NODE=${GPUS_PER_NODE:-4}
 QUOTA_TYPE=${QUOTA_TYPE:-"reserved"}
 NODES=$((GPUS / GPUS_PER_NODE))
-CPUS_PER_TASK=${CPUS_PER_TASK:-2}
+CPUS_PER_TASK=${CPUS_PER_TASK:-4}
 
 
 LOG_DIR="logs_sampling/prm_mmpr"
@@ -63,6 +63,7 @@ for ((i=0; i<${#datasets[@]}; i++)); do
         --kill-on-bad-exit=1 \
         --quotatype=${QUOTA_TYPE} \
         --job-name "wwy_sampling" \
+        -x SH-IDC1-10-140-37-[5-9] \
         -o "${CUR_LOG_DIR}/${dataset_name}_max_tiles_${max_num}.log" \
         -e "${CUR_LOG_DIR}/${dataset_name}_max_tiles_${max_num}.log" \
     python -u tools/internvlo1_pipeline/internvl_o1_prm_pipeline.py \

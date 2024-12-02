@@ -2,7 +2,8 @@
 
 data_dir="outputs/correctness_mmpr"
 save_dir="outputs_pair_data/correctness_mmpr"
-model="internvl_sft_internvl2_pro_dynamic_res_sft_cotv4"
+model="internvl_sft_internvl2_5_8b_dynamic_res_sft_mmmu_o1_241125"
+# model="internvl_sft_internvl2_pro_dynamic_res_sft_cotv4"
 
 declare -a max_tiles=( \
     "6" \
@@ -16,14 +17,14 @@ for ((j=0; j<${#max_tiles[@]}; j++)); do
     echo "$(date) ${model} ${curr_max_tiles}"
 
     srun \
-        -p Intern5 \
+        -p INTERN2 \
         --gres=gpu:0 \
     python -u tools/mmpr_pipeline/internvl_lmdeploy_correctness_postprocess.py \
         --data-dir "${data_dir}/${model}/max_tiles_${curr_max_tiles}" \
         --save-dir "${save_dir}/${model}" \
         --answer-fix \
         --force \
-        --num-pairs-per-key 10 \
+        --num-pairs-per-key 15 \
         --max-lines 1200000 \
 
 done
