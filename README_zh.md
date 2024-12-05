@@ -24,6 +24,7 @@
 
 ## 最新消息 🚀🚀🚀
 
+-  `2024/12/05`: 🚀 我们发布了 InternVL2.5 系列，覆盖率从1B参数到78B参数的多模态大语言模型。[InternVL2_5-78B](https://huggingface.co/OpenGVLab/InternVL2_5-78B) 是首个在MMMU benchmark上得分超过70的开源模型。 这些模型可在 [HF 链接](https://huggingface.co/collections/OpenGVLab/internvl-25-673e1019b66e2218f68d7c1c) 中下载。
 - `2024/11/14`: 我们发布了 [MMPR](https://huggingface.co/datasets/OpenGVLab/MMPR)，一个高质量、大规模的多模态推理偏好数据集，以及 [MPO](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/internvl2.0_mpo)，一种高效的偏好优化算法。由此训练的模型 [InternVL2-8B-MPO](https://huggingface.co/OpenGVLab/InternVL2-8B-MPO) 在 MathVista 上取得了 67.0 的准确率。更多详情请参阅我们的[论文](https://arxiv.org/abs/2411.10442)、[项目主页](https://internvl.github.io/blog/2024-11-14-InternVL-2.0-MPO/) 和 [文档](https://internvl.readthedocs.io/en/latest/internvl2.0/preference_optimization.html)。
 - `2024/10/21`: 我们发布了 Mini-InternVL 系列。这些模型在保持极小模型体积的同时实现了出色的性能：4B 模型仅用 5% 的模型大小便达到了 90% 的性能。有关更多详细信息，请查看我们的 [项目页面](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/mini_internvl) 和 [文档](https://internvl.readthedocs.io/en/latest/internvl2.0/domain_adaptation.html)。
 - `2024/08/01`: [Chartmimic](https://chartmimic.github.io/) 团队在他们的基准测试中评估了 InternVL2 系列模型。InternVL2-26B 和 76B 模型在开源模型中取得了前两名的成绩，其中 InternVL2-Llama3-76B 模型超过了 GeminiProVision，并表现出与 Claude-3-opus 相当的结果。
@@ -81,6 +82,62 @@
 ![waic_performance](https://github.com/user-attachments/assets/38f82c34-20b4-4d11-8f3e-f76af1b013c2)
 
 ## 模型库
+
+
+
+#### 多模态大语言模型 (InternVL 2.5)
+
+<table>
+  <tr>
+    <th>Model Name</th>
+    <th>Vision Part</th>
+    <th>Language Part</th>
+    <th>HF&nbsp;Link</th>
+  </tr>
+  <tr>
+    <td>InternVL2_5-1B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct">Qwen2.5-0.5B-Instruct</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-1B">🤗 link</a></td>
+  </tr>
+  <tr>
+    <td>InternVL2_5-2B </td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/internlm/internlm2_5-1_8b-chat">internlm2_5-1_8b-chat</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-2B">🤗 link</a></td>
+  </tr>
+  <tr>
+    <td>InternVL2_5-4B </td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/Qwen/Qwen2.5-3B-Instruct">Qwen2.5-3B-Instruct</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-4B">🤗 link</a></td>
+  </tr>
+  <tr>
+    <td>InternVL2_5-8B    </td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/internlm/internlm2_5-7b-chat">internlm2_5-7b-chat</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-8B">🤗 link</a></td>
+  </tr>
+  <tr>
+    <td>InternVL2_5-26B </td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">InternViT-6B-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/internlm/internlm2_5-20b-chat">internlm2_5-20b-chat</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-26B">🤗 link</a></td>
+  </tr>
+  <tr>
+    <td>InternVL2_5-38B   </td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">InternViT-6B-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/Qwen/Qwen2.5-32B-Instruct">Qwen2.5-32B-Instruct</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-38B">🤗 link</a></td>
+  </tr>
+  <tr>
+    <td>InternVL2_5-78B |</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">InternViT-6B-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/Qwen/Qwen2.5-72B-Instruct">Qwen2.5-72B-Instruct</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-78B">🤗 link</a></td>
+  </tr>
+</table>
+
 
 #### 多模态大语言模型 (InternVL 2.0)
 
@@ -223,7 +280,7 @@
   </tr>
 </table>
 
-#### 视觉基础模型 (InternVL 1.0-1.5)
+#### 视觉基础模型 (InternVL 1.0-2.5)
 
 <table>
   <tr>
@@ -232,6 +289,18 @@
     <th>HF&nbsp;Link</th>
     <th>MS&nbsp;Link</th>
     <th>Note</th>
+  </tr>
+  <td>InternViT-300M-448px-V2_5</td>
+    <td>2024.12.05</td>
+    <td><a href="https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5">🤗 link</a></td>
+    <td></td>
+    <td>🚀🚀 一个更强大的轻量视觉编码器 (🔥新)</td>
+  </tr>
+    <td>InternViT-6B-448px-V2_5</td>
+    <td>2024.12.05</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">🤗 link</a></td>
+    <td></td>
+    <td>🚀🚀 拥有更强的视觉特征提取能力 (🔥新)</td>
   </tr>
   <tr>
     <td>InternViT&#8209;300M&#8209;448px</td>

@@ -24,6 +24,7 @@
 
 ## News 🚀🚀🚀
 
+- `2024/12/05`: 🚀 We release the [InternVL2.5](https://huggingface.co/collections/OpenGVLab/internvl-25-673e1019b66e2218f68d7c1c), an advanced multimodal large language model (MLLM) series with parameter coverage ranging from 1B to 78B. [InternVL2_5-78B](https://huggingface.co/OpenGVLab/InternVL2_5-78B) is the first open-source MLLMs to achieve over **70%** on the **MMMU benchmark**. matching the performance of leading closed-source commercial models like GPT-4o. These models are available at [HF link](https://huggingface.co/collections/OpenGVLab/internvl-25-673e1019b66e2218f68d7c1c).
 - `2024/11/14`: We introduce [MMPR](https://huggingface.co/datasets/OpenGVLab/MMPR), a high-quality, large-scale multimodal reasoning preference dataset, and [MPO](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/internvl2.0_mpo), an effective preference optimization algorithm. The resulting model, [InternVL2-8B-MPO](https://huggingface.co/OpenGVLab/InternVL2-8B-MPO), achieves an accuracy of 67.0 on MathVista. Please refer to our [paper](https://arxiv.org/abs/2411.10442), [project page](https://internvl.github.io/blog/2024-11-14-InternVL-2.0-MPO/) and [document](https://internvl.readthedocs.io/en/latest/internvl2.0/preference_optimization.html) for more details.
 - `2024/10/21`: We release the Mini-InternVL series. These models achieve impressive performance with minimal size: the 4B model achieves 90% of the performance with just 5% of the model size. For more details, please check our [project page](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/mini_internvl) and [document](https://internvl.readthedocs.io/en/latest/internvl2.0/domain_adaptation.html).
 - `2024/08/01`: The [Chartmimic](https://chartmimic.github.io/) team evaluated the InternVL2 series models on their benchmark. The InternVL2-26B and 76B models achieved the top two performances among open-source models, with the InternVL2 76B model surpassing GeminiProVision and exhibiting comparable results to Claude-3-opus.
@@ -81,6 +82,59 @@
 ![waic_performance](https://github.com/user-attachments/assets/38f82c34-20b4-4d11-8f3e-f76af1b013c2)
 
 ## Model Zoo
+
+#### Multimodal Large Language Model (InternVL 2.5)
+
+<table>
+  <tr>
+    <th>Model Name</th>
+    <th>Vision Part</th>
+    <th>Language Part</th>
+    <th>HF&nbsp;Link</th>
+  </tr>
+  <tr>
+    <td>InternVL2_5-1B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct">Qwen2.5-0.5B-Instruct</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-1B">🤗 link</a></td>
+  </tr>
+  <tr>
+    <td>InternVL2_5-2B </td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/internlm/internlm2_5-1_8b-chat">internlm2_5-1_8b-chat</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-2B">🤗 link</a></td>
+  </tr>
+  <tr>
+    <td>InternVL2_5-4B </td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/Qwen/Qwen2.5-3B-Instruct">Qwen2.5-3B-Instruct</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-4B">🤗 link</a></td>
+  </tr>
+  <tr>
+    <td>InternVL2_5-8B    </td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/internlm/internlm2_5-7b-chat">internlm2_5-7b-chat</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-8B">🤗 link</a></td>
+  </tr>
+  <tr>
+    <td>InternVL2_5-26B </td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">InternViT-6B-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/internlm/internlm2_5-20b-chat">internlm2_5-20b-chat</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-26B">🤗 link</a></td>
+  </tr>
+  <tr>
+    <td>InternVL2_5-38B   </td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">InternViT-6B-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/Qwen/Qwen2.5-32B-Instruct">Qwen2.5-32B-Instruct</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-38B">🤗 link</a></td>
+  </tr>
+  <tr>
+    <td>InternVL2_5-78B |</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">InternViT-6B-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/Qwen/Qwen2.5-72B-Instruct">Qwen2.5-72B-Instruct</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-78B">🤗 link</a></td>
+  </tr>
+</table>
 
 #### Multimodal Large Language Model (InternVL 2.0)
 
@@ -151,7 +205,7 @@
   </tr>
 </table>
 
-#### InternVL2-Pro API
+#### InternVL2-Pro & InternVL2.5-Pro API
 
 We welcome everyone to use our API for research. For better management, please submit ([application form](https://docs.google.com/forms/d/e/1FAIpQLSfMCzhPr1OOEKau_6jwTU0EiZMSFckDo-HMlc_hUudhF_97rw/viewform?usp=sf_link)) / ([申请表](https://wj.qq.com/s2/14910502/25a4/)) to obtain free API access.
 
@@ -165,6 +219,7 @@ We welcome everyone to use our API for research. For better management, please s
     <th>MS&nbsp;Link</th>
     <th>Note</th>
   </tr>
+  <tr>
   <tr>
     <td>Mini&#8209;InternVL&#8209;Chat&#8209;4B&#8209;V1&#8209;5</td>
     <td>2024.05.28</td>
@@ -223,7 +278,7 @@ We welcome everyone to use our API for research. For better management, please s
   </tr>
 </table>
 
-#### Vision Foundation Model (InternVL 1.0-1.5)
+#### Vision Foundation Model (InternVL 1.0-2.5)
 
 <table>
   <tr>
@@ -233,19 +288,31 @@ We welcome everyone to use our API for research. For better management, please s
     <th>MS&nbsp;Link</th>
     <th>Note</th>
   </tr>
+    <td>InternViT-300M-448px-V2_5</td>
+    <td>2024.12.05</td>
+    <td><a href="https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5">🤗 link</a></td>
+    <td></td>
+    <td>🚀🚀 A more powerful lightweight visual encoder. (🔥new)</td>
+  </tr>
+    <td>InternViT-6B-448px-V2_5</td>
+    <td>2024.12.05</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">🤗 link</a></td>
+    <td></td>
+    <td>🚀🚀 A stronger visual encoder to extract visual features. (🔥new)</td>
+  </tr>
   <tr>
-    <td>InternViT&#8209;300M&#8209;448px</td>
-    <td>2024.05.25</td>
+    <td>Mini&#8209;InternVL&#8209;Chat&#8209;4B&#8209;V1&#8209;5</td>
+    <td>2024.05.28</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternViT-300M-448px">🤖 link</a></td>
-    <td>distilled small vision foundation model with 300M parameters (🔥new)</td>
+    <td>distilled small vision foundation model with 300M parameters </td>
   </tr>
   <tr>
     <td>InternViT&#8209;6B&#8209;448px&#8209;V1&#8209;5</td>
     <td>2024.04.20</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternViT-6B-448px-V1-5">🤖 link</a></td>
-    <td>support dynamic resolution and super strong OCR feature extraction capability by incremental pre-training (🔥new)</td>
+    <td>support dynamic resolution and super strong OCR feature extraction capability by incremental pre-training</td>
   </tr>
   <tr>
     <td>InternViT&#8209;6B&#8209;448px&#8209;V1&#8209;2</td>
