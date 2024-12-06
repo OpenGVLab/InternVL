@@ -302,7 +302,7 @@ def _build_items_based_on_correctness(lines, mode):
             consistent = True
 
         if args.use_correctness_cache:
-            correct = int(item['is_correctness'])
+            correct = int(item['is_correct'])
         else:
             try:
                 _, answer_pred = parse_answer(response)
@@ -409,7 +409,7 @@ def build_pairs_based_on_pos_neg(pos_id2item, neg_id2item, allow_entailment=Fals
         for item_pos in pos_id2item[key]:
             for item_neg in neg_id2item[key]:
 
-                if item_pos['answer_pred'].lower() in item_neg['answer_pred'].lower() and not allow_entailment:
+                if not allow_entailment and item_pos['answer_pred'].lower() in item_neg['answer_pred'].lower():
                     info['entail_skip'] += 1
                     continue
 
@@ -587,11 +587,11 @@ def main(args):
         )
 
         save_pairs(
-            build_pairs_based_on_pos_neg(pos_id2item=pos_id2item, neg_id2item=neg_id2item, allow_entailment=False),
+            build_pairs_based_on_pos_neg(pos_id2item=pos_id2item, neg_id2item=neg_id2item, allow_entailment=args.use_correctness_cache),
             pairs_vqa_correctness_rules_save_path,
         )
         save_pairs(
-            build_pairs_based_on_pos_neg(pos_id2item=pos_id2item, neg_id2item=neg_format_id2item, allow_entailment=False),
+            build_pairs_based_on_pos_neg(pos_id2item=pos_id2item, neg_id2item=neg_format_id2item, allow_entailment=args.use_correctness_cache),
             pairs_vqa_format_rules_save_path,
         )
         print()

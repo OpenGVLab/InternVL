@@ -400,3 +400,20 @@ register_conv_template(
         sep='<|im_end|>\n',
     )
 )
+
+
+register_conv_template(
+    Conversation(
+        name='internlm2-chat-v3',
+        system_template='<|im_start|>system\n{system_message}',
+        system_message='',
+        roles=('<|im_start|>user\n', '<|im_start|>assistant\n', '<|im_start|>knowledge\n'),
+        sep_style=SeparatorStyle.MPT,
+        sep='<|im_end|>\n',
+        stop_token_ids=[
+            2,
+            92543,
+            92542
+        ]
+    )
+)

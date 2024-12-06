@@ -8,6 +8,7 @@ import logging
 import math
 import os
 import random
+import shutil
 import sys
 import traceback
 import warnings
@@ -45,6 +46,7 @@ from internvl.train.dataset import (ConcatDataset, TCSLoader,
                                     dynamic_preprocess, preprocess,
                                     preprocess_internlm,
                                     preprocess_internvl2_5, preprocess_mpt,
+                                    preprocess_internlm_v3,
                                     preprocess_phi3)
 from internvl.train.trainer_dpo import MultimodalDPOTrainer
 from PIL import Image, ImageFile, PngImagePlugin, UnidentifiedImageError
@@ -289,6 +291,7 @@ class LazySupervisedDataset(Dataset):
                 # If repeat_time is less than 1, select a portion of the data
                 self.raw_data = random.sample(self.raw_data, k=int(len(self.raw_data) * repeat_time))
             if repeat_time > 1:
+                repeat_time = int(repeat_time)
                 assert isinstance(repeat_time, int)
                 # Repeat the list if repeat_time is greater than 1
                 self.raw_data = self.raw_data * repeat_time
@@ -342,6 +345,8 @@ class LazySupervisedDataset(Dataset):
             preprocess_function = preprocess_phi3
         elif self.template_name == 'internvl2_5':
             preprocess_function = preprocess_internvl2_5
+        elif self.template_name == 'internlm2-chat-v3':
+            preprocess_function = preprocess_internlm_v3
         else:
             preprocess_function = preprocess
         return preprocess_function
@@ -659,7 +664,7 @@ def build_datasets(
             ds_name=ds_name,
             num_image_token=model.num_image_token,
             image_size=data_args.force_image_size,
-            is_train=ds_collections[ds_name]['data_augment'],
+            is_train=ds_collections[ds_name].get('data_augment', False),
             pad2square=data_args.pad2square,
             group_by_length=group_by_length,
             dynamic_image_size=dynamic_image_size,
@@ -955,6 +960,20 @@ def main():
         trainer.log_metrics('train', metrics)
         trainer.save_metrics('train', metrics)
         trainer.save_state()
+
+        model_dir = model_args.model_name_or_path
+        output_dir = training_args.output_dir
+        for filename in [
+            'conversation.py',
+            'modeling_internvl_chat.py',
+            'modeling_intern_vit.py',
+            'modeling_internlm2.py',
+            'configuration_internvl_chat.py',
+            'configuration_intern_vit.py',
+            'configuration_internlm2.py',
+        ]:
+            if os.path.exists(os.path.join(model_dir, filename)):
+                shutil.copy(os.path.join(model_dir, filename), output_dir)
 
 
 if __name__ == '__main__':

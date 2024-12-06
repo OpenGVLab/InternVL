@@ -864,3 +864,91 @@ def dynamic_preprocess(image, min_num=1, max_num=6, image_size=448, use_thumbnai
         thumbnail_img = image.resize((image_size, image_size))
         processed_images.append(thumbnail_img)
     return processed_images
+
+
+import copy
+from typing import List
+def preprocess_internlm_v3(
+        template_name,
+        conversations,
+        tokenizer: transformers.PreTrainedTokenizer,
+        num_image_token_list: List[int],
+        text_only: bool = False,
+        group_by_length: bool = False,
+        use_packed_ds: bool = True,
+        padding: bool = False,
+        truncation: bool = False,
+        ds_name: str = None,
+        num_image: int = 1,
+) -> Dict:
+    assert not padding
+    assert template_name == 'internlm2-chat-v3'
+    conversations = conversations[0]
+
+    default_system_system_message = ''
+    roles = {'human': 'user', 'gpt': 'assistant', 'system': 'system', 'knowledge': 'knowledge'}
+    conversation_start = "<|im_start|>"
+    conversation_end = "<|im_end|>\n"
+    system_template = conversation_start + 'system\n{system_message}' + conversation_end
+    num_image = len(num_image_token_list)
+    if not text_only:
+        new_conversations = []
+        cur_image_idx = 0
+        for conv in conversations:
+            while "<image>" in conv['value'] and cur_image_idx < num_image:
+                image_tokens = f'{IMG_START_TOKEN}{IMG_CONTEXT_TOKEN * num_image_token_list[cur_image_idx]}{IMG_END_TOKEN}'
+                conv['value'] = conv['value'].replace('<image>', image_tokens, 1)
+                cur_image_idx += 1
+            new_conversations.append(conv)
+        conversations = new_conversations
+
+        if cur_image_idx < num_image:
+            print(f'WARNING: image flag mismatch: cur_image_idx {cur_image_idx} vs. num_image {num_image}. This dataset is {ds_name}.')
+            sys.stdout.flush()
+
+    # Tokenize conversations
+    tokens = []
+    labels = []
+    # check the first is system,
+    if conversations[0]['from'] != 'system':  # default
+        pass
+    else:
+        tokenized_system = tokenizer(system_template.format(system_message=conversations[0]['value']),
+                                     return_attention_mask=False, add_special_tokens=False)['input_ids']
+        conversations = conversations[1:]
+        tokens.extend(tokenized_system)
+        labels.extend([IGNORE_TOKEN_ID] * len(tokenized_system))
+    for i, conv in enumerate(conversations):
+        if conv['from'] not in roles:
+            print(f"Unknown role, skip. {conv}")
+            continue
+        role = roles[conv['from']]
+        content = conv['value']
+        if role == 'user' or role == 'knowledge' or (role == 'assistant' and conv.get('is_input', False)):
+            user_info = f"{conversation_start}{role}\n{content}{conversation_end}"
+            tokenized_user = tokenizer(user_info, return_attention_mask=False, add_special_tokens=False)['input_ids']
+            tokens.extend(tokenized_user)
+            labels.extend([IGNORE_TOKEN_ID] * len(tokenized_user))
+        elif role == 'assistant':
+            assis_start = f"{conversation_start}{role}\n"
+            tokens_assistant_start = tokenizer(assis_start, return_attention_mask=False, add_special_tokens=False)[
+                'input_ids']
+            tokens.extend(tokens_assistant_start)
+            labels.extend([IGNORE_TOKEN_ID] * len(tokens_assistant_start))
+            assis_info = f"{content}{conversation_end}"
+            tokenized_assistant = tokenizer(assis_info, return_attention_mask=False, add_special_tokens=False)[
+                'input_ids']
+            tokens.extend(tokenized_assistant)
+            labels.extend(copy.deepcopy(tokenized_assistant))
+        else:
+            print(f"Not processed role, skip. {conv}")
+    if truncation and len(tokens) > tokenizer.model_max_length:
+        tokens = tokens[:tokenizer.model_max_length]
+        labels = labels[:tokenizer.model_max_length]
+    input_ids = torch.LongTensor([tokens])  # [1,N] to match the before
+    targets = torch.LongTensor([labels])  # [1,N] to match the before
+    return dict(
+        input_ids=input_ids,
+        labels=targets,
+        attention_mask=input_ids.ne(tokenizer.pad_token_id),
+    )

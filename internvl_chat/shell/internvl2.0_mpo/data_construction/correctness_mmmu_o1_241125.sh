@@ -10,7 +10,8 @@ CPUS_PER_TASK=${CPUS_PER_TASK:-10}
 LOG_DIR="logs_sampling/correctness_mmmu_o1_241125"
 
 
-model_path="/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/work_dirs/internvl_sft/internvl2_5_8b_dynamic_res_sft_mmmu_o1_241125"
+# model_path="work_dirs/internvl_sft/internvl2_5_8b_dynamic_res_sft_mmmu_o1_241125"
+model_path="work_dirs/internvl_sft/internvl2_pro_dynamic_res_sft_mmmu_o1_241125"
 
 
 declare -a datasets=( \

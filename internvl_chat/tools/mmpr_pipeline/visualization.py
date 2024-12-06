@@ -50,6 +50,10 @@ class Dataset:
     def __getitem__(self, index):
         item = self.lines[index]
         item = json.loads(item)
+
+        if 'images' in item:
+            item['image'] = item.pop('images')
+
         if 'image' in item:
             if isinstance(item['image'], (list, tuple)):
                 item['image'] = [
@@ -58,6 +62,10 @@ class Dataset:
                 ]
             else:
                 item['image'] = [load_image(os.path.join(self.image_path, item['image']))]
+
+            if IMAGE_PLACEHOLDER not in item['conversations'][0]['value']:
+                item['conversations'][0]['value'] = IMAGE_PLACEHOLDER + '\n' + item['conversations'][0]['value']
+
         return item.copy()
 
     def __len__(self):
