@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PARTITION=${PARTITION:-"INTERN2"}
-GPUS=${GPUS:-256}
+GPUS=${GPUS:-192}
 GPUS_PER_NODE=${GPUS_PER_NODE:-8}
 QUOTA_TYPE=${QUOTA_TYPE:-"reserved"}
 NODES=$((GPUS / GPUS_PER_NODE))
@@ -12,7 +12,7 @@ LOG_DIR="logs_sampling/correctness_mmpr"
 
 # model_path="/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/work_dirs/internvl_sft/internvl2_5_8b_dynamic_res_sft_cotv4"
 # model_path="/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL-RL-DPO/internvl_chat_dev/work_dirs/internvl_sft/internvl2_pro_dynamic_res_sft_cotv4"
-model_path="/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/work_dirs/internvl_sft/internvl2_5_8b_dynamic_res_sft_mmmu_o1_241125"
+model_path="work_dirs/internvl_sft/internvl2_5_8b_dynamic_res_sft_mmmu_o1_241125"
 
 
 declare -a datasets=( \
@@ -39,7 +39,7 @@ declare -a datasets=( \
     'outputs/correctness_prompt_mmpr/geos_en_20240402_extracted_open_ended_only.jsonl,6' \
     'outputs/correctness_prompt_mmpr/unigeo_calc_en_20240402_extracted_open_ended_only.jsonl,6' \
     'outputs/correctness_prompt_mmpr/geomverse_extracted.jsonl,6' \
-    'outputs/correctness_prompt_mmpr/geo170k_extracted_full.jsonl'
+    'outputs/correctness_prompt_mmpr/geo170k_extracted_full.jsonl,6' \
     'outputs/correctness_prompt_mmpr/geoqa+_extracted_en_version.jsonl,6' \
 )
 
@@ -75,10 +75,12 @@ for ((i=0; i<${#datasets[@]}; i++)); do
         --prompt-path $dataset \
         --out-dir "outputs/correctness_mmpr" \
         --batch-size 8 \
+        --vit-batch-size 1 \
         --num-workers 8 \
         --num-return-sequences 32 \
         --top-k 50 \
         --temperature 1.0 \
+        --max-new-tokens 4096 \
         --dynamic \
         --max-num ${max_num} \
         --sample-max-num 30000 \

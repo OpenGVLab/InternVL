@@ -15,7 +15,7 @@ option_candidate = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 
 
 # you can download this file from this url: https://huggingface.co/datasets/Weiyun1025/M3CoT-ScienceQA-Format/blob/main/train_pair_with_res.jsonl
 gt_path_map = {
-    'm3cot': 'outputs/correctness_prompt_mmpr_gt/m3cot.jsonl',
+    'm3cot': '/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL/internvl_chat/outputs/correctness_prompt_mmpr_gt/m3cot.jsonl',
 }
 
 
@@ -27,20 +27,16 @@ def merge_dict(*dict_list):
     return merged_dict
 
 
-def parse_answer(text):
-    match = re.search(r'(Final answer:|Answer:)\s*(.*)', text, re.IGNORECASE)
+def parse_answer(response):
+    answer_trigger = 'Final answer:'
+    assert response.count(answer_trigger) <= 2, f"Fail to find Answer, {response.count(answer_trigger)=}"
+    assert response.count('\n') >= 2, f"Fail to find rationale, {response=}"
 
-    assert match
+    rationale, answer = response.rsplit(answer_trigger, 1)
+    assert len(rationale.strip()) > 0, f"Empty rationale:\n{response}"
+    assert '\n' not in answer.strip(), f"Answer with multiple paragraphs:\n{answer}"
 
-    answer_trigger = match.group(1).strip()
-    answer = match.group(2).strip().strip('*').strip()
-
-    assert text.count(answer_trigger) <= 2
-
-    rationale = text.lower().split(answer_trigger.lower())[0].strip().strip('*').strip()
-    assert len(rationale) > 0
-
-    return rationale, answer
+    return rationale.strip(), answer.strip()
 
 
 def isfloat(x):
@@ -244,14 +240,20 @@ def _fix_answer(item, answer_pred, answer_gt, mc=False):
         or answer_gt.strip('.').replace(',', '') in answer_pred.strip('.').replace(',', '')
     ):
         item['response'] = answer_gt_orig.join(item['response'].rsplit(answer_pred_orig, 1))
+        item['response'] = item['response'].strip().strip('**').strip()
         _, answer_pred_after_fix = parse_answer(item['response'])
         item['answer_pred'] = answer_pred_after_fix
+
+    other_lines, last_line = item['response'].rsplit('\n', 1)
+    if '**Final' in last_line:
+        last_line = last_line.replace('**Final', 'Final')
+        item['response'] = f'{other_lines}\n{last_line}'.strip()
 
     return item
 
 
 def post_process(pred):
-    pred = pred.strip().strip('*').upper()
+    pred = pred.strip().strip('*').strip().upper()
 
     if len(pred) == 1:
         return pred

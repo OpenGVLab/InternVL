@@ -138,7 +138,7 @@ class InferenceSampler(torch.utils.data.sampler.Sampler):
 
 
 def post_process(pred, option):
-    pred = pred.strip()
+    pred = pred.strip().strip('**').strip()
     option_candidate = list(option.keys())
     if len(pred) == 1:
         return pred

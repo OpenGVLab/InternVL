@@ -242,36 +242,43 @@ def process_item(context, image, title):
     return md_str.replace('\\', '\\\\').replace('$', '\\$').replace('<', '\\<').replace('>', '\\>')
 
 def meta2str(meta):
+    info = []
+
     if 'claims' in meta:
         claims = '\n\n'.join(meta['claims'])
         claims_converted = '\n\n'.join(meta['claims_converted'])
         results = '\n\n'.join(meta['results'])
 
-        return (
+        info.append((
             f'### Claims\n\n'
             f'{claims}\n\n'
             f'### Claims (converted)\n\n'
             f'{claims_converted}\n\n'
             f'### Results\n\n'
             f'{results}\n\n'
-        )
-    else:
-        return ''
+        ))
+
+    return ''.join(info)
 
 
 def meta2str_v2(meta):
-    objects = '\n\n'.join(meta['objects'])
-    results = '\n\n'.join(meta['results'])
-    hallucinations = '\n\n'.join(meta['hallucinations'])
+    info = []
 
-    return (
-        f'### Objects\n\n'
-        f'{objects}\n\n'
-        f'### Results\n\n'
-        f'{results}\n\n'
-        f'### Hallucinations\n\n'
-        f'{hallucinations}\n\n'
-    )
+    def add_info(key):
+        if key in meta:
+            value = meta[key]
+            info.append((
+                f'### {key}\n\n'
+                f'{value}\n\n'
+            ))
+
+    add_info('objects')
+    add_info('results')
+    add_info('hallucinations')
+    add_info('chosen_mc_score')
+    add_info('rejected_mc_score')
+
+    return ''.join(info)
 
 def gradio_app_vis(args):
     with open(args.meta_path) as file:
