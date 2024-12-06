@@ -18,7 +18,8 @@
 <a href="https://trendshift.io/repositories/9803" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9803" alt="OpenGVLab%2FInternVL | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 <img height="55" alt="image" src="https://github.com/user-attachments/assets/bd62ab46-f0ea-40c6-ab10-7fde671716cc">
 
-![opencompass](https://github.com/user-attachments/assets/7ce93c05-84ae-4997-a480-53897d1d3a1c)
+![overall_performance](https://github.com/user-attachments/assets/163cb0c1-c93b-4d72-8a9e-d066d4659660)
+
 
 </div>
 
@@ -205,7 +206,7 @@
   </tr>
 </table>
 
-#### InternVL2-Pro & InternVL2.5-Pro API
+#### InternVL2-Pro API
 
 We welcome everyone to use our API for research. For better management, please submit ([application form](https://docs.google.com/forms/d/e/1FAIpQLSfMCzhPr1OOEKau_6jwTU0EiZMSFckDo-HMlc_hUudhF_97rw/viewform?usp=sf_link)) / ([申请表](https://wj.qq.com/s2/14910502/25a4/)) to obtain free API access.
 
