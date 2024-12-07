@@ -18,7 +18,8 @@
 <a href="https://trendshift.io/repositories/9803" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9803" alt="OpenGVLab%2FInternVL | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 <img height="55" alt="image" src="https://github.com/user-attachments/assets/bd62ab46-f0ea-40c6-ab10-7fde671716cc">
 
-![overall_performance](https://github.com/user-attachments/assets/163cb0c1-c93b-4d72-8a9e-d066d4659660)
+![perform](https://github.com/user-attachments/assets/aab987fd-8811-4ff9-b5e0-1d08f0ad1f7a)
+
 
 
 </div>
