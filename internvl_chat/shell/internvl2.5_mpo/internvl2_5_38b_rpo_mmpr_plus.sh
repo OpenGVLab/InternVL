@@ -1,13 +1,13 @@
 set -x
 
 PARTITION=${PARTITION:-"Intern5"}
-GPUS=${GPUS:-256}
+GPUS=${GPUS:-512}
 GPUS_PER_NODE=${GPUS_PER_NODE:-8}
 QUOTA_TYPE=${QUOTA_TYPE:-"reserved"}
 NODES=$((GPUS / GPUS_PER_NODE))
 CPUS_PER_TASK=${CPUS_PER_TASK:-10}
 SRUN_ARGS=${SRUN_ARGS:-""}
-BATCH_SIZE=${BATCH_SIZE:-256}
+BATCH_SIZE=${BATCH_SIZE:-512}
 PER_DEVICE_BATCH_SIZE=${PER_DEVICE_BATCH_SIZE:-1}
 GRADIENT_ACC=$((BATCH_SIZE / PER_DEVICE_BATCH_SIZE / GPUS))
 
@@ -72,7 +72,7 @@ srun -p ${PARTITION} \
   --dynamic_image_size True \
   --use_thumbnail True \
   --ps_version 'v2' \
-  --deepspeed "zero_stage3_config_70b.json" \
+  --deepspeed "zero_stage3_config_100b_1e5_offload.json" \
   --report_to "tensorboard" \
   --loss_type sigmoid \
   --sigmoid_loss_weight 1.0 \
