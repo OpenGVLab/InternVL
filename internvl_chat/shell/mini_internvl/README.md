@@ -37,6 +37,38 @@ Visual tasks (*e.g.* Image classification, region perception, multi-view images 
 
 In the [document](https://internvl.readthedocs.io/en/latest/internvl2.0/domain_adaptation.html), we provide detailed information on the datasets and the fine-tuning process.
 
+### Adaptation models
+
+We have released the adaptation models for the following four domains. The script for evaluation is in the [document](https://internvl.readthedocs.io/en/latest/internvl2.0/domain_adaptation.html#id3).
+
+<table>
+  <tr>
+    <th>Model Name</th>
+    <th>HF Link</th>
+    <th>Note</th>
+  </tr>
+  <tr>
+    <td>Mini-InternVL2-DA-Drivelm</td>
+    <td><a href="https://huggingface.co/OpenGVLab/Mini-InternVL2-1B-DA-Drivelm">🤗1B</a> / <a href="https://huggingface.co/OpenGVLab/Mini-InternVL2-2B-DA-Drivelm">🤗2B</a> / <a href="https://huggingface.co/OpenGVLab/Mini-InternVL2-4B-DA-Drivelm">🤗4B</a></td>
+    <td> Adaptation for <a href="https://github.com/OpenDriveLab/DriveLM/tree/main/challenge"> CVPR 2024 Autonomous Driving Challenge </a></td>
+  </tr>
+  <tr>
+    <td>Mini-InternVL2-DA-BDD</td>
+    <td><a href="https://huggingface.co/OpenGVLab/Mini-InternVL2-1B-DA-BDD">🤗1B</a> / <a href="https://huggingface.co/OpenGVLab/Mini-InternVL2-2B-DA-BDD">🤗2B</a> / <a href="https://huggingface.co/OpenGVLab/Mini-InternVL2-4B-DA-BDD">🤗4B</a></td>
+    <td> Fine-tuning with data constructed by <a href="https://tonyxuqaq.github.io/projects/DriveGPT4/"> DriveGPT4 </a></td>
+  </tr>
+  <tr>
+    <td>Mini-InternVL2-DA-RS</td>
+    <td><a href="https://huggingface.co/OpenGVLab/Mini-InternVL2-1B-DA-RS">🤗1B</a> / <a href="https://huggingface.co/OpenGVLab/Mini-InternVL2-2B-DA-RS">🤗2B</a> / <a href="https://huggingface.co/OpenGVLab/Mini-InternVL2-4B-DA-RS">🤗4B</a></td>
+    <td> Adaptation for remote sensing domain </td>
+  </tr>
+  <tr>
+    <td>Mini-InternVL2-DA-Medical</td>
+    <td><a href="https://huggingface.co/OpenGVLab/Mini-InternVL2-1B-DA-Medical">🤗1B</a> / <a href="https://huggingface.co/OpenGVLab/Mini-InternVL2-2B-DA-Medical">🤗2B</a> / <a href="https://huggingface.co/OpenGVLab/Mini-InternVL2-4B-DA-Medical">🤗4B</a></td>
+    <td> Fine-tuning using our <a href="https://huggingface.co/datasets/OpenGVLab/InternVL-Domain-Adaptation-Data/blob/main/train_meta/internvl_1_2_finetune_medical.json">medical data</a>.</td>
+  </tr>
+</table>
+
 ## Citation
 
 If you find this project useful in your research, please consider citing:
