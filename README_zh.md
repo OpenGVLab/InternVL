@@ -1,15 +1,15 @@
 <div align="center">
 
-# <img width="60" alt="image" src="https://github.com/OpenGVLab/InternVL/assets/47669167/7037290e-f474-4d11-b90f-1d8316087bf8"> InternVL家族：通过开源组件缩小与商业多模态模型的差距 —— GPT-4o的开源替代方案
+# InternVL家族：通过开源组件缩小与商业多模态模型的差距 —— GPT-4o的开源替代方案
 
 <div align="center">
   <img width="500" alt="image" src="https://github.com/user-attachments/assets/930e6814-8a9f-43e1-a284-118a5732daa4">
   <br>
 </div>
 
-[\[🆕 博客\]](https://internvl.github.io/blog/) [\[🤔 常见问题\]](https://internvl.readthedocs.io/en/latest/tutorials/faqs.html) [\[🚀 InternVL2 博客\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[🗨️ 对话Demo\]](https://internvl.opengvlab.com/)  [\[🤗 HF Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)  [\[📖 文档\]](https://internvl.readthedocs.io/en/latest/)  [\[🌐 API\]](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html)  [\[🚀 快速开始\]](#使用-huggingface-快速开始)
+[\[🆕 博客\]](https://internvl.github.io/blog/) [\[🤔 常见问题\]](https://internvl.readthedocs.io/en/latest/tutorials/faqs.html)  [\[🗨️ 对话Demo\]](https://internvl.opengvlab.com/)  [\[🤗 HF Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)  [\[📖 文档\]](https://internvl.readthedocs.io/en/latest/)  [\[🌐 API\]](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html)  [\[🚀 快速开始\]](#使用-huggingface-快速开始)
 
-[\[🔥 Mini-InternVL 报告\]](https://arxiv.org/abs/2410.16261)  [\[📜 InternVL 1.5 报告\]](https://arxiv.org/abs/2404.16821)  [\[📜 InternVL 1.0 论文\]](https://arxiv.org/abs/2312.14238)
+[\[📜 InternVL 2.5 报告\]](https://huggingface.co/papers/2412.05271) [\[🔥 Mini-InternVL 论文\]](https://arxiv.org/abs/2410.16261)  [\[🚀 InternVL2 博客\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)   [\[📜 InternVL 1.5 论文\]](https://huggingface.co/papers/2404.16821)  [\[📜 InternVL 1.0 论文\]](https://huggingface.co/papers/2312.14238)
 
 [\[📖 2.0 中文解读\]](https://zhuanlan.zhihu.com/p/706547971)  [\[📖 1.5 中文解读\]](https://zhuanlan.zhihu.com/p/699439759)  [\[📖 1.0 中文解读\]](https://zhuanlan.zhihu.com/p/702946079)
 
@@ -18,7 +18,7 @@
 <a href="https://trendshift.io/repositories/9803" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9803" alt="OpenGVLab%2FInternVL | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 <img height="55" alt="image" src="https://github.com/user-attachments/assets/bd62ab46-f0ea-40c6-ab10-7fde671716cc">
 
-![overall_performance](https://github.com/user-attachments/assets/163cb0c1-c93b-4d72-8a9e-d066d4659660)
+![perform](https://github.com/user-attachments/assets/aab987fd-8811-4ff9-b5e0-1d08f0ad1f7a)
 
 </div>
 
@@ -105,31 +105,31 @@
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-2B">🤗 link</a></td>
   </tr>
   <tr>
-    <td>InternVL2_5-4B </td>
+    <td>InternVL2_5-4B</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/Qwen/Qwen2.5-3B-Instruct">Qwen2.5-3B-Instruct</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-4B">🤗 link</a></td>
   </tr>
   <tr>
-    <td>InternVL2_5-8B    </td>
+    <td>InternVL2_5-8B</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/internlm/internlm2_5-7b-chat">internlm2_5-7b-chat</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-8B">🤗 link</a></td>
   </tr>
   <tr>
-    <td>InternVL2_5-26B </td>
+    <td>InternVL2_5-26B</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">InternViT-6B-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/internlm/internlm2_5-20b-chat">internlm2_5-20b-chat</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-26B">🤗 link</a></td>
   </tr>
   <tr>
-    <td>InternVL2_5-38B   </td>
+    <td>InternVL2_5-38B</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">InternViT-6B-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/Qwen/Qwen2.5-32B-Instruct">Qwen2.5-32B-Instruct</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-38B">🤗 link</a></td>
   </tr>
   <tr>
-    <td>InternVL2_5-78B |</td>
+    <td>InternVL2_5-78B</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">InternViT-6B-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/Qwen/Qwen2.5-72B-Instruct">Qwen2.5-72B-Instruct</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-78B">🤗 link</a></td>
@@ -204,10 +204,6 @@
     <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
 </table>
-
-#### InternVL2-Pro API
-
-我们诚挚邀请大家将 InternVL2-Pro 的 API 用于学术研究。为了更好地管理，请提交[英文申请表](https://docs.google.com/forms/d/e/1FAIpQLSfMCzhPr1OOEKau_6jwTU0EiZMSFckDo-HMlc_hUudhF_97rw/viewform?usp=sf_link)/[中文申请表](https://wj.qq.com/s2/14910502/25a4/)以获得免费 API 访问权限。
 
 #### 多模态大语言模型 (InternVL 1.0-1.5)
 
@@ -992,29 +988,35 @@ print(f'User: {question}\nAssistant: {response}')
 如果您在研究中发现本项目有用，请考虑引用：
 
 ```BibTeX
-@article{chen2023internvl,
-  title={InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks},
-  author={Chen, Zhe and Wu, Jiannan and Wang, Wenhai and Su, Weijie and Chen, Guo and Xing, Sen and Zhong, Muyan and Zhang, Qinglong and Zhu, Xizhou and Lu, Lewei and Li, Bin and Luo, Ping and Lu, Tong and Qiao, Yu and Dai, Jifeng},
-  journal={arXiv preprint arXiv:2312.14238},
-  year={2023}
-}
-
-@article{chen2024far,
-  title={How Far Are We to GPT-4V? Closing the Gap to Commercial Multimodal Models with Open-Source Suites},
-  author={Chen, Zhe and Wang, Weiyun and Tian, Hao and Ye, Shenglong and Gao, Zhangwei and Cui, Erfei and Tong, Wenwen and Hu, Kongzhi and Luo, Jiapeng and Ma, Zheng and others},
-  journal={arXiv preprint arXiv:2404.16821},
-  year={2024}
-}
-@article{gao2024mini,
-  title={Mini-InternVL: A Flexible-Transfer Pocket Multimodal Model with 5\% Parameters and 90\% Performance},
-  author={Gao, Zhangwei and Chen, Zhe and Cui, Erfei and Ren, Yiming and Wang, Weiyun and Zhu, Jinguo and Tian, Hao and Ye, Shenglong and He, Junjun and Zhu, Xizhou and others},
-  journal={arXiv preprint arXiv:2410.16261},
+@article{chen2024expanding,
+  title={Expanding Performance Boundaries of Open-Source Multimodal Models with Model, Data, and Test-Time Scaling},
+  author={Chen, Zhe and Wang, Weiyun and Cao, Yue and Liu, Yangzhou and Gao, Zhangwei and Cui, Erfei and Zhu, Jinguo and Ye, Shenglong and Tian, Hao and Liu, Zhaoyang and others},
+  journal={arXiv preprint arXiv:2412.05271},
   year={2024}
 }
 @article{wang2024mpo,
   title={Enhancing the Reasoning Ability of Multimodal Large Language Models via Mixed Preference Optimization},
   author={Wang, Weiyun and Chen, Zhe and Wang, Wenhai and Cao, Yue and Liu, Yangzhou and Gao, Zhangwei and Zhu, Jinguo and Zhu, Xizhou and Lu, Lewei and Qiao, Yu and Dai, Jifeng},
   journal={arXiv preprint arXiv:2411.10442},
+  year={2024}
+}
+@article{gao2024mini,
+  title={Mini-internvl: A flexible-transfer pocket multimodal model with 5\% parameters and 90\% performance},
+  author={Gao, Zhangwei and Chen, Zhe and Cui, Erfei and Ren, Yiming and Wang, Weiyun and Zhu, Jinguo and Tian, Hao and Ye, Shenglong and He, Junjun and Zhu, Xizhou and others},
+  journal={arXiv preprint arXiv:2410.16261},
+  year={2024}
+}
+@article{chen2024far,
+  title={How Far Are We to GPT-4V? Closing the Gap to Commercial Multimodal Models with Open-Source Suites},
+  author={Chen, Zhe and Wang, Weiyun and Tian, Hao and Ye, Shenglong and Gao, Zhangwei and Cui, Erfei and Tong, Wenwen and Hu, Kongzhi and Luo, Jiapeng and Ma, Zheng and others},
+  journal={arXiv preprint arXiv:2404.16821},
+  year={2024}
+}
+@inproceedings{chen2024internvl,
+  title={Internvl: Scaling up vision foundation models and aligning for generic visual-linguistic tasks},
+  author={Chen, Zhe and Wu, Jiannan and Wang, Wenhai and Su, Weijie and Chen, Guo and Xing, Sen and Zhong, Muyan and Zhang, Qinglong and Zhu, Xizhou and Lu, Lewei and others},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={24185--24198},
   year={2024}
 }
 ```
