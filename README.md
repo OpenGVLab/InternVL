@@ -1028,6 +1028,6 @@ InternVL is built with reference to the code of the following projects: [OpenAI 
 
 ______________________________________________________________________
 
-If you want to join our WeChat group, please scan the following QR Code to add our assistant as a Wechat friend:
+Scan the following QR Code, join our WeChat group.
 
-<p align="center"><img width="300" alt="image" src="https://github.com/OpenGVLab/DragGAN/assets/26198430/e3f0807f-956a-474e-8fd2-1f7c22d73997"></p>
+<p align="center"><img width="300" alt="image" src="https://github.com/user-attachments/assets/f776df09-ebba-4fd5-80c2-fec4ff1518be"></p>
