@@ -1027,6 +1027,6 @@ InternVL 的代码构建参考了以下的项目: [OpenAI CLIP](https://github.c
 
 ______________________________________________________________________
 
-如何您想加入我们的项目微信群，请扫描下方二维码添加我们的小助手：
+扫描下方二维码，加入我们的项目微信群。
 
-<p align="center"><img width="300" alt="image" src="https://github.com/OpenGVLab/DragGAN/assets/26198430/e3f0807f-956a-474e-8fd2-1f7c22d73997"></p>
+<p align="center"><img width="300" alt="image" src="https://github.com/user-attachments/assets/f776df09-ebba-4fd5-80c2-fec4ff1518be"></p>
