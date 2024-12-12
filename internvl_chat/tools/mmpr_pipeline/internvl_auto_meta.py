@@ -57,6 +57,10 @@ IMG_DIR_LIST = [
     'langchao:s3://internvl2/datasets/mmmu/',
     'langchao:s3://internvl2/datasets/',
     'langchao:s3://internvl2/',
+    '/mnt/petrelfs/wangweiyun/workspace_cz/inhouse_data/mmmu_tiku/',
+    'vc-reader:s3://multi-modal/playground/data/koniq-10k/',
+    'langchao:s3://private-dataset-pnorm/study/',
+    'langchao:s3://mm-dataset/gpt4o/',
 ]
 
 for i in range(len(IMG_DIR_LIST)):
@@ -67,18 +71,37 @@ def find_prefix(line):
     item = json.loads(line)
     res = ''
     for prefix in IMG_DIR_LIST:
-        item['image'] = item['image'].replace('wenhaitmp:s3://internvl/', 'langchao:s3://internvl2/')
-        if item['image'].startswith(prefix) and prefix.startswith(res):
+        image = item['image']
+        image = image[0] if isinstance(image, (list, tuple)) else image
+        image = image.replace('wenhaitmp:s3://internvl/', 'langchao:s3://internvl2/')
+        if image.startswith(prefix) and prefix.startswith(res):
             res = prefix
     return res
 
 def clean_prefix(lines, prefix):
+    if not prefix:
+        return lines
+
+    assert prefix.endswith('/')
+
     new_lines = []
     for line in lines:
         item = json.loads(line)
-        item['image'] = item['image'].replace('wenhaitmp:s3://internvl/', 'langchao:s3://internvl2/')
-        assert item['image'].startswith(prefix)
-        item['image'] = item['image'][len(prefix):]
+        image = item['image']
+
+        if isinstance(image, list):
+            new_image = []
+            for i in image:
+                i = i.replace('wenhaitmp:s3://internvl/', 'langchao:s3://internvl2/')
+                assert i.startswith(prefix)
+                new_image.append(i[len(prefix):])
+            image = new_image
+        else:
+            image = image.replace('wenhaitmp:s3://internvl/', 'langchao:s3://internvl2/')
+            assert image.startswith(prefix), f'\n{image=}\n{prefix=}'
+            image = image[len(prefix):]
+
+        item['image'] = image
 
         if item.get('is_tie', False):
             continue
@@ -115,14 +138,6 @@ def main(args):
             continue
 
         prefix = find_prefix(lines[0])
-        new_lines = clean_prefix(lines, prefix)
-        save_new_lines(new_lines, os.path.join(args.save_dir, filename))
-
-        if not prefix:
-            print(f'[Warning] Fail to find prefix: {filename}')
-
-        assert filename.endswith('.jsonl')
-        ds_name = filename[:-len('.jsonl')]
 
         if filename.replace('.jsonl', '') in ref_meta:
             ref_prefix = ref_meta[filename.replace('.jsonl', '')]['root']
@@ -133,6 +148,15 @@ def main(args):
         elif not prefix:
             print(f'[Warning] Fail to find ref_prefix: {filename}')
             ref_prefix = None
+
+        new_lines = clean_prefix(lines, prefix if prefix else ref_prefix)
+        save_new_lines(new_lines, os.path.join(args.save_dir, filename))
+
+        if not prefix:
+            print(f'[Warning] Fail to find prefix: {filename}')
+
+        assert filename.endswith('.jsonl')
+        ds_name = filename[:-len('.jsonl')]
 
         meta[f'{ds_name}{args.suffix}'.strip()] = {
             'root': prefix if prefix else ref_prefix,

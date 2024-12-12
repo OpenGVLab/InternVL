@@ -108,7 +108,16 @@ class VQADataset(torch.utils.data.Dataset):
         sample_max_num=None,
     ):
         with open(data) as file:
-            self.data = file.readlines()
+            lines = file.readlines()
+
+        self.data = []
+        for line in lines:
+            item = json.loads(line)
+
+            multi_image = isinstance(item['image'], (list, tuple)) and len(item['image']) > 1
+
+            if not (multi_image ^ args.multi_image):
+                self.data.append(line)
 
         if sample_max_num is not None and len(self.data) > sample_max_num:
             print(f'Truncate data lines. {len(self.data)} => {sample_max_num}')
@@ -187,6 +196,11 @@ def get_global_min(value):
 
 
 def save_outputs(outputs, results_file):
+    # multi_images = any(isinstance(x['image'], (list, tuple)) for x in outputs)
+    # if multi_images:
+    #     for x in outputs:
+    #         x['image'] = list(x['image']) if isinstance(x['image'], (list, tuple)) else [x['image']]
+
     outputs = sorted(outputs, key=lambda x:x['image'])
 
     world_size = torch.distributed.get_world_size()
@@ -230,6 +244,10 @@ def evaluate_chat_model():
     item2num = defaultdict(int)
     results_file = os.path.basename(args.prompt_path)
     results_file = os.path.join(args.out_dir, results_file)
+
+    if args.multi_image:
+        results_file = results_file.replace('.jsonl', '_ov.jsonl')
+
     if os.path.exists(results_file):
         with open(results_file) as file:
             lines = file.readlines()
@@ -322,6 +340,7 @@ if __name__ == '__main__':
     parser.add_argument('--min-new-tokens', type=int, default=1)
     parser.add_argument('--num-return-sequences', type=int, default=8)
     parser.add_argument('--tp', type=int, default=1)
+    parser.add_argument('--multi-image', action='store_true')
     parser.add_argument('--dynamic', action='store_true')
     parser.add_argument('--max-num', type=int, default=6)
     parser.add_argument('--sample-max-num', type=int, default=None)
@@ -375,7 +394,7 @@ if __name__ == '__main__':
         backend_config=TurbomindEngineConfig(session_len=8192, cache_max_entry_count=0.1, tp=args.tp)
     )
     pipe.vl_encoder.model.config.max_dynamic_patch = args.max_num
-    pipe.vl_encoder.model.config.dynamic_image_size = args.dynamic
+    pipe.vl_encoder.model.config.dynamic_image_size = args.dynamic and not args.multi_image
 
     # lmdeploy will update the current_device
     torch.cuda.set_device(int(os.environ['RANK']) % torch.cuda.device_count())

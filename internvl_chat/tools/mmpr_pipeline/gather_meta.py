@@ -1,0 +1,173 @@
+import io
+import os
+import json
+import json
+import argparse
+
+from PIL import Image
+from petrel_client.client import Client
+
+client = Client()
+
+image_error = set()
+image_exist = {}
+ceph2local = {
+    "langchao:s3://multi_modal/playground/data/chartqa/": "chartqa",
+    "langchao:s3://multi_modal/playground/data/geoqa+/": "geoqa_plus",
+    "langchao:s3://multi_modal/UniGeo/": "UniGeo",
+    "langchao:s3://multi_modal/serve_images/": "DataReflow/unknown",
+    "langchao:s3://internvl2/datasets/SROIE/": "SROIE",
+    "langchao:s3://multi_modal/FigureQA/": "FigureQA",
+    "/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/iconqa/": "iconqa",
+    "langchao:s3://ocr/ocr_data/InfoVQA/infographicVQA_train_v1.0_images/": "InfoVQA",
+    "langchao:s3://multi_modal/playground/data/dvqa/": "dvqa",
+    "langchao:s3://multi_modal/MapQA/": "MapQA",
+    "/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/GeomVerse/": "GeomVerse",
+    "langchao:s3://internvl2/datasets/ai2diagram/ai2d/": "ai2d",
+    "langchao:s3://mm_dataset/gqa/images/": "gqa",
+    "/mnt/petrelfs/share_data/wangweiyun/share_data_dpo/jsonl_format/openbmb/RLAIF-V-Dataset/images": "RLAIF-V",
+    "langchao:s3://internvl2/datasets/logs-240710-to-240902/serve_images/": "DataReflow/240710_to_240902",
+    "langchao:s3://multi_modal/ScienceQA/": "ScienceQA",
+    "langchao:s3://SA-1B/": "SA-1B",
+    "/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/M3CoT/": "M3CoT",
+    "langchao:s3://multi_modal/GEOS/": "GEOS",
+    "langchao:s3://multi_modal/DataReflow/raw_data/": "DataReflow",
+    "langchao:s3://multi_modal/DataReflow/raw_data/internvl_chat_llava_0212_To_0510/serve_images/": "DataReflow/0212_to_0510",
+    "/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/Geo170K/images/": "Geo170K",
+    "langchao:s3://multi_modal/CLEVR/": "CLEVR",
+    "langchao:s3://internvl2/datasets/wildvision/images/": "wildvision",
+    "langchao:s3://multi_modal/coco/train2014/": "coco",
+    "langchao:s3://multi_modal/DataReflow/raw_data/internvl_chat_llava_0510_To_0523/serve_images/": "DataReflow/0510_to_0523",
+    "langchao:s3://multi_modal/playground/data/docvqa/": "docvqa",
+    "langchao:s3://multi_modal/Geometry3K/": "Geometry3K",
+    "langchao:s3://internvl2/datasets/reflux/serve_images/": "DataReflow",
+    "langchao:s3://mm_dataset/ocr_data/TextVQA/train_images/": "TextVQA",
+}
+
+prefix_to_replace = {
+    'MM-Reasoning-Private/images/': '',
+    '/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/': 'private_241203',
+}
+
+
+def save_items(lines, save_path):
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    with open(save_path, 'w') as file:
+        file.writelines(lines)
+
+
+def save_image(image_path, save_path):
+    if 's3://' in image_path:
+        image_path = io.BytesIO(client.get(image_path))
+    image = Image.open(image_path).convert('RGB')
+
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    image.save(save_path)
+
+
+def save_images(lines, image_dir, save_dir, dsname):
+    print_freq = max(len(lines) // 100, 1)
+    for line_idx, line in enumerate(lines):
+        item = json.loads(line)
+        image = item['image']
+
+        save_path = os.path.join(save_dir, image)
+        image_path = os.path.join(image_dir, image)
+
+        if save_path in image_error:
+            continue
+
+        if save_path not in image_exist:
+            image_exist[save_path] = os.path.exists(save_path)
+
+        if not image_exist[save_path]:
+            try:
+                save_image(image_path, save_path)
+                image_exist[save_path] = True
+            except KeyboardInterrupt:
+                raise
+            except:
+                image_error.add(image_path)
+                print(f'[Rank {rank}] Fail to load {image_path}')
+
+        if rank == 0 and line_idx % print_freq == 0:
+            print(f'[Rank {rank}] [{dsname}] [Progress] {line_idx} / {len(lines)}')
+
+
+def get_image_save_dir(root):
+    if root in ceph2local:
+        return ceph2local[root]
+
+    for k, v in prefix_to_replace.items():
+        if root.startswith(k):
+            return os.path.join(v, root[len(k):].strip('/'))
+
+    raise RuntimeError(root)
+
+
+def main():
+    with open(args.meta_path) as file:
+        meta = json.load(file)
+
+    meta_new = {}
+    num_samples = 0
+    num_samples_wo_reflux = 0
+    for dsname, info in meta.items():
+        root = info['root']
+        annotation = info['annotation']
+        repeat_time = info['repeat_time']
+        length = info['length']
+
+        num_samples += length
+        image_save_dir = get_image_save_dir(root)
+        image_save_dir = os.path.join(args.save_dir, 'images', image_save_dir)
+        items_save_dir = os.path.join(args.save_dir, 'annotations', f'{dsname.replace("/", "_")}.jsonl')
+
+        is_private = (
+            'DataReflow' in image_save_dir
+            or 'sync/oc_dpo_model_data_241203' in root
+        )
+
+        if not args.keep_private_data and is_private:
+            continue
+        num_samples_wo_reflux += length
+
+        with open(annotation) as file:
+            lines = file.readlines()
+
+        if rank == 0:
+            print(f'Begin to process {dsname}, {image_save_dir=}, {items_save_dir=}, {len(lines)=}, {len(lines[rank::world_size])=}')
+            save_items(lines, items_save_dir)
+
+        meta_new[dsname] = info.copy()
+        meta_new[dsname]['root'] = image_save_dir
+        meta_new[dsname]['annotation'] = items_save_dir
+        meta_new[dsname]['is_private'] = is_private
+
+        if args.save_image and 'sa1b' not in dsname:
+            lines = lines[rank::world_size]
+            save_images(lines, root, image_save_dir, dsname=dsname)
+
+    if rank == 0:
+        print(f'{num_samples=}, {num_samples_wo_reflux=}')
+        with open(os.path.join(args.save_dir, 'meta.json'), 'w') as file:
+            json.dump(meta_new, file)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--meta-path', type=str, default='/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL-MPO-Dev/vlm_tools/data/meta_oc_data_241203_with_wh.json')
+    parser.add_argument('--save-dir', type=str, default='/mnt/petrelfs/share_data/wangweiyun/open_source_wwy/MMPR-Private-241210')
+    parser.add_argument('--save-image', action='store_true', default=False)
+    parser.add_argument('--keep-private-data', action='store_true', default=False)
+    args = parser.parse_args()
+
+    rank = int(os.environ['SLURM_PROCID']) if 'SLURM_PROCID' in os.environ else 0
+    world_size = int(os.environ["SLURM_NTASKS"]) if 'SLURM_NTASKS' in os.environ else 1
+
+    if rank == 0:
+        print(f'{rank=}, {world_size=}')
+
+    main()
+
+# srun -p Intern5 --gres=gpu:0 --ntasks=256 --ntasks-per-node=8 --cpus-per-task=2 python -u tools/mmpr_pipeline/gather_meta.py --save-image --keep-private-data

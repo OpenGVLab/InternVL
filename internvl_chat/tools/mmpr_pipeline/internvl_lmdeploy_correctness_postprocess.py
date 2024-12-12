@@ -288,7 +288,7 @@ def _build_items_based_on_correctness(lines, mode):
     neg_format_id2item = defaultdict(list)
     for line in lines:
         item = json.loads(line)
-        image = item['image']
+        image = str(item['image'])
         question = item['question']
         answer_gt = item['answer']
         response = item['response']
@@ -446,12 +446,16 @@ def save_items(items, save_path, question_only=False, all_incorrect_keys=None):
         for key in keys:
             values = items[key]
             for item in values:
-                items_set.add((item['image'], item['question'], item['answer']))
+                items_set.add((str(item['image']), item['question'], item['answer']))
 
         items_list = []
         for item in items_set:
+            try:
+                image = eval(item[0])
+            except:
+                image = item[0]
             items_list.append({
-                'image': item[0],
+                'image': image,
                 'question': item[1],
                 'answer': item[2],
             })
@@ -472,7 +476,7 @@ def save_pairs(pairs, save_path):
     rejected_meta_dict = {}
     for pair in pairs:
         pair = pair.copy()
-        image = pair['image']
+        image = str(pair['image'])
         question = pair['question']
         chosen = pair['chosen']
         rejected = pair['rejected']
@@ -493,6 +497,10 @@ def save_pairs(pairs, save_path):
     filtered_pairs = []
     for pair in distinct_pairs:
         image, question, chosen, rejected, answer_gt = pair
+        try:
+            image = eval(image)
+        except:
+            pass
         filtered_pair = {
             'image': image,
             'question': question,
@@ -501,6 +509,7 @@ def save_pairs(pairs, save_path):
             'answer_gt': answer_gt,
         }
 
+        image = str(image)
         if (image, question, chosen, rejected, answer_gt) in chosen_meta_dict:
             filtered_pair['chosen_meta'] = chosen_meta_dict[(image, question, chosen, rejected, answer_gt)]
 

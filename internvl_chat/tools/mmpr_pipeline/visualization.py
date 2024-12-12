@@ -36,6 +36,7 @@ class Dataset:
     def __init__(self, meta):
         self.image_path = meta['root']
         self.data_path = meta['annotation']
+        self.data_path = self.data_path.replace('/dev/shm/chenzhe/', '/mnt/petrelfs/wangweiyun/workspace_cz/InternVL/internvl_chat_dev/metas2/')
 
         if 's3://' in self.data_path:
             self.lines = io.BytesIO(client.get(self.data_path)).readlines()
