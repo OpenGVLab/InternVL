@@ -4,10 +4,8 @@ import argparse
 
 ref_meta = {}
 ref_meta_path_list = [
-    '/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL-RL-DPO/internvl_chat_dev/data_sampled_lmdeploy_prefix/max_tiles_6_with_inst/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0_clean/meta.json',
-    '/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL-RL-DPO/internvl_chat_dev/dpo_data_lmdeploy/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0_v2_clean/meta.json',
-    '/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL-RL-DPO/internvl_chat_dev/shell/data/data_finetune_v129.json',
-    '/mnt/petrelfs/wangweiyun/workspace_wwy/InternVL-RL-DPO/internvl_chat_dev/shell/data/temp.json',
+    '/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/shell/data/dev_mpo/meta_oc_data_241203_with_wh_v5.json',
+    '/mnt/petrelfs/wangweiyun/workspace_cz/InternVL/internvl_chat_dev/shell/data/data_finetune_v165.json',
 ]
 
 for ref_meta_path in ref_meta_path_list:
@@ -60,7 +58,8 @@ IMG_DIR_LIST = [
     '/mnt/petrelfs/wangweiyun/workspace_cz/inhouse_data/mmmu_tiku/',
     'vc-reader:s3://multi-modal/playground/data/koniq-10k/',
     'langchao:s3://private-dataset-pnorm/study/',
-    'langchao:s3://mm-dataset/gpt4o/',
+    'vc-reader:s3://mm-dataset/gpt4o/',
+    '/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/CaraJ/MAVIS-Function',
 ]
 
 for i in range(len(IMG_DIR_LIST)):
@@ -98,6 +97,8 @@ def clean_prefix(lines, prefix):
             image = new_image
         else:
             image = image.replace('wenhaitmp:s3://internvl/', 'langchao:s3://internvl2/')
+            image = image.replace('langchao:s3://mm-dataset/', 'vc-reader:s3://mm-dataset/')
+            image = image.replace('langchao:s3://gui/', 'vc-reader:s3://gui/')
             assert image.startswith(prefix), f'\n{image=}\n{prefix=}'
             image = image[len(prefix):]
 

@@ -16,7 +16,7 @@ export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 export TRITON_CACHE_DIR="/tmp/triton_wwy/"
 export MASTER_PORT=34229
 export TF_CPP_MIN_LOG_LEVEL=3
-export PYTORCH_CUDA_ALLOC_CONF="max_split_size_mb:128"
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 OUTPUT_DIR='work_dirs/internvl_chat_v2_5/InternVL2_5-78B-st-mmpr-plus'
 
@@ -74,7 +74,7 @@ srun -p ${PARTITION} \
   --dynamic_image_size True \
   --use_thumbnail True \
   --ps_version 'v2' \
-  --deepspeed "zero_stage3_config_100b_1e5_offload.json" \
+  --deepspeed "zero_stage3_config_100b_1e6.json" \
   --report_to "tensorboard" \
   --loss_type sigmoid \
   --sigmoid_loss_weight 1.0 \

@@ -45,7 +45,7 @@ class Dataset:
     def __getitem__(self, index):
         item = self.lines[index]
         item = json.loads(item)
-        if 'image' in item:
+        if 'image' in item and item['image'] is not None:
             item['image'] = os.path.join(self.image_path, item['image'])
             item['image'] = item['image'].replace('wenhaitmp:s3://internvl/', 'langchao:s3://internvl2/')
             item['image'] = load_image(item['image'])

@@ -4,6 +4,11 @@
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
 
+import warnings
+
+warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
 import logging
 import math
 import os
@@ -11,7 +16,6 @@ import random
 import shutil
 import sys
 import traceback
-import warnings
 from copy import deepcopy
 from dataclasses import dataclass, field
 from typing import Dict, Literal, Optional

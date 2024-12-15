@@ -29,6 +29,9 @@ def merge_dict(*dict_list):
 
 def parse_answer(response):
     answer_trigger = 'Final answer:'
+    if response.count(answer_trigger) == 0:
+        answer_trigger = 'Final Answer:'
+
     assert response.count(answer_trigger) <= 2, f"Fail to find Answer, {response.count(answer_trigger)=}"
     assert response.count('\n') >= 2, f"Fail to find rationale, {response=}"
 
