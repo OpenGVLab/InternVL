@@ -7,12 +7,14 @@ import base64
 import logging
 import argparse
 import gradio as gr
+from internvl.train.dataset import TCSLoader
 
 from collections import defaultdict
 from PIL import Image, ImageDraw
 from petrel_client.client import Client
 
 client = Client()
+tcs_loader = TCSLoader('~/petreloss.conf')
 
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(name)s - %(message)s',
@@ -45,23 +47,48 @@ class Dataset:
     def __getitem__(self, index):
         item = self.lines[index]
         item = json.loads(item)
-        if 'image' in item and item['image'] is not None:
-            item['image'] = os.path.join(self.image_path, item['image'])
-            item['image'] = item['image'].replace('wenhaitmp:s3://internvl/', 'langchao:s3://internvl2/')
-            item['image'] = load_image(item['image'])
-        else:
-            item['image'] = None
+
+        if 'image' in item and item['image'] is not None and item['image'] != '':
+            if isinstance(item['image'], (list, tuple)):
+                item['image'] = [
+                    load_image(os.path.join(self.image_path, image))
+                    for image in item['image']
+                ]
+            else:
+                item['image'] = [load_image(os.path.join(self.image_path, item['image']))]
+
+            if IMAGE_PLACEHOLDER not in item['question']:
+                item['question'] = f'{IMAGE_PLACEHOLDER}\n' * len(item['image']) + item['question']
+
+        if 'video' in item and item['video'] is not None and item['video'] != '':
+            if '<video>' not in item['question']:
+                item['question'] = '<video>\n' + item['question']
+
+            image_list = load_video(os.path.join(self.image_path, item['video']), item)
+            special_tokens = '\n'.join(['Frame{}: <image>'.format(i + 1) for i in range(len(image_list))])
+            item['question'] = item['question'].replace('<video>\n', special_tokens)
+            item['image'] = image_list
+
         return item.copy()
 
     def __len__(self):
         return len(self.lines)
 
-def load_image(image_file):
-    if 's3://' in image_file:
-        image_file = client.get(image_file)
-        image_file = io.BytesIO(image_file)
-    image = Image.open(image_file).convert('RGB')
-    return image
+def load_image(image_path):
+    if tcs_loader is not None and 's3://' in image_path:
+        return tcs_loader(image_path)
+    return Image.open(image_path).convert('RGB')
+
+def load_video(video_path, data_item):
+    image_list = tcs_loader(
+        video_path,
+        image_type='video',
+        max_num_frames=32,
+        min_num_frames=8,
+        sample='rand',
+        clip=data_item.get('clip', None),
+    )
+    return image_list
 
 def image_to_mdstring(image):
     if isinstance(image, str):
@@ -234,10 +261,12 @@ def process_item(context, image, title):
     md_str = '\n\n'.join(md_str)
 
     if image is not None:
-        md_str = md_str.replace(IMAGE_PLACEHOLDER, image_to_mdstring(image.copy()))
-        images_with_bbox = visualize_objects(md_str, image.copy())
-        for idx, image_with_bbox in enumerate(images_with_bbox):
-            md_str = f'{md_str}\n\n### Image with region {idx}\n\n{image_to_mdstring(image_with_bbox.copy())}'
+        assert isinstance(image, (list, tuple))
+        for image_idx, each_image in enumerate(image):
+            md_str = md_str.replace(IMAGE_PLACEHOLDER, image_to_mdstring(each_image.copy()), 1)
+            images_with_bbox = visualize_objects(md_str, image.copy())
+            for idx, image_with_bbox in enumerate(images_with_bbox):
+                md_str = f'{md_str}\n\n### Image {image_idx} with region {idx}\n\n{image_to_mdstring(image_with_bbox.copy())}'
 
     return md_str.replace('\\', '\\\\').replace('$', '\\$').replace('<', '\\<').replace('>', '\\>')
 

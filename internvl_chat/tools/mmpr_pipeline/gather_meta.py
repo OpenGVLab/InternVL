@@ -187,7 +187,7 @@ def main():
             lines = file.readlines()
 
         if repeat_time < 1:
-            random.seed(ds_idx)
+            random.seed(ds_idx + args.seed)
             lines = random.sample(lines, k=int(len(lines) * repeat_time))
             meta_new[dsname]['repeat_time'] = 1
             meta_new[dsname]['length'] = len(lines)
@@ -210,6 +210,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--meta-path', type=str, default='')
     parser.add_argument('--save-dir', type=str, default='')
+    parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--save-image', action='store_true', default=False)
     parser.add_argument('--keep-private-data', action='store_true', default=False)
     args = parser.parse_args()
@@ -223,4 +224,4 @@ if __name__ == '__main__':
     main()
 
 # srun -p Intern5 --gres=gpu:0 --ntasks=256 --ntasks-per-node=8 --cpus-per-task=2 python -u tools/mmpr_pipeline/gather_meta.py --save-image --keep-private-data
-# srun -p Intern5 --gres=gpu:0 --ntasks=256 --ntasks-per-node=8 --cpus-per-task=2 python -u tools/mmpr_pipeline/gather_meta.py --save-image --keep-private-data --meta-path /mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/shell/data/dev_mpo/meta_oc_data_241203_with_wh_v8.json --save-dir /mnt/petrelfs/wangweiyun/workspace_wwy/open_source/MMPR-Private-241215-v8
+# srun -p Intern5 --gres=gpu:0 --ntasks=256 --ntasks-per-node=8 --cpus-per-task=2 python -u tools/mmpr_pipeline/gather_meta.py --save-image --keep-private-data --meta-path /mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/shell/data/dev_mpo/meta_oc_data_241203_with_wh_v8.json --save-dir /mnt/petrelfs/wangweiyun/workspace_wwy/open_source/MMPR-Private-241215-v8-try2 --seed 100

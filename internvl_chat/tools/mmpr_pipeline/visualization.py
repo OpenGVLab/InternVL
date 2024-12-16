@@ -8,12 +8,14 @@ import random
 import logging
 import argparse
 import gradio as gr
+from internvl.train.dataset import TCSLoader
 
 from collections import defaultdict
 from PIL import Image, ImageDraw
 from petrel_client.client import Client
 
 client = Client()
+tcs_loader = TCSLoader('~/petreloss.conf')
 
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(name)s - %(message)s',
@@ -55,7 +57,7 @@ class Dataset:
         if 'images' in item:
             item['image'] = item.pop('images')
 
-        if 'image' in item:
+        if 'image' in item and item['image'] is not None and item['image'] != '':
             if isinstance(item['image'], (list, tuple)):
                 item['image'] = [
                     load_image(os.path.join(self.image_path, image))
@@ -67,17 +69,35 @@ class Dataset:
             if IMAGE_PLACEHOLDER not in item['conversations'][0]['value']:
                 item['conversations'][0]['value'] = IMAGE_PLACEHOLDER + '\n' + item['conversations'][0]['value']
 
+        if 'video' in item and item['video'] is not None and item['video'] != '':
+            if '<video>' not in item['conversations'][0]['value']:
+                item['conversations'][0]['value'] = '<video>\n' + item['conversations'][0]['value']
+
+            image_list = load_video(os.path.join(self.image_path, item['video']), item)
+            special_tokens = '\n'.join(['Frame{}: <image>'.format(i + 1) for i in range(len(image_list))])
+            item['conversations'][0]['value'] =  item['conversations'][0]['value'].replace('<video>\n', special_tokens)
+            item['image'] = image_list
+
         return item.copy()
 
     def __len__(self):
         return len(self.lines)
 
-def load_image(image_file):
-    if 's3://' in image_file:
-        image_file = client.get(image_file)
-        image_file = io.BytesIO(image_file)
-    image = Image.open(image_file).convert('RGB')
-    return image
+def load_image(image_path):
+    if tcs_loader is not None and 's3://' in image_path:
+        return tcs_loader(image_path)
+    return Image.open(image_path).convert('RGB')
+
+def load_video(video_path, data_item):
+    image_list = tcs_loader(
+        video_path,
+        image_type='video',
+        max_num_frames=32,
+        min_num_frames=8,
+        sample='rand',
+        clip=data_item.get('clip', None),
+    )
+    return image_list
 
 def image_to_mdstring(image):
     if isinstance(image, str):
