@@ -41,11 +41,12 @@ class InternVLChatConfig(PretrainedConfig):
         super().__init__(**kwargs)
 
         if vision_config is None:
-            vision_config = {}
+            vision_config = {'architectures': ['InternVisionModel']}
             logger.info('vision_config is None. Initializing the InternVisionConfig with default values.')
 
         if llm_config is None:
-            llm_config = {}
+            # TODO: There might still be a bug in transformers version 4.44 and above.
+            llm_config = {'architectures': ['']}
             logger.info('llm_config is None. Initializing the LlamaConfig config with default values (`LlamaConfig`).')
 
         self.vision_config = InternVisionConfig(**vision_config)
@@ -73,7 +74,9 @@ class InternVLChatConfig(PretrainedConfig):
         self.max_dynamic_patch = max_dynamic_patch
 
         self.hidden_size = self.llm_config.hidden_size
+        # By default, we use tie_word_embeddings=False for models of all sizes.
         self.tie_word_embeddings = False
+        self.llm_config.tie_word_embeddings = self.tie_word_embeddings
 
         logger.info(f'vision_select_layer: {self.select_layer}')
         logger.info(f'ps_version: {self.ps_version}')
@@ -93,7 +96,6 @@ class InternVLChatConfig(PretrainedConfig):
         output['model_type'] = self.__class__.model_type
         output['use_backbone_lora'] = self.use_backbone_lora
         output['use_llm_lora'] = self.use_llm_lora
-        output['pad2square'] = self.pad2square
         output['select_layer'] = self.select_layer
         output['force_image_size'] = self.force_image_size
         output['downsample_ratio'] = self.downsample_ratio

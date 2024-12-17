@@ -5,7 +5,7 @@
 # --------------------------------------------------------
 
 import warnings
-from typing import Any, List, Optional, Tuple, Union
+from typing import List, Optional, Tuple, Union
 
 import torch.distributed as dist
 import torch.utils.checkpoint
@@ -23,7 +23,7 @@ from transformers.modeling_utils import PreTrainedModel
 from transformers.utils import ModelOutput, logging
 
 from .configuration_internvl_chat import InternVLChatConfig
-from .modeling_intern_vit import InternVisionModel
+from .modeling_intern_vit import InternVisionModel, has_flash_attn
 
 logger = logging.get_logger(__name__)
 
@@ -45,7 +45,7 @@ class InternVLChatModel(PreTrainedModel):
     _supports_flash_attn_2 = True
     supports_gradient_checkpointing = True
 
-    def __init__(self, config: InternVLChatConfig, vision_model=None, language_model=None):
+    def __init__(self, config: InternVLChatConfig, vision_model=None, language_model=None, use_flash_attn=True):
         super().__init__(config)
 
         assert version_cmp(transformers.__version__, '4.37.0', 'ge')
@@ -58,6 +58,10 @@ class InternVLChatModel(PreTrainedModel):
         self.downsample_ratio = config.downsample_ratio
         self.ps_version = config.ps_version
         self.llm_arch_name = config.llm_config.architectures[0]
+        # Enable Flash Attention if supported, otherwise fall back to eager attention.
+        use_flash_attn = use_flash_attn if has_flash_attn else False
+        config.vision_config.use_flash_attn = True if use_flash_attn else False
+        config.llm_config.attn_implementation = 'flash_attention_2' if use_flash_attn else 'eager'
 
         logger.info(f'num_image_token: {self.num_image_token}')
         logger.info(f'ps_version: {self.ps_version}')
@@ -320,8 +324,9 @@ class InternVLChatModel(PreTrainedModel):
 
         tokenizer.padding_side = 'left'
         model_inputs = tokenizer(queries, return_tensors='pt', padding=True)
-        input_ids = model_inputs['input_ids'].cuda()
-        attention_mask = model_inputs['attention_mask'].cuda()
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        input_ids = model_inputs['input_ids'].to(device)
+        attention_mask = model_inputs['attention_mask'].to(device)
         eos_token_id = tokenizer.convert_tokens_to_ids(template.sep.strip())
         generation_config['eos_token_id'] = eos_token_id
         generation_output = self.generate(
@@ -369,8 +374,9 @@ class InternVLChatModel(PreTrainedModel):
             query = query.replace('<image>', image_tokens, 1)
 
         model_inputs = tokenizer(query, return_tensors='pt')
-        input_ids = model_inputs['input_ids'].cuda()
-        attention_mask = model_inputs['attention_mask'].cuda()
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        input_ids = model_inputs['input_ids'].to(device)
+        attention_mask = model_inputs['attention_mask'].to(device)
         generation_config['eos_token_id'] = eos_token_id
         generation_output = self.generate(
             pixel_values=pixel_values,
@@ -399,7 +405,6 @@ class InternVLChatModel(PreTrainedModel):
             visual_features: Optional[torch.FloatTensor] = None,
             generation_config: Optional[GenerationConfig] = None,
             output_hidden_states: Optional[bool] = None,
-            return_dict: Optional[bool] = None,
             **generate_kwargs,
     ) -> torch.LongTensor:
 
@@ -427,7 +432,6 @@ class InternVLChatModel(PreTrainedModel):
             attention_mask=attention_mask,
             generation_config=generation_config,
             output_hidden_states=output_hidden_states,
-            return_dict=return_dict,
             use_cache=True,
             **generate_kwargs,
         )
