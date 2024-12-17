@@ -53,7 +53,7 @@ torchrun \
   --save_steps 200 \
   --save_total_limit 1 \
   --learning_rate 4e-5 \
-  --weight_decay 0.05 \
+  --weight_decay 0.01 \
   --warmup_ratio 0.03 \
   --lr_scheduler_type "cosine" \
   --logging_steps 1 \
