@@ -117,6 +117,10 @@ def run_and_save(pipe):
 
 
 if __name__ == '__main__':
-    pipe = pipeline(MODEL, backend_config=TurbomindEngineConfig(session_len=16384, tp=TP),
-                    log_level='DEBUG')
+    model_name = MODEL.lower().replace('-', '_')
+    if 'internvl2_5' in model_name or 'internvl2.5' in model_name:
+        pipe = pipeline(MODEL, backend_config=TurbomindEngineConfig(session_len=16384, tp=TP),
+                        chat_template_config=ChatTemplateConfig('internvl-internlm2'))
+    elif 'internvl2' in model_name:
+        pipe = pipeline(MODEL, backend_config=TurbomindEngineConfig(session_len=16384, tp=TP))
     run_and_save(pipe)
