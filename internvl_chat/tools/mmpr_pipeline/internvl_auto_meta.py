@@ -59,6 +59,14 @@ IMG_DIR_LIST = [
     'vc-reader:s3://multi-modal/playground/data/koniq-10k/',
     'langchao:s3://private-dataset-pnorm/study/',
     'vc-reader:s3://mm-dataset/gpt4o/',
+    'vc-reader:s3://multi-modal/Super-CLEVR/',
+    'vc-reader:s3://multi-modal/coco/train2014/',
+    'vc-reader:s3://multi-modal/coco/',
+    'vc-reader:s3://multi-modal/coco/train2017/',
+    'vc-reader:s3://multi-modal-2024/ccbench/',
+    'vc-reader:s3://internvl2/datasets/spot-the-diff/',
+    'vc-reader:s3://internvl2/datasets/inat2018/',
+    'vc-reader:s3://internvl2/datasets/nlvr2/',
     '/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/CaraJ/MAVIS-Function',
 ]
 
