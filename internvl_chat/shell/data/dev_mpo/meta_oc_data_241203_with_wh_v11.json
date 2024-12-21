@@ -1,0 +1,1409 @@
+{
+    "internvl_watermark": {
+        "root": null,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/others/internvl_watermark.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 373
+    },
+    "ccbench_inhouse_part1_zh_20240401_pairs_vqa_correctness_rules": {
+        "root": "vc-reader:s3://multi-modal-2024/ccbench/",
+        "annotation": "outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/ccbench_inhouse_part1_zh_20240401_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.15,
+        "length": 8710
+    },
+    "ccbench_inhouse_part1_zh_20240401_pairs_vqa_format_rules": {
+        "root": "vc-reader:s3://multi-modal-2024/ccbench/",
+        "annotation": "outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/ccbench_inhouse_part1_zh_20240401_pairs_vqa_format_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.01,
+        "length": 8550
+    },
+    "ccbench_inhouse_part2_zh_20240410_pairs_vqa_correctness_rules": {
+        "root": "vc-reader:s3://multi-modal-2024/ccbench/",
+        "annotation": "outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/ccbench_inhouse_part2_zh_20240410_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.15,
+        "length": 8995
+    },
+    "ccbench_inhouse_part2_zh_20240410_pairs_vqa_format_rules": {
+        "root": "vc-reader:s3://multi-modal-2024/ccbench/",
+        "annotation": "outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/ccbench_inhouse_part2_zh_20240410_pairs_vqa_format_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.01,
+        "length": 8328
+    },
+    "cocorem_exist_yorn_en_20241016_pairs_vqa_correctness_rules": {
+        "root": "vc-reader:s3://multi-modal/coco/train2017/",
+        "annotation": "outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/cocorem_exist_yorn_en_20241016_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1,
+        "length": 6910
+    },
+    "cocorem_exist_yorn_en_20241016_pairs_vqa_format_rules": {
+        "root": "vc-reader:s3://multi-modal/coco/train2017/",
+        "annotation": "outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/cocorem_exist_yorn_en_20241016_pairs_vqa_format_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.25,
+        "length": 40
+    },
+    "nlvr2_en_20240910_ov_pairs_vqa_correctness_rules": {
+        "root": "vc-reader:s3://internvl2/datasets/nlvr2/",
+        "annotation": "outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/nlvr2_en_20240910_ov_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.07,
+        "length": 32315
+    },
+    "nlvr2_en_20240910_ov_pairs_vqa_format_rules": {
+        "root": "vc-reader:s3://internvl2/datasets/nlvr2/",
+        "annotation": "outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/nlvr2_en_20240910_ov_pairs_vqa_format_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.005,
+        "length": 32798
+    },
+    "inat_train2018_merge_en_20240811_sr0.50_wo_image": {
+        "root": "vc-reader:s3://internvl2/datasets/inat2018/",
+        "annotation": "outputs_pair_data/dropntp_sftv165/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/inat_train2018_merge_en_20240811.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.03,
+        "length": 43751
+    },
+    "inat_train2018_merge_gpt4o_en_20240819_sr0.50_wo_image": {
+        "root": "vc-reader:s3://internvl2/datasets/inat2018/",
+        "annotation": "outputs_pair_data/dropntp_sftv165/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/inat_train2018_merge_gpt4o_en_20240819.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.05,
+        "length": 18633
+    },
+    "spot_the_diff_en_20240910_sr0.50_wo_image": {
+        "root": "vc-reader:s3://internvl2/datasets/spot-the-diff/",
+        "annotation": "outputs_pair_data/dropntp_sftv165/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/spot_the_diff_en_20240910.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1,
+        "length": 8007
+    },
+    "vqav2_en_20240402_int_pairs_vqa_correctness_rules": {
+        "root": "vc-reader:s3://multi-modal/coco/train2014/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/vqav2_en_20240402_int_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1,
+        "length": 6967
+    },
+    "vqav2_en_20240402_int_pairs_vqa_format_rules": {
+        "root": "vc-reader:s3://multi-modal/coco/train2014/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/vqav2_en_20240402_int_pairs_vqa_format_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1,
+        "length": 161
+    },
+    "super_clevr_en_20240402_int_pairs_vqa_correctness_rules": {
+        "root": "vc-reader:s3://multi-modal/Super-CLEVR/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/super_clevr_en_20240402_int_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.05,
+        "length": 48407
+    },
+    "super_clevr_en_20240402_int_pairs_vqa_format_rules": {
+        "root": "vc-reader:s3://multi-modal/Super-CLEVR/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/super_clevr_en_20240402_int_pairs_vqa_format_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.05,
+        "length": 1797
+    },
+    "super_clevr_en_20240402_yorn_pairs_vqa_correctness_rules": {
+        "root": "vc-reader:s3://multi-modal/Super-CLEVR/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/super_clevr_en_20240402_yorn_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.15,
+        "length": 47452
+    },
+    "super_clevr_en_20240402_yorn_pairs_vqa_format_rules": {
+        "root": "vc-reader:s3://multi-modal/Super-CLEVR/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/super_clevr_en_20240402_yorn_pairs_vqa_format_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.05,
+        "length": 842
+    },
+    "mavis_function_abs_pairs_vqa_direct_rules": {
+        "root": "/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/CaraJ/MAVIS-Function/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/mavis_function_abs_pairs_vqa_direct_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.25,
+        "length": 1000
+    },
+    "geometry3k_en_20240402_extracted_pairs_vqa_direct_rules": {
+        "root": "MM-Reasoning-Private/images/Geometry3K",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/geometry3k_en_20240402_extracted_pairs_vqa_direct_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.25,
+        "length": 1000
+    },
+    "m3cot_train_extracted_pairs_vqa_direct_rules": {
+        "root": "MM-Reasoning-Private/images/M3CoT",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/m3cot_train_extracted_pairs_vqa_direct_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.25,
+        "length": 1000
+    },
+    "scienceqa_multi_choice_en_20240402_extracted_pairs_vqa_direct_rules": {
+        "root": "MM-Reasoning-Private/images/ScienceQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/scienceqa_multi_choice_en_20240402_extracted_pairs_vqa_direct_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.25,
+        "length": 1000
+    },
+    "mavis_function_abs_pairs_vqa_correctness_rules": {
+        "root": "/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/CaraJ/MAVIS-Function/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/mavis_function_abs_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.08,
+        "length": 47267
+    },
+    "mavis_function_abs_pairs_vqa_format_rules": {
+        "root": "/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/CaraJ/MAVIS-Function/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/mavis_function_abs_pairs_vqa_format_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.015,
+        "length": 26169
+    },
+    "mavis_function_cos_pairs_vqa_correctness_rules": {
+        "root": "/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/CaraJ/MAVIS-Function/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/mavis_function_cos_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.15,
+        "length": 17532
+    },
+    "mavis_function_cos_pairs_vqa_format_rules": {
+        "root": "/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/CaraJ/MAVIS-Function/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/mavis_function_cos_pairs_vqa_format_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.05,
+        "length": 8832
+    },
+    "mavis_function_log_pairs_vqa_correctness_rules": {
+        "root": "/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/CaraJ/MAVIS-Function/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/mavis_function_log_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.08,
+        "length": 44265
+    },
+    "mavis_function_log_pairs_vqa_format_rules": {
+        "root": "/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/CaraJ/MAVIS-Function/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/mavis_function_log_pairs_vqa_format_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.02,
+        "length": 24254
+    },
+    "mavis_function_poly_pairs_vqa_correctness_rules": {
+        "root": "/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/CaraJ/MAVIS-Function/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/mavis_function_poly_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1,
+        "length": 21702
+    },
+    "mavis_function_poly_pairs_vqa_format_rules": {
+        "root": "/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/CaraJ/MAVIS-Function/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/mavis_function_poly_pairs_vqa_format_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.02,
+        "length": 9294
+    },
+    "mavis_function_sin_pairs_vqa_correctness_rules": {
+        "root": "/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/CaraJ/MAVIS-Function/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/mavis_function_sin_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2,
+        "length": 15462
+    },
+    "mavis_function_sin_pairs_vqa_format_rules": {
+        "root": "/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/CaraJ/MAVIS-Function/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/mavis_function_sin_pairs_vqa_format_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.02,
+        "length": 7555
+    },
+    "mavis_function_tan_pairs_vqa_correctness_rules": {
+        "root": "/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/CaraJ/MAVIS-Function/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/mavis_function_tan_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.25,
+        "length": 9652
+    },
+    "mavis_function_tan_pairs_vqa_format_rules": {
+        "root": "/mnt/petrelfs/share_data/wangweiyun/share_data_sft/datasets/CaraJ/MAVIS-Function/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/mavis_function_tan_pairs_vqa_format_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.03,
+        "length": 6053
+    },
+    "private_schedual_extract_zh_20241102_sr0.50_wo_image": {
+        "root": "vc-reader:s3://gui/visual_inputs/multi_modal_2024/single_iterate/raw_data/wangbo/schedual_extract/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/dropntp_sftv165/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/private_schedual_extract_zh_20241102.jsonl",
+        "data_augment": false,
+        "repeat_time": 2,
+        "length": 463
+    },
+    "airplane_app_longcap_gpt4o_zh_20240627": {
+        "root": "langchao:s3://internvl2/datasets/crawler_data2/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_lyz/internvl/performance_data_ft_v141/processed/xuxie_pipeline_1211/airplane_app_longcap_gpt4o_zh_20240627_xuxie.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.75,
+        "length": 1112
+    },
+    "ai2d_cap_gpt4o_en_20240410": {
+        "root": "langchao:s3://internvl2/datasets/ai2diagram/ai2d/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_lyz/internvl/performance_data_ft_v141/processed/xuxie_pipeline_1211/ai2d_cap_gpt4o_en_20240410_xuxie.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.5,
+        "length": 3949
+    },
+    "android_ui_longcap_qwen_zh_20240409": {
+        "root": "langchao:s3://multi_modal/agent_data/AndroidUI/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_lyz/internvl/performance_data_ft_v141/processed/xuxie_pipeline_1211/android_ui_longcap_qwen_zh_20240409_xuxie.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2,
+        "length": 5499
+    },
+    "wechat_longcap_gpt4o_zh_20240627": {
+        "root": "langchao:s3://internvl2/datasets/crawler_data2/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_lyz/internvl/performance_data_ft_v141/processed/xuxie_pipeline_1211/wechat_longcap_gpt4o_zh_20240627_xuxie.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.75,
+        "length": 1093
+    },
+    "taobao_longcap_gpt4o_zh_20240627": {
+        "root": "langchao:s3://internvl2/datasets/crawler_data2/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_lyz/internvl/performance_data_ft_v141/processed/xuxie_pipeline_1211/taobao_longcap_gpt4o_zh_20240627_xuxie.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.4,
+        "length": 1565
+    },
+    "sam_cap_review_negative_en_20240918": {
+        "root": "langchao:s3://SA-1B/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_lyz/internvl/performance_data_ft_v141/processed/xuxie_pipeline_1211/sam_cap_review_negative_en_20240918_xuxie.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.08,
+        "length": 17042
+    },
+    "llavar_inhouse_sft_longcap_en_20240521": {
+        "root": "langchao:s3://mm_dataset/LLaVAR/images/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_lyz/internvl/performance_data_ft_v141/processed/xuxie_pipeline_1211/llavar_inhouse_sft_longcap_en_20240521_xuxie.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.08,
+        "length": 16178
+    },
+    "vsr_en_20240402_cot_ques_pairs_vqa_correctness_rules": {
+        "root": "langchao:s3://multi_modal/coco/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/vsr_en_20240402_cot_ques_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.06,
+        "length": 105801
+    },
+    "tallyqa_vg_en_20240816_cot_pairs_vqa_correctness_rules": {
+        "root": "langchao:s3://multi_modal/playground/data/vg/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_lyz/internvl/performance_data_ft_v141/processed/cot_pipeline_1211/tallyqa_vg_en_20240816_cot_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.03,
+        "length": 64221
+    },
+    "tabmwp_en_20240402_cot_pairs_vqa_correctness_rules": {
+        "root": "langchao:s3://multi_modal/TabMWP/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/tabmwp_en_20240402_cot_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.05,
+        "length": 24148
+    },
+    "koniq10k_en_20240403_pairs_vqa_correctness_rules": {
+        "root": "vc-reader:s3://multi-modal/playground/data/koniq-10k/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/koniq10k_en_20240403_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.15,
+        "length": 57785
+    },
+    "koniq10k_en_20240403_pairs_vqa_format_rules": {
+        "root": "vc-reader:s3://multi-modal/playground/data/koniq-10k/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/koniq10k_en_20240403_pairs_vqa_format_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.5,
+        "length": 1141
+    },
+    "study_com_en_20240619_ov_pairs_vqa_correctness_rules": {
+        "root": "langchao:s3://private-dataset-pnorm/study/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/study_com_en_20240619_ov_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.04,
+        "length": 45296
+    },
+    "study_com_en_20240619_ov_pairs_vqa_format_rules": {
+        "root": "langchao:s3://private-dataset-pnorm/study/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/study_com_en_20240619_ov_pairs_vqa_format_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.02,
+        "length": 23281
+    },
+    "study_com_en_20240619_pairs_vqa_correctness_rules": {
+        "root": "langchao:s3://private-dataset-pnorm/study/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/study_com_en_20240619_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1,
+        "length": 17149
+    },
+    "study_com_en_20240619_pairs_vqa_format_rules": {
+        "root": "langchao:s3://private-dataset-pnorm/study/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/correctness_sftv165/internvl_sft_internvl2_8b_dynamic_res_sft_cotv0/clean/study_com_en_20240619_pairs_vqa_format_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1,
+        "length": 2739
+    },
+    "artwork_part1_en_20240628_sr0.50_wo_image": {
+        "root": "vc-reader:s3://internvl2/datasets/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/dropntp_sftv165/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/artwork_part1_en_20240628.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.05,
+        "length": 10855
+    },
+    "birds_to_words_en_20240910_sr0.50_wo_image": {
+        "root": "vc-reader:s3://internvl2/datasets/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/dropntp_sftv165/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/birds_to_words_en_20240910.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1,
+        "length": 2649
+    },
+    "img_diff_object_removal_en_20240902_sr0.50_wo_image": {
+        "root": "vc-reader:s3://internvl2/datasets/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/dropntp_sftv165/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/img_diff_object_removal_en_20240902.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1,
+        "length": 5773
+    },
+    "img_diff_object_replacement_en_20240902_sr0.50_wo_image": {
+        "root": "vc-reader:s3://internvl2/datasets/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/dropntp_sftv165/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/img_diff_object_replacement_en_20240902.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.05,
+        "length": 12679
+    },
+    "sharegpt4o_longcap_en_20240819_sr0.50_wo_image": {
+        "root": "vc-reader:s3://mm-dataset/gpt4o/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/dropntp_sftv165/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/sharegpt4o_longcap_en_20240819.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2,
+        "length": 35088
+    },
+    "sharegpt4o_longcap_zh_20240819_sr0.50_wo_image": {
+        "root": "vc-reader:s3://mm-dataset/gpt4o/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/dropntp_sftv165/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/sharegpt4o_longcap_zh_20240819.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1,
+        "length": 84428
+    },
+    "merged_mmmu_knowledge_point_gpt4o_en_20241118_sr0.5_wo_image": {
+        "root": "langchao:s3://internvl2/datasets/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/dropntp_mmmu_241210/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/merged_mmmu_knowledge_point_gpt4o_en_20241118.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 42184
+    },
+    "mmmu_baidu_image_caption_gpt4o_en_20240621_sr0.5_wo_image": {
+        "root": "langchao:s3://internvl2/datasets/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/dropntp_mmmu_241210/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/mmmu_baidu_image_caption_gpt4o_en_20240621.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1,
+        "length": 18572
+    },
+    "mmmu_tiku_gpt4o_zh_20240626_sr0.5_wo_image": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_cz/inhouse_data/mmmu_tiku/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/dropntp_mmmu_241210/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/mmmu_tiku_gpt4o_zh_20240626.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1,
+        "length": 18110
+    },
+    "mmmu_val_all_filter_annotations": {
+        "root": "langchao:s3://internvl2/datasets/mmmu/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/mmmu_o1_241130/mmmu_val_all_filter_annotations.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 3392
+    },
+    "gaokao_chemistry_ocr_zh_20240623_sr0.50_wo_image": {
+        "root": "langchao:s3://internvl2/datasets/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/dropntp_mmmu_241210/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/gaokao_chemistry_ocr_zh_20240623.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2,
+        "length": 6680
+    },
+    "gaokao_chemistry_zh_20240623_sr0.50_wo_image": {
+        "root": "langchao:s3://internvl2/datasets/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/dropntp_mmmu_241210/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/gaokao_chemistry_zh_20240623.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2,
+        "length": 3254
+    },
+    "gaokao_math_jieti_zh_20240805_sr0.50_wo_image": {
+        "root": "langchao:s3://internvl2/datasets/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/dropntp_mmmu_241210/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/gaokao_math_jieti_zh_20240805.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2,
+        "length": 7407
+    },
+    "gaokao_math_ocr_zh_20240623_sr0.50_wo_image": {
+        "root": "langchao:s3://internvl2/datasets/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/dropntp_mmmu_241210/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/gaokao_math_ocr_zh_20240623.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.25,
+        "length": 15508
+    },
+    "gaokao_physics_ocr_zh_20240623_sr0.50_wo_image": {
+        "root": "langchao:s3://internvl2/datasets/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/dropntp_mmmu_241210/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/gaokao_physics_ocr_zh_20240623.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2,
+        "length": 6846
+    },
+    "gaokao_physics_zh_20240623_sr0.50_wo_image": {
+        "root": "langchao:s3://internvl2/datasets/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/dropntp_mmmu_241210/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/gaokao_physics_zh_20240623.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2,
+        "length": 3299
+    },
+    "gaokao_politics_zh_20240623_sr0.50_wo_image": {
+        "root": "langchao:s3://internvl2/datasets/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/outputs_pair_data/dropntp_mmmu_241210/max_tiles_6_wo_image_0.50/share_internvl_InternVL2_5-8B/clean/gaokao_politics_zh_20240623.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2,
+        "length": 2656
+    },
+    "openbmb/RLAIF-V-Dataset": {
+        "root": "MM-Reasoning-Private/images/RLAIF-V",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/openbmb_RLAIF-V-Dataset_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 83121
+    },
+    "CLEVR_math_en_20240402_extracted_prefix_pair_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/CLEVR",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/CLEVR_math_en_20240402_extracted_prefix_pair_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1001
+    },
+    "SROIE_information_extraction_multi_turn_20240620_extracted_prefix_pair_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/SROIE",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/SROIE_information_extraction_multi_turn_20240620_extracted_prefix_pair_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1250
+    },
+    "ai2d_train_12k_en_20240410_extracted_prefix_pair_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/ai2d",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/ai2d_train_12k_en_20240410_extracted_prefix_pair_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 3043
+    },
+    "chartqa_trainval_30k_w_csv_en_20240402_extracted_prefix_pair_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/chartqa",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/chartqa_trainval_30k_w_csv_en_20240402_extracted_prefix_pair_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 2015
+    },
+    "docvqa_train_56k_en_20240402_extracted_prefix_pair_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/docvqa",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/docvqa_train_56k_en_20240402_extracted_prefix_pair_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 2010
+    },
+    "figureqa_en_20240402_extracted_prefix_pair_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/FigureQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/figureqa_en_20240402_extracted_prefix_pair_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1000
+    },
+    "gqa_train_en_20240402_extracted_prefix_pair_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/gqa",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/gqa_train_en_20240402_extracted_prefix_pair_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1000
+    },
+    "infographics_20240403_qa_20240407_v2_extracted_prefix_pair_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/InfoVQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/infographics_20240403_qa_20240407_v2_extracted_prefix_pair_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1039
+    },
+    "m3cot_train_extracted_prefix_pair_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/M3CoT",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/m3cot_train_extracted_prefix_pair_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 3139
+    },
+    "mapqa_suv_en_20240402_extracted_prefix_pair_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/MapQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/mapqa_suv_en_20240402_extracted_prefix_pair_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1001
+    },
+    "okvqa_train_9k_en_20240402_extracted_prefix_pair_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/coco",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/okvqa_train_9k_en_20240402_extracted_prefix_pair_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 4581
+    },
+    "scienceqa_multi_choice_en_20240402_extracted_prefix_pair_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/ScienceQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/scienceqa_multi_choice_en_20240402_extracted_prefix_pair_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 3059
+    },
+    "textvqa_train_21k_wo_ocr_en_20240611_extracted_prefix_pair_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/TextVQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/textvqa_train_21k_wo_ocr_en_20240611_extracted_prefix_pair_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1017
+    },
+    "vqav2_en_20240402_extracted_prefix_pair_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/coco",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/vqav2_en_20240402_extracted_prefix_pair_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1006
+    },
+    "CLEVR_math_en_20240402_extracted_prefix_pair_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/CLEVR",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/CLEVR_math_en_20240402_extracted_prefix_pair_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1001
+    },
+    "SROIE_information_extraction_multi_turn_20240620_extracted_prefix_pair_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/SROIE",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/SROIE_information_extraction_multi_turn_20240620_extracted_prefix_pair_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1250
+    },
+    "ai2d_train_12k_en_20240410_extracted_prefix_pair_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/ai2d",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/ai2d_train_12k_en_20240410_extracted_prefix_pair_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 3043
+    },
+    "chartqa_trainval_30k_w_csv_en_20240402_extracted_prefix_pair_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/chartqa",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/chartqa_trainval_30k_w_csv_en_20240402_extracted_prefix_pair_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 2015
+    },
+    "docvqa_train_56k_en_20240402_extracted_prefix_pair_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/docvqa",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/docvqa_train_56k_en_20240402_extracted_prefix_pair_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 2010
+    },
+    "figureqa_en_20240402_extracted_prefix_pair_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/FigureQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/figureqa_en_20240402_extracted_prefix_pair_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1000
+    },
+    "gqa_train_en_20240402_extracted_prefix_pair_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/gqa",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/gqa_train_en_20240402_extracted_prefix_pair_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1000
+    },
+    "infographics_20240403_qa_20240407_v2_extracted_prefix_pair_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/InfoVQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/infographics_20240403_qa_20240407_v2_extracted_prefix_pair_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1039
+    },
+    "m3cot_train_extracted_prefix_pair_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/M3CoT",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/m3cot_train_extracted_prefix_pair_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 3139
+    },
+    "mapqa_suv_en_20240402_extracted_prefix_pair_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/MapQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/mapqa_suv_en_20240402_extracted_prefix_pair_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1001
+    },
+    "okvqa_train_9k_en_20240402_extracted_prefix_pair_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/coco",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/okvqa_train_9k_en_20240402_extracted_prefix_pair_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 4581
+    },
+    "scienceqa_multi_choice_en_20240402_extracted_prefix_pair_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/ScienceQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/scienceqa_multi_choice_en_20240402_extracted_prefix_pair_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 3059
+    },
+    "textvqa_train_21k_wo_ocr_en_20240611_extracted_prefix_pair_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/TextVQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/textvqa_train_21k_wo_ocr_en_20240611_extracted_prefix_pair_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1017
+    },
+    "vqav2_en_20240402_extracted_prefix_pair_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/coco",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/vqav2_en_20240402_extracted_prefix_pair_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1006
+    },
+    "CLEVR_math_en_20240402_extracted_prefix_pair_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/CLEVR",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/CLEVR_math_en_20240402_extracted_prefix_pair_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1001
+    },
+    "SROIE_information_extraction_multi_turn_20240620_extracted_prefix_pair_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/SROIE",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/SROIE_information_extraction_multi_turn_20240620_extracted_prefix_pair_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1250
+    },
+    "ai2d_train_12k_en_20240410_extracted_prefix_pair_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/ai2d",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/ai2d_train_12k_en_20240410_extracted_prefix_pair_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 3043
+    },
+    "chartqa_trainval_30k_w_csv_en_20240402_extracted_prefix_pair_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/chartqa",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/chartqa_trainval_30k_w_csv_en_20240402_extracted_prefix_pair_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 2015
+    },
+    "docvqa_train_56k_en_20240402_extracted_prefix_pair_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/docvqa",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/docvqa_train_56k_en_20240402_extracted_prefix_pair_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 2010
+    },
+    "figureqa_en_20240402_extracted_prefix_pair_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/FigureQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/figureqa_en_20240402_extracted_prefix_pair_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1000
+    },
+    "gqa_train_en_20240402_extracted_prefix_pair_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/gqa",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/gqa_train_en_20240402_extracted_prefix_pair_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1000
+    },
+    "infographics_20240403_qa_20240407_v2_extracted_prefix_pair_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/InfoVQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/infographics_20240403_qa_20240407_v2_extracted_prefix_pair_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1039
+    },
+    "m3cot_train_extracted_prefix_pair_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/M3CoT",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/m3cot_train_extracted_prefix_pair_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 3139
+    },
+    "mapqa_suv_en_20240402_extracted_prefix_pair_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/MapQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/mapqa_suv_en_20240402_extracted_prefix_pair_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1001
+    },
+    "okvqa_train_9k_en_20240402_extracted_prefix_pair_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/coco",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/okvqa_train_9k_en_20240402_extracted_prefix_pair_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 4581
+    },
+    "scienceqa_multi_choice_en_20240402_extracted_prefix_pair_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/ScienceQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/scienceqa_multi_choice_en_20240402_extracted_prefix_pair_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 3059
+    },
+    "textvqa_train_21k_wo_ocr_en_20240611_extracted_prefix_pair_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/TextVQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/textvqa_train_21k_wo_ocr_en_20240611_extracted_prefix_pair_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1017
+    },
+    "vqav2_en_20240402_extracted_prefix_pair_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/coco",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/vqav2_en_20240402_extracted_prefix_pair_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1006
+    },
+    "reflux_20240212_to_20240510_gpt4o_en_zh_20240628_extracted_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/DataReflow",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/reflux_20240212_to_20240510_gpt4o_en_zh_20240628_extracted_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 8286
+    },
+    "reflux_20240510_to_20240523_gpt4o_en_zh_20240628_extracted_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/DataReflow",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/reflux_20240510_to_20240523_gpt4o_en_zh_20240628_extracted_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 5057
+    },
+    "reflux_20240510_to_20240621_gpt4o_en_zh_20240621_extracted_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/DataReflow",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/reflux_20240510_to_20240621_gpt4o_en_zh_20240621_extracted_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 34912
+    },
+    "reflux_20240710_to_20240902_gpt4o_en_zh_20240905_extracted_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/DataReflow/240710_to_240902",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/reflux_20240710_to_20240902_gpt4o_en_zh_20240905_extracted_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 38809
+    },
+    "reflux_gpt4o_to0516_en_zh_20240516_extracted_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/DataReflow/unknown",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/reflux_gpt4o_to0516_en_zh_20240516_extracted_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 9629
+    },
+    "reflux_sensechat_0429to0517_gpt4o_en_zh_20240518_extracted_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/DataReflow",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/reflux_sensechat_0429to0517_gpt4o_en_zh_20240518_extracted_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 382
+    },
+    "wildvision_gpt4o_en_20240903.jsonl_extracted_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/wildvision",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/wildvision_gpt4o_en_20240903.jsonl_extracted_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 8836
+    },
+    "wildvision_gpt4v_to_gpt4o_en_20240903.jsonl_extracted_sr0.0_with_image": {
+        "root": "MM-Reasoning-Private/images/wildvision",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/wildvision_gpt4v_to_gpt4o_en_20240903.jsonl_extracted_sr0.0_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 6565
+    },
+    "reflux_20240212_to_20240510_gpt4o_en_zh_20240628_extracted_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/DataReflow",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/reflux_20240212_to_20240510_gpt4o_en_zh_20240628_extracted_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 8286
+    },
+    "reflux_20240510_to_20240523_gpt4o_en_zh_20240628_extracted_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/DataReflow/0510_to_0523",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/reflux_20240510_to_20240523_gpt4o_en_zh_20240628_extracted_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 5057
+    },
+    "reflux_20240510_to_20240621_gpt4o_en_zh_20240621_extracted_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/DataReflow",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/reflux_20240510_to_20240621_gpt4o_en_zh_20240621_extracted_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 34912
+    },
+    "reflux_20240710_to_20240902_gpt4o_en_zh_20240905_extracted_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/DataReflow/240710_to_240902",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/reflux_20240710_to_20240902_gpt4o_en_zh_20240905_extracted_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 38809
+    },
+    "reflux_gpt4o_to0516_en_zh_20240516_extracted_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/DataReflow/unknown",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/reflux_gpt4o_to0516_en_zh_20240516_extracted_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 9629
+    },
+    "reflux_sensechat_0429to0517_gpt4o_en_zh_20240518_extracted_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/DataReflow",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/reflux_sensechat_0429to0517_gpt4o_en_zh_20240518_extracted_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 382
+    },
+    "wildvision_gpt4o_en_20240903.jsonl_extracted_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/wildvision",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/wildvision_gpt4o_en_20240903.jsonl_extracted_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 8836
+    },
+    "wildvision_gpt4v_to_gpt4o_en_20240903.jsonl_extracted_sr0.5_with_image": {
+        "root": "MM-Reasoning-Private/images/wildvision",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/wildvision_gpt4v_to_gpt4o_en_20240903.jsonl_extracted_sr0.5_with_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 6565
+    },
+    "RLAIF-V-Dataset_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/RLAIF-V",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/RLAIF-V-Dataset_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 83121
+    },
+    "reflux_20240212_to_20240510_gpt4o_en_zh_20240628_extracted_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/DataReflow/0212_to_0510",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/reflux_20240212_to_20240510_gpt4o_en_zh_20240628_extracted_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 8286
+    },
+    "reflux_20240510_to_20240523_gpt4o_en_zh_20240628_extracted_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/DataReflow/0510_to_0523",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/reflux_20240510_to_20240523_gpt4o_en_zh_20240628_extracted_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 5057
+    },
+    "reflux_20240510_to_20240621_gpt4o_en_zh_20240621_extracted_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/DataReflow",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/reflux_20240510_to_20240621_gpt4o_en_zh_20240621_extracted_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 34204
+    },
+    "reflux_20240710_to_20240902_gpt4o_en_zh_20240905_extracted_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/DataReflow/240710_to_240902",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/reflux_20240710_to_20240902_gpt4o_en_zh_20240905_extracted_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 38367
+    },
+    "reflux_gpt4o_to0516_en_zh_20240516_extracted_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/DataReflow/unknown",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/reflux_gpt4o_to0516_en_zh_20240516_extracted_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 9346
+    },
+    "reflux_sensechat_0429to0517_gpt4o_en_zh_20240518_extracted_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/DataReflow",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/reflux_sensechat_0429to0517_gpt4o_en_zh_20240518_extracted_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 382
+    },
+    "sa1b_caption_extracted_sr0.5_wo_image": {
+        "root": "langchao:s3://SA-1B/",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/sa1b_caption_extracted_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.0506,
+        "length": 506811
+    },
+    "wildvision_gpt4o_en_20240903.jsonl_extracted_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/wildvision",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/wildvision_gpt4o_en_20240903.jsonl_extracted_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 8833
+    },
+    "wildvision_gpt4v_to_gpt4o_en_20240903.jsonl_extracted_sr0.5_wo_image": {
+        "root": "MM-Reasoning-Private/images/wildvision",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/wildvision_gpt4v_to_gpt4o_en_20240903.jsonl_extracted_sr0.5_wo_image_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 6565
+    },
+    "CLEVR_math_en_20240402_extracted_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/CLEVR",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/CLEVR_math_en_20240402_extracted_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.05,
+        "length": 195624
+    },
+    "CLEVR_math_en_20240402_extracted_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/CLEVR",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/CLEVR_math_en_20240402_extracted_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1012,
+        "length": 295
+    },
+    "SROIE_information_extraction_multi_turn_20240620_extracted_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/SROIE",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/SROIE_information_extraction_multi_turn_20240620_extracted_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.0202,
+        "length": 20256
+    },
+    "SROIE_information_extraction_multi_turn_20240620_extracted_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/SROIE",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/SROIE_information_extraction_multi_turn_20240620_extracted_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1012,
+        "length": 3799
+    },
+    "ai2d_train_12k_en_20240410_extracted_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/ai2d",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/ai2d_train_12k_en_20240410_extracted_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1012,
+        "length": 84482
+    },
+    "ai2d_train_12k_en_20240410_extracted_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/ai2d",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/ai2d_train_12k_en_20240410_extracted_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 1175
+    },
+    "chartqa_trainval_30k_w_csv_en_20240402_extracted_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/chartqa",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/chartqa_trainval_30k_w_csv_en_20240402_extracted_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.05,
+        "length": 96789
+    },
+    "chartqa_trainval_30k_w_csv_en_20240402_extracted_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/chartqa",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/chartqa_trainval_30k_w_csv_en_20240402_extracted_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.0202,
+        "length": 18673
+    },
+    "dvqa_en_20240402_extracted_int_only_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/dvqa",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/dvqa_en_20240402_extracted_int_only_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.0304,
+        "length": 108414
+    },
+    "dvqa_en_20240402_extracted_int_only_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/dvqa",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/dvqa_en_20240402_extracted_int_only_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 552
+    },
+    "figureqa_en_20240402_extracted_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/FigureQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/figureqa_en_20240402_extracted_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.04,
+        "length": 189347
+    },
+    "figureqa_en_20240402_extracted_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/FigureQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/figureqa_en_20240402_extracted_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 232
+    },
+    "geometry3k_en_20240402_extracted_open_ended_only_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/Geometry3K",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/geometry3k_en_20240402_extracted_open_ended_only_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 22423
+    },
+    "geometry3k_en_20240402_extracted_open_ended_only_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/Geometry3K",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/geometry3k_en_20240402_extracted_open_ended_only_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 324
+    },
+    "geometry3k_en_20240402_extracted_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/Geometry3K",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/geometry3k_en_20240402_extracted_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 69961
+    },
+    "geometry3k_en_20240402_extracted_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/Geometry3K",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/geometry3k_en_20240402_extracted_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.0405,
+        "length": 126996
+    },
+    "geoqa+_extracted_en_version_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/geoqa_plus",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/geoqa+_extracted_en_version_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1518,
+        "length": 222055
+    },
+    "geoqa+_extracted_en_version_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/geoqa_plus",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/geoqa+_extracted_en_version_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.0405,
+        "length": 18446
+    },
+    "geos_en_20240402_extracted_open_ended_only_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/GEOS",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/geos_en_20240402_extracted_open_ended_only_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 2,
+        "length": 425
+    },
+    "geos_en_20240402_extracted_open_ended_only_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/GEOS",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/geos_en_20240402_extracted_open_ended_only_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 2
+    },
+    "geos_en_20240402_extracted_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/GEOS",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/geos_en_20240402_extracted_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 2,
+        "length": 2585
+    },
+    "geos_en_20240402_extracted_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/GEOS",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/geos_en_20240402_extracted_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2,
+        "length": 3105
+    },
+    "iconqa_train_extracted_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/iconqa",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/iconqa_train_extracted_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.03,
+        "length": 324405
+    },
+    "iconqa_train_extracted_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/iconqa",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/iconqa_train_extracted_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1012,
+        "length": 1831
+    },
+    "infographics_20240403_qa_20240407_v2_extracted_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/InfoVQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/infographics_20240403_qa_20240407_v2_extracted_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.0202,
+        "length": 132231
+    },
+    "infographics_20240403_qa_20240407_v2_extracted_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/InfoVQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/infographics_20240403_qa_20240407_v2_extracted_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.0405,
+        "length": 2188
+    },
+    "m3cot_train_extracted_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/M3CoT",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/m3cot_train_extracted_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 94603
+    },
+    "m3cot_train_extracted_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/M3CoT",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/m3cot_train_extracted_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.0202,
+        "length": 36341
+    },
+    "mapqa_suv_en_20240402_extracted_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/MapQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/mapqa_suv_en_20240402_extracted_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.0202,
+        "length": 127458
+    },
+    "mapqa_suv_en_20240402_extracted_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/MapQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/mapqa_suv_en_20240402_extracted_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.0405,
+        "length": 519
+    },
+    "scienceqa_multi_choice_en_20240402_extracted_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/ScienceQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/scienceqa_multi_choice_en_20240402_extracted_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 20074
+    },
+    "scienceqa_multi_choice_en_20240402_extracted_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/ScienceQA",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/scienceqa_multi_choice_en_20240402_extracted_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.0101,
+        "length": 66049
+    },
+    "unigeo_calc_en_20240402_extracted_open_ended_only_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/UniGeo",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/unigeo_calc_en_20240402_extracted_open_ended_only_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.2025,
+        "length": 37290
+    },
+    "unigeo_calc_en_20240402_extracted_open_ended_only_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/UniGeo",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/unigeo_calc_en_20240402_extracted_open_ended_only_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.0405,
+        "length": 4910
+    },
+    "geomverse_extracted_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/GeomVerse",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/geomverse_extracted_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1012,
+        "length": 125933
+    },
+    "geomverse_extracted_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/GeomVerse",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/geomverse_extracted_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1012,
+        "length": 2343
+    },
+    "geo170k_extracted_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/Geo170K",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/geo170k_extracted_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.162,
+        "length": 26502
+    },
+    "geo170k_extracted_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/Geo170K",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/geo170k_extracted_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.1012,
+        "length": 429
+    },
+    "geo170k_extracted_full_pairs_vqa_correctness_rules": {
+        "root": "MM-Reasoning-Private/images/Geo170K",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/geo170k_extracted_full_pairs_vqa_correctness_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.0202,
+        "length": 279015
+    },
+    "geo170k_extracted_full_pairs_vqa_format_rules": {
+        "root": "MM-Reasoning-Private/images/Geo170K",
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/MM-Reasoning-Private/annotations/geo170k_extracted_full_pairs_vqa_format_rules_with_wh.jsonl",
+        "data_augment": false,
+        "repeat_time": 0.0202,
+        "length": 82357
+    },
+    "estvqa_train_17k_20240620_20240816_ocr_correctness_rules": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/mm_dataset/ocr_data/EST-VQA-v1.0/images/train/",
+        "repeat_time": 0.4,
+        "length": 426,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/estvqa_train_17k_20240620_20240816_ocr_correctness_rules_with_wh.jsonl"
+    },
+    "stvqa_train_19k_20240620_20240816_ocr_correctness_rules": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/mm_dataset/ocr_data/ST-VQA/",
+        "repeat_time": 0.4,
+        "length": 950,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/stvqa_train_19k_20240620_20240816_ocr_correctness_rules_with_wh.jsonl"
+    },
+    "info_markdown_v3_en_20240515_filter_20240815_v1_sr0.0_with_image": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/multi_modal/infographic-aug/infographics_0408_4k_data/imgs_with_qa",
+        "repeat_time": 1,
+        "length": 111,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/info_markdown_v3_en_20240515_filter_20240815_v1_sr0.0_with_image_with_wh.jsonl"
+    },
+    "info_markdown_v3_en_20240515_filter_20240815_v1_sr0.5_with_image": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/multi_modal/infographic-aug/infographics_0408_4k_data/imgs_with_qa",
+        "repeat_time": 1,
+        "length": 98,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/info_markdown_v3_en_20240515_filter_20240815_v1_sr0.5_with_image_with_wh.jsonl"
+    },
+    "DocReason_20240402_v1_r25877_20240403_v1_20240822_sr0.0_with_image": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/mm_dataset/DocOwl/DocReason25K/imgs/",
+        "repeat_time": 0.2,
+        "length": 1524,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/DocReason_20240402_v1_r25877_20240403_v1_20240822_sr0.0_with_image_with_wh.jsonl"
+    },
+    "DocReason_20240402_v1_r25877_20240403_v1_20240822_sr0.5_with_image": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/mm_dataset/DocOwl/DocReason25K/imgs/",
+        "repeat_time": 0.1,
+        "length": 1441,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/DocReason_20240402_v1_r25877_20240403_v1_20240822_sr0.5_with_image_with_wh.jsonl"
+    },
+    "infovqa_train_25k_24patch_en_20240402_fix_hw_20240812_ocr_correctness_rules": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/multi_modal/playground/data/infovqa/infographicVQA_train_v1.0_images",
+        "repeat_time": 0.4,
+        "length": 300,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/infovqa_train_25k_24patch_en_20240402_fix_hw_20240812_ocr_correctness_rules_with_wh.jsonl"
+    },
+    "infovqa_train_25k_en_20240402_20240812_ocr_correctness_rules": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/multi_modal/playground/data/infovqa/infographicVQA_train_v1.0_images",
+        "repeat_time": 0.2,
+        "length": 1300,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/infovqa_train_25k_en_20240402_20240812_ocr_correctness_rules_with_wh.jsonl"
+    },
+    "infovqa_train_25k_en_20240402_gpt4o_20240812_sr0.0_with_image": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/multi_modal/playground/data/infovqa/infographicVQA_train_v1.0_images",
+        "repeat_time": 1,
+        "length": 498,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/infovqa_train_25k_en_20240402_gpt4o_20240812_sr0.0_with_image_with_wh.jsonl"
+    },
+    "infovqa_train_25k_en_20240402_gpt4o_20240812_sr0.5_with_image": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/multi_modal/playground/data/infovqa/infographicVQA_train_v1.0_images",
+        "repeat_time": 1,
+        "length": 414,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/infovqa_train_25k_en_20240402_gpt4o_20240812_sr0.5_with_image_with_wh.jsonl"
+    },
+    "POIE_information_extraction_multi_turn_20240620_20240816_ocr_correctness_rules": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/internvl/datasets/POIE/nfv5/nfv5_3125/image_files",
+        "repeat_time": 1,
+        "length": 75,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/POIE_information_extraction_multi_turn_20240620_20240816_ocr_correctness_rules_with_wh.jsonl"
+    },
+    "ocr_vqa_update_prompt_20241105check_ocr_correctness_rules": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/mm_dataset/ocrvqa/images/",
+        "repeat_time": 0.4,
+        "length": 600,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/ocr_vqa_update_prompt_20241105check_ocr_correctness_rules_with_wh.jsonl"
+    },
+    "HME100K_20241126_promptchange_20241127check_ocr_correctness_rules": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/internvl/datasets/HME100K/train_images",
+        "repeat_time": 0.2,
+        "length": 3000,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/HME100K_20241126_promptchange_20241127check_ocr_correctness_rules_with_wh.jsonl"
+    },
+    "ocr_math_formula_haoweilai_20241126check_ocr_correctness_rules": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/data-mllm-ocr-v2-images/handwritten_formula_ocr/images",
+        "repeat_time": 0.2,
+        "length": 2500,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/ocr_math_formula_haoweilai_20241126check_ocr_correctness_rules_with_wh.jsonl"
+    },
+    "IAM_words_20241118check_ocr_correctness_rules": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/yaotiankuo/ocrbench/IAM_words/images",
+        "repeat_time": 0.2,
+        "length": 2824,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/IAM_words_20241118check_ocr_correctness_rules_with_wh.jsonl"
+    },
+    "nonsemanticText_20241126check_ocr_correctness_rules": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/data-mllm-ocr-v2-images/OCRbench/NonSematicText_100k_20241126/images",
+        "repeat_time": 0.2,
+        "length": 4200,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/nonsemanticText_20241126check_ocr_correctness_rules_with_wh.jsonl"
+    },
+    "nonsemanticText_withdigit_20241126check_ocr_correctness_rules": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/data-mllm-ocr-v2-images/OCRbench/NonSematicText_withdigital_100k_20241126/images",
+        "repeat_time": 0.2,
+        "length": 2200,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/nonsemanticText_withdigit_20241126check_ocr_correctness_rules_with_wh.jsonl"
+    },
+    "funsd_20241126check_ocr_correctness_rules": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/data-mllm-ocr-v2-images/OCRbench/funsd_2k_20241126/images",
+        "repeat_time": 0.4,
+        "length": 381,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/funsd_20241126check_ocr_correctness_rules_with_wh.jsonl"
+    },
+    "aidapearson_ocr_kaggle_20241126check_ocr_correctness_rules": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/data-mllm-ocr-v2-images/OCRbench/aidapearson_ocr_kaggle_100k_20241126",
+        "repeat_time": 1,
+        "length": 100,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/aidapearson_ocr_kaggle_20241126check_ocr_correctness_rules_with_wh.jsonl"
+    },
+    "HallusionBench_long_caption_sr0.0_with_image": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/multi_modal_2024/benchmark/data/HallusionBench/images",
+        "repeat_time": 1,
+        "length": 214,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/HallusionBench_long_caption_sr0.0_with_image_with_wh.jsonl"
+    },
+    "HallusionBench_long_caption_sr0.5_with_image": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/multi_modal_2024/benchmark/data/HallusionBench/images",
+        "repeat_time": 1,
+        "length": 115,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/HallusionBench_long_caption_sr0.5_with_image_with_wh.jsonl"
+    },
+    "HallusionBench_long_caption_sr0.5_wo_image": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/multi_modal_2024/benchmark/data/HallusionBench/images",
+        "repeat_time": 5,
+        "length": 338,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/HallusionBench_long_caption_sr0.5_wo_image_with_wh.jsonl"
+    },
+    "MMStar_long_caption_filter_sr0.0_with_image": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/multi_modal_2024/benchmark/data/mmstar",
+        "repeat_time": 0.5,
+        "length": 721,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/MMStar_long_caption_filter_sr0.0_with_image_with_wh.jsonl"
+    },
+    "MMStar_long_caption_filter_sr0.5_with_image": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/multi_modal_2024/benchmark/data/mmstar",
+        "repeat_time": 0.5,
+        "length": 349,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/MMStar_long_caption_filter_sr0.5_with_image_with_wh.jsonl"
+    },
+    "MMStar_long_caption_filter_sr0.5_wo_image": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/multi_modal_2024/benchmark/data/mmstar",
+        "repeat_time": 0.25,
+        "length": 1366,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/MMStar_long_caption_filter_sr0.5_wo_image_with_wh.jsonl"
+    },
+    "mmvet_cap_en_20240923_split_filter_sr0.0_with_image": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/multi_modal_2024/benchmark/data/mm-vet/images",
+        "repeat_time": 3,
+        "length": 369,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/mmvet_cap_en_20240923_split_filter_sr0.0_with_image_with_wh.jsonl"
+    },
+    "mmvet_cap_en_20240923_split_filter_sr0.5_with_image": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/multi_modal_2024/benchmark/data/mm-vet/images",
+        "repeat_time": 3,
+        "length": 360,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/mmvet_cap_en_20240923_split_filter_sr0.5_with_image_with_wh.jsonl"
+    },
+    "mmvet_cap_en_20240923_split_filter_sr0.5_wo_image": {
+        "root": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/images/multi_modal_2024/benchmark/data/mm-vet/images",
+        "repeat_time": 6,
+        "length": 374,
+        "annotation": "/mnt/petrelfs/wangweiyun/workspace_wwy/sync/oc_dpo_model_data_241203/data/new_jsonls/mmvet_cap_en_20240923_split_filter_sr0.5_wo_image_with_wh.jsonl"
+    }
+}
