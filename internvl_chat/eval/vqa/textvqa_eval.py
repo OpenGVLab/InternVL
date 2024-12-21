@@ -246,9 +246,9 @@ class TextVQAAccuracyEvaluator:
 
         return unique_answer_scores
 
-    def eval_pred_list(self, pred_list):
+    def eval_pred_list(self, pred_list, disable_tqdm=False):
         pred_scores = []
-        for entry in tqdm(pred_list):
+        for entry in tqdm(pred_list, disable=disable_tqdm):
             pred_answer = self.answer_processor(entry['pred_answer'])
             unique_answer_scores = self._compute_answer_scores(entry['gt_answers'])
             score = unique_answer_scores.get(pred_answer, 0.0)

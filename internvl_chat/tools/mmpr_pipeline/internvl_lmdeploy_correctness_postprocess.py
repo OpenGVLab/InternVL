@@ -27,20 +27,21 @@ def merge_dict(*dict_list):
     return merged_dict
 
 
-def parse_answer(text):
-    match = re.search(r'(Final answer:|Answer:)\s*(.*)', text, re.IGNORECASE)
+def parse_answer(response):
+    answer_trigger = 'Final answer:'
+    if response.count(answer_trigger) == 0:
+        answer_trigger = 'Final Answer:'
+    if response.count(answer_trigger) == 0:
+        answer_trigger = '答案:'
 
-    assert match
+    assert response.count(answer_trigger) <= 2, f"Fail to find Answer, {response.count(answer_trigger)=}"
+    assert response.count('\n') >= 2, f"Fail to find rationale, {response=}"
 
-    answer_trigger = match.group(1).strip()
-    answer = match.group(2).strip().strip('*').strip()
+    rationale, answer = response.rsplit(answer_trigger, 1)
+    assert len(rationale.strip()) > 0, f"Empty rationale:\n{response}"
+    assert '\n' not in answer.strip(), f"Answer with multiple paragraphs:\n{answer}"
 
-    assert text.count(answer_trigger) <= 2
-
-    rationale = text.lower().split(answer_trigger.lower())[0].strip().strip('*').strip()
-    assert len(rationale) > 0
-
-    return rationale, answer
+    return rationale.strip(), answer.strip()
 
 
 def isfloat(x):
@@ -171,7 +172,7 @@ def check_answer(answer_pred, answer_gt, mode):
                 'gt_answers': [answer_gt] * 10,
             },
         ]
-        accuracy = max(accuracy, evaluator.eval_pred_list(merged_outputs))
+        accuracy = max(accuracy, evaluator.eval_pred_list(merged_outputs, disable_tqdm=True))
 
         if len(evaluator.answer_processor(answer_pred)) == 0:
             accuracy = 0
@@ -244,14 +245,20 @@ def _fix_answer(item, answer_pred, answer_gt, mc=False):
         or answer_gt.strip('.').replace(',', '') in answer_pred.strip('.').replace(',', '')
     ):
         item['response'] = answer_gt_orig.join(item['response'].rsplit(answer_pred_orig, 1))
+        item['response'] = item['response'].strip().strip('**').strip()
         _, answer_pred_after_fix = parse_answer(item['response'])
         item['answer_pred'] = answer_pred_after_fix
+
+    other_lines, last_line = item['response'].rsplit('\n', 1)
+    if '**Final' in last_line:
+        last_line = last_line.replace('**Final', 'Final')
+        item['response'] = f'{other_lines}\n{last_line}'.strip()
 
     return item
 
 
 def post_process(pred):
-    pred = pred.strip().strip('*').upper()
+    pred = pred.strip().strip('*').strip().upper()
 
     if len(pred) == 1:
         return pred
@@ -286,7 +293,7 @@ def _build_items_based_on_correctness(lines, mode):
     neg_format_id2item = defaultdict(list)
     for line in lines:
         item = json.loads(line)
-        image = item['image']
+        image = str(item['image'])
         question = item['question']
         answer_gt = item['answer']
         response = item['response']
@@ -301,29 +308,33 @@ def _build_items_based_on_correctness(lines, mode):
         else:
             consistent = True
 
-        try:
-            _, answer_pred = parse_answer(response)
-            item['answer_pred'] = answer_pred
-        except:
-            item['answer_pred'] = 'None'
-            neg_format_id2item[(image, question, answer_gt)].append(item)
-            continue
+        if args.use_correctness_cache:
+            correct = int(item['is_correct'])
+        else:
+            try:
+                _, answer_pred = parse_answer(response)
+                item['answer_pred'] = answer_pred
+            except:
+                item['answer_pred'] = 'None'
+                neg_format_id2item[(image, question, answer_gt)].append(item)
+                continue
 
-        if args.answer_fix:
-            if (
-                'mc_score' in mode
-                and "Answer with the option's letter from the given choices directly." in question
-            ):
-                mc = True
-            else:
-                assert "Answer with the option's letter from the given choices directly." not in question
-                mc = False
+            if args.answer_fix:
+                if (
+                    'mc_score' in mode
+                    and "Answer with the option's letter from the given choices directly." in question
+                ):
+                    mc = True
+                else:
+                    assert "Answer with the option's letter from the given choices directly." not in question
+                    mc = False
 
-            item = _fix_answer(item, answer_pred, answer_gt, mc=mc)
-            response = item['response']
-            answer_pred = item['answer_pred']
+                item = _fix_answer(item, answer_pred, answer_gt, mc=mc)
+                response = item['response']
+                answer_pred = item['answer_pred']
 
-        correct = check_answer(answer_pred, answer_gt, mode=mode)
+            correct = check_answer(answer_pred, answer_gt, mode=mode)
+
         assert correct in [0, 1], correct
 
         if correct == 1 and not consistent:
@@ -405,7 +416,7 @@ def build_pairs_based_on_pos_neg(pos_id2item, neg_id2item, allow_entailment=Fals
         for item_pos in pos_id2item[key]:
             for item_neg in neg_id2item[key]:
 
-                if item_pos['answer_pred'].lower() in item_neg['answer_pred'].lower() and not allow_entailment:
+                if not allow_entailment and item_pos['answer_pred'].lower() in item_neg['answer_pred'].lower():
                     info['entail_skip'] += 1
                     continue
 
@@ -440,12 +451,16 @@ def save_items(items, save_path, question_only=False, all_incorrect_keys=None):
         for key in keys:
             values = items[key]
             for item in values:
-                items_set.add((item['image'], item['question'], item['answer']))
+                items_set.add((str(item['image']), item['question'], item['answer']))
 
         items_list = []
         for item in items_set:
+            try:
+                image = eval(item[0])
+            except:
+                image = item[0]
             items_list.append({
-                'image': item[0],
+                'image': image,
                 'question': item[1],
                 'answer': item[2],
             })
@@ -466,7 +481,7 @@ def save_pairs(pairs, save_path):
     rejected_meta_dict = {}
     for pair in pairs:
         pair = pair.copy()
-        image = pair['image']
+        image = str(pair['image'])
         question = pair['question']
         chosen = pair['chosen']
         rejected = pair['rejected']
@@ -487,6 +502,10 @@ def save_pairs(pairs, save_path):
     filtered_pairs = []
     for pair in distinct_pairs:
         image, question, chosen, rejected, answer_gt = pair
+        try:
+            image = eval(image)
+        except:
+            pass
         filtered_pair = {
             'image': image,
             'question': question,
@@ -495,6 +514,7 @@ def save_pairs(pairs, save_path):
             'answer_gt': answer_gt,
         }
 
+        image = str(image)
         if (image, question, chosen, rejected, answer_gt) in chosen_meta_dict:
             filtered_pair['chosen_meta'] = chosen_meta_dict[(image, question, chosen, rejected, answer_gt)]
 
@@ -519,13 +539,13 @@ def main(args):
 
         save_dir = args.save_dir
         ds_name = os.path.basename(filename).replace('.jsonl', '')
-        os.makedirs(save_dir, exist_ok=True)
-        os.makedirs(f'{save_dir}_pos_items', exist_ok=True)
-        os.makedirs(f'{save_dir}_neg_items', exist_ok=True)
+        os.makedirs(os.path.join(save_dir, 'raw'), exist_ok=True)
+        os.makedirs(os.path.join(save_dir, 'pos_items'), exist_ok=True)
+        os.makedirs(os.path.join(save_dir, 'neg_items'), exist_ok=True)
 
-        pairs_vqa_correctness_rules_save_path = os.path.join(save_dir, f'{ds_name}_pairs_vqa_correctness_rules.jsonl')
-        pairs_vqa_correctness_rules_and_claims_save_path = os.path.join(save_dir, f'{ds_name}_pairs_vqa_correctness_rules_and_claims.jsonl')
-        pairs_vqa_format_rules_save_path = os.path.join(save_dir, f'{ds_name}_pairs_vqa_format_rules.jsonl')
+        pairs_vqa_correctness_rules_save_path = os.path.join(save_dir, 'raw', f'{ds_name}_pairs_vqa_correctness_rules.jsonl')
+        pairs_vqa_correctness_rules_and_claims_save_path = os.path.join(save_dir, 'raw', f'{ds_name}_pairs_vqa_correctness_rules_and_claims.jsonl')
+        pairs_vqa_format_rules_save_path = os.path.join(save_dir, 'raw', f'{ds_name}_pairs_vqa_format_rules.jsonl')
 
         if not args.overwrite and os.path.exists(pairs_vqa_correctness_rules_save_path):
             print(f'skip {filename}')
@@ -573,21 +593,21 @@ def main(args):
 
         save_items(
             merge_dict(pos_id2item, pos_inconsistent_id2item),
-            os.path.join(f'{save_dir}_pos_items', f'{ds_name}.jsonl'),
+            os.path.join(save_dir, 'pos_items', f'{ds_name}.jsonl'),
         )
         save_items(
             neg_id2item,
-            os.path.join(f'{save_dir}_neg_items', f'{ds_name}.jsonl'),
+            os.path.join(save_dir, 'neg_items', f'{ds_name}.jsonl'),
             question_only=True,
             all_incorrect_keys=all_incorrect_keys,
         )
 
         save_pairs(
-            build_pairs_based_on_pos_neg(pos_id2item=pos_id2item, neg_id2item=neg_id2item, allow_entailment=False),
+            build_pairs_based_on_pos_neg(pos_id2item=pos_id2item, neg_id2item=neg_id2item, allow_entailment=args.use_correctness_cache),
             pairs_vqa_correctness_rules_save_path,
         )
         save_pairs(
-            build_pairs_based_on_pos_neg(pos_id2item=pos_id2item, neg_id2item=neg_format_id2item, allow_entailment=False),
+            build_pairs_based_on_pos_neg(pos_id2item=pos_id2item, neg_id2item=neg_format_id2item, allow_entailment=args.use_correctness_cache),
             pairs_vqa_format_rules_save_path,
         )
         print()
@@ -603,6 +623,7 @@ if __name__ == '__main__':
     parser.add_argument('--overwrite', action='store_true', default=False)
     parser.add_argument('--answer-fix', action='store_true', default=False)
     parser.add_argument('--force', action='store_true', default=False)
+    parser.add_argument('--use-correctness-cache', action='store_true', default=False)
     args = parser.parse_args()
     NUM_PAIRS_PER_KEY = args.num_pairs_per_key
     main(args)

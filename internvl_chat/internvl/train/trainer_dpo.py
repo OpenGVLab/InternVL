@@ -4,9 +4,11 @@
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
 
+from copy import deepcopy
 from typing import Dict, List, Literal, Optional, Tuple, Union
 
 import torch
+import deepspeed
 from torch import nn
 from torch.utils.data import ConcatDataset
 from trl import DPOTrainer
@@ -173,12 +175,25 @@ class MultimodalDPOTrainer(DPOTrainer):
 
         return (chosen_logps, rejected_logps, chosen_logits, rejected_logits, nll_loss)
 
+    def _prepare_deepspeed_orig(self, model):
+        # Adapted from accelerate: https://github.com/huggingface/accelerate/blob/739b135f8367becb67ffaada12fe76e3aa60fefd/src/accelerate/accelerator.py#L1473
+        deepspeed_plugin = self.accelerator.state.deepspeed_plugin
+        config_kwargs = deepcopy(deepspeed_plugin.deepspeed_config)
+
+        # If ZeRO-3 is used, we shard both the active and reference model.
+        # Otherwise, we assume the reference model fits in memory and is initialized on each device with ZeRO disabled (stage 0)
+        if config_kwargs["zero_optimization"]["stage"] != 3:
+            config_kwargs["zero_optimization"]["stage"] = 0
+        model, *_ = deepspeed.initialize(model=model, config=config_kwargs)
+        model.eval()
+        return model
+
     def _prepare_deepspeed(self, model):
         deepspeed_plugin = self.accelerator.state.deepspeed_plugin
         config_kwargs = deepspeed_plugin.deepspeed_config
         if config_kwargs['zero_optimization']['stage'] == 3:
             print('Enable DPOTrainer._prepare_deepspeed')
-            return super()._prepare_deepspeed(model)
+            return self._prepare_deepspeed_orig(model)
 
         print('Disable DPOTrainer._prepare_deepspeed')
         for param in model.parameters():

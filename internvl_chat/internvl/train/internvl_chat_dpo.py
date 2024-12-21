@@ -4,13 +4,18 @@
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
 
+import warnings
+
+warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
 import logging
 import math
 import os
 import random
+import shutil
 import sys
 import traceback
-import warnings
 from copy import deepcopy
 from dataclasses import dataclass, field
 from typing import Dict, Literal, Optional
@@ -289,6 +294,7 @@ class LazySupervisedDataset(Dataset):
                 # If repeat_time is less than 1, select a portion of the data
                 self.raw_data = random.sample(self.raw_data, k=int(len(self.raw_data) * repeat_time))
             if repeat_time > 1:
+                repeat_time = int(repeat_time)
                 assert isinstance(repeat_time, int)
                 # Repeat the list if repeat_time is greater than 1
                 self.raw_data = self.raw_data * repeat_time
@@ -518,9 +524,84 @@ class LazySupervisedDataset(Dataset):
         )
         return ret
 
-    # TODO: support pair data loading
     def video_get_item(self, data_item):
-        raise NotImplementedError
+        # Build transformation function
+        transform = self.get_transform()
+
+        # Ensure the first conversation contains a video placeholder
+        if '<video>' not in data_item['question']:
+            data_item['question'] = '<video>\n' + data_item['question']
+
+        # Get the video file path
+        video_file = data_item['video']
+        video_path = os.path.join(self.root, video_file)
+
+        # Load the video frames using tcs_loader
+        # TODO: Load videos without using tcsloader.
+        image_list = self.tcs_loader(
+            video_path,
+            image_type='video',
+            max_num_frames=self.max_num_frame,
+            min_num_frames=self.min_num_frame,
+            sample=self.sampling_method,
+            clip=data_item.get('clip', None))
+
+        # Generate special tokens for each video frame
+        special_tokens = '\n'.join(['Frame{}: <image>'.format(i + 1) for i in range(len(image_list))])
+        data_item['question'] = data_item['question'].replace('<video>\n', special_tokens)
+
+        # Transform each frame image and stack them into a tensor
+        pixel_values = [transform(image) for image in image_list]
+        pixel_values = torch.stack(pixel_values)
+        num_patches = pixel_values.size(0)
+
+        # Select the appropriate preprocessing function based on the template name
+        preprocess_function = self.get_preprocess_function()
+
+        # Preprocess the conversations and generate the return dictionary
+        num_image_tokens = [self.num_image_token] * num_patches
+
+        chosen_conversations = [
+            {'from': 'human', 'value': data_item['question']},
+            {'from': 'gpt', 'value': data_item['chosen']},
+        ]
+        chosen_ret = preprocess_function(
+            self.template_name,
+            [deepcopy(chosen_conversations)],
+            self.tokenizer,
+            num_image_tokens,
+            group_by_length=True,
+            use_packed_ds=self.use_packed_ds,
+            ds_name=self.ds_name,
+            num_image=num_patches,
+        )
+
+        rejected_conversations = [
+            {'from': 'human', 'value': data_item['question']},
+            {'from': 'gpt', 'value': data_item['rejected']},
+        ]
+        rejected_ret = preprocess_function(
+            self.template_name,
+            [deepcopy(rejected_conversations)],
+            self.tokenizer,
+            num_image_tokens,
+            group_by_length=True,
+            use_packed_ds=self.use_packed_ds,
+            ds_name=self.ds_name,
+            num_image=num_patches,
+        )
+
+        ret = dict(
+            chosen_input_ids=chosen_ret['input_ids'][0],
+            chosen_labels=chosen_ret['labels'][0],
+            chosen_attention_mask=chosen_ret['attention_mask'][0],
+            rejected_input_ids=rejected_ret['input_ids'][0],
+            rejected_labels=rejected_ret['labels'][0],
+            rejected_attention_mask=rejected_ret['attention_mask'][0],
+            pixel_values=pixel_values,
+            image_flags=torch.tensor([1] * num_patches, dtype=torch.long),
+        )
+        return ret
 
     def pure_text_get_item(self, data_item):
         # Build transformation function
@@ -659,7 +740,7 @@ def build_datasets(
             ds_name=ds_name,
             num_image_token=model.num_image_token,
             image_size=data_args.force_image_size,
-            is_train=ds_collections[ds_name]['data_augment'],
+            is_train=ds_collections[ds_name].get('data_augment', False),
             pad2square=data_args.pad2square,
             group_by_length=group_by_length,
             dynamic_image_size=dynamic_image_size,
@@ -955,6 +1036,20 @@ def main():
         trainer.log_metrics('train', metrics)
         trainer.save_metrics('train', metrics)
         trainer.save_state()
+
+        model_dir = model_args.model_name_or_path
+        output_dir = training_args.output_dir
+        for filename in [
+            'conversation.py',
+            'modeling_internvl_chat.py',
+            'modeling_intern_vit.py',
+            'modeling_internlm2.py',
+            'configuration_internvl_chat.py',
+            'configuration_intern_vit.py',
+            'configuration_internlm2.py',
+        ]:
+            if os.path.exists(os.path.join(model_dir, filename)):
+                shutil.copy(os.path.join(model_dir, filename), output_dir)
 
 
 if __name__ == '__main__':
