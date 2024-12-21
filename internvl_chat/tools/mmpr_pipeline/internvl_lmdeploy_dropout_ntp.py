@@ -239,7 +239,7 @@ def evaluate_chat_model():
             lines = file.readlines()
         for line in lines:
             item = json.loads(line)
-            item2num[(item['image'], item['question'])] += 1
+            item2num[(str(item['image']), item['question'])] += 1
 
     print(
         f'[Rank {torch.distributed.get_rank()}] '
@@ -257,7 +257,7 @@ def evaluate_chat_model():
         assert len(inputs) == len(prefixs)
         assert len(inputs) == 1
 
-        cnt = args.num_return_sequences - item2num[(items[0]['image'], items[0]['question'])]
+        cnt = args.num_return_sequences - item2num[(str(items[0]['image']), items[0]['question'])]
         if cnt <= 0:
             continue
 
@@ -357,8 +357,8 @@ if __name__ == '__main__':
 
     init_distributed_mode()
 
-    model_name = '_'.join(args.checkpoint.split('/')[-2:])
-    args.out_dir = os.path.join(args.out_dir, model_name)
+    # model_name = '_'.join(args.checkpoint.split('/')[-2:])
+    # args.out_dir = os.path.join(args.out_dir, model_name)
 
     if not os.path.exists(args.out_dir):
         os.makedirs(args.out_dir, exist_ok=True)
