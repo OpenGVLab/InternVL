@@ -19,6 +19,7 @@
 <img height="55" alt="image" src="https://github.com/user-attachments/assets/bd62ab46-f0ea-40c6-ab10-7fde671716cc">
 
 <!-- ![perform](https://github.com/user-attachments/assets/aab987fd-8811-4ff9-b5e0-1d08f0ad1f7a) -->
+
 ![perform](https://github.com/user-attachments/assets/5046239c-0b3d-450a-833b-fcaaecf8114b)
 
 </div>
@@ -26,7 +27,7 @@
 ## 最新消息 🚀🚀🚀
 
 - `2024/12/20`: 🚀 我们发布了 [InternVL2.5-MPO系列](https://internvl.github.io/blog/2024-12-20-InternVL-2.5-MPO/)。该系列通过 [Mixed Preference Optimization](https://huggingface.co/papers/2411.10442) 算法和 [MMPR-v1.1](https://huggingface.co/datasets/OpenGVLab/MMPR-v1.1) 数据集微调得到。**该系列模型在OpenCompass评测榜单中的整体性能超过MPO训练前两个百分点。** 这些模型可在 [HF 链接](https://huggingface.co/collections/OpenGVLab/internvl25-mpo-6753fed98cd828219b12f849)中下载.
-- `2024/12/17`: 🚀 Paddle团队已在[PaddleMIX](https://github.com/PaddlePaddle/PaddleMIX)框架中适配[InternVL2/2.5](https://github.com/PaddlePaddle/PaddleMIX/tree/develop/paddlemix/examples/internvl2). 
+- `2024/12/17`: 🚀 Paddle团队已在[PaddleMIX](https://github.com/PaddlePaddle/PaddleMIX)框架中适配[InternVL2/2.5](https://github.com/PaddlePaddle/PaddleMIX/tree/develop/paddlemix/examples/internvl2).
 - `2024/12/05`: 🚀 我们发布了 InternVL2.5 系列，覆盖了从1B参数到78B参数的多模态大语言模型。[InternVL2_5-78B](https://huggingface.co/OpenGVLab/InternVL2_5-78B) 是首个在MMMU benchmark上得分超过70的开源模型。 这些模型可在 [HF 链接](https://huggingface.co/collections/OpenGVLab/internvl-25-673e1019b66e2218f68d7c1c) 中下载。
 - `2024/11/14`: 我们发布了 [MMPR](https://huggingface.co/datasets/OpenGVLab/MMPR)，一个高质量、大规模的多模态推理偏好数据集，以及 [MPO](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/internvl2.0_mpo)，一种高效的偏好优化算法。由此训练的模型 [InternVL2-8B-MPO](https://huggingface.co/OpenGVLab/InternVL2-8B-MPO) 在 MathVista 上取得了 67.0 的准确率。更多详情请参阅我们的[论文](https://arxiv.org/abs/2411.10442)、[项目主页](https://internvl.github.io/blog/2024-11-14-InternVL-2.0-MPO/) 和 [文档](https://internvl.readthedocs.io/en/latest/internvl2.0/preference_optimization.html)。
 - `2024/10/21`: 我们发布了 Mini-InternVL 系列。这些模型在保持极小模型体积的同时实现了出色的性能：4B 模型仅用 5% 的模型大小便达到了 90% 的性能。有关更多详细信息，请查看我们的 [项目页面](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/mini_internvl) 和 [文档](https://internvl.readthedocs.io/en/latest/internvl2.0/domain_adaptation.html)。
@@ -189,7 +190,6 @@
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-78B-MPO">🤗 link</a></td>
   </tr>
 </table>
-
 
 #### 多模态大语言模型 (InternVL 2.0)
 
@@ -415,14 +415,14 @@
 
   ViT-22B uses the private JFT-3B dataset.
 
-  | method              | #param | IN-1K | IN-ReaL | IN-V2 | IN-A  | IN-R  | IN-Sketch |
-  | ------------------- | :----: | :---: | :-----: | :---: | :---: | :---: | :-------: |
-  | OpenCLIP-G          |  1.8B  | 86.2  |  89.4   | 77.2  | 63.8  | 87.8  |   66.4    |
-  | DINOv2-g            |  1.1B  | 86.5  |  89.6   | 78.4  | 75.9  | 78.8  |   62.5    |
-  | EVA-01-CLIP-g       |  1.1B  | 86.5  |  89.3   | 77.4  | 70.5  | 87.7  |   63.1    |
-  | MAWS-ViT-6.5B       |  6.5B  | 87.8  |    -    |   -   |   -   |   -   |     -     |
-  | ViT-22B\*           | 21.7B  | 89.5  |  90.9   | 83.2  | 83.8  | 87.4  |     -     |
-  | InternViT-6B (ours) |  5.9B  | 88.2  |  90.4   | 79.9  | 77.5  | 89.8  |   69.1    |
+  | method              | #param | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |
+  | ------------------- | :----: | :---: | :-----: | :---: | :--: | :--: | :-------: |
+  | OpenCLIP-G          |  1.8B  | 86.2  |  89.4   | 77.2  | 63.8 | 87.8 |   66.4    |
+  | DINOv2-g            |  1.1B  | 86.5  |  89.6   | 78.4  | 75.9 | 78.8 |   62.5    |
+  | EVA-01-CLIP-g       |  1.1B  | 86.5  |  89.3   | 77.4  | 70.5 | 87.7 |   63.1    |
+  | MAWS-ViT-6.5B       |  6.5B  | 87.8  |    -    |   -   |  -   |  -   |     -     |
+  | ViT-22B\*           | 21.7B  | 89.5  |  90.9   | 83.2  | 83.8 | 87.4 |     -     |
+  | InternViT-6B (ours) |  5.9B  | 88.2  |  90.4   | 79.9  | 77.5 | 89.8 |   69.1    |
 
 - 语义分割 [\[查看详情\]](./segmentation#-evaluation)
 
@@ -438,12 +438,12 @@
 
 - 零样本图像分类 [\[查看详情\]](./clip_benchmark#imagenet-variants-and-objectnet)
 
-  | method            | IN-1K | IN-A  | IN-R  | IN-V2 | IN-Sketch | ObjectNet |
-  | ----------------- | :---: | :---: | :---: | :---: | :-------: | :-------: |
-  | OpenCLIP-G        | 80.1  | 69.3  | 92.1  | 73.6  |   68.9    |   73.0    |
-  | EVA-02-CLIP-E+    | 82.0  | 82.1  | 94.5  | 75.7  |   71.6    |   79.6    |
-  | ViT-22B\*         | 85.9  | 90.1  | 96.0  | 80.9  |     -     |   87.6    |
-  | InternVL-C (ours) | 83.2  | 83.8  | 95.5  | 77.3  |   73.9    |   80.6    |
+  | method            | IN-1K | IN-A | IN-R | IN-V2 | IN-Sketch | ObjectNet |
+  | ----------------- | :---: | :--: | :--: | :---: | :-------: | :-------: |
+  | OpenCLIP-G        | 80.1  | 69.3 | 92.1 | 73.6  |   68.9    |   73.0    |
+  | EVA-02-CLIP-E+    | 82.0  | 82.1 | 94.5 | 75.7  |   71.6    |   79.6    |
+  | ViT-22B\*         | 85.9  | 90.1 | 96.0 | 80.9  |     -     |   87.6    |
+  | InternVL-C (ours) | 83.2  | 83.8 | 95.5 | 77.3  |   73.9    |   80.6    |
 
 - 多语言零样本图像分类 [\[查看详情\]](./clip_benchmark#multilingual-imagenet-1k)
 
@@ -461,13 +461,13 @@
 
 - 零样本视频分类
 
-  | method            | #frame | K400  | K600  | K700  |
-  | ----------------- | :----: | :---: | :---: | :---: |
-  | OpenCLIP-G        |   1    | 65.9  | 66.1  | 59.2  |
-  | EVA-02-CLIP-E+    |   1    | 69.8  | 69.3  | 63.4  |
-  | InternVL-C (ours) |   1    | 71.0  | 71.3  | 65.7  |
-  | ViCLIP            |   8    | 75.7  | 73.5  | 66.4  |
-  | InternVL-C (ours) |   8    | 79.4  | 78.8  | 71.5  |
+  | method            | #frame | K400 | K600 | K700 |
+  | ----------------- | :----: | :--: | :--: | :--: |
+  | OpenCLIP-G        |   1    | 65.9 | 66.1 | 59.2 |
+  | EVA-02-CLIP-E+    |   1    | 69.8 | 69.3 | 63.4 |
+  | InternVL-C (ours) |   1    | 71.0 | 71.3 | 65.7 |
+  | ViCLIP            |   8    | 75.7 | 73.5 | 66.4 |
+  | InternVL-C (ours) |   8    | 79.4 | 78.8 | 71.5 |
 
 </details>
 
@@ -690,12 +690,12 @@
 
 - 多语言零样本图文对检索 [\[查看详情\]](./clip_benchmark#xtd)
 
-  | method            |  EN   |  ES   |  FR   |  ZH   |  IT   |  KO   |  RU   |  JP   | average |
-  | ----------------- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :-----: |
-  | AltCLIP           | 95.4  | 94.1  | 92.9  | 95.1  | 94.2  | 94.4  | 91.8  | 91.7  |  93.7   |
-  | OpenCLIP-XLM-R-H  | 97.3  | 96.1  | 94.5  | 94.7  | 96.0  | 90.2  | 93.9  | 94.0  |  94.6   |
-  | InternVL-C (ours) | 97.3  | 95.7  | 95.1  | 95.6  | 96.0  | 92.2  | 93.3  | 95.5  |  95.1   |
-  | InternVL-G (ours) | 98.6  | 97.7  | 96.5  | 96.7  | 96.9  | 95.1  | 94.8  | 96.1  |  96.6   |
+  | method            |  EN  |  ES  |  FR  |  ZH  |  IT  |  KO  |  RU  |  JP  | average |
+  | ----------------- | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :-----: |
+  | AltCLIP           | 95.4 | 94.1 | 92.9 | 95.1 | 94.2 | 94.4 | 91.8 | 91.7 |  93.7   |
+  | OpenCLIP-XLM-R-H  | 97.3 | 96.1 | 94.5 | 94.7 | 96.0 | 90.2 | 93.9 | 94.0 |  94.6   |
+  | InternVL-C (ours) | 97.3 | 95.7 | 95.1 | 95.6 | 96.0 | 92.2 | 93.3 | 95.5 |  95.1   |
+  | InternVL-G (ours) | 98.6 | 97.7 | 96.5 | 96.7 | 96.9 | 95.1 | 94.8 | 96.1 |  96.6   |
 
 </details>
 

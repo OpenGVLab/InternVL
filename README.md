@@ -19,6 +19,7 @@
 <img height="55" alt="image" src="https://github.com/user-attachments/assets/bd62ab46-f0ea-40c6-ab10-7fde671716cc">
 
 <!-- ![perform](https://github.com/user-attachments/assets/aab987fd-8811-4ff9-b5e0-1d08f0ad1f7a) -->
+
 ![perform](https://github.com/user-attachments/assets/5046239c-0b3d-450a-833b-fcaaecf8114b)
 
 </div>
@@ -26,7 +27,7 @@
 ## News 🚀🚀🚀
 
 - `2024/12/20`: 🚀 We release the [InternVL2.5-MPO](https://internvl.github.io/blog/2024-12-20-InternVL-2.5-MPO/), which is finetuned with [Mixed Preference Optimization](https://huggingface.co/papers/2411.10442) on [MMPR-v1.1](https://huggingface.co/datasets/OpenGVLab/MMPR-v1.1). **The resulting models outperform their counterparts without MPO by an average of 2 points across all model scales on the OpenCompass leaderboard.** These models are available at [HF link](https://huggingface.co/collections/OpenGVLab/internvl25-mpo-6753fed98cd828219b12f849).
-- `2024/12/17`: 🚀 [InternVL2/2.5](https://github.com/PaddlePaddle/PaddleMIX/tree/develop/paddlemix/examples/internvl2) is supported in [PaddleMIX](https://github.com/PaddlePaddle/PaddleMIX) by Paddle Team. 
+- `2024/12/17`: 🚀 [InternVL2/2.5](https://github.com/PaddlePaddle/PaddleMIX/tree/develop/paddlemix/examples/internvl2) is supported in [PaddleMIX](https://github.com/PaddlePaddle/PaddleMIX) by Paddle Team.
 - `2024/12/05`: 🚀 We release the [InternVL2.5](https://huggingface.co/collections/OpenGVLab/internvl-25-673e1019b66e2218f68d7c1c), an advanced multimodal large language model (MLLM) series with parameter coverage ranging from 1B to 78B. [InternVL2_5-78B](https://huggingface.co/OpenGVLab/InternVL2_5-78B) is the first open-source MLLMs to achieve over **70%** on the **MMMU benchmark**. matching the performance of leading closed-source commercial models like GPT-4o. These models are available at [HF link](https://huggingface.co/collections/OpenGVLab/internvl-25-673e1019b66e2218f68d7c1c).
 - `2024/11/14`: We introduce [MMPR](https://huggingface.co/datasets/OpenGVLab/MMPR), a high-quality, large-scale multimodal reasoning preference dataset, and [MPO](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/internvl2.0_mpo), an effective preference optimization algorithm. The resulting model, [InternVL2-8B-MPO](https://huggingface.co/OpenGVLab/InternVL2-8B-MPO), achieves an accuracy of 67.0 on MathVista. Please refer to our [paper](https://arxiv.org/abs/2411.10442), [project page](https://internvl.github.io/blog/2024-11-14-InternVL-2.0-MPO/) and [document](https://internvl.readthedocs.io/en/latest/internvl2.0/preference_optimization.html) for more details.
 - `2024/10/21`: We release the Mini-InternVL series. These models achieve impressive performance with minimal size: the 4B model achieves 90% of the performance with just 5% of the model size. For more details, please check our [project page](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/mini_internvl) and [document](https://internvl.readthedocs.io/en/latest/internvl2.0/domain_adaptation.html).
@@ -189,7 +190,6 @@
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-78B-MPO">🤗 link</a></td>
   </tr>
 </table>
-
 
 #### Multimodal Large Language Model (InternVL 2.0)
 
@@ -416,14 +416,14 @@
 
   ViT-22B uses the private JFT-3B dataset.
 
-  | method              | #param | IN-1K | IN-ReaL | IN-V2 | IN-A  | IN-R  | IN-Sketch |
-  | ------------------- | :----: | :---: | :-----: | :---: | :---: | :---: | :-------: |
-  | OpenCLIP-G          |  1.8B  | 86.2  |  89.4   | 77.2  | 63.8  | 87.8  |   66.4    |
-  | DINOv2-g            |  1.1B  | 86.5  |  89.6   | 78.4  | 75.9  | 78.8  |   62.5    |
-  | EVA-01-CLIP-g       |  1.1B  | 86.5  |  89.3   | 77.4  | 70.5  | 87.7  |   63.1    |
-  | MAWS-ViT-6.5B       |  6.5B  | 87.8  |    -    |   -   |   -   |   -   |     -     |
-  | ViT-22B\*           | 21.7B  | 89.5  |  90.9   | 83.2  | 83.8  | 87.4  |     -     |
-  | InternViT-6B (ours) |  5.9B  | 88.2  |  90.4   | 79.9  | 77.5  | 89.8  |   69.1    |
+  | method              | #param | IN-1K | IN-ReaL | IN-V2 | IN-A | IN-R | IN-Sketch |
+  | ------------------- | :----: | :---: | :-----: | :---: | :--: | :--: | :-------: |
+  | OpenCLIP-G          |  1.8B  | 86.2  |  89.4   | 77.2  | 63.8 | 87.8 |   66.4    |
+  | DINOv2-g            |  1.1B  | 86.5  |  89.6   | 78.4  | 75.9 | 78.8 |   62.5    |
+  | EVA-01-CLIP-g       |  1.1B  | 86.5  |  89.3   | 77.4  | 70.5 | 87.7 |   63.1    |
+  | MAWS-ViT-6.5B       |  6.5B  | 87.8  |    -    |   -   |  -   |  -   |     -     |
+  | ViT-22B\*           | 21.7B  | 89.5  |  90.9   | 83.2  | 83.8 | 87.4 |     -     |
+  | InternViT-6B (ours) |  5.9B  | 88.2  |  90.4   | 79.9  | 77.5 | 89.8 |   69.1    |
 
 - Semantic Segmentation [\[see details\]](./segmentation#-evaluation)
 
@@ -439,12 +439,12 @@
 
 - Zero-Shot Image Classification [\[see details\]](./clip_benchmark#imagenet-variants-and-objectnet)
 
-  | method            | IN-1K | IN-A  | IN-R  | IN-V2 | IN-Sketch | ObjectNet |
-  | ----------------- | :---: | :---: | :---: | :---: | :-------: | :-------: |
-  | OpenCLIP-G        | 80.1  | 69.3  | 92.1  | 73.6  |   68.9    |   73.0    |
-  | EVA-02-CLIP-E+    | 82.0  | 82.1  | 94.5  | 75.7  |   71.6    |   79.6    |
-  | ViT-22B\*         | 85.9  | 90.1  | 96.0  | 80.9  |     -     |   87.6    |
-  | InternVL-C (ours) | 83.2  | 83.8  | 95.5  | 77.3  |   73.9    |   80.6    |
+  | method            | IN-1K | IN-A | IN-R | IN-V2 | IN-Sketch | ObjectNet |
+  | ----------------- | :---: | :--: | :--: | :---: | :-------: | :-------: |
+  | OpenCLIP-G        | 80.1  | 69.3 | 92.1 | 73.6  |   68.9    |   73.0    |
+  | EVA-02-CLIP-E+    | 82.0  | 82.1 | 94.5 | 75.7  |   71.6    |   79.6    |
+  | ViT-22B\*         | 85.9  | 90.1 | 96.0 | 80.9  |     -     |   87.6    |
+  | InternVL-C (ours) | 83.2  | 83.8 | 95.5 | 77.3  |   73.9    |   80.6    |
 
 - Multilingual Zero-Shot Image Classification [\[see details\]](./clip_benchmark#multilingual-imagenet-1k)
 
@@ -462,13 +462,13 @@
 
 - Zero-Shot Video Classification
 
-  | method            | #frame | K400  | K600  | K700  |
-  | ----------------- | :----: | :---: | :---: | :---: |
-  | OpenCLIP-G        |   1    | 65.9  | 66.1  | 59.2  |
-  | EVA-02-CLIP-E+    |   1    | 69.8  | 69.3  | 63.4  |
-  | InternVL-C (ours) |   1    | 71.0  | 71.3  | 65.7  |
-  | ViCLIP            |   8    | 75.7  | 73.5  | 66.4  |
-  | InternVL-C (ours) |   8    | 79.4  | 78.8  | 71.5  |
+  | method            | #frame | K400 | K600 | K700 |
+  | ----------------- | :----: | :--: | :--: | :--: |
+  | OpenCLIP-G        |   1    | 65.9 | 66.1 | 59.2 |
+  | EVA-02-CLIP-E+    |   1    | 69.8 | 69.3 | 63.4 |
+  | InternVL-C (ours) |   1    | 71.0 | 71.3 | 65.7 |
+  | ViCLIP            |   8    | 75.7 | 73.5 | 66.4 |
+  | InternVL-C (ours) |   8    | 79.4 | 78.8 | 71.5 |
 
 </details>
 
@@ -691,12 +691,12 @@
 
 - Multilingual Zero-Shot Image-Text Retrieval on XTD [\[see details\]](./clip_benchmark#xtd)
 
-  | method            |  EN   |  ES   |  FR   |  ZH   |  IT   |  KO   |  RU   |  JP   | average |
-  | ----------------- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :-----: |
-  | AltCLIP           | 95.4  | 94.1  | 92.9  | 95.1  | 94.2  | 94.4  | 91.8  | 91.7  |  93.7   |
-  | OpenCLIP-XLM-R-H  | 97.3  | 96.1  | 94.5  | 94.7  | 96.0  | 90.2  | 93.9  | 94.0  |  94.6   |
-  | InternVL-C (ours) | 97.3  | 95.7  | 95.1  | 95.6  | 96.0  | 92.2  | 93.3  | 95.5  |  95.1   |
-  | InternVL-G (ours) | 98.6  | 97.7  | 96.5  | 96.7  | 96.9  | 95.1  | 94.8  | 96.1  |  96.6   |
+  | method            |  EN  |  ES  |  FR  |  ZH  |  IT  |  KO  |  RU  |  JP  | average |
+  | ----------------- | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :-----: |
+  | AltCLIP           | 95.4 | 94.1 | 92.9 | 95.1 | 94.2 | 94.4 | 91.8 | 91.7 |  93.7   |
+  | OpenCLIP-XLM-R-H  | 97.3 | 96.1 | 94.5 | 94.7 | 96.0 | 90.2 | 93.9 | 94.0 |  94.6   |
+  | InternVL-C (ours) | 97.3 | 95.7 | 95.1 | 95.6 | 96.0 | 92.2 | 93.3 | 95.5 |  95.1   |
+  | InternVL-G (ours) | 98.6 | 97.7 | 96.5 | 96.7 | 96.9 | 95.1 | 94.8 | 96.1 |  96.6   |
 
 </details>
 

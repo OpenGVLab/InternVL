@@ -34,12 +34,12 @@ def parse_answer(response):
     if response.count(answer_trigger) == 0:
         answer_trigger = '答案:'
 
-    assert response.count(answer_trigger) <= 2, f"Fail to find Answer, {response.count(answer_trigger)=}"
-    assert response.count('\n') >= 2, f"Fail to find rationale, {response=}"
+    assert response.count(answer_trigger) <= 2, f'Fail to find Answer, {response.count(answer_trigger)=}'
+    assert response.count('\n') >= 2, f'Fail to find rationale, {response=}'
 
     rationale, answer = response.rsplit(answer_trigger, 1)
-    assert len(rationale.strip()) > 0, f"Empty rationale:\n{response}"
-    assert '\n' not in answer.strip(), f"Answer with multiple paragraphs:\n{answer}"
+    assert len(rationale.strip()) > 0, f'Empty rationale:\n{response}'
+    assert '\n' not in answer.strip(), f'Answer with multiple paragraphs:\n{answer}'
 
     return rationale.strip(), answer.strip()
 
