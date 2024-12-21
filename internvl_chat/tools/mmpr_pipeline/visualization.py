@@ -214,7 +214,7 @@ def visualize_objects(md_str, image):
         for bbox in bbox_list:
             image_to_draw = image.copy()
             image_to_draw = draw_box(image=image_to_draw, bbox=bbox, bbox2category=bbox2category, bbox2cid=bbox2cid)
-            images.append(image_to_draw)
+            images.append((obj_name, image_to_draw))
 
     # extract scene graph
     scene_graph = []
@@ -242,7 +242,7 @@ def visualize_objects(md_str, image):
             for bbox in bboxes:
                 image_to_draw = image.copy()
                 image_to_draw = draw_box(image=image_to_draw, bbox=bbox, bbox2category=bbox2category, bbox2cid=bbox2cid)
-                images.append(image_to_draw)
+                images.append((bbox2category[json.dumps(bbox)], image_to_draw))
 
     # visualize edges in the scene graph
     for rel_name, bbox_list in relations.items():
@@ -256,7 +256,7 @@ def visualize_objects(md_str, image):
 
             relation_cnt += 1
             if relation_cnt % 2 == 0:
-                images.append(image_to_draw)
+                images.append((rel_name, image_to_draw))
 
         if relation_cnt % 2 != 0:
             print(f"Format Warning: {rel_name}, {relation_cnt}")
@@ -279,8 +279,8 @@ def process_item(item):
         md_str = md_str.replace(IMAGE_PLACEHOLDER, image_to_mdstring(image.copy()))
 
         images_with_bbox = visualize_objects(md_str, image.copy())
-        for idx, image_with_bbox in enumerate(images_with_bbox):
-            md_str = f'{md_str}\n\n### Image with region {idx}\n\n{image_to_mdstring(image_with_bbox.copy())}'
+        for idx, (desc, image_with_bbox) in enumerate(images_with_bbox):
+            md_str = f'{md_str}\n\n### Image with region {idx}\n\n{desc}\n\n{image_to_mdstring(image_with_bbox.copy())}'
 
     return md_str.replace('\\', '\\\\').replace('$', '\\$').replace('<', '\\<').replace('>', '\\>')
 

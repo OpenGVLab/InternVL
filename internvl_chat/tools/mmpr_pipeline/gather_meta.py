@@ -173,8 +173,15 @@ def main():
 
         is_private = (
             'DataReflow' in image_save_dir
-            or 'private' in dsname
             or 'private' in image_save_dir
+            or 'crawler' in image_save_dir
+            or 'gui' in image_save_dir
+            or 'internvl' in image_save_dir
+            or 'private' in dsname
+            or 'mmmu' in dsname
+            or 'gaokao' in dsname
+            or 'watermark' in dsname
+            or 'sa1b' in dsname
         )
 
         if root is None:
@@ -186,7 +193,7 @@ def main():
 
         meta_new[dsname] = info.copy()
         meta_new[dsname]['annotation'] = items_save_dir
-        meta_new[dsname]['is_private'] = is_private
+        # meta_new[dsname]['is_private'] = is_private
 
         if 'sa1b' not in dsname:
             meta_new[dsname]['root'] = image_save_dir
@@ -194,7 +201,7 @@ def main():
         with open(annotation) as file:
             lines = file.readlines()
 
-        if repeat_time < 1:
+        if repeat_time < 1 and args.down_sample:
             random.seed(ds_idx + args.seed)
             lines = random.sample(lines, k=int(len(lines) * repeat_time))
             meta_new[dsname]['repeat_time'] = 1
@@ -220,6 +227,7 @@ if __name__ == '__main__':
     parser.add_argument('--save-dir', type=str, default='')
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--save-image', action='store_true', default=False)
+    parser.add_argument('--down-sample', action='store_true', default=False)
     parser.add_argument('--keep-private-data', action='store_true', default=False)
     args = parser.parse_args()
 
@@ -232,4 +240,5 @@ if __name__ == '__main__':
     main()
 
 # srun -p Intern5 --gres=gpu:0 --ntasks=256 --ntasks-per-node=8 --cpus-per-task=2 python -u tools/mmpr_pipeline/gather_meta.py --save-image --keep-private-data
-# srun -p Intern5 --gres=gpu:0 --ntasks=256 --ntasks-per-node=8 --cpus-per-task=2 python -u tools/mmpr_pipeline/gather_meta.py --save-image --keep-private-data --meta-path /mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/shell/data/dev_mpo/meta_oc_data_241203_with_wh_v8.json --save-dir /mnt/petrelfs/wangweiyun/workspace_wwy/open_source/MMPR-Private-241215-v8-try2 --seed 100
+# srun -p Intern5 --gres=gpu:0 --ntasks=256 --ntasks-per-node=8 --cpus-per-task=2 python -u tools/mmpr_pipeline/gather_meta.py --save-image --keep-private-data --meta-path /mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/shell/data/dev_mpo/meta_oc_data_241203_with_wh_v11.json --save-dir /mnt/petrelfs/wangweiyun/workspace_wwy/open_source/MMPR-Private-241221
+# srun -p Intern5 --gres=gpu:0 --ntasks=256 --ntasks-per-node=8 --cpus-per-task=2 python -u tools/mmpr_pipeline/gather_meta.py --save-image --meta-path /mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/shell/data/dev_mpo/meta_oc_data_241203_with_wh_v11.json --save-dir /mnt/petrelfs/wangweiyun/workspace_wwy/open_source/MMPR-v1.1

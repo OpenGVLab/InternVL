@@ -2,7 +2,7 @@ import os
 import json
 from collections import defaultdict
 
-meta_path = '/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/shell/data/dev_mpo/meta_oc_data_241203_with_wh_v6.json'
+meta_path = '/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat/shell/data/dev_mpo/meta_oc_data_241203_with_wh_v9.json'
 DATA_DIR = '/mnt/petrelfs/wangweiyun/workspace_wwy/open_source/InternVL/internvl_chat'
 
 def parse_answer(response):
