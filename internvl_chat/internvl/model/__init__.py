@@ -31,6 +31,7 @@ def split_model(num_layers, vit_alpha=0.5):
     device_map['language_model.model.norm'] = 0
     device_map['language_model.lm_head'] = 0
     device_map[f'language_model.model.layers.{num_layers - 1}'] = 0
+    device_map['language_model.model.rotary_emb'] = 0
 
     return device_map
 
