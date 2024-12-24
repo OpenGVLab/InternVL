@@ -40,9 +40,9 @@ python eval/mmmu_pro/evaluate.py
 
 The following arguments can be configured for the evaluation script:
 
-| Argument    | Type  | Default                    | Description                                                                        |
-| ----------- | ----- | -------------------------- | ---------------------------------------------------------------------------------- |
-| `--model`   | `str` | `'OpenGVLab/InternVL2-8B'` | Specifies the model name to use in the pipeline.                                   |
-| `--mode`    | `str` | `'direct'`                 | Defines the operation mode, such as `direct` or `cot`.                             |
-| `--setting` | `str` | `'standard'`               | Determines the setting for processing the dataset, such as `standard` or `vision`. |
-| `--tp`      | `int` | `1`                        | Sets tensor parallelism (TP) for distributing computations across multiple GPUs.   |
+| Argument    | Type  | Default                    | Description                                                                                     |
+| ----------- | ----- | -------------------------- | ----------------------------------------------------------------------------------------------- |
+| `--model`   | `str` | `'OpenGVLab/InternVL2-8B'` | Specifies the model name to use in the pipeline.                                                |
+| `--mode`    | `str` | `'direct'`                 | Defines the operation mode, such as `direct` or `cot`.                                          |
+| `--setting` | `str` | `'standard (10 options)'`  | Determines the setting for processing the dataset, such as `standard (10 options)` or `vision`. |
+| `--tp`      | `int` | `1`                        | Sets tensor parallelism (TP) for distributing computations across multiple GPUs.                |
