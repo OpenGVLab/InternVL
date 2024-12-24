@@ -628,6 +628,18 @@ if [ ${DATASET} == "mmiu" ]; then
       eval/mmiu/evaluate_mmiu.py --checkpoint ${CHECKPOINT} "${ARGS[@]:2}"
 fi
 
+if [ ${DATASET} == "mmhal" ]; then
+    export http_proxy=http://closeai-proxy.pjlab.org.cn:23128
+    export https_proxy=http://closeai-proxy.pjlab.org.cn:23128
+    torchrun \
+      --nnodes=1 \
+      --node_rank=0 \
+      --master_addr=127.0.0.1 \
+      --nproc_per_node=${GPUS} \
+      --master_port=${MASTER_PORT} \
+      eval/mmhal/evaluate_mmhal.py --checkpoint ${CHECKPOINT} "${ARGS[@]:2}"
+fi
+
 if [ ${DATASET} == "mmmu-pro" ]; then
     python -u eval/mmmu_pro/evaluate_mmmu_pro.py --model ${CHECKPOINT} --mode direct --setting "standard (10 options)" "${ARGS[@]:2}"
     python -u eval/mmmu_pro/evaluate_mmmu_pro.py --model ${CHECKPOINT} --mode cot --setting "standard (10 options)" "${ARGS[@]:2}"
