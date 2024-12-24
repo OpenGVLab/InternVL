@@ -18,9 +18,7 @@
 <a href="https://trendshift.io/repositories/9803" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9803" alt="OpenGVLab%2FInternVL | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 <img height="55" alt="image" src="https://github.com/user-attachments/assets/bd62ab46-f0ea-40c6-ab10-7fde671716cc">
 
-<!-- ![perform](https://github.com/user-attachments/assets/aab987fd-8811-4ff9-b5e0-1d08f0ad1f7a) -->
-
-![perform](https://github.com/user-attachments/assets/5046239c-0b3d-450a-833b-fcaaecf8114b)
+![perform](https://github.com/user-attachments/assets/3059622e-e553-40ba-84ed-32d8f92a2f69)
 
 </div>
 
@@ -75,7 +73,8 @@
 
 - InternVL 系列
 
-  - InternVL 2.0: [\[介绍\]](https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html)  [\[快速开始\]](https://internvl.readthedocs.io/en/latest/internvl2.0/quick_start.html)  [\[微调\]](https://internvl.readthedocs.io/en/latest/internvl2.0/finetune.html)  [\[评测\]](https://internvl.readthedocs.io/en/latest/internvl2.0/evaluation.html)  [\[部署\]](https://internvl.readthedocs.io/en/latest/internvl2.0/deployment.html)
+  - InternVL 2.5: [\[介绍\]](https://internvl.readthedocs.io/en/latest/internvl2.5/introduction.html)  [\[快速开始\]](https://internvl.readthedocs.io/en/latest/internvl2.5/quick_start.html)  [\[微调\]](https://internvl.readthedocs.io/en/latest/internvl2.5/finetune.html)  [\[评测\]](https://internvl.readthedocs.io/en/latest/internvl2.5/evaluation.html)  [\[部署\]](https://internvl.readthedocs.io/en/latest/internvl2.5/deployment.html)  [\[偏好对齐\]](https://internvl.readthedocs.io/en/latest/internvl2.5/preference_optimization.html)
+  - InternVL 2.0: [\[介绍\]](https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html)  [\[快速开始\]](https://internvl.readthedocs.io/en/latest/internvl2.0/quick_start.html)  [\[微调\]](https://internvl.readthedocs.io/en/latest/internvl2.0/finetune.html)  [\[评测\]](https://internvl.readthedocs.io/en/latest/internvl2.0/evaluation.html)  [\[部署\]](https://internvl.readthedocs.io/en/latest/internvl2.0/deployment.html)  [\[偏好对齐\]](https://internvl.readthedocs.io/en/latest/internvl2.0/preference_optimization.html)
   - InternVL 1.5: [\[介绍\]](https://internvl.readthedocs.io/en/latest/internvl1.5/introduction.html)  [\[快速开始\]](https://internvl.readthedocs.io/en/latest/internvl1.5/quick_start.html)  [\[微调\]](https://internvl.readthedocs.io/en/latest/internvl1.5/finetune.html)  [\[评测\]](https://internvl.readthedocs.io/en/latest/internvl1.5/evaluation.html)  [\[部署\]](https://internvl.readthedocs.io/en/latest/internvl1.5/deployment.html)
   - InternVL 1.2: [\[介绍\]](https://internvl.readthedocs.io/en/latest/internvl1.2/introduction.html)  [\[快速开始\]](https://internvl.readthedocs.io/en/latest/internvl1.2/quick_start.html)  [\[微调\]](https://internvl.readthedocs.io/en/latest/internvl1.2/finetune.html)  [\[评测\]](https://internvl.readthedocs.io/en/latest/internvl1.2/evaluation.html)
   - InternVL 1.1: [\[介绍\]](https://internvl.readthedocs.io/en/latest/internvl1.1/introduction.html)  [\[快速开始\]](https://internvl.readthedocs.io/en/latest/internvl1.1/quick_start.html)  [\[微调\]](https://internvl.readthedocs.io/en/latest/internvl1.1/evaluation.html)
@@ -83,7 +82,7 @@
 
 ## 和 SOTA 多模态大模型对比
 
-![waic_performance](https://github.com/user-attachments/assets/38f82c34-20b4-4d11-8f3e-f76af1b013c2)
+![waic_performance](https://github.com/user-attachments/assets/d14a7ba3-1863-45d7-9d94-0ea8c3433ce4)
 
 ## 模型库
 
