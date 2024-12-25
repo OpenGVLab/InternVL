@@ -26,7 +26,7 @@ mkdir -p annotations && cd annotations/
 wget https://github.com/OpenGVLab/InternVL/releases/download/data/coco_karpathy_test.json
 wget https://github.com/OpenGVLab/InternVL/releases/download/data/coco_karpathy_test_gt.json
 
-cd ../../../
+cd ../../..
 ```
 
 After preparation is complete, the directory structure is:
