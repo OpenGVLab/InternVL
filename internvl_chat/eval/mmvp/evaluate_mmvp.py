@@ -55,11 +55,8 @@ class MMVPDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         data = self.data[idx]
-        # {'lndex': '1', 'Question': "Are the butterfly's wings closer to being open or closed?",
-        #  'Options': '(a) Open (b) Closed', 'Correct Answer': '(a)'}
-        data_id = data['lndex']
+        data_id = data['lndex'] if 'lndex' in data else data['Index']
         question = data['Question']
-        # question = '<image>\n' + question
         image = os.path.join(self.root + '/MMVP Images', data_id + '.jpg')
         image = Image.open(image).convert('RGB')
 
@@ -89,7 +86,6 @@ class MMVPDataset(torch.utils.data.Dataset):
         if len(choice_txt) > 0:
             question += '\n' + choice_txt
         question += '\n' + self.prompt
-        print(question, answer)
         return {
             'question': question,
             'pixel_values': pixel_values,
