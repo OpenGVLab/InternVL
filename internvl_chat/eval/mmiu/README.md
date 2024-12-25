@@ -40,13 +40,13 @@ data/mmiu
 To run the evaluation, execute the following command on an 8-GPU setup:
 
 ```shell
-torchrun --nproc_per_node=8 eval/mmiu/evaluate_mmiu.py --checkpoint ${CHECKPOINT} --dynamic
+torchrun --nproc_per_node=8 eval/mmiu/evaluate_mmiu.py --checkpoint ${CHECKPOINT} --dynamic --max-num 12
 ```
 
 Alternatively, you can run the following simplified command:
 
 ```shell
-GPUS=8 sh evaluate.sh ${CHECKPOINT} mmiu --dynamic
+GPUS=8 sh evaluate.sh ${CHECKPOINT} mmiu --dynamic --max-num 12
 ```
 
 ### Arguments
@@ -58,6 +58,6 @@ The following arguments can be configured for the evaluation script:
 | `--checkpoint`   | `str`  | `''`     | Path to the model checkpoint.                                                                                     |
 | `--datasets`     | `str`  | `'mmiu'` | Comma-separated list of datasets to evaluate.                                                                     |
 | `--dynamic`      | `flag` | `False`  | Enables dynamic high resolution preprocessing.                                                                    |
-| `--max-num`      | `int`  | `6`      | Maximum tile number for dynamic high resolution.                                                                  |
+| `--max-num`      | `int`  | `12`     | Maximum tile number for dynamic high resolution.                                                                  |
 | `--load-in-8bit` | `flag` | `False`  | Loads the model weights in 8-bit precision.                                                                       |
 | `--auto`         | `flag` | `False`  | Automatically splits a large model across 8 GPUs when needed, useful for models too large to fit on a single GPU. |
