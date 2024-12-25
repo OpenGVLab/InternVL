@@ -14,19 +14,19 @@ This folder contains the implementation of the InternVL-Chat.
 
 ### 🏆 **InternVL Family**
 
-- **InternVL 2.5**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl2.5/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl2.5/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl2.5/finetune.html) | 📊 [Evaluate](https://internvl.readthedocs.io/en/latest/internvl2.5/evaluation.html) | 📦 [Deploy](https://internvl.readthedocs.io/en/latest/internvl2.5/deployment.html) | 🎯 [MPO](https://internvl.readthedocs.io/en/latest/internvl2.5/preference_optimization.html)
-- **InternVL 2.0**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl2.0/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl2.0/finetune.html) | 📊 [Evaluate](https://internvl.readthedocs.io/en/latest/internvl2.0/evaluation.html) | 📦 [Deploy](https://internvl.readthedocs.io/en/latest/internvl2.0/deployment.html) | 🎯 [MPO](https://internvl.readthedocs.io/en/latest/internvl2.0/preference_optimization.html)
-- **InternVL 1.5**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl1.5/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl1.5/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl1.5/finetune.html) | 📊 [Evaluate](https://internvl.readthedocs.io/en/latest/internvl1.5/evaluation.html) | 📦 [Deploy](https://internvl.readthedocs.io/en/latest/internvl1.5/deployment.html)
-- **InternVL 1.2**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl1.2/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl1.2/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl1.2/finetune.html) | 📊 [Evaluate](https://internvl.readthedocs.io/en/latest/internvl1.2/evaluation.html)
-- **InternVL 1.1**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl1.1/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl1.1/quick_start.html) | 📊 [Evaluation](https://internvl.readthedocs.io/en/latest/internvl1.1/evaluation.html)
+- **InternVL 2.5**: 📖 [Introduction](https://internvl.readthedocs.io/en/latest/internvl2.5/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl2.5/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl2.5/finetune.html) | 📊 [Evaluation](https://internvl.readthedocs.io/en/latest/internvl2.5/evaluation.html) | 📦 [Deployment](https://internvl.readthedocs.io/en/latest/internvl2.5/deployment.html) | 🎯 [Preference Optimization](https://internvl.readthedocs.io/en/latest/internvl2.5/preference_optimization.html)
+- **InternVL 2.0**: 📖 [Introduction](https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl2.0/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl2.0/finetune.html) | 📊 [Evaluation](https://internvl.readthedocs.io/en/latest/internvl2.0/evaluation.html) | 📦 [Deployment](https://internvl.readthedocs.io/en/latest/internvl2.0/deployment.html) | 🎯 [Preference Optimization](https://internvl.readthedocs.io/en/latest/internvl2.0/preference_optimization.html)
+- **InternVL 1.5**: 📖 [Introduction](https://internvl.readthedocs.io/en/latest/internvl1.5/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl1.5/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl1.5/finetune.html) | 📊 [Evaluation](https://internvl.readthedocs.io/en/latest/internvl1.5/evaluation.html) | 📦 [Deployment](https://internvl.readthedocs.io/en/latest/internvl1.5/deployment.html)
+- **InternVL 1.2**: 📖 [Introduction](https://internvl.readthedocs.io/en/latest/internvl1.2/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl1.2/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl1.2/finetune.html) | 📊 [Evaluation](https://internvl.readthedocs.io/en/latest/internvl1.2/evaluation.html)
+- **InternVL 1.1**: 📖 [Introduction](https://internvl.readthedocs.io/en/latest/internvl1.1/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl1.1/quick_start.html) | 📊 [Evaluation](https://internvl.readthedocs.io/en/latest/internvl1.1/evaluation.html)
 
-### Introduction
+# Introduction
 
 We are excited to introduce **InternVL 2.5**, an advanced multimodal large language model (MLLM) series that builds upon InternVL 2.0, maintaining its core model architecture while introducing significant enhancements in training and testing strategies as well as data quality.
 
 ![image/png](https://cdn-uploads.huggingface.co/production/uploads/64119264f0f81eb569e0d569/5HDAGOQOZvS1EtI107Ac-.png)
 
-### InternVL 2.5 Family
+## InternVL 2.5 Family
 
 In the following table, we provide an overview of the InternVL 2.5 series.
 
@@ -40,7 +40,7 @@ In the following table, we provide an overview of the InternVL 2.5 series.
 | InternVL2_5-38B |   [InternViT-6B-448px-V2_5](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5)   |    [Qwen2.5-32B-Instruct](https://huggingface.co/Qwen/Qwen2.5-32B-Instruct)    | [🤗 link](https://huggingface.co/OpenGVLab/InternVL2_5-38B) |
 | InternVL2_5-78B |   [InternViT-6B-448px-V2_5](https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5)   |    [Qwen2.5-72B-Instruct](https://huggingface.co/Qwen/Qwen2.5-72B-Instruct)    | [🤗 link](https://huggingface.co/OpenGVLab/InternVL2_5-78B) |
 
-### Model Architecture
+## Model Architecture
 
 As shown in the following figure, InternVL 2.5 retains the same model architecture as its predecessors, InternVL 1.5 and 2.0, following the "ViT-MLP-LLM" paradigm. In this new version, we integrate a newly incrementally pre-trained InternViT with various pre-trained LLMs, including InternLM 2.5 and Qwen 2.5, using a randomly initialized MLP projector.
 
@@ -48,9 +48,9 @@ As shown in the following figure, InternVL 2.5 retains the same model architectu
 
 As in the previous version, we applied a pixel unshuffle operation, reducing the number of visual tokens to one-quarter of the original. Besides, we adopted a similar dynamic resolution strategy as InternVL 1.5, dividing images into tiles of 448×448 pixels. The key difference, starting from InternVL 2.0, is that we additionally introduced support for multi-image and video data.
 
-### Training Strategy
+## Training Strategy
 
-#### Dynamic High-Resolution for Multimodal Data
+### Dynamic High-Resolution for Multimodal Data
 
 In InternVL 2.0 and 2.5, we extend the dynamic high-resolution training approach, enhancing its capabilities to handle multi-image and video datasets.
 
@@ -62,7 +62,7 @@ In InternVL 2.0 and 2.5, we extend the dynamic high-resolution training approach
 
 - For videos, each frame is resized to 448×448. Frames are labeled with tags like `Frame-1` and enclosed in `<img>` and `</img>` tags, similar to images.
 
-#### Single Model Training Pipeline
+### Single Model Training Pipeline
 
 The training pipeline for a single model in InternVL 2.5 is structured across three stages, designed to enhance the model's visual perception and multimodal capabilities.
 
@@ -74,7 +74,7 @@ The training pipeline for a single model in InternVL 2.5 is structured across th
 
 - **Stage 2: Full Model Instruction Tuning.** The entire model is trained on high-quality multimodal instruction datasets. Strict data quality controls are enforced to prevent degradation of the LLM, as noisy data can cause issues like repetitive or incorrect outputs. After this stage, the training process is complete.
 
-#### Progressive Scaling Strategy
+### Progressive Scaling Strategy
 
 We introduce a progressive scaling strategy to align the vision encoder with LLMs efficiently. This approach trains with smaller LLMs first (e.g., 20B) to optimize foundational visual capabilities and cross-modal alignment before transferring the vision encoder to larger LLMs (e.g., 72B) without retraining. This reuse skips intermediate stages for larger models.
 
@@ -82,7 +82,7 @@ We introduce a progressive scaling strategy to align the vision encoder with LLM
 
 Compared to Qwen2-VL's 1.4 trillion tokens, InternVL2.5-78B uses only 120 billion tokens—less than one-tenth. This strategy minimizes redundancy, maximizes pre-trained component reuse, and enables efficient training for complex vision-language tasks.
 
-#### Training Enhancements
+### Training Enhancements
 
 To improve real-world adaptability and performance, we introduce two key techniques:
 
@@ -90,9 +90,9 @@ To improve real-world adaptability and performance, we introduce two key techniq
 
 - **Loss Reweighting**: To balance the NTP loss across responses of different lengths, we use a reweighting strategy called **square averaging**. This method balances contributions from responses of varying lengths, mitigating biases toward longer or shorter responses.
 
-#### Data Organization
+### Data Organization
 
-##### Dataset Configuration
+#### Dataset Configuration
 
 In InternVL 2.0 and 2.5, the organization of the training data is controlled by several key parameters to optimize the balance and distribution of datasets during training.
 
@@ -104,7 +104,7 @@ In InternVL 2.0 and 2.5, the organization of the training data is controlled by 
 
 - **Repeat Factor:** The repeat factor `r` adjusts dataset sampling frequency. Values below 1 reduce a dataset's weight, while values above 1 increase it. This ensures balanced training across tasks and prevents overfitting or underfitting.
 
-##### Data Filtering Pipeline
+#### Data Filtering Pipeline
 
 During development, we found that LLMs are highly sensitive to data noise, with even small anomalies—like outliers or repetitive data—causing abnormal behavior during inference. Repetitive generation, especially in long-form or CoT reasoning tasks, proved particularly harmful.
 
@@ -125,59 +125,59 @@ For **multimodal data**, two strategies are used:
 1. **Repetition Detection**: Repetitive samples in non-academic datasets are flagged and manually reviewed to prevent pattern loops. High-quality datasets are exempt from this process.
 2. **Heuristic Rule-Based Filtering**: Similar rules are applied to detect visual anomalies, with flagged data verified manually to maintain integrity.
 
-##### Training Data
+#### Training Data
 
 As shown in the following figure, from InternVL 1.5 to 2.0 and then to 2.5, the fine-tuning data mixture has undergone iterative improvements in scale, quality, and diversity. For more information about the training data, please refer to our technical report.
 
 ![image/png](https://cdn-uploads.huggingface.co/production/uploads/64119264f0f81eb569e0d569/GaTY9Lde02YzclASMthDa.png)
 
-### Evaluation on Multimodal Capability
+## Evaluation on Multimodal Capability
 
-#### Multimodal Reasoning and Mathematics
+### Multimodal Reasoning and Mathematics
 
 ![image/png](https://cdn-uploads.huggingface.co/production/uploads/64119264f0f81eb569e0d569/ihFWMRHbF0lpFTkLqnnj1.png)
 
 ![image/png](https://cdn-uploads.huggingface.co/production/uploads/64119264f0f81eb569e0d569/Nrzq0kjlitjp_jrJCqtwX.png)
 
-#### OCR, Chart, and Document Understanding
+### OCR, Chart, and Document Understanding
 
 ![image/png](https://cdn-uploads.huggingface.co/production/uploads/64119264f0f81eb569e0d569/3yCMoLjlbsqY7ZJViGzih.png)
 
-#### Multi-Image & Real-World Comprehension
+### Multi-Image & Real-World Comprehension
 
 ![image/png](https://cdn-uploads.huggingface.co/production/uploads/64119264f0f81eb569e0d569/DSnalmEyhDVQ9GE0GPCla.png)
 
-#### Comprehensive Multimodal & Hallucination Evaluation
+### Comprehensive Multimodal & Hallucination Evaluation
 
 ![image/png](https://cdn-uploads.huggingface.co/production/uploads/64119264f0f81eb569e0d569/Z7Raj3TGDiV1H81pDHtoG.png)
 
-#### Visual Grounding
+### Visual Grounding
 
 ![image/png](https://cdn-uploads.huggingface.co/production/uploads/64119264f0f81eb569e0d569/lPcIrng8MPSg_PM1hpDPt.png)
 
-#### Multimodal Multilingual Understanding
+### Multimodal Multilingual Understanding
 
 ![image/png](https://cdn-uploads.huggingface.co/production/uploads/64119264f0f81eb569e0d569/BPpbAOX36RV8RTnm3j-gs.png)
 
-#### Video Understanding
+### Video Understanding
 
 ![image/png](https://cdn-uploads.huggingface.co/production/uploads/64006c09330a45b03605bba3/tcwH-i1qc8H16En-7AZ5M.png)
 
-### Evaluation on Language Capability
+## Evaluation on Language Capability
 
 Training InternVL 2.0 models led to a decline in pure language capabilities. InternVL 2.5 addresses this by collecting more high-quality open-source data and filtering out low-quality data, achieving better preservation of pure language performance.
 
 ![image/png](https://cdn-uploads.huggingface.co/production/uploads/64119264f0f81eb569e0d569/mxuSKvSY-kfI8zePpXj6y.png)
 
-### Quick Start
+## Quick Start
 
 We provide an example code to run `InternVL2_5-8B` using `transformers`.
 
 > Please use transformers>=4.37.2 to ensure the model works normally.
 
-#### Model Loading
+### Model Loading
 
-##### 16-bit (bf16 / fp16)
+#### 16-bit (bf16 / fp16)
 
 ```python
 import torch
@@ -191,7 +191,7 @@ model = AutoModel.from_pretrained(
     trust_remote_code=True).eval().cuda()
 ```
 
-##### BNB 8-bit Quantization
+#### BNB 8-bit Quantization
 
 ```python
 import torch
@@ -206,7 +206,7 @@ model = AutoModel.from_pretrained(
     trust_remote_code=True).eval()
 ```
 
-##### Multiple GPUs
+#### Multiple GPUs
 
 The reason for writing the code this way is to avoid errors that occur during multi-GPU inference due to tensors not being on the same device. By ensuring that the first and last layers of the large language model (LLM) are on the same device, we prevent such errors.
 
@@ -252,7 +252,7 @@ model = AutoModel.from_pretrained(
     device_map=device_map).eval()
 ```
 
-#### Inference with Transformers
+### Inference with Transformers
 
 ```python
 import numpy as np
@@ -470,7 +470,7 @@ response, history = model.chat(tokenizer, pixel_values, question, generation_con
 print(f'User: {question}\nAssistant: {response}')
 ```
 
-##### Streaming Output
+#### Streaming Output
 
 Besides this method, you can also use the following code to get streamed output.
 
@@ -499,13 +499,13 @@ for new_text in streamer:
     print(new_text, end='', flush=True)  # Print each new chunk of generated text on the same line
 ```
 
-### Finetune
+## Finetune
 
 Many repositories now support fine-tuning of the InternVL series models, including [InternVL](https://github.com/OpenGVLab/InternVL), [SWIFT](https://github.com/modelscope/ms-swift), [XTurner](https://github.com/InternLM/xtuner), and others. Please refer to their documentation for more details on fine-tuning.
 
-### Deployment
+## Deployment
 
-#### LMDeploy
+### LMDeploy
 
 LMDeploy is a toolkit for compressing, deploying, and serving LLMs & VLMs.
 
@@ -515,7 +515,7 @@ pip install lmdeploy>=0.6.4
 
 LMDeploy abstracts the complex inference process of multi-modal Vision-Language Models (VLM) into an easy-to-use pipeline, similar to the Large Language Model (LLM) inference pipeline.
 
-##### A 'Hello, world' Example
+#### A 'Hello, world' Example
 
 ```python
 from lmdeploy import pipeline, TurbomindEngineConfig
@@ -530,7 +530,7 @@ print(response.text)
 
 If `ImportError` occurs while executing this case, please install the required dependency packages as prompted.
 
-##### Multi-images Inference
+#### Multi-images Inference
 
 When dealing with multiple images, you can put them all in one list. Keep in mind that multiple images will lead to a higher number of input tokens, and as a result, the size of the context window typically needs to be increased.
 
@@ -553,7 +553,7 @@ response = pipe((f'Image-1: {IMAGE_TOKEN}\nImage-2: {IMAGE_TOKEN}\ndescribe thes
 print(response.text)
 ```
 
-##### Batch Prompts Inference
+#### Batch Prompts Inference
 
 Conducting inference with batch prompts is quite straightforward; just place them within a list structure:
 
@@ -573,7 +573,7 @@ response = pipe(prompts)
 print(response)
 ```
 
-##### Multi-turn Conversation
+#### Multi-turn Conversation
 
 There are two ways to do the multi-turn conversations with the pipeline. One is to construct messages according to the format of OpenAI and use above introduced method, the other is to use the `pipeline.chat` interface.
 
@@ -592,7 +592,7 @@ sess = pipe.chat('What is the woman doing?', session=sess, gen_config=gen_config
 print(sess.response.text)
 ```
 
-##### Service
+#### Service
 
 LMDeploy's `api_server` enables models to be easily packed into services with a single command. The provided RESTful APIs are compatible with OpenAI's interfaces. Below are an example of service startup:
 
