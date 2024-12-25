@@ -14,6 +14,12 @@ The evaluation script will automatically download the MMMU-Pro dataset from Hugg
 
 ## 🏃 Evaluation Execution
 
+This evaluation script requires `lmdeploy`. If it's not installed, run the following command:
+
+```shell
+pip install lmdeploy>=0.5.3 --no-deps
+```
+
 To run the evaluation, execute the following command on an 1-GPU setup:
 
 ```shell

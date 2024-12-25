@@ -41,6 +41,8 @@ After preparation is complete, the directory structure is:
 
 ## 🏃 Evaluation Execution
 
+> ⚠️ Note: For testing InternVL (1.5, 2.0, 2.5, and later versions), always enable `--dynamic` to perform dynamic resolution testing.
+
 To run the evaluation, execute the following command on an 8-GPU setup:
 
 ```shell
