@@ -225,7 +225,7 @@
   <tr>
     <td>InternVL2-4B</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">InternViT-300M-448px</a></td>
-    <td><a href="https://huggingface.co/microsoft/Phi-3-mini-128k-instruct">Phi-3-mini-128k-instruct</a></td>
+    <td><a href="https://huggingface.co/microsoft/Phi-3-mini-128k-instruct">Phi&#8209;3&#8209;mini&#8209;128k&#8209;instruct</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-4B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-4B">🤖 link</a></td>
     <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
@@ -275,7 +275,7 @@
     <th>Note</th>
   </tr>
   <tr>
-    <td>Mini-InternVL-Chat-4B-V1-5</td>
+    <td>Mini&#8209;InternVL&#8209;Chat&#8209;4B&#8209;V1&#8209;5</td>
     <td>2024.05.28</td>
     <td><a href="https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/Mini-InternVL-Chat-4B-V1-5">🤖 link</a></td>
@@ -342,18 +342,18 @@
     <th>MS&nbsp;Link</th>
     <th>Note</th>
   </tr>
-  <td>InternViT-300M-448px-V2_5</td>
+  <tr>
+    <td>InternViT-300M-448px-V2_5</td>
     <td>2024.12.05</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternViT-300M-448px-V2_5">🤖 link</a></td>
-    <td></td>
     <td>🚀🚀 一个更强的轻量视觉编码器 (🔥新)</td>
   </tr>
+  <tr>
     <td>InternViT-6B-448px-V2_5</td>
     <td>2024.12.05</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternViT-6B-448px-V2_5">🤖 link</a></td>
-    <td></td>
     <td>🚀🚀 拥有更强的视觉特征提取能力 (🔥新)</td>
   </tr>
   <tr>
@@ -361,14 +361,14 @@
     <td>2024.05.25</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternViT-300M-448px">🤖 link</a></td>
-    <td>蒸馏的小型视觉基础模型，具有 300M 参数（🔥新）</td>
+    <td>蒸馏的小型视觉基础模型，具有 300M 参数</td>
   </tr>
   <tr>
-    <td>InternViT-6B-448px-V1-5</td>
+    <td>InternViT&#8209;6B&#8209;448px&#8209;V1&#8209;5</td>
     <td>2024.04.20</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternViT-6B-448px-V1-5">🤖 link</a></td>
-    <td>通过增量预训练支持动态分辨率和超强的 OCR 特征提取能力（🔥新）</td>
+    <td>通过增量预训练支持动态分辨率和超强的 OCR 特征提取能力</td>
   </tr>
   <tr>
     <td>InternViT-6B-448px-V1-2</td>
