@@ -404,11 +404,11 @@ GPUS=8 sh evaluate.sh ${CHECKPOINT} vqa-infovqa-test --dynamic --max-num 24
 
 The following arguments can be configured for the evaluation script:
 
-| Argument         | Type   | Default                   | Description                                                                                                       |
-| ---------------- | ------ | ------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `--checkpoint`   | `str`  | `''`                      | Path to the model checkpoint.                                                                                     |
+| Argument         | Type   | Default     | Description                                                                                                       |
+| ---------------- | ------ | ----------- | ----------------------------------------------------------------------------------------------------------------- |
+| `--checkpoint`   | `str`  | `''`        | Path to the model checkpoint.                                                                                     |
 | `--datasets`     | `str`  | `okvqa_val` | Comma-separated list of datasets to evaluate.                                                                     |
-| `--dynamic`      | `flag` | `False`                   | Enables dynamic high resolution preprocessing.                                                                    |
-| `--max-num`      | `int`  | `6`                       | Maximum tile number for dynamic high resolution.                                                                  |
-| `--load-in-8bit` | `flag` | `False`                   | Loads the model weights in 8-bit precision.                                                                       |
-| `--auto`         | `flag` | `False`                   | Automatically splits a large model across 8 GPUs when needed, useful for models too large to fit on a single GPU. |
+| `--dynamic`      | `flag` | `False`     | Enables dynamic high resolution preprocessing.                                                                    |
+| `--max-num`      | `int`  | `6`         | Maximum tile number for dynamic high resolution.                                                                  |
+| `--load-in-8bit` | `flag` | `False`     | Loads the model weights in 8-bit precision.                                                                       |
+| `--auto`         | `flag` | `False`     | Automatically splits a large model across 8 GPUs when needed, useful for models too large to fit on a single GPU. |
