@@ -90,9 +90,9 @@ To improve real-world adaptability and performance, we introduce two key techniq
 
 - **Loss Reweighting**: To balance the NTP loss across responses of different lengths, we use a reweighting strategy called **square averaging**. This method balances contributions from responses of varying lengths, mitigating biases toward longer or shorter responses.
 
-### Data Organization
+## Data Organization
 
-#### Dataset Configuration
+### Dataset Configuration
 
 In InternVL 2.0 and 2.5, the organization of the training data is controlled by several key parameters to optimize the balance and distribution of datasets during training.
 
@@ -104,7 +104,7 @@ In InternVL 2.0 and 2.5, the organization of the training data is controlled by 
 
 - **Repeat Factor:** The repeat factor `r` adjusts dataset sampling frequency. Values below 1 reduce a dataset's weight, while values above 1 increase it. This ensures balanced training across tasks and prevents overfitting or underfitting.
 
-#### Data Filtering Pipeline
+### Data Filtering Pipeline
 
 During development, we found that LLMs are highly sensitive to data noise, with even small anomalies—like outliers or repetitive data—causing abnormal behavior during inference. Repetitive generation, especially in long-form or CoT reasoning tasks, proved particularly harmful.
 
@@ -125,7 +125,7 @@ For **multimodal data**, two strategies are used:
 1. **Repetition Detection**: Repetitive samples in non-academic datasets are flagged and manually reviewed to prevent pattern loops. High-quality datasets are exempt from this process.
 2. **Heuristic Rule-Based Filtering**: Similar rules are applied to detect visual anomalies, with flagged data verified manually to maintain integrity.
 
-#### Training Data
+### Training Data
 
 As shown in the following figure, from InternVL 1.5 to 2.0 and then to 2.5, the fine-tuning data mixture has undergone iterative improvements in scale, quality, and diversity. For more information about the training data, please refer to our technical report.
 
@@ -510,7 +510,7 @@ Many repositories now support fine-tuning of the InternVL series models, includi
 LMDeploy is a toolkit for compressing, deploying, and serving LLMs & VLMs.
 
 ```sh
-pip install lmdeploy>=0.6.4
+pip install lmdeploy>=0.6.4 --no-deps
 ```
 
 LMDeploy abstracts the complex inference process of multi-modal Vision-Language Models (VLM) into an easy-to-use pipeline, similar to the Large Language Model (LLM) inference pipeline.
