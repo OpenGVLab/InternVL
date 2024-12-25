@@ -363,7 +363,7 @@ if __name__ == '__main__':
     parser.add_argument('--out-dir', type=str, default='results')
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--dynamic', action='store_true')
-    parser.add_argument('--max-num', type=int, default=6)
+    parser.add_argument('--max-num', type=int, default=1)
     parser.add_argument('--load-in-8bit', action='store_true')
     parser.add_argument('--load-in-4bit', action='store_true')
     parser.add_argument('--auto', action='store_true')

@@ -75,7 +75,7 @@ class MantisEvalDataset(torch.utils.data.Dataset):
                 images += tiles
                 num_patches_list.append(len(tiles))
         else:
-            images = [image]
+            images = image_list
             num_patches_list.append(1)
         pixel_values = [self.transform(image) for image in images]
         pixel_values = torch.stack(pixel_values)

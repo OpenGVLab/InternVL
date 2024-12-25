@@ -232,7 +232,7 @@ def query_image_generation(response, sd_worker_url, timeout=15):
         payload = {'caption': match.group(1)}
         print('drawing-instruction:', payload)
         response = requests.post(sd_worker_url, json=payload, timeout=timeout)
-        response.raise_for_status()  # 检查HTTP请求是否成功
+        response.raise_for_status()
         image = Image.open(BytesIO(response.content))
         return image
     else:

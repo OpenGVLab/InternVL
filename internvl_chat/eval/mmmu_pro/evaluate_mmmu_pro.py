@@ -14,7 +14,7 @@ os.environ['HF_HOME'] = './data/MMMU'
 argparse = argparse.ArgumentParser()
 argparse.add_argument('--model', type=str, default='OpenGVLab/InternVL2-8B')
 argparse.add_argument('--mode', type=str, default='direct')
-argparse.add_argument('--setting', type=str, default='standard')
+argparse.add_argument('--setting', type=str, default='standard (10 options)')
 argparse.add_argument('--tp', type=int, default=1)
 args = argparse.parse_args()
 
