@@ -14,13 +14,18 @@ Follow the instructions below to prepare the data:
 
 ```shell
 # Step 1: Create the data directory
-mkdir -p data/scienceqa && cd data/scienceqa
+mkdir -p data/scienceqa/images && cd data/scienceqa/images
 
-# Step 2: Download dataset from Google Drive
-# https://drive.google.com/drive/folders/16kuhXdM-MOhYcFIyRj91WvnDnjnF-xHw
+# Step 2: Download images
+wget https://scienceqa.s3.us-west-1.amazonaws.com/images/test.zip && unzip test.zip
 
-# Step 3: Download converted file (LLaVA format)
-wget https://huggingface.co/OpenGVLab/InternVL/resolve/main/scienceqa_test_img.jsonl
+cd ..
+
+# Step 3: Download original questions
+wget https://github.com/lupantech/ScienceQA/blob/main/data/scienceqa/problems.json
+
+# Step 4: Download converted files
+wget https://ofasys-wlcb.oss-cn-wulanchabu.aliyuncs.com/Qwen-VL/evaluation/scienceqa/scienceqa_test_img.jsonl
 
 cd ../..
 ```

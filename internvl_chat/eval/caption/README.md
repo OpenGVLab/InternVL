@@ -89,6 +89,14 @@ wget https://nocaps.s3.amazonaws.com/nocaps_val_4500_captions.json
 cd ../..
 ```
 
+After preparation is complete, the directory structure is:
+
+```shell
+data/nocaps
+├── images
+└── nocaps_val_4500_captions.json
+```
+
 ## 🏃 Evaluation Execution
 
 > ⚠️ Note: For testing InternVL (1.5, 2.0, 2.5, and later versions), always enable `--dynamic` to perform dynamic resolution testing.

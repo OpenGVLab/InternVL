@@ -118,9 +118,15 @@ def split_model(model_name, vit_alpha=0.5):
     world_size = torch.cuda.device_count()
     num_layers = {
         'InternVL-Chat-V1-1': 40, 'InternVL-Chat-V1-2': 60, 'InternVL-Chat-V1-2-Plus': 60,
+        # InternVL 1.5 Series
         'Mini-InternVL-2B-V1-5': 24, 'Mini-InternVL-4B-V1-5': 32, 'InternVL-Chat-V1-5': 48,
-        'InternVL2-8B': 32, 'InternVL2-26B': 48,  'InternVL2-40B': 60, 'InternVL2-Llama3-76B': 80,
-        'InternVL2-78B': 80, 'InternVL2-Pro': 80}[model_name]
+        # InternVL 2.0 Series
+        'InternVL2-8B': 32, 'InternVL2-26B': 48, 'InternVL2-40B': 60, 'InternVL2-Llama3-76B': 80,
+        'InternVL2-78B': 80, 'InternVL2-Pro': 80,
+        # InternVL 2.5 Series
+        'InternVL2_5-1B': 24, 'InternVL2_5-2B': 24, 'InternVL2_5-4B': 36, 'InternVL2_5-8B': 32,
+        'InternVL2_5-26B': 48, 'InternVL2_5-38B': 64, 'InternVL2_5-78B': 80
+    }[model_name]
     # Since the first GPU will be used for ViT, treat it as half a GPU.
     num_layers_per_gpu = math.ceil(num_layers / (world_size - vit_alpha))
     num_layers_per_gpu = [num_layers_per_gpu] * world_size
@@ -134,8 +140,9 @@ def split_model(model_name, vit_alpha=0.5):
     device_map['mlp1'] = 0
     device_map['language_model.model.tok_embeddings'] = 0
     device_map['language_model.model.embed_tokens'] = 0
-    device_map['language_model.output'] = 0
     device_map['language_model.model.norm'] = 0
+    device_map['language_model.model.rotary_emb'] = 0
+    device_map['language_model.output'] = 0
     device_map['language_model.lm_head'] = 0
     device_map[f'language_model.model.layers.{num_layers - 1}'] = 0
 

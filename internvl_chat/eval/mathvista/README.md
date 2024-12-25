@@ -13,7 +13,24 @@ Before starting to download the data, please create the `InternVL/internvl_chat/
 
 ### MathVista
 
-The evaluation script will automatically download the MathVista dataset from HuggingFace, and the cached path is `data/MathVista`.
+Follow the instructions below to prepare the data：
+
+```bash
+# Step 1: Create the data directory
+mkdir -p data/MathVista && cd data/MathVista
+
+# Step 2: Download the annotation
+wget https://huggingface.co/datasets/AI4Math/MathVista/raw/main/annot_testmini.json
+
+cd ../..
+```
+
+After preparation is complete, the directory structure is:
+
+```
+MathVista
+└── annot_testmini.json
+```
 
 ## 🏃 Evaluation Execution
 

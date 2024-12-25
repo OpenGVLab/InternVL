@@ -31,6 +31,7 @@ cd ../../..
 After preparation is complete, the directory structure is:
 
 ```shell
+data/pope
 ├── coco
 │   ├── coco_pope_adversarial.json
 │   ├── coco_pope_popular.json
