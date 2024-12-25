@@ -204,7 +204,6 @@
     <th>Language Part</th>
     <th>HF&nbsp;Link</th>
     <th>MS&nbsp;Link</th>
-    <th>Document</th>
   </tr>
   <tr>
     <td>InternVL2-1B</td>
@@ -212,7 +211,6 @@
     <td><a href="https://huggingface.co/Qwen/Qwen2-0.5B-Instruct">Qwen2-0.5B-Instruct</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-1B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-1B">🤖 link</a></td>
-    <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
     <td>InternVL2-2B</td>
@@ -220,7 +218,6 @@
     <td><a href="https://huggingface.co/internlm/internlm2-chat-1_8b">internlm2-chat-1-8b</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-2B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-2B">🤖 link</a></td>
-    <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
     <td>InternVL2-4B</td>
@@ -228,7 +225,6 @@
     <td><a href="https://huggingface.co/microsoft/Phi-3-mini-128k-instruct">Phi&#8209;3&#8209;mini&#8209;128k&#8209;instruct</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-4B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-4B">🤖 link</a></td>
-    <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
     <td>InternVL2-8B</td>
@@ -236,7 +232,6 @@
     <td><a href="https://huggingface.co/internlm/internlm2_5-7b-chat">internlm2_5-7b-chat</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-8B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-8B">🤖 link</a></td>
-    <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
     <td>InternVL2-26B</td>
@@ -244,7 +239,6 @@
     <td><a href="https://huggingface.co/internlm/internlm2-chat-20b">internlm2-chat-20b</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-26B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-26B">🤖 link</a></td>
-    <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
     <td>InternVL2-40B</td>
@@ -252,7 +246,6 @@
     <td><a href="https://huggingface.co/NousResearch/Nous-Hermes-2-Yi-34B">Nous&#8209;Hermes&#8209;2&#8209;Yi&#8209;34B</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-40B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-40B">🤖 link</a></td>
-    <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
     <td>InternVL2&#8209;Llama3-76B</td>
@@ -260,7 +253,6 @@
     <td><a href="https://huggingface.co/NousResearch/Hermes-2-Theta-Llama-3-70B">Hermes‑2‑Theta‑<br>Llama‑3‑70B</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-Llama3-76B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-Llama3-76B">🤖 link</a></td>
-    <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
 </table>
 
@@ -332,7 +324,7 @@
   </tr>
 </table>
 
-#### 视觉基础模型 (InternVL 1.0-2.5)
+#### 类 CLIP 模型 (InternVL 1.0-2.5)
 
 <table>
   <tr>
@@ -829,7 +821,7 @@ caption = tokenizer.decode(pred[0].cpu(), skip_special_tokens=True).strip()
 </details>
 
 <details>
-  <summary>使用 InternVL-Chat 进行多模态对话 (点击展开)</summary>
+  <summary>使用 InternVL 2.5 进行多模态对话 (点击展开)</summary>
 
 这里我们以较小的 `OpenGVLab/InternVL2_5-8B` 为例：
 
@@ -1053,7 +1045,7 @@ print(f'User: {question}\nAssistant: {response}')
 
 ## 许可证
 
-本项目以 [MIT](LICENSE) 许可证发布。项目中的部分代码和模型来自其它来源，受其原始许可证的约束。
+本项目以 [MIT 许可证](LICENSE) 发布。项目中的部分代码和模型来自其它来源，受其原始许可证的约束。
 
 ## 引用
 
