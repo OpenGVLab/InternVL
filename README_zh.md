@@ -56,22 +56,22 @@
 
 ## 使用文档
 
-- 开始
+### 🌟 **Get Started**
 
-  - 配置环境:  [\[环境\]](https://internvl.readthedocs.io/en/latest/get_started/installation.html)  [\[requirements.txt\]](./requirements.txt)
-  - 评测数据准备: [\[InternVL 评测\]](https://internvl.readthedocs.io/en/latest/get_started/eval_data_preparation.html)
-  - 对话数据格式: [\[元文件\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#meta-file)  [\[纯文本\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#pure-text-data)  [\[单图\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#single-image-data)  [\[多图\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#multi-image-data)    [\[视频\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#video-data)
-  - InternVL-Chat API: [\[InternVL2-Pro\]](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html#official-api-of-internvl2-pro)
-  - 本地在线 Demo: [\[Streamlit Demo\]](https://internvl.readthedocs.io/en/latest/get_started/local_chat_demo.html#streamlit-demo)  [\[Gradio Demo\]](https://internvl.readthedocs.io/en/latest/get_started/local_chat_demo.html#gradio-demo)  [\[LMDeploy Demo\]](https://internvl.readthedocs.io/en/latest/get_started/local_chat_demo.html#lmdeploy-demo)
-  - 教程: [\[使用LoRA微调提升InternVL2在COCO Caption上的表现\]](https://internvl.readthedocs.io/en/latest/tutorials/coco_caption_finetune.html)
+- **Installation**: 🌱 [Installation Guide](https://internvl.readthedocs.io/en/latest/get_started/installation.html) | 📄 [requirements.txt](./requirements.txt)
+- **Chat Data Format**: 📝 [Meta File](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#meta-file) | ✏️ [Text](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#pure-text-data) | 🖼️ [Single-Image](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#single-image-data) | 🖼️🖼️ [Multi-Image](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#multi-image-data) | 🎥 [Video](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#video-data)
+- **Local Chat Demo**: 🤖 [Streamlit Demo](https://internvl.readthedocs.io/en/latest/get_started/local_chat_demo.html#streamlit-demo)
+- **InternVL-Chat API**: 🌐 [InternVL2-Pro](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html#official-api-of-internvl2-pro)
+- **Tutorials**: 🚀 [Enhancing InternVL2 on COCO Caption Using LoRA Fine-Tuning](https://internvl.readthedocs.io/en/latest/tutorials/coco_caption_finetune.html)
 
-- InternVL 系列
+### 🏆 **InternVL Family**
 
-  - InternVL 2.0: [\[介绍\]](https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html)  [\[快速开始\]](https://internvl.readthedocs.io/en/latest/internvl2.0/quick_start.html)  [\[微调\]](https://internvl.readthedocs.io/en/latest/internvl2.0/finetune.html)  [\[评测\]](https://internvl.readthedocs.io/en/latest/internvl2.0/evaluation.html)  [\[部署\]](https://internvl.readthedocs.io/en/latest/internvl2.0/deployment.html)
-  - InternVL 1.5: [\[介绍\]](https://internvl.readthedocs.io/en/latest/internvl1.5/introduction.html)  [\[快速开始\]](https://internvl.readthedocs.io/en/latest/internvl1.5/quick_start.html)  [\[微调\]](https://internvl.readthedocs.io/en/latest/internvl1.5/finetune.html)  [\[评测\]](https://internvl.readthedocs.io/en/latest/internvl1.5/evaluation.html)  [\[部署\]](https://internvl.readthedocs.io/en/latest/internvl1.5/deployment.html)
-  - InternVL 1.2: [\[介绍\]](https://internvl.readthedocs.io/en/latest/internvl1.2/introduction.html)  [\[快速开始\]](https://internvl.readthedocs.io/en/latest/internvl1.2/quick_start.html)  [\[微调\]](https://internvl.readthedocs.io/en/latest/internvl1.2/finetune.html)  [\[评测\]](https://internvl.readthedocs.io/en/latest/internvl1.2/evaluation.html)
-  - InternVL 1.1: [\[介绍\]](https://internvl.readthedocs.io/en/latest/internvl1.1/introduction.html)  [\[快速开始\]](https://internvl.readthedocs.io/en/latest/internvl1.1/quick_start.html)  [\[微调\]](https://internvl.readthedocs.io/en/latest/internvl1.1/evaluation.html)
-  - InternVL 1.0: [\[图像分类\]](https://internvl.readthedocs.io/en/latest/internvl1.0/classification.html)  [\[CLIP-Benchmark\]](https://internvl.readthedocs.io/en/latest/internvl1.0/clip_benchmark.html)  [\[语义分割\]](https://internvl.readthedocs.io/en/latest/internvl1.0/segmentation.html)  [\[InternVL-Chat-LLaVA\]](https://internvl.readthedocs.io/en/latest/internvl1.0/internvl_chat_llava.html)  [\[InternVL-G\]](https://internvl.readthedocs.io/en/latest/internvl1.0/internvl_g.html)
+- **InternVL 2.5**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl2.5/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl2.5/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl2.5/finetune.html) | 📊 [Evaluate](https://internvl.readthedocs.io/en/latest/internvl2.5/evaluation.html) | 📦 [Deploy](https://internvl.readthedocs.io/en/latest/internvl2.5/deployment.html) | 🎯 [MPO](https://internvl.readthedocs.io/en/latest/internvl2.5/preference_optimization.html)
+- **InternVL 2.0**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl2.0/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl2.0/finetune.html) | 📊 [Evaluate](https://internvl.readthedocs.io/en/latest/internvl2.0/evaluation.html) | 📦 [Deploy](https://internvl.readthedocs.io/en/latest/internvl2.0/deployment.html) | 🎯 [MPO](https://internvl.readthedocs.io/en/latest/internvl2.0/preference_optimization.html)
+- **InternVL 1.5**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl1.5/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl1.5/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl1.5/finetune.html) | 📊 [Evaluate](https://internvl.readthedocs.io/en/latest/internvl1.5/evaluation.html) | 📦 [Deploy](https://internvl.readthedocs.io/en/latest/internvl1.5/deployment.html)
+- **InternVL 1.2**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl1.2/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl1.2/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl1.2/finetune.html) | 📊 [Evaluate](https://internvl.readthedocs.io/en/latest/internvl1.2/evaluation.html)
+- **InternVL 1.1**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl1.1/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl1.1/quick_start.html) | 📊 [Evaluation](https://internvl.readthedocs.io/en/latest/internvl1.1/evaluation.html)
+- **InternVL 1.0**: 🖼️ [Classification](https://internvl.readthedocs.io/en/latest/internvl1.0/classification.html) | 📊 [CLIP-Benchmark](https://internvl.readthedocs.io/en/latest/internvl1.0/clip_benchmark.html) | 🎨 [Segmentation](https://internvl.readthedocs.io/en/latest/internvl1.0/segmentation.html) | 💬 [Chat-LLaVA](https://internvl.readthedocs.io/en/latest/internvl1.0/internvl_chat_llava.html) | ✨ [InternVL-G](https://internvl.readthedocs.io/en/latest/internvl1.0/internvl_g.html)
 
 ## 模型库
 
@@ -255,7 +255,7 @@
     <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
-    <td>InternVL2-Llama3-76B</td>
+    <td>InternVL2&#8209;Llama3-76B</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5">InternViT-6B-448px-V1-5</a></td>
     <td><a href="https://huggingface.co/NousResearch/Hermes-2-Theta-Llama-3-70B">Hermes‑2‑Theta‑<br>Llama‑3‑70B</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-Llama3-76B">🤗 link</a></td>
@@ -404,7 +404,7 @@
     <th>Note</th>
   </tr>
   <tr>
-    <td>InternVL-14B-224px</td>
+    <td>InternVL&#8209;14B&#8209;224px</td>
     <td>2023.12.22</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL-14B-224px">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL-14B-224px">🤖 link</a></td>
@@ -414,6 +414,7 @@
 
 ## TODO 列表
 
+- [x] 发布 InternVL2.5 系列的训练 / 评估代码
 - [x] 支持 liger kernels 以节省显存
 - [x] 发布 MPO 的代码、模型和数据
 - [x] 支持多模态 packed dataset
@@ -502,8 +503,7 @@
         <td colspan="6" align=center><b>Flickr30K</b></td>
         <td colspan="6" align=center><b>COCO</b></td>
         <td rowspan="3" align=center><b>avg</b></td>
-
-  </tr>
+    </tr>
      <tr align=center>
         <td colspan="3" align=center><b>image-to-text</b></td>
         <td colspan="3" align=center><b>text-to-image</b></td>
@@ -524,7 +524,6 @@
         <td>R@5</td>
         <td>R@10</td>
      </tr>
-
   <tr align=center>
         <td align=left>OpenCLIP-G</td>
         <td>92.9</td>
@@ -721,8 +720,6 @@
 
 <details>
   <summary>多模态对话</summary>
-
-请看 ["和SOTA多模态大模型对比"](#和-sota-多模态大模型对比)
 
 </details>
 

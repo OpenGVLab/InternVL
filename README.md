@@ -28,7 +28,7 @@
 
 - `2024/12/20`: 🔥 We release the [InternVL2.5-MPO](https://internvl.github.io/blog/2024-12-20-InternVL-2.5-MPO/), which is finetuned with [Mixed Preference Optimization](https://huggingface.co/papers/2411.10442) on [MMPR-v1.1](https://huggingface.co/datasets/OpenGVLab/MMPR-v1.1). **The resulting models outperform their counterparts without MPO by an average of 2 points across all model scales on the OpenCompass leaderboard.** These models are available at [HF link](https://huggingface.co/collections/OpenGVLab/internvl25-mpo-6753fed98cd828219b12f849).
 - `2024/12/17`: 🚀 [InternVL2/2.5](https://github.com/PaddlePaddle/PaddleMIX/tree/develop/paddlemix/examples/internvl2) is supported in [PaddleMIX](https://github.com/PaddlePaddle/PaddleMIX) by Paddle Team.
-- `2024/12/05`: 🚀 We release the [InternVL2.5](https://huggingface.co/collections/OpenGVLab/internvl-25-673e1019b66e2218f68d7c1c), an advanced multimodal large language model (MLLM) series with parameter coverage ranging from 1B to 78B. [InternVL2_5-78B](https://huggingface.co/OpenGVLab/InternVL2_5-78B) is the first open-source MLLMs to achieve over **70%** on the **MMMU benchmark**. matching the performance of leading closed-source commercial models like GPT-4o. These models are available at [HF link](https://huggingface.co/collections/OpenGVLab/internvl-25-673e1019b66e2218f68d7c1c).
+- `2024/12/05`: 🚀 We release the [InternVL2.5](https://huggingface.co/collections/OpenGVLab/internvl-25-673e1019b66e2218f68d7c1c), an advanced multimodal large language model (MLLM) series with parameter coverage ranging from 1B to 78B. [InternVL2_5-78B](https://huggingface.co/OpenGVLab/InternVL2_5-78B) is the first open-source MLLMs to achieve over **70%** on the **MMMU benchmark**, matching the performance of leading closed-source commercial models like GPT-4o. These models are available at [HF link](https://huggingface.co/collections/OpenGVLab/internvl-25-673e1019b66e2218f68d7c1c).
 - `2024/11/14`: We introduce [MMPR](https://huggingface.co/datasets/OpenGVLab/MMPR), a high-quality, large-scale multimodal reasoning preference dataset, and [MPO](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/internvl2.0_mpo), an effective preference optimization algorithm. The resulting model, [InternVL2-8B-MPO](https://huggingface.co/OpenGVLab/InternVL2-8B-MPO), achieves an accuracy of 67.0 on MathVista. Please refer to our [paper](https://arxiv.org/abs/2411.10442), [project page](https://internvl.github.io/blog/2024-11-14-InternVL-2.0-MPO/) and [document](https://internvl.readthedocs.io/en/latest/internvl2.0/preference_optimization.html) for more details.
 - `2024/10/21`: We release the Mini-InternVL series. These models achieve impressive performance with minimal size: the 4B model achieves 90% of the performance with just 5% of the model size. For more details, please check our [project page](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/mini_internvl) and [document](https://internvl.readthedocs.io/en/latest/internvl2.0/domain_adaptation.html).
 - `2024/08/01`: The [Chartmimic](https://chartmimic.github.io/) team evaluated the InternVL2 series models on their benchmark. The InternVL2-26B and 76B models achieved the top two performances among open-source models, with the InternVL2 76B model surpassing GeminiProVision and exhibiting comparable results to Claude-3-opus.
@@ -56,22 +56,22 @@
 
 ## Documents
 
-- Get Started
+### 🌟 **Get Started**
 
-  - Installation: [\[Environment\]](https://internvl.readthedocs.io/en/latest/get_started/installation.html)  [\[requirements.txt\]](./requirements.txt)
-  - Evaluation Data Preparation: [\[InternVL Evaluation\]](https://internvl.readthedocs.io/en/latest/get_started/eval_data_preparation.html)
-  - Chat Data Format: [\[Meta File\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#meta-file)  [\[Pure Text\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#pure-text-data)  [\[Single-Image\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#single-image-data)  [\[Multi-Image\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#multi-image-data)    [\[Video\]](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#video-data)
-  - InternVL-Chat API: [\[InternVL2-Pro\]](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html#official-api-of-internvl2-pro)
-  - Local Chat Demo: [\[Streamlit Demo\]](https://internvl.readthedocs.io/en/latest/get_started/local_chat_demo.html#streamlit-demo)  [\[Gradio Demo\]](https://internvl.readthedocs.io/en/latest/get_started/local_chat_demo.html#gradio-demo)  [\[LMDeploy Demo\]](https://internvl.readthedocs.io/en/latest/get_started/local_chat_demo.html#lmdeploy-demo)
-  - Tutorials: [\[Enhancing InternVL2 on COCO Caption Using LoRA Fine-Tuning\]](https://internvl.readthedocs.io/en/latest/tutorials/coco_caption_finetune.html)
+- **Installation**: 🌱 [Installation Guide](https://internvl.readthedocs.io/en/latest/get_started/installation.html) | 📄 [requirements.txt](./requirements.txt)
+- **Chat Data Format**: 📝 [Meta File](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#meta-file) | ✏️ [Text](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#pure-text-data) | 🖼️ [Single-Image](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#single-image-data) | 🖼️🖼️ [Multi-Image](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#multi-image-data) | 🎥 [Video](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#video-data)
+- **Local Chat Demo**: 🤖 [Streamlit Demo](https://internvl.readthedocs.io/en/latest/get_started/local_chat_demo.html#streamlit-demo)
+- **InternVL-Chat API**: 🌐 [InternVL2-Pro](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html#official-api-of-internvl2-pro)
+- **Tutorials**: 🚀 [Enhancing InternVL2 on COCO Caption Using LoRA Fine-Tuning](https://internvl.readthedocs.io/en/latest/tutorials/coco_caption_finetune.html)
 
-- InternVL Family
+### 🏆 **InternVL Family**
 
-  - InternVL 2.0: [\[Introduction\]](https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html)  [\[Quick Start\]](https://internvl.readthedocs.io/en/latest/internvl2.0/quick_start.html)  [\[Finetune\]](https://internvl.readthedocs.io/en/latest/internvl2.0/finetune.html)  [\[Evaluation\]](https://internvl.readthedocs.io/en/latest/internvl2.0/evaluation.html)  [\[Deployment\]](https://internvl.readthedocs.io/en/latest/internvl2.0/deployment.html)
-  - InternVL 1.5: [\[Introduction\]](https://internvl.readthedocs.io/en/latest/internvl1.5/introduction.html)  [\[Quick Start\]](https://internvl.readthedocs.io/en/latest/internvl1.5/quick_start.html)  [\[Finetune\]](https://internvl.readthedocs.io/en/latest/internvl1.5/finetune.html)  [\[Evaluation\]](https://internvl.readthedocs.io/en/latest/internvl1.5/evaluation.html)  [\[Deployment\]](https://internvl.readthedocs.io/en/latest/internvl1.5/deployment.html)
-  - InternVL 1.2: [\[Introduction\]](https://internvl.readthedocs.io/en/latest/internvl1.2/introduction.html)  [\[Quick Start\]](https://internvl.readthedocs.io/en/latest/internvl1.2/quick_start.html)  [\[Finetune\]](https://internvl.readthedocs.io/en/latest/internvl1.2/finetune.html)  [\[Evaluation\]](https://internvl.readthedocs.io/en/latest/internvl1.2/evaluation.html)
-  - InternVL 1.1: [\[Introduction\]](https://internvl.readthedocs.io/en/latest/internvl1.1/introduction.html)  [\[Quick Start\]](https://internvl.readthedocs.io/en/latest/internvl1.1/quick_start.html)  [\[Evaluation\]](https://internvl.readthedocs.io/en/latest/internvl1.1/evaluation.html)
-  - InternVL 1.0: [\[Classification\]](https://internvl.readthedocs.io/en/latest/internvl1.0/classification.html)  [\[CLIP-Benchmark\]](https://internvl.readthedocs.io/en/latest/internvl1.0/clip_benchmark.html)  [\[Segmentation\]](https://internvl.readthedocs.io/en/latest/internvl1.0/segmentation.html)  [\[InternVL-Chat-LLaVA\]](https://internvl.readthedocs.io/en/latest/internvl1.0/internvl_chat_llava.html)  [\[InternVL-G\]](https://internvl.readthedocs.io/en/latest/internvl1.0/internvl_g.html)
+- **InternVL 2.5**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl2.5/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl2.5/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl2.5/finetune.html) | 📊 [Evaluate](https://internvl.readthedocs.io/en/latest/internvl2.5/evaluation.html) | 📦 [Deploy](https://internvl.readthedocs.io/en/latest/internvl2.5/deployment.html) | 🎯 [MPO](https://internvl.readthedocs.io/en/latest/internvl2.5/preference_optimization.html)
+- **InternVL 2.0**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl2.0/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl2.0/finetune.html) | 📊 [Evaluate](https://internvl.readthedocs.io/en/latest/internvl2.0/evaluation.html) | 📦 [Deploy](https://internvl.readthedocs.io/en/latest/internvl2.0/deployment.html) | 🎯 [MPO](https://internvl.readthedocs.io/en/latest/internvl2.0/preference_optimization.html)
+- **InternVL 1.5**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl1.5/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl1.5/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl1.5/finetune.html) | 📊 [Evaluate](https://internvl.readthedocs.io/en/latest/internvl1.5/evaluation.html) | 📦 [Deploy](https://internvl.readthedocs.io/en/latest/internvl1.5/deployment.html)
+- **InternVL 1.2**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl1.2/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl1.2/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl1.2/finetune.html) | 📊 [Evaluate](https://internvl.readthedocs.io/en/latest/internvl1.2/evaluation.html)
+- **InternVL 1.1**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl1.1/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl1.1/quick_start.html) | 📊 [Evaluation](https://internvl.readthedocs.io/en/latest/internvl1.1/evaluation.html)
+- **InternVL 1.0**: 🖼️ [Classification](https://internvl.readthedocs.io/en/latest/internvl1.0/classification.html) | 📊 [CLIP-Benchmark](https://internvl.readthedocs.io/en/latest/internvl1.0/clip_benchmark.html) | 🎨 [Segmentation](https://internvl.readthedocs.io/en/latest/internvl1.0/segmentation.html) | 💬 [Chat-LLaVA](https://internvl.readthedocs.io/en/latest/internvl1.0/internvl_chat_llava.html) | ✨ [InternVL-G](https://internvl.readthedocs.io/en/latest/internvl1.0/internvl_g.html)
 
 ## Model Zoo
 
@@ -255,7 +255,7 @@
     <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
-    <td>InternVL2-Llama3-76B</td>
+    <td>InternVL2&#8209;Llama3-76B</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5">InternViT-6B-448px-V1-5</a></td>
     <td><a href="https://huggingface.co/NousResearch/Hermes-2-Theta-Llama-3-70B">Hermes‑2‑Theta‑<br>Llama‑3‑70B</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-Llama3-76B">🤗 link</a></td>
@@ -404,7 +404,7 @@
     <th>Note</th>
   </tr>
   <tr>
-    <td>InternVL-14B-224px</td>
+    <td>InternVL&#8209;14B&#8209;224px</td>
     <td>2023.12.22</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL-14B-224px">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL-14B-224px">🤖 link</a></td>
@@ -414,6 +414,7 @@
 
 ## TODO List
 
+- [x] Release training / evaluation code for InternVL2.5 series
 - [x] Support liger kernels to save GPU memory
 - [x] Release the code, model, and data of MPO
 - [x] Support multimodal packed dataset
@@ -502,8 +503,7 @@
         <td colspan="6" align=center><b>Flickr30K</b></td>
         <td colspan="6" align=center><b>COCO</b></td>
         <td rowspan="3" align=center><b>avg</b></td>
-
-  </tr>
+    </tr>
      <tr align=center>
         <td colspan="3" align=center><b>image-to-text</b></td>
         <td colspan="3" align=center><b>text-to-image</b></td>
@@ -524,7 +524,6 @@
         <td>R@5</td>
         <td>R@10</td>
      </tr>
-
   <tr align=center>
         <td align=left>OpenCLIP-G</td>
         <td>92.9</td>
@@ -721,8 +720,6 @@
 
 <details>
   <summary>Multimodal Dialogue</summary>
-
-See ["Compared with SOTA VLLMs"](#compared-with-sota-vllms) section.
 
 </details>
 
