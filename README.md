@@ -26,7 +26,7 @@
 
 ## News 🚀🚀🚀
 
-- `2024/12/20`: 🚀 We release the [InternVL2.5-MPO](https://internvl.github.io/blog/2024-12-20-InternVL-2.5-MPO/), which is finetuned with [Mixed Preference Optimization](https://huggingface.co/papers/2411.10442) on [MMPR-v1.1](https://huggingface.co/datasets/OpenGVLab/MMPR-v1.1). **The resulting models outperform their counterparts without MPO by an average of 2 points across all model scales on the OpenCompass leaderboard.** These models are available at [HF link](https://huggingface.co/collections/OpenGVLab/internvl25-mpo-6753fed98cd828219b12f849).
+- `2024/12/20`: 🔥 We release the [InternVL2.5-MPO](https://internvl.github.io/blog/2024-12-20-InternVL-2.5-MPO/), which is finetuned with [Mixed Preference Optimization](https://huggingface.co/papers/2411.10442) on [MMPR-v1.1](https://huggingface.co/datasets/OpenGVLab/MMPR-v1.1). **The resulting models outperform their counterparts without MPO by an average of 2 points across all model scales on the OpenCompass leaderboard.** These models are available at [HF link](https://huggingface.co/collections/OpenGVLab/internvl25-mpo-6753fed98cd828219b12f849).
 - `2024/12/17`: 🚀 [InternVL2/2.5](https://github.com/PaddlePaddle/PaddleMIX/tree/develop/paddlemix/examples/internvl2) is supported in [PaddleMIX](https://github.com/PaddlePaddle/PaddleMIX) by Paddle Team.
 - `2024/12/05`: 🚀 We release the [InternVL2.5](https://huggingface.co/collections/OpenGVLab/internvl-25-673e1019b66e2218f68d7c1c), an advanced multimodal large language model (MLLM) series with parameter coverage ranging from 1B to 78B. [InternVL2_5-78B](https://huggingface.co/OpenGVLab/InternVL2_5-78B) is the first open-source MLLMs to achieve over **70%** on the **MMMU benchmark**. matching the performance of leading closed-source commercial models like GPT-4o. These models are available at [HF link](https://huggingface.co/collections/OpenGVLab/internvl-25-673e1019b66e2218f68d7c1c).
 - `2024/11/14`: We introduce [MMPR](https://huggingface.co/datasets/OpenGVLab/MMPR), a high-quality, large-scale multimodal reasoning preference dataset, and [MPO](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/internvl2.0_mpo), an effective preference optimization algorithm. The resulting model, [InternVL2-8B-MPO](https://huggingface.co/OpenGVLab/InternVL2-8B-MPO), achieves an accuracy of 67.0 on MathVista. Please refer to our [paper](https://arxiv.org/abs/2411.10442), [project page](https://internvl.github.io/blog/2024-11-14-InternVL-2.0-MPO/) and [document](https://internvl.readthedocs.io/en/latest/internvl2.0/preference_optimization.html) for more details.
@@ -34,13 +34,13 @@
 - `2024/08/01`: The [Chartmimic](https://chartmimic.github.io/) team evaluated the InternVL2 series models on their benchmark. The InternVL2-26B and 76B models achieved the top two performances among open-source models, with the InternVL2 76B model surpassing GeminiProVision and exhibiting comparable results to Claude-3-opus.
 - `2024/08/01`: InternVL2-Pro achieved the SOTA performance among open-source models on the [CharXiv](https://charxiv.github.io/#leaderboard) dataset, surpassing many closed-source models such as GPT-4V, Gemini 1.5 Flash, and Claude 3 Sonnet.
 - `2024/07/24`: The [MLVU](https://github.com/JUNJIE99/MLVU) team evaluated InternVL-1.5 on their benchmark. The average performance on the multiple-choice task was 50.4%, while the performance on the generative tasks was 4.02. The performance on the multiple-choice task ranked #1 among all open-source MLLMs.
-- `2024/07/18`: InternVL2-40B achieved SOTA performance among open-source models on the [Video-MME](https://github.com/BradyFU/Video-MME) dataset, scoring 61.2 when inputting 16 frames and 64.4 when inputting 32 frames. It significantly outperforms other open-source models and is the closest open-source model to GPT-4o mini.
-- `2024/07/18`: InternVL2-Pro achieved the SOTA performance on the [DocVQA](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=1) and [InfoVQA](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=3) benchmarks.
 - `2024/07/04`: We release the [InternVL2 series](https://huggingface.co/collections/OpenGVLab/internvl-20-667d3961ab5eb12c7ed1463e). InternVL2-Pro achieved a 62.0% accuracy on the MMMU benchmark, matching the performance of leading closed-source commercial models like GPT-4o.
 
 <details>
 <summary>More News</summary>
 
+- `2024/07/18`: InternVL2-40B achieved SOTA performance among open-source models on the [Video-MME](https://github.com/BradyFU/Video-MME) dataset, scoring 61.2 when inputting 16 frames and 64.4 when inputting 32 frames. It significantly outperforms other open-source models and is the closest open-source model to GPT-4o mini.
+- `2024/07/18`: InternVL2-Pro achieved the SOTA performance on the [DocVQA](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=1) and [InfoVQA](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=3) benchmarks.
 - `2024/06/19`: We propose Needle In A Multimodal Haystack ([MM-NIAH](https://github.com/OpenGVLab/MM-NIAH)), the first benchmark designed to systematically evaluate the capability of existing MLLMs to comprehend long multimodal documents.
 - `2024/05/30`: We release [ShareGPT-4o](https://sharegpt4o.github.io/), a large-scale dataset that we plan to open-source with 200K images, 10K videos, and 10K audios with detailed descriptions.
 - `2024/05/28`: Thanks to the [lmdeploy](https://github.com/InternLM/lmdeploy) team for providing AWQ quantization support. The 4-bit model is available at [OpenGVLab/InternVL-Chat-V1-5-AWQ](https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5-AWQ).
@@ -73,10 +73,6 @@
   - InternVL 1.1: [\[Introduction\]](https://internvl.readthedocs.io/en/latest/internvl1.1/introduction.html)  [\[Quick Start\]](https://internvl.readthedocs.io/en/latest/internvl1.1/quick_start.html)  [\[Evaluation\]](https://internvl.readthedocs.io/en/latest/internvl1.1/evaluation.html)
   - InternVL 1.0: [\[Classification\]](https://internvl.readthedocs.io/en/latest/internvl1.0/classification.html)  [\[CLIP-Benchmark\]](https://internvl.readthedocs.io/en/latest/internvl1.0/clip_benchmark.html)  [\[Segmentation\]](https://internvl.readthedocs.io/en/latest/internvl1.0/segmentation.html)  [\[InternVL-Chat-LLaVA\]](https://internvl.readthedocs.io/en/latest/internvl1.0/internvl_chat_llava.html)  [\[InternVL-G\]](https://internvl.readthedocs.io/en/latest/internvl1.0/internvl_g.html)
 
-## Compared with SOTA VLLMs
-
-![waic_performance](https://github.com/user-attachments/assets/38f82c34-20b4-4d11-8f3e-f76af1b013c2)
-
 ## Model Zoo
 
 #### Multimodal Large Language Model (InternVL 2.5)
@@ -90,49 +86,49 @@
     <th>MS&nbsp;Link</th>
   </tr>
   <tr>
-    <td>InternVL2_5&#8209;1B</td>
+    <td>InternVL2_5-1B</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct">Qwen2.5-0.5B-Instruct</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-1B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2_5-1B">🤖 link</a></td>
   </tr>
   <tr>
-    <td>InternVL2_5&#8209;2B</td>
+    <td>InternVL2_5-2B</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/internlm/internlm2_5-1_8b-chat">internlm2_5-1_8b-chat</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-2B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2_5-2B">🤖 link</a></td>
   </tr>
   <tr>
-    <td>InternVL2_5&#8209;4B</td>
+    <td>InternVL2_5-4B</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/Qwen/Qwen2.5-3B-Instruct">Qwen2.5-3B-Instruct</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-4B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2_5-4B">🤖 link</a></td>
   </tr>
   <tr>
-    <td>InternVL2_5&#8209;8B</td>
+    <td>InternVL2_5-8B</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/internlm/internlm2_5-7b-chat">internlm2_5-7b-chat</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-8B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2_5-8B">🤖 link</a></td>
   </tr>
   <tr>
-    <td>InternVL2_5&#8209;26B</td>
+    <td>InternVL2_5-26B</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">InternViT-6B-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/internlm/internlm2_5-20b-chat">internlm2_5-20b-chat</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-26B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2_5-26B">🤖 link</a></td>
   </tr>
   <tr>
-    <td>InternVL2_5&#8209;38B</td>
+    <td>InternVL2_5-38B</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">InternViT-6B-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/Qwen/Qwen2.5-32B-Instruct">Qwen2.5-32B-Instruct</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-38B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2_5-38B">🤖 link</a></td>
   </tr>
   <tr>
-    <td>InternVL2_5&#8209;78B</td>
+    <td>InternVL2_5-78B</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">InternViT-6B-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/Qwen/Qwen2.5-72B-Instruct">Qwen2.5-72B-Instruct</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-78B">🤗 link</a></td>
@@ -149,49 +145,49 @@
     <th>MS&nbsp;Link</th>
   </tr>
   <tr>
-    <td>InternVL2_5&#8209;1B&#8209;MPO</td>
+    <td>InternVL2_5-1B-MPO</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct">Qwen2.5-0.5B-Instruct</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-1B-MPO">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2_5-1B-MPO">🤖 link</a></td>
   </tr>
   <tr>
-    <td>InternVL2_5&#8209;2B&#8209;MPO</td>
+    <td>InternVL2_5-2B-MPO</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/internlm/internlm2_5-1_8b-chat">internlm2_5-1_8b-chat</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-2B-MPO">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2_5-2B-MPO">🤖 link</a></td>
   </tr>
   <tr>
-    <td>InternVL2_5&#8209;4B&#8209;MPO</td>
+    <td>InternVL2_5-4B-MPO</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/Qwen/Qwen2.5-3B-Instruct">Qwen2.5-3B-Instruct</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-4B-MPO">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2_5-4B-MPO">🤖 link</a></td>
   </tr>
   <tr>
-    <td>InternVL2_5&#8209;8B&#8209;MPO</td>
+    <td>InternVL2_5-8B-MPO</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/internlm/internlm2_5-7b-chat">internlm2_5-7b-chat</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-8B-MPO">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2_5-8B-MPO">🤖 link</a></td>
   </tr>
   <tr>
-    <td>InternVL2_5&#8209;26B&#8209;MPO</td>
+    <td>InternVL2_5-26B-MPO</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">InternViT-6B-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/internlm/internlm2_5-20b-chat">internlm2_5-20b-chat</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-26B-MPO">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2_5-26B-MPO">🤖 link</a></td>
   </tr>
   <tr>
-    <td>InternVL2_5&#8209;38B&#8209;MPO</td>
+    <td>InternVL2_5-38B-MPO</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">InternViT-6B-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/Qwen/Qwen2.5-32B-Instruct">Qwen2.5-32B-Instruct</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-38B-MPO">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2_5-38B-MPO">🤖 link</a></td>
   </tr>
   <tr>
-    <td>InternVL2_5&#8209;78B&#8209;MPO</td>
+    <td>InternVL2_5-78B-MPO</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">InternViT-6B-448px-V2_5</a></td>
     <td><a href="https://huggingface.co/Qwen/Qwen2.5-72B-Instruct">Qwen2.5-72B-Instruct</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2_5-78B-MPO">🤗 link</a></td>
@@ -211,56 +207,56 @@
     <th>Document</th>
   </tr>
   <tr>
-    <td>InternVL2&#8209;1B</td>
-    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">InternViT&#8209;300M&#8209;448px</a></td>
-    <td><a href="https://huggingface.co/Qwen/Qwen2-0.5B-Instruct">Qwen2&#8209;0.5B&#8209;Instruct</a></td>
+    <td>InternVL2-1B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">InternViT-300M-448px</a></td>
+    <td><a href="https://huggingface.co/Qwen/Qwen2-0.5B-Instruct">Qwen2-0.5B-Instruct</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-1B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-1B">🤖 link</a></td>
     <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
-    <td>InternVL2&#8209;2B</td>
-    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">InternViT&#8209;300M&#8209;448px</a></td>
-    <td><a href="https://huggingface.co/internlm/internlm2-chat-1_8b">internlm2&#8209;chat&#8209;1&#8209;8b</a></td>
+    <td>InternVL2-2B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">InternViT-300M-448px</a></td>
+    <td><a href="https://huggingface.co/internlm/internlm2-chat-1_8b">internlm2-chat-1-8b</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-2B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-2B">🤖 link</a></td>
     <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
-    <td>InternVL2&#8209;4B</td>
-    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">InternViT&#8209;300M&#8209;448px</a></td>
-    <td><a href="https://huggingface.co/microsoft/Phi-3-mini-128k-instruct">Phi&#8209;3&#8209;mini&#8209;128k&#8209;instruct</a></td>
+    <td>InternVL2-4B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">InternViT-300M-448px</a></td>
+    <td><a href="https://huggingface.co/microsoft/Phi-3-mini-128k-instruct">Phi-3-mini-128k-instruct</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-4B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-4B">🤖 link</a></td>
     <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
-    <td>InternVL2&#8209;8B</td>
-    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">InternViT&#8209;300M&#8209;448px</a></td>
-    <td><a href="https://huggingface.co/internlm/internlm2_5-7b-chat">internlm2_5&#8209;7b&#8209;chat</a></td>
+    <td>InternVL2-8B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">InternViT-300M-448px</a></td>
+    <td><a href="https://huggingface.co/internlm/internlm2_5-7b-chat">internlm2_5-7b-chat</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-8B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-8B">🤖 link</a></td>
     <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
-    <td>InternVL2&#8209;26B</td>
-    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5">InternViT&#8209;6B&#8209;448px&#8209;V1&#8209;5</a></td>
-    <td><a href="https://huggingface.co/internlm/internlm2-chat-20b">internlm2&#8209;chat&#8209;20b</a></td>
+    <td>InternVL2-26B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5">InternViT-6B-448px-V1-5</a></td>
+    <td><a href="https://huggingface.co/internlm/internlm2-chat-20b">internlm2-chat-20b</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-26B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-26B">🤖 link</a></td>
     <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
-    <td>InternVL2&#8209;40B</td>
-    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5">InternViT&#8209;6B&#8209;448px&#8209;V1&#8209;5</a></td>
-    <td><a href="https://huggingface.co/NousResearch/Nous-Hermes-2-Yi-34B">Nous&#8209;Hermes&#8209;2&#8209;Yi&#8209;34B</a></td>
+    <td>InternVL2-40B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5">InternViT-6B-448px-V1-5</a></td>
+    <td><a href="https://huggingface.co/NousResearch/Nous-Hermes-2-Yi-34B">Nous-Hermes-2-Yi-34B</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-40B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-40B">🤖 link</a></td>
     <td><a href="https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html">📖 doc</a></td>
   </tr>
   <tr>
     <td>InternVL2-Llama3-76B</td>
-    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5">InternViT&#8209;6B&#8209;448px&#8209;V1&#8209;5</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5">InternViT-6B-448px-V1-5</a></td>
     <td><a href="https://huggingface.co/NousResearch/Hermes-2-Theta-Llama-3-70B">Hermes‑2‑Theta‑<br>Llama‑3‑70B</a></td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL2-Llama3-76B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL2-Llama3-76B">🤖 link</a></td>
@@ -279,56 +275,56 @@
     <th>Note</th>
   </tr>
   <tr>
-    <td>Mini&#8209;InternVL&#8209;Chat&#8209;4B&#8209;V1&#8209;5</td>
+    <td>Mini-InternVL-Chat-4B-V1-5</td>
     <td>2024.05.28</td>
     <td><a href="https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-4B-V1-5">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/Mini-InternVL-Chat-4B-V1-5">🤖 link</a></td>
     <td>🚀🚀 16% of the model size, 90% of the performance</td>
   </tr>
   <tr>
-    <td>Mini&#8209;InternVL&#8209;Chat&#8209;2B&#8209;V1&#8209;5</td>
+    <td>Mini-InternVL-Chat-2B-V1-5</td>
     <td>2024.05.19</td>
     <td><a href="https://huggingface.co/OpenGVLab/Mini-InternVL-Chat-2B-V1-5">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/Mini-InternVL-Chat-2B-V1-5">🤖 link</a></td>
     <td>🚀 8% of the model size, 80% of the performance</td>
   </tr>
   <tr>
-    <td>InternVL&#8209;Chat&#8209;V1&#8209;5</td>
+    <td>InternVL-Chat-V1-5</td>
     <td>2024.04.18</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL-Chat-V1-5">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL-Chat-V1-5">🤖 link</a></td>
     <td>support 4K image; super strong OCR; Approaching the performance of GPT-4V and Gemini Pro on various benchmarks like MMMU, DocVQA, ChartQA, MathVista, etc.</td>
   </tr>
   <tr>
-    <td>InternVL&#8209;Chat&#8209;V1&#8209;2&#8209;Plus</td>
+    <td>InternVL-Chat-V1-2-Plus</td>
     <td>2024.02.21</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2-Plus">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL-Chat-V1-2-Plus">🤖 link</a></td>
     <td>more SFT data and stronger</td>
   </tr>
   <tr>
-    <td>InternVL&#8209;Chat&#8209;V1&#8209;2</td>
+    <td>InternVL-Chat-V1-2</td>
     <td>2024.02.11</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL-Chat-V1-2">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL-Chat-V1-2">🤖 link</a></td>
     <td>scaling up LLM to 34B</td>
   </tr>
   <tr>
-    <td>InternVL&#8209;Chat&#8209;V1&#8209;1</td>
+    <td>InternVL-Chat-V1-1</td>
     <td>2024.01.24</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL-Chat-V1-1">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL-Chat-V1-1">🤖 link</a></td>
     <td>support Chinese and stronger OCR</td>
   </tr>
   <tr>
-    <td>InternVL&#8209;Chat&#8209;19B</td>
+    <td>InternVL-Chat-19B</td>
     <td>2023.12.25</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-13B">🤖 link</a></td>
     <td>English multimodal dialogue</td>
   </tr>
   <tr>
-    <td>InternVL&#8209;Chat&#8209;13B</td>
+    <td>InternVL-Chat-13B</td>
     <td>2023.12.25</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL-Chat-ViT-6B-Vicuna-7B">🤖 link</a></td>
@@ -346,14 +342,14 @@
     <th>MS&nbsp;Link</th>
     <th>Note</th>
   </tr>
-    <td>InternViT&#8209;300M&#8209;448px&#8209;V2_5</td>
+    <td>InternViT-300M-448px-V2_5</td>
     <td>2024.12.05</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternViT-300M-448px-V2_5">🤖 link</a></td>
     <td></td>
     <td>🚀🚀 A more powerful lightweight visual encoder. (🔥new)</td>
   </tr>
-    <td>InternViT6B&#8209;448px&#8209;V2_5</td>
+    <td>InternViT6B-448px-V2_5</td>
     <td>2024.12.05</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternViT-6B-448px-V2_5">🤖 link</a></td>
@@ -361,35 +357,35 @@
     <td>🚀🚀 A stronger visual encoder to extract visual features. (🔥new)</td>
   </tr>
   <tr>
-    <td>Mini&#8209;InternVL&#8209;Chat&#8209;4B&#8209;V1&#8209;5</td>
+    <td>Mini-InternVL-Chat-4B-V1-5</td>
     <td>2024.05.28</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternViT-300M-448px">🤖 link</a></td>
     <td>distilled small vision foundation model with 300M parameters </td>
   </tr>
   <tr>
-    <td>InternViT&#8209;6B&#8209;448px&#8209;V1&#8209;5</td>
+    <td>InternViT-6B-448px-V1-5</td>
     <td>2024.04.20</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-5">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternViT-6B-448px-V1-5">🤖 link</a></td>
     <td>support dynamic resolution and super strong OCR feature extraction capability by incremental pre-training</td>
   </tr>
   <tr>
-    <td>InternViT&#8209;6B&#8209;448px&#8209;V1&#8209;2</td>
+    <td>InternViT-6B-448px-V1-2</td>
     <td>2024.02.11</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-2">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternViT-6B-448px-V1-2">🤖 link</a></td>
     <td>support 448 resolution by incremental pre-training</td>
   </tr>
   <tr>
-    <td>InternViT&#8209;6B&#8209;448px&#8209;V1&#8209;0</td>
+    <td>InternViT-6B-448px-V1-0</td>
     <td>2024.01.30</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V1-0">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternViT-6B-448px-V1-0">🤖 link</a></td>
     <td>support 448 resolution by incremental pre-training</td>
   </tr>
   <tr>
-    <td>InternViT&#8209;6B&#8209;224px</td>
+    <td>InternViT-6B-224px</td>
     <td>2023.12.22</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-224px">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternViT-6B-224px">🤖 link</a></td>
@@ -408,7 +404,7 @@
     <th>Note</th>
   </tr>
   <tr>
-    <td>InternVL&#8209;14B&#8209;224px</td>
+    <td>InternVL-14B-224px</td>
     <td>2023.12.22</td>
     <td><a href="https://huggingface.co/OpenGVLab/InternVL-14B-224px">🤗 link</a></td>
     <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL-14B-224px">🤖 link</a></td>
