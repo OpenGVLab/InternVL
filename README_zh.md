@@ -7,7 +7,7 @@
   <br>
 </div>
 
-[\[🆕 博客\]](https://internvl.github.io/blog/) [\[🤔 常见问题\]](https://internvl.readthedocs.io/en/latest/tutorials/faqs.html)  [\[🗨️ 对话Demo\]](https://internvl.opengvlab.com/)  [\[🤗 HF Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)  [\[📖 文档\]](https://internvl.readthedocs.io/en/latest/)  [\[🌐 API\]](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html)  [\[🚀 快速开始\]](#使用-huggingface-快速开始)
+[\[🆕 博客\]](https://internvl.github.io/blog/) [\[🤔 常见问题\]](https://internvl.readthedocs.io/en/latest/tutorials/faqs.html)  [\[🗨️ 对话Demo\]](https://internvl.opengvlab.com/)  [\[🤗 HF Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)  [\[📖 文档\]](https://internvl.readthedocs.io/en/latest/)  [\[🌐 API\]](https://internlm.intern-ai.org.cn/api/document)  [\[🚀 快速开始\]](#使用-huggingface-快速开始)
 
 [\[📜 InternVL 2.5 报告\]](https://huggingface.co/papers/2412.05271) [\[🔥 Mini-InternVL 论文\]](https://arxiv.org/abs/2410.16261)  [\[🚀 InternVL2 博客\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)   [\[📜 InternVL 1.5 论文\]](https://huggingface.co/papers/2404.16821)  [\[📜 InternVL 1.0 论文\]](https://huggingface.co/papers/2312.14238)
 
@@ -32,7 +32,7 @@
 - `2024/08/01`: [Chartmimic](https://chartmimic.github.io/) 团队在他们的基准测试中评估了 InternVL2 系列模型。InternVL2-26B 和 76B 模型在开源模型中取得了前两名的成绩，其中 InternVL2-Llama3-76B 模型超过了 GeminiProVision，并表现出与 Claude-3-opus 相当的结果。
 - `2024/08/01`: InternVL2-Pro 在 [CharXiv](https://charxiv.github.io/#leaderboard) 数据集中实现了开源模型中的 SOTA 性能，也比部分知名闭源模型如 GPT-4V、Gemini 1.5 Flash、Claude 3 Sonnet 取得了更好成绩
 - `2024/07/24`: [MLVU](https://github.com/JUNJIE99/MLVU)团队在它们的基准测试中评估了InternVL-1.5。在多项选择任务上的平均表现为50.4%，而在生成任务上的表现为4.02。多项选择任务的表现在所有开源多模态大语言模型中排名第一。
-- `2024/07/04`: 我们发布了 InternVL2 系列模型。InternVL2-Pro 在 MMMU 基准测试中达到了 62.0% 的准确率，实现了与 GPT-4o 等领先闭源商业模型比肩的性能。该模型的免费 API 可以通过填写 ([英文申请表](https://docs.google.com/forms/d/e/1FAIpQLSfMCzhPr1OOEKau_6jwTU0EiZMSFckDo-HMlc_hUudhF_97rw/viewform?usp=sf_link)) / ([中文申请表](https://wj.qq.com/s2/14910502/25a4/)) 来申请。其它模型可在 [HF 链接](https://huggingface.co/collections/OpenGVLab/internvl-20-667d3961ab5eb12c7ed1463e) 中下载。
+- `2024/07/04`: 我们发布了 InternVL2 系列模型。InternVL2-Pro 在 MMMU 基准测试中达到了 62.0% 的准确率，实现了与 GPT-4o 等领先闭源商业模型比肩的性能。模型权重可在 [HF 链接](https://huggingface.co/collections/OpenGVLab/internvl-20-667d3961ab5eb12c7ed1463e) 中下载。
 
 <details>
 <summary>更多</summary>
@@ -59,7 +59,7 @@
 - **Installation**: 🌱 [Installation Guide](https://internvl.readthedocs.io/en/latest/get_started/installation.html) | 📄 [requirements.txt](./requirements.txt)
 - **Chat Data Format**: 📝 [Meta File](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#meta-file) | ✏️ [Text](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#pure-text-data) | 🖼️ [Single-Image](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#single-image-data) | 🖼️🖼️ [Multi-Image](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#multi-image-data) | 🎥 [Video](https://internvl.readthedocs.io/en/latest/get_started/chat_data_format.html#video-data)
 - **Local Chat Demo**: 🤖 [Streamlit Demo](https://internvl.readthedocs.io/en/latest/get_started/local_chat_demo.html#streamlit-demo)
-- **InternVL-Chat API**: 🌐 [InternVL2-Pro](https://internvl.readthedocs.io/en/latest/get_started/internvl_chat_api.html#official-api-of-internvl2-pro)
+- **InternVL-Chat API**: 🌐 [InternVL2.5 API](https://internlm.intern-ai.org.cn/api/document)
 - **Tutorials**: 🚀 [Enhancing InternVL2 on COCO Caption Using LoRA Fine-Tuning](https://internvl.readthedocs.io/en/latest/tutorials/coco_caption_finetune.html)
 
 ### 🏆 **InternVL Family**
