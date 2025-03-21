@@ -57,6 +57,7 @@ from torch.utils.data import Dataset
 from transformers import (AutoConfig, AutoModelForCausalLM, AutoTokenizer,
                           HfArgumentParser, Trainer, TrainingArguments,
                           set_seed)
+from internvl.train.trainer import CustomTrainer
 from transformers.trainer_utils import get_last_checkpoint
 from transformers.utils.logging import (enable_default_handler,
                                         enable_explicit_format, set_verbosity)
@@ -263,6 +264,14 @@ class DataTrainingArguments:
     loss_reduction_all_gather: bool = field(
         default=False,
         metadata={'help': 'Whether to gather all during loss reduction. Default is False.'},
+    )
+    use_cuda_graph: bool = field(
+        default=False,
+        metadata={"help": "use cuda_graph to accelerate finetuning"}
+    )
+    pad_to_max_seqlen: bool = field(
+        default=False,
+        metadata={"help": "padding to max seq length, must be True if use_cuda_graph"}
     )
 
 
@@ -1036,9 +1045,15 @@ def main():
             loss_reduction_all_gather=data_args.loss_reduction_all_gather,
         )
     else:
-        collator = concat_pad_data_collator
+        if data_args.pad_to_max_seqlen:
+            collator = partial(concat_pad_data_collator, max_item_length=tokenizer.model_max_length)
+        else:
+            collator = concat_pad_data_collator
 
-    trainer = Trainer(
+
+    # trainer = Trainer(
+    trainer = CustomTrainer(
+        use_cuda_graph = data_args.use_cuda_graph,
         model=model,
         args=training_args,
         train_dataset=train_dataset if training_args.do_train else None,
