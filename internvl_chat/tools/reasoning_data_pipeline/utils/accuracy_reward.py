@@ -1,7 +1,8 @@
 import re
-from tqdm import tqdm
+
 from sympy import latex
 from sympy.parsing.latex import parse_latex
+from tqdm import tqdm
 
 
 class EvalAIAnswerProcessor:

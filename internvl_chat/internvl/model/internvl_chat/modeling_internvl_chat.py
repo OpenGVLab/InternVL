@@ -447,3 +447,13 @@ class InternVLChatModel(PreTrainedModel):
 
     def get_output_embeddings(self):
         return self.language_model.get_output_embeddings()
+
+    @property
+    def lm_head(self):
+        return self.language_model.get_output_embeddings()
+
+    def get_input_embeddings(self):
+        return self.language_model.get_input_embeddings()
+
+    def get_output_embeddings(self):
+        return self.language_model.get_output_embeddings()

@@ -11,35 +11,28 @@ else:
     os.environ['CUDA_VISIBLE_DEVICES'] = str(int(os.environ['SLURM_PROCID']) % 8)
     print(f"{os.environ['CUDA_VISIBLE_DEVICES']=}")
 
+import argparse
 import io
 import json
 import math
-import argparse
-import torch
-
-from PIL import Image
 from collections import defaultdict
-from lmdeploy import GenerationConfig, TurbomindEngineConfig, VisionConfig, ChatTemplateConfig, pipeline
-from lmdeploy.vl.constants import IMAGE_TOKEN
 
-from tools.reasoning_data_pipeline.utils.accuracy_reward import get_mode, check_answer, parse_answer
-from tools.reasoning_data_pipeline.utils.utils import (
-    localtime,
-    init_dist,
-    save_outputs,
-    get_global_min,
-    InferenceSampler,
-)
+import torch
+from lmdeploy import (ChatTemplateConfig, GenerationConfig,
+                      TurbomindEngineConfig, VisionConfig, pipeline)
+from lmdeploy.vl.constants import IMAGE_TOKEN
+from PIL import Image
+from tools.reasoning_data_pipeline.utils.accuracy_reward import (check_answer,
+                                                                 get_mode,
+                                                                 parse_answer)
 from tools.reasoning_data_pipeline.utils.constants import (
-    IMG_PLACEHOLDER,
-    VALID_INSTRUCTIONS,
-    INSTRUCTION_EN,
-    INSTRUCTION_ZH,
-    INSTRUCTION_BOXED_EN,
-    INSTRUCTION_BOXED_ZH,
-    INSTRUCTION_R1_EN,
-    INSTRUCTION_R1_ZH,
-)
+    IMG_PLACEHOLDER, INSTRUCTION_BOXED_EN, INSTRUCTION_BOXED_ZH,
+    INSTRUCTION_EN, INSTRUCTION_R1_EN, INSTRUCTION_R1_ZH, INSTRUCTION_ZH,
+    VALID_INSTRUCTIONS)
+from tools.reasoning_data_pipeline.utils.utils import (InferenceSampler,
+                                                       get_global_min,
+                                                       init_dist, localtime,
+                                                       save_outputs)
 
 try:
     from petrel_client.client import Client

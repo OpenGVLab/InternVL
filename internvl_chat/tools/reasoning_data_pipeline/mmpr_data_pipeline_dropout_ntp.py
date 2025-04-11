@@ -11,26 +11,21 @@ else:
     os.environ['CUDA_VISIBLE_DEVICES'] = str(int(os.environ['SLURM_PROCID']) % 8)
     print(f"{os.environ['CUDA_VISIBLE_DEVICES']=}")
 
+import argparse
 import io
 import json
-import argparse
-import torch
-
-from PIL import Image
 from collections import defaultdict
-from lmdeploy import GenerationConfig, TurbomindEngineConfig, VisionConfig, ChatTemplateConfig, pipeline
-from lmdeploy.vl.constants import IMAGE_TOKEN
 
-from tools.reasoning_data_pipeline.utils.utils import (
-    localtime,
-    init_dist,
-    save_outputs,
-    get_global_min,
-    InferenceSampler,
-)
-from tools.reasoning_data_pipeline.utils.constants import (
-    IMG_PLACEHOLDER,
-)
+import torch
+from lmdeploy import (ChatTemplateConfig, GenerationConfig,
+                      TurbomindEngineConfig, VisionConfig, pipeline)
+from lmdeploy.vl.constants import IMAGE_TOKEN
+from PIL import Image
+from tools.reasoning_data_pipeline.utils.constants import IMG_PLACEHOLDER
+from tools.reasoning_data_pipeline.utils.utils import (InferenceSampler,
+                                                       get_global_min,
+                                                       init_dist, localtime,
+                                                       save_outputs)
 
 try:
     from petrel_client.client import Client

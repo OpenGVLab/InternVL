@@ -45,17 +45,17 @@ INSTRUCTION_EN = (
 
 
 INSTRUCTION_BOXED_EN = (
-    "{question}\n"
-    "Answer the preceding question. The last line of your response should follow this format: "
+    '{question}\n'
+    'Answer the preceding question. The last line of your response should follow this format: '
     "'Answer: \\boxed{$FINAL_ANSWER}' (without quotes), where 'FINAL_ANSWER' is your conclusion "
-    "based on the reasoning provided. If you are uncertain or the problem is too complex, make "
-    "a reasoned guess based on the information provided. Avoid repeating steps indefinitely—"
-    "provide your best guess even if unsure. Think step by step logically, considering all "
-    "relevant information before answering."
+    'based on the reasoning provided. If you are uncertain or the problem is too complex, make '
+    'a reasoned guess based on the information provided. Avoid repeating steps indefinitely—'
+    'provide your best guess even if unsure. Think step by step logically, considering all '
+    'relevant information before answering.'
 )
 
 
-INSTRUCTION_R1_EN = R1_SYSTEM_PROMPT + '\n' + "{question}\nPlease answer the question and put the final answer within \\boxed{}."
+INSTRUCTION_R1_EN = R1_SYSTEM_PROMPT + '\n' + '{question}\nPlease answer the question and put the final answer within \\boxed{}.'
 
 
 INSTRUCTION_ZH = (
@@ -68,16 +68,16 @@ INSTRUCTION_ZH = (
 
 
 INSTRUCTION_BOXED_ZH = (
-    "{question}\n"
-    "请回答上述问题。你的回答最后一行应遵循以下格式："
-    "“答案：\\boxed{$FINAL_ANSWER}”（不包含引号），其中“FINAL_ANSWER”是你根据推理得出的最终结论。"
-    "如果你不确定答案或问题过于复杂，请基于已有信息做出有理有据的猜测。"
-    "避免无限重复推理步骤——即使不完全确定，也请给出你认为最合理的答案。"
-    "请一步一步进行逻辑思考，充分考虑所有相关信息后再作答。"
+    '{question}\n'
+    '请回答上述问题。你的回答最后一行应遵循以下格式：'
+    '“答案：\\boxed{$FINAL_ANSWER}”（不包含引号），其中“FINAL_ANSWER”是你根据推理得出的最终结论。'
+    '如果你不确定答案或问题过于复杂，请基于已有信息做出有理有据的猜测。'
+    '避免无限重复推理步骤——即使不完全确定，也请给出你认为最合理的答案。'
+    '请一步一步进行逻辑思考，充分考虑所有相关信息后再作答。'
 )
 
 
-INSTRUCTION_R1_ZH = R1_SYSTEM_PROMPT + '\n' + "{question}\n请详细回答这个问题并将最终答案用\\boxed{}包住。"
+INSTRUCTION_R1_ZH = R1_SYSTEM_PROMPT + '\n' + '{question}\n请详细回答这个问题并将最终答案用\\boxed{}包住。'
 
 
 VALID_INSTRUCTIONS = [

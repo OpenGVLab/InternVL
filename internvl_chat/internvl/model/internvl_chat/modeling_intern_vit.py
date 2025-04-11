@@ -364,6 +364,7 @@ class InternVisionEncoder(nn.Module):
 class InternVisionModel(PreTrainedModel):
     main_input_name = 'pixel_values'
     _supports_flash_attn_2 = True
+    supports_gradient_checkpointing = True
     config_class = InternVisionConfig
     _no_split_modules = ['InternVisionEncoderLayer']
 

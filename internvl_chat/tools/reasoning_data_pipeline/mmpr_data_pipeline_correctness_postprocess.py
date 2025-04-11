@@ -1,12 +1,14 @@
-import os
-import json
-import random
 import argparse
-
-from tqdm import tqdm
+import json
+import os
+import random
 from collections import defaultdict
-from tools.reasoning_data_pipeline.utils.accuracy_reward import parse_answer, check_answer, fix_answer, get_mode
 
+from tools.reasoning_data_pipeline.utils.accuracy_reward import (check_answer,
+                                                                 fix_answer,
+                                                                 get_mode,
+                                                                 parse_answer)
+from tqdm import tqdm
 
 random.seed(0)
 
@@ -227,7 +229,7 @@ def save_pairs(pairs, save_path):
             image = eval(image)
         except:
             pass
-        
+
         if image:
             filtered_pair = {
                 'image': image,
