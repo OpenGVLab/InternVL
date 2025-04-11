@@ -31,7 +31,7 @@ srun -p ${PARTITION} \
   --kill-on-bad-exit=1 \
   --quotatype=${QUOTA_TYPE} \
   ${SRUN_ARGS} \
-  python -u internvl/train/internvl_chat_dpo.py \
+  python -u internvl/train/internvl_chat_mpo.py \
   --model_name_or_path "OpenGVLab/InternVL2_5-4B" \
   --conv_style "internvl2_5" \
   --output_dir ${OUTPUT_DIR} \

@@ -16,7 +16,7 @@ export TRITON_CACHE_DIR="/tmp/triton_wwy/"
 export MASTER_PORT=34229
 export TF_CPP_MIN_LOG_LEVEL=3
 
-OUTPUT_DIR='work_dirs/internvl_chat_v2_5_mpo/Internvl2_5-1B-MPO'
+OUTPUT_DIR='work_dirs/internvl_chat_v3_mpo/Internvl3-1B'
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
@@ -32,11 +32,11 @@ srun -p ${PARTITION} \
   --quotatype=${QUOTA_TYPE} \
   ${SRUN_ARGS} \
   python -u internvl/train/internvl_chat_mpo.py \
-  --model_name_or_path "OpenGVLab/InternVL2_5-1B" \
+  --model_name_or_path "" \
   --conv_style "internvl2_5" \
   --output_dir ${OUTPUT_DIR} \
-  --meta_path "MMPR-v1.1/meta.json" \
-  --overwrite_output_dir True \
+  --meta_path "MMPR-v1.2/meta.json" \
+  --overwrite_output_dir False \
   --force_image_size 448 \
   --down_sample_ratio 0.5 \
   --drop_path_rate 0.1 \
@@ -53,14 +53,14 @@ srun -p ${PARTITION} \
   --gradient_accumulation_steps ${GRADIENT_ACC} \
   --evaluation_strategy "no" \
   --save_strategy "no" \
-  --save_steps 100 \
+  --save_steps 200 \
   --save_total_limit 100 \
-  --learning_rate 1e-6 \
+  --learning_rate 2e-7 \
   --weight_decay 0.05 \
   --warmup_ratio 0.03 \
   --lr_scheduler_type "cosine" \
   --logging_steps 1 \
-  --max_seq_length 8192 \
+  --max_seq_length 12288 \
   --do_train True \
   --grad_checkpoint True \
   --group_by_length False \
