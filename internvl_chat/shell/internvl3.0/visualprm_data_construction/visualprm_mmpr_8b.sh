@@ -28,6 +28,8 @@ fi
 
 echo "${CHECKPOINT}, ${AUTO_SPLIT}"
 
+# NOTE: you can download MMPR-v1.2-prompts from: https://huggingface.co/datasets/OpenGVLab/MMPR-v1.2-prompts
+
 declare -a datasets=( \
     'MMPR-v1.2-prompts/correctness_prompts/CLEVR_math_en_20240402_extracted.jsonl,6' \
     'MMPR-v1.2-prompts/correctness_prompts/geos_en_20240402_extracted.jsonl,6' \
