@@ -22,6 +22,7 @@ if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
 fi
 
+# NOTE: you can download MMPR-v1.2 from: https://huggingface.co/datasets/OpenGVLab/MMPR-v1.2
 # NOTE: In our experiment, the checkpoint saved at step 400 yields the best performance.
 
 srun -p ${PARTITION} \
@@ -34,7 +35,7 @@ srun -p ${PARTITION} \
   --quotatype=${QUOTA_TYPE} \
   ${SRUN_ARGS} \
   python -u internvl/train/internvl_chat_mpo.py \
-  --model_name_or_path "" \
+  --model_name_or_path "OpenGVLab/InternVL3-78B-Instruct" \
   --conv_style "internvl2_5" \
   --output_dir ${OUTPUT_DIR} \
   --meta_path "MMPR-v1.2/meta.json" \
