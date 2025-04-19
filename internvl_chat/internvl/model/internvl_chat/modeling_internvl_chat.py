@@ -159,6 +159,8 @@ class InternVLChatModel(PreTrainedModel):
     ) -> Union[Tuple, CausalLMOutputWithPast]:
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
 
+        if isinstance(position_ids, list):
+            position_ids = torch.tensor(position_ids, dtype=torch.float32).to(pixel_values.device)
         image_flags = image_flags.squeeze(-1)
         input_embeds = self.language_model.get_input_embeddings()(input_ids).clone()
 
@@ -379,21 +381,15 @@ class InternVLChatModel(PreTrainedModel):
         input_ids = model_inputs['input_ids'].to(device)
         attention_mask = model_inputs['attention_mask'].to(device)
         generation_config['eos_token_id'] = eos_token_id
-
-        if 'rope_pos_id_version' in kwargs:
+        rope_pos_id_version = self.config.rope_pos_id_version
+        if rope_pos_id_version.startswith('v2pe_'):
             self.language_model.rope_pos_id_version = kwargs['rope_pos_id_version']
             pos_ids = []
             ret = {'input_ids': input_ids, 'attention_mask': attention_mask}
             for i in range(input_ids.shape[0]):
-                if kwargs['rope_pos_id_version'] == 'default':
-                    cur_dtype = torch.long
-                else:
-                    cur_dtype = torch.float32
 
-                if 'rope_pos_id_stride' in kwargs:
-                    rope_pos_id_stride = kwargs['rope_pos_id_stride']
-                else:
-                    rope_pos_id_stride = None
+                cur_dtype = torch.float32
+                rope_pos_id_stride = self.config.rope_pos_id_stride
 
                 cur_pos_id = get_rope_pos_id(ret, tokenizer=tokenizer, num_tiles=kwargs['num_tiles'][i],
                                            dtype=cur_dtype,

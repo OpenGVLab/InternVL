@@ -78,14 +78,13 @@ def get_rope_pos_id(ret, num_tiles, dtype, rope_pos_id_version='default', positi
 
 # Rotary Position Embedding for V2PE
 class V2PE(nn.Module):
-    def __init__(self, dim, max_position_embeddings=2048, base=10000, scaling_factor=1.0):
+    def __init__(self, dim, max_position_embeddings=2048, base=10000):
         super().__init__()
 
         self.dim = dim
         self.max_position_embeddings = max_position_embeddings
         self.base = base
         self.inv_freq = None
-        self.scaling_factor=scaling_factor
         # inv_freq = 1.0 / (self.base ** (torch.arange(0, self.dim, 2).float().to(device) / self.dim))
         # self.register_buffer('inv_freq', inv_freq, persistent=False)
 
@@ -107,7 +106,7 @@ class V2PE(nn.Module):
 
     def forward(self, x, global_posid=None):
         # x: [bs, num_attention_heads, seq_len, head_size]
-        self._set_cos_sin_cache(pos_id=global_posid, device=x.device, dtype=x.dtype,selected=selected)
+        self._set_cos_sin_cache(pos_id=global_posid, device=x.device, dtype=x.dtype)
 
         return (
             self.cos_cached[:].to(dtype=x.dtype),

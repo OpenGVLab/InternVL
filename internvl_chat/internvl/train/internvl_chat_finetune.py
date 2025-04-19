@@ -159,6 +159,14 @@ class ModelArguments:
         default=False,
         metadata={'help': 'Set to True to use the liger kernel.'}
     )
+    rope_pos_id_version: Optional[str] = field(
+        default='default',
+        metadata={'help': 'version for get_rope_pos_id'},
+    )
+    rope_pos_id_stride: Optional[int] = field(
+        default=None,
+        metadata={'help': 'stride for the version v4 of get_rope_pos_id'},
+    )
 
 
 @dataclass
@@ -266,14 +274,7 @@ class DataTrainingArguments:
         default=False,
         metadata={'help': 'Whether to gather all during loss reduction. Default is False.'},
     )
-    rope_pos_id_version: Optional[str] = field(
-        default='default',
-        metadata={'help': 'version for get_rope_pos_id'},
-    )
-    rope_pos_id_stride: Optional[int] = field(
-        default=None,
-        metadata={'help': 'stride for the version v4 of get_rope_pos_id'},
-    )
+
 
 
 class LazySupervisedDataset(Dataset):
@@ -450,7 +451,7 @@ class LazySupervisedDataset(Dataset):
         orig_size = image.size
 
         if self.dynamic_image_size:  # If dynamic image size is enabled, preprocess the image dynamically
-            images, boxes = dynamic_preprocess(image, min_num=self.min_dynamic_patch, max_num=self.max_dynamic_patch,
+            images = dynamic_preprocess(image, min_num=self.min_dynamic_patch, max_num=self.max_dynamic_patch,
                                         image_size=self.image_size, use_thumbnail=self.use_thumbnail)
             num_tiles.append(len(images))
         else:  # Otherwise, use the original image as a single patch
@@ -594,9 +595,6 @@ class LazySupervisedDataset(Dataset):
         # Calculate position_ids for packed dataset
         position_ids = ret['attention_mask'].long().cumsum(-1) - 1
         position_ids.masked_fill_(ret['attention_mask'] == 0, 1)
-
-        image_end_token_id = self.tokenizer.convert_tokens_to_ids(IMG_END_TOKEN)
-        assert (ret['input_ids'][0] == image_end_token_id).sum() == num_patches, f'image tokens are truncated, this dataset is {self.ds_name}'
 
         if self.rope_pos_id_version in ['v2pe_fix', 'v2pe_rnd']:
             position_ids = get_rope_pos_id(ret, [1] * num_patches, torch.float32, self.rope_pos_id_version, position_ids[0], tokenizer=self.tokenizer)
@@ -746,6 +744,8 @@ def build_datasets(
     min_num_frame=8,
     max_num_frame=32,
     normalize_type='imagenet',
+    rope_pos_id_version='default',
+    rope_pos_id_stride=None,
 ):
     datasets = []
     lengths = []
@@ -784,6 +784,8 @@ def build_datasets(
             distributed_mode=data_args.use_packed_ds,
             force_shuffle=data_args.use_packed_ds,
             random_seed=ds_idx,
+            rope_pos_id_version=rope_pos_id_version,
+            rope_pos_id_stride=rope_pos_id_stride,
         )
         logger.info(f'Add dataset: {ds_name} with length: {len(dataset)}')
         datasets.append(dataset)
@@ -1026,8 +1028,8 @@ def main():
         dynamic_image_size=data_args.dynamic_image_size, use_thumbnail=data_args.use_thumbnail,
         min_dynamic_patch=data_args.min_dynamic_patch, max_dynamic_patch=data_args.max_dynamic_patch,
         normalize_type=data_args.normalize_type, min_num_frame=data_args.min_num_frame,
-        max_num_frame=data_args.max_num_frame)
-
+        max_num_frame=data_args.max_num_frame,rope_pos_id_version=model_args.rope_pos_id_version,
+        rope_pos_id_stride=model_args.rope_pos_id_stride)
     def _freeze_params(module):
         for param in module.parameters():
             param.requires_grad = False

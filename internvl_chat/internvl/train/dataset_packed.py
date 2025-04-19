@@ -240,7 +240,22 @@ class PackedDataset(IterableDataset):
 
         assert buffer.keys() == new_sample.keys()
         for k in buffer:
-            buffer[k] = torch.cat([buffer[k], new_sample[k]])
+            if isinstance(buffer[k], list) or isinstance(new_sample[k], list):
+                # Handle list type
+                if isinstance(buffer[k], list):
+                    buffer_data = buffer[k]
+                else:
+                    buffer_data = buffer[k].tolist()
+                
+                if isinstance(new_sample[k], list):
+                    new_data = new_sample[k]
+                else:
+                    new_data = new_sample[k].tolist()
+                
+                buffer[k] = buffer_data + new_data
+            else:
+                # Handle tensor type
+                buffer[k] = torch.cat([buffer[k], new_sample[k]])
         return buffer
 
     @staticmethod

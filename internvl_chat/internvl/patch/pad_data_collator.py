@@ -73,7 +73,12 @@ def concat_pad_data_collator(features, max_item_length=None, pad_id=0):
 
         if 'position_ids' in feat:
             temp_position_ids = [pad_id] * max_item_length
-            temp_position_ids[:feat['position_ids'].shape[0]] = feat['position_ids']
+            if isinstance(feat['position_ids'], (list, tuple)):
+                pos_length = len(feat['position_ids'])
+                temp_position_ids[:pos_length] = feat['position_ids']
+            else:
+                pos_length = feat['position_ids'].shape[0]
+                temp_position_ids[:pos_length] = feat['position_ids']
             feat['position_ids'] = temp_position_ids
 
         if 'loss_weight' in feat:
@@ -98,7 +103,7 @@ def concat_pad_data_collator(features, max_item_length=None, pad_id=0):
     # Handling of all other possible keys.
     # Again, we will use the first element to figure out which key/values are not None for this model.
     for k, v in first.items():
-        if k not in ('label', 'label_ids', 'pixel_values', 'image_flags') and \
+        if k not in ('label', 'label_ids', 'pixel_values', 'image_flags', 'position_ids') and \
                 v is not None and not isinstance(v, str):
             if isinstance(v, torch.Tensor):
                 batch[k] = torch.stack([f[k] for f in features])
@@ -113,6 +118,13 @@ def concat_pad_data_collator(features, max_item_length=None, pad_id=0):
                 batch[k] = torch.concat(np.stack([f[k] for f in features]))
             else:
                 batch[k] = torch.concat([f[k] for f in features])
+        if k in ('position_ids'):
+            if isinstance(v, torch.Tensor):
+                batch[k] = torch.concat([f[k] for f in features])
+            elif isinstance(v, np.ndarray):
+                batch[k] = torch.concat(np.stack([f[k] for f in features]))
+            else:
+                batch[k] = [f[k] for f in features]
     return batch
 
 
