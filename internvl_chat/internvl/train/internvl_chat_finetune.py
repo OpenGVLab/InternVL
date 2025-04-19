@@ -941,6 +941,10 @@ def main():
         config.ps_version = model_args.ps_version
         config.min_dynamic_patch = data_args.min_dynamic_patch
         config.max_dynamic_patch = data_args.max_dynamic_patch
+        config.rope_pos_id_version = model_args.rope_pos_id_version
+        config.rope_pos_id_stride = model_args.rope_pos_id_stride
+        config.llm_config.rope_pos_id_version = model_args.rope_pos_id_version
+        config.llm_config.rope_pos_id_stride = model_args.rope_pos_id_stride
         model = InternVLChatModel.from_pretrained(
             model_args.model_name_or_path, torch_dtype=torch.bfloat16, config=config)
     else:
@@ -970,6 +974,10 @@ def main():
             use_thumbnail=data_args.use_thumbnail, ps_version=model_args.ps_version,
             min_dynamic_patch=data_args.min_dynamic_patch, max_dynamic_patch=data_args.max_dynamic_patch)
         internvl_chat_config.force_image_size = data_args.force_image_size
+        internvl_chat_config.rope_pos_id_version = model_args.rope_pos_id_version
+        internvl_chat_config.rope_pos_id_stride = model_args.rope_pos_id_stride
+        internvl_chat_config.llm_config.rope_pos_id_version = model_args.rope_pos_id_version
+        internvl_chat_config.llm_config.rope_pos_id_stride = model_args.rope_pos_id_stride
         logger.info('Building InternVLChatModel...')
         model = InternVLChatModel(internvl_chat_config, vision_model, llm)
     model.img_context_token_id = img_context_token_id

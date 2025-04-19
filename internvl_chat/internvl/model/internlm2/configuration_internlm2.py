@@ -95,6 +95,8 @@ class InternLM2Config(PretrainedConfig):
         rope_theta=10000,
         rope_scaling=None,
         attn_implementation='eager',
+        rope_pos_id_version='default',
+        rope_pos_id_stride=None,
         **kwargs,
     ):
         self.vocab_size = vocab_size
@@ -115,8 +117,10 @@ class InternLM2Config(PretrainedConfig):
         self.use_cache = use_cache
         self.rope_theta = rope_theta
         self.rope_scaling = rope_scaling
+        self.rope_pos_id_version = rope_pos_id_version
+        self.rope_pos_id_stride = rope_pos_id_stride
         self._rope_scaling_validation()
-
+        
         self.attn_implementation = attn_implementation
         if self.attn_implementation is None:
             self.attn_implementation = 'eager'
