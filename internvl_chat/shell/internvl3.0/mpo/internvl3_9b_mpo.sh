@@ -16,7 +16,7 @@ export TRITON_CACHE_DIR="/tmp/triton_wwy/"
 export MASTER_PORT=34229
 export TF_CPP_MIN_LOG_LEVEL=3
 
-OUTPUT_DIR='work_dirs/internvl_chat_v3_mpo/Internvl3-14B'
+OUTPUT_DIR='work_dirs/internvl_chat_v3_mpo/Internvl3-9B'
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
@@ -34,7 +34,7 @@ srun -p ${PARTITION} \
   --quotatype=${QUOTA_TYPE} \
   ${SRUN_ARGS} \
   python -u internvl/train/internvl_chat_mpo.py \
-  --model_name_or_path "OpenGVLab/InternVL3-14B-Instruct" \
+  --model_name_or_path "OpenGVLab/InternVL3-9B-Instruct" \
   --conv_style "internvl2_5" \
   --output_dir ${OUTPUT_DIR} \
   --meta_path "MMPR-v1.2/meta.json" \
