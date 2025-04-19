@@ -524,7 +524,7 @@ class LazySupervisedDataset(Dataset):
         assert (ret['input_ids'][0] == image_end_token_id).sum() == 1, f'image tokens are truncated, this dataset is {self.ds_name}'
 
         if self.rope_pos_id_version in ['v2pe_fix', 'v2pe_rnd']:
-            position_ids = get_rope_pos_id(ret, num_tiles, torch.float32, self.rope_pos_id_version, position_ids[0], tokenizer=self.tokenizer)
+            position_ids = get_rope_pos_id(ret, torch.float32, self.rope_pos_id_version, position_ids[0], tokenizer=self.tokenizer, num_image_token=self.num_image_token)
         else:
             position_ids = position_ids[0]
         # Create the final return dictionary
@@ -578,7 +578,7 @@ class LazySupervisedDataset(Dataset):
         assert (ret['input_ids'][0] == image_end_token_id).sum() == num_image, f'image tokens are truncated, this dataset is {self.ds_name}'
 
         if self.rope_pos_id_version in ['v2pe_fix', 'v2pe_rnd']:
-            position_ids = get_rope_pos_id(ret, num_tiles, torch.float32, self.rope_pos_id_version, position_ids[0], tokenizer=self.tokenizer)
+            position_ids = get_rope_pos_id(ret, torch.float32, self.rope_pos_id_version, position_ids[0], tokenizer=self.tokenizer, num_image_token=self.num_image_token)
         else:
             position_ids = position_ids[0]  
         # Create the final return dictionary
@@ -638,7 +638,7 @@ class LazySupervisedDataset(Dataset):
         position_ids.masked_fill_(ret['attention_mask'] == 0, 1)
 
         if self.rope_pos_id_version in ['v2pe_fix', 'v2pe_rnd']:
-            position_ids = get_rope_pos_id(ret, [1] * num_patches, torch.float32, self.rope_pos_id_version, position_ids[0], tokenizer=self.tokenizer)
+            position_ids = get_rope_pos_id(ret, torch.float32, self.rope_pos_id_version, position_ids[0], tokenizer=self.tokenizer, num_image_token=self.num_image_token)
         else:
             position_ids = position_ids[0]
         # Create the final return dictionary

@@ -383,25 +383,22 @@ class InternVLChatModel(PreTrainedModel):
         generation_config['eos_token_id'] = eos_token_id
         rope_pos_id_version = self.config.rope_pos_id_version
         if rope_pos_id_version.startswith('v2pe_'):
-            self.language_model.rope_pos_id_version = kwargs['rope_pos_id_version']
             pos_ids = []
             ret = {'input_ids': input_ids, 'attention_mask': attention_mask}
             for i in range(input_ids.shape[0]):
-
                 cur_dtype = torch.float32
                 rope_pos_id_stride = self.config.rope_pos_id_stride
-
-                cur_pos_id = get_rope_pos_id(ret, tokenizer=tokenizer, num_tiles=kwargs['num_tiles'][i],
+                cur_pos_id = get_rope_pos_id(ret, tokenizer=tokenizer,
                                            dtype=cur_dtype,
-                                           rope_pos_id_version=kwargs['rope_pos_id_version'],
+                                           rope_pos_id_version=rope_pos_id_version,
                                            position_id=torch.arange(0, input_ids.shape[1]),
                                            IMG_START_TOKEN=IMG_START_TOKEN,
-                                           IMG_END_TOKEN=IMG_END_TOKEN, rope_pos_id_stride=rope_pos_id_stride)
+                                           IMG_END_TOKEN=IMG_END_TOKEN, rope_pos_id_stride=rope_pos_id_stride, num_image_token=self.num_image_token)
 
                 cur_pos_id = torch.tensor(cur_pos_id).to(device)
                 pos_ids.append(cur_pos_id)
 
-            pos_ids = torch.stack(pos_ids)
+            pos_ids = torch.stack(pos_ids).to(device)
             generation_output = self.generate(
                 pixel_values=pixel_values,
                 input_ids=input_ids,

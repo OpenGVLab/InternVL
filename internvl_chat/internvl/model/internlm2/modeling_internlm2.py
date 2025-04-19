@@ -1159,7 +1159,7 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
                 remove_prefix_length = input_ids.shape[1] - 1
 
             input_ids = input_ids[:, remove_prefix_length:]
-
+        
         position_ids = kwargs.get('position_ids', None)
         if attention_mask is not None and position_ids is None:
             # create position_ids on the fly for batch generation
@@ -1167,13 +1167,15 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
             position_ids.masked_fill_(attention_mask == 0, 1)
             if past_key_values:
                 position_ids = position_ids[:, -input_ids.shape[1]:]
+        elif position_ids is not None:
+            if self.config.rope_pos_id_version!='default' and past_key_values is not None:
+                position_ids=(position_ids[:,-1]+attention_mask[:,position_ids.shape[1]:].sum(dim=1)).unsqueeze(1)
 
         # if `inputs_embeds` are passed, we only want to use them in the 1st generation step
         if inputs_embeds is not None and past_key_values is None:
             model_inputs = {'inputs_embeds': inputs_embeds}
         else:
             model_inputs = {'input_ids': input_ids}
-
         model_inputs.update(
             {
                 'position_ids': position_ids,

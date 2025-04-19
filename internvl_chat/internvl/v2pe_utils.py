@@ -2,18 +2,17 @@ import torch
 import torch.nn as nn
 import random
 # get rope pos id while evaluating
-def get_rope_pos_id(ret, num_tiles, dtype, rope_pos_id_version='default', position_id=None,
-                    IMG_START_TOKEN='<img>',IMG_END_TOKEN='</img>',rope_pos_id_stride=None, tokenizer=None):
+def get_rope_pos_id(ret, dtype, rope_pos_id_version='default', position_id=None,
+                    IMG_START_TOKEN='<img>',IMG_END_TOKEN='</img>',rope_pos_id_stride=None, tokenizer=None, num_image_token=256):
     image_start_token_id = tokenizer.convert_tokens_to_ids(IMG_START_TOKEN)
     image_end_token_id = tokenizer.convert_tokens_to_ids(IMG_END_TOKEN)
-    num_image_token=256
     rope_pos_id_list = []
-
+    assert ret['input_ids'].shape[0] == 1, 'batch size should be 1, other batch sizes are not supported yet'
     input_ids_0 = ret['input_ids'][0]
     attention_mask_0 = ret['attention_mask'][0]
     image_start_token_id_idxs = torch.where(input_ids_0 == image_start_token_id)[0]
     image_end_token_id_idxs = torch.where(input_ids_0 == image_end_token_id)[0]
-
+    num_tiles = (image_end_token_id_idxs - image_start_token_id_idxs) // num_image_token
     last_record_pos_id = -1
     start_index = 0
 
