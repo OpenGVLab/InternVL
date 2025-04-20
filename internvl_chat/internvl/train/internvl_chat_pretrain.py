@@ -580,7 +580,7 @@ class LazySupervisedDataset(Dataset):
         if self.rope_pos_id_version in ['v2pe_fix', 'v2pe_rnd']:
             position_ids = get_rope_pos_id(ret, torch.float32, self.rope_pos_id_version, position_ids[0], tokenizer=self.tokenizer, num_image_token=self.num_image_token)
         else:
-            position_ids = position_ids[0]  
+            position_ids = position_ids[0]
         # Create the final return dictionary
         ret = dict(
             input_ids=ret['input_ids'][0],
@@ -683,7 +683,6 @@ class LazySupervisedDataset(Dataset):
         # Calculate position_ids for packed dataset
         position_ids = ret['attention_mask'].long().cumsum(-1) - 1
         position_ids.masked_fill_(ret['attention_mask'] == 0, 1)
-
 
         # Create the final return dictionary
         ret = dict(
