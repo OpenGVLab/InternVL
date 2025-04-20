@@ -13,6 +13,7 @@ import transformers
 from internvl.conversation import get_conv_template
 from internvl.model.internlm2.modeling_internlm2 import InternLM2ForCausalLM
 from internvl.model.phi3.modeling_phi3 import Phi3ForCausalLM
+from internvl.v2pe_utils import get_rope_pos_id
 from peft import LoraConfig, get_peft_model
 from torch import nn
 from torch.nn import CrossEntropyLoss
@@ -24,7 +25,6 @@ from transformers.utils import ModelOutput, logging
 
 from .configuration_internvl_chat import InternVLChatConfig
 from .modeling_intern_vit import InternVisionModel, has_flash_attn
-from internvl.v2pe_utils import get_rope_pos_id
 
 logger = logging.get_logger(__name__)
 

@@ -246,12 +246,12 @@ class PackedDataset(IterableDataset):
                     buffer_data = buffer[k]
                 else:
                     buffer_data = buffer[k].tolist()
-                
+
                 if isinstance(new_sample[k], list):
                     new_data = new_sample[k]
                 else:
                     new_data = new_sample[k].tolist()
-                
+
                 buffer[k] = buffer_data + new_data
             else:
                 # Handle tensor type

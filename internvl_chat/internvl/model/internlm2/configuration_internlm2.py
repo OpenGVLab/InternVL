@@ -120,7 +120,7 @@ class InternLM2Config(PretrainedConfig):
         self.rope_pos_id_version = rope_pos_id_version
         self.rope_pos_id_stride = rope_pos_id_stride
         self._rope_scaling_validation()
-        
+
         self.attn_implementation = attn_implementation
         if self.attn_implementation is None:
             self.attn_implementation = 'eager'

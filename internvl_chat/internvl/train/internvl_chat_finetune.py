@@ -276,7 +276,6 @@ class DataTrainingArguments:
     )
 
 
-
 class LazySupervisedDataset(Dataset):
     """Dataset for supervised fine-tuning."""
 
@@ -539,7 +538,7 @@ class LazySupervisedDataset(Dataset):
         if self.rope_pos_id_version in ['v2pe_fix', 'v2pe_rnd']:
             position_ids = get_rope_pos_id(ret, torch.float32, self.rope_pos_id_version, position_ids[0], tokenizer=self.tokenizer, num_image_token=self.num_image_token)
         else:
-            position_ids = position_ids[0]  
+            position_ids = position_ids[0]
         # Create the final return dictionary
         ret = dict(
             input_ids=ret['input_ids'][0],
@@ -1030,6 +1029,7 @@ def main():
         normalize_type=data_args.normalize_type, min_num_frame=data_args.min_num_frame,
         max_num_frame=data_args.max_num_frame,rope_pos_id_version=model_args.rope_pos_id_version,
         rope_pos_id_stride=model_args.rope_pos_id_stride)
+
     def _freeze_params(module):
         for param in module.parameters():
             param.requires_grad = False

@@ -1,6 +1,9 @@
+import random
+
 import torch
 import torch.nn as nn
-import random
+
+
 # get rope pos id while evaluating
 def get_rope_pos_id(ret, dtype, rope_pos_id_version='default', position_id=None,
                     IMG_START_TOKEN='<img>',IMG_END_TOKEN='</img>',rope_pos_id_stride=None, tokenizer=None, num_image_token=256):
@@ -87,7 +90,7 @@ class V2PE(nn.Module):
         # inv_freq = 1.0 / (self.base ** (torch.arange(0, self.dim, 2).float().to(device) / self.dim))
         # self.register_buffer('inv_freq', inv_freq, persistent=False)
 
-        self.max_seq_len_cached = -1 
+        self.max_seq_len_cached = -1
 
     def _set_cos_sin_cache(self, pos_id, device, dtype):
         if self.inv_freq is None:

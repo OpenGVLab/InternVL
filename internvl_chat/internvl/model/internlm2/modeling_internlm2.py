@@ -40,8 +40,9 @@ try:
 except:  # noqa # pylint: disable=bare-except
     BaseStreamer = None
 
-from .configuration_internlm2 import InternLM2Config
 from internvl.v2pe_utils import V2PE
+
+from .configuration_internlm2 import InternLM2Config
 
 logger = logging.get_logger(__name__)
 
@@ -338,23 +339,23 @@ class InternLM2Attention(nn.Module):
                 )
         else:
             if self.config.rope_pos_id_version.startswith('v2pe_'):
-                warnings.warn(f"V2PE is not compatible with rope_scaling. When using V2PE, rope_scaling must be None. rope_scaling is {self.config.rope_scaling}")
+                warnings.warn(f'V2PE is not compatible with rope_scaling. When using V2PE, rope_scaling must be None. rope_scaling is {self.config.rope_scaling}')
                 self.rotary_emb = V2PE(
                     self.head_dim,
                     max_position_embeddings=self.max_position_embeddings,
                     base=self.config.rope_theta,
                 )
             else:
-                scaling_type = self.config.rope_scaling["type"]
-                scaling_factor = self.config.rope_scaling["factor"]
-                if scaling_type == "linear":
+                scaling_type = self.config.rope_scaling['type']
+                scaling_factor = self.config.rope_scaling['factor']
+                if scaling_type == 'linear':
                     self.rotary_emb = InternLM2LinearScalingRotaryEmbedding(
                         self.head_dim,
                         max_position_embeddings=self.max_position_embeddings,
                         scaling_factor=scaling_factor,
                         base=self.config.rope_theta,
                     )
-                elif scaling_type == "dynamic":
+                elif scaling_type == 'dynamic':
                     self.rotary_emb = InternLM2DynamicNTKScalingRotaryEmbedding(
                         self.head_dim,
                         max_position_embeddings=self.max_position_embeddings,
@@ -362,7 +363,7 @@ class InternLM2Attention(nn.Module):
                         base=self.config.rope_theta,
                     )
                 else:
-                    raise ValueError(f"Unknown RoPE scaling type {scaling_type}")
+                    raise ValueError(f'Unknown RoPE scaling type {scaling_type}')
         return self.rotary_emb
 
     def _shape(self, tensor: torch.Tensor, seq_len: int, bsz: int):
@@ -1159,7 +1160,7 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
                 remove_prefix_length = input_ids.shape[1] - 1
 
             input_ids = input_ids[:, remove_prefix_length:]
-        
+
         position_ids = kwargs.get('position_ids', None)
         if attention_mask is not None and position_ids is None:
             # create position_ids on the fly for batch generation
