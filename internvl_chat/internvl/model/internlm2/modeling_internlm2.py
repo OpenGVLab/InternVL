@@ -40,6 +40,8 @@ try:
 except:  # noqa # pylint: disable=bare-except
     BaseStreamer = None
 
+from internvl.v2pe_utils import V2PE
+
 from .configuration_internlm2 import InternLM2Config
 
 logger = logging.get_logger(__name__)
@@ -323,30 +325,45 @@ class InternLM2Attention(nn.Module):
 
     def _init_rope(self):
         if self.config.rope_scaling is None:
-            self.rotary_emb = InternLM2RotaryEmbedding(
-                self.head_dim,
-                max_position_embeddings=self.max_position_embeddings,
-                base=self.config.rope_theta,
-            )
-        else:
-            scaling_type = self.config.rope_scaling['type']
-            scaling_factor = self.config.rope_scaling['factor']
-            if scaling_type == 'dynamic':
-                self.rotary_emb = InternLM2DynamicNTKScalingRotaryEmbedding(
+            if self.config.rope_pos_id_version.startswith('v2pe_'):
+                self.rotary_emb = V2PE(
                     self.head_dim,
                     max_position_embeddings=self.max_position_embeddings,
                     base=self.config.rope_theta,
-                    scaling_factor=scaling_factor,
-                )
-            elif scaling_type == 'linear':
-                self.rotary_emb = InternLM2LinearScalingRotaryEmbedding(
-                    self.head_dim,
-                    max_position_embeddings=self.max_position_embeddings,
-                    base=self.config.rope_theta,
-                    scaling_factor=scaling_factor,
                 )
             else:
-                raise ValueError("Currently we only support rotary embedding's type being 'dynamic' or 'linear'.")
+                self.rotary_emb = InternLM2RotaryEmbedding(
+                    self.head_dim,
+                    max_position_embeddings=self.max_position_embeddings,
+                    base=self.config.rope_theta,
+                )
+        else:
+            if self.config.rope_pos_id_version.startswith('v2pe_'):
+                warnings.warn(f'V2PE is not compatible with rope_scaling. When using V2PE, rope_scaling must be None. rope_scaling is {self.config.rope_scaling}')
+                self.rotary_emb = V2PE(
+                    self.head_dim,
+                    max_position_embeddings=self.max_position_embeddings,
+                    base=self.config.rope_theta,
+                )
+            else:
+                scaling_type = self.config.rope_scaling['type']
+                scaling_factor = self.config.rope_scaling['factor']
+                if scaling_type == 'linear':
+                    self.rotary_emb = InternLM2LinearScalingRotaryEmbedding(
+                        self.head_dim,
+                        max_position_embeddings=self.max_position_embeddings,
+                        scaling_factor=scaling_factor,
+                        base=self.config.rope_theta,
+                    )
+                elif scaling_type == 'dynamic':
+                    self.rotary_emb = InternLM2DynamicNTKScalingRotaryEmbedding(
+                        self.head_dim,
+                        max_position_embeddings=self.max_position_embeddings,
+                        scaling_factor=scaling_factor,
+                        base=self.config.rope_theta,
+                    )
+                else:
+                    raise ValueError(f'Unknown RoPE scaling type {scaling_type}')
         return self.rotary_emb
 
     def _shape(self, tensor: torch.Tensor, seq_len: int, bsz: int):
@@ -391,8 +408,12 @@ class InternLM2Attention(nn.Module):
         kv_seq_len = key_states.shape[-2]
         if past_key_value is not None:
             kv_seq_len += past_key_value[0].shape[-2]
-        cos, sin = self.rotary_emb(value_states, seq_len=kv_seq_len)
-        query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin, position_ids)
+        if self.config.rope_pos_id_version.startswith('v2pe_'):
+            cos, sin = self.rotary_emb(value_states, global_posid=position_ids)
+            query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin, torch.arange(0,position_ids.shape[1]).unsqueeze(0))
+        else:
+            cos, sin = self.rotary_emb(value_states, seq_len=kv_seq_len)
+            query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin, position_ids)
 
         if past_key_value is not None:
             # reuse k, v, self_attention
@@ -493,10 +514,12 @@ class InternLM2FlashAttention2(InternLM2Attention):
         kv_seq_len = key_states.shape[-2]
         if past_key_value is not None:
             kv_seq_len += past_key_value[0].shape[-2]
-
-        cos, sin = self.rotary_emb(value_states, seq_len=kv_seq_len)
-
-        query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin, position_ids)
+        if self.config.rope_pos_id_version.startswith('v2pe_'):
+            cos, sin = self.rotary_emb(value_states, global_posid=position_ids)
+            query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin, torch.arange(0,position_ids.shape[1]).unsqueeze(0))
+        else:
+            cos, sin = self.rotary_emb(value_states, seq_len=kv_seq_len)
+            query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin, position_ids)
 
         if past_key_value is not None:
             # reuse k, v, self_attention
@@ -1145,13 +1168,15 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
             position_ids.masked_fill_(attention_mask == 0, 1)
             if past_key_values:
                 position_ids = position_ids[:, -input_ids.shape[1]:]
+        elif position_ids is not None:
+            if self.config.rope_pos_id_version!='default' and past_key_values is not None:
+                position_ids=(position_ids[:,-1]+attention_mask[:,position_ids.shape[1]:].sum(dim=1)).unsqueeze(1)
 
         # if `inputs_embeds` are passed, we only want to use them in the 1st generation step
         if inputs_embeds is not None and past_key_values is None:
             model_inputs = {'inputs_embeds': inputs_embeds}
         else:
             model_inputs = {'input_ids': input_ids}
-
         model_inputs.update(
             {
                 'position_ids': position_ids,

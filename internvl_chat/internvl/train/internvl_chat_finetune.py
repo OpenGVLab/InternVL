@@ -52,6 +52,7 @@ from internvl.train.dataset import (ConcatDataset, TCSLoader,
                                     preprocess_internvl2_5, preprocess_mpt,
                                     preprocess_phi3)
 from internvl.train.dataset_packed import PackedDataset, packed_collate_fn
+from internvl.v2pe_utils import get_rope_pos_id
 from PIL import Image, ImageFile, PngImagePlugin, UnidentifiedImageError
 from torch.utils.data import Dataset
 from transformers import (AutoConfig, AutoModelForCausalLM, AutoTokenizer,
@@ -69,6 +70,7 @@ try:
 except ImportError as E:
     print('petrel_client is not installed. Using PIL to load images.')
     has_tcs_loader = False
+
 
 # Set constants for image processing and logging
 IGNORE_INDEX = -100
@@ -156,6 +158,14 @@ class ModelArguments:
     use_liger: bool = field(
         default=False,
         metadata={'help': 'Set to True to use the liger kernel.'}
+    )
+    rope_pos_id_version: Optional[str] = field(
+        default='default',
+        metadata={'help': 'version for get_rope_pos_id'},
+    )
+    rope_pos_id_stride: Optional[int] = field(
+        default=None,
+        metadata={'help': 'stride for the version v4 of get_rope_pos_id'},
     )
 
 
@@ -297,16 +307,22 @@ class LazySupervisedDataset(Dataset):
         distributed_mode=False,
         force_shuffle=False,
         random_seed=0,
+        rope_pos_id_version='default',
+        rope_pos_id_stride=None,
     ):
         super(LazySupervisedDataset, self).__init__()
         self.ds_name = ds_name
         self.tokenizer = tokenizer
         self.template_name = template_name
         self.num_image_token = num_image_token
+        self.rope_pos_id_version = rope_pos_id_version
+        self.rope_pos_id_stride = rope_pos_id_stride
         logger.info(f'[Dataset] num_image_token: {num_image_token}')
         logger.info(f'[Dataset] dynamic_image_size: {dynamic_image_size}')
         logger.info(f'[Dataset] use_thumbnail: {use_thumbnail}')
         logger.info(f'[Dataset] min_dynamic_patch: {min_dynamic_patch}, max_dynamic_patch: {max_dynamic_patch}')
+        logger.info(f'[Dataset] rope_pos_id_version: {rope_pos_id_version}')
+        logger.info(f'[Dataset] rope_pos_id_stride: {rope_pos_id_stride}')
 
         self.image_size = image_size
         self.is_train = is_train
@@ -421,6 +437,7 @@ class LazySupervisedDataset(Dataset):
         # Build transformation function
         transform = self.get_transform()
 
+        num_tiles = []
         # Ensure the first conversation contains an image placeholder
         if '<image>' not in data_item['conversations'][0]['value']:
             data_item['conversations'][0]['value'] = '<image>\n' + data_item['conversations'][0]['value']
@@ -430,12 +447,15 @@ class LazySupervisedDataset(Dataset):
 
         # Load the image using tcs_loader if available, otherwise use PIL
         image = self.load_image(image_path)
+        orig_size = image.size
 
         if self.dynamic_image_size:  # If dynamic image size is enabled, preprocess the image dynamically
             images = dynamic_preprocess(image, min_num=self.min_dynamic_patch, max_num=self.max_dynamic_patch,
                                         image_size=self.image_size, use_thumbnail=self.use_thumbnail)
+            num_tiles.append(len(images))
         else:  # Otherwise, use the original image as a single patch
             images = [image]
+            num_tiles.append(1)
 
         # Apply the transformation to each image and stack the results into a tensor
         pixel_values = [transform(image) for image in images]
@@ -461,12 +481,16 @@ class LazySupervisedDataset(Dataset):
         image_end_token_id = self.tokenizer.convert_tokens_to_ids(IMG_END_TOKEN)
         assert (ret['input_ids'][0] == image_end_token_id).sum() == 1, f'image tokens are truncated, this dataset is {self.ds_name}'
 
+        if self.rope_pos_id_version in ['v2pe_fix', 'v2pe_rnd']:
+            position_ids = get_rope_pos_id(ret, torch.float32, self.rope_pos_id_version, position_ids[0], tokenizer=self.tokenizer, num_image_token=self.num_image_token)
+        else:
+            position_ids = position_ids[0]
         # Create the final return dictionary
         ret = dict(
             input_ids=ret['input_ids'][0],
             labels=ret['labels'][0],
             attention_mask=ret['attention_mask'][0],
-            position_ids=position_ids[0],
+            position_ids=position_ids,
             pixel_values=pixel_values,
             image_flags=torch.tensor([1] * num_patches, dtype=torch.long)
         )
@@ -511,12 +535,16 @@ class LazySupervisedDataset(Dataset):
         image_end_token_id = self.tokenizer.convert_tokens_to_ids(IMG_END_TOKEN)
         assert (ret['input_ids'][0] == image_end_token_id).sum() == num_image, f'image tokens are truncated, this dataset is {self.ds_name}'
 
+        if self.rope_pos_id_version in ['v2pe_fix', 'v2pe_rnd']:
+            position_ids = get_rope_pos_id(ret, torch.float32, self.rope_pos_id_version, position_ids[0], tokenizer=self.tokenizer, num_image_token=self.num_image_token)
+        else:
+            position_ids = position_ids[0]
         # Create the final return dictionary
         ret = dict(
             input_ids=ret['input_ids'][0],
             labels=ret['labels'][0],
             attention_mask=ret['attention_mask'][0],
-            position_ids=position_ids[0],
+            position_ids=position_ids,
             pixel_values=pixel_values,
             image_flags=torch.tensor([1] * num_patches, dtype=torch.long)
         )
@@ -567,12 +595,16 @@ class LazySupervisedDataset(Dataset):
         position_ids = ret['attention_mask'].long().cumsum(-1) - 1
         position_ids.masked_fill_(ret['attention_mask'] == 0, 1)
 
+        if self.rope_pos_id_version in ['v2pe_fix', 'v2pe_rnd']:
+            position_ids = get_rope_pos_id(ret,  torch.float32, self.rope_pos_id_version, position_ids[0], tokenizer=self.tokenizer, num_image_token=self.num_image_token)
+        else:
+            position_ids = position_ids[0]
         # Create the final return dictionary
         ret = dict(
             input_ids=ret['input_ids'][0],
             labels=ret['labels'][0],
             attention_mask=ret['attention_mask'][0],
-            position_ids=position_ids[0],
+            position_ids=position_ids,
             pixel_values=pixel_values,
             image_flags=torch.tensor([1] * num_patches, dtype=torch.long)
         )
@@ -711,6 +743,8 @@ def build_datasets(
     min_num_frame=8,
     max_num_frame=32,
     normalize_type='imagenet',
+    rope_pos_id_version='default',
+    rope_pos_id_stride=None,
 ):
     datasets = []
     lengths = []
@@ -749,6 +783,8 @@ def build_datasets(
             distributed_mode=data_args.use_packed_ds,
             force_shuffle=data_args.use_packed_ds,
             random_seed=ds_idx,
+            rope_pos_id_version=rope_pos_id_version,
+            rope_pos_id_stride=rope_pos_id_stride,
         )
         logger.info(f'Add dataset: {ds_name} with length: {len(dataset)}')
         datasets.append(dataset)
@@ -906,6 +942,10 @@ def main():
         config.ps_version = model_args.ps_version
         config.min_dynamic_patch = data_args.min_dynamic_patch
         config.max_dynamic_patch = data_args.max_dynamic_patch
+        config.rope_pos_id_version = model_args.rope_pos_id_version
+        config.rope_pos_id_stride = model_args.rope_pos_id_stride
+        config.llm_config.rope_pos_id_version = model_args.rope_pos_id_version
+        config.llm_config.rope_pos_id_stride = model_args.rope_pos_id_stride
         model = InternVLChatModel.from_pretrained(
             model_args.model_name_or_path, torch_dtype=torch.bfloat16, config=config)
     else:
@@ -935,6 +975,10 @@ def main():
             use_thumbnail=data_args.use_thumbnail, ps_version=model_args.ps_version,
             min_dynamic_patch=data_args.min_dynamic_patch, max_dynamic_patch=data_args.max_dynamic_patch)
         internvl_chat_config.force_image_size = data_args.force_image_size
+        internvl_chat_config.rope_pos_id_version = model_args.rope_pos_id_version
+        internvl_chat_config.rope_pos_id_stride = model_args.rope_pos_id_stride
+        internvl_chat_config.llm_config.rope_pos_id_version = model_args.rope_pos_id_version
+        internvl_chat_config.llm_config.rope_pos_id_stride = model_args.rope_pos_id_stride
         logger.info('Building InternVLChatModel...')
         model = InternVLChatModel(internvl_chat_config, vision_model, llm)
     model.img_context_token_id = img_context_token_id
@@ -983,7 +1027,8 @@ def main():
         dynamic_image_size=data_args.dynamic_image_size, use_thumbnail=data_args.use_thumbnail,
         min_dynamic_patch=data_args.min_dynamic_patch, max_dynamic_patch=data_args.max_dynamic_patch,
         normalize_type=data_args.normalize_type, min_num_frame=data_args.min_num_frame,
-        max_num_frame=data_args.max_num_frame)
+        max_num_frame=data_args.max_num_frame,rope_pos_id_version=model_args.rope_pos_id_version,
+        rope_pos_id_stride=model_args.rope_pos_id_stride)
 
     def _freeze_params(module):
         for param in module.parameters():
