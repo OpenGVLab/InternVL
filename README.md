@@ -9,7 +9,7 @@
 
 [\[🆕 Blog\]](https://internvl.github.io/blog/)  [\[🤔 FAQs\]](https://internvl.readthedocs.io/en/latest/tutorials/faqs.html)   [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/)  [\[🤗 HF Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)  [\[📖 Document\]](https://internvl.readthedocs.io/en/latest/)  [\[🌐 API\]](https://internlm.intern-ai.org.cn/api/document)  [\[🚀 Quick Start\]](#quick-start-with-huggingface)
 
-[\[🔥 InternVL3.0 Report\]](https://huggingface.co/papers/2504.10479) [\[🔥 InternVL2.5 Report\]](https://huggingface.co/papers/2412.05271) [\[Mini-InternVL Paper\]](https://arxiv.org/abs/2410.16261) [\[InternVL2 Blog\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[📜 InternVL 1.5 Paper\]](https://huggingface.co/papers/2404.16821)  [\[📜 InternVL 1.0 Paper\]](https://huggingface.co/papers/2312.14238)
+[\[🔥 InternVL3.0 Report\]](https://huggingface.co/papers/2504.10479) [\[🔥 InternVL2.5 MPO\]](https://huggingface.co/papers/2411.10442) [\[🔥 InternVL2.5 Report\]](https://huggingface.co/papers/2412.05271) [\[Mini-InternVL Paper\]](https://arxiv.org/abs/2410.16261) [\[InternVL2 Blog\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[📜 InternVL 1.5 Paper\]](https://huggingface.co/papers/2404.16821)  [\[📜 InternVL 1.0 Paper\]](https://huggingface.co/papers/2312.14238)
 
 [\[📖 2.0 中文解读\]](https://zhuanlan.zhihu.com/p/706547971)  [\[📖 1.5 中文解读\]](https://zhuanlan.zhihu.com/p/699439759)  [\[📖 1.0 中文解读\]](https://zhuanlan.zhihu.com/p/702946079)
 
