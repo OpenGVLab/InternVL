@@ -1,0 +1,58 @@
+{
+    "dvqa_train_200k": {
+      "root": "playground/data/dvqa/",
+      "annotation": "playground/opensource/dvqa_train_200k.jsonl",
+      "data_augment": false,
+      "repeat_time": 1,
+      "length": 200000
+    },
+    "chartqa_train_18k": {
+      "root": "playground/data/chartqa/",
+      "annotation": "playground/opensource/chartqa_train_18k.jsonl",
+      "data_augment": false,
+      "repeat_time": 1,
+      "length": 18317
+    },
+    "ai2d_train_12k": {
+      "root": "playground/data/ai2d/",
+      "annotation": "playground/opensource/ai2d_train_12k.jsonl",
+      "data_augment": false,
+      "repeat_time": 1,
+      "length": 12413
+    },
+    "docvqa_train_10k": {
+      "root": "playground/data/docvqa/",
+      "annotation": "playground/opensource/docvqa_train_10k.jsonl",
+      "data_augment": false,
+      "repeat_time": 1,
+      "length": 10211
+    },
+    "geoqa+": {
+      "root": "playground/data/geoqa+/",
+      "annotation": "playground/opensource/geoqa+.jsonl",
+      "data_augment": false,
+      "repeat_time": 1,
+      "length": 72318
+    },
+    "synthdog_en": {
+      "root": "playground/data/synthdog-en/",
+      "annotation": "playground/opensource/synthdog_en.jsonl",
+      "data_augment": false,
+      "repeat_time": 1,
+      "length": 29765
+    },
+    "vsi_bench": {
+      "root": "/mnt/chengchangxu/data/VSI-Bench",
+      "annotation": "/mnt/chengchangxu/data/VSI-Bench/vsi_bench_test.jsonl",
+      "data_augment": false,
+      "repeat_time": 1,
+      "length": 5130
+    },
+    "spacer_151k":{
+      "root": "/mnt/chengchangxu/data/SpaceR-151k/SpaceR-151k",
+      "annotation": "/mnt/chensenda/VLNDatas/SpaceR-151k/spacer_151k_vsi_format.jsonl",
+      "data_augment": false,
+      "repeat_time": 1,
+      "length": 151000
+    }
+}
