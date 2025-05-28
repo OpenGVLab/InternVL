@@ -8,6 +8,7 @@ import logging
 import math
 import os
 import random
+import re
 import sys
 import traceback
 import warnings
@@ -17,6 +18,9 @@ from functools import partial
 from typing import Dict, Literal, Optional
 
 import numpy as np
+import cv2
+import imageio
+from decord import VideoReader
 
 try:
     import orjson as json
@@ -82,6 +86,58 @@ warnings.filterwarnings('ignore')
 logger = logging.getLogger(__name__)
 
 os.environ['TOKENIZERS_PARALLELISM'] = 'true'
+
+
+def get_frame_indices(num_frames, vlen, sample='rand', fix_start=None, input_fps=1, max_num_frames=-1):
+    if sample in ['rand', 'middle']: # uniform sampling
+        acc_samples = min(num_frames, vlen)
+        # split the video into `acc_samples` intervals, and sample from each interval.
+        intervals = np.linspace(start=0, stop=vlen, num=acc_samples + 1).astype(int)
+        ranges = []
+        for idx, interv in enumerate(intervals[:-1]):
+            ranges.append((interv, intervals[idx + 1] - 1))
+        if sample == 'rand':
+            try:
+                frame_indices = [random.choice(range(x[0], x[1])) for x in ranges]
+            except:
+                frame_indices = np.random.permutation(vlen)[:acc_samples]
+                frame_indices.sort()
+                frame_indices = list(frame_indices)
+        elif fix_start is not None:
+            frame_indices = [x[0] + fix_start for x in ranges]
+        elif sample == 'middle':
+            frame_indices = [(x[0] + x[1]) // 2 for x in ranges]
+        else:
+            raise NotImplementedError
+
+        if len(frame_indices) < num_frames:  # padded with last frame
+            padded_frame_indices = [frame_indices[-1]] * num_frames
+            padded_frame_indices[:len(frame_indices)] = frame_indices
+            frame_indices = padded_frame_indices
+    elif 'fps' in sample:  # fps0.5, sequentially sample frames at 0.5 fps
+        output_fps = float(sample[3:])
+        duration = float(vlen) / input_fps
+        delta = 1 / output_fps  # gap between frames, this is also the clip length each frame represents
+        frame_seconds = np.arange(0 + delta / 2, duration + delta / 2, delta)
+        frame_indices = np.around(frame_seconds * input_fps).astype(int)
+        frame_indices = [e for e in frame_indices if e < vlen]
+        if max_num_frames > 0 and len(frame_indices) > max_num_frames:
+            frame_indices = frame_indices[:max_num_frames]
+            # frame_indices = np.linspace(0 + delta / 2, duration + delta / 2, endpoint=False, num=max_num_frames)
+    else:
+        raise ValueError
+    return frame_indices
+
+
+def extract_frame_number(filename):
+    # Extract the numeric part from the filename using regular expressions
+    match = re.search(r'_(\d+).jpg$', filename)
+    return int(match.group(1)) if match else -1
+
+
+def sort_frames(frame_paths):
+    # Extract filenames from each path and sort by their numeric part
+    return sorted(frame_paths, key=lambda x: extract_frame_number(os.path.basename(x)))
 
 
 @dataclass
@@ -217,7 +273,7 @@ class DataTrainingArguments:
         metadata={'help': 'The minimum number of frames for video data. Default is 8.'},
     )
     max_num_frame: int = field(
-        default=32,
+        default=30,
         metadata={'help': 'The maximum number of frames for video data. Default is 32.'},
     )
     normalize_type: Literal['imagenet', 'clip', 'siglip'] = field(
@@ -522,6 +578,114 @@ class LazySupervisedDataset(Dataset):
         )
         return ret
 
+    def load_video(self, video_path, clip=None):
+        if video_path.endswith('/'):  # Video is a folder of images
+            image_list = sort_frames(os.listdir(video_path))
+            frames_pil = []
+            for image_name in image_list:
+                fp = os.path.join(video_path, image_name)
+                try:
+                    frame = Image.open(fp).convert('RGB')
+                    frames_pil.append(frame)
+                except UnidentifiedImageError:
+                    logger.warning(f"Skipping unidentified image: {fp}")
+                    continue
+            vlen = len(frames_pil)
+            # Randomly select number of frames between min_num_frame and max_num_frame
+            # self.max_num_frame and self.min_num_frame are attributes of LazySupervisedDataset
+            t_num_frames = np.random.randint(self.min_num_frame, self.max_num_frame + 1)
+
+            if vlen > t_num_frames:
+                # self.sampling_method is an attribute of LazySupervisedDataset
+                frame_indices = get_frame_indices(
+                    t_num_frames, vlen, sample=self.sampling_method
+                )
+                selected_frames = [frames_pil[i] for i in frame_indices]
+            else:
+                selected_frames = frames_pil # Use all frames if less than t_num_frames
+            return selected_frames
+
+        elif video_path.endswith('.gif'): # Video is a GIF
+            try:
+                gif = imageio.get_reader(video_path)
+                vlen = len(gif)
+            except Exception as e:
+                logger.error(f"Error loading GIF {video_path}: {e}")
+                return [] # Return empty list on error
+
+            t_num_frames = np.random.randint(self.min_num_frame, self.max_num_frame + 1)
+            frame_indices = get_frame_indices(
+                t_num_frames, vlen, sample=self.sampling_method
+            )
+            frames_pil = []
+            try:
+                for index, frame_data in enumerate(gif):
+                    if index in frame_indices:
+                        # Convert RGBA to RGB if necessary, handle other conversions
+                        if frame_data.ndim == 3 and frame_data.shape[2] == 4:
+                            frame = cv2.cvtColor(frame_data, cv2.COLOR_RGBA2RGB)
+                        elif frame_data.ndim == 2: # Grayscale to RGB
+                            frame = cv2.cvtColor(frame_data, cv2.COLOR_GRAY2RGB)
+                        else:
+                            frame = frame_data
+                        frame_pil = Image.fromarray(frame.astype(np.uint8))
+                        frames_pil.append(frame_pil)
+            except Exception as e:
+                logger.error(f"Error processing GIF frames for {video_path}: {e}")
+                return []
+            return frames_pil
+
+        else:  # Video is a standard video file (mp4, avi, etc.)
+            try:
+                video_reader = VideoReader(video_path, num_threads=1)
+                vlen = len(video_reader)
+                fps = video_reader.get_avg_fps()
+                duration = vlen / float(fps)
+
+                if clip:
+                    start, end = clip
+                    # Ensure start and end are within video duration
+                    start = max(0, min(start, duration))
+                    end = max(start, min(end, duration))
+                    duration = end - start
+                    vlen_clip = int(duration * fps)
+                    start_index = int(start * fps)
+                else:
+                    vlen_clip = vlen
+                    start_index = 0
+
+                t_num_frames = np.random.randint(self.min_num_frame, self.max_num_frame + 1)
+                # Ensure t_num_frames is not greater than available frames in the clip
+                t_num_frames = min(t_num_frames, vlen_clip)
+                if t_num_frames <= 0 and vlen_clip > 0 : # if min_num_frame makes t_num_frames too small or 0
+                    t_num_frames = vlen_clip # use all frames in clip
+                elif vlen_clip == 0:
+                     logger.warning(f"Video clip has 0 frames: {video_path}, clip: {clip}")
+                     return []
+
+
+                frame_indices = get_frame_indices(
+                    t_num_frames, vlen_clip, sample=self.sampling_method,
+                    input_fps=fps, max_num_frames=self.max_num_frame # Pass max_num_frame from dataset args
+                )
+                actual_frame_indices = [f + start_index for f in frame_indices]
+                # Ensure indices are within the bounds of the original video
+                actual_frame_indices = [idx for idx in actual_frame_indices if idx < vlen]
+                
+                if not actual_frame_indices: # if all indices are out of bounds
+                    logger.warning(f"No valid frames selected for {video_path}, clip: {clip}, indices: {frame_indices}, start_idx: {start_index}")
+                    return []
+
+                frames_np = video_reader.get_batch(actual_frame_indices).asnumpy()  # (T, H, W, C), np.uint8
+                frames_pil = [Image.fromarray(frames_np[i]) for i in range(frames_np.shape[0])]
+                return frames_pil
+            except RuntimeError as e:
+                logger.error(f"Decord runtime error for {video_path}: {e}")
+                return []
+            except Exception as e:
+                logger.error(f"Error loading video {video_path}: {e}")
+                return []
+
     def video_get_item(self, data_item):
         # Build transformation function
         transform = self.get_transform()
@@ -536,13 +700,16 @@ class LazySupervisedDataset(Dataset):
 
         # Load the video frames using tcs_loader
         # TODO: Load videos without using tcsloader.
-        image_list = self.tcs_loader(
-            video_path,
-            image_type='video',
-            max_num_frames=self.max_num_frame,
-            min_num_frames=self.min_num_frame,
-            sample=self.sampling_method,
-            clip=data_item.get('clip', None))
+        if self.tcs_loader is not None:
+            image_list = self.tcs_loader(
+                video_path,
+                image_type='video',
+                max_num_frames=self.max_num_frame,
+                min_num_frames=self.min_num_frame,
+                sample=self.sampling_method,
+                clip=data_item.get('clip', None))
+        else:
+            image_list = self.load_video(video_path)
 
         # Generate special tokens for each video frame
         special_tokens = '\n'.join(['Frame-{}: <image>'.format(i + 1) for i in range(len(image_list))])
@@ -714,8 +881,13 @@ def build_datasets(
 ):
     datasets = []
     lengths = []
-    data_rank = dist.get_rank()
-    data_world_size = dist.get_world_size()
+    # 安全地获取分布式参数
+    if dist.is_available() and dist.is_initialized():
+        data_rank = dist.get_rank()
+        data_world_size = dist.get_world_size()
+    else:
+        data_rank = 0
+        data_world_size = 1
     ds_collections = json.loads(open(data_args.meta_path).read())
     for ds_idx, ds_name in enumerate(ds_collections.keys()):
         repeat_time = ds_collections[ds_name]['repeat_time']
@@ -804,8 +976,10 @@ def main():
     # Parse input arguments
     # See all possible arguments in src/transformers/training_args.py
     # If use DeepSpeed zero3, init_dist must before HfArgumentParser
-    launcher = os.environ.get('LAUNCHER', 'slurm')
-    init_dist(launcher=launcher, backend='nccl')
+    launcher = os.environ.get('LAUNCHER', 'pytorch')
+    # 只在多GPU或设置了分布式环境变量时初始化分布式
+    if torch.cuda.device_count() > 1 or 'RANK' in os.environ or 'LOCAL_RANK' in os.environ:
+        init_dist(launcher=launcher, backend='nccl')
     parser = HfArgumentParser((ModelArguments, DataTrainingArguments, TrainingArguments))
     if len(sys.argv) == 2 and sys.argv[1].endswith('.json'):
         # If we pass only one argument to the script, and it's the path to a json file,
@@ -1018,10 +1192,17 @@ def main():
             v.requires_grad = True
 
     # print trainable parameters
-    if dist.get_rank() == 0:
+    # 安全地检查是否为主进程
+    is_main_process = True
+    if dist.is_available() and dist.is_initialized():
+        is_main_process = dist.get_rank() == 0
+    
+    if is_main_process:
+        params_requires_grad = []
         for name, param in model.named_parameters():
             if param.requires_grad:
-                logger.info(name)
+                params_requires_grad.append(name)
+        logger.info(f'Trainable parameters: {params_requires_grad}')
 
     # set seed for torch dataloaders
     set_seed(training_args.seed)

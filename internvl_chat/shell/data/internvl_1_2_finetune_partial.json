@@ -40,5 +40,19 @@
       "data_augment": false,
       "repeat_time": 1,
       "length": 29765
+    },
+    "vsi_bench": {
+      "root": "/mnt/chengchangxu/data/VSI-Bench",
+      "annotation": "/mnt/chengchangxu/data/VSI-Bench/vsi_bench_test.jsonl",
+      "data_augment": false,
+      "repeat_time": 1,
+      "length": 5130
+    },
+    "spacer_151k":{
+      "root": "/mnt/chengchangxu/data/SpaceR-151k/SpaceR-151k",
+      "annotation": "/mnt/chensenda/VLNDatas/SpaceR-151k/spacer_151k_vsi_format.jsonl",
+      "data_augment": false,
+      "repeat_time": 1,
+      "length": 151000
     }
 }
