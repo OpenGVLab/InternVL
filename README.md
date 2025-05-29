@@ -9,7 +9,7 @@
 
 [\[🆕 Blog\]](https://internvl.github.io/blog/)  [\[🤔 FAQs\]](https://internvl.readthedocs.io/en/latest/tutorials/faqs.html)   [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/)  [\[🤗 HF Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)  [\[📖 Document\]](https://internvl.readthedocs.io/en/latest/)  [\[🌐 API\]](https://internlm.intern-ai.org.cn/api/document)  [\[🚀 Quick Start\]](#quick-start-with-huggingface)
 
-[\[🔥 InternVL2.5 Report\]](https://huggingface.co/papers/2412.05271) [\[Mini-InternVL Paper\]](https://arxiv.org/abs/2410.16261) [\[InternVL2 Blog\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[📜 InternVL 1.5 Paper\]](https://huggingface.co/papers/2404.16821)  [\[📜 InternVL 1.0 Paper\]](https://huggingface.co/papers/2312.14238)
+[\[🔥 InternVL3.0 Report\]](https://huggingface.co/papers/2504.10479) [\[🔥 InternVL2.5 MPO\]](https://huggingface.co/papers/2411.10442) [\[🔥 InternVL2.5 Report\]](https://huggingface.co/papers/2412.05271) [\[Mini-InternVL Paper\]](https://arxiv.org/abs/2410.16261) [\[InternVL2 Blog\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[📜 InternVL 1.5 Paper\]](https://huggingface.co/papers/2404.16821)  [\[📜 InternVL 1.0 Paper\]](https://huggingface.co/papers/2312.14238)
 
 [\[📖 2.0 中文解读\]](https://zhuanlan.zhihu.com/p/706547971)  [\[📖 1.5 中文解读\]](https://zhuanlan.zhihu.com/p/699439759)  [\[📖 1.0 中文解读\]](https://zhuanlan.zhihu.com/p/702946079)
 
@@ -67,6 +67,7 @@
 
 ### 🏆 **InternVL Family**
 
+- **InternVL 3.0**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl3.0/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl3.0/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl3.0/finetune.html) | 📊 [Evaluate](https://internvl.readthedocs.io/en/latest/internvl3.0/evaluation.html) | 📦 [Deploy](https://internvl.readthedocs.io/en/latest/internvl3.0/deployment.html) | 🎯 [MPO](https://internvl.readthedocs.io/en/latest/internvl3.0/preference_optimization.html)
 - **InternVL 2.5**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl2.5/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl2.5/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl2.5/finetune.html) | 📊 [Evaluate](https://internvl.readthedocs.io/en/latest/internvl2.5/evaluation.html) | 📦 [Deploy](https://internvl.readthedocs.io/en/latest/internvl2.5/deployment.html) | 🎯 [MPO](https://internvl.readthedocs.io/en/latest/internvl2.5/preference_optimization.html)
 - **InternVL 2.0**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl2.0/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl2.0/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl2.0/finetune.html) | 📊 [Evaluate](https://internvl.readthedocs.io/en/latest/internvl2.0/evaluation.html) | 📦 [Deploy](https://internvl.readthedocs.io/en/latest/internvl2.0/deployment.html) | 🎯 [MPO](https://internvl.readthedocs.io/en/latest/internvl2.0/preference_optimization.html)
 - **InternVL 1.5**: 📖 [Intro](https://internvl.readthedocs.io/en/latest/internvl1.5/introduction.html) | ⚡ [Quick Start](https://internvl.readthedocs.io/en/latest/internvl1.5/quick_start.html) | ✨ [Finetune](https://internvl.readthedocs.io/en/latest/internvl1.5/finetune.html) | 📊 [Evaluate](https://internvl.readthedocs.io/en/latest/internvl1.5/evaluation.html) | 📦 [Deploy](https://internvl.readthedocs.io/en/latest/internvl1.5/deployment.html)
@@ -75,6 +76,66 @@
 - **InternVL 1.0**: 🖼️ [Classification](https://internvl.readthedocs.io/en/latest/internvl1.0/classification.html) | 📊 [CLIP-Benchmark](https://internvl.readthedocs.io/en/latest/internvl1.0/clip_benchmark.html) | 🎨 [Segmentation](https://internvl.readthedocs.io/en/latest/internvl1.0/segmentation.html) | 💬 [Chat-LLaVA](https://internvl.readthedocs.io/en/latest/internvl1.0/internvl_chat_llava.html) | ✨ [InternVL-G](https://internvl.readthedocs.io/en/latest/internvl1.0/internvl_g.html)
 
 ## Model Zoo
+
+#### Multimodal Large Language Model (InternVL 3.0)
+<table>
+  <tr>
+    <th>Model Name</th>
+    <th>Vision Part</th>
+    <th>Language Part</th>
+    <th>HF&nbsp;Link</th>
+    <th>MS&nbsp;Link</th>
+  </tr>
+  <tr>
+    <td>InternVL3-1B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT&#8209;300M&#8209;448px&#8209;V2_5</a></td>
+    <td><a href="https://huggingface.co/Qwen/Qwen2.5-0.5B">Qwen2.5&#8209;0.5B</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL3-1B">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL3-1B">🤖 link</a></td>
+  </tr>
+  <tr>
+    <td>InternVL3-2B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/Qwen/Qwen2.5-1.5B">Qwen2.5-1.5B</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL3-2B">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL3-2B">🤖 link</a></td>
+  </tr>
+  <tr>
+    <td>InternVL3-8B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/Qwen/Qwen2.5-7B">Qwen2.5-7B</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL3-8B">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL3-8B">🤖 link</a></td>
+  </tr>
+  <tr>
+    <td>InternVL3-9B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/internlm/internlm3-8b-instruct">internlm3-8b-instruct</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL3-9B">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL3-9B">🤖 link</a></td>
+  </tr>
+  <tr>
+    <td>InternVL3-14B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-300M-448px-V2_5">InternViT-300M-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/Qwen/Qwen2.5-14B">Qwen2.5-14B</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL3-14B">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL3-14B">🤖 link</a></td>
+  </tr>
+  <tr>
+    <td>InternVL3-38B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">InternViT-6B-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/Qwen/Qwen2.5-32B">Qwen2.5-32B</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL3-38B">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL3-38B">🤖 link</a></td>
+  </tr>
+  <tr>
+    <td>InternVL3-78B</td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternViT-6B-448px-V2_5">InternViT-6B-448px-V2_5</a></td>
+    <td><a href="https://huggingface.co/Qwen/Qwen2.5-72B">Qwen2.5-72B</a></td>
+    <td><a href="https://huggingface.co/OpenGVLab/InternVL3-78B">🤗 link</a></td>
+    <td><a href="https://modelscope.cn/models/OpenGVLab/InternVL3-78B">🤖 link</a></td>
+  </tr>
+</table>
 
 #### Multimodal Large Language Model (InternVL 2.5)
 
@@ -1053,6 +1114,15 @@ This project is released under the [MIT license](LICENSE). Parts of this project
 If you find this project useful in your research, please consider cite:
 
 ```BibTeX
+@misc{zhu2025internvl3exploringadvancedtraining,
+      title={InternVL3: Exploring Advanced Training and Test-Time Recipes for Open-Source Multimodal Models}, 
+      author={Jinguo Zhu and Weiyun Wang and Zhe Chen and Zhaoyang Liu and Shenglong Ye and Lixin Gu and Hao Tian and Yuchen Duan and Weijie Su and Jie Shao and Zhangwei Gao and Erfei Cui and Xuehui Wang and Yue Cao and Yangzhou Liu and Xingguang Wei and Hongjie Zhang and Haomin Wang and Weiye Xu and Hao Li and Jiahao Wang and Nianchen Deng and Songze Li and Yinan He and Tan Jiang and Jiapeng Luo and Yi Wang and Conghui He and Botian Shi and Xingcheng Zhang and Wenqi Shao and Junjun He and Yingtong Xiong and Wenwen Qu and Peng Sun and Penglong Jiao and Han Lv and Lijun Wu and Kaipeng Zhang and Huipeng Deng and Jiaye Ge and Kai Chen and Limin Wang and Min Dou and Lewei Lu and Xizhou Zhu and Tong Lu and Dahua Lin and Yu Qiao and Jifeng Dai and Wenhai Wang},
+      year={2025},
+      eprint={2504.10479},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2504.10479}, 
+}
 @article{chen2024expanding,
   title={Expanding Performance Boundaries of Open-Source Multimodal Models with Model, Data, and Test-Time Scaling},
   author={Chen, Zhe and Wang, Weiyun and Cao, Yue and Liu, Yangzhou and Gao, Zhangwei and Cui, Erfei and Zhu, Jinguo and Ye, Shenglong and Tian, Hao and Liu, Zhaoyang and others},
