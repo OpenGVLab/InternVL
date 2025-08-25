@@ -1,0 +1,16 @@
+{
+    "m3cot_train_extracted_pairs_vqa_correctness_rules": {
+        "root": "MMPR-v1.2/images/M3CoT",
+        "annotation": "MMPR-v1.2/annotations/m3cot_train_extracted_pairs_vqa_correctness_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 529
+    },
+    "m3cot_train_extracted_pairs_vqa_format_rules": {
+        "root": "MMPR-v1.2/images/M3CoT",
+        "annotation": "MMPR-v1.2/annotations/m3cot_train_extracted_pairs_vqa_format_rules.jsonl",
+        "data_augment": false,
+        "repeat_time": 1,
+        "length": 201
+    },
+}
