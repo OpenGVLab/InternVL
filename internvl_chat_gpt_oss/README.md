@@ -2,6 +2,7 @@
 
 This folder contains the implementation of the training code for [InternVL3_5-GPT-OSS-20B-A4B](https://huggingface.co/OpenGVLab/InternVL3_5-GPT-OSS-20B-A4B-Preview).
 We provide a [conda environment package](https://huggingface.co/Weiyun1025/InternVL3_5-GPT-OSS-conda-env) along with corresponding [training scripts](shell/internvl3_5_gpt_oss).
+The efficient implementation of GptOssAttention is provided in this [folder](internvl/patch/flash_sink_attn), with credit to [Wenhao Li](https://github.com/wenhaoli-xmu).
 Please refer to the model card for more details.
 
 ## 📖 Documents
