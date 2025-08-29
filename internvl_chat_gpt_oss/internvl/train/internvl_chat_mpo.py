@@ -903,10 +903,8 @@ def main():
     else:
         model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
-    # training_args.loss_type = ['sigmoid', 'bco_pair', 'sft']
-    # training_args.loss_weights = [0.8, 0.2, 1.0]
-    training_args.loss_type = ['sigmoid', 'sft']
-    training_args.loss_weights = [1.0, 1.0]
+    training_args.loss_type = ['sigmoid', 'bco_pair', 'sft']
+    training_args.loss_weights = [0.8, 0.2, 1.0]
     training_args.remove_unused_columns = False
     training_args.max_length = data_args.max_seq_length
     training_args.gradient_checkpointing = model_args.grad_checkpoint
