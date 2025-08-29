@@ -1,45 +1,63 @@
 <div align="center">
 
-# InternVL Family: Closing the Gap to Commercial Multimodal Models with Open-Source Suites —— A Pioneering Open-Source Alternative to GPT-4o
+# InternVL Family: Closing the Gap to Commercial Multimodal Models with Open-Source Suites —— A Pioneering Open-Source Alternative to GPT-5
 
 <div align="center">
   <img width="500" alt="image" src="https://github.com/user-attachments/assets/930e6814-8a9f-43e1-a284-118a5732daa4">
   <br>
 </div>
 
-[\[🆕 Blog\]](https://internvl.github.io/blog/)  [\[🤔 FAQs\]](https://internvl.readthedocs.io/en/latest/tutorials/faqs.html)   [\[🗨️ Chat Demo\]](https://internvl.opengvlab.com/)  [\[🤗 HF Demo\]](https://huggingface.co/spaces/OpenGVLab/InternVL)  [\[📖 Document\]](https://internvl.readthedocs.io/en/latest/)  [\[🌐 API\]](https://internlm.intern-ai.org.cn/api/document)  [\[🚀 Quick Start\]](#quick-start-with-huggingface)
+[\[🆕 Blog\]](https://internvl.github.io/blog/)
+[\[🤔 FAQs\]](https://internvl.readthedocs.io/en/latest/tutorials/faqs.html)
+[\[🗨️ Chat Demo\]](https://chat.intern-ai.org.cn/)
+[\[📖 Document\]](https://internvl.readthedocs.io/en/latest/)
+[\[🌐 API\]](https://internlm.intern-ai.org.cn/api/document)
+[\[🚀 Quick Start\]](#quick-start-with-huggingface)
 
-[\[🔥 InternVL3.0 Report\]](https://huggingface.co/papers/2504.10479) [\[🔥 InternVL2.5 MPO\]](https://huggingface.co/papers/2411.10442) [\[🔥 InternVL2.5 Report\]](https://huggingface.co/papers/2412.05271) [\[Mini-InternVL Paper\]](https://arxiv.org/abs/2410.16261) [\[InternVL2 Blog\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)  [\[📜 InternVL 1.5 Paper\]](https://huggingface.co/papers/2404.16821)  [\[📜 InternVL 1.0 Paper\]](https://huggingface.co/papers/2312.14238)
+[\[🔥 InternVL3.5 Report\]](https://huggingface.co/papers/2508.18265)
+[\[📜 InternVL3.0 Report\]](https://huggingface.co/papers/2504.10479)
+[\[📜 InternVL2.5 MPO\]](https://huggingface.co/papers/2411.10442)
+[\[📜 InternVL2.5 Report\]](https://huggingface.co/papers/2412.05271)
 
-[\[📖 2.0 中文解读\]](https://zhuanlan.zhihu.com/p/706547971)  [\[📖 1.5 中文解读\]](https://zhuanlan.zhihu.com/p/699439759)  [\[📖 1.0 中文解读\]](https://zhuanlan.zhihu.com/p/702946079)
+[\[📜 Mini-InternVL Paper\]](https://arxiv.org/abs/2410.16261)
+[\[📜 InternVL2 Blog\]](https://internvl.github.io/blog/2024-07-02-InternVL-2.0/)
+[\[📜 InternVL 1.5 Paper\]](https://huggingface.co/papers/2404.16821)
+[\[📜 InternVL 1.0 Paper\]](https://huggingface.co/papers/2312.14238)
+
+[\[📖 2.0 中文解读\]](https://zhuanlan.zhihu.com/p/706547971)
+[\[📖 1.5 中文解读\]](https://zhuanlan.zhihu.com/p/699439759)
+[\[📖 1.0 中文解读\]](https://zhuanlan.zhihu.com/p/702946079)
 
 [Switch to the Chinese version (切换至中文版)](/README_zh.md)
 
 <a href="https://trendshift.io/repositories/9803" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9803" alt="OpenGVLab%2FInternVL | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 <img height="55" alt="image" src="https://github.com/user-attachments/assets/bd62ab46-f0ea-40c6-ab10-7fde671716cc">
 
-![image/png](https://huggingface.co/datasets/Weiyun1025/InternVL-Performance/resolve/main/internvl3/overall.png)
+![image/jpg](https://huggingface.co/OpenGVLab/InternVL3_5-241B-A28B/resolve/main/images/performance.jpg)
 
 </div>
 
 ## News 🚀🚀🚀
 
+- `2025/08/30`: 🔥 We open-source the training code of [InternVL3_5-GPT-OSS-20B-A4B](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat_gpt_oss) and CascadeRL, which consists of a [offline RL stage](https://github.com/OpenGVLab/InternVL/blob/main/internvl_chat_gpt_oss/shell/internvl3_5_gpt_oss/internvl3_5_gpt_oss_20b_stage3_mpo.sh) and a [online RL stage](https://github.com/Weiyun1025/verl-internvl). The training data for these two stages ([MMPR-v1.2](https://huggingface.co/datasets/OpenGVLab/MMPR-v1.2) and [MMPR-Tiny](https://huggingface.co/datasets/OpenGVLab/MMPR-Tiny)) are also open-sourced.
+- `2025/08/26`: 🚀 We introduce [InternVL3.5](https://huggingface.co/papers/2508.18265),  a new family of open-source multimodal models that significantly advances versatility, reasoning capability, and inference efficiency along the InternVL series. Our largest model, i.e., [InternVL3.5-241B-A28B](https://huggingface.co/OpenGVLab/InternVL3_5-241B-A28B), attains state-of-the-art results among open-source MLLMs across general multimodal, reasoning, text, and agentic tasks. We also provide a 20B-A4B version (i.e., [InternVL3_5-GPT-OSS-20B-A4B](https://huggingface.co/OpenGVLab/InternVL3_5-GPT-OSS-20B-A4B-Preview)), which is built up on GPT-OSS-20B-A4B. Notably, we provide two model formats: [the GitHub format](https://huggingface.co/OpenGVLab/InternVL3_5-GPT-OSS-20B-A4B-Preview#github-format), consistent with prior releases, and [the HF format](https://huggingface.co/OpenGVLab/InternVL3_5-GPT-OSS-20B-A4B-Preview#huggingface-format), aligned with the official `transformers` standard.
 - `2025/04/17`: We open-source the [data construction pipeline](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/tools/reasoning_data_pipeline) and [training scripts](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/internvl3.0/mpo) of [MPO](https://huggingface.co/papers/2411.10442) and [VisualPRM](https://huggingface.co/papers/2503.10291). Additionally, the data construction scripts for [MPO](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/internvl3.0/mpo_data_construction) and [VisualPRM](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/internvl3.0/visualprm_data_construction) are also released for reference.
-- `2025/04/11`: 🚀 We introduce [InternVL3](https://huggingface.co/collections/OpenGVLab/internvl3-67f7f690be79c2fe9d74fe9d), an advanced multimodal large language model (MLLM) series that demonstrates superior overall performance. InternVL3-78B achieves SoTA performance in both [perception](https://rank.opencompass.org.cn/leaderboard-multimodal/?m=REALTIME) and [reasoning performance](https://rank.opencompass.org.cn/leaderboard-multimodal-reasoning/?m=REALTIME) among open-source MLLMs. The key designs of InternVL3-78B include [Variable Visual Position Encoding](https://huggingface.co/papers/2412.09616), [Native Multimodal Pre-Training](https://huggingface.co/papers/2504.10479), [Mixed Preference Optimization](https://huggingface.co/papers/2411.10442), and [Multimodal Test-Time Scaling](https://huggingface.co/papers/2503.10291).
-- `2025/03/13`: 🔥 We introduce [VisualPRM](https://huggingface.co/OpenGVLab/VisualPRM-8B), an advanced multimodal Process Reward Model (PRM) with 8B parameters, which improves the overall reasoning performance of InternVL2.5-8B and InternVL2.5-78B by 8.4 and 5.9 points, respectively. The training data for this model, termed [VisualPRM400K](https://huggingface.co/datasets/OpenGVLab/VisualPRM400K), is also open-sourced. Please refer to our [paper](https://huggingface.co/papers/2503.10291) and [project page](https://internvl.github.io/blog/2025-03-13-VisualPRM/) for more details.
-- `2024/12/20`: 🔥 We release the [InternVL2.5-MPO](https://internvl.github.io/blog/2024-12-20-InternVL-2.5-MPO/), which is finetuned with [Mixed Preference Optimization](https://huggingface.co/papers/2411.10442) on [MMPR-v1.1](https://huggingface.co/datasets/OpenGVLab/MMPR-v1.1). **The resulting models outperform their counterparts without MPO by an average of 2 points across all model scales on the OpenCompass leaderboard.** These models are available at [HF link](https://huggingface.co/collections/OpenGVLab/internvl25-mpo-6753fed98cd828219b12f849).
-- `2024/12/17`: 🚀 [InternVL2/2.5](https://github.com/PaddlePaddle/PaddleMIX/tree/develop/paddlemix/examples/internvl2) is supported in [PaddleMIX](https://github.com/PaddlePaddle/PaddleMIX) by Paddle Team.
-- `2024/12/05`: 🚀 We release the [InternVL2.5](https://huggingface.co/collections/OpenGVLab/internvl-25-673e1019b66e2218f68d7c1c), an advanced multimodal large language model (MLLM) series with parameter coverage ranging from 1B to 78B. [InternVL2_5-78B](https://huggingface.co/OpenGVLab/InternVL2_5-78B) is the first open-source MLLMs to achieve over **70%** on the **MMMU benchmark**, matching the performance of leading closed-source commercial models like GPT-4o. These models are available at [HF link](https://huggingface.co/collections/OpenGVLab/internvl-25-673e1019b66e2218f68d7c1c).
+- `2025/04/11`: We introduce [InternVL3](https://huggingface.co/collections/OpenGVLab/internvl3-67f7f690be79c2fe9d74fe9d), an advanced multimodal large language model (MLLM) series that demonstrates superior overall performance. InternVL3-78B achieves SoTA performance in both [perception](https://rank.opencompass.org.cn/leaderboard-multimodal/?m=REALTIME) and [reasoning performance](https://rank.opencompass.org.cn/leaderboard-multimodal-reasoning/?m=REALTIME) among open-source MLLMs. The key designs of InternVL3-78B include [Variable Visual Position Encoding](https://huggingface.co/papers/2412.09616), [Native Multimodal Pre-Training](https://huggingface.co/papers/2504.10479), [Mixed Preference Optimization](https://huggingface.co/papers/2411.10442), and [Multimodal Test-Time Scaling](https://huggingface.co/papers/2503.10291).
+- `2025/03/13`: We introduce [VisualPRM](https://huggingface.co/OpenGVLab/VisualPRM-8B), an advanced multimodal Process Reward Model (PRM) with 8B parameters, which improves the overall reasoning performance of InternVL2.5-8B and InternVL2.5-78B by 8.4 and 5.9 points, respectively. The training data for this model, termed [VisualPRM400K](https://huggingface.co/datasets/OpenGVLab/VisualPRM400K), is also open-sourced. Please refer to our [paper](https://huggingface.co/papers/2503.10291) and [project page](https://internvl.github.io/blog/2025-03-13-VisualPRM/) for more details.
+- `2024/12/20`: We release the [InternVL2.5-MPO](https://internvl.github.io/blog/2024-12-20-InternVL-2.5-MPO/), which is finetuned with [Mixed Preference Optimization](https://huggingface.co/papers/2411.10442) on [MMPR-v1.1](https://huggingface.co/datasets/OpenGVLab/MMPR-v1.1). **The resulting models outperform their counterparts without MPO by an average of 2 points across all model scales on the OpenCompass leaderboard.** These models are available at [HF link](https://huggingface.co/collections/OpenGVLab/internvl25-mpo-6753fed98cd828219b12f849).
+- `2024/12/17`: [InternVL2/2.5](https://github.com/PaddlePaddle/PaddleMIX/tree/develop/paddlemix/examples/internvl2) is supported in [PaddleMIX](https://github.com/PaddlePaddle/PaddleMIX) by Paddle Team.
+- `2024/12/05`: We release the [InternVL2.5](https://huggingface.co/collections/OpenGVLab/internvl-25-673e1019b66e2218f68d7c1c), an advanced multimodal large language model (MLLM) series with parameter coverage ranging from 1B to 78B. [InternVL2_5-78B](https://huggingface.co/OpenGVLab/InternVL2_5-78B) is the first open-source MLLMs to achieve over **70%** on the **MMMU benchmark**, matching the performance of leading closed-source commercial models like GPT-4o. These models are available at [HF link](https://huggingface.co/collections/OpenGVLab/internvl-25-673e1019b66e2218f68d7c1c).
 - `2024/11/14`: We introduce [MMPR](https://huggingface.co/datasets/OpenGVLab/MMPR), a high-quality, large-scale multimodal reasoning preference dataset, and [MPO](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/internvl2.0_mpo), an effective preference optimization algorithm. The resulting model, [InternVL2-8B-MPO](https://huggingface.co/OpenGVLab/InternVL2-8B-MPO), achieves an accuracy of 67.0 on MathVista. Please refer to our [paper](https://arxiv.org/abs/2411.10442), [project page](https://internvl.github.io/blog/2024-11-14-InternVL-2.0-MPO/) and [document](https://internvl.readthedocs.io/en/latest/internvl2.0/preference_optimization.html) for more details.
+
+<details>
+<summary>More News</summary>
+
+
 - `2024/10/21`: We release the Mini-InternVL series. These models achieve impressive performance with minimal size: the 4B model achieves 90% of the performance with just 5% of the model size. For more details, please check our [project page](https://github.com/OpenGVLab/InternVL/tree/main/internvl_chat/shell/mini_internvl) and [document](https://internvl.readthedocs.io/en/latest/internvl2.0/domain_adaptation.html).
 - `2024/08/01`: The [Chartmimic](https://chartmimic.github.io/) team evaluated the InternVL2 series models on their benchmark. The InternVL2-26B and 76B models achieved the top two performances among open-source models, with the InternVL2 76B model surpassing GeminiProVision and exhibiting comparable results to Claude-3-opus.
 - `2024/08/01`: InternVL2-Pro achieved the SOTA performance among open-source models on the [CharXiv](https://charxiv.github.io/#leaderboard) dataset, surpassing many closed-source models such as GPT-4V, Gemini 1.5 Flash, and Claude 3 Sonnet.
 - `2024/07/24`: The [MLVU](https://github.com/JUNJIE99/MLVU) team evaluated InternVL-1.5 on their benchmark. The average performance on the multiple-choice task was 50.4%, while the performance on the generative tasks was 4.02. The performance on the multiple-choice task ranked #1 among all open-source MLLMs.
 - `2024/07/04`: We release the [InternVL2 series](https://huggingface.co/collections/OpenGVLab/internvl-20-667d3961ab5eb12c7ed1463e). InternVL2-Pro achieved a 62.0% accuracy on the MMMU benchmark, matching the performance of leading closed-source commercial models like GPT-4o.
-
-<details>
-<summary>More News</summary>
-
 - `2024/07/18`: InternVL2-40B achieved SOTA performance among open-source models on the [Video-MME](https://github.com/BradyFU/Video-MME) dataset, scoring 61.2 when inputting 16 frames and 64.4 when inputting 32 frames. It significantly outperforms other open-source models and is the closest open-source model to GPT-4o mini.
 - `2024/07/18`: InternVL2-Pro achieved the SOTA performance on the [DocVQA](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=1) and [InfoVQA](https://rrc.cvc.uab.es/?ch=17&com=evaluation&task=3) benchmarks.
 - `2024/06/19`: We propose Needle In A Multimodal Haystack ([MM-NIAH](https://github.com/OpenGVLab/MM-NIAH)), the first benchmark designed to systematically evaluate the capability of existing MLLMs to comprehend long multimodal documents.
@@ -76,6 +94,40 @@
 - **InternVL 1.0**: 🖼️ [Classification](https://internvl.readthedocs.io/en/latest/internvl1.0/classification.html) | 📊 [CLIP-Benchmark](https://internvl.readthedocs.io/en/latest/internvl1.0/clip_benchmark.html) | 🎨 [Segmentation](https://internvl.readthedocs.io/en/latest/internvl1.0/segmentation.html) | 💬 [Chat-LLaVA](https://internvl.readthedocs.io/en/latest/internvl1.0/internvl_chat_llava.html) | ✨ [InternVL-G](https://internvl.readthedocs.io/en/latest/internvl1.0/internvl_g.html)
 
 ## Model Zoo
+
+#### Multimodal Large Language Model (InternVL 3.5)
+
+To maintain consistency with earlier generations, we provide two model formats: [the GitHub format](https://huggingface.co/OpenGVLab/InternVL3_5-241B-A28B), consistent with prior releases, and [the HF format](https://huggingface.co/OpenGVLab/InternVL3_5-241B-A28B-HF), aligned with the official Transformers standard.
+
+> If you want to convert the checkpoint between these two formats, please refer to the scripts about [custom2hf](https://github.com/OpenGVLab/InternVL/blob/main/internvl_chat/tools/internvl_custom2hf.py) and [hf2custom](https://github.com/OpenGVLab/InternVL/blob/main/internvl_chat/tools/internvl_hf2custom.py).
+
+**Github Format**
+| Model                 | #Vision Param | #Language Param | #Total Param | HF Link                                                                        | ModelScope Link                                                                          |
+| --------------------- | ------------- | --------------- | ------------ | ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| InternVL3.5-1B        | 0.3B          | 0.8B            | 1.1B         | [🤗 link](https://huggingface.co/OpenGVLab/InternVL3_5-1B)                      | [🤖 link](https://www.modelscope.cn/models/OpenGVLab/InternVL3_5-1B)                      |
+| InternVL3.5-2B        | 0.3B          | 2.0B            | 2.3B         | [🤗 link](https://huggingface.co/OpenGVLab/InternVL3_5-2B)                      | [🤖 link](https://www.modelscope.cn/models/OpenGVLab/InternVL3_5-2B)                      |
+| InternVL3.5-4B        | 0.3B          | 4.4B            | 4.7B         | [🤗 link](https://huggingface.co/OpenGVLab/InternVL3_5-4B)                      | [🤖 link](https://www.modelscope.cn/models/OpenGVLab/InternVL3_5-4B)                      |
+| InternVL3.5-8B        | 0.3B          | 8.2B            | 8.5B         | [🤗 link](https://huggingface.co/OpenGVLab/InternVL3_5-8B)                      | [🤖 link](https://www.modelscope.cn/models/OpenGVLab/InternVL3_5-8B)                      |
+| InternVL3.5-14B       | 0.3B          | 14.8B           | 15.1B        | [🤗 link](https://huggingface.co/OpenGVLab/InternVL3_5-14B)                     | [🤖 link](https://www.modelscope.cn/models/OpenGVLab/InternVL3_5-14B)                     |
+| InternVL3.5-38B       | 5.5B          | 32.8B           | 38.4B        | [🤗 link](https://huggingface.co/OpenGVLab/InternVL3_5-38B)                     | [🤖 link](https://www.modelscope.cn/models/OpenGVLab/InternVL3_5-38B)                     |
+| InternVL3.5-20B-A4B   | 0.3B          | 20.9B           | 21.2B-A4B    | [🤗 link](https://huggingface.co/OpenGVLab/InternVL3_5-GPT-OSS-20B-A4B-Preview) | [🤖 link](https://www.modelscope.cn/models/OpenGVLab/InternVL3_5-GPT-OSS-20B-A4B-Preview) |
+| InternVL3.5-30B-A3B   | 0.3B          | 30.5B           | 30.8B-A3B    | [🤗 link](https://huggingface.co/OpenGVLab/InternVL3_5-30B-A3B)                 | [🤖 link](https://www.modelscope.cn/models/OpenGVLab/InternVL3_5-30B-A3B)                 |
+| InternVL3.5-241B-A28B | 5.5B          | 235.1B          | 240.7B-A29B  | [🤗 link](https://huggingface.co/OpenGVLab/InternVL3_5-241B-A28B)               | [🤖 link](https://www.modelscope.cn/models/OpenGVLab/InternVL3_5-241B-A28B)               |
+
+**HuggingFace Format**
+
+| Model                    | #Vision Param | #Language Param | #Total Param | HF Link                                                                           | ModelScope Link                                                                             |
+| ------------------------ | ------------- | --------------- | ------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| InternVL3.5-1B-HF        | 0.3B          | 0.8B            | 1.1B         | [🤗 link](https://huggingface.co/OpenGVLab/InternVL3_5-1B-HF)                      | [🤖 link](https://www.modelscope.cn/models/OpenGVLab/InternVL3_5-1B-HF)                      |
+| InternVL3.5-2B-HF        | 0.3B          | 2.0B            | 2.3B         | [🤗 link](https://huggingface.co/OpenGVLab/InternVL3_5-2B-HF)                      | [🤖 link](https://www.modelscope.cn/models/OpenGVLab/InternVL3_5-2B-HF)                      |
+| InternVL3.5-4B-HF        | 0.3B          | 4.4B            | 4.7B         | [🤗 link](https://huggingface.co/OpenGVLab/InternVL3_5-4B-HF)                      | [🤖 link](https://www.modelscope.cn/models/OpenGVLab/InternVL3_5-4B-HF)                      |
+| InternVL3.5-8B-HF        | 0.3B          | 8.2B            | 8.5B         | [🤗 link](https://huggingface.co/OpenGVLab/InternVL3_5-8B-HF)                      | [🤖 link](https://www.modelscope.cn/models/OpenGVLab/InternVL3_5-8B-HF)                      |
+| InternVL3.5-14B-HF       | 0.3B          | 14.8B           | 15.1B        | [🤗 link](https://huggingface.co/OpenGVLab/InternVL3_5-14B-HF)                     | [🤖 link](https://www.modelscope.cn/models/OpenGVLab/InternVL3_5-14B-HF)                     |
+| InternVL3.5-38B-HF       | 5.5B          | 32.8B           | 38.4B        | [🤗 link](https://huggingface.co/OpenGVLab/InternVL3_5-38B-HF)                     | [🤖 link](https://www.modelscope.cn/models/OpenGVLab/InternVL3_5-38B-HF)                     |
+| InternVL3.5-20B-A4B-HF   | 0.3B          | 20.9B           | 21.2B-A4B    | [🤗 link](https://huggingface.co/OpenGVLab/InternVL3_5-GPT-OSS-20B-A4B-Preview-HF) | [🤖 link](https://www.modelscope.cn/models/OpenGVLab/InternVL3_5-GPT-OSS-20B-A4B-Preview-HF) |
+| InternVL3.5-30B-A3B-HF   | 0.3B          | 30.5B           | 30.8B-A3B    | [🤗 link](https://huggingface.co/OpenGVLab/InternVL3_5-30B-A3B-HF)                 | [🤖 link](https://www.modelscope.cn/models/OpenGVLab/InternVL3_5-30B-A3B-HF)                 |
+| InternVL3.5-241B-A28B-HF | 5.5B          | 235.1B          | 240.7B-A29B  | [🤗 link](https://huggingface.co/OpenGVLab/InternVL3_5-241B-A28B-HF)               | [🤖 link](https://www.modelscope.cn/models/OpenGVLab/InternVL3_5-241B-A28B-HF)               |
+
 
 #### Multimodal Large Language Model (InternVL 3.0)
 <table>
@@ -1114,14 +1166,17 @@ This project is released under the [MIT license](LICENSE). Parts of this project
 If you find this project useful in your research, please consider cite:
 
 ```BibTeX
-@misc{zhu2025internvl3exploringadvancedtraining,
-      title={InternVL3: Exploring Advanced Training and Test-Time Recipes for Open-Source Multimodal Models}, 
-      author={Jinguo Zhu and Weiyun Wang and Zhe Chen and Zhaoyang Liu and Shenglong Ye and Lixin Gu and Hao Tian and Yuchen Duan and Weijie Su and Jie Shao and Zhangwei Gao and Erfei Cui and Xuehui Wang and Yue Cao and Yangzhou Liu and Xingguang Wei and Hongjie Zhang and Haomin Wang and Weiye Xu and Hao Li and Jiahao Wang and Nianchen Deng and Songze Li and Yinan He and Tan Jiang and Jiapeng Luo and Yi Wang and Conghui He and Botian Shi and Xingcheng Zhang and Wenqi Shao and Junjun He and Yingtong Xiong and Wenwen Qu and Peng Sun and Penglong Jiao and Han Lv and Lijun Wu and Kaipeng Zhang and Huipeng Deng and Jiaye Ge and Kai Chen and Limin Wang and Min Dou and Lewei Lu and Xizhou Zhu and Tong Lu and Dahua Lin and Yu Qiao and Jifeng Dai and Wenhai Wang},
-      year={2025},
-      eprint={2504.10479},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2504.10479}, 
+@article{wang2025internvl3_5,
+  title={InternVL3.5: Advancing Open-Source Multimodal Models in Versatility, Reasoning, and Efficiency},
+  author={Wang, Weiyun and Gao, Zhangwei and Gu, Lixin and Pu, Hengjun and Cui, Long and Wei, Xingguang and Liu, Zhaoyang and Jing, Linglin and Ye, Shenglong and Shao, Jie and others},
+  journal={arXiv preprint arXiv:2508.18265},
+  year={2025}
+}
+@article{zhu2025internvl3,
+  title={Internvl3: Exploring advanced training and test-time recipes for open-source multimodal models},
+  author={Zhu, Jinguo and Wang, Weiyun and Chen, Zhe and Liu, Zhaoyang and Ye, Shenglong and Gu, Lixin and Tian, Hao and Duan, Yuchen and Su, Weijie and Shao, Jie and others},
+  journal={arXiv preprint arXiv:2504.10479},
+  year={2025}
 }
 @article{chen2024expanding,
   title={Expanding Performance Boundaries of Open-Source Multimodal Models with Model, Data, and Test-Time Scaling},
