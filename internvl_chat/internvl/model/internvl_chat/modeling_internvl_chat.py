@@ -13,6 +13,7 @@ import transformers
 from internvl.conversation import get_conv_template
 from internvl.model.internlm2.modeling_internlm2 import InternLM2ForCausalLM
 from internvl.model.phi3.modeling_phi3 import Phi3ForCausalLM
+from internvl.v2pe_utils import get_rope_pos_id
 from peft import LoraConfig, get_peft_model
 from torch import nn
 from torch.nn import CrossEntropyLoss
@@ -159,6 +160,8 @@ class InternVLChatModel(PreTrainedModel):
     ) -> Union[Tuple, CausalLMOutputWithPast]:
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
 
+        if isinstance(position_ids, list):
+            position_ids = torch.tensor(position_ids, dtype=torch.float32).to(pixel_values.device)
         image_flags = image_flags.squeeze(-1)
         input_embeds = self.language_model.get_input_embeddings()(input_ids).clone()
 
@@ -342,7 +345,7 @@ class InternVLChatModel(PreTrainedModel):
 
     def chat(self, tokenizer, pixel_values, question, generation_config, history=None, return_history=False,
              num_patches_list=None, IMG_START_TOKEN='<img>', IMG_END_TOKEN='</img>', IMG_CONTEXT_TOKEN='<IMG_CONTEXT>',
-             verbose=False):
+             verbose=False, **kwargs):
 
         if history is None and pixel_values is not None and '<image>' not in question:
             question = '<image>\n' + question
@@ -379,12 +382,40 @@ class InternVLChatModel(PreTrainedModel):
         input_ids = model_inputs['input_ids'].to(device)
         attention_mask = model_inputs['attention_mask'].to(device)
         generation_config['eos_token_id'] = eos_token_id
-        generation_output = self.generate(
-            pixel_values=pixel_values,
-            input_ids=input_ids,
-            attention_mask=attention_mask,
-            **generation_config
-        )
+        rope_pos_id_version = self.config.rope_pos_id_version
+        if rope_pos_id_version.startswith('v2pe_'):
+            pos_ids = []
+            ret = {'input_ids': input_ids, 'attention_mask': attention_mask}
+            for i in range(input_ids.shape[0]):
+                cur_dtype = torch.float32
+                rope_pos_id_stride = self.config.rope_pos_id_stride
+                cur_pos_id = get_rope_pos_id(ret, tokenizer=tokenizer,
+                                           dtype=cur_dtype,
+                                           rope_pos_id_version=rope_pos_id_version,
+                                           position_id=torch.arange(0, input_ids.shape[1]),
+                                           IMG_START_TOKEN=IMG_START_TOKEN,
+                                           IMG_END_TOKEN=IMG_END_TOKEN, rope_pos_id_stride=rope_pos_id_stride, num_image_token=self.num_image_token)
+
+                cur_pos_id = torch.tensor(cur_pos_id).to(device)
+                pos_ids.append(cur_pos_id)
+
+            pos_ids = torch.stack(pos_ids).to(device)
+            generation_output = self.generate(
+                pixel_values=pixel_values,
+                input_ids=input_ids,
+                attention_mask=attention_mask,
+                position_ids=pos_ids,
+                **generation_config
+            )
+        else:
+            self.language_model.rope_pos_id_version = 'default'
+            generation_output = self.generate(
+                pixel_values=pixel_values,
+                input_ids=input_ids,
+                attention_mask=attention_mask,
+                **generation_config
+            )
+
         response = tokenizer.batch_decode(generation_output, skip_special_tokens=True)[0]
         response = response.split(template.sep.strip())[0].strip()
         history.append((question, response))
@@ -403,6 +434,7 @@ class InternVLChatModel(PreTrainedModel):
             pixel_values: Optional[torch.FloatTensor] = None,
             input_ids: Optional[torch.FloatTensor] = None,
             attention_mask: Optional[torch.LongTensor] = None,
+            position_ids: Optional[torch.LongTensor] = None,
             visual_features: Optional[torch.FloatTensor] = None,
             generation_config: Optional[GenerationConfig] = None,
             output_hidden_states: Optional[bool] = None,
@@ -431,6 +463,7 @@ class InternVLChatModel(PreTrainedModel):
         outputs = self.language_model.generate(
             inputs_embeds=input_embeds,
             attention_mask=attention_mask,
+            position_ids=position_ids,
             generation_config=generation_config,
             output_hidden_states=output_hidden_states,
             use_cache=True,
