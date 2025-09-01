@@ -73,6 +73,9 @@ def _forward_gpt_oss_with_varlen(
     input_shape = hidden_states.shape[:-1]
     hidden_shape = (*input_shape, -1, self.head_dim)
 
+    if self.cu_seqlens is not None:
+        attention_mask = self.cu_seqlens
+
     # B,L,N_h,D_h --> B,N_h,L,D_h
     query_states = self.q_proj(hidden_states).view(hidden_shape).transpose(1, 2)
     key_states = self.k_proj(hidden_states).view(hidden_shape).transpose(1, 2)

@@ -79,7 +79,7 @@ internvl/train/internvl_chat_mpo.py \
   --dynamic_image_size True \
   --use_thumbnail True \
   --ps_version 'v2' \
-  --use_custom_flash_attn True \
+  --use_custom_flash_attn False \
   --report_to "tensorboard" \
   --deepspeed "zero_stage3_config.json" \
   --seed 42 \

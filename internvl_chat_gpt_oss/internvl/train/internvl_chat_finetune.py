@@ -40,6 +40,7 @@ from internvl.model.internvl_chat import (
 from internvl.patch import (
     concat_pad_data_collator,
     replace_train_dataloader,
+    replace_qwen3_attention_class,
     replace_gpt_oss_with_flash_sink_attn,
 )
 from internvl.train.constants import (
@@ -1009,6 +1010,8 @@ def main():
 
     if model_args.use_custom_flash_attn:
         replace_gpt_oss_with_flash_sink_attn(model.language_model, use_varlen=data_args.use_packed_ds)
+    elif data_args.use_packed_ds:
+        replace_qwen3_attention_class(model.language_model)
 
     assert model.config.downsample_ratio == data_args.down_sample_ratio
 

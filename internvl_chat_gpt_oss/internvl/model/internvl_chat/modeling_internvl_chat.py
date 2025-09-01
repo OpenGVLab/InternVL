@@ -149,7 +149,9 @@ class InternVLChatModel(PreTrainedModel):
 
         input_embeds = input_embeds.reshape(B, N, C)
 
-        self.language_model.model.cu_seqlens = cu_seqlens
+        for layer in self.language_model.model.layers:
+            layer.self_attn.cu_seqlens = cu_seqlens
+
         outputs = self.language_model(
             inputs_embeds=input_embeds,
             attention_mask=attention_mask,
