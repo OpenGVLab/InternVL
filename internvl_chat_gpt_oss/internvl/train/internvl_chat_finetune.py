@@ -54,7 +54,7 @@ from internvl.train.dataset import (
     preprocess_pretrain, preprocess_internvl2_5, preprocess_internvl3_5_gpt_oss,
 )
 from internvl.train.dataset_packed import PackedDataset, packed_collate_fn
-use_tcs_loader = bool(os.environ.get("USE_TCS_LOADER", "0"))
+use_tcs_loader = bool(os.environ.get("USE_TCS_LOADER", "0") == "1")
 
 
 # Set constants for image processing and logging

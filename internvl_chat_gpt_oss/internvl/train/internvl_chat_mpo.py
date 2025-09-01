@@ -52,7 +52,7 @@ from internvl.train.trainer_dpo import InternVLDPOTrainer
 from internvl.model.internvl_chat.conversation import get_conv_template
 
 
-USE_TCS_LOADER = bool(os.environ.get("USE_TCS_LOADER", "0"))
+USE_TCS_LOADER = bool(os.environ.get("USE_TCS_LOADER", "0") == "1")
 
 
 R1_SYSTEM_PROMPT = """
