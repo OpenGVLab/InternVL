@@ -55,15 +55,15 @@ def init_dist(args):
         os.environ['MASTER_PORT'] = str(args.port)
 
     if int(os.getenv('RANK', '0')) % args.tp != 0:
-        print(f"[SLURM_PROCID {int(os.environ['SLURM_PROCID'])}] Exit early")
+        print(f"[RANK {int(os.environ['RANK'])}] Exit early")
         exit(0)
 
-    if args.tp > 1:
-        os.environ['RANK'] = str(int(os.environ['RANK']) // args.tp)
-        os.environ['LOCAL_RANK'] = str(int(os.environ['RANK']) % args.tp)
-        os.environ['WORLD_SIZE'] = str(int(os.environ['WORLD_SIZE']) // args.tp)
-        # different rank should use different gpu, otherwise the all gather operation will be blocked
-        torch.cuda.set_device(int(os.environ['RANK']) % torch.cuda.device_count())
+    os.environ['RANK'] = str(int(os.environ['RANK']) // args.tp)
+    os.environ['LOCAL_RANK'] = str(int(os.environ['RANK']) % args.tp)
+    os.environ['WORLD_SIZE'] = str(int(os.environ['WORLD_SIZE']) // args.tp)
+    os.environ['LOCAL_WORLD_SIZE'] = str(args.tp)
+    # different rank should use different gpu, otherwise the all gather operation will be blocked
+    torch.cuda.set_device(int(os.environ['RANK']) % torch.cuda.device_count())
 
     torch.distributed.init_process_group(
         backend='nccl',
@@ -96,7 +96,9 @@ def get_global_min(value):
 
 
 def save_outputs(outputs, results_file):
-    if 'image' in outputs[0]:
+    if len(outputs) <= 0:
+        pass
+    elif 'image' in outputs[0]:
         outputs = sorted(outputs, key=lambda x:str(x['image']))
     else:
         outputs = sorted(outputs, key=lambda x:str(x['question']))

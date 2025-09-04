@@ -1,15 +1,15 @@
 import os
 
-if os.environ.get('AUTO_SPLIT', '0') == '1':
-    TP = int(os.environ.get('TP', '4'))
-    DEVICE_START_IDX = int(os.environ['SLURM_PROCID']) % 8
-    CUDA_VISIBLE_DEVICES = [str(i) for i in range(DEVICE_START_IDX, DEVICE_START_IDX + TP)]
-    os.environ['CUDA_VISIBLE_DEVICES'] = ','.join(CUDA_VISIBLE_DEVICES)
-    print(f"{os.environ['CUDA_VISIBLE_DEVICES']=}")
+TP = int(os.environ.get('TP', '1'))
+
+if 'RANK' in os.environ:
+    DEVICE_START_IDX = int(os.environ['RANK']) % 8
 else:
-    TP = 1
-    os.environ['CUDA_VISIBLE_DEVICES'] = str(int(os.environ['SLURM_PROCID']) % 8)
-    print(f"{os.environ['CUDA_VISIBLE_DEVICES']=}")
+    DEVICE_START_IDX = int(os.environ['SLURM_PROCID']) % 8
+
+CUDA_VISIBLE_DEVICES = [str(i) for i in range(DEVICE_START_IDX, DEVICE_START_IDX + TP)]
+os.environ['CUDA_VISIBLE_DEVICES'] = ','.join(CUDA_VISIBLE_DEVICES)
+print(f"{os.environ['CUDA_VISIBLE_DEVICES']=}")
 
 import argparse
 import io
@@ -17,7 +17,7 @@ import json
 from collections import defaultdict
 
 import torch
-from lmdeploy import (ChatTemplateConfig, GenerationConfig,
+from lmdeploy import (ChatTemplateConfig, GenerationConfig, PytorchEngineConfig,
                       TurbomindEngineConfig, VisionConfig, pipeline)
 from lmdeploy.vl.constants import IMAGE_TOKEN
 from PIL import Image
@@ -266,7 +266,7 @@ if __name__ == '__main__':
     parser.add_argument('--dynamic', action='store_true')
     parser.add_argument('--max-num', type=int, default=6)
     parser.add_argument('--session-len', type=int, default=16384)
-    parser.add_argument('--cache-max-entry-count', type=float, default=0.3)
+    parser.add_argument('--cache-max-entry-count', type=float, default=0.7)
     # generation args
     parser.add_argument('--top-k', type=int, default=50)
     parser.add_argument('--top-p', type=float, default=1.0)
@@ -319,12 +319,17 @@ if __name__ == '__main__':
         max_new_tokens=args.max_new_tokens,
     )
 
+    if "internvl3_5" in model_name.lower():
+        engine_type = PytorchEngineConfig
+    else:
+        engine_type = TurbomindEngineConfig
+
     vision_config = VisionConfig(max_batch_size=args.vit_batch_size)
     pipe = pipeline(
         args.checkpoint,
         vision_config=vision_config,
         chat_template_config=ChatTemplateConfig(model_name='internvl2_5'),
-        backend_config=TurbomindEngineConfig(session_len=args.session_len, cache_max_entry_count=args.cache_max_entry_count, tp=args.tp),
+        backend_config=engine_type(session_len=args.session_len, cache_max_entry_count=args.cache_max_entry_count, tp=args.tp),
     )
     pipe.vl_encoder.model.config.max_dynamic_patch = args.max_num
     pipe.vl_encoder.model.config.dynamic_image_size = args.dynamic

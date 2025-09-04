@@ -3,6 +3,7 @@ import re
 from sympy import latex
 from sympy.parsing.latex import parse_latex
 from tqdm import tqdm
+from math_verify import parse, verify, ExprExtractionConfig, LatexExtractionConfig, StringExtractionConfig
 
 
 class EvalAIAnswerProcessor:
@@ -377,8 +378,17 @@ def multi_choice_score(answer_pred, answer_gt):
 def parse_answer(response, prompt_version):
     if prompt_version in ['zh', 'en']:
         return extract_answer_from_mpo(response, version=prompt_version)
-    if prompt_version in ['zh_v2', 'en_v2', 'en_r1', 'zh_r1']:
+
+    if prompt_version in ['zh_v2', 'en_v2']:
+        if not check_cot_format(response):
+            raise ValueError(f"Invalid response format: {response}")
         return None, extract_answer_from_box(response)
+
+    if prompt_version in ['en_r1', 'zh_r1']:
+        if not check_r1_format(response):
+            raise ValueError(f"Invalid response format: {response}")
+        return None, extract_answer_from_box(response)
+
     raise NotImplementedError(f'Unsupported prompt_version: {prompt_version}')
 
 
@@ -433,6 +443,27 @@ def extract_answer_from_box(ans):
     return content
 
 
+def check_cot_format(response: str):
+    return len(response.split()) > 20
+
+
+def check_r1_format(response: str):
+    R1_PATTERN = r"<think>.*?</think>\s*.+"
+
+    flag = {}
+    flag["format_re"] = re.fullmatch(R1_PATTERN, response, re.DOTALL) is not None
+    flag["format_count"] = response.count("<think>") == 1 and response.count("</think>") == 1
+
+    if "</think>" in response:
+        response_answer = response.split("</think>")[-1].strip()
+        flag["format_answer"] = bool(extract_answer_from_box(response_answer) != response_answer)
+        flag["format_think"] = check_cot_format(response.split("</think>")[0].strip())
+    else:
+        flag["format_answer"] = False
+
+    return all(flag.values())
+
+
 def check_answer(answer_pred, answer_gt, mode):
     if (answer_pred, answer_gt) in evaluator_cache:
         accuracy = evaluator_cache[(answer_pred, answer_gt)]
@@ -441,6 +472,19 @@ def check_answer(answer_pred, answer_gt, mode):
         return 1
 
     accuracy = 0
+
+    if 'math_verify_score' in mode:
+        try:
+            answer_parsed = parse(
+                answer_pred,
+                extraction_config=[StringExtractionConfig(), LatexExtractionConfig(), ExprExtractionConfig()],
+            )
+            label_parsed = parse(answer_gt)
+            verify_label = verify(label_parsed, answer_parsed)
+        except:
+            verify_label = False
+
+        accuracy = max(accuracy, int(verify_label))
 
     # vqa_score
     if 'vqa_score' in mode:
@@ -544,12 +588,12 @@ def get_mode(ds_name):
         return ['anls']
 
     if contain_keywords(ds_name, ['SROIE', 'CLEVR_math', 'geos', 'geometry']):
-        return ['relaxed_accuracy', 'vqa_score', 'mc_score']
+        return ['relaxed_accuracy', 'vqa_score', 'mc_score', 'math_verify_score']
 
     if contain_keywords(ds_name, ['mavis']):
-        return ['vqa_score', 'mc_score', 'math_score', 'latex_score']
+        return ['vqa_score', 'mc_score', 'math_score', 'latex_score', 'math_verify_score']
 
-    return ['vqa_score', 'mc_score', 'math_score']
+    return ['vqa_score', 'mc_score', 'math_score', 'math_verify_score']
 
 
 def use_latex_score(x):
