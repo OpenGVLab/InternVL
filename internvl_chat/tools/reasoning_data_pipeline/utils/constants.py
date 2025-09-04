@@ -84,5 +84,6 @@ VALID_INSTRUCTIONS = [
     'Answer the question using a single word or phrase.',
     "Answer with the option's letter from the given choices directly.",
     'Please answer Yes or No.',
+    'Please answer the question and put the final answer within \\boxed{}.',
 ]
 VALID_INSTRUCTIONS = set(VALID_INSTRUCTIONS)

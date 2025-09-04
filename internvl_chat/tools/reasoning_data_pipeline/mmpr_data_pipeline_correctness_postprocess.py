@@ -15,7 +15,7 @@ random.seed(0)
 
 # you can download this file from this url: https://huggingface.co/datasets/Weiyun1025/M3CoT-ScienceQA-Format/blob/main/train_pair_with_res.jsonl
 gt_path_map = {
-    'm3cot': 'M3CoT/train_pair_with_res.jsonl',
+    # 'm3cot': 'M3CoT/train_pair_with_res.jsonl',
 }
 
 
@@ -28,6 +28,7 @@ def _build_items_based_on_correctness(lines, mode):
         image = str(item.get('image', ''))
         question = item['question']
         answer_gt = item['answer']
+        answer_gt = str(answer_gt)
         response = item['response']
         prompt_version = item.get('prompt_version', 'en')
 
@@ -209,6 +210,7 @@ def save_pairs(pairs, save_path):
         chosen = pair['chosen']
         rejected = pair['rejected']
         answer_gt = pair['answer_gt']
+        answer_gt = str(answer_gt)
 
         if 'chosen_meta' in pair:
             choosen_meta = pair.pop('chosen_meta')
