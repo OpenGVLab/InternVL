@@ -252,7 +252,10 @@ class DataTrainingArguments:
         default=False,
         metadata={'help': 'Whether to split annotations to save memory usage. Default is False.'},
     )
-
+    eval_meta_path: str = field(
+        default=None,
+        metadata={'help': 'The path of the eval meta file of datasets.'},
+    )
 
 class LazySupervisedDataset(Dataset):
     """Dataset for supervised fine-tuning."""
@@ -771,6 +774,7 @@ def build_datasets(
     tokenizer,
     tcs_loader,
     model,
+    meta_file_path,
     group_by_length=False,
     dynamic_image_size=False,
     use_thumbnail=False,
@@ -785,7 +789,7 @@ def build_datasets(
     lengths = []
     data_rank = 0 if split_annotations else dist.get_rank()
     data_world_size = 1 if split_annotations else dist.get_world_size()
-    ds_collections = json.loads(open(data_args.meta_path).read())
+    ds_collections = json.loads(open(meta_file_path).read())
     for ds_idx, ds_name in enumerate(ds_collections.keys()):
         repeat_time = ds_collections[ds_name]['repeat_time']
         if 'max_dynamic_patch' in ds_collections[ds_name]:
@@ -1058,6 +1062,7 @@ def main():
         tokenizer,
         tcs_loader,
         model,
+        meta_file_path=data_args.meta_path,
         group_by_length=training_args.group_by_length,
         dynamic_image_size=data_args.dynamic_image_size,
         use_thumbnail=data_args.use_thumbnail,
@@ -1068,6 +1073,23 @@ def main():
         max_num_frame=data_args.max_num_frame,
         split_annotations=data_args.split_annotations,
     )
+
+    eval_dataset = None
+    if training_args.do_eval and data_args.eval_meta_path is not None:
+        eval_dataset = build_datasets(
+            data_args, 
+            tokenizer, 
+            tcs_loader, model, 
+            meta_file_path=data_args.eval_meta_path, 
+            group_by_length=False,
+            dynamic_image_size=data_args.dynamic_image_size, 
+            use_thumbnail=data_args.use_thumbnail,
+            min_dynamic_patch=data_args.min_dynamic_patch, 
+            max_dynamic_patch=data_args.max_dynamic_patch,
+            normalize_type=data_args.normalize_type, 
+            min_num_frame=data_args.min_num_frame,
+            max_num_frame=data_args.max_num_frame
+        )
 
     def _freeze_params(module):
         for param in module.parameters():
@@ -1126,7 +1148,7 @@ def main():
         model=model,
         args=training_args,
         train_dataset=train_dataset if training_args.do_train else None,
-        eval_dataset=None,
+        eval_dataset=eval_dataset,
         tokenizer=tokenizer,
         data_collator=collator,
     )
