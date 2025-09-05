@@ -444,7 +444,7 @@ def extract_answer_from_box(ans):
 
 
 def check_cot_format(response: str):
-    return len(response.split()) > 20
+    return len(response) > 20
 
 
 def check_r1_format(response: str):
