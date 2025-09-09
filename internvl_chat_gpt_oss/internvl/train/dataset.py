@@ -535,7 +535,8 @@ def preprocess_internvl3_5_gpt_oss(
             batches.append(f'<|start|>user<|message|>{conversation["value"]}<|end|>')
             roles.append('human')
         elif conversation['from'] == 'gpt':
-            batches.append(f'<|start|>assistant<|channel|>final<|message|>{conversation["value"]}<|return|>')
+            eos = '<|return|>' if i == len(conversations) - 1 else '<|end|>' # '<|return|>' if last message else '<|end|>'
+            batches.append(f'<|start|>assistant<|channel|>final<|message|>{conversation["value"]}{eos}')
             roles.append('gpt')
         elif conversation['from'] == 'function':
             batches.append(f'<|start|>tool<|message|>{conversation["value"]}<|end|>')
