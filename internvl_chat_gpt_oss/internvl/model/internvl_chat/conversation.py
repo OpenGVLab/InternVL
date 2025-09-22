@@ -255,7 +255,13 @@ class Conversation:
                 if message:
                     if type(message) is tuple:
                         message, _, _ = message
-                    ret += role + message + seps[i % 2]
+                    # Check if this is the last message and it's from assistant
+                    is_last_message = (i == len(self.messages) - 1)
+                    is_assistant = role == self.roles[1]  # roles[1] is assistant role
+                    
+                    # Use sep2 only for the last assistant message, otherwise use sep
+                    separator = self.sep2 if (is_last_message and is_assistant) else self.sep
+                    ret += role + message + separator
                 else:
                     ret += role
             return ret
