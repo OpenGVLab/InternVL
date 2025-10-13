@@ -63,7 +63,7 @@ torchrun \
   --group_by_length True \
   --dynamic_image_size False \
   --use_thumbnail False \
-  --ps_version 'v1' \
+  --pixel_unshuffle_version 'v1' \
   --deepspeed "zero_stage3_config_34b.json" \
   --report_to "tensorboard" \
   2>&1 | tee -a "${OUTPUT_DIR}/training_log.txt"

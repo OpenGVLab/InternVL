@@ -68,7 +68,7 @@ srun -p ${PARTITION} \
   --group_by_length False \
   --dynamic_image_size True \
   --use_thumbnail True \
-  --ps_version 'v2' \
+  --pixel_unshuffle_version 'v2' \
   --deepspeed "zero_stage1_config.json" \
   --report_to "tensorboard" \
   --loss_type sigmoid,bco_pair \

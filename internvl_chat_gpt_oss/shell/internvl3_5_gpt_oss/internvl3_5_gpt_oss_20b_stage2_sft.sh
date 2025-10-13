@@ -78,7 +78,7 @@ internvl/train/internvl_chat_finetune.py \
   --group_by_length False \
   --dynamic_image_size True \
   --use_thumbnail True \
-  --ps_version 'v2' \
+  --pixel_unshuffle_version 'v2' \
   --use_custom_flash_attn True \
   --report_to "tensorboard" \
   --deepspeed "zero_stage3_config.json" \
