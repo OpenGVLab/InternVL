@@ -34,7 +34,7 @@ class InternVLChatConfig(PretrainedConfig):
             template=None,
             dynamic_image_size=False,
             use_thumbnail=False,
-            ps_version='v1',
+            pixel_unshuffle_version='v1',
             min_dynamic_patch=1,
             max_dynamic_patch=6,
             **kwargs):
@@ -69,7 +69,7 @@ class InternVLChatConfig(PretrainedConfig):
         self.template = template
         self.dynamic_image_size = dynamic_image_size
         self.use_thumbnail = use_thumbnail
-        self.ps_version = ps_version  # pixel shuffle version
+        self.pixel_unshuffle_version = pixel_unshuffle_version  # pixel unshuffle version
         self.min_dynamic_patch = min_dynamic_patch
         self.max_dynamic_patch = max_dynamic_patch
 
@@ -79,7 +79,7 @@ class InternVLChatConfig(PretrainedConfig):
         self.llm_config.tie_word_embeddings = self.tie_word_embeddings
 
         logger.info(f'vision_select_layer: {self.select_layer}')
-        logger.info(f'ps_version: {self.ps_version}')
+        logger.info(f'pixel_unshuffle_version: {self.pixel_unshuffle_version}')
         logger.info(f'min_dynamic_patch: {self.min_dynamic_patch}')
         logger.info(f'max_dynamic_patch: {self.max_dynamic_patch}')
 
@@ -102,7 +102,7 @@ class InternVLChatConfig(PretrainedConfig):
         output['template'] = self.template
         output['dynamic_image_size'] = self.dynamic_image_size
         output['use_thumbnail'] = self.use_thumbnail
-        output['ps_version'] = self.ps_version
+        output['pixel_unshuffle_version'] = self.pixel_unshuffle_version
         output['min_dynamic_patch'] = self.min_dynamic_patch
         output['max_dynamic_patch'] = self.max_dynamic_patch
 

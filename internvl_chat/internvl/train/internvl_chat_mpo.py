@@ -146,9 +146,14 @@ class ModelArguments:
         default=0.0,
         metadata={'help': 'Set the drop path rate for the ViT. Default is 0.'},
     )
-    ps_version: Literal['v1', 'v2'] = field(
+    pixel_unshuffle_version: Literal['v1', 'v2'] = field(
         default='v2',
         metadata={'help': 'Specify the version of pixel shuffle implementation. Default is v2.'}
+    )
+    # Deprecated alias for pixel_unshuffle_version; keep temporarily for backward compatibility
+    ps_version: Optional[Literal['v1', 'v2']] = field(
+        default=None,
+        metadata={'help': 'DEPRECATED: use --pixel_unshuffle_version instead.'}
     )
     use_fast_tokenizer: bool = field(
         default=False,
@@ -803,6 +808,35 @@ def main():
         handlers=[logging.StreamHandler(sys.stdout)],
     )
 
+    # -------------------- begin: migrate deprecated args (ps_version -> pixel_unshuffle_version) --------------------
+
+    # !! IF `ps_version` IS READY TO BE DEPRECATED, REMOVE THE FOLLOWING BLOCK COMPLETELY !!
+    
+    # Getting the "default value" of the new argument to determine if the user has explicitly set it
+    _default_new = ModelArguments.__dataclass_fields__['pixel_unshuffle_version'].default
+    new_is_default = (model_args.pixel_unshuffle_version == _default_new)
+
+    # If the old argument is provided, issue a deprecation warning and map it
+    if getattr(model_args, 'ps_version', None) is not None:
+        warnings.warn(
+            '`--ps_version` is deprecated and will be removed; use `--pixel_unshuffle_version` instead.',
+            DeprecationWarning
+        )
+        # If the new argument appears to have been explicitly set, and conflicts with the old value → take the new argument
+        if not new_is_default and model_args.ps_version != model_args.pixel_unshuffle_version:
+            logger.warning(
+                f'Both ps_version={model_args.ps_version} (deprecated) and '
+                f'pixel_unshuffle_version={model_args.pixel_unshuffle_version} are provided; '
+                f'using pixel_unshuffle_version.'
+            )
+        else:
+            # Else, map the old value to the new argument
+            model_args.pixel_unshuffle_version = model_args.ps_version
+
+    logger.info(f'Pixel unshuffle version = {model_args.pixel_unshuffle_version}')
+    # --------------------  end: migrate deprecated args  ------------------------------------------------------------
+
+
     if training_args.should_log:
         # The default of training_args.log_level is passive, so we set log level at info here to have that default.
         transformers.utils.logging.set_verbosity_info()
@@ -873,7 +907,7 @@ def main():
         config.select_layer = model_args.vision_select_layer
         config.dynamic_image_size = data_args.dynamic_image_size
         config.use_thumbnail = data_args.use_thumbnail
-        config.ps_version = model_args.ps_version
+        config.pixel_unshuffle_version = model_args.pixel_unshuffle_version
         config.min_dynamic_patch = data_args.min_dynamic_patch
         config.max_dynamic_patch = data_args.max_dynamic_patch
         model = InternVLChatModel.from_pretrained(
@@ -904,7 +938,7 @@ def main():
             vision_config.to_dict(), llm_config.to_dict(), downsample_ratio=data_args.down_sample_ratio,
             pad2square=data_args.pad2square, template=data_args.conv_style,
             select_layer=model_args.vision_select_layer, dynamic_image_size=data_args.dynamic_image_size,
-            use_thumbnail=data_args.use_thumbnail, ps_version=model_args.ps_version,
+            use_thumbnail=data_args.use_thumbnail, pixel_unshuffle_version=model_args.pixel_unshuffle_version,
             min_dynamic_patch=data_args.min_dynamic_patch, max_dynamic_patch=data_args.max_dynamic_patch)
         internvl_chat_config.force_image_size = data_args.force_image_size
         logger.info('Building InternVLChatModel...')

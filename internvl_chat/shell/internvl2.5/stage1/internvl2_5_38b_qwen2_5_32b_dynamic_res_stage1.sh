@@ -75,7 +75,7 @@ srun -p ${PARTITION} \
   --group_by_length False \
   --dynamic_image_size True \
   --use_thumbnail True \
-  --ps_version 'v2' \
+  --pixel_unshuffle_version 'v2' \
   --deepspeed "zero_stage3_config_34b.json" \
   --report_to "tensorboard" \
   --use_packed_ds True \

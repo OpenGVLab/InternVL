@@ -64,13 +64,13 @@ class InternVLChatModel(PreTrainedModel):
         self.template = config.template
         self.num_image_token = int((image_size // patch_size) ** 2 * (config.downsample_ratio ** 2))
         self.downsample_ratio = config.downsample_ratio
-        self.ps_version = config.ps_version
+        self.pixel_unshuffle_version = config.pixel_unshuffle_version
         use_flash_attn = use_flash_attn if has_flash_attn else False
         config.vision_config.use_flash_attn = True if use_flash_attn else False
         # config.llm_config._attn_implementation = 'flash_attention_2' if use_flash_attn else 'eager'
 
         logger.info(f'num_image_token: {self.num_image_token}')
-        logger.info(f'ps_version: {self.ps_version}')
+        logger.info(f'pixel_unshuffle_version: {self.pixel_unshuffle_version}')
         if vision_model is not None:
             self.vision_model = vision_model
         else:
@@ -275,7 +275,7 @@ class InternVLChatModel(PreTrainedModel):
             attentions=outputs.attentions,
         )
 
-    def pixel_shuffle(self, x, scale_factor=0.5):
+    def pixel_unshuffle(self, x, scale_factor=0.5):
         n, w, h, c = x.size()
         # N, W, H, C --> N, W, H * scale, C // scale
         x = x.view(n, w, int(h * scale_factor), int(c / scale_factor))
@@ -284,8 +284,8 @@ class InternVLChatModel(PreTrainedModel):
         # N, H * scale, W, C // scale --> N, H * scale, W * scale, C // (scale ** 2)
         x = x.view(n, int(h * scale_factor), int(w * scale_factor),
                    int(c / (scale_factor * scale_factor)))
-        if self.ps_version == 'v1':
-            warnings.warn("In ps_version 'v1', the height and width have not been swapped back, "
+        if self.pixel_unshuffle_version == 'v1':
+            warnings.warn("In pixel_unshuffle_version 'v1', the height and width have not been swapped back, "
                           'which results in a transposed image.')
         else:
             x = x.permute(0, 2, 1, 3).contiguous()
@@ -306,7 +306,7 @@ class InternVLChatModel(PreTrainedModel):
 
         h = w = int(vit_embeds.shape[1] ** 0.5)
         vit_embeds = vit_embeds.reshape(vit_embeds.shape[0], h, w, -1)
-        vit_embeds = self.pixel_shuffle(vit_embeds, scale_factor=self.downsample_ratio)
+        vit_embeds = self.pixel_unshuffle(vit_embeds, scale_factor=self.downsample_ratio)
         vit_embeds = vit_embeds.reshape(vit_embeds.shape[0], -1, vit_embeds.shape[-1])
         vit_embeds = self.mlp1(vit_embeds)
         return vit_embeds
