@@ -512,7 +512,8 @@ def check_answer(answer_pred, answer_gt, mode):
         det_answer = ' '.join(answer_pred.strip().lower().split())
         dist = levenshtein_distance(gt_answer, det_answer)
         length = max(len(answer_gt.upper()), len(answer_pred.upper()))
-        accuracy = max(accuracy, float(dist) / float(length))
+        similarity = 1 -  float(dist) / float(length)
+        accuracy = max(accuracy, similarity)
 
     if 'mc_score' in mode:
         accuracy = max(accuracy, multi_choice_score(answer_pred, answer_gt))
