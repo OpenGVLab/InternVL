@@ -68,15 +68,37 @@ def find_closest_aspect_ratio(aspect_ratio, target_ratios, width, height, image_
     return best_ratio
 
 
+# Maximum number of patches allowed to prevent OOM with large max_num values.
+MAX_PATCHES_LIMIT = 24
+# Maximum aspect ratio (width/height or height/width) allowed for target
+# patch grids. Ratios beyond this threshold are filtered out to avoid
+# excessive memory allocation when processing images with extreme proportions.
+MAX_ASPECT_RATIO_THRESHOLD = 200
+
+
 def dynamic_preprocess(image, min_num=1, max_num=6, image_size=448, use_thumbnail=False):
     orig_width, orig_height = image.size
     aspect_ratio = orig_width / orig_height
+
+    # Enforce an upper bound on max_num to prevent OOM from runaway patch counts
+    max_num = min(max_num, MAX_PATCHES_LIMIT)
 
     # calculate the existing image aspect ratio
     target_ratios = set(
         (i, j) for n in range(min_num, max_num + 1) for i in range(1, n + 1) for j in range(1, n + 1) if
         i * j <= max_num and i * j >= min_num)
     target_ratios = sorted(target_ratios, key=lambda x: x[0] * x[1])
+
+    # Filter out target ratios with extreme aspect ratios to prevent OOM.
+    # For example, with max_num=12, a ratio like (12,1) produces a 5376x448
+    # intermediate image which wastes memory without adding visual information.
+    target_ratios = [r for r in target_ratios
+                     if r[0] / r[1] <= MAX_ASPECT_RATIO_THRESHOLD
+                     and r[1] / r[0] <= MAX_ASPECT_RATIO_THRESHOLD]
+
+    # Safety fallback: if all ratios were filtered, use a 1:1 grid
+    if not target_ratios:
+        target_ratios = [(1, 1)]
 
     # find the closest aspect ratio to the target
     target_aspect_ratio = find_closest_aspect_ratio(
