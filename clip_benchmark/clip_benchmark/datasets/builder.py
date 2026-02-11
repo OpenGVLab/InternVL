@@ -519,7 +519,9 @@ def has_kaggle():
     return call('which kaggle', shell=True) == 0
 
 
-def build_vtab_dataset(dataset_name, transform, download=True, split='test', data_dir='root', classnames=[]):
+def build_vtab_dataset(dataset_name, transform, download=True, split='test', data_dir='root', classnames=None):
+    if classnames is None:
+        classnames = []
     # Using VTAB splits instead of default TFDS splits
     from .tfds import (VTABIterableDataset, disable_gpus_on_tensorflow,
                        download_tfds_dataset)

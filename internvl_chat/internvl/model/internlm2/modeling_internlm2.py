@@ -1171,7 +1171,9 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
             )
         return reordered_past
 
-    def build_inputs(self, tokenizer, query: str, history: List[Tuple[str, str]] = [], meta_instruction=''):
+    def build_inputs(self, tokenizer, query: str, history: List[Tuple[str, str]] = None, meta_instruction=''):
+        if history is None:
+            history = []
         if tokenizer.add_bos_token:
             prompt = ''
         else:
@@ -1188,7 +1190,7 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
         self,
         tokenizer,
         query: str,
-        history: List[Tuple[str, str]] = [],
+        history: List[Tuple[str, str]] = None,
         streamer: Optional[BaseStreamer] = None,
         max_new_tokens: int = 1024,
         do_sample: bool = True,
@@ -1199,6 +1201,8 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
                                 '- InternLM (书生·浦语) can understand and communicate fluently in the language chosen by the user such as English and 中文.',
         **kwargs,
     ):
+        if history is None:
+            history = []
         inputs = self.build_inputs(tokenizer, query, history, meta_instruction)
         inputs = {k: v.to(self.device) for k, v in inputs.items() if torch.is_tensor(v)}
         # also add end-of-assistant token in eos token id to avoid unnecessary generation
@@ -1224,7 +1228,7 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
         self,
         tokenizer,
         query: str,
-        history: List[Tuple[str, str]] = [],
+        history: List[Tuple[str, str]] = None,
         max_new_tokens: int = 1024,
         do_sample: bool = True,
         temperature: float = 0.8,
@@ -1237,6 +1241,8 @@ class InternLM2ForCausalLM(InternLM2PreTrainedModel):
         ('你好，有什么可以帮助您的吗', [('你好', '你好，有什么可以帮助您的吗')])
         ('你好，有什么可以帮助您的吗？', [('你好', '你好，有什么可以帮助您的吗？')])
         """
+        if history is None:
+            history = []
         if BaseStreamer is None:
             raise ModuleNotFoundError(
                 'The version of `transformers` is too low. Please make sure '

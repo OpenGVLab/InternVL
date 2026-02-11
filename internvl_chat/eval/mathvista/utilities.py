@@ -83,7 +83,9 @@ def contains_number_word(text):
     return False  # If none of the words could be converted to a number, return False
 
 
-def contains_quantity_word(text, special_keep_words=[]):
+def contains_quantity_word(text, special_keep_words=None):
+    if special_keep_words is None:
+        special_keep_words = []
     # check if text contains a quantity word
     quantity_words = ['most', 'least', 'fewest'
                                        'more', 'less', 'fewer',
