@@ -128,7 +128,7 @@ class InternVLChatModel(PreTrainedModel):
             target_modules = ['self_attn.q_proj', 'self_attn.k_proj', 'self_attn.v_proj', 'self_attn.o_proj',
                               'mlp.gate_proj', 'mlp.down_proj', 'mlp.up_proj']
         else:
-            raise NotImplemented
+            raise NotImplementedError(f'Unsupported architecture: {self.llm_arch_name}')
         lora_config = LoraConfig(
             r=r,
             target_modules=target_modules,
