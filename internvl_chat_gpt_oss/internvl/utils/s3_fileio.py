@@ -24,13 +24,19 @@ from mmengine.fileio.backends.base import BaseStorageBackend
 thread_local_client = threading.local()
 
 class S3Backend(BaseStorageBackend):
-    """S3 storage bachend.
+    """S3 storage backend.
 
-    S3Backend supports reading and writing data to aws
-    It relies on awscli and boto3, you must install and run ``aws configure``
-    in advance to use it.
+    Reads and writes data via boto3 against AWS S3 or any S3-compatible
+    service (Backblaze B2, Ceph RGW, Cloudflare R2, CoreWeave, MinIO, etc.)
+    by setting ``end_point_url``. Credentials follow the standard boto3
+    resolution chain (explicit args, env vars, shared config) unless passed
+    directly to the constructor.
 
     Args:
+        end_point_url (str, optional): Custom S3 endpoint URL. Leave unset for
+            AWS S3. Default: None.
+        access_key_id (str, optional): S3 access key ID. Default: None.
+        secret_access_key (str, optional): S3 secret access key. Default: None.
         path_mapping (dict, optional): Path mapping dict from local path to
             Petrel path. When ``path_mapping={'src': 'dst'}``, ``src`` in
             ``filepath`` will be replaced by ``dst``. Default: None.
@@ -38,7 +44,7 @@ class S3Backend(BaseStorageBackend):
     Examples:
         >>> filepath = 's3://bucket/obj'
         >>> backend = S3Backend()
-        >>> backend.get(filepath1)  # get data from s3
+        >>> backend.get(filepath)
         b'hello world'
     """
 
@@ -54,19 +60,18 @@ class S3Backend(BaseStorageBackend):
         except ImportError:
             raise ImportError('Please install boto3 to enable '
                               'S3Backend.')
-        self.config = Config(   
+
+        self.config = Config(
             read_timeout=5,
-            connect_timeout=2
+            connect_timeout=2,
+            user_agent_extra='internvl-chat-gpt-oss',
         )
-        if access_key_id and secret_access_key:
-            self._client = boto3.client(
-                's3',
-                endpoint_url=end_point_url,
-                aws_access_key_id=access_key_id,
-                aws_secret_access_key=secret_access_key,
-                config=self.config)
-        else:
-            self._client = boto3.client('s3')
+        self._client = boto3.client(
+            's3',
+            endpoint_url=end_point_url,
+            aws_access_key_id=access_key_id,
+            aws_secret_access_key=secret_access_key,
+            config=self.config)
         assert isinstance(path_mapping, dict) or path_mapping is None
         self.path_mapping = path_mapping
         # Use to parse bucket and obj_name
