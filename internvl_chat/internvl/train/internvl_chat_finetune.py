@@ -375,8 +375,8 @@ class LazySupervisedDataset(Dataset):
                         token_length = tokenizer(
                             conversations, return_tensors='pt', padding=False, truncation=False,
                         ).input_ids.size(1)
-                        self.conv2length[str_length] = token_length + num_image_token * (
-                                    max_dynamic_patch + use_thumbnail)
+                        token_length += num_image_token * (max_dynamic_patch + use_thumbnail)
+                        self.conv2length[str_length] = token_length
                     else:
                         token_length = self.conv2length[str_length]
                 self.length.append(token_length)
