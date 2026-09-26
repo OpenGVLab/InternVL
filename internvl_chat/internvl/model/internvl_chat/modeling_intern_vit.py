@@ -308,8 +308,8 @@ class InternVisionEncoder(nn.Module):
     def __init__(self, config: InternVisionConfig):
         super().__init__()
         self.config = config
-        # stochastic depth decay rule
-        dpr = [x.item() for x in torch.linspace(0, config.drop_path_rate, config.num_hidden_layers)]
+        # Keep the stochastic depth schedule on CPU so meta initialization can extract its scalar values.
+        dpr = [x.item() for x in torch.linspace(0, config.drop_path_rate, config.num_hidden_layers, device='cpu')]
         self.layers = nn.ModuleList([
             InternVisionEncoderLayer(config, dpr[idx]) for idx in range(config.num_hidden_layers)])
         self.gradient_checkpointing = True
