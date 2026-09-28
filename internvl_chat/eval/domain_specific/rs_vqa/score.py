@@ -11,7 +11,9 @@ def is_correct_count(response, answer):
 
     if response == 0 and answer == 0:
         return True
-    elif 0 < response <= 100 and 0 < answer <= 100:
+    elif 0 < response <= 10 and 0 < answer <= 10:
+        return True
+    elif 10 < response <= 100 and 10 < answer <= 100:
         return True
     elif 100 < response <= 1000 and 100 < answer <= 1000:
         return True
