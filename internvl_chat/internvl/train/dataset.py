@@ -172,19 +172,9 @@ def read_frames_folder(
 ):
     if 's3://' in video_path:
         image_list = sort_frames(client.list(video_path))
-        frames = []
-        for image in image_list:
-            fp = os.path.join(video_path, image)
-            frame = Image.open(io.BytesIO(client.get(fp)))
-            frames.append(frame)
     else:
         image_list = sort_frames(list(os.listdir(video_path)))
-        frames = []
-        for image in image_list:
-            fp = os.path.join(video_path, image)
-            frame = Image.open(fp).convert('RGB')
-            frames.append(frame)
-    vlen = len(frames)
+    vlen = len(image_list)
 
     t_num_frames = np.random.randint(min_num_frames, num_frames + 1)
 
@@ -192,7 +182,14 @@ def read_frames_folder(
         frame_indices = get_frame_indices(
             t_num_frames, vlen, sample=sample, fix_start=fix_start
         )
-        frames = [frames[i] for i in frame_indices]
+        image_list = [image_list[i] for i in frame_indices]
+
+    frames = []
+    for image in image_list:
+        fp = os.path.join(video_path, image)
+        source = io.BytesIO(client.get(fp)) if 's3://' in video_path else fp
+        with Image.open(source) as frame:
+            frames.append(frame.convert('RGB'))
     return frames
 
 
