@@ -110,7 +110,7 @@ def concat_pad_data_collator(features, max_item_length=None, pad_id=0):
             if isinstance(v, torch.Tensor):
                 batch[k] = torch.concat([f[k] for f in features])
             elif isinstance(v, np.ndarray):
-                batch[k] = torch.concat(np.stack([f[k] for f in features]))
+                batch[k] = torch.from_numpy(np.concatenate([f[k] for f in features], axis=0))
             else:
                 batch[k] = torch.concat([f[k] for f in features])
     return batch
@@ -149,7 +149,7 @@ def dpo_concat_pad_data_collator(features, pad_id=0):
             if isinstance(v, torch.Tensor):
                 batch[k] = torch.concat([f[k] for f in features])
             elif isinstance(v, np.ndarray):
-                batch[k] = torch.concat(np.stack([f[k] for f in features]))
+                batch[k] = torch.from_numpy(np.concatenate([f[k] for f in features], axis=0))
             else:
                 batch[k] = torch.concat([f[k] for f in features])
     return batch
