@@ -67,12 +67,7 @@ def get_frame_indices(num_frames, vlen, sample='rand', fix_start=None, input_fps
         for idx, interv in enumerate(intervals[:-1]):
             ranges.append((interv, intervals[idx + 1] - 1))
         if sample == 'rand':
-            try:
-                frame_indices = [random.choice(range(x[0], x[1])) for x in ranges]
-            except:
-                frame_indices = np.random.permutation(vlen)[:acc_samples]
-                frame_indices.sort()
-                frame_indices = list(frame_indices)
+            frame_indices = [random.choice(range(start, end + 1)) for start, end in ranges]
         elif fix_start is not None:
             frame_indices = [x[0] + fix_start for x in ranges]
         elif sample == 'middle':
